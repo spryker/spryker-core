@@ -1,6 +1,6 @@
 {
   "name": "spryker/auth-mail-connector",
-  "description": "AuthMailConnector bundle",
+  "description": "AuthMailConnector module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

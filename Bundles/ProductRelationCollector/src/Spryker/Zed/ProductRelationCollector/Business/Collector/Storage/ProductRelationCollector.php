@@ -107,6 +107,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
             StorageProductAbstractRelationTransfer::ID_PRODUCT_ABSTRACT => $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             StorageProductAbstractRelationTransfer::NAME => $relationProduct[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
             StorageProductAbstractRelationTransfer::PRICE => $this->getPriceBySku($relationProduct[SpyProductAbstractTableMap::COL_SKU]),
+            StorageProductAbstractRelationTransfer::PRICES => $this->findPricesBySku($relationProduct[SpyProductAbstractTableMap::COL_SKU]),
             StorageProductAbstractRelationTransfer::SKU => $relationProduct[SpyProductAbstractTableMap::COL_SKU],
             StorageProductAbstractRelationTransfer::URL => $relationProduct[SpyUrlTableMap::COL_URL],
             StorageProductAbstractRelationTransfer::ORDER => $relationProduct[SpyProductRelationProductAbstractTableMap::COL_ORDER],
@@ -119,7 +120,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param int $idProductRelation
      *
-     * @return array|mixed|\Orm\Zed\Cms\Persistence\SpyCmsBlock[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findRelationProducts($idProductRelation)
     {
@@ -139,6 +140,23 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     protected function getPriceBySku($sku)
     {
         return $this->priceFacade->getPriceBySku($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return array
+     */
+    protected function findPricesBySku($sku)
+    {
+        $priceProductTransfers = $this->priceFacade->findPricesBySku($sku);
+
+        $prices = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $prices[$priceProductTransfer->getPriceTypeName()] = $priceProductTransfer->getPrice();
+        }
+
+        return $prices;
     }
 
     /**

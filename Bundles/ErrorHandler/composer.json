@@ -1,6 +1,6 @@
 {
   "name": "spryker/error-handler",
-  "description": "ErrorHandler bundle",
+  "description": "ErrorHandler module",
   "license": "proprietary",
   "require": {
     "filp/whoops": "^2.1",

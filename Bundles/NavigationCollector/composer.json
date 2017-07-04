@@ -1,6 +1,6 @@
 {
   "name": "spryker/navigation-collector",
-  "description": "NavigationCollector bundle",
+  "description": "NavigationCollector module",
   "license": "proprietary",
   "require": {
     "spryker/collector": "^5.1.1",

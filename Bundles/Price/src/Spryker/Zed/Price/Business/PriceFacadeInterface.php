@@ -185,6 +185,20 @@ interface PriceFacadeInterface
 
     /**
      * Specification:
+     * - Create new product price entities if they doesn't exists by abstract product id and price type.
+     * - Updates the price of product price entities if they exists by abstract product id and price type.
+     * - If price type wasn't explicitly specified, then the default price type will be used.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * Specification:
      * - Create a new product price entity if it doesn't exists by concrete product id and price type.
      * - Updates the price of a product price entity if it exists by concrete product id and price type.
      * - If price type wasn't explicitly specified, then the default price type will be used.
@@ -196,5 +210,59 @@ interface PriceFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * Specification:
+     * - Create new product price entities if they doesn't exists by concrete product id and price type.
+     * - Updates the price of product price entities if they exists by concrete product id and price type.
+     * - If price type wasn't explicitly specified, then the default price type will be used.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * Specification:
+     * - Reads abstract and concrete product prices from database.
+     * - Concrete prices overwrites abstracts for matching price types.
+     * - The provided SKU can represent both abstract or concrete product.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findPricesBySku($sku);
+
+    /**
+     * Specification:
+     * - Reads abstract product prices from database.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Reads abstract and concrete product prices from database.
+     * - Concrete prices overwrites abstracts for matching price types.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
 
 }

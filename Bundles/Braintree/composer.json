@@ -1,6 +1,6 @@
 {
   "name": "spryker/braintree",
-  "description": "Braintree bundle",
+  "description": "Braintree module",
   "license": "proprietary",
   "require": {
     "braintree/braintree_php": "~3.15.0",

@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Orm\Zed\Cms\Persistence\SpyCmsBlock;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -53,18 +51,12 @@ class GlossaryController extends AbstractController
         $idForm = (int)$request->get(self::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
-        $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
         $cmsPageEntity = $this->findCmsPageById($idPage);
         $localeTransfer = $this->getLocaleTransfer($cmsPageEntity);
 
         $fkLocale = $this->getLocaleByCmsPage($cmsPageEntity);
 
-        if ($block === null) {
-            $title = $cmsPageEntity->getUrl();
-        } else {
-            $type = CmsConstants::RESOURCE_TYPE_BLOCK;
-            $title = $block->getName();
-        }
+        $title = $cmsPageEntity->getUrl();
 
         $placeholders = $this->findPagePlaceholders($cmsPageEntity);
         $glossaryMappingArray = $this->extractGlossaryMapping($idPage, $localeTransfer);
@@ -311,8 +303,6 @@ class GlossaryController extends AbstractController
             $data = $forms[$idForm]->getData();
             $this->saveGlossaryKeyPageMapping($data, $localeTransfer);
 
-            $this->touchNecessaryBlock($data['fkPage']);
-
             return $this->jsonResponse([
                 'success' => 'true',
                 'glossaryKeyName' => $this->glossaryKeyName,
@@ -399,37 +389,6 @@ class GlossaryController extends AbstractController
         }
 
         return $cmsPage;
-    }
-
-    /**
-     * @param int $idPage
-     *
-     * @return void
-     */
-    protected function touchNecessaryBlock($idPage)
-    {
-        $blockEntity = $this->getQueryContainer()
-            ->queryBlockByIdPage($idPage)
-            ->findOne();
-
-        if ($blockEntity !== null) {
-            $blockTransfer = $this->createBlockTransfer($blockEntity);
-            $this->getFacade()
-                ->touchBlockActive($blockTransfer);
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsBlock $blockEntity
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    protected function createBlockTransfer(SpyCmsBlock $blockEntity)
-    {
-        $blockTransfer = new CmsBlockTransfer();
-        $blockTransfer->fromArray($blockEntity->toArray());
-
-        return $blockTransfer;
     }
 
     /**

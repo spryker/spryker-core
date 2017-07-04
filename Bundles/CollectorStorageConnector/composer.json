@@ -1,6 +1,6 @@
 {
   "name": "spryker/collector-storage-connector",
-  "description": "CollectorStorageConnector bundle",
+  "description": "CollectorStorageConnector module",
   "license": "proprietary",
   "require": {
     "spryker/collector": "^5.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/ratepay",
-  "description": "Ratepay bundle",
+  "description": "Ratepay module",
   "license": "proprietary",
   "require": {
     "spryker/checkout": "^3.0.0",

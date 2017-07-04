@@ -1,6 +1,6 @@
 {
   "name": "spryker/availability",
-  "description": "Availability bundle",
+  "description": "Availability module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

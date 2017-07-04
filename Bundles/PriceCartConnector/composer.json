@@ -1,6 +1,6 @@
 {
   "name": "spryker/price-cart-connector",
-  "description": "PriceCartConnector bundle",
+  "description": "PriceCartConnector module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

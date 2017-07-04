@@ -1,6 +1,6 @@
 {
   "name": "spryker/tax",
-  "description": "Tax bundle",
+  "description": "Tax module",
   "license": "proprietary",
   "require": {
     "spryker/calculation": "^4.0.0",

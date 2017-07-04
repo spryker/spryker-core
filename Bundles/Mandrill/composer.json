@@ -1,6 +1,6 @@
 {
   "name": "spryker/mandrill",
-  "description": "Mandrill bundle",
+  "description": "Mandrill module",
   "license": "proprietary",
   "require": {
     "mandrill/mandrill": "~1.0.55"

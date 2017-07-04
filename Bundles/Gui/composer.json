@@ -1,6 +1,6 @@
 {
   "name": "spryker/gui",
-  "description": "Gui bundle",
+  "description": "Gui module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

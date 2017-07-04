@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-category",
-  "description": "ProductCategory bundle",
+  "description": "ProductCategory module",
   "license": "proprietary",
   "require": {
     "spryker/category": "^3.2.0",

@@ -1,6 +1,6 @@
 {
   "name": "spryker/availability-gui",
-  "description": "AvailabilityGui bundle",
+  "description": "AvailabilityGui module",
   "license": "proprietary",
   "require": {
     "spryker/availability": "^5.0.0",

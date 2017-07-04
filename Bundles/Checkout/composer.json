@@ -1,6 +1,6 @@
 {
   "name": "spryker/checkout",
-  "description": "Checkout bundle",
+  "description": "Checkout module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

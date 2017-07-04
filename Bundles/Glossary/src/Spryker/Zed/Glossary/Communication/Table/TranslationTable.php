@@ -24,7 +24,7 @@ class TranslationTable extends AbstractTable
 
     const ACTIONS = 'Actions';
     const URL_GLOSSARY_EDIT = '/glossary/edit';
-    const GENERATED_CMS = 'generated.cms%';
+    const GENERATED_KEY_MASK = 'generated.%';
 
     /**
      * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -132,7 +132,7 @@ class TranslationTable extends AbstractTable
     {
         $query = $this->glossaryKeyQuery
             ->leftJoinSpyGlossaryTranslation()
-            ->filterByKey(self::GENERATED_CMS, Criteria::NOT_LIKE)
+            ->filterByKey(self::GENERATED_KEY_MASK, Criteria::NOT_LIKE)
             ->groupByIdGlossaryKey();
 
         $lines = $this->runQuery($query, $config);

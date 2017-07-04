@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-discount-connector",
-  "description": "ProductDiscountConnector bundle",
+  "description": "ProductDiscountConnector module",
   "license": "proprietary",
   "require": {
     "spryker/discount": "^4.0.0",

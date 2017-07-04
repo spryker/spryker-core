@@ -200,6 +200,7 @@ class AbstractProductFormDataProvider
             ProductFormAdd::FORM_ATTRIBUTE_SUPER => $this->getAttributeVariantDefaultFields(),
             ProductFormAdd::FORM_PRICE_AND_TAX => [
                 PriceForm::FIELD_PRICE => 0,
+                PriceForm::FIELD_PRICES => $this->getDefaultPricesData(),
                 PriceForm::FIELD_TAX_RATE => 0,
             ],
         ];
@@ -755,6 +756,26 @@ class AbstractProductFormDataProvider
         }
 
         return $url;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultPricesData()
+    {
+        $priceData = [];
+        $defaultPriceTypeName = $this->priceFacade->getDefaultPriceTypeName();
+        $priceTypes = $this->priceFacade->getPriceTypeValues();
+
+        foreach ($priceTypes as $priceType) {
+            if ($priceType === $defaultPriceTypeName) {
+                continue;
+            }
+
+            $priceData[$priceType] = null;
+        }
+
+        return $priceData;
     }
 
 }

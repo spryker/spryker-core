@@ -1,6 +1,6 @@
 {
   "name": "spryker/quote",
-  "description": "Quote bundle",
+  "description": "Quote module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config>
+    <cms-gui>
+        <label>CMS</label>
+        <title>CMS</title>
+        <icon>fa-files-o</icon>
+        <pages>
+            <block>
+                <label>Blocks</label>
+                <title>Blocks</title>
+                <bundle>cms-block-gui</bundle>
+                <controller>list-block</controller>
+                <action>index</action>
+
+                <pages>
+                    <view-block>
+                        <label>View Block</label>
+                        <title>View Block</title>
+                        <bundle>cms-block-gui</bundle>
+                        <controller>view-block</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </view-block>
+                    <create-block>
+                        <label>Create Block</label>
+                        <title>Create Block</title>
+                        <bundle>cms-block-gui</bundle>
+                        <controller>create-block</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create-block>
+                    <edit-block>
+                        <label>Edit Block</label>
+                        <title>Edit Block</title>
+                        <bundle>cms-block-gui</bundle>
+                        <controller>edit-block</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-block>
+                    <edit-block-glossary>
+                        <label>Edit Block Glossary</label>
+                        <title>Edit Block Glossary</title>
+                        <bundle>cms-block-gui</bundle>
+                        <controller>edit-glossary</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-block-glossary>
+                </pages>
+            </block>
+
+        </pages>
+    </cms-gui>
+    <cms>
+        <visible>0</visible>
+    </cms>
+</config>

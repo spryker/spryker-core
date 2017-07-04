@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-management",
-  "description": "ProductManagement bundle",
+  "description": "ProductManagement module",
   "license": "proprietary",
   "require": {
     "everon/collection": "^1.0.0",
@@ -12,7 +12,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/money": "^2.0.0",
-    "spryker/price": "^4.0.0",
+    "spryker/price": "^4.2.0",
     "spryker/product": "^5.0.0",
     "spryker/product-bundle": "^2.0.0 || ^3.0.0",
     "spryker/product-group": "^1.0.0",

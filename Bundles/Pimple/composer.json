@@ -1,6 +1,6 @@
 {
   "name": "spryker/pimple",
-  "description": "Pimple bundle",
+  "description": "Pimple module",
   "license": "proprietary",
   "require": {
     "pimple/pimple": "~1.1.1"

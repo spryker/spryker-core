@@ -1,6 +1,6 @@
 {
   "name": "spryker/transfer",
-  "description": "Transfer bundle",
+  "description": "Transfer module",
   "license": "proprietary",
   "require": {
     "fzaninotto/faker": "^1.6",

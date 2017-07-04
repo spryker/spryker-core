@@ -46,13 +46,6 @@
                     </edit-placeholder>
                 </pages>
             </page>
-            <block>
-                <label>Blocks</label>
-                <title>Blocks</title>
-                <bundle>cms</bundle>
-                <controller>block</controller>
-                <action>index</action>
-            </block>
             <redirects>
                 <label>Redirects</label>
                 <title>Redirects</title>

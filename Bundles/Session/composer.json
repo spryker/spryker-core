@@ -1,6 +1,6 @@
 {
   "name": "spryker/session",
-  "description": "Session bundle",
+  "description": "Session module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

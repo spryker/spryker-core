@@ -1,6 +1,6 @@
 {
   "name": "spryker/messenger",
-  "description": "Messenger bundle",
+  "description": "Messenger module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

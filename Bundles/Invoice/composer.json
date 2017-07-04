@@ -1,6 +1,6 @@
 {
   "name": "spryker/invoice",
-  "description": "Invoice bundle",
+  "description": "Invoice module",
   "license": "proprietary",
   "require-dev": {
     "spryker/code-sniffer": "*",

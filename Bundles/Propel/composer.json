@@ -1,6 +1,6 @@
 {
   "name": "spryker/propel",
-  "description": "Propel bundle",
+  "description": "Propel module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

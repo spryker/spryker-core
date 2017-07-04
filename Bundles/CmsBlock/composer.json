@@ -1,0 +1,45 @@
+{
+  "name": "spryker/cms-block",
+  "description": "CmsBlock module",
+  "license": "proprietary",
+  "require": {
+    "spryker/glossary": "^3.1.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/key-builder": "^1.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/touch": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "*",
+    "spryker/twig": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

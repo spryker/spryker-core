@@ -1,6 +1,6 @@
 {
   "name": "spryker/graphviz",
-  "description": "Graphviz bundle",
+  "description": "Graphviz module",
   "license": "proprietary",
   "require": {
     "phpdocumentor/graphviz": "~1.0.4"

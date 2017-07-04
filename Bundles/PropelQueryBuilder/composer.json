@@ -1,6 +1,6 @@
 {
   "name": "spryker/propel-query-builder",
-  "description": "PropelQueryBuilder bundle",
+  "description": "PropelQueryBuilder module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",

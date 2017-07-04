@@ -1,6 +1,6 @@
 {
   "name": "spryker/util-encoding",
-  "description": "UtilEncoding bundle",
+  "description": "UtilEncoding module",
   "license": "proprietary",
   "autoload": {
     "psr-0": {

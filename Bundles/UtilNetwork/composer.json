@@ -1,6 +1,6 @@
 {
   "name": "spryker/util-network",
-  "description": "UtilNetwork bundle",
+  "description": "UtilNetwork module",
   "license": "proprietary",
   "autoload": {
     "psr-0": {
