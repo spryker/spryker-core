@@ -28,7 +28,7 @@ class CmsBlockCategoryPosition extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->isCategoryConnectorInstalled()) {
+        if ($this->isCategoryPositionInstalled()) {
             $output->writeln('Is already installed.');
             return;
         }
@@ -44,9 +44,10 @@ class CmsBlockCategoryPosition extends Console
                 $spyCmsBlockCategoryPosition->save();
                 $output->writeln('Position [' . $positionName . '] is imported');
             } else {
-                $this->assignAllBlocksToPosition($spyCmsBlockCategoryPosition);
-                $output->writeln('Position [' . $positionName . '] is found');
+                $output->writeln('Position [' . $positionName . '] exists');
             }
+
+            $this->assignAllBlocksToPosition($spyCmsBlockCategoryPosition);
         }
 
         $output->writeln('Successfully finished.');
@@ -91,7 +92,7 @@ class CmsBlockCategoryPosition extends Console
     /**
      * @return bool
      */
-    protected function isCategoryConnectorInstalled()
+    protected function isCategoryPositionInstalled()
     {
         $count = SpyCmsBlockCategoryPositionQuery::create()
             ->filterByName_In($this->getPositionList())
