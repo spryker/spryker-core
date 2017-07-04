@@ -16,7 +16,7 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @var array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
+     * @var \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
      */
     protected $collectorDataExpanderPlugins = [];
 
