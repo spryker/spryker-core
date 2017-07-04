@@ -48,6 +48,11 @@ class CmsBlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addWarningLabel(
+            $builder,
+            $options[static::OPTION_WRONG_TEMPLATE_CATEGORY_LIST],
+            $options[static::OPTION_CATEGORY_ARRAY]
+        );
         $this->addCategoryFields(
             $builder,
             $options[static::OPTION_CMS_BLOCK_POSITION_LIST],
@@ -80,7 +85,6 @@ class CmsBlockType extends AbstractType
     protected function addCategoryFields(FormBuilderInterface $builder, array $positions, array $categoryList, array $wrongCategoryList)
     {
         foreach ($positions as $idCmsBlockCategoryPosition => $positionName) {
-            $this->addWarningLabel($builder, $wrongCategoryList, $categoryList, $idCmsBlockCategoryPosition);
             $this->addCategoryField($builder, $categoryList, $idCmsBlockCategoryPosition, $positionName);
         }
 
@@ -91,20 +95,17 @@ class CmsBlockType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $wrongCategoryList
      * @param array $categoryList
-     * @param int $idCmsBlockCategoryPosition
      *
      * @return void
      */
-    protected function addWarningLabel(FormBuilderInterface $builder, array $wrongCategoryList, array $categoryList, $idCmsBlockCategoryPosition)
+    protected function addWarningLabel(FormBuilderInterface $builder, array $wrongCategoryList, array $categoryList)
     {
-        if (empty($wrongCategoryList[$idCmsBlockCategoryPosition])) {
-            return;
-        }
-
         $warningCategoryList = '';
-        foreach ($wrongCategoryList[$idCmsBlockCategoryPosition] as $idCategory) {
-            if ($categoryList[$idCategory]) {
-                $warningCategoryList[] = $categoryList[$idCategory];
+        foreach ($wrongCategoryList as $idCmsBlockCategoryPosition => $list) {
+            foreach ($list as $idCategory) {
+                if ($categoryList[$idCategory]) {
+                    $warningCategoryList[] = $categoryList[$idCategory];
+                }
             }
         }
 
@@ -112,7 +113,7 @@ class CmsBlockType extends AbstractType
             return;
         }
 
-        $builder->add(static::FIELD_CATEGORIES . '_label_' . $idCmsBlockCategoryPosition, new LabelType(), [
+        $builder->add(static::FIELD_CATEGORIES . '_label', new LabelType(), [
             'text' => $this->formatWrongCategoryTemplateWarningMessage($warningCategoryList)
         ]);
     }
