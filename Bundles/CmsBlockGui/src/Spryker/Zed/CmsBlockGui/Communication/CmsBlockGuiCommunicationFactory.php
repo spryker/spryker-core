@@ -152,17 +152,15 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm|\Symfony\Component\Form\FormTypeInterface
      */
-    protected function createCmsBlockGlossaryPlaceholderTranslationFormType()
+    public function createCmsBlockGlossaryPlaceholderTranslationFormType()
     {
-        return new CmsBlockGlossaryPlaceholderTranslationForm(
-            $this->createTwigContentConstraint()
-        );
+        return new CmsBlockGlossaryPlaceholderTranslationForm();
     }
 
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent|\Symfony\Component\Validator\Constraint
      */
-    protected function createTwigContentConstraint()
+    public function createTwigContentConstraint()
     {
         return new TwigContent([
             TwigContent::OPTION_TWIG_ENVIRONMENT => $this->getTwigEnvironment(),
@@ -190,20 +188,9 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm
      */
-    protected function createCmsBlockGlossaryPlaceholderFormType()
+    public function createCmsBlockGlossaryPlaceholderFormType()
     {
-        return new CmsBlockGlossaryPlaceholderForm(
-            $this->getCmsBlockFacade(),
-            $this->createCmsBlockGlossaryPlaceholderTranslationFormType()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsInterface
-     */
-    public function getCmsFacade()
-    {
-        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::FACADE_CMS);
+        return new CmsBlockGlossaryPlaceholderForm();
     }
 
 }

@@ -21,7 +21,7 @@ interface CmsPageCollectorDataExpanderPluginInterface
      * @param array $collectedData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return mixed
+     * @return array
      */
     public function expand(array $collectedData, LocaleTransfer $localeTransfer);
 

@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductSet\Dependency\Client\ProductSetToLocaleBridge;
 use Spryker\Client\ProductSet\Dependency\Client\ProductSetToStorageBridge;
-use Spryker\Client\ProductSet\Dependency\Service\ProductSetToUtilEncodingBridge;
 
 class ProductSetDependencyProvider extends AbstractDependencyProvider
 {
@@ -19,8 +18,6 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_LOCALE = 'CLIENT_LOCALE';
-
-    const UTIL_ENCODING_SERVICE = 'SERVICE_UTIL_ENCODING';
 
     const PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS = 'PLUGIN_PRODUCT_SET_SEARCH_RESULT_FORMATTERS';
     const PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS = 'PLUGIN_PRODUCT_SET_SEARCH_QUERY_EXPANDERS';
@@ -35,8 +32,6 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
         $this->provideSearchClient($container);
         $this->provideStorageClient($container);
         $this->provideLocaleClient($container);
-
-        $this->provideUtilEncodingService($container);
 
         $this->provideProductSetListResultFormatterPlugins($container);
         $this->provideProductSetListQueryExpanderPlugins($container);
@@ -105,18 +100,6 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductSetToStorageBridge($container->getLocator()->storage()->client());
-        };
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function provideUtilEncodingService(Container $container)
-    {
-        $container[static::UTIL_ENCODING_SERVICE] = function (Container $container) {
-            return new ProductSetToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
     }
 

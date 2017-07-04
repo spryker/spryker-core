@@ -8,17 +8,11 @@
 namespace Spryker\Client\ProductSet\Storage;
 
 use Spryker\Client\ProductSet\Dependency\Client\ProductSetToStorageInterface;
-use Spryker\Client\ProductSet\Dependency\Service\ProductSetToUtilEncodingInterface;
 use Spryker\Client\ProductSet\Mapper\ProductSetStorageMapperInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductSetStorage implements ProductSetStorageInterface
 {
-
-    /**
-     * @var \Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface
-     */
-    protected $utilEncodingService;
 
     /**
      * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
@@ -43,20 +37,17 @@ class ProductSetStorage implements ProductSetStorageInterface
     /**
      * @param \Spryker\Client\ProductSet\Dependency\Client\ProductSetToStorageInterface $storage
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
-     * @param \Spryker\Client\ProductSet\Dependency\Service\ProductSetToUtilEncodingInterface $utilEncodingService
      * @param string $localeName
      * @param \Spryker\Client\ProductSet\Mapper\ProductSetStorageMapperInterface $productSetStorageMapper
      */
     public function __construct(
         ProductSetToStorageInterface $storage,
         KeyBuilderInterface $keyBuilder,
-        ProductSetToUtilEncodingInterface $utilEncodingService,
         $localeName,
         ProductSetStorageMapperInterface $productSetStorageMapper
     ) {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
-        $this->utilEncodingService = $utilEncodingService;
         $this->localeName = $localeName;
         $this->productSetStorageMapper = $productSetStorageMapper;
     }

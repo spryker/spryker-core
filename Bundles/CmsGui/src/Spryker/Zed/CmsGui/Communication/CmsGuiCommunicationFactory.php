@@ -174,7 +174,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsGlossaryFormType()
     {
-        return new CmsGlossaryFormType($this->createCmsGlossaryAttributesFormType());
+        return new CmsGlossaryFormType();
     }
 
     /**
@@ -183,8 +183,6 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsGlossaryAttributesFormType()
     {
         return new CmsGlossaryAttributesFormType(
-            $this->getCmsFacade(),
-            $this->createUniqueGlossaryForSearchTypeConstraint(),
             $this->createCmsGlossaryTranslationFormType()
         );
     }
@@ -229,7 +227,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType
      */
-    protected function createUniqueGlossaryForSearchTypeConstraint()
+    public function createUniqueGlossaryForSearchTypeConstraint()
     {
         return new UniqueGlossaryForSearchType([
             UniqueGlossaryForSearchType::OPTION_GLOSSARY_FACADE => $this->getGlossaryFacade(),
@@ -258,17 +256,15 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryTranslationFormType|\Symfony\Component\Form\FormTypeInterface
      */
-    protected function createCmsGlossaryTranslationFormType()
+    public function createCmsGlossaryTranslationFormType()
     {
-        return new CmsGlossaryTranslationFormType(
-            $this->createTwigContentConstraint()
-        );
+        return new CmsGlossaryTranslationFormType();
     }
 
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent|\Symfony\Component\Validator\Constraint
      */
-    protected function createTwigContentConstraint()
+    public function createTwigContentConstraint()
     {
         return new TwigContent([
             TwigContent::OPTION_TWIG_ENVIRONMENT => $this->getTwigEnvironment(),

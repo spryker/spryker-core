@@ -8,17 +8,18 @@
 namespace Spryker\Zed\CmsBlockGui\Communication\Form\Glossary;
 
 use Spryker\Zed\CmsBlockGui\Communication\Form\ArrayObjectTransformerTrait;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
+ */
 class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {
 
@@ -32,28 +33,6 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @var \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface
-     */
-    protected $cmsBlockFacade;
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface
-     */
-    protected $cmsBlockGlossaryPlaceholderTranslationForm;
-
-    /**
-     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
-     * @param \Symfony\Component\Form\FormTypeInterface $cmsBlockGlossaryPlaceholderTranslationForm
-     */
-    public function __construct(
-        CmsBlockGuiToCmsBlockInterface $cmsBlockFacade,
-        FormTypeInterface $cmsBlockGlossaryPlaceholderTranslationForm
-    ) {
-        $this->cmsBlockFacade = $cmsBlockFacade;
-        $this->cmsBlockGlossaryPlaceholderTranslationForm = $cmsBlockGlossaryPlaceholderTranslationForm;
-    }
 
     /**
      * @return string
@@ -158,7 +137,7 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     protected function addTranslationsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
-            'type' => $this->cmsBlockGlossaryPlaceholderTranslationForm,
+            'type' => $this->getFactory()->createCmsBlockGlossaryPlaceholderTranslationFormType(),
             'allow_add' => true,
         ]);
 

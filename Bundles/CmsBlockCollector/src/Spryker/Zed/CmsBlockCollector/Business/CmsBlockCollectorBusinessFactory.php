@@ -35,7 +35,7 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
      */
     protected function getCollectorDataExpanderPlugins()
     {

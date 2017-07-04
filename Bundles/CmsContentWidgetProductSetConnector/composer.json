@@ -1,0 +1,41 @@
+{
+  "name": "spryker/cms-content-widget-product-set-connector",
+  "description": "CmsContentWidgetProductSetConnector module",
+  "license": "proprietary",
+  "require": {
+    "spryker/cms-content-widget": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/product-set": "^1.0.0",
+    "spryker/product": "^5.0.0",
+    "spryker/propel-orm": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/twig" : "Is need by Yves twig function"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsContentWidget\Business\CmsBlockCollector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\CmsContentWidget\CmsContentWidgetConstants;
+use Spryker\Shared\CmsContentWidget\CmsContentWidgetConfig;
 use Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetParameterMapperInterface;
 
 class CmsBlockCollectorParameterMapExpander implements CmsBlockCollectorParameterMapExpanderInterface
@@ -35,7 +35,7 @@ class CmsBlockCollectorParameterMapExpander implements CmsBlockCollectorParamete
      */
     public function map(array $collectedData, LocaleTransfer $localeTransfer)
     {
-        $collectedData[CmsContentWidgetConstants::CMS_CONTENT_WIDGET_PARAMETER_MAP] = $this->extractContentWidgetFunctionParameterMap(
+        $collectedData[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP] = $this->extractContentWidgetFunctionParameterMap(
             $collectedData['placeholders'],
             $localeTransfer
         );

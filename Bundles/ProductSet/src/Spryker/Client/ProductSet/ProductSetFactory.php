@@ -41,7 +41,6 @@ class ProductSetFactory extends AbstractFactory
         return new ProductSetStorage(
             $this->getStorageClient(),
             $this->createProductSetResourceBuilder(),
-            $this->getUtilEncodingService(),
             $this->getLocaleClient()->getCurrentLocale(),
             $this->createProductSetStorageMapper()
         );
@@ -85,14 +84,6 @@ class ProductSetFactory extends AbstractFactory
     protected function createProductSetListQueryExpanders()
     {
         return $this->getProvidedDependency(ProductSetDependencyProvider::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS);
-    }
-
-    /**
-     * @return \Spryker\Client\ProductSet\Dependency\Service\ProductSetToUtilEncodingInterface
-     */
-    protected function getUtilEncodingService()
-    {
-        return $this->getProvidedDependency(ProductSetDependencyProvider::UTIL_ENCODING_SERVICE);
     }
 
     /**

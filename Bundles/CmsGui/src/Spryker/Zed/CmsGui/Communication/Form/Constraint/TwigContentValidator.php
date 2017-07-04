@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Constraint;
 
-use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
