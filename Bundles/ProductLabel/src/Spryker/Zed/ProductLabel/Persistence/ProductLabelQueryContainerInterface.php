@@ -97,4 +97,13 @@ interface ProductLabelQueryContainerInterface
      */
     public function queryPublishedProductLabelsBecomingInvalid();
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryValidProductLabelsByIdProductAbstract($idProductAbstract);
+
 }

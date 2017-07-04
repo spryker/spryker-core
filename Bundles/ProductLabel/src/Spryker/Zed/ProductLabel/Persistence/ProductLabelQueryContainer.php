@@ -180,4 +180,25 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->filterByValidTo('now', Criteria::LESS_THAN);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryValidProductLabelsByIdProductAbstract($idProductAbstract)
+    {
+        return $this->queryProductsLabelByIdProductAbstract($idProductAbstract)
+            ->filterByIsActive(true)
+            ->filterByValidFrom('now', Criteria::LESS_EQUAL)
+            ->_or()
+            ->filterByValidFrom(null, Criteria::ISNULL)
+            ->filterByValidTo('now', Criteria::GREATER_EQUAL)
+            ->_or()
+            ->filterByValidTo(null, Criteria::ISNULL)
+            ->orderByIsExclusive(Criteria::DESC)
+            ->orderByPosition(Criteria::ASC);
+    }
+
 }

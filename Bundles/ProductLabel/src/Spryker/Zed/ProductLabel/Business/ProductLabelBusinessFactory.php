@@ -91,6 +91,14 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductLabelDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionReaderInterface
      */
     public function createLocalizedAttributesCollectionReader()
@@ -133,7 +141,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductAbstractRelationTouchManager()
     {
-        return new ProductAbstractRelationTouchManager($this->getTouchFacade());
+        return new ProductAbstractRelationTouchManager($this->getTouchFacade(), $this->getProductFacade());
     }
 
     /**
