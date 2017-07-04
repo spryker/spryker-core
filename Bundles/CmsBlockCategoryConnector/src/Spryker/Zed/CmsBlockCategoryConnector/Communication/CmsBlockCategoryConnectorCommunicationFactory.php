@@ -17,7 +17,9 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\C
 use Spryker\Zed\CmsBlockCollector\CmsBlockCollectorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-/** @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer() * @method CmsBlockCategoryConnectorConfig getConfig()
+/**
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig getConfig()
  */
 class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

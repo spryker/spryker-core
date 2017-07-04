@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector;
 
+use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
@@ -36,4 +37,13 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
      * A name of category template: CmsBlock content is presented alone
      */
     const CATEGORY_TEMPLATE_ONLY_CMS_BLOCK = 'CMS Block';
+
+    /**
+     * @return array
+     */
+    public function getCmsBlockCategoryPositionList()
+    {
+        return $this->get(CmsBlockCategoryConnectorConstants::CMS_BLOCK_CATEGORY_POSITION_LIST);
+    }
+
 }

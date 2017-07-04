@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
  */
 class CmsBlockCategoryPosition extends Console
 {
@@ -82,11 +83,9 @@ class CmsBlockCategoryPosition extends Console
      */
     protected function getPositionList()
     {
-        return [
-            CmsBlockCategoryConnectorConfig::CMS_BLOCK_CATEGORY_POSITION_TOP,
-            CmsBlockCategoryConnectorConfig::CMS_BLOCK_CATEGORY_POSITION_MIDDLE,
-            CmsBlockCategoryConnectorConfig::CMS_BLOCK_CATEGORY_POSITION_BOTTOM,
-        ];
+        return $this->getFactory()
+            ->getConfig()
+            ->getCmsBlockCategoryPositionList();
     }
 
     /**
