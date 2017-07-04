@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\CmsProductConnector
+namespace: SprykerTest\Zed\CmsContentWidgetProductConnector
 actor: Tester
 paths:
     tests: .
