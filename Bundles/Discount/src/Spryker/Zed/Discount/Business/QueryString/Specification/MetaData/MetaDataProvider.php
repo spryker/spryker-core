@@ -148,7 +148,7 @@ class MetaDataProvider implements MetaDataProviderInterface
         $valueOptions = [];
         foreach ($this->specificationPlugins as $specificationPlugin) {
             if ($specificationPlugin instanceof DiscountRuleWithValueOptionsPluginInterface) {
-                $valueOptions = array_merge($valueOptions, $specificationPlugin->getQueryStringValueOptions());
+                $valueOptions[$specificationPlugin->getFieldName()] = $specificationPlugin->getQueryStringValueOptions();
             }
         }
 
