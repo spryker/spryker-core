@@ -28,7 +28,11 @@ class ResourceParametersPreProcessor implements PreProcessorInterface
     {
         $path = $apiRequestTransfer->getPath();
 
-        $elements = [$path];
+        $elements = [];
+        if ($path !== '') {
+            $elements[] = $path;
+        }
+
         if (strpos($path, '/') !== false) {
             $elements = explode('/', $path);
         }

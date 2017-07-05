@@ -44,4 +44,9 @@ interface MetaDataProviderInterface
      */
     public function getCompoundExpressions();
 
+    /**
+     * @return array
+     */
+    public function getQueryStringValueOptions();
+
 }

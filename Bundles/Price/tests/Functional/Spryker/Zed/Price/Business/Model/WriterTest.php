@@ -279,11 +279,7 @@ class WriterTest extends Test
      */
     public function testPersistAbstractPriceShouldCreateNewPrice()
     {
-        $productAbstractEntity = SpyProductAbstractQuery::create()->filterBySku(self::SKU_PRODUCT_ABSTRACT)->findOne();
-        if ($productAbstractEntity === null) {
-            $productAbstractEntity = new SpyProductAbstract();
-            $productAbstractEntity->save();
-        }
+        $productAbstractEntity = $this->createProductAbstractEntity();
 
         $beforePriceProductEntity = SpyPriceProductQuery::create()
             ->filterByFkProductAbstract($productAbstractEntity->getIdProductAbstract())
@@ -318,11 +314,7 @@ class WriterTest extends Test
      */
     public function testPersistAbstractPriceShouldUpdatePrice()
     {
-        $productAbstractEntity = SpyProductAbstractQuery::create()->filterBySku(self::SKU_PRODUCT_ABSTRACT)->findOne();
-        if ($productAbstractEntity === null) {
-            $productAbstractEntity = new SpyProductAbstract();
-            $productAbstractEntity->save();
-        }
+        $productAbstractEntity = $this->createProductAbstractEntity();
 
         $priceTypeEntity = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_1)->findOneOrCreate();
         $priceTypeEntity->save();
@@ -396,6 +388,112 @@ class WriterTest extends Test
         $this->assertEquals(self::PRICE_VALUE_2, $priceEntity->getPrice());
         $this->assertEquals($productConcreteEntity->getIdProduct(), $priceEntity->getFkProduct());
         $this->assertNull($priceEntity->getFkProductAbstract());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistProductAbstractPriceCollection()
+    {
+        $productAbstractEntity = $this->createProductAbstractEntity();
+
+        $productPriceTransfer1 = new PriceProductTransfer();
+        $productPriceTransfer1
+            ->setPrice(self::PRICE_VALUE_1)
+            ->setPriceTypeName(self::PRICE_TYPE_1);
+
+        $productPriceTransfer2 = new PriceProductTransfer();
+        $productPriceTransfer2
+            ->setPrice(self::PRICE_VALUE_2)
+            ->setPriceTypeName(self::PRICE_TYPE_2);
+
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer
+            ->setIdProductAbstract($productAbstractEntity->getIdProductAbstract())
+            ->addPrices($productPriceTransfer1)
+            ->addPrices($productPriceTransfer1);
+
+        $this->priceFacade->persistProductAbstractPriceCollection($productAbstractTransfer);
+
+        $priceEntities = SpyPriceProductQuery::create()
+            ->filterByFkProductAbstract($productAbstractEntity->getIdProductAbstract())
+            ->find();
+
+        $this->assertCount(2, $priceEntities);
+
+        $expectedPrices = [
+            self::PRICE_TYPE_1 => self::PRICE_VALUE_1,
+            self::PRICE_TYPE_2 => self::PRICE_VALUE_2,
+        ];
+
+        foreach ($priceEntities as $priceEntity) {
+            $priceTypeName = $priceEntity->getPriceType()->getName();
+            $this->assertSame($expectedPrices[$priceTypeName], $priceEntity->getPrice());
+            $this->assertSame($productAbstractEntity->getIdProductAbstract(), $priceEntity->getFkProductAbstract());
+            $this->assertNull($priceEntity->getFkProduct());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistProductConcretePriceCollection()
+    {
+        $productConcreteEntity = SpyProductQuery::create()->filterBySku(self::SKU_PRODUCT_CONCRETE)->findOne();
+        if ($productConcreteEntity === null) {
+            $productConcreteEntity = new SpyProduct();
+            $productConcreteEntity->save();
+        }
+
+        $productPriceTransfer1 = new PriceProductTransfer();
+        $productPriceTransfer1
+            ->setPrice(self::PRICE_VALUE_1)
+            ->setPriceTypeName(self::PRICE_TYPE_1);
+
+        $productPriceTransfer2 = new PriceProductTransfer();
+        $productPriceTransfer2
+            ->setPrice(self::PRICE_VALUE_2)
+            ->setPriceTypeName(self::PRICE_TYPE_2);
+
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer
+            ->setIdProductConcrete($productConcreteEntity->getIdProduct())
+            ->addPrices($productPriceTransfer1)
+            ->addPrices($productPriceTransfer2);
+
+        $this->priceFacade->persistProductConcretePriceCollection($productConcreteTransfer);
+
+        $priceEntities = SpyPriceProductQuery::create()
+            ->filterByFkProduct($productConcreteEntity->getIdProduct())
+            ->find();
+
+        $this->assertCount(2, $priceEntities);
+
+        $expectedPrices = [
+            self::PRICE_TYPE_1 => self::PRICE_VALUE_1,
+            self::PRICE_TYPE_2 => self::PRICE_VALUE_2,
+        ];
+
+        foreach ($priceEntities as $priceEntity) {
+            $priceTypeName = $priceEntity->getPriceType()->getName();
+            $this->assertSame($expectedPrices[$priceTypeName], $priceEntity->getPrice());
+            $this->assertSame($productConcreteEntity->getIdProduct(), $priceEntity->getFkProduct());
+            $this->assertNull($priceEntity->getFkProductAbstract());
+        }
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     */
+    protected function createProductAbstractEntity()
+    {
+        $productAbstractEntity = SpyProductAbstractQuery::create()->filterBySku(self::SKU_PRODUCT_ABSTRACT)->findOne();
+        if ($productAbstractEntity === null) {
+            $productAbstractEntity = new SpyProductAbstract();
+            $productAbstractEntity->save();
+        }
+
+        return $productAbstractEntity;
     }
 
 }

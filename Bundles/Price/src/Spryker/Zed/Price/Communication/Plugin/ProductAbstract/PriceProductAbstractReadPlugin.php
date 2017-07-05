@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Price\Communication\Plugin\ProductAbstract;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
@@ -27,11 +28,14 @@ class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAb
     {
         $productAbstractTransfer->requireIdProductAbstract();
 
-        $priceProductTransfer = $this->getFacade()
-            ->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
-
+        $priceProductTransfer = $this->getFacade()->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
         if ($priceProductTransfer) {
             $productAbstractTransfer->setPrice($priceProductTransfer);
+        }
+
+        $priceProductTransfers = $this->getFacade()->findProductAbstractPrices($productAbstractTransfer->getIdProductAbstract());
+        if ($priceProductTransfers) {
+            $productAbstractTransfer->setPrices(new ArrayObject($priceProductTransfers));
         }
 
         return $productAbstractTransfer;

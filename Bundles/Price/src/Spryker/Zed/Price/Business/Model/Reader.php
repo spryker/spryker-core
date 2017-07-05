@@ -87,6 +87,47 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findPricesBySku($sku)
+    {
+        $abstractPriceProductTransfers = $this->findProductAbstractPricesBySku($sku);
+        $concretePriceProductTransfers = $this->findProductConcretePricesBySku($sku);
+
+        $priceProductTransfers = array_merge($abstractPriceProductTransfers, $concretePriceProductTransfers);
+
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract)
+    {
+        return $this->findProductAbstractPricesById($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
+    {
+        $abstractPriceProductTransfers = $this->findProductAbstractPricesById($idProductAbstract);
+        $concretePriceProductTransfers = $this->findProductConcretePricesById($idProductConcrete);
+
+        $priceProductTransfers = array_merge($abstractPriceProductTransfers, $concretePriceProductTransfers);
+
+        return $priceProductTransfers;
+    }
+
+    /**
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName
      *
@@ -207,9 +248,11 @@ class Reader implements ReaderInterface
             return true;
         }
 
-        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-        if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
-            return true;
+        if ($this->hasProductConcrete($sku)) {
+            $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+            if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
+                return true;
+            }
         }
 
         return false;
@@ -280,9 +323,11 @@ class Reader implements ReaderInterface
             return $this->getPriceEntityForProductAbstract($sku, $priceType);
         }
 
-        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-        if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
-            return $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
+        if ($this->hasProductConcrete($sku)) {
+            $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+            if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
+                return $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
+            }
         }
 
         throw new MissingPriceException(sprintf(
@@ -379,6 +424,124 @@ class Reader implements ReaderInterface
     public function getProductConcreteIdBySku($sku)
     {
         return $this->productFacade->getProductConcreteIdBySku($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function findProductAbstractPricesBySku($sku)
+    {
+        $abstractSku = $this->getAbstractSku($sku);
+        $productAbstractPriceEntities = $this->queryContainer
+            ->queryPricesForProductAbstractBySku($abstractSku)
+            ->find();
+
+        return $this->mapPriceProductTransferCollectionForProductAbstract($productAbstractPriceEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProduct[] $priceProductEntities
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function mapPriceProductTransferCollectionForProductAbstract($priceProductEntities)
+    {
+        $priceTransfers = [];
+        foreach ($priceProductEntities as $priceProductEntity) {
+            $priceTypeName = $priceProductEntity->getPriceType()->getName();
+
+            $priceProductTransfer = new PriceProductTransfer();
+            $priceProductTransfer
+                ->fromArray($priceProductEntity->toArray(), true)
+                ->setIdProductAbstract($priceProductEntity->getFkProductAbstract())
+                ->setPriceTypeName($priceTypeName);
+
+            $priceTransfers[$priceTypeName] = $priceProductTransfer;
+        }
+
+        return $priceTransfers;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return string
+     */
+    protected function getAbstractSku($sku)
+    {
+        $abstractSku = $sku;
+        if ($this->hasProductConcrete($sku)) {
+            $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+        }
+
+        return $abstractSku;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function findProductConcretePricesBySku($sku)
+    {
+        $productConcretePriceEntities = $this->queryContainer
+            ->queryPricesForProductConcreteBySku($sku)
+            ->find();
+
+        return $this->mapPriceProductTransferCollectionForProductConcrete($productConcretePriceEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProduct[] $priceProductEntities
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function mapPriceProductTransferCollectionForProductConcrete($priceProductEntities)
+    {
+        $priceTransfers = [];
+        foreach ($priceProductEntities as $priceProductEntity) {
+            $priceTypeName = $priceProductEntity->getPriceType()->getName();
+
+            $priceProductTransfer = new PriceProductTransfer();
+            $priceProductTransfer
+                ->fromArray($priceProductEntity->toArray(), true)
+                ->setIdProduct($priceProductEntity->getFkProduct())
+                ->setPriceTypeName($priceTypeName);
+
+            $priceTransfers[$priceTypeName] = $priceProductTransfer;
+        }
+
+        return $priceTransfers;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function findProductAbstractPricesById($idProductAbstract)
+    {
+        $productAbstractPriceEntities = $this->queryContainer
+            ->queryPricesForProductAbstractById($idProductAbstract)
+            ->find();
+
+        return $this->mapPriceProductTransferCollectionForProductAbstract($productAbstractPriceEntities);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function findProductConcretePricesById($idProductConcrete)
+    {
+        $productAbstractPriceEntities = $this->queryContainer
+            ->queryPricesForProductConcreteById($idProductConcrete)
+            ->find();
+
+        return $this->mapPriceProductTransferCollectionForProductConcrete($productAbstractPriceEntities);
     }
 
 }

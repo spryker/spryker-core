@@ -14,6 +14,9 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
 {
 
+    const HEADER_ACCEPT_RANGES = 'Accept-Ranges';
+    const HEADER_CONTENT_RANGE = 'Content-Range';
+
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
@@ -34,12 +37,12 @@ class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
 
         if ($pagination->getPage() && $pagination->getItemsPerPage() && $pagination->getTotal()) {
             $headers = $apiResponseTransfer->getHeaders();
-            $headers['Accept-Ranges'] = $apiRequestTransfer->getResource();
+            $headers[static::HEADER_ACCEPT_RANGES] = $apiRequestTransfer->getResource();
 
             $from = $pagination->getPage() * $pagination->getItemsPerPage() - 1;
             $to = $from + $pagination->getItemsPerPage();
             $total = $pagination->getTotal();
-            $headers['Content-Range'] = $apiRequestTransfer->getResource() . ' ' . $from . '-' . $to . '/' . $total;
+            $headers[static::HEADER_CONTENT_RANGE] = $apiRequestTransfer->getResource() . ' ' . $from . '-' . $to . '/' . $total;
             $apiResponseTransfer->setHeaders($headers);
         }
 

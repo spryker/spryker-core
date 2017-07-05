@@ -26,16 +26,16 @@ class OperatorProvider
     public function createComparators()
     {
         return [
+            $this->createEqual(),
+            $this->createNotEqual(),
             $this->createContains(),
             $this->createDoesNotContain(),
-            $this->createEqual(),
             $this->createIsIn(),
             $this->createIsNotIn(),
             $this->createLess(),
             $this->createLessEqual(),
             $this->createGreater(),
             $this->createGreaterEqual(),
-            $this->createNotEqual(),
         ];
     }
 

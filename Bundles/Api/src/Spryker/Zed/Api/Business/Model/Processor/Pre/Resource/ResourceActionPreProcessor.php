@@ -26,28 +26,25 @@ class ResourceActionPreProcessor implements PreProcessorInterface
      */
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
-        $path = $apiRequestTransfer->getPath();
-        $identifier = $path;
-        if (strpos($identifier, '/') !== false) {
-            $identifier = substr($identifier, 0, strpos($identifier, '/'));
-        }
-
+        $resourceId = $apiRequestTransfer->getResourceId();
         $requestType = $apiRequestTransfer->getRequestType();
 
         $resourceAction = null;
-        if ($identifier === '' && $requestType === 'GET') {
+        if ($requestType === ApiConfig::HTTP_METHOD_OPTIONS) {
+            $resourceAction = ApiConfig::ACTION_OPTIONS;
+        } elseif (!$resourceId && $requestType === 'GET') {
             $resourceAction = ApiConfig::ACTION_INDEX;
-        } if ($identifier !== '' && $requestType === 'GET') {
+        } elseif ($resourceId && $requestType === 'GET') {
             $resourceAction = ApiConfig::ACTION_READ;
-        } elseif ($identifier === '' && $requestType === 'POST') {
+        } elseif (!$resourceId && $requestType === 'POST') {
             $resourceAction = ApiConfig::ACTION_CREATE;
-        } elseif ($identifier !== '' && $requestType === 'PATCH') {
+        } elseif ($resourceId && $requestType === 'PATCH') {
             $resourceAction = ApiConfig::ACTION_UPDATE;
-        } elseif ($identifier !== '' && $requestType === 'DELETE') {
+        } elseif ($resourceId && $requestType === 'DELETE') {
             $resourceAction = ApiConfig::ACTION_DELETE;
         }
         if ($resourceAction === null) {
-            throw new BadRequestHttpException(sprintf('Request type %s does not fit to provided REST URI.', $requestType), null, 400);
+            throw new BadRequestHttpException(sprintf('Request type %s does not fit to provided REST URI.', $requestType), null, ApiConfig::HTTP_CODE_NOT_ALLOWED);
         }
 
         $apiRequestTransfer->setResourceAction($resourceAction);
