@@ -31,9 +31,9 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "Event bundle is required to listen for changes affecting product relations.",
-    "spryker/silex": "Is required by product relation Twig component.",
-    "spryker/twig": "Is required because of the product relation component."
+    "spryker/event": "Required to listen for changes affecting product relations.",
+    "spryker/silex": "Required by product relation Twig component.",
+    "spryker/twig": "Required because of the product relation component."
   },
   "autoload": {
     "psr-0": {
