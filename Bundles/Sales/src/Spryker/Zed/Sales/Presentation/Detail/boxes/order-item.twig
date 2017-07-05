@@ -20,9 +20,19 @@
   {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length > 0 %}
     <div class="variant-details">
       <h3>{{ 'Variant Details' | trans }}</h3>
-      {% for attributeName, attributeValue in orderItem.metadata.superAttributes %}
+      {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0,2) %}
           <div>{{ attributeName }}: {{ attributeValue }}</div>
       {% endfor %}
+
+      {% if orderItem.metadata.superAttributes | length > 2 %}
+        <div id="attribute_details_{{ orderItem.IdSalesOrderItem }}" class="hidden">
+          {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(2) %}
+            <div>{{ attributeName }}: {{ attributeValue }}</div>
+          {% endfor %}
+        </div>
+
+        <a id="attribute-details-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
+      {% endif %}
     </div>
   {% endif %}
 </td>
