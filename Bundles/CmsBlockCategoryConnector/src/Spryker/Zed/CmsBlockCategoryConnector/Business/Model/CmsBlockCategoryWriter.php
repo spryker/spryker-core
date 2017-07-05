@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
+use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Exception\CmsBlockCategoryPositionNotFound;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface;
@@ -88,41 +89,92 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
             ->queryCategoryById($categoryTransfer->getIdCategory())
             ->findOne();
 
+        $touchOnly = false;
+
         if ($spyCategory->getFkCategoryTemplate() !== $categoryTransfer->getFkCategoryTemplate()) {
-            return;
+            $touchOnly = true;
         }
 
-        $this->deleteCategoryCmsBlockRelations($categoryTransfer);
-        $this->createCategoryCmsBlockRelations($categoryTransfer);
+        $this->deleteCategoryCmsBlockRelations($categoryTransfer, $touchOnly);
+        $this->createCategoryCmsBlockRelations($categoryTransfer, $touchOnly);
     }
 
     /**
      * @param CategoryTransfer $categoryTransfer
+     * @param bool $touchOnly
      *
      * @return void
      */
-    protected function deleteCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer)
+    protected function deleteCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer, $touchOnly = false)
     {
         $categoryTransfer->requireIdCategory();
 
         $query = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCategory($categoryTransfer->getIdCategory(), $categoryTransfer->getFkCategoryTemplate());
 
-        $this->deleteRelations($query);
+        if (!$touchOnly) {
+            $this->deleteRelations($query);
+        }
+
+        $this->touchDeleteCategoryCmsBlockRelation($query);
+    }
+
+    /**
+     * @param SpyCmsBlockCategoryConnectorQuery $query
+     */
+    protected function touchDeleteCategoryCmsBlockRelation(SpyCmsBlockCategoryConnectorQuery $query)
+    {
+        foreach ($query->find() as $relation) {
+            $this->touchFacade->touchDeleted(
+                CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
+                $relation->getFkCategory()
+            );
+
+            $this->touchFacade->touchDeleted(
+                CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION,
+                $relation->getFkCmsBlockCategoryPosition()
+            );
+        }
     }
 
     /**
      * @param CategoryTransfer $categoryTransfer
+     * @param bool $touchOnly
      *
      * @return void
      */
-    protected function createCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer)
+    protected function createCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer, $touchOnly = false)
     {
         $categoryTransfer->requireIdCategory();
 
         foreach ($categoryTransfer->getIdCmsBlocks() as $idCmsBlockCategoryPosition => $idCmsBlocks) {
-            $this->createRelations($idCmsBlocks, [$categoryTransfer->getIdCategory()], $idCmsBlockCategoryPosition);
+            if (!$touchOnly) {
+                $this->createRelations($idCmsBlocks, [$categoryTransfer->getIdCategory()], $idCmsBlockCategoryPosition);
+            }
+
+            $this->touchActiveCategoryCmsBlockRelation([$categoryTransfer->getIdCategory()], $idCmsBlockCategoryPosition);
         }
+    }
+
+    /**
+     * @param array $idCategories
+     * @param int $idCmsBlockCategoryPosition
+     *
+     * @return void
+     */
+    protected function touchActiveCategoryCmsBlockRelation(array $idCategories, $idCmsBlockCategoryPosition)
+    {
+        foreach ($idCategories as $idCategory) {
+            $this->touchFacade->touchActive(
+                CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
+                $idCategory
+            );
+        }
+
+        $this->touchFacade->touchActive(
+            CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION,
+            $idCmsBlockCategoryPosition
+        );
     }
 
     /**
@@ -149,6 +201,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
             ->queryCmsBlockCategoryConnectorByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock());
 
         $this->deleteRelations($query);
+        $this->touchDeleteCategoryCmsBlockRelation($query);
     }
 
     /**
@@ -160,11 +213,6 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     {
         foreach ($query->find() as $relation) {
             $relation->delete();
-
-            $this->touchFacade->touchDeleted(
-                CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
-                $relation->getFkCategory()
-            );
         }
     }
 
@@ -188,11 +236,6 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
                     $spyCategory->getFkCategoryTemplate()
                 );
             }
-
-            $this->touchFacade->touchActive(
-                CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
-                $idCategory
-            );
         }
     }
 
@@ -239,6 +282,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 
         foreach ($cmsBlockTransfer->getIdCategories() as $idCmsBlockCategoryPosition => $idCategories) {
             $this->createRelations([$cmsBlockTransfer->getIdCmsBlock()], $idCategories, $idCmsBlockCategoryPosition);
+            $this->touchActiveCategoryCmsBlockRelation($idCategories, $idCmsBlockCategoryPosition);
         }
     }
 

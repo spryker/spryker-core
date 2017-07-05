@@ -1,0 +1,38 @@
+<?php
+
+
+namespace Spryker\Shared\CmsBlockCategoryConnector;
+
+
+use Spryker\Shared\CmsBlock\CmsBlockConfig;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
+{
+    /**
+     * Specification:
+     * - Used to define a storage key
+     * - Used in Yves to provide an option name for client
+     */
+    const OPTION_NAME = 'category';
+
+    /**
+     * Specification:
+     * - Used to define a storage key
+     * - Used in Yves to provide an option name for client
+     */
+    const OPTION_POSITION_NAME = 'category_position';
+
+    /**
+     * Specification:
+     * - Full name for storage key for CMS Block to Category relation
+     */
+    const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
+
+    /**
+     * Specification:
+     * - Fill name for storage key for CMS Block to Category position relation
+     */
+    const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_POSITION_NAME;
+
+}

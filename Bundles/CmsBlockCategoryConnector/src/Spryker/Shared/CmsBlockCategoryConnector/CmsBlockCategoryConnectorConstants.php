@@ -11,24 +11,6 @@ use Spryker\Shared\CmsBlock\CmsBlockConfig;
 
 interface CmsBlockCategoryConnectorConstants
 {
-
-    /**
-     * Specification:
-     * - Used to define a storage key
-     * - Used in Yves to provide an option name for client
-     *
-     * @api
-     */
-    const OPTION_NAME = 'category';
-
-    /**
-     * Specification:
-     * - Full name for storage key
-     *
-     * @api
-     */
-    const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
-
     /**
      * Specification:
      * - Available positions of blocks on a category page

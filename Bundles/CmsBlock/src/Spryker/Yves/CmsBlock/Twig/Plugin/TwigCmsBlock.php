@@ -22,6 +22,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
 {
 
     const OPTION_NAME = 'name';
+    const POSITION_POSTFIX = '_position';
 
     /**
      * @var string
@@ -83,10 +84,33 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     protected function getBlockDataByOptions(array &$blockOptions)
     {
         $blockNameKey = $this->extractBlockNameKey($blockOptions);
+        $blockOptions = $this->preparePositionOptions($blockOptions);
         $availableBlockNames = $this->getClient()->findBlockNamesByOptions($blockOptions, $this->localeName);
         $availableBlockNames = $this->filterAvailableBlockNames($blockNameKey, $availableBlockNames);
 
         return $this->getClient()->findBlocksByNames($availableBlockNames, $this->localeName);
+    }
+
+    /**
+     * @param array $blockOptions
+     *
+     * @return array
+     */
+    protected function preparePositionOptions($blockOptions)
+    {
+        foreach ($blockOptions as $optionKey => $optionValue) {
+            if (strpos($optionKey, static::POSITION_POSTFIX) !== false) {
+                $resourceName = rtrim($optionKey, static::POSITION_POSTFIX);
+
+                if (isset($blockOptions[$resourceName])) {
+                    $blockOptions[$optionKey] = $optionValue . $blockOptions[$resourceName];
+                } else {
+                    unset($blockOptions[$optionKey]);
+                }
+            }
+        }
+
+        return $blockOptions;
     }
 
     /**

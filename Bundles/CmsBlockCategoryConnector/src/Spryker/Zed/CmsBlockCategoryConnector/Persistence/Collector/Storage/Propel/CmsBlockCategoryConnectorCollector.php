@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
@@ -31,6 +32,11 @@ class CmsBlockCategoryConnectorCollector extends AbstractPropelCollectorQuery
         $this->touchQuery->addJoin(
             SpyCmsBlockCategoryConnectorTableMap::COL_FK_CMS_BLOCK,
             SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
+            Criteria::INNER_JOIN
+        );
+        $this->touchQuery->addJoin(
+            [SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY_TEMPLATE],
+            [SpyCategoryTableMap::COL_ID_CATEGORY, SpyCategoryTableMap::COL_FK_CATEGORY_TEMPLATE],
             Criteria::INNER_JOIN
         );
 

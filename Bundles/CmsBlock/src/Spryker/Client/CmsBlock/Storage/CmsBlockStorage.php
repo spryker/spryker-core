@@ -81,16 +81,16 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      */
     public function getBlockNamesByOptions(array $options, $localeName)
     {
-        $availableBlockNames = [];
+        $availableBlockNames = null;
 
         foreach ($options as $optionKey => $resources) {
 
             $resources = (array)$resources;
             $blockNames = $this->getBlockNamesForOption($optionKey, $resources, $localeName);
 
-            $availableBlockNames = $availableBlockNames ?
-                array_intersect($availableBlockNames, $blockNames) :
-                $blockNames;
+            $availableBlockNames = $availableBlockNames === null ?
+                $blockNames :
+                array_intersect($availableBlockNames, $blockNames);
         }
 
         return $availableBlockNames;

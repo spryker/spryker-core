@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Collector;
 
+use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
@@ -30,7 +31,7 @@ class CmsBlockCategoryCollector extends AbstractStoragePropelCollector
      */
     protected function collectResourceType()
     {
-        return CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR;
+        return CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR;
     }
 
     /**

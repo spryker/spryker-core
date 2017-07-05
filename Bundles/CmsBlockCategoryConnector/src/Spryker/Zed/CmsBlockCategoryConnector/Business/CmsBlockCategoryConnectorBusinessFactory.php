@@ -8,11 +8,13 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollector;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryPositionCollector;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryReader;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriter;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
+use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryPositionCollectorQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -57,6 +59,21 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
         $cmsBlockCategoryCollector->setQueryBuilder($this->createCmsBlockCategoryStorageQueryContainer());
 
         return $cmsBlockCategoryCollector;
+    }
+
+    /**
+     * @return CmsBlockCategoryPositionCollector
+     */
+    public function createStorageCmsBlockCategoryPositionCollector()
+    {
+        $cmsBlockCategoryPositionCollector = new CmsBlockCategoryPositionCollector(
+            $this->getUtilDataReaderService()
+        );
+
+        $cmsBlockCategoryPositionCollector->setTouchQueryContainer($this->getTouchQueryContainer());
+        $cmsBlockCategoryPositionCollector->setQueryBuilder($this->createCmsBlockCategoryPositionStorageQueryContainer());
+
+        return $cmsBlockCategoryPositionCollector;
     }
 
     /**
@@ -105,6 +122,14 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     protected function createCmsBlockCategoryStorageQueryContainer()
     {
         return new CmsBlockCategoryConnectorCollector();
+    }
+
+    /**
+     * @return CmsBlockCategoryPositionCollectorQuery
+     */
+    protected function createCmsBlockCategoryPositionStorageQueryContainer()
+    {
+        return new CmsBlockCategoryPositionCollectorQuery();
     }
 
 }
