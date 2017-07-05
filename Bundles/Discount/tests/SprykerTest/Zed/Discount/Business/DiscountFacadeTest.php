@@ -213,6 +213,7 @@ class DiscountFacadeTest extends Test
     {
         $discountRulePluginMock = $this->createDiscountRuleWithValueOptionsPluginMock();
         $discountRulePluginMock->method('getQueryStringValueOptions')->willReturn(['a' => 'b']);
+        $discountRulePluginMock->method('getFieldName')->willReturn('foo');
 
         $discountFacade = $this->createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(
             DiscountDependencyProvider::COLLECTOR_PLUGINS,
@@ -221,7 +222,7 @@ class DiscountFacadeTest extends Test
 
         $fields = $discountFacade->getQueryStringValueOptions(MetaProviderFactory::TYPE_COLLECTOR);
 
-        $this->assertNotEmpty($fields);
+        $this->assertNotEmpty($fields['foo']);
     }
 
     /**
@@ -231,6 +232,7 @@ class DiscountFacadeTest extends Test
     {
         $discountRulePluginMock = $this->createDiscountRuleWithValueOptionsPluginMock();
         $discountRulePluginMock->method('getQueryStringValueOptions')->willReturn(['a' => 'b']);
+        $discountRulePluginMock->method('getFieldName')->willReturn('foo');
 
         $discountFacade = $this->createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(
             DiscountDependencyProvider::DECISION_RULE_PLUGINS,
@@ -239,7 +241,7 @@ class DiscountFacadeTest extends Test
 
         $fields = $discountFacade->getQueryStringValueOptions(MetaProviderFactory::TYPE_DECISION_RULE);
 
-        $this->assertNotEmpty($fields);
+        $this->assertNotEmpty($fields['foo']);
     }
 
     /**
@@ -772,7 +774,7 @@ class DiscountFacadeTest extends Test
     protected function createDiscountRuleWithValueOptionsPluginMock()
     {
         $discountRulePluginMock = $this->getMockBuilder(DiscountRuleWithValueOptionsPluginInterface::class)
-            ->setMethods(['getQueryStringValueOptions'])
+            ->setMethods(['getQueryStringValueOptions', 'getFieldName'])
             ->getMock();
 
         return $discountRulePluginMock;
