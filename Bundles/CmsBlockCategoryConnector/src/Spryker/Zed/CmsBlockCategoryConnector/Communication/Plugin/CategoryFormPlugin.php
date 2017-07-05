@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin;
-
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface;
@@ -18,7 +21,7 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
 {
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void
      */
@@ -40,7 +43,7 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */

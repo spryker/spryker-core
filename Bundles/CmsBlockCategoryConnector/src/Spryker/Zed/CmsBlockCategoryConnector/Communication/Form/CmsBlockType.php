@@ -11,7 +11,6 @@ use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\Gui\Communication\Form\Type\LabelType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,7 +28,7 @@ class CmsBlockType extends AbstractType
      */
     const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
-        CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK
+        CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];
 
     /**
@@ -92,7 +91,7 @@ class CmsBlockType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $wrongCategoryList
      * @param array $categoryList
      *
@@ -114,7 +113,7 @@ class CmsBlockType extends AbstractType
         }
 
         $builder->add(static::FIELD_CATEGORIES . '_label', new LabelType(), [
-            'text' => $this->formatWrongCategoryTemplateWarningMessage($warningCategoryList)
+            'text' => $this->formatWrongCategoryTemplateWarningMessage($warningCategoryList),
         ]);
     }
 
@@ -135,7 +134,7 @@ class CmsBlockType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $categoryList
      * @param int $idCmsBlockCategoryPosition
      * @param string $positionName
@@ -152,4 +151,5 @@ class CmsBlockType extends AbstractType
             'required' => false,
         ]);
     }
+
 }

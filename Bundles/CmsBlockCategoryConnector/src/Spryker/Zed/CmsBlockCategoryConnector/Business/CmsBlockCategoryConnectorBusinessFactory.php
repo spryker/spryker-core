@@ -12,7 +12,6 @@ use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryPos
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryReader;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriter;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryPositionCollectorQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -62,7 +61,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockCategoryPositionCollector
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryPositionCollector
      */
     public function createStorageCmsBlockCategoryPositionCollector()
     {
@@ -109,7 +108,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockCategoryConnectorToCategoryQueryContainerInterface
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      */
     protected function getCategoryQueryContainer()
     {
@@ -125,7 +124,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockCategoryPositionCollectorQuery
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryPositionCollectorQuery
      */
     protected function createCmsBlockCategoryPositionStorageQueryContainer()
     {

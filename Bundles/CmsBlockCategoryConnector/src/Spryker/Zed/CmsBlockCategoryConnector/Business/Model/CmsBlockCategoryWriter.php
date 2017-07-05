@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
-use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
-use Spryker\Zed\CmsBlockCategoryConnector\Business\Exception\CmsBlockCategoryPositionNotFound;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
@@ -35,14 +33,14 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     protected $touchFacade;
 
     /**
-     * @var
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
     /**
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface $touchFacade
-     * @param CmsBlockCategoryConnectorToCategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface $categoryQueryContainer
      */
     public function __construct(
         CmsBlockCategoryConnectorQueryContainerInterface $queryContainer,
@@ -67,7 +65,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
@@ -79,7 +77,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
@@ -100,7 +98,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param bool $touchOnly
      *
      * @return void
@@ -120,7 +118,9 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param SpyCmsBlockCategoryConnectorQuery $query
+     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery $query
+     *
+     * @return void
      */
     protected function touchDeleteCategoryCmsBlockRelation(SpyCmsBlockCategoryConnectorQuery $query)
     {
@@ -138,7 +138,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param bool $touchOnly
      *
      * @return void
@@ -205,7 +205,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param SpyCmsBlockCategoryConnectorQuery $query
+     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery $query
      *
      * @return void
      */
@@ -269,7 +269,6 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
             ->queryCategoryById($idCategory)
             ->findOne();
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer

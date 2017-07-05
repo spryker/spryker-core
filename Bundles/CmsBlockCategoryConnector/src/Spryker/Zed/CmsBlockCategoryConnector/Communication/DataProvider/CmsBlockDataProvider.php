@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
-use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockType;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
@@ -114,7 +113,9 @@ class CmsBlockDataProvider
     }
 
     /**
-     * @param SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector
+     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector
+     *
+     * @return void
      */
     protected function assertCmsBlockTemplate(SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector)
     {
@@ -145,7 +146,7 @@ class CmsBlockDataProvider
             $categoryName = $spyCategory->getLocalisedAttributes($idLocale)->getFirst()->getName();
             $categoryTemplate = $spyCategory->getCategoryTemplate()->getName();
 
-            $categoryList[$spyCategory->getIdCategory()] = $categoryName . ' (' . $categoryTemplate .')';
+            $categoryList[$spyCategory->getIdCategory()] = $categoryName . ' (' . $categoryTemplate . ')';
         }
 
         return $categoryList;

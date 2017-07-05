@@ -15,7 +15,6 @@ use Spryker\Zed\Category\Communication\Form\DeleteType;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -202,7 +201,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CategoryFormPluginInterface[]
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
      */
     protected function getCategoryFormPlugins()
     {

@@ -21,7 +21,7 @@ interface CmsBlockCategoryWriterInterface
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */

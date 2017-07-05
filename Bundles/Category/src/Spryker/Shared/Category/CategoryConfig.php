@@ -1,12 +1,17 @@
 <?php
 
-namespace Spryker\Shared\Category;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Shared\Category;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class CategoryConfig extends AbstractBundleConfig
 {
+
     /**
      * Used as `item_type` for touch mechanism.
      */

@@ -1,9 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Category\Communication\Console;
 
-
-use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
@@ -15,14 +18,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CategoryTemplateImporter extends Console
 {
+
     const COMMAND_NAME = 'category-template:import';
 
+    /**
+     * @var \Symfony\Component\Console\Output\OutputInterface
+     */
     protected $output;
 
-
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -30,7 +36,7 @@ class CategoryTemplateImporter extends Console
     {
         $this->output = $output;
 
-        if ($this->isCategoryTemplateIntalled()) {
+        if ($this->isCategoryTemplateInstalled()) {
             $output->writeln('Is already installed.');
             return;
         }
@@ -47,9 +53,9 @@ class CategoryTemplateImporter extends Console
                 $spyCategoryTemplate->setTemplatePath($templatePath);
                 $spyCategoryTemplate->save();
 
-                $output->writeln('Template ['. $templateName .'] is created.');
+                $output->writeln('Template [' . $templateName . '] is created.');
             } else {
-                $output->writeln('Template ['. $templateName .'] exists.');
+                $output->writeln('Template [' . $templateName . '] exists.');
             }
 
         }
@@ -103,7 +109,7 @@ class CategoryTemplateImporter extends Console
     /**
      * @return bool
      */
-    protected function isCategoryTemplateIntalled()
+    protected function isCategoryTemplateInstalled()
     {
         $count = SpyCategoryTemplateQuery::create()
             ->filterByName_In($this->getTemplateList())
@@ -111,4 +117,5 @@ class CategoryTemplateImporter extends Console
 
         return $count >= count($this->getTemplateList());
     }
+
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use ArrayObject;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -35,7 +34,7 @@ class CategoryType extends AbstractType
     const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
-     * @var CategoryFormPluginInterface[]
+     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
      */
     protected $formPlugins;
 
@@ -83,12 +82,13 @@ class CategoryType extends AbstractType
 
     /**
      * @param array $formPlugins
+     *
+     * @return void
      */
     public function setFormPlugins(array $formPlugins)
     {
         $this->formPlugins = $formPlugins;
     }
-
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -220,7 +220,7 @@ class CategoryType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return $this
@@ -251,7 +251,7 @@ class CategoryType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */

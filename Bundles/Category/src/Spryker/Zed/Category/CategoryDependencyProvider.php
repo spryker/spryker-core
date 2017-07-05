@@ -11,7 +11,6 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToEventBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlBridge;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -116,9 +115,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCategoryFormPlugins(Container $container)
     {
@@ -138,7 +137,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return CategoryFormPluginInterface[]
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
      */
     protected function getCategoryFormPlugins()
     {

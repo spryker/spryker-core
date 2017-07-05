@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,7 +27,7 @@ class CategoryType extends AbstractType
      */
     const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
-        CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK
+        CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];
 
     /**
@@ -76,7 +75,7 @@ class CategoryType extends AbstractType
     {
         foreach ($positions as $idCmsBlockCategoryPosition => $positionName) {
             $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition, new Select2ComboBoxType(), [
-                'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idCmsBlockCategoryPosition. ']',
+                'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idCmsBlockCategoryPosition . ']',
                 'label' => 'CMS Blocks: ' . $positionName,
                 'choices' => $choices,
                 'multiple' => true,

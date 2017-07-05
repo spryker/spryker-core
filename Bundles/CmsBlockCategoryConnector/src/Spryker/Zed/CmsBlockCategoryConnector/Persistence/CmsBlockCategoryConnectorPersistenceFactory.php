@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence;
 
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
-use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -28,7 +27,7 @@ class CmsBlockCategoryConnectorPersistenceFactory extends AbstractPersistenceFac
     }
 
     /**
-     * @return SpyCmsBlockCategoryPositionQuery
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
      */
     public function createCmsBlockCategoryPosition()
     {

@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
-
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CategoryType;
@@ -14,17 +17,17 @@ class CategoryDataProvider
 {
 
     /**
-     * @var CmsBlockCategoryConnectorQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface
      */
     protected $cmsBlockQueryContainer;
 
     /**
-     * @var CmsBlockCategoryConnectorToCategoryQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
@@ -34,8 +37,9 @@ class CategoryDataProvider
     protected $isTemplateSupported = true;
 
     /**
-     * @param CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
-     * @param CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface $categoryQueryContainer
      */
     public function __construct(
         CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer,
@@ -47,20 +51,23 @@ class CategoryDataProvider
         $this->categoryQueryContainer = $categoryQueryContainer;
     }
 
+    /**
+     * @return array
+     */
     public function getOptions()
     {
         return [
             'data_class' => CategoryTransfer::class,
             CategoryType::OPTION_CMS_BLOCK_LIST => $this->getCmsBlockList(),
             CategoryType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList(),
-            CategoryType::OPTION_IS_TEMPLATE_SUPPORTED => $this->isTemplateSupported()
+            CategoryType::OPTION_IS_TEMPLATE_SUPPORTED => $this->isTemplateSupported(),
         ];
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function getData(CategoryTransfer $categoryTransfer)
     {
@@ -124,7 +131,7 @@ class CategoryDataProvider
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */

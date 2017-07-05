@@ -12,9 +12,7 @@ use Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider\CategoryDat
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider\CmsBlockDataProvider;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CategoryType;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockType;
-use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
-use Spryker\Zed\CmsBlockCollector\CmsBlockCollectorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -42,7 +40,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return CategoryDataProvider
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider\CategoryDataProvider
      */
     public function createCategoryDataProvider()
     {
@@ -62,7 +60,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return CategoryType
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CategoryType
      */
     public function createCategoryType()
     {
@@ -99,7 +97,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface
      */
     protected function getCmsBlockQueryContainer()
     {

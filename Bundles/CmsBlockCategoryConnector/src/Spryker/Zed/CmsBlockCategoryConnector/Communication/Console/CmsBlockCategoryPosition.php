@@ -1,12 +1,15 @@
 <?php
 
-namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Console;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Console;
 
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery;
-use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,11 +21,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsBlockCategoryPosition extends Console
 {
+
     const COMMAND_NAME = 'cms-block-category-connector:import-position';
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
@@ -65,7 +69,9 @@ class CmsBlockCategoryPosition extends Console
     }
 
     /**
-     * @param SpyCmsBlockCategoryPosition $spyCmsBlockCategoryPosition
+     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition $spyCmsBlockCategoryPosition
+     *
+     * @return void
      */
     protected function assignAllBlocksToPosition(SpyCmsBlockCategoryPosition $spyCmsBlockCategoryPosition)
     {
@@ -100,4 +106,5 @@ class CmsBlockCategoryPosition extends Console
 
         return $count >= count($this->getPositionList());
     }
+
 }

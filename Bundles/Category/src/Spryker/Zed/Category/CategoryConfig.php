@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\Category;
 
-use Spryker\Shared\Category\CategoryConstants;
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Category\CategoryConfig as SharedCategoryConfig;
+use Spryker\Shared\Category\CategoryConstants;
 
 class CategoryConfig extends SharedCategoryConfig
 {
@@ -38,4 +37,5 @@ class CategoryConfig extends SharedCategoryConfig
 
         return $count >= count($this->getPositionList());
     }
+
 }

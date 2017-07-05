@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Client\Category\Storage;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Client\Category\Storage;
 
 use Spryker\Client\Category\Dependency\Client\CategoryToStorageClientInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
@@ -10,18 +14,18 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
 {
 
     /**
-     * @var CategoryToStorageClientInterface
+     * @var \Spryker\Client\Category\Dependency\Client\CategoryToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @var KeyBuilderInterface
+     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
 
     /**
-     * @param CategoryToStorageClientInterface $storageClient
-     * @param KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Client\Category\Dependency\Client\CategoryToStorageClientInterface $storageClient
+     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
     public function __construct(
         CategoryToStorageClientInterface $storageClient,
@@ -46,7 +50,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param string $data
+     * @param string $categoryNodeData
      *
      * @return string|null
      */

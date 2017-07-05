@@ -7,10 +7,9 @@
 
 namespace Spryker\Shared\CmsBlockCategoryConnector;
 
-use Spryker\Shared\CmsBlock\CmsBlockConfig;
-
 interface CmsBlockCategoryConnectorConstants
 {
+
     /**
      * Specification:
      * - Available positions of blocks on a category page

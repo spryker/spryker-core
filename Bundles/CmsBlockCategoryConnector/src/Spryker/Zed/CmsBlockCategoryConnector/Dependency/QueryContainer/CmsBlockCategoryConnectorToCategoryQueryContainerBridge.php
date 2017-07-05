@@ -52,4 +52,5 @@ class CmsBlockCategoryConnectorToCategoryQueryContainerBridge implements CmsBloc
     {
         return $this->categoryQueryContainer->queryCategoryTemplateById($idCategoryTemplate);
     }
+
 }

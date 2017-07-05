@@ -1,20 +1,21 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Client\Category;
 
-
-use Spryker\Client\Category\Dependency\Client\CategoryToStorageClientInterface;
 use Spryker\Client\Category\KeyBuilder\CategoryNodeKeyBuilder;
 use Spryker\Client\Category\Storage\CategoryNodeStorage;
-use Spryker\Client\Category\Storage\CategoryNodeStorageInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CategoryFactory extends AbstractFactory
 {
 
     /**
-     * @return CategoryNodeStorageInterface
+     * @return \Spryker\Client\Category\Storage\CategoryNodeStorageInterface
      */
     public function createCategoryNodeStorage()
     {
@@ -25,7 +26,7 @@ class CategoryFactory extends AbstractFactory
     }
 
     /**
-     * @return CategoryToStorageClientInterface
+     * @return \Spryker\Client\Category\Dependency\Client\CategoryToStorageClientInterface
      */
     protected function getStorageClient()
     {
@@ -33,7 +34,7 @@ class CategoryFactory extends AbstractFactory
     }
 
     /**
-     * @return CategoryNodeKeyBuilder
+     * @return \Spryker\Client\Category\KeyBuilder\CategoryNodeKeyBuilder
      */
     protected function getCategoryNodeKeyBuilder()
     {

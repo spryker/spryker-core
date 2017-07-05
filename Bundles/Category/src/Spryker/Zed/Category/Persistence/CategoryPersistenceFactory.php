@@ -79,7 +79,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return SpyCategoryTemplateQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function createCategoryTemplateQuery()
     {
