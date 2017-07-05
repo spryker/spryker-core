@@ -10,13 +10,13 @@ namespace Spryker\Zed\Customer\Business\Sales;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 
-class CustomerOrderHydrator
+class CustomerOrderHydrator implements CustomerOrderHydratorInterface
 {
 
     /**
      * @var \Spryker\Zed\Customer\Business\Customer\CustomerInterface
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer

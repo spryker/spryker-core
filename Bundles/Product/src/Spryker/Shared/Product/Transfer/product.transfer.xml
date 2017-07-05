@@ -42,7 +42,7 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
-    <transfer name="ProductMetadata">
+    <transfer name="ItemMetadata">
         <property name="superAttributes" type="array" />
         <property name="image" type="string" />
         <property name="fkSalesOrderItem" type="int" />
@@ -52,7 +52,7 @@
         <property name="sku" type="string" />
         <property name="id" type="int" />
         <property name="idProductAbstract" type="int" />
-        <property name="metadata" type="ProductMetadata" />
+        <property name="metadata" type="ItemMetadata" />
     </transfer>
 
     <transfer name="Quote">

@@ -705,7 +705,7 @@ interface ProductFacadeInterface
      *
      * @return void
      */
-    public function saveProductMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function saveItemMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
      * Specification:
@@ -717,7 +717,7 @@ interface ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateProductMetadata(OrderTransfer $orderTransfer);
+    public function hydrateItemMetadata(OrderTransfer $orderTransfer);
 
     /**
      * Specification:

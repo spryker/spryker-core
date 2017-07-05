@@ -10,7 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class ProductIdHydrator
+class ProductIdHydrator implements ProductIdHydratorInterface
 {
 
     /**

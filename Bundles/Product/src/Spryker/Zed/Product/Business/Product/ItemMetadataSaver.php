@@ -7,14 +7,23 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
+use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductMetadataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
+use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class ProductMetadataSaver implements ProductMetadataSaverInterface
+class ItemMetadataSaver implements ItemMetadataSaverInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
+     */
+    private $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -22,11 +31,16 @@ class ProductMetadataSaver implements ProductMetadataSaverInterface
     protected $productQueryContainer;
 
     /**
+     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
-    {
+    public function __construct(
+        ProductToUtilEncodingInterface $utilEncodingService,
+        ProductQueryContainerInterface $productQueryContainer
+    ) {
+
         $this->productQueryContainer = $productQueryContainer;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -34,11 +48,13 @@ class ProductMetadataSaver implements ProductMetadataSaverInterface
      *
      * @return void
      */
-    public function saveProductMetadata(QuoteTransfer $quoteTransfer)
+    public function saveItemsMetadata(QuoteTransfer $quoteTransfer)
     {
-        foreach ($quoteTransfer->getItems() as $item) {
-            $this->saveItemMetadata($item);
-        }
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer) {
+            foreach ($quoteTransfer->getItems() as $item) {
+                $this->saveItemMetadata($item);
+            }
+        });
     }
 
     /**
@@ -55,14 +71,14 @@ class ProductMetadataSaver implements ProductMetadataSaverInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMetadataTransfer
+     * @return \Generated\Shared\Transfer\ItemMetadataTransfer
      */
     protected function createMetadataTransfer(ItemTransfer $itemTransfer)
     {
         $image = $this->determineImage($itemTransfer);
         $superAttributes = $this->determineSuperAttributes($itemTransfer);
 
-        $metadataTransfer = new ProductMetadataTransfer();
+        $metadataTransfer = new ItemMetadataTransfer();
         $metadataTransfer->setImage($image);
         $metadataTransfer->setSuperAttributes($superAttributes);
         $metadataTransfer->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
@@ -78,10 +94,6 @@ class ProductMetadataSaver implements ProductMetadataSaverInterface
     protected function determineImage(ItemTransfer $itemTransfer)
     {
         $images = $itemTransfer->getImages();
-        if (!$images) {
-            return null;
-        }
-
         if (count($images) === 0) {
             return null;
         }
@@ -106,25 +118,25 @@ class ProductMetadataSaver implements ProductMetadataSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMetadataTransfer $productMetadataTransfer
+     * @param \Generated\Shared\Transfer\ItemMetadataTransfer $productMetadataTransfer
      *
      * @return void
      */
-    protected function saveMetadataTransfer(ProductMetadataTransfer $productMetadataTransfer)
+    protected function saveMetadataTransfer(ItemMetadataTransfer $productMetadataTransfer)
     {
         $productMetadataEntity = $this->mapMetadataTransfer($productMetadataTransfer);
         $productMetadataEntity->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMetadataTransfer $productMetadataTransfer
+     * @param \Generated\Shared\Transfer\ItemMetadataTransfer $productMetadataTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata
      */
-    protected function mapMetadataTransfer(ProductMetadataTransfer $productMetadataTransfer)
+    protected function mapMetadataTransfer(ItemMetadataTransfer $productMetadataTransfer)
     {
         $entity = new SpySalesOrderItemMetadata();
-        $entity->setSuperAttributes(json_encode($productMetadataTransfer->getSuperAttributes()));
+        $entity->setSuperAttributes($this->utilEncodingService->encodeJson($productMetadataTransfer->getSuperAttributes()));
         $entity->setImage($productMetadataTransfer->getImage());
         $entity->setFkSalesOrderItem($productMetadataTransfer->getFkSalesOrderItem());
 

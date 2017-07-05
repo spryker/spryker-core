@@ -9,7 +9,7 @@ namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ProductMetadataSaverInterface
+interface ItemMetadataSaverInterface
 {
 
     /**
@@ -17,6 +17,6 @@ interface ProductMetadataSaverInterface
      *
      * @return void
      */
-    public function saveProductMetadata(QuoteTransfer $quoteTransfer);
+    public function saveItemsMetadata(QuoteTransfer $quoteTransfer);
 
 }

@@ -317,8 +317,8 @@ interface CustomerFacadeInterface
      * @api
      *
      * Specification
-     *  - finds customer by reference
-     *  - stores customer information on an order
+     *  - Finds customer by reference
+     *  - Hydrates the customer information into an order
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

@@ -15,7 +15,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
  */
-class ProductMetadataHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
+class ItemMetadataHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
 
     /**
@@ -31,7 +31,7 @@ class ProductMetadataHydratorPlugin extends AbstractPlugin implements HydrateOrd
      */
     public function hydrate(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->hydrateProductMetadata($orderTransfer);
+        return $this->getFacade()->hydrateItemMetadata($orderTransfer);
     }
 
 }

@@ -24,13 +24,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
 
     /**
-     * Specification:
-     * - Adds product abstract with its attributes, meta information and concrete variants.
-     * - Throws exception if product concrete with same SKU exists.
-     * - Throws exception if abstract product with same SKU exists.
-     * - Trigger before and after CREATE plugins.
-     * - Abstract and concrete products are created but not activated or touched.
-     * - Returns the ID of the newly created abstract product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -50,15 +44,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Saves product abstract with its concrete variants.
-     * - Saves product abstract attributes.
-     * - Saves product abstract meta.
-     * - Triggers before and after UPDATE plugins.
-     * - Throws exception if product concrete with same SKU exists.
-     * - Throws exception if abstract product with same SKU exists.
-     * - Abstract and concrete products are updated but not activated or touched.
-     * - Returns the ID of the abstract product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -78,14 +64,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Adds product abstract attributes.
-     * - Adds product abstract localized attributes.
-     * - Adds product abstract meta.
-     * - Triggers before and after CREATE plugins.
-     * - Throws exception if abstract product with same SKU exists.
-     * - Abstract product is created but not activated or touched.
-     * - Returns the ID of the newly created abstract product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -103,15 +82,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Saves product abstract attributes
-     * - Saves product abstract localized attributes
-     * - Saves product abstract meta
-     * - Updates URL of an active product when it's changed.
-     * - Triggers before and after CREATE plugins
-     * - Throws exception if abstract product with same SKU exists
-     * - Abstract product is created but not activated or touched
-     * - Returns the ID of the abstract product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -129,8 +100,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Checks if product abstract exists
+     * {@inheritdoc}
      *
      * @api
      *
@@ -146,8 +116,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the ID of an abstract product for the given SKU if it exists, NULL otherwise.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -163,9 +132,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns abstract product with attributes and localized attributes
-     * - Triggers READ plugins
+     * {@inheritdoc}
      *
      * @api
      *
@@ -181,9 +148,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the SKU of an abstract product that belongs to the given SKU of a concrete product.
-     * - Throws exception if no abstract product is found.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -201,9 +166,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the abstract product ID of the given concrete product SKU if exists.
-     * - Throws exception if no abstract product is found.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -221,11 +184,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Adds concrete product with attributes and localized attributes.
-     * - Throws exception if product concrete with same SKU exists.
-     * - Triggers before and after CREATE plugins.
-     * - Returns the ID of the newly created concrete product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -243,11 +202,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Saves concrete product with attributes and localized attributes.
-     * - Throws exception if product concrete with same SKU exists.
-     * - Triggers before and after UPDATE plugins.
-     * - Returns the ID of the concrete product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -265,8 +220,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Checks if product concrete exists.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -282,8 +236,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns ID of concrete product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -299,10 +252,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns concrete product with attributes and localized attributes.
-     * - Returns NULL if the concrete product is not found by ID.
-     * - Triggers READ plugins.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -318,10 +268,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns concrete product with attributes and localized attributes.
-     * - Throws exception if the concrete product is not found by SKU.
-     * - Triggers READ plugins.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -339,9 +286,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns concrete product collection.
-     * - Triggers READ plugins.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -357,8 +302,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Checks if the product attribute key exists.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -374,8 +318,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns product attribute key if exists, NULL otherwise.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -391,9 +334,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Creates new product attribute key.
-     * - Returns created product attribute key.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -409,9 +350,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Updates an existing product attribute key.
-     * - Returns the updated product attribute key.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -427,10 +366,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches abstract product and all it's variants.
-     * - Touches related "product_abstract", "product_concrete" and "attribute_map" entries.
-     * - Used touch event statuses (active, inactive) depends on the current active status of the product and it's variants.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -446,8 +382,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches as active: "product_abstract" and "product_attribute_map"
+     * {@inheritdoc}
      *
      * @api
      *
@@ -463,8 +398,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches as in-active: "product_abstract" and "product_attribute_map".
+     * {@inheritdoc}
      *
      * @api
      *
@@ -480,8 +414,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches as deleted: "product_abstract" and "product_attribute_map".
+     * {@inheritdoc}
      *
      * @api
      *
@@ -497,10 +430,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches a concrete product.
-     * - Touches related "product_concrete", "product_abstract" and "attribute_map" entries.
-     * - Used touch event statuses (active, inactive) depends on the current status of the product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -516,8 +446,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches as active: "product_concrete".
+     * {@inheritdoc}
      *
      * @api
      *
@@ -533,8 +462,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches as in-active: "product_concrete".
+     * {@inheritdoc}
      *
      * @api
      *
@@ -550,8 +478,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches as deleted: "product_concrete".
+     * {@inheritdoc}
      *
      * @api
      *
@@ -567,9 +494,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Creates localized product URLs based on product abstract localized attributes name.
-     * - Executes touch logic for product URL activation.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -585,9 +510,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Updates localized product URLs based on product abstract localized attributes name.
-     * - Executes touch logic for product URL update.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -603,8 +526,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns localized product URLs for all available locales.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -620,9 +542,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Deletes all URLs belonging to given abstract product.
-     * - Executes touch logic for product URL deletion.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -638,8 +558,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches the URL of the product as active for all available locales.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -655,8 +574,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Touches the URL of the product as deleted for all available locales.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -672,8 +590,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns localized product abstract name based on localized attributes.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -690,8 +607,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns localized product concrete name based on localized attributes.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -708,11 +624,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Activates product concrete.
-     * - Generates and saves product abstract URL.
-     * - Touches as active product.
-     * - Touches as active product URL.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -728,11 +640,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Deactivates product concrete.
-     * - Removes product URL.
-     * - Touches as in-active product.
-     * - Touches as in-active product URL.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -748,22 +656,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Generatate all possible permutations for given attributes.
-     *
-     * Leaf node of a tree is concrete id.
-     * (
-     *   [color:red] => array (
-     *       [brand:nike] => array(
-     *          [id] => 1
-     *       )
-     *   ),
-     *   [brand:nike] => array(
-     *       [color:red] => array(
-     *          [id] => 1
-     *       )
-     *   )
-     * )
+     * {@inheritdoc}
      *
      * @api
      *
@@ -780,28 +673,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Generates product variants based on attributes.
-     *
-     * $attributeCollection = Array
-     *  (
-     *     [color] => Array
-     *      (
-     *          [red] => Red
-     *          [blue] => Blue
-     *      )
-     *     [flavour] => Array
-     *      (
-     *          [sweet] => Cakes
-     *      )
-     *     [size] => Array
-     *      (
-     *          [40] => 40
-     *          [41] => 41
-     *          [42] => 42
-     *          )
-     *      )
-     * )
+     * {@inheritdoc}
      *
      * @api
      *
@@ -818,8 +690,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns true if any of the concrete products of abstract products are active.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -835,10 +706,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns an array with attribute keys of a persisted product.
-     * - The result is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
-     * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -857,10 +725,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns an associative array of attribute key - attribute value pairs of a persisted concrete product.
-     * - The result is a combination of the concrete's attributes and its abstract's attributes.
-     * - If $localeTransfer is provided then localized concrete and abstract attributes are also part of the result.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -877,9 +742,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns an associative array of attribute key - attribute value pairs.
-     * - The result is the correct inheritance combination of the provided raw product attribute data.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -895,8 +758,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Encodes an array of product attribute key - attribute value pairs to JSON string.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -912,8 +774,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Decodes product attributes JSON string to an array of attribute key - attribute value pairs.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -929,8 +790,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Saves product metadata information (image, super attributes) into a sales table to hydrate them later
+     * {@inheritdoc}
      *
      * @api
      *
@@ -939,14 +799,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return void
      */
-    public function saveProductMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveItemMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createProductMetadataSaver()->saveProductMetadata($quoteTransfer);
+        $this->getFactory()->createItemMetadataSaver()->saveItemsMetadata($quoteTransfer);
     }
 
     /**
-     * Specification:
-     * - Hydrates product meta information (image, super attributes) into an order transfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -954,14 +813,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateProductMetadata(OrderTransfer $orderTransfer)
+    public function hydrateItemMetadata(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createProductMetadataHydrator()->hydrateProductMetadata($orderTransfer);
+        return $this->getFactory()->createItemMetadataHydrator()->hydrateItemMetadata($orderTransfer);
     }
 
     /**
-     * Specification:
-     * - Hydrates product ids (abstract / concrete) into an order based on their sku
+     * {@inheritdoc}
      *
      * @api
      *

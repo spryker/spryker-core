@@ -7,13 +7,19 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
+use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductMetadataTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
+use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class ProductMetadataHydrator implements ProductMetadataHydratorInterface
+class ItemMetadataHydrator implements ItemMetadataHydratorInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -21,11 +27,15 @@ class ProductMetadataHydrator implements ProductMetadataHydratorInterface
     protected $productQueryContainer;
 
     /**
+     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
-    {
+    public function __construct(
+        ProductToUtilEncodingInterface $utilEncodingService,
+        ProductQueryContainerInterface $productQueryContainer
+    ) {
         $this->productQueryContainer = $productQueryContainer;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -33,7 +43,7 @@ class ProductMetadataHydrator implements ProductMetadataHydratorInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateProductMetadata(OrderTransfer $orderTransfer)
+    public function hydrateItemMetadata(OrderTransfer $orderTransfer)
     {
         foreach ($orderTransfer->getItems() as $item) {
             $metadata = $this->findMetadata($item->getIdSalesOrderItem());
@@ -63,41 +73,16 @@ class ProductMetadataHydrator implements ProductMetadataHydratorInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata $metadata
      *
-     * @return \Generated\Shared\Transfer\ProductMetadataTransfer
+     * @return \Generated\Shared\Transfer\ItemMetadataTransfer
      */
     protected function convertMetadata(SpySalesOrderItemMetadata $metadata)
     {
-        $metadataTransfer = new ProductMetadataTransfer();
+        $metadataTransfer = new ItemMetadataTransfer();
         $metadataTransfer->setFkSalesOrderItem($metadata->getFkSalesOrderItem());
-        $metadataTransfer->setSuperAttributes(json_decode($metadata->getSuperAttributes(), true));
+        $metadataTransfer->setSuperAttributes($this->utilEncodingService->decodeJson($metadata->getSuperAttributes(), true));
         $metadataTransfer->setImage($metadata->getImage());
 
         return $metadataTransfer;
-    }
-
-    /**
-     * @param array $concreteAttributes
-     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey[] $matchingAttributes
-     *
-     * @return array
-     */
-    protected function filterMatchingSuperAttributes(array $concreteAttributes, array $matchingAttributes)
-    {
-        if (count($matchingAttributes) === 0) {
-            return [];
-        }
-
-        $result = [];
-
-        foreach ($concreteAttributes as $key => $value) {
-            foreach ($matchingAttributes as $matchingAttribute) {
-                if ($matchingAttribute->getKey() === $key) {
-                    $result[$key] = $value;
-                }
-            }
-        }
-
-        return $result;
     }
 
 }

@@ -33,10 +33,10 @@
                 <th>{{ 'Trigger event' | trans }}</th>
             </tr>
             </thead>
-            {% if order.itemGroups %}
+            {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
               {% embed '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
             {% else %}
-              {% embed '@Sales/Detail/boxes/row-widget.twig' with {items: order.items, render_body: true} %}{% endembed %}
+              {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}{% endembed %}
             {% endif %}
         </table>
 

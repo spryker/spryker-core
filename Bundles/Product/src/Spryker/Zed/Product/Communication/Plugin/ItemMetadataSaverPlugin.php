@@ -16,11 +16,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
  */
-class ProductMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
+class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
 
     /**
-     * This plugin retrieves (its) data from the quote object and saves it to the database.
+     * Specification:
+     * - This plugin retrieves (its) data item metadata from the quote object and saves it to the database.
      *
      * @api
      *
@@ -31,7 +32,7 @@ class ProductMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveO
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFacade()->saveProductMetadata($quoteTransfer, $checkoutResponse);
+        $this->getFacade()->saveItemMetadata($quoteTransfer, $checkoutResponse);
     }
 
 }

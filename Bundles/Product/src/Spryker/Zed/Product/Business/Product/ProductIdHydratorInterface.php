@@ -5,22 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Dependency\Plugin;
+namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface ProductMetadataHydratorInterface
+interface ProductIdHydratorInterface
 {
 
     /**
-     * Specification:
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateProductMetadata(OrderTransfer $orderTransfer);
+    public function hydrateProductIds(OrderTransfer $orderTransfer);
 
 }

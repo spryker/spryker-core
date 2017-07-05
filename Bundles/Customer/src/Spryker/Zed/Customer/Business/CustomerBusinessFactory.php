@@ -148,7 +148,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator
+     * @return \Spryker\Zed\Customer\Business\Sales\CustomerOrderHydratorInterface
      */
     public function createCustomerOrderHydrator()
     {

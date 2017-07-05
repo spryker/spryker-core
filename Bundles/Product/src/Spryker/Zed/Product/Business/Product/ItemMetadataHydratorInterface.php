@@ -9,7 +9,7 @@ namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface ProductMetadataHydratorInterface
+interface ItemMetadataHydratorInterface
 {
 
     /**
@@ -17,6 +17,6 @@ interface ProductMetadataHydratorInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateProductMetadata(OrderTransfer $orderTransfer);
+    public function hydrateItemMetadata(OrderTransfer $orderTransfer);
 
 }

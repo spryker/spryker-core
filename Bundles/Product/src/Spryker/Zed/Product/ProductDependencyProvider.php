@@ -240,24 +240,4 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductMetadataSaverInterface[]
-     */
-    protected function getMetadataSaverPlugins(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductMetadataHydratorInterface[]
-     */
-    protected function getMetadataHydratorPlugins(Container $container)
-    {
-        return [];
-    }
-
 }
