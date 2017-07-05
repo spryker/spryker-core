@@ -12,10 +12,15 @@
                     Edit
                 </a>
                 <p>{{ addr.salutation }} {{ addr.firstName }} {{ addr.middleName }} {{ addr.lastName }}</p>
+                {% if addr.company is not empty %}
+                    <p>
+                      {{ addr.company }}{% if addr.phone is not empty %}, {{ addr.phone }}{% endif %}
+                    </p>
+                {% endif %}
                 {% if addr.address1 is not empty %}<p>{{ addr.address1 }}</p>{% endif %}
                 {% if addr.address2 is not empty %}<p>{{ addr.address2 }}</p>{% endif %}
                 {% if addr.address3 is not empty %}<p>{{ addr.address3 }}</p>{% endif %}
-                <p>{{ addr.zipCode }} {{ addr.city }}</p>
+                {% if addr.zipCode is not empty %}<p>{{ addr.zipCode }} {{ addr.city }}</p>{% endif %}
             </div>
         </div>
     {% endif %}
