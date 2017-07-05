@@ -59,9 +59,9 @@ class JavascriptQueryBuilderTransformer
             $fieldTransformed['type'] = 'string';
             $fieldTransformed['operators'] = $this->transformComparators($type, $ruleField);
 
-            if ($valueOptions) {
+            if (isset($valueOptions[$ruleField]) && $valueOptions[$ruleField]) {
                 $fieldTransformed['input'] = 'select';
-                $fieldTransformed['values'] = $valueOptions;
+                $fieldTransformed['values'] = $valueOptions[$ruleField];
             }
 
             $transformed[] = $fieldTransformed;
