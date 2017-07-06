@@ -127,7 +127,7 @@ function AttributeManager() {
         dataTable.DataTable().
             row.
             add(dataToAdd)
-            .draw();
+            .draw(true);
 
         updateAttributeInputsWithAutoComplete();
     };
@@ -326,6 +326,11 @@ function updateAttributeInputsWithAutoComplete() {
 
                 input.val(value);
                 input.attr('value', value);
+
+                var span = input.parents('td').find('span');
+                if (span) {
+                    span.text(value);
+                }
             },
             select: function(event, ui) {
                 var input = $(this);
@@ -451,4 +456,5 @@ $(document).ready(function() {
             return false;
         }
     });
+
 });
