@@ -7,7 +7,9 @@
 namespace Spryker\Zed\Payment\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesPaymentTransfer;
 
 /**
  * @method \Spryker\Zed\Payment\Business\PaymentBusinessFactory getFactory()
@@ -44,5 +46,29 @@ interface PaymentFacadeInterface
      * @return void
      */
     public function checkoutPostCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     * Specification:
+     *   - Returns payment method price to pay
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesPaymentTransfer $salesPaymentTransfer
+     *
+     * @return int
+     */
+    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $salesPaymentTransfer);
+
+    /**
+     * Specification:
+     *   - Populates order transfer with payment data
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderPayments(OrderTransfer $orderTransfer);
 
 }

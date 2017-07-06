@@ -9,17 +9,31 @@ namespace Spryker\Zed\Payment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
+use Spryker\Zed\Payment\Business\Order\PaymentHydratorExecutor;
+use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
+use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
+ */
 class PaymentBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor
+     * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutorInterface
      */
     public function createCheckoutPaymentPluginExecutor()
     {
-        return new PaymentPluginExecutor($this->getCheckoutPlugins());
+        return new PaymentPluginExecutor($this->getCheckoutPlugins(), $this->createPaymentSaver());
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface
+     */
+    protected function createPaymentSaver()
+    {
+        return new SalesPaymentSaver($this->getQueryContainer());
     }
 
     /**
@@ -28,6 +42,33 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     public function getCheckoutPlugins()
     {
          return $this->getProvidedDependency(PaymentDependencyProvider::CHECKOUT_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Order\PaymentHydratorExecutorInterface
+     */
+    public function createPaymentHydratorExecutor()
+    {
+        return new PaymentHydratorExecutor($this->getPaymentHydrationPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\PaymentHydratorPluginInterface[]
+     */
+    protected function getPaymentHydrationPlugins()
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_HYDRATION_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentReaderInterface
+     */
+    public function createSalesPaymentReader()
+    {
+        return new SalesPaymentReader(
+            $this->getQueryContainer(),
+            $this->createPaymentHydratorExecutor()
+        );
     }
 
 }

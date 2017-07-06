@@ -9,10 +9,11 @@ namespace Spryker\Zed\Payment\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
-class PaymentPluginExecutor
+class PaymentPluginExecutor implements PaymentPluginExecutorInterface
 {
 
     /**
@@ -21,11 +22,20 @@ class PaymentPluginExecutor
     protected $checkoutPlugins;
 
     /**
-     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface $checkoutPlugins
+     * @var \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface
      */
-    public function __construct(CheckoutPluginCollectionInterface $checkoutPlugins)
-    {
+    protected $salesPaymentSaver;
+
+    /**
+     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface $checkoutPlugins
+     * @param \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface $salesPaymentSaver
+     */
+    public function __construct(
+        CheckoutPluginCollectionInterface $checkoutPlugins,
+        SalesPaymentSaverInterface $salesPaymentSaver
+    ) {
         $this->checkoutPlugins = $checkoutPlugins;
+        $this->salesPaymentSaver = $salesPaymentSaver;
     }
 
     /**
@@ -54,6 +64,8 @@ class PaymentPluginExecutor
             $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer);
             $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
         }
+
+        $this->salesPaymentSaver->saveOrderPayments($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

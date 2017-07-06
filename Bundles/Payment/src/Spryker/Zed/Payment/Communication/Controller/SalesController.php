@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Payment\Communication\Controller;
 
-use DateTime;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,18 +20,9 @@ class SalesController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $idSalesOrder = $request->request->get('id-sales-order');
-
+        $orderTransfer = $request->request->get('orderTransfer');
         return [
-            'logs' => [
-                [
-                    'logType' => 'type',
-                    'TransactionId' => uniqid(),
-                    'Request' => 'request',
-                    'Status' => 'active',
-                    'CreatedAt' => new DateTime('now'),
-                ],
-            ],
+            'payments' => $orderTransfer->getPayments(),
         ];
     }
 

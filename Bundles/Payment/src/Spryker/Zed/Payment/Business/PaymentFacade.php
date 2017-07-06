@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Payment\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -60,6 +62,40 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
         $this->getFactory()
             ->createCheckoutPaymentPluginExecutor()
             ->executePostCheckPlugin($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesPaymentTransfer $salesPaymentTransfer
+     *
+     * @return int
+     */
+    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $salesPaymentTransfer)
+    {
+        return $this->getFactory()
+            ->createSalesPaymentReader()
+            ->getPaymentMethodPriceToPay($salesPaymentTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderPayments(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createSalesPaymentReader()
+            ->hydrateOrderWithPayment($orderTransfer);
     }
 
 }

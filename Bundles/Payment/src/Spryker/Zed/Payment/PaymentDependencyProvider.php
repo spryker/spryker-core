@@ -19,6 +19,8 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
     const CHECKOUT_POST_SAVE_PLUGINS = 'post save';
 
+    const PAYMENT_HYDRATION_PLUGINS = 'payment hydration plugins';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -30,7 +32,19 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
             return new CheckoutPluginCollection();
         };
 
+        $container[static::PAYMENT_HYDRATION_PLUGINS] = function (Container $container) {
+            return $this->getPaymentHydrationPlugins();
+        };
+
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\PaymentHydratorPluginInterface[]
+     */
+    public function getPaymentHydrationPlugins()
+    {
+        return [];
     }
 
 }

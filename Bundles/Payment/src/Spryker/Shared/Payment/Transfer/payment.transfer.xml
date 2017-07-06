@@ -7,10 +7,22 @@
         <property name="paymentProvider" type="string"/>
         <property name="paymentMethod" type="string"/>
         <property name="paymentSelection" type="string"/>
+        <property name="amount" type="int"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="payment" type="Payment"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="payments" type="Payment[]" singular="payment"/>
+    </transfer>
+
+    <transfer name="SalesPayment">
+        <property name="fkSalesOrder" type="int" />
+        <property name="paymentProvider" type="string" />
+        <property name="paymentMethod" type="string" />
     </transfer>
 
 </transfers>
