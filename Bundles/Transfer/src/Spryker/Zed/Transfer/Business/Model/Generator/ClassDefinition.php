@@ -174,7 +174,11 @@ class ClassDefinition implements ClassDefinitionInterface
             $property['propertyConst'] = $this->getPropertyConstantName($property);
             $property['name_underscore'] = mb_strtolower($property['propertyConst']);
 
-            if (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $property['type'])) {
+            if (preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $property['type'])) {
+                if (preg_match('/\[\]$/', $property['type'])) {
+                    $property['is_collection'] = true;
+                }
+            } else {
                 $property['is_transfer'] = true;
                 $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
                 if (preg_match('/\[\]$/', $property['type'])) {

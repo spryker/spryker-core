@@ -480,4 +480,13 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      */
     public function queryCategoryTemplateById($idCategoryTemplate);
 
+    /**
+     * @api
+     *
+     * @param string $nameCategoryTemplate
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplateByName($nameCategoryTemplate);
+
 }

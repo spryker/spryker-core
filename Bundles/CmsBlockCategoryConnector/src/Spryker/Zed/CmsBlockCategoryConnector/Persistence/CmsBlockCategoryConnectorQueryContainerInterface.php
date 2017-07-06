@@ -63,4 +63,13 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
      */
     public function queryCmsBlockCategoryPosition();
 
+    /**
+     * @api
+     *
+     * @param string $positionName
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
+     */
+    public function queryCmsBlockCategoryPositionByName($positionName);
+
 }

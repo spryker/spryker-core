@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Console;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery;
+use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,11 +19,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
  */
 class CmsBlockCategoryPosition extends Console
 {
 
     const COMMAND_NAME = 'cms-block-category-connector:import-position';
+
+    const DEFAULT_POSITION = CmsBlockCategoryConnectorConfig::CMS_BLOCK_CATEGORY_POSITION_TOP;
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
@@ -37,22 +41,8 @@ class CmsBlockCategoryPosition extends Console
             return;
         }
 
-        foreach ($this->getPositionList() as $positionName) {
-            $spyCmsBlockCategoryPosition = SpyCmsBlockCategoryPositionQuery::create()
-                ->filterByName($positionName)
-                ->findOne();
-
-            if (!$spyCmsBlockCategoryPosition) {
-                $spyCmsBlockCategoryPosition = new SpyCmsBlockCategoryPosition();
-                $spyCmsBlockCategoryPosition->setName($positionName);
-                $spyCmsBlockCategoryPosition->save();
-                $output->writeln('Position [' . $positionName . '] is imported');
-            } else {
-                $output->writeln('Position [' . $positionName . '] exists');
-            }
-
-            $this->assignAllBlocksToPosition($spyCmsBlockCategoryPosition);
-        }
+        $this->getFacade()->syncCmsBlockCategoryPosition();
+        $this->assignAllBlocksToPosition();
 
         $output->writeln('Successfully finished.');
     }
@@ -69,12 +59,20 @@ class CmsBlockCategoryPosition extends Console
     }
 
     /**
-     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition $spyCmsBlockCategoryPosition
+     * @throws \Exception
      *
      * @return void
      */
-    protected function assignAllBlocksToPosition(SpyCmsBlockCategoryPosition $spyCmsBlockCategoryPosition)
+    protected function assignAllBlocksToPosition()
     {
+        $spyCmsBlockCategoryPosition = $this->getQueryContainer()
+            ->queryCmsBlockCategoryPositionByName(static::DEFAULT_POSITION)
+            ->findOne();
+
+        if ($spyCmsBlockCategoryPosition) {
+            throw new \Exception('Please add valid default position for import');
+        }
+
         $spyCmsBlockCategoryConnections = SpyCmsBlockCategoryConnectorQuery::create()
             ->filterByFkCmsBlockCategoryPosition(null, Criteria::ISNULL)
             ->find();

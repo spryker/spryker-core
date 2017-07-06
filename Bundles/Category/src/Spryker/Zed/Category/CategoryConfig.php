@@ -26,16 +26,4 @@ class CategoryConfig extends SharedCategoryConfig
         return $this->get(CategoryConstants::TEMPLATE_LIST);
     }
 
-    /**
-     * @return bool
-     */
-    protected function isCategoryConnectorInstalled()
-    {
-        $count = SpyCmsBlockCategoryPositionQuery::create()
-            ->filterByName_In($this->getPositionList())
-            ->count();
-
-        return $count >= count($this->getPositionList());
-    }
-
 }

@@ -98,6 +98,20 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      *
      * @api
      *
+     * @return void
+     */
+    public function syncCmsBlockCategoryPosition()
+    {
+        $this->getFactory()
+            ->createCmsBlockCategoryPositionSync()
+            ->syncFromConfig();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

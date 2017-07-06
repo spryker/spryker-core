@@ -579,4 +579,18 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->touchCategoryActive($idCategory);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncCategoryTemplate()
+    {
+        $this->getFactory()
+            ->createCategoryTemplateSync()
+            ->syncFromConfig();
+    }
+
 }

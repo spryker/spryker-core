@@ -79,6 +79,18 @@ interface CmsBlockCategoryConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Takes positions from configuration
+     * - Creates new CMS Block category position records
+     * - Does not remove/update existing records
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncCmsBlockCategoryPosition();
+
+    /**
+     * Specification:
      * - Hydrate CMS Block to Category relation with block names
      * - Collect relation to Storage
      *

@@ -16,6 +16,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
+ */
 class CategoryTemplateImporter extends Console
 {
 
@@ -41,25 +44,7 @@ class CategoryTemplateImporter extends Console
             return;
         }
 
-        foreach ($this->getTemplateList() as $templateName => $templatePath) {
-
-            $spyCategoryTemplate = SpyCategoryTemplateQuery::create()
-                ->filterByName($templateName)
-                ->findOne();
-
-            if (!$spyCategoryTemplate) {
-                $spyCategoryTemplate = new SpyCategoryTemplate();
-                $spyCategoryTemplate->setName($templateName);
-                $spyCategoryTemplate->setTemplatePath($templatePath);
-                $spyCategoryTemplate->save();
-
-                $output->writeln('Template [' . $templateName . '] is created.');
-            } else {
-                $output->writeln('Template [' . $templateName . '] exists.');
-            }
-
-        }
-
+        $this->getFacade()->syncCategoryTemplate();
         $this->assignTemplateToAllCategories();
 
         $output->writeln('Successfully finished.');
@@ -77,6 +62,8 @@ class CategoryTemplateImporter extends Console
     }
 
     /**
+     * @throws \Exception
+     *
      * @return void
      */
     protected function assignTemplateToAllCategories()
@@ -84,6 +71,10 @@ class CategoryTemplateImporter extends Console
         $spyCategoryTemplate = SpyCategoryTemplateQuery::create()
             ->filterByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT)
             ->findOne();
+
+        if (empty($spyCategoryTemplate)) {
+            throw new \Exception('Please specify CATEGORY_TEMPLATE_DEFAULT in your category template list configuration');
+        }
 
         $query = SpyCategoryQuery::create()
             ->filterByFkCategoryTemplate(null, Criteria::ISNULL);
@@ -111,11 +102,11 @@ class CategoryTemplateImporter extends Console
      */
     protected function isCategoryTemplateInstalled()
     {
-        $count = SpyCategoryTemplateQuery::create()
-            ->filterByName_In($this->getTemplateList())
+        $count = SpyCategoryQuery::create()
+            ->filterByFkCategoryTemplate(null, Criteria::ISNULL)
             ->count();
 
-        return $count >= count($this->getTemplateList());
+        return $count === 0;
     }
 
 }

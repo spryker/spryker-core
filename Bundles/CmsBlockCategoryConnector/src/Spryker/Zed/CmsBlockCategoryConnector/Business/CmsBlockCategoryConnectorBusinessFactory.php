@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollector;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryPositionCollector;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionSync;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryReader;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriter;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
@@ -73,6 +74,17 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
         $cmsBlockCategoryPositionCollector->setQueryBuilder($this->createCmsBlockCategoryPositionStorageQueryContainer());
 
         return $cmsBlockCategoryPositionCollector;
+    }
+
+    /**
+     * @return CmsBlockCategoryPositionSync
+     */
+    public function createCmsBlockCategoryPositionSync()
+    {
+        return new CmsBlockCategoryPositionSync(
+            $this->getQueryContainer(),
+            $this->getConfig()
+        );
     }
 
     /**

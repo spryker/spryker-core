@@ -105,4 +105,17 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
             ->createCmsBlockCategoryPosition();
     }
 
+    /**
+     * @api
+     *
+     * @param string $positionName
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
+     */
+    public function queryCmsBlockCategoryPositionByName($positionName)
+    {
+        return $this->queryCmsBlockCategoryPosition()
+            ->filterByName($positionName);
+    }
+
 }
