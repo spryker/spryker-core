@@ -7,64 +7,17 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Business;
 
+/**
+ * @method \Spryker\Zed\ProductAttributeGui\Business\ProductAttributeGuiBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig getConfig()
+ */
 interface ProductAttributeGuiFacadeInterface
 {
 
     /**
-     * @api
+     * Specification:
+     * - Returns product abstract attributes with metadata info
      *
-     * @param int $idProductAbstract
-     *
-     * @return array
-     */
-    public function getProductAbstractAttributes($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return array
-     */
-    public function getProductAttributeValues($idProduct);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return array
-     */
-    public function getMetaAttributesForProductAbstract($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return array
-     */
-    public function getMetaAttributesForProduct($idProduct);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function getProductAbstract($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function getProduct($idProduct);
-
-    /**
      * @api
      *
      * @param int $idProductAbstract
@@ -74,6 +27,69 @@ interface ProductAttributeGuiFacadeInterface
     public function getProductAbstractAttributeValues($idProductAbstract);
 
     /**
+     * Specification:
+     * - Returns list of all product concrete attributes
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getProductAttributeValues($idProduct);
+
+    /**
+     * Specification:
+     * - Returns list of attributes metadata based on product abstract attributes
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getMetaAttributesForProductAbstract($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Returns list of attributes metadata based on product abstract attributes
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getMetaAttributesForProduct($idProduct);
+
+    /**
+     * Specification:
+     * - Returns basic product abstract transfer
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function getProductAbstract($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Returns basic product concrete transfer
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProduct($idProduct);
+
+    /**
+     * Specification:
+     * - Returns list of product keys suggested based on $searchText, super attributes are ignored
+     *
      * @api
      *
      * @param string $searchText
@@ -84,6 +100,9 @@ interface ProductAttributeGuiFacadeInterface
     public function suggestKeys($searchText = '', $limit = 10);
 
     /**
+     * Specification:
+     * - Save product abstract attributes
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -94,6 +113,9 @@ interface ProductAttributeGuiFacadeInterface
     public function saveAbstractAttributes($idProductAbstract, array $attributes);
 
     /**
+     * Specification:
+     * - Save product concrete attributes
+     *
      * @api
      *
      * @param int $idProduct
@@ -104,6 +126,9 @@ interface ProductAttributeGuiFacadeInterface
     public function saveConcreteAttributes($idProduct, array $attributes);
 
     /**
+     * Specification:
+     * - Return list of attribute keys
+     *
      * @api
      *
      * @param array $productAttributes
@@ -113,6 +138,9 @@ interface ProductAttributeGuiFacadeInterface
     public function extractKeysFromAttributes(array $productAttributes);
 
     /**
+     * Specification:
+     * - Return list of attribute values
+     *
      * @api
      *
      * @param array $productAttributes

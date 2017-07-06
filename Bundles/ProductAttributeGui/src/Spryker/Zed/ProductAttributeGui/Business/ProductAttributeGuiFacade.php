@@ -17,90 +17,9 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
 {
 
     /**
-     * @api
+     * Specification:
+     * - Returns product abstract attributes with metadata info
      *
-     * @param int $idProductAbstract
-     *
-     * @return array
-     */
-    public function getProductAbstractAttributes($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createProductAttributeManager()
-            ->getProductAbstractAttributes($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return array
-     */
-    public function getProductAttributeValues($idProduct)
-    {
-        return $this->getFactory()
-            ->createProductAttributeManager()
-            ->getProductAttributeValues($idProduct);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return array
-     */
-    public function getMetaAttributesForProductAbstract($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createProductAttributeManager()
-            ->getMetaAttributesForProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return array
-     */
-    public function getMetaAttributesForProduct($idProduct)
-    {
-        return $this->getFactory()
-            ->createProductAttributeManager()
-            ->getMetaAttributesForProduct($idProduct);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function getProductAbstract($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createProductAttributeManager()
-            ->getProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function getProduct($idProduct)
-    {
-        return $this->getFactory()
-            ->createProductAttributeManager()
-            ->getProduct($idProduct);
-    }
-
-    /**
      * @api
      *
      * @param int $idProductAbstract
@@ -115,6 +34,94 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
+     * Specification:
+     * - Returns list of all product concrete attributes
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getProductAttributeValues($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getProductAttributeValues($idProduct);
+    }
+
+    /**
+     * Specification:
+     * - Returns list of attributes metadata based on product abstract attributes
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getMetaAttributesForProductAbstract($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getMetaAttributesForProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * Specification:
+     * - Returns list of attributes metadata based on product abstract attributes
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    public function getMetaAttributesForProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getMetaAttributesForProduct($idProduct);
+    }
+
+    /**
+     * Specification:
+     * - Returns basic product abstract transfer
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function getProductAbstract($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * Specification:
+     * - Returns basic product concrete transfer
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductAttributeManager()
+            ->getProduct($idProduct);
+    }
+
+    /**
+     * Specification:
+     * - Returns list of product keys suggested based on $searchText, super attributes are ignored
+     *
      * @api
      *
      * @param string $searchText
@@ -130,6 +137,9 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
+     * Specification:
+     * - Save product abstract attributes
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -145,6 +155,9 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
+     * Specification:
+     * - Save product concrete attributes
+     *
      * @api
      *
      * @param int $idProduct
@@ -160,6 +173,9 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
+     * Specification:
+     * - Return list of attribute keys
+     *
      * @api
      *
      * @param array $productAttributes
@@ -174,6 +190,9 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
+     * Specification:
+     * - Return list of attribute values
+     *
      * @api
      *
      * @param array $productAttributes
