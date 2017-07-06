@@ -62,9 +62,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createAttributeKeyForm(array $formData, array $formOptions = [])
     {
-        $formType = new AttributeKeyForm();
-
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        return $this->getFormFactory()->create(AttributeKeyForm::class, $formData, $formOptions);
     }
 
     /**

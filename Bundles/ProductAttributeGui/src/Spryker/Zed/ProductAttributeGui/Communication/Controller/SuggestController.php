@@ -26,7 +26,7 @@ class SuggestController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $searchTerm = $request->query->get(self::PARAM_SEARCH_TEXT);
+        $searchTerm = $request->query->get(static::PARAM_SEARCH_TEXT);
         $keys = $this->getFacade()->suggestKeys($searchTerm);
 
         return $this->jsonResponse($keys);

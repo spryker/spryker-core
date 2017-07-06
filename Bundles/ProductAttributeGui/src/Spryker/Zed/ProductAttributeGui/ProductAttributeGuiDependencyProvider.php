@@ -31,7 +31,7 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
 
         $container = $this->addProductQueryContainer($container);
         $container = $this->addProductManagementQueryContainer($container);
-        $container = $this->addServiceUtilEncoding($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -97,7 +97,7 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addServiceUtilEncoding($container)
+    protected function addUtilEncodingService($container)
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ProductAttributeGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());

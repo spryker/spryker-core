@@ -38,7 +38,7 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
         return new AttributeReader(
             $this->getProductQueryContainer(),
             $this->getProductManagementQueryContainer(),
-            $this->getServiceEncoding()
+            $this->getEncodingService()
         );
     }
 
@@ -81,7 +81,7 @@ class ProductAttributeGuiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductAttributeGui\Dependency\Service\ProductAttributeGuiToUtilEncodingInterface
      */
-    protected function getServiceEncoding()
+    protected function getEncodingService()
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }

@@ -85,25 +85,6 @@ class AttributeWriter implements AttributeWriterInterface
 
         $query = $this->productQueryContainer->queryProductLocalizedAttributes($idProduct);
         $this->saveLocalizedAttributes($query, $formattedAttributeData);
-
-        //TODO remove
-/*        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $localizedDataToSave = [];
-            $idLocale = $localeTransfer->getIdLocale();
-
-            $localizedAttributeEntity = $this->productQueryContainer
-                ->queryProductLocalizedAttributes($idProduct)
-                ->filterByFkLocale($idLocale)
-                ->findOneOrCreate();
-
-            if (array_key_exists($idLocale, $formattedAttributeData)) {
-                $localizedDataToSave = $formattedAttributeData[$idLocale];
-            }
-
-            $attributesJson = $this->reader->encodeJsonAttributes($localizedDataToSave);
-            $localizedAttributeEntity->setAttributes($attributesJson);
-            $localizedAttributeEntity->save();
-        }*/
     }
 
     /**

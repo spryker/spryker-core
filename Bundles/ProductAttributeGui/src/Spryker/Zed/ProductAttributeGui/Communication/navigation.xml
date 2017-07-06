@@ -6,8 +6,6 @@
                 <label>Product Attributes Management</label>
                 <title>Product Attributes Management</title>
                 <bundle>product-attribute-gui</bundle>
-                <controller>index</controller>
-                <action>index</action>
             </products>
         </pages>
     </product>

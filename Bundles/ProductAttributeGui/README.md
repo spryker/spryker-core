@@ -1,4 +1,4 @@
-# ProductAttributeGui Bundle
+# ProductAttributeGui Module
 
 ## Installation
 

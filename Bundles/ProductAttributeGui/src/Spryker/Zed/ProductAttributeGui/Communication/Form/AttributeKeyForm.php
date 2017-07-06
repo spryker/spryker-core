@@ -49,8 +49,6 @@ class AttributeKeyForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
         $this
             ->addAttributeKeyField($builder)
             ->addAttributeKeyHiddenField($builder);
@@ -63,7 +61,7 @@ class AttributeKeyForm extends AbstractType
      */
     protected function addAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY, 'text', [
+        $builder->add(static::FIELD_KEY, 'text', [
             'label' => 'Attribute key',
             'constraints' => [
                 new NotBlank(),
@@ -91,7 +89,7 @@ class AttributeKeyForm extends AbstractType
     protected function addAttributeKeyHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_KEY_HIDDEN_ID, 'hidden', []);
+            ->add(static::FIELD_KEY_HIDDEN_ID, 'hidden', []);
 
         return $this;
     }
