@@ -4,8 +4,8 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ viewActionButton(url('/product-management/view/variant?id-product-abstract=' ~ productAbstract.idProductAbstract ~ '&id-product=' ~ product.idProductConcrete), 'View Product' | trans) }}
-    {{ backActionButton(url('/product-management/edit?id-product-abstract=' ~ productAbstract.idProductAbstract ~ '#tab-content-variants'), 'Back to List' | trans) }}
+    {{ editActionButton(url('/product-management/edit/variant?id-product-abstract=' ~ productAbstract.idProductAbstract ~ '&id-product=' ~ product.idProductConcrete), 'Edit Product' | trans) }}
+    {{ backActionButton(url('/product-management/edit?id-product-abstract=' ~ productAbstract.idProductAbstract ~ '#tab-content-variants'), 'Back to Product Abstract' | trans) }}
 {% endblock %}
 
 {% block content %}

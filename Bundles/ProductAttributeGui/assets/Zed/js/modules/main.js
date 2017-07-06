@@ -41,7 +41,7 @@ function AttributeManager() {
     _attributeManager.extractKeysFromTable = function() {
         var keys = [];
         $('#productAttributesTable tr').each(function(){
-            keys.push($(this).find('td:first').text());
+            keys.push($(this).find('td:first').text().trim());
         });
 
         return keys;
@@ -94,7 +94,7 @@ function AttributeManager() {
             dataToAdd.push(item);
         }
 
-        dataToAdd.push('<a data-key="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>');
+        dataToAdd.push('<div style="text-align: center;"><a data-key="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a></div>');
 
         return dataToAdd;
     };
@@ -210,7 +210,9 @@ function AttributeManager() {
                     });
 
                     if (jqXHR.status === 200) {
-                        location.reload();
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000);
                     }
                 }
             },
@@ -319,7 +321,7 @@ function updateAttributeInputsWithAutoComplete() {
                     value = '';
                 } else if (!allowInput) {
                     value = selectedValue;
-                    input.attr('data-value', ui.item.value);
+                    input.attr('data-value', selectedValue);
                 }
 
                 input.val(value);

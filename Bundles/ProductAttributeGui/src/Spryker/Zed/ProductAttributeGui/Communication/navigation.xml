@@ -2,11 +2,22 @@
 <config>
     <product>
         <pages>
-            <products>
+            <product-abstract-attribute-gui>
+                <label>Product Abstract Attributes Management</label>
+                <title>Product Abstract Attributes Management</title>
+                <bundle>product-attribute-gui</bundle>
+                <controller>view</controller>
+                <action>productAbstract</action>
+                <visible>0</visible>
+            </product-abstract-attribute-gui>
+            <product-concrete-attribute-gui>
                 <label>Product Attributes Management</label>
                 <title>Product Attributes Management</title>
                 <bundle>product-attribute-gui</bundle>
-            </products>
+                <controller>view</controller>
+                <action>product</action>
+                <visible>0</visible>
+            </product-concrete-attribute-gui>
         </pages>
     </product>
 </config>
