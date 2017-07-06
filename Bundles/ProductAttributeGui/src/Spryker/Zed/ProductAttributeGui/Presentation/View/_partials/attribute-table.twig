@@ -4,15 +4,15 @@
         <input type="hidden" name="attribute_values_form[hidden_product_id]" id="attribute_values_form_hidden_product_id" value="{{ idProductConcrete }}" />
         <thead>
         <tr>
-            <th>key</th>
+            <th>Key</th>
             {% for localeCode,localeData in locales %}
                 {% if localeCode == '_' %}
-                    <th>{{ 'default' }}</th>
+                    <th>{{ 'Default' }}</th>
                 {% else %}
                     <th>{{ localeData.locale_name }}</th>
                 {% endif %}
             {% endfor %}
-            <th>action</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
