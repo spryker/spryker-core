@@ -227,6 +227,22 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->getFactory()
+            ->createWriterModel()
+            ->persistProductAbstractPriceCollection($productAbstractTransfer);
+    }
+
+    /**
      * Specification:
      * - Create a new product price entity if it doesn't exists by concrete product id and price type.
      * - Updates the price of a product price entity if it exists by concrete product id and price type.
@@ -241,6 +257,69 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()->createWriterModel()->persistProductConcretePrice($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->getFactory()->createWriterModel()->persistProductConcretePriceCollection($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findPricesBySku($sku)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findPricesBySku($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findProductAbstractPrices($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findProductConcretePrices($idProductConcrete, $idProductAbstract);
     }
 
 }

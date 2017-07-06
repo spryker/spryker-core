@@ -1,0 +1,9 @@
+class_name: ProductLabelDiscountConnectorBusinessTester
+modules:
+  enabled:
+    - \SprykerTest\Shared\Testify\Helper\Environment
+    - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+    - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+    - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+    - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+    - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper

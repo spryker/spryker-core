@@ -33,4 +33,14 @@ class ProductRelationCollectorToPriceBridge implements ProductRelationCollectorT
         return $this->priceFacade->getPriceBySku($sku);
     }
 
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findPricesBySku($sku)
+    {
+        return $this->priceFacade->findPricesBySku($sku);
+    }
+
 }

@@ -23,4 +23,18 @@ interface ProductLabelClientInterface
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName);
 
+    /**
+     * Specification:
+     * - Finds a list of product labels by their IDs.
+     * - The result contains valid labels from the label dictionary in the given locale.
+     *
+     * @api
+     *
+     * @param array $idProductLabels
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     */
+    public function findLabels(array $idProductLabels, $localeName);
+
 }

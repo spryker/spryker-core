@@ -109,7 +109,20 @@ class LabelReader implements LabelReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
+     * @return int[]
+     */
+    public function findAllLabelIdsByIdProductAbstract($idProductAbstract)
+    {
+        $productLabelEntities = $this->findEntitiesByIdProductAbstract($idProductAbstract);
+        $productLabelIds = $productLabelEntities->getColumnValues(ProductLabelTransfer::ID_PRODUCT_LABEL);
+
+        return $productLabelIds;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findEntitiesByIdProductAbstract($idProductAbstract)
     {

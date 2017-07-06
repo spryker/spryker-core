@@ -15,12 +15,14 @@
         <property name="path" type="string" />
         <property name="resource" type="string" />
         <property name="resourceAction" type="string" />
+        <property name="resourceId" type="int" />
         <property name="resourceParameters" type="array" />
 
         <property name="filter" type="ApiFilter" />
     </transfer>
 
     <transfer name="ApiResponse">
+        <property name="type" type="string" />
         <property name="code" type="string" />
         <property name="message" type="string" />
         <property name="stackTrace" type="string" />
@@ -29,6 +31,7 @@
         <property name="pagination" type="ApiPagination" />
         <property name="data" type="array" />
         <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
+        <property name="options" type="array"/>
     </transfer>
 
     <transfer name="ApiValidationError">
@@ -63,11 +66,17 @@
     <transfer name="ApiCollection">
         <property name="data" type="array"/>
         <property name="pagination" type="ApiPagination" />
+        <property name="options" type="array"/>
     </transfer>
 
     <transfer name="ApiItem">
         <property name="id" type="string"/>
         <property name="data" type="array"/>
+        <property name="options" type="array"/>
+    </transfer>
+
+    <transfer name="ApiOptions">
+        <property name="options" type="array"/>
     </transfer>
 
     <transfer name="ApiMeta">

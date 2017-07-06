@@ -9,7 +9,7 @@ namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Resource;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
 
 /**
  * @group Functional
@@ -37,76 +37,29 @@ class ResourceParametersPreProcessorTest extends Test
     /**
      * @return void
      */
-    public function testProcessFind()
+    public function testProcessNoParameters()
     {
-        $processor = new ResourceActionPreProcessor();
+        $processor = new ResourceParametersPreProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
-        $apiRequestTransfer->setRequestType('GET');
         $apiRequestTransfer->setPath('');
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('find', $apiRequestTransferAfter->getResourceAction());
+        $this->assertSame([], $apiRequestTransferAfter->getResourceParameters());
     }
 
     /**
      * @return void
      */
-    public function testProcessGet()
+    public function testProcessWithParameters()
     {
-        $processor = new ResourceActionPreProcessor();
+        $processor = new ResourceParametersPreProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
-        $apiRequestTransfer->setRequestType('GET');
-        $apiRequestTransfer->setPath('1');
+        $apiRequestTransfer->setPath('foo/bar');
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('get', $apiRequestTransferAfter->getResourceAction());
-    }
-
-    /**
-     * @return void
-     */
-    public function testProcessAdd()
-    {
-        $processor = new ResourceActionPreProcessor();
-
-        $apiRequestTransfer = new ApiRequestTransfer();
-        $apiRequestTransfer->setRequestType('POST');
-        $apiRequestTransfer->setPath('');
-
-        $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('add', $apiRequestTransferAfter->getResourceAction());
-    }
-
-    /**
-     * @return void
-     */
-    public function testProcessUpdate()
-    {
-        $processor = new ResourceActionPreProcessor();
-
-        $apiRequestTransfer = new ApiRequestTransfer();
-        $apiRequestTransfer->setRequestType('PATCH');
-        $apiRequestTransfer->setPath('1');
-
-        $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('update', $apiRequestTransferAfter->getResourceAction());
-    }
-
-    /**
-     * @return void
-     */
-    public function testProcessRemove()
-    {
-        $processor = new ResourceActionPreProcessor();
-
-        $apiRequestTransfer = new ApiRequestTransfer();
-        $apiRequestTransfer->setRequestType('DELETE');
-        $apiRequestTransfer->setPath('1');
-
-        $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
-        $this->assertSame('remove', $apiRequestTransferAfter->getResourceAction());
+        $this->assertSame(['foo', 'bar'], $apiRequestTransferAfter->getResourceParameters());
     }
 
 }

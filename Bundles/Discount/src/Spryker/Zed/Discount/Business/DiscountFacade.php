@@ -642,4 +642,21 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
             ->hydrate($orderTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getQueryStringValueOptions($type)
+    {
+        return $this->getFactory()
+            ->createQueryStringMetaDataProviderFactory()
+            ->createMetaProviderByType($type)
+            ->getQueryStringValueOptions();
+    }
+
 }

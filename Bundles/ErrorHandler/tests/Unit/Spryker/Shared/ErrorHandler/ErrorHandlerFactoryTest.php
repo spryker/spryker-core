@@ -95,7 +95,7 @@ class ErrorHandlerFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testCreateErrorHandlerShouldReturnErrorHandlerWithConfiguredErrorRendererWhenSapiNotCliAndErrorRendererConfigGiven()
+    public function testCreateErrorHandlerShouldReturnErrorHandlerWithConfiguredWebExceptionErrorRendererWhenSapiNotCliAndErrorRendererConfigGiven()
     {
         $errorHandlerFactoryMock = $this->getErrorHandlerFactoryMock('ZED', ['isCliCall', 'createWebErrorRenderer']);
         $errorHandlerFactoryMock->expects($this->once())->method('isCliCall')->willReturn(false);
@@ -107,6 +107,27 @@ class ErrorHandlerFactoryTest extends PHPUnit_Framework_TestCase
         $configProperty = $this->getConfigReflectionProperty();
         $config = $configProperty->getValue();
         $config[ErrorHandlerConstants::ERROR_RENDERER] = WebExceptionErrorRenderer::class;
+        $configProperty->setValue($config);
+
+        $errorHandler = $errorHandlerFactoryMock->createErrorHandler();
+        $this->assertInstanceOf(ErrorHandler::class, $errorHandler);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateErrorHandlerShouldReturnErrorHandlerWithConfiguredWebHtmlErrorRendererWhenSapiNotCliAndErrorRendererConfigGiven()
+    {
+        $errorHandlerFactoryMock = $this->getErrorHandlerFactoryMock('ZED', ['isCliCall', 'createWebErrorRenderer']);
+        $errorHandlerFactoryMock->expects($this->once())->method('isCliCall')->willReturn(false);
+        $errorHandlerFactoryMock->expects($this->once())->method('createWebErrorRenderer')
+            ->with(WebHtmlErrorRenderer::class)
+            ->willReturn(new WebHtmlErrorRenderer('ZED'));
+
+        $this->unsetAllErrorRelatedConfigs();
+        $configProperty = $this->getConfigReflectionProperty();
+        $config = $configProperty->getValue();
+        $config[ErrorHandlerConstants::ERROR_RENDERER] = WebHtmlErrorRenderer::class;
         $configProperty->setValue($config);
 
         $errorHandler = $errorHandlerFactoryMock->createErrorHandler();
