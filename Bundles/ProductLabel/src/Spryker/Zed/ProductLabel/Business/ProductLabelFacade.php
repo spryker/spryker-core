@@ -188,4 +188,14 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->checkAndTouchAllLabels();
     }
 
+    /**
+     * @return void
+     */
+    public function updateDynamicProductLabelRelations()
+    {
+        $this->getFactory()
+            ->createProductAbstractRelationUpdater()
+            ->updateProductLabelRelations();
+    }
+
 }

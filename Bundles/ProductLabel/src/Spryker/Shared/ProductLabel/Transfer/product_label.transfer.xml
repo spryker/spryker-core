@@ -36,4 +36,10 @@
         <property name="frontEndReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductLabelProductAbstractRelations">
+        <property name="idProductLabel" type="int"/>
+        <property name="idsProductAbstractToAssign" type="array"/>
+        <property name="idsProductAbstractToDeAssign" type="array"/>
+    </transfer>
+
 </transfers>

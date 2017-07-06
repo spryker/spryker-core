@@ -146,4 +146,15 @@ interface ProductLabelFacadeInterface
      */
     public function checkLabelValidityDateRangeAndTouch();
 
+    /**
+     * Specification:
+     * - Calls a stack of `ProductLabelRelationUpdaterPluginInterface` to collect necessary information to update product label relations.
+     * - The results of the plugins are used to persist product label relation changes into database.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function updateDynamicProductLabelRelations();
+
 }
