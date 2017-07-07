@@ -11,6 +11,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CmsBlockGuiConfig extends AbstractBundleConfig
 {
 
-    const CMS_BLOCK_TEMPLATE_PATH = '@Cms/template/';
+    const CMS_BLOCK_TEMPLATE_PATH = '@CmsBlock/template/';
+
+    /**
+     * @return string
+     */
+    public function getTemplatePath()
+    {
+        return static::CMS_BLOCK_TEMPLATE_PATH;
+    }
 
 }
