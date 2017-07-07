@@ -16,7 +16,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/twig" : "Is need by Yves twig function"
+    "spryker/twig" : "This package is required by Yves twig function"
   },
   "autoload": {
     "psr-0": {

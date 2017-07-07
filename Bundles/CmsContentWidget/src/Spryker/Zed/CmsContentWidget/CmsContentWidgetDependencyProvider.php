@@ -15,9 +15,9 @@ use Spryker\Zed\Kernel\Container;
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'cms_content_widget_parameter_mappers';
-    const FACADE_GLOSSARY = 'facade glossary';
-    const SERVICE_UTIL_ENCODING = 'util encoding';
+    const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'CMS CONTENT WIDGET PARAMETER MAPPER';
+    const FACADE_GLOSSARY = 'FACADE GLOSSARY';
+    const SERVICE_UTIL_ENCODING = 'UTIL ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

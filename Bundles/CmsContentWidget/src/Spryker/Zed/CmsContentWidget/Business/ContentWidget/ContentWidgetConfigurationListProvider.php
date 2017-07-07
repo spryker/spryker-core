@@ -9,19 +9,20 @@ namespace Spryker\Zed\CmsContentWidget\Business\ContentWidget;
 
 use Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer;
 use Generated\Shared\Transfer\CmsContentWidgetConfigurationTransfer;
+use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 
 class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurationListProviderInterface
 {
 
     /**
-     * @var array|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
+     * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
      */
     protected $contentWidgetConfigurationProviders = [];
 
     /**
-     * @param array|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[] $contentWidgetConfigurationProviders
+     * @param \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[] $contentWidgetConfigurationProviders
      */
-    public function __construct($contentWidgetConfigurationProviders)
+    public function __construct(array $contentWidgetConfigurationProviders)
     {
         $this->contentWidgetConfigurationProviders = $contentWidgetConfigurationProviders;
     }
@@ -50,8 +51,10 @@ class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurati
      *
      * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationTransfer
      */
-    protected function mapCmsContentWidgetConfigurationTransfer($functionName, $contentWidgetConfigurationProvider)
-    {
+    protected function mapCmsContentWidgetConfigurationTransfer(
+        $functionName,
+        CmsContentWidgetConfigurationProviderInterface $contentWidgetConfigurationProvider
+    ) {
         $cmsContentWidgetConfigurationTransfer = new CmsContentWidgetConfigurationTransfer();
         $cmsContentWidgetConfigurationTransfer->setFunctionName($functionName);
         $cmsContentWidgetConfigurationTransfer->setTemplates($contentWidgetConfigurationProvider->getAvailableTemplates());

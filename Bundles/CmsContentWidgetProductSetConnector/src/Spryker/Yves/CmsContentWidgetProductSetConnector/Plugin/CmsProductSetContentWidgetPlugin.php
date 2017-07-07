@@ -77,6 +77,7 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
         }
 
         $productSetKey = $this->extractProductSetKey($productSetKeys);
+
         return $this->getSingleProductSet($context, $productSetKeyMap, $productSetKey);
     }
 
