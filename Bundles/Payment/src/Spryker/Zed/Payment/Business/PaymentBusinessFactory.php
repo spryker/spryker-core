@@ -56,7 +56,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\PaymentHydratorPluginInterface[]
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface[]
      */
     protected function getPaymentHydrationPlugins()
     {

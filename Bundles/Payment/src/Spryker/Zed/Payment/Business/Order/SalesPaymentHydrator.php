@@ -17,7 +17,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Payment\Dependency\Plugin\PaymentHydratorPluginInterface[]
+     * @var \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface[]
      */
     protected $paymentHydratePlugins = [];
 
@@ -27,7 +27,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     protected $paymentQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Payment\Dependency\Plugin\PaymentHydratorPluginInterface[] $paymentHydratePlugins
+     * @param \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface[] $paymentHydratePlugins
      * @param \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface $paymentQueryContainer
      */
     public function __construct(
