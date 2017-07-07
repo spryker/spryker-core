@@ -44,6 +44,11 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         $result = [];
 
         $productLabelNewEntity = $this->getProductLabelNewEntity();
+
+        if (!$productLabelNewEntity->getIsActive()) {
+            return[];
+        }
+
         $relationsToDeAssign = $this->findRelationsBecomingInactive($productLabelNewEntity);
         $relationsToAssign = $this->findRelationsBecomingActive($productLabelNewEntity);
 

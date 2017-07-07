@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Psr\Log\LoggerInterface;
 
 interface ProductLabelFacadeInterface
 {
@@ -153,8 +154,10 @@ interface ProductLabelFacadeInterface
      *
      * @api
      *
+     * @param \Psr\Log\LoggerInterface|null $logger
+     *
      * @return void
      */
-    public function updateDynamicProductLabelRelations();
+    public function updateDynamicProductLabelRelations(LoggerInterface $logger = null);
 
 }

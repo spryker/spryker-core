@@ -102,7 +102,9 @@ class EditController extends AbstractController
         $aggregateFormTransfer = $aggregateForm->getData();
 
         $productLabelTransfer = $this->storeProductLabel($aggregateFormTransfer->getProductLabel());
-        $this->storeRelatedProduct($aggregateFormTransfer->getProductAbstractRelations());
+        if (!$productLabelTransfer->getIsDynamic()) {
+            $this->storeRelatedProduct($aggregateFormTransfer->getProductAbstractRelations());
+        }
 
         $this->addSuccessMessage(sprintf(
             'Product label #%d successfully updated.',

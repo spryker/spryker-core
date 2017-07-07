@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelReader;
@@ -157,14 +158,17 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationUpdaterInterface
+     * @param \Psr\Log\LoggerInterface|null $logger
+     *
+     * @return ProductAbstractRelation\ProductAbstractRelationUpdaterInterface
      */
-    public function createProductAbstractRelationUpdater()
+    public function createProductAbstractRelationUpdater(LoggerInterface $logger = null)
     {
         return new ProductAbstractRelationUpdater(
             $this->createProductAbstractRelationDeleter(),
             $this->createProductAbstractRelationWriter(),
-            $this->getProductLabelRelationUpdaterPlugins()
+            $this->getProductLabelRelationUpdaterPlugins(),
+            $logger
         );
     }
 

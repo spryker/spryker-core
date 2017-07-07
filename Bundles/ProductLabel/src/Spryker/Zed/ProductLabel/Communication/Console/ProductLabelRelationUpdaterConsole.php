@@ -38,7 +38,7 @@ class ProductLabelRelationUpdaterConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->updateDynamicProductLabelRelations();
+        $this->getFacade()->updateDynamicProductLabelRelations($this->getMessenger());
     }
 
 }
