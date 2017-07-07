@@ -17,8 +17,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
 {
 
     /**
-     * Specification:
-     * - Returns product abstract attributes with metadata info
+     * {@inheritdoc}
      *
      * @api
      *
@@ -34,8 +33,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Returns list of all product concrete attributes
+     * {@inheritdoc}
      *
      * @api
      *
@@ -51,8 +49,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Returns list of attributes metadata based on product abstract attributes
+     * {@inheritdoc}
      *
      * @api
      *
@@ -68,8 +65,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Returns list of attributes metadata based on product abstract attributes
+     * {@inheritdoc}
      *
      * @api
      *
@@ -85,8 +81,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Returns basic product abstract transfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -102,8 +97,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Returns basic product concrete transfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -119,8 +113,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Returns list of product keys suggested based on $searchText, super attributes are ignored
+     * {@inheritdoc}
      *
      * @api
      *
@@ -137,8 +130,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Save product abstract attributes
+     * {@inheritdoc}
      *
      * @api
      *
@@ -155,8 +147,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Save product concrete attributes
+     * {@inheritdoc}
      *
      * @api
      *
@@ -173,8 +164,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Return list of attribute keys
+     * {@inheritdoc}
      *
      * @api
      *
@@ -190,8 +180,7 @@ class ProductAttributeGuiFacade extends AbstractFacade implements ProductAttribu
     }
 
     /**
-     * Specification:
-     * - Return list of attribute values
+     * {@inheritdoc}
      *
      * @api
      *
