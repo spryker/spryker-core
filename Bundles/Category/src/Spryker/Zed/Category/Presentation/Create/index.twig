@@ -16,13 +16,8 @@
         {% block widget_content %}
 
             {{ form_start(categoryForm) }}
-                {{ form_row(categoryForm.category_key) }}
-                {{ form_row(categoryForm.is_active) }}
-                {{ form_row(categoryForm.is_in_menu) }}
-                {{ form_row(categoryForm.is_clickable) }}
-                {{ form_row(categoryForm.is_searchable) }}
-                {{ form_row(categoryForm.parent_category_node) }}
-                {{ form_row(categoryForm.extra_parents) }}
+                {% do categoryForm.localized_attributes.setRendered %}
+                {{ form_widget(categoryForm) }}
 
                 <hr />
                 <p><strong>{{ 'Translations' | trans }}</strong></p>
