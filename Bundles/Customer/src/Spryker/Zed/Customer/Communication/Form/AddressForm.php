@@ -172,6 +172,7 @@ class AddressForm extends AbstractType
             'label' => 'Address line 1',
             'constraints' => [
                 new NotBlank(),
+                new Length(['max' => 255]),
             ],
         ]);
 
@@ -187,6 +188,9 @@ class AddressForm extends AbstractType
     {
         $builder->add(static::FIELD_ADDRESS_2, 'text', [
             'label' => 'Address line 2',
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;
@@ -201,6 +205,9 @@ class AddressForm extends AbstractType
     {
         $builder->add(static::FIELD_ADDRESS_3, 'text', [
             'label' => 'Address line 3',
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;
@@ -217,6 +224,7 @@ class AddressForm extends AbstractType
             'label' => 'City',
             'constraints' => [
                 new NotBlank(),
+                new Length(['max' => 255]),
             ],
         ]);
 
@@ -272,6 +280,9 @@ class AddressForm extends AbstractType
     {
         $builder->add(static::FIELD_PHONE, 'text', [
             'label' => 'Phone',
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;
@@ -286,6 +297,9 @@ class AddressForm extends AbstractType
     {
         $builder->add(static::FIELD_COMPANY, 'text', [
             'label' => 'Company',
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;
