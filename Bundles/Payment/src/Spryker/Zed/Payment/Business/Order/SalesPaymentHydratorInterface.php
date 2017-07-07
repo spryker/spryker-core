@@ -9,7 +9,7 @@ namespace Spryker\Zed\Payment\Business\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface PaymentHydratorExecutorInterface
+interface SalesPaymentHydratorInterface
 {
 
     /**
@@ -17,6 +17,6 @@ interface PaymentHydratorExecutorInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrate(OrderTransfer $orderTransfer);
+    public function hydrateOrderWithPayment(OrderTransfer $orderTransfer);
 
 }

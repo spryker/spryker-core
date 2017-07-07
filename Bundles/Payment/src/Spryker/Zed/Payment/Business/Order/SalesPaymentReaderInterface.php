@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Payment\Business\Order;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 
 interface SalesPaymentReaderInterface
@@ -19,12 +18,5 @@ interface SalesPaymentReaderInterface
      * @return int
      */
     public function getPaymentMethodPriceToPay(SalesPaymentTransfer $paymentTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateOrderWithPayment(OrderTransfer $orderTransfer);
 
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Payment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
-use Spryker\Zed\Payment\Business\Order\PaymentHydratorExecutor;
+use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
@@ -45,11 +45,14 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Business\Order\PaymentHydratorExecutorInterface
+     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentHydratorInterface
      */
-    public function createPaymentHydratorExecutor()
+    public function createPaymentHydrator()
     {
-        return new PaymentHydratorExecutor($this->getPaymentHydrationPlugins());
+        return new SalesPaymentHydrator(
+            $this->getPaymentHydrationPlugins(),
+            $this->getQueryContainer()
+        );
     }
 
     /**
@@ -67,7 +70,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesPaymentReader(
             $this->getQueryContainer(),
-            $this->createPaymentHydratorExecutor()
+            $this->createPaymentHydrator()
         );
     }
 

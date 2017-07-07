@@ -82,7 +82,7 @@ class PaymentPluginExecutorTest extends PHPUnit_Framework_TestCase
      * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface|null $preCheckPluginMock
      * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface|null $orderSavePluginMock
      * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface|null $postCheckPluginMock
-     * @param  \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Ratepay\Business\Payment\PaymentSaverInterface $salesSaverMock
+     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Ratepay\Business\Payment\PaymentSaverInterface|null $salesSaverMock
      *
      * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor
      */

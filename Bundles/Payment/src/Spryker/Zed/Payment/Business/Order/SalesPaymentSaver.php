@@ -58,15 +58,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      */
     protected function executeSavePaymentMethodsTransaction(QuoteTransfer $quoteTransfer, $idSalesOrder)
     {
-        $paymentTransfer = $quoteTransfer->getPayment();
-        $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
-        $numberOfPayments = $quoteTransfer->getPayments()->count();
-        if ($numberOfPayments === 0) {
-            $salesPaymentEntity->setAmount($quoteTransfer->getTotals()->getGrandTotal());
-        }
-        $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
-        $salesPaymentEntity->save();
-
+        $this->saveSinglePayment($quoteTransfer, $idSalesOrder);
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
             $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
             $salesPaymentEntity->save();
@@ -99,6 +91,24 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
         $salesPaymentEntity->setAmount($paymentTransfer->getAmount());
 
         return $salesPaymentEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    protected function saveSinglePayment(QuoteTransfer $quoteTransfer, $idSalesOrder)
+    {
+        $paymentTransfer = $quoteTransfer->getPayment();
+        $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
+        $numberOfPayments = $quoteTransfer->getPayments()->count();
+        if ($numberOfPayments === 0) {
+            $salesPaymentEntity->setAmount($quoteTransfer->getTotals()->getGrandTotal());
+        }
+        $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
+        $salesPaymentEntity->save();
     }
 
 }

@@ -94,7 +94,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     public function hydrateOrderPayments(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()
-            ->createSalesPaymentReader()
+            ->createPaymentHydrator()
             ->hydrateOrderWithPayment($orderTransfer);
     }
 
