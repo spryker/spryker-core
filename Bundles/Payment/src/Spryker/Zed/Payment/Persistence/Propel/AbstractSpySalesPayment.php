@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Persistence\Propel;
+namespace Spryker\Zed\Payment\Persistence\Propel;
 
-use Orm\Zed\Sales\Persistence\Base\SpySalesPayment as BaseSpySalesPayment;
+use Orm\Zed\Payment\Persistence\Base\SpySalesPayment as BaseSpySalesPayment;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_sales_payment' table.

@@ -60,12 +60,13 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      */
     public function executeOrderSaverPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
+        $this->savePaymentPriceToPay($quoteTransfer, $checkoutResponseTransfer);
+
         if ($this->hasPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer)) {
             $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer);
             $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
         }
 
-        $this->salesPaymentSaver->saveOrderPayments($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -122,6 +123,17 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
         $quoteTransfer->requirePayment();
         $quoteTransfer->getPayment()
             ->requirePaymentProvider();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function savePaymentPriceToPay(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        $this->salesPaymentSaver->saveOrderPayments($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

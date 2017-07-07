@@ -20,7 +20,7 @@ interface PaymentQueryContainerInterface
      * @param string $paymentProvider
      * @param string $paymentMethod
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPaymentQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
      */
     public function queryPaymentMethodPriceToPay($idSalesOrder, $paymentProvider, $paymentMethod);
 
@@ -30,7 +30,7 @@ interface PaymentQueryContainerInterface
      * @param string $paymentProvider
      * @param string $paymentMethod
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPaymentMethodTypeQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery
      */
     public function queryPaymentMethodType($paymentProvider, $paymentMethod);
 
@@ -39,7 +39,7 @@ interface PaymentQueryContainerInterface
      *
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPaymentQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
      */
     public function queryPaymentMethodsByIdSalesOrder($idSalesOrder);
 

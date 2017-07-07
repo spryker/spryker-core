@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Payment\Persistence;
 
-use Orm\Zed\Sales\Persistence\SpySalesPaymentMethodTypeQuery;
-use Orm\Zed\Sales\Persistence\SpySalesPaymentQuery;
+use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery;
+use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -18,7 +18,7 @@ class PaymentPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPaymentQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
      */
     public function createSalesPaymentQuery()
     {
@@ -26,7 +26,7 @@ class PaymentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPaymentMethodTypeQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery
      */
     public function createSalesPaymentMethodTypeQuery()
     {

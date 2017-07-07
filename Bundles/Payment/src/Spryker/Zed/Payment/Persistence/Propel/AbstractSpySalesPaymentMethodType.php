@@ -4,9 +4,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Persistence\Propel;
+namespace Spryker\Zed\Payment\Persistence\Propel;
 
-use Orm\Zed\Sales\Persistence\Base\SpySalesPaymentMethodType as BaseSpySalesPaymentMethodType;
+use Orm\Zed\Payment\Persistence\Base\SpySalesPaymentMethodType as BaseSpySalesPaymentMethodType;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_sales_payment_method_type' table.

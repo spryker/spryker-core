@@ -22,7 +22,7 @@ class PaymentQueryContainer extends AbstractQueryContainer implements PaymentQue
      * @param string $paymentProvider
      * @param string $paymentMethod
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPaymentQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
      */
     public function queryPaymentMethodPriceToPay($idSalesOrder, $paymentProvider, $paymentMethod)
     {
@@ -41,7 +41,7 @@ class PaymentQueryContainer extends AbstractQueryContainer implements PaymentQue
      * @param string $paymentProvider
      * @param string $paymentMethod
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPaymentMethodTypeQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery
      */
     public function queryPaymentMethodType($paymentProvider, $paymentMethod)
     {
@@ -56,7 +56,7 @@ class PaymentQueryContainer extends AbstractQueryContainer implements PaymentQue
      *
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPaymentQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
      */
     public function queryPaymentMethodsByIdSalesOrder($idSalesOrder)
     {

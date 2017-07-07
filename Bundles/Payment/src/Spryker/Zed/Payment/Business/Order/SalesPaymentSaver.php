@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payment\Business\Order;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesPayment;
+use Orm\Zed\Payment\Persistence\SpySalesPayment;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -60,16 +60,17 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     {
         $paymentTransfer = $quoteTransfer->getPayment();
         $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
-
         $numberOfPayments = $quoteTransfer->getPayments()->count();
         if ($numberOfPayments === 0) {
             $salesPaymentEntity->setAmount($quoteTransfer->getTotals()->getGrandTotal());
         }
+        $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
         $salesPaymentEntity->save();
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
             $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
             $salesPaymentEntity->save();
+            $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
         }
     }
 
@@ -77,7 +78,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesPayment
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPayment
      */
     protected function mapSalesPaymentEntity(PaymentTransfer $paymentTransfer, $idSalesOrder)
     {

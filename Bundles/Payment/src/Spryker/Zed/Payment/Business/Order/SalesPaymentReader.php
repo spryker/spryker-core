@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payment\Business\Order;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesPayment;
+use Orm\Zed\Payment\Persistence\SpySalesPayment;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
 class SalesPaymentReader implements SalesPaymentReaderInterface
@@ -79,7 +79,7 @@ class SalesPaymentReader implements SalesPaymentReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesPayment $salesPaymentEntity
+     * @param \Orm\Zed\Payment\Persistence\SpySalesPayment $salesPaymentEntity
      *
      * @return \Generated\Shared\Transfer\PaymentTransfer
      */
