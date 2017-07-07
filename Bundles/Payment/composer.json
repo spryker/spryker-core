@@ -12,7 +12,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
+    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout.",
+    "spryker/sales": "If you want to use SalesPayment saver plugin."
   },
   "autoload": {
     "psr-0": {
