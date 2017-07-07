@@ -36,7 +36,7 @@ class CategoryType extends AbstractType
     /**
      * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
      */
-    protected $formPlugins;
+    protected $formPlugins = [];
 
     /**
      * @return string

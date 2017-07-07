@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector;
 
-use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
@@ -46,7 +45,7 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
         return [
             static::CMS_BLOCK_CATEGORY_POSITION_TOP,
             static::CMS_BLOCK_CATEGORY_POSITION_MIDDLE,
-            static::CMS_BLOCK_CATEGORY_POSITION_BOTTOM
+            static::CMS_BLOCK_CATEGORY_POSITION_BOTTOM,
         ];
     }
 

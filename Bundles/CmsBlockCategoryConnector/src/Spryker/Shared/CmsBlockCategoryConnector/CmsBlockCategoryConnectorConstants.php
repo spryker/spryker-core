@@ -9,5 +9,4 @@ namespace Spryker\Shared\CmsBlockCategoryConnector;
 
 interface CmsBlockCategoryConnectorConstants
 {
-
 }

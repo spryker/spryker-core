@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Category;
 
 use Spryker\Shared\Category\CategoryConfig as SharedCategoryConfig;
-use Spryker\Shared\Category\CategoryConstants;
 
 class CategoryConfig extends SharedCategoryConfig
 {
@@ -24,7 +23,7 @@ class CategoryConfig extends SharedCategoryConfig
     public function getTemplateList()
     {
         return [
-            static::CATEGORY_TEMPLATE_DEFAULT => ''
+            static::CATEGORY_TEMPLATE_DEFAULT => '',
         ];
     }
 
