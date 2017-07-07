@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Category\Communication\Console;
 
+use Exception;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
@@ -73,7 +73,7 @@ class CategoryTemplateImporter extends Console
             ->findOne();
 
         if (empty($spyCategoryTemplate)) {
-            throw new \Exception('Please specify CATEGORY_TEMPLATE_DEFAULT in your category template list configuration');
+            throw new Exception('Please specify CATEGORY_TEMPLATE_DEFAULT in your category template list configuration');
         }
 
         $query = SpyCategoryQuery::create()

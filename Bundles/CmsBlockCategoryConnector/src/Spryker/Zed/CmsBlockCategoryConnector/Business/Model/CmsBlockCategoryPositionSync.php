@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
-
 
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
@@ -10,19 +13,20 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQ
 
 class CmsBlockCategoryPositionSync implements CmsBlockCategoryPositionSyncInterface
 {
+
     /**
-     * @var CmsBlockCategoryConnectorQueryContainerInterface
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
     protected $cmsBlockCategoryConnectorQueryContainer;
 
     /**
-     * @var CmsBlockCategoryConnectorConfig
+     * @var \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig
      */
     protected $cmsBlockCategoryConnectorConfig;
 
     /**
-     * @param CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
-     * @param CmsBlockCategoryConnectorConfig $cmsBlockCategoryConnectorConfig
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig $cmsBlockCategoryConnectorConfig
      */
     public function __construct(
         CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer,
@@ -54,7 +58,7 @@ class CmsBlockCategoryPositionSync implements CmsBlockCategoryPositionSyncInterf
     }
 
     /**
-     * @return SpyCmsBlockCategoryPosition
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition
      */
     protected function createSpyCmsBlockCategoryPosition()
     {

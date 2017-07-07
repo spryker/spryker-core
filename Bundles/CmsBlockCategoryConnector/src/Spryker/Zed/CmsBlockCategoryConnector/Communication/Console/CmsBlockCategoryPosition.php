@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Console;
 
+use Exception;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
-use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPosition;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
@@ -70,7 +70,7 @@ class CmsBlockCategoryPosition extends Console
             ->findOne();
 
         if ($spyCmsBlockCategoryPosition) {
-            throw new \Exception('Please add valid default position for import');
+            throw new Exception('Please add valid default position for import');
         }
 
         $spyCmsBlockCategoryConnections = SpyCmsBlockCategoryConnectorQuery::create()

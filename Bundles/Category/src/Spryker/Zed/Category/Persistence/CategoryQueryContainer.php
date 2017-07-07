@@ -1108,4 +1108,5 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         return $this->queryCategoryTemplate()
             ->filterByName($nameCategoryTemplate);
     }
+
 }

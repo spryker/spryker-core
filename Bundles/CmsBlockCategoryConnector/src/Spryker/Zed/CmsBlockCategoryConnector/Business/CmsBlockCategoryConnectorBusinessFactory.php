@@ -77,7 +77,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CmsBlockCategoryPositionSync
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionSync
      */
     public function createCmsBlockCategoryPositionSync()
     {
