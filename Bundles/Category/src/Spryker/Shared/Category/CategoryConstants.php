@@ -24,12 +24,4 @@ interface CategoryConstants
     const PARAM_ID_PARENT_NODE = 'id-parent-node';
     const PARAM_ID_CATEGORY = 'id-category';
 
-    /**
-     * Specification:
-     * - A list of available templates for category view
-     *
-     * @api
-     */
-    const TEMPLATE_LIST = 'TEMPLATE_LIST';
-
 }

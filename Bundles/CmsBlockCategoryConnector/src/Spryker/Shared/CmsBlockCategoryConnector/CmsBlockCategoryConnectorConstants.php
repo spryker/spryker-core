@@ -10,12 +10,4 @@ namespace Spryker\Shared\CmsBlockCategoryConnector;
 interface CmsBlockCategoryConnectorConstants
 {
 
-    /**
-     * Specification:
-     * - Available positions of blocks on a category page
-     *
-     * @api
-     */
-    const CMS_BLOCK_CATEGORY_POSITION_LIST = 'CMS_BLOCK_CATEGORY_POSITION_LIST';
-
 }

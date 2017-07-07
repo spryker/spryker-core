@@ -23,7 +23,9 @@ class CategoryConfig extends SharedCategoryConfig
      */
     public function getTemplateList()
     {
-        return $this->get(CategoryConstants::TEMPLATE_LIST);
+        return [
+            static::CATEGORY_TEMPLATE_DEFAULT => ''
+        ];
     }
 
 }
