@@ -145,7 +145,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         $templateContent = $this->readTemplateContents($templateFile);
 
         preg_match_all($this->getPlaceholderPattern(), $templateContent, $cmsPlaceholderLine);
-        if (count($cmsPlaceholderLine) == 0) {
+        if (count($cmsPlaceholderLine) === 0) {
             throw new MissingPlaceholdersException(
                 sprintf(
                     'No placeholders found in "%s" template.',
