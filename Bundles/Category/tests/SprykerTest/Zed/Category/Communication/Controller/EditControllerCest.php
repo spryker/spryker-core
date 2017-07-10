@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Category\Communication\Controller;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use SprykerTest\Zed\Category\CommunicationTester;
 
 /**
@@ -50,13 +51,14 @@ class EditControllerCest
     }
 
     /**
-     * @param $categoryTransferB
+     * Needed to use Request::createFromGlobals()
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransferB
      *
      * @return void
      */
-    protected function mockGlobalGet($categoryTransferB)
+    protected function mockGlobalGet(CategoryTransfer $categoryTransferB)
     {
-// Needed to use Request::createFromGlobals()
         $_GET['id-category'] = $categoryTransferB->getIdCategory();
     }
 
