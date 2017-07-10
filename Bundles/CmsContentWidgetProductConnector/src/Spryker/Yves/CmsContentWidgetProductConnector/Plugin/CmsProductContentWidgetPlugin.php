@@ -144,6 +144,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
 
             $products[] = $productStorageTransfer;
         }
+
         return $products;
     }
 
