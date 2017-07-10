@@ -329,7 +329,14 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
                             'lte' => 12300,
-                        ]))));
+                        ]))))
+                ->addFilter((new Nested())
+                ->setPath(PageIndexMap::INTEGER_FACET)
+                ->setQuery((new BoolQuery())
+                    ->addFilter((new Term)
+                        ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'baz'))
+                    ->addFilter((new Range())
+                        ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, []))));
 
                 $parameters = [
                     'foo' => [
@@ -338,7 +345,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     'bar' => [
                         'max' => 123,
                     ], // open range
-                    'baz' => [], // empty range
+                    'baz' => '-', // empty range
                 ];
 
                 return [$searchConfig, $expectedQuery, $parameters];

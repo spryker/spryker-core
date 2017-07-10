@@ -100,7 +100,7 @@ class NestedRangeQuery extends AbstractNestedQuery
             $this->minValue = $values[0];
         }
 
-        if (count($values) > 1) {
+        if (count($values) > 1 && $values[1] !== '') {
             $this->maxValue = $values[1];
         }
 
