@@ -37,7 +37,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_PROPEL_CONNECTION = 'PROPEL_CONNECTION_PLUGIN';
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
     const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
-    const FACADE_MONEY = 'money plugin';
+    const PLUGIN_DISCOUNTABLE_ITEM_FILTER = 'PLUGIN_DISCOUNTABLE_ITEM_FILTER';
+    const FACADE_MONEY = 'MONEY_PLUGIN';
 
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
@@ -57,6 +58,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCalculatorPlugins($container);
         $container = $this->addDecisionRulePlugins($container);
         $container = $this->addCollectorPlugins($container);
+        $container = $this->addDiscountableItemFilterPlugins($container);
         $container = $this->addMoneyFacade($container);
 
         return $container;
@@ -118,6 +120,18 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             new MonthDecisionRulePlugin(),
             new TimeDecisionRulePlugin(),
         ];
+    }
+
+    /**
+     *
+     * This is additional filter applied to discountable items, the plugins are triggered after discount collectors run
+     * this ensures that certain items are never picked by discount calculation and removed from DiscountableItem stack.
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface[]
+     */
+    protected function getDiscountableItemFilterPlugins()
+    {
+        return [];
     }
 
     /**
@@ -201,6 +215,20 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::COLLECTOR_PLUGINS] = function () {
             return $this->getCollectorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountableItemFilterPlugins($container)
+    {
+        $container[static::PLUGIN_DISCOUNTABLE_ITEM_FILTER] = function () {
+            return $this->getDiscountableItemFilterPlugins();
         };
 
         return $container;

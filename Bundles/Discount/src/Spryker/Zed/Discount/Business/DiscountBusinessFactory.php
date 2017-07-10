@@ -25,6 +25,7 @@ use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
+use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
@@ -444,6 +445,22 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     protected function createMoneyValueConverter()
     {
         return new MoneyValueConverter($this->getMoneyFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Filter\DiscountableItemFilterInterface
+     */
+    protected function createDiscountableItemFilter()
+    {
+        return new DiscountableItemFilter($this->getDiscountableItemFilterPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface[]
+     */
+    protected function getDiscountableItemFilterPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER);
     }
 
 }
