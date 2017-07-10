@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeTableMap;
+use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;

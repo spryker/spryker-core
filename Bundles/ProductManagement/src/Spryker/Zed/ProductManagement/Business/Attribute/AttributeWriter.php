@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;

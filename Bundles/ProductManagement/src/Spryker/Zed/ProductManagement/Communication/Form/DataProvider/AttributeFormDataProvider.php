@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
@@ -85,7 +85,7 @@ class AttributeFormDataProvider
     }
 
     /**
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute $productManagementAttributeEntity
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productManagementAttributeEntity
      *
      * @return array
      */
@@ -103,7 +103,7 @@ class AttributeFormDataProvider
     /**
      * @param int $idProductManagementAttribute
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute|null
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute|null
      */
     protected function getAttributeEntity($idProductManagementAttribute)
     {

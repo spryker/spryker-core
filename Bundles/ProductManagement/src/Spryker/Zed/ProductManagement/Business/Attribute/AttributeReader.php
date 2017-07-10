@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
+use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTableMap;
+use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
 use PDO;
 use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
@@ -116,7 +116,7 @@ class AttributeReader implements AttributeReaderInterface
 
     /**
      * @param string $searchText
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery $query
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery $query
      *
      * @return void
      */
@@ -136,7 +136,7 @@ class AttributeReader implements AttributeReaderInterface
     /**
      * @param int $idProductManagementAttribute
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute|null
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute|null
      */
     protected function getAttributeEntity($idProductManagementAttribute)
     {

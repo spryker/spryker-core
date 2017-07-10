@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
@@ -52,7 +52,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute $productAttributeEntity
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productAttributeEntity
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
@@ -74,7 +74,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute[]|\Propel\Runtime\Collection\ObjectCollection $productAttributeEntityCollection
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute[]|\Propel\Runtime\Collection\ObjectCollection $productAttributeEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
@@ -90,7 +90,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute $productAttributeEntity
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productAttributeEntity
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
@@ -112,7 +112,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue $productAttributeValueEntity
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue $productAttributeValueEntity
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer
      */
@@ -125,7 +125,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue[]|\Propel\Runtime\Collection\ObjectCollection $productAttributeValueEntityCollection
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue[]|\Propel\Runtime\Collection\ObjectCollection $productAttributeValueEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */

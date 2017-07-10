@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 
 class AttributeValueWriter implements AttributeValueWriterInterface
@@ -75,7 +75,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
     /**
      * @param int $idProductManagementAttribute
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\Base\SpyProductManagementAttributeValue[]
+     * @return \Orm\Zed\ProductAttribute\Persistence\Base\SpyProductManagementAttributeValue[]
      */
     protected function getExistingAttributeValues($idProductManagementAttribute)
     {
@@ -109,7 +109,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue[] $attributeValues
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue[] $attributeValues
      *
      * @return void
      */

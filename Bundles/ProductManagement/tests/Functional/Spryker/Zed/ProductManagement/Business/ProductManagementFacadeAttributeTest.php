@@ -16,9 +16,9 @@ use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValue;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslation;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslation;
 use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductManagement\Business\ProductManagementBusinessFactory;
@@ -319,7 +319,7 @@ class ProductManagementFacadeAttributeTest extends Test
     /**
      * @param array $values
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttribute
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute
      */
     protected function createProductManagementAttributeEntity(array $values = [])
     {
