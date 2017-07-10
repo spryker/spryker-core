@@ -41,10 +41,12 @@ interface AttributeMapperInterface
     /**
      * $productAttributes format
      * [
-     *   [default] => [key=>value, key2=>value2]
+     *   [_] => [key=>value, key2=>value2]
      *   [46] => [key=>value]
      *   [66] => [key3=>value3, key5=value5]
      * ]
+     *
+     * @see ProductAttributeConfig::DEFAULT_LOCALE
      *
      * @param array $productAttributes
      *
@@ -55,10 +57,12 @@ interface AttributeMapperInterface
     /**
      * $productAttributes format
      * [
-     *   [default] => [key=>value, key2=>value2]
+     *   [_] => [key=>value, key2=>value2]
      *   [46] => [key=>value]
      *   [66] => [key3=>value3, key5=value5]
      * ]
+     *
+     * @see ProductAttributeConfig::DEFAULT_LOCALE
      *
      * @param array $productAttributes
      *

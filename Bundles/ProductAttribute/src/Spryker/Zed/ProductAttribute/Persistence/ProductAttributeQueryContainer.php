@@ -240,10 +240,12 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     /**
      * $attributes format
      * [
-     *   [default] => [key=>value, key2=>value2]
+     *   [_] => [key=>value, key2=>value2]
      *   [46] => [key=>value]
      *   [66] => [key3=>value3, key5=value5]
      * ]
+     *
+     * @see ProductAttributeConfig::DEFAULT_LOCALE
      *
      * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $query
      * @param array $attributes
