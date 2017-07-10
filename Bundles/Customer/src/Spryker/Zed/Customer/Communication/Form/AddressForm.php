@@ -46,10 +46,11 @@ class AddressForm extends AbstractType
     {
         $resolver->setRequired(static::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);
-        $resolver->setRequired(static::OPTION_PREFERRED_COUNTRY_CHOICES);
+        $resolver->setDefined(static::OPTION_PREFERRED_COUNTRY_CHOICES);
 
         $resolver->setDefaults([
             'required' => false,
+            static::OPTION_PREFERRED_COUNTRY_CHOICES => [],
         ]);
     }
 
