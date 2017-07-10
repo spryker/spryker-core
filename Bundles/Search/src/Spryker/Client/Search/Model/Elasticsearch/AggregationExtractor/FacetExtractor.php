@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
+use Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation;
 
 class FacetExtractor implements AggregationExtractorInterface
@@ -73,8 +74,10 @@ class FacetExtractor implements AggregationExtractorInterface
 
             foreach ($nameBucket[$fieldName . StringFacetAggregation::VALUE_SUFFIX]['buckets'] as $valueBucket) {
                 $facetResultValueTransfer = new FacetSearchResultValueTransfer();
+                $value = $this->getFacetValue($valueBucket);
+
                 $facetResultValueTransfer
-                    ->setValue($valueBucket['key'])
+                    ->setValue($value)
                     ->setDocCount($valueBucket['doc_count']);
 
                 $facetResultValues->append($facetResultValueTransfer);
@@ -84,6 +87,30 @@ class FacetExtractor implements AggregationExtractorInterface
         }
 
         return $facetResultValues;
+    }
+
+    /**
+     * @param array $valueBucket
+     *
+     * @return mixed
+     */
+    protected function getFacetValue(array $valueBucket)
+    {
+        $value = $valueBucket['key'];
+
+        // TODO: refactor
+        $plugin = $this->facetConfigTransfer->getValueTransformer();
+        if ($plugin) {
+            $valueTransformerPlugin = new $plugin();
+
+            if (!$valueTransformerPlugin instanceof FacetSearchResultValueTransformerPluginInterface) {
+                throw new \Exception('Ain\'t good!');
+            }
+
+            $value = $valueTransformerPlugin->transformForDisplay($value);
+        }
+
+        return $value;
     }
 
 }

@@ -63,4 +63,12 @@ class ProductLabelFactory extends AbstractFactory
         return new ProductAbstractRelationKeyBuilder();
     }
 
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(ProductLabelDependencyProvider::STORE);
+    }
+
 }

@@ -53,6 +53,40 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
+     * @param int $idProductLabel
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findStorageProductLabelByIdProductLabel($idProductLabel, $localeName)
+    {
+        $dictionary = $this->getLabelDictionary($localeName);
+
+        if (!array_key_exists($idProductLabel, $dictionary)) {
+            return null;
+        }
+
+        return $dictionary[$idProductLabel];
+    }
+
+    /**
+     * @param int $labelName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findStorageProductLabelByName($labelName, $localeName)
+    {
+        $dictionary = $this->getLabelDictionaryByName($localeName);
+
+        if (!array_key_exists($labelName, $dictionary)) {
+            return null;
+        }
+
+        return $dictionary[$labelName];
+    }
+
+    /**
      * @param int[] $idsProductLabel
      * @param string $localeName
      *
@@ -95,6 +129,22 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
+    protected function getLabelDictionaryByName($localeName)
+    {
+        static $labelDictionaryByName = null;
+
+        if ($labelDictionaryByName === null) {
+            $labelDictionaryByName = $this->initializeLabelDictionaryByName($localeName);
+        }
+
+        return $labelDictionaryByName;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     */
     protected function initializeLabelDictionary($localeName)
     {
         $labelsByIds = [];
@@ -107,6 +157,23 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
         }
 
         return $labelsByIds;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function initializeLabelDictionaryByName($localeName)
+    {
+        $labelDictionaryByName = [];
+
+        $labelDictionary = $this->getLabelDictionary($localeName);
+        foreach ($labelDictionary as $storageProductLabelTransfer) {
+            $labelDictionaryByName[$storageProductLabelTransfer->getName()] = $storageProductLabelTransfer;
+        }
+
+        return $labelDictionaryByName;
     }
 
     /**
