@@ -62,7 +62,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return new Discount(
             $this->getQueryContainer(),
-            $this->createFilteredCalculator(),
+            $this->createCalculator(),
             $this->createDecisionRuleBuilder(),
             $this->createVoucherValidator()
         );
@@ -93,19 +93,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createCalculatorFixed()
     {
         return new Fixed();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface
-     */
-    protected function createCalculator()
-    {
-        return new Calculator(
-            $this->createCollectorBuilder(),
-            $this->getMessengerFacade(),
-            $this->createDistributor(),
-            $this->getCalculatorPlugins()
-        );
     }
 
     /**
@@ -451,7 +438,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface
      */
-    protected function createFilteredCalculator()
+    protected function createCalculator()
     {
         return new FilteredCalculator(
             $this->createCollectorBuilder(),
