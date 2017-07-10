@@ -22,7 +22,7 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
 
-    const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9_-]*" -->/';
+    const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
     const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
 
     /**

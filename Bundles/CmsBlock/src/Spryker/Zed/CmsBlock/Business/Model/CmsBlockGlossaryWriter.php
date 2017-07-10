@@ -84,7 +84,6 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     {
         $glossaryKeys = $this->cmsBlockQueryContainer
             ->queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock)
-            ->select([SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_GLOSSARY_KEY])
             ->find()
             ->getColumnValues('FkGlossaryKey');
 

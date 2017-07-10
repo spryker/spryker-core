@@ -19,7 +19,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/util-encoding": "Optional dependency. Add this bundle if you want to use it's functionality."
+    "spryker/util-encoding": "If you want to use its encoding functionality."
   },
   "autoload": {
     "psr-0": {

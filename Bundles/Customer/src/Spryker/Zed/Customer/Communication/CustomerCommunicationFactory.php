@@ -108,8 +108,17 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     {
         return new AddressFormDataProvider(
             $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getStore()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::STORE);
     }
 
 }
