@@ -75,15 +75,15 @@
           "include_in_all": false,
           "index": "not_analyzed"
         },
-        "is_active": {
+        "is-active": {
           "type": "boolean",
           "include_in_all": false
         },
-        "active_from": {
+        "active-from": {
           "type": "date",
           "include_in_all": false
         },
-        "active_to": {
+        "active-to": {
           "type": "date",
           "include_in_all": false
         },
