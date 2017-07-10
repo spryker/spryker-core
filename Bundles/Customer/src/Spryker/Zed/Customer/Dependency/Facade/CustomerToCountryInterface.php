@@ -11,6 +11,8 @@ interface CustomerToCountryInterface
 {
 
     /**
+     * @deprecated Use getCountryByIso2Code() instead.
+     *
      * @param string $iso2Code
      *
      * @return int
@@ -28,5 +30,12 @@ interface CustomerToCountryInterface
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries();
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso2Code($iso2Code);
 
 }
