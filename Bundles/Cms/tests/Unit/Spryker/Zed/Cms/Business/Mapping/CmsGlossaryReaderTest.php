@@ -96,6 +96,13 @@ class CmsGlossaryReaderTest extends CmsMocks
                 ->willReturn(['test_template']);
         }
 
+        $cmsConfigMock
+            ->method('getPlaceholderPattern')
+            ->willReturn('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/');
+
+        $cmsConfigMock->method('getPlaceholderValuePattern')
+            ->willReturn('/"([^"]+)"/');
+
         return $this->getMockBuilder(CmsGlossaryReader::class)
             ->setConstructorArgs([$cmsQueryContainerMock, $localeFacadeMock, $cmsConfigMock])
             ->setMethods([
