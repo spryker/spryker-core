@@ -197,9 +197,7 @@ class IndexController extends AbstractController
                 if ($this->getFactory()->getStockFacade()->updateStockProduct($stockProductTransfer) > 0) {
                     $isAnyItemsUpdated = true;
                 }
-            }
-
-            if ($stockProductTransfer->getIdStockProduct() === null && (int)$stockProductTransfer->getQuantity() !== 0) {
+            } elseif ($stockProductTransfer->getIdStockProduct() === null && ((int)$stockProductTransfer->getQuantity() !== 0) || $stockProductTransfer->getIsNeverOutOfStock()) {
                 $stockProductTransfer->setSku($availabilityStockTransfer->getSku());
                 if ($this->getFactory()->getStockFacade()->createStockProduct($stockProductTransfer) > 0) {
                     $isAnyItemsUpdated = true;
