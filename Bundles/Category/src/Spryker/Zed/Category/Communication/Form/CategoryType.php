@@ -8,17 +8,21 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use ArrayObject;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CategoryType extends AbstractType
 {
 
     const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
+    const OPTION_CATEGORY_QUERY_CONTAINER = 'category query container';
 
     const FIELD_CATEGORY_KEY = 'category_key';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -49,7 +53,9 @@ class CategoryType extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(static::OPTION_PARENT_CATEGORY_NODE_CHOICES);
+        $resolver
+            ->setRequired(static::OPTION_PARENT_CATEGORY_NODE_CHOICES)
+            ->setRequired(static::OPTION_CATEGORY_QUERY_CONTAINER);
     }
 
     /**
@@ -61,7 +67,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addCategoryKeyField($builder)
+            ->addCategoryKeyField($builder, $options[static::OPTION_CATEGORY_QUERY_CONTAINER])
             ->addIsActiveField($builder)
             ->addIsInMenuField($builder)
             ->addIsClickableField($builder)
@@ -73,14 +79,24 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      *
      * @return $this
      */
-    protected function addCategoryKeyField(FormBuilderInterface $builder)
+    protected function addCategoryKeyField(FormBuilderInterface $builder, CategoryQueryContainerInterface $categoryQueryContainer)
     {
         $builder->add(static::FIELD_CATEGORY_KEY, 'text', [
             'constraints' => [
                 new NotBlank(),
+                new Callback([
+                    'methods' => [
+                        function ($key, ExecutionContextInterface $contextInterface) use ($categoryQueryContainer) {
+                            if ($categoryQueryContainer->queryCategoryByKey($key)->count() > 0) {
+                                $contextInterface->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
+                            }
+                        },
+                    ],
+                ]),
             ],
         ]);
 
