@@ -41,6 +41,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'filtered multi-valued string facets' => $this->createMultiValuedFilteredStringFacetData(),
             'filtered single integer facet' => $this->createFilteredIntegerFacetData(),
             'filtered single price range facet' => $this->createFilteredPriceRangeFacetData(),
+            'filtered open price range facet' => $this->createFilteredOpenPriceRangeFacetData(),
             'filtered multiple integer facets' => $this->createMultiFilteredIntegerFacetData(),
             'filtered multi-valued integer facets' => $this->createMultiValuedFilteredIntegerFacetData(),
             'filtered single category facet' => $this->createFilteredCategoryFacetData(),
@@ -246,7 +247,6 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
-                            'lte' => 12300,
                             'gte' => 12300,
                         ]))))
                 ->addFilter((new Nested())
@@ -285,6 +285,68 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
     /**
      * @return array
      */
+    protected function createFilteredOpenPriceRangeFacetData()
+    {
+        $searchConfig = $this->createSearchConfigMock();
+        $searchConfig->getFacetConfigBuilder()
+            ->addFacet(
+                (new FacetConfigTransfer())
+                    ->setName('foo')
+                    ->setParameterName('foo')
+                    ->setFieldName(PageIndexMap::INTEGER_FACET)
+                ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
+            )
+            ->addFacet(
+                (new FacetConfigTransfer())
+                    ->setName('bar')
+                    ->setParameterName('bar')
+                    ->setFieldName(PageIndexMap::INTEGER_FACET)
+                ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
+            )
+            ->addFacet(
+                (new FacetConfigTransfer())
+                    ->setName('baz')
+                    ->setParameterName('baz')
+                    ->setFieldName(PageIndexMap::INTEGER_FACET)
+                ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
+            );
+
+        $expectedQuery = (new BoolQuery())
+                ->addFilter((new Nested())
+                ->setPath(PageIndexMap::INTEGER_FACET)
+                ->setQuery((new BoolQuery())
+                    ->addFilter((new Term)
+                        ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'foo'))
+                    ->addFilter((new Range())
+                        ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
+                            'gte' => 12300,
+                        ]))))
+                ->addFilter((new Nested())
+                ->setPath(PageIndexMap::INTEGER_FACET)
+                ->setQuery((new BoolQuery())
+                    ->addFilter((new Term)
+                        ->setTerm(PageIndexMap::INTEGER_FACET_FACET_NAME, 'bar'))
+                    ->addFilter((new Range())
+                        ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
+                            'lte' => 12300,
+                        ]))));
+
+                $parameters = [
+                    'foo' => [
+                        'min' => 123,
+                    ], // open range
+                    'bar' => [
+                        'max' => 123,
+                    ], // open range
+                    'baz' => [], // empty range
+                ];
+
+                return [$searchConfig, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return array
+     */
     protected function createMultiFilteredIntegerFacetData()
     {
         $searchConfig = $this->createMultiIntegerSearchConfig();
@@ -311,14 +373,13 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     // "baz" is range type so we expect a range filter
                     ->addFilter((new Range())
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
-                            'lte' => 789,
                             'gte' => 789,
                         ]))));
 
                 $parameters = [
-                'foo' => 123,
-                'bar' => 456,
-                'baz' => 789,
+                    'foo' => 123,
+                    'bar' => 456,
+                    'baz' => 789,
                 ];
 
                 return [$searchConfig, $expectedQuery, $parameters];

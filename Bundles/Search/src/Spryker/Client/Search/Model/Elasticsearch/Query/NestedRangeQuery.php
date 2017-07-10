@@ -81,8 +81,8 @@ class NestedRangeQuery extends AbstractNestedQuery
      */
     protected function setMinMaxValuesFromArray(array $rangeValues)
     {
-        $this->minValue = isset($rangeValues[self::RANGE_MIN]) ? $rangeValues[self::RANGE_MIN] : 0;
-        $this->maxValue = isset($rangeValues[self::RANGE_MAX]) ? $rangeValues[self::RANGE_MAX] : $this->minValue;
+        $this->minValue = isset($rangeValues[self::RANGE_MIN]) ? $rangeValues[self::RANGE_MIN] : null;
+        $this->maxValue = isset($rangeValues[self::RANGE_MAX]) ? $rangeValues[self::RANGE_MAX] : null;
 
         $this->convertMinMaxValues();
     }
@@ -95,8 +95,10 @@ class NestedRangeQuery extends AbstractNestedQuery
     protected function setMinMaxValuesFromString($rangeValues)
     {
         $values = explode(self::RANGE_DIVIDER, $rangeValues);
-        $this->minValue = $values[0];
-        $this->maxValue = $this->minValue;
+
+        if ($values[0] !== '') {
+            $this->minValue = $values[0];
+        }
 
         if (count($values) > 1) {
             $this->maxValue = $values[1];
@@ -110,8 +112,13 @@ class NestedRangeQuery extends AbstractNestedQuery
      */
     protected function convertMinMaxValues()
     {
-        $this->minValue = (string)(float)$this->minValue;
-        $this->maxValue = (string)(float)$this->maxValue;
+        if ($this->minValue !== null) {
+            $this->minValue = (string)(float)$this->minValue;
+        }
+
+        if ($this->maxValue !== null) {
+            $this->maxValue = (string)(float)$this->maxValue;
+        }
     }
 
 }

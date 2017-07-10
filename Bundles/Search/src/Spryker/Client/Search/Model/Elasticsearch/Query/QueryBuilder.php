@@ -29,14 +29,18 @@ class QueryBuilder implements QueryBuilderInterface
      */
     public function createRangeQuery($fieldName, $minValue, $maxValue, $greaterParam = 'gte', $lessParam = 'lte')
     {
+        $args = [];
+
+        if ($minValue !== null) {
+            $args[$greaterParam] = $minValue;
+        }
+
+        if ($maxValue !== null) {
+            $args[$lessParam] = $maxValue;
+        }
+
         $rangeQuery = new Range();
-        $rangeQuery->addField(
-            $fieldName,
-            [
-                $greaterParam => $minValue,
-                $lessParam => $maxValue,
-            ]
-        );
+        $rangeQuery->addField($fieldName, $args);
 
         return $rangeQuery;
     }
