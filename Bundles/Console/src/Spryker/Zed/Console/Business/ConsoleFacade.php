@@ -41,4 +41,17 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
         return $this->getFactory()->getEventSubscriber();
     }
 
+    /**
+     * Specification
+     * - Returns an array of ServiceProviders
+     *
+     * @api
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    public function getServiceProvider()
+    {
+        return $this->getFactory()->getServiceProvider();
+    }
+
 }

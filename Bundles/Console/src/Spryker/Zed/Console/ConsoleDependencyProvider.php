@@ -9,12 +9,14 @@ namespace Spryker\Zed\Console;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const COMMANDS = 'commands';
     const EVENT_SUBSCRIBER = 'event_subscriber';
+    const SERVICE_PROVIDER = 'service provider';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,8 +25,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->addCommands($container);
-        $container = $this->addEventSubscriber($container);
+        $this->addCommands($container);
+        $this->addEventSubscriber($container);
+        $this->addServiceProvider($container);
 
         return $container;
     }
@@ -32,15 +35,13 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return void
      */
     protected function addCommands(Container $container)
     {
         $container[self::COMMANDS] = function (Container $container) {
             return $this->getConsoleCommands($container);
         };
-
-        return $container;
     }
 
     /**
@@ -56,15 +57,13 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return void
      */
     protected function addEventSubscriber(Container $container)
     {
         $container[static::EVENT_SUBSCRIBER] = function (Container $container) {
             return $this->getEventSubscriber($container);
         };
-
-        return $container;
     }
 
     /**
@@ -75,6 +74,30 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     protected function getEventSubscriber(Container $container)
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addServiceProvider(Container $container)
+    {
+        $container[static::SERVICE_PROVIDER] = function (Container $container) {
+            return $this->getServiceProvider($container);
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getServiceProvider(Container $container)
+    {
+        return [
+            new PropelServiceProvider()
+        ];
     }
 
 }
