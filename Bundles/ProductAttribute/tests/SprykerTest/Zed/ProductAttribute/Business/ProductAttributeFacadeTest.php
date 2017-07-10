@@ -7,7 +7,10 @@
 
 namespace SprykerTest\Zed\ProductAttribute\Business;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacade;
@@ -27,11 +30,27 @@ use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 class ProductAttributeFacadeTest extends Test
 {
 
+    const ATTRIBUTES = 'attributes';
+    const LOCALIZED_ATTRIBUTES = 'localizedAttributes';
+
+    const DATA_PRODUCT_ATTRIBUTES = [
+        'foo' => 'Foo Value',
+        'bar' => '20 units',
+    ];
+
+    const DATA_PRODUCT_LOCALIZED_ATTRIBUTES = [
+        46 => [
+            'foo' => 'Foo Value DE',
+        ],
+        66 => [
+            'foo' => 'Foo Value US',
+        ],
+    ];
+
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface
      */
     protected $productAttributeFacade;
-
 
     /**
      * @var \SprykerTest\Zed\ProductAttribute\BusinessTester
@@ -75,10 +94,56 @@ class ProductAttributeFacadeTest extends Test
         return $container;
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductAbstractAttributeValues()
     {
-        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->markTestSkipped();
 
-        print_r($productAbstractTransfer->toArray());die;
+        $productAbstractTransfer = $this->generateProductAbstractTransfer();
+
+        $productAttributes = $this->productAttributeFacade->getProductAbstractAttributeValues($productAbstractTransfer->getIdProductAbstract());
+
+        print_r($productAttributes);
+        print_r($productAbstractTransfer->toArray());
+        die;
     }
+
+    /**
+     * @return array
+     */
+    protected function generateLocalizedAttributes()
+    {
+        $results = [];
+        foreach (static::DATA_PRODUCT_LOCALIZED_ATTRIBUTES as $idLocale => $localizedData) {
+            $localeTransfer = new LocaleTransfer();
+            $localeTransfer->setIdLocale($idLocale);
+
+            $localizedAttributeTransfer = new LocalizedAttributesTransfer();
+            $localizedAttributeTransfer->setAttributes($localizedData);
+            $localizedAttributeTransfer->setLocale($localeTransfer);
+
+            $results[] = $localizedAttributeTransfer;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function generateProductAbstractTransfer()
+    {
+        $localizedAttributes = $this->generateLocalizedAttributes();
+
+        $productAbstractTransfer = $this->tester->haveProductAbstract([
+            static::ATTRIBUTES => static::DATA_PRODUCT_ATTRIBUTES,
+        ]);
+
+        $productAbstractTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
+
+        return $productAbstractTransfer;
+    }
+
 }
