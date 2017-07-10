@@ -64,30 +64,6 @@ interface ProductAttributeFacadeInterface
 
     /**
      * Specification:
-     * - Returns basic product abstract transfer
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function getProductAbstract($idProductAbstract);
-
-    /**
-     * Specification:
-     * - Returns basic product concrete transfer
-     *
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function getProduct($idProduct);
-
-    /**
-     * Specification:
      * - Returns list of product keys suggested based on $searchText, super attributes are ignored
      *
      * @api
@@ -143,7 +119,7 @@ interface ProductAttributeFacadeInterface
 
     /**
      * Specification:
-     * - Return list of attribute keys
+     * - Return list of unique attribute keys
      *
      * $attributes format
      * [
@@ -164,7 +140,7 @@ interface ProductAttributeFacadeInterface
 
     /**
      * Specification:
-     * - Return list of attribute values
+     * - Return list of unique attribute values
      *
      * $attributes format
      * [

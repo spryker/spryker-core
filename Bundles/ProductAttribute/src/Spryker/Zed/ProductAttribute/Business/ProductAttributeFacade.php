@@ -85,38 +85,6 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
      *
      * @api
      *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function getProductAbstract($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createProductAttributeManager()
-            ->getProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function getProduct($idProduct)
-    {
-        return $this->getFactory()
-            ->createProductAttributeManager()
-            ->getProduct($idProduct);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $searchText
      * @param int $limit
      *

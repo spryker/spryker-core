@@ -51,7 +51,7 @@ class AttributeMapper implements AttributeMapperInterface
      *
      * @return array
      */
-    public function mapMetaAttributes(array $metaAttributeCollection)
+    public function mapMetaAttributes($metaAttributeCollection)
     {
         $results = [];
         foreach ($metaAttributeCollection as $metaAttribute) {
@@ -67,7 +67,7 @@ class AttributeMapper implements AttributeMapperInterface
      *
      * @return array
      */
-    public function maSuggestKeys(array $metaAttributeCollection)
+    public function maSuggestKeys($metaAttributeCollection)
     {
         $results = [];
 

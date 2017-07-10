@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductAttribute\Business\Model;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 class ProductAttribute implements ProductAttributeInterface
@@ -17,17 +15,17 @@ class ProductAttribute implements ProductAttributeInterface
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeReaderInterface
      */
-    protected $attributeReader;
+    protected $reader;
 
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeWriterInterface
      */
-    protected $attributeWriter;
+    protected $writer;
 
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeMapperInterface
      */
-    protected $attributeMapper;
+    protected $mapper;
 
     /**
      * @param \Spryker\Zed\ProductAttribute\Business\Model\AttributeReaderInterface $attributeReader
@@ -39,9 +37,9 @@ class ProductAttribute implements ProductAttributeInterface
         AttributeWriterInterface $attributeWriter,
         AttributeMapperInterface $attributeMapper
     ) {
-        $this->attributeReader = $attributeReader;
-        $this->attributeWriter = $attributeWriter;
-        $this->attributeMapper = $attributeMapper;
+        $this->reader = $attributeReader;
+        $this->writer = $attributeWriter;
+        $this->mapper = $attributeMapper;
     }
 
     /**
@@ -52,7 +50,7 @@ class ProductAttribute implements ProductAttributeInterface
     public function getProductAbstractAttributes($idProductAbstract)
     {
         $values = $this->getProductAbstractAttributeValues($idProductAbstract);
-        return $this->attributeReader->getAttributesByValues($values);
+        return $this->reader->getAttributesByValues($values);
     }
 
     /**
@@ -63,27 +61,7 @@ class ProductAttribute implements ProductAttributeInterface
     public function getMetaAttributesForProductAbstract($idProductAbstract)
     {
         $values = $this->getProductAbstractAttributeValues($idProductAbstract);
-        return $this->attributeReader->getMetaAttributesByValues($values);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function getProductAbstract($idProductAbstract)
-    {
-        $entity = $this->attributeReader->getProductAbstractEntity($idProductAbstract);
-        $productAbstractTransfer = new ProductAbstractTransfer();
-
-        if (!$entity) {
-            return $productAbstractTransfer;
-        }
-
-        $productAbstractTransfer->setIdProductAbstract($entity->getIdProductAbstract());
-        $productAbstractTransfer->setSku($entity->getSku());
-
-        return $productAbstractTransfer;
+        return $this->reader->getMetaAttributesByValues($values);
     }
 
     /**
@@ -93,36 +71,15 @@ class ProductAttribute implements ProductAttributeInterface
      */
     public function getProductAbstractAttributeValues($idProductAbstract)
     {
-        $productAbstractEntity = $this->attributeReader->getProductAbstractEntity($idProductAbstract);
+        $productAbstractEntity = $this->reader->getProductAbstractEntity($idProductAbstract);
 
         $localizedAttributes = [];
         foreach ($productAbstractEntity->getSpyProductAbstractLocalizedAttributess() as $localizedAttributeEntity) {
-            $attributesDecoded = $this->attributeMapper->decodeJsonAttributes($localizedAttributeEntity->getAttributes());
+            $attributesDecoded = $this->mapper->decodeJsonAttributes($localizedAttributeEntity->getAttributes());
             $localizedAttributes[$localizedAttributeEntity->getFkLocale()] = $attributesDecoded;
         }
 
         return $this->generateAttributes($productAbstractEntity->getAttributes(), $localizedAttributes);
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function getProduct($idProduct)
-    {
-        $entity = $this->attributeReader->getProductEntity($idProduct);
-        $productTransfer = new ProductConcreteTransfer();
-
-        if (!$entity) {
-            return $productTransfer;
-        }
-
-        $productTransfer->setIdProductConcrete($entity->getIdProduct());
-        $productTransfer->setFkProductAbstract($entity->getFkProductAbstract());
-        $productTransfer->setSku($entity->getSku());
-
-        return $productTransfer;
     }
 
     /**
@@ -133,7 +90,7 @@ class ProductAttribute implements ProductAttributeInterface
     public function getProductAttributes($idProduct)
     {
         $values = $this->getProductAttributeValues($idProduct);
-        return $this->attributeReader->getAttributesByValues($values);
+        return $this->reader->getAttributesByValues($values);
     }
 
     /**
@@ -144,7 +101,7 @@ class ProductAttribute implements ProductAttributeInterface
     public function getMetaAttributesForProduct($idProduct)
     {
         $values = $this->getProductAttributeValues($idProduct);
-        return $this->attributeReader->getMetaAttributesByValues($values);
+        return $this->reader->getMetaAttributesByValues($values);
     }
 
     /**
@@ -154,11 +111,11 @@ class ProductAttribute implements ProductAttributeInterface
      */
     public function getProductAttributeValues($idProduct)
     {
-        $productEntity = $this->attributeReader->getProductEntity($idProduct);
+        $productEntity = $this->reader->getProductEntity($idProduct);
 
         $localizedAttributes = [];
         foreach ($productEntity->getSpyProductLocalizedAttributess() as $localizedAttributeEntity) {
-            $attributesDecoded = $this->attributeMapper->decodeJsonAttributes($localizedAttributeEntity->getAttributes());
+            $attributesDecoded = $this->mapper->decodeJsonAttributes($localizedAttributeEntity->getAttributes());
             $localizedAttributes[$localizedAttributeEntity->getFkLocale()] = $attributesDecoded;
         }
 
@@ -173,7 +130,7 @@ class ProductAttribute implements ProductAttributeInterface
      */
     protected function generateAttributes($productAttributesJson, array $localizedAttributes)
     {
-        $attributes = $this->attributeMapper->decodeJsonAttributes($productAttributesJson);
+        $attributes = $this->mapper->decodeJsonAttributes($productAttributesJson);
         $attributes = [ProductAttributeConfig::DEFAULT_LOCALE => $attributes] + $localizedAttributes;
 
         ksort($attributes);

@@ -27,23 +27,9 @@ interface ProductAttributeInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function getProductAbstract($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
      * @return array
      */
     public function getProductAbstractAttributeValues($idProductAbstract);
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function getProduct($idProduct);
 
     /**
      * @param int $idProduct

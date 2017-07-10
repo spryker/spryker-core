@@ -29,14 +29,14 @@ interface AttributeMapperInterface
      *
      * @return array
      */
-    public function mapMetaAttributes(array $metaAttributeCollection);
+    public function mapMetaAttributes($metaAttributeCollection);
 
     /**
      * @param array|\Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection $metaAttributeCollection
      *
      * @return array
      */
-    public function maSuggestKeys(array $metaAttributeCollection);
+    public function maSuggestKeys($metaAttributeCollection);
 
     /**
      * $productAttributes format
