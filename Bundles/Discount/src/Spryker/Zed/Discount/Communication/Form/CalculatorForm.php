@@ -87,22 +87,9 @@ class CalculatorForm extends AbstractType
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,
                 function (FormEvent $event) {
-                    $this->normalizeAmount($event);
                     $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
                 }
             );
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
-    protected function normalizeAmount(FormEvent $event)
-    {
-        $data = $event->getData();
-        $data[self::FIELD_AMOUNT] = str_replace(',', '.', $data[self::FIELD_AMOUNT]);
-        $event->setData($data);
     }
 
     /**
