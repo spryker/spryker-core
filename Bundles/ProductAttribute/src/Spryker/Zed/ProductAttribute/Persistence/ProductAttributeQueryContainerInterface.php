@@ -29,27 +29,6 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     /**
      * @api
      *
-     * @param int $idProductManagementAttribute
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
-     */
-    public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idProductManagementAttribute
-     * @param int $idLocale
-     * @param string|null $attributeValueOrTranslation
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryFindAttributeByValueOrTranslation($idProductManagementAttribute, $idLocale, $attributeValueOrTranslation = null);
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKey();
@@ -67,22 +46,6 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
     public function queryProductManagementAttributeValueTranslation();
-
-    /**
-     * @api
-     *
-     * @param int $idProductManagementAttribute
-     *
-     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
-     */
-    public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
-     */
-    public function queryUnusedProductAttributeKeys();
 
     /**
      * @api
