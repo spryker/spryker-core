@@ -68,7 +68,6 @@ class GlossaryTabs extends AbstractTabs
         return str_replace('.', '-', $value);
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *

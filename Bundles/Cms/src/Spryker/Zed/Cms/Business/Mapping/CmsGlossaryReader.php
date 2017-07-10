@@ -28,7 +28,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     const CMS_PLACEHOLDER_PATTERN = '';
 
     /**
-     * @deprecated use CmsConfig::getPlaceholderValuePattern()
+     * @deprecated Use CmsConfig::getPlaceholderValuePattern()
      */
     const CMS_PLACEHOLDER_VALUE_PATTERN = '';
 
