@@ -1,7 +1,7 @@
 
 {% set attributeForm = '' %}
 {% for glossaryAttributes in glossaryForm.glossaryAttributes %}
-    {% if tab.name == glossaryAttributes.vars.data.placeholder %}
+    {% if tab.name == glossaryAttributes.vars.data.placeholder|replace({'.': '-'}) %}
         {% set attributeForm = glossaryAttributes %}
     {% endif %}
 {% endfor %}
