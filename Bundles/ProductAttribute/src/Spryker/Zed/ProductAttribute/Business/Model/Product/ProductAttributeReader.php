@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttribute\Business\Model;
+namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeTableMap;
@@ -14,10 +14,11 @@ use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueT
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
-class AttributeReader implements AttributeReaderInterface
+class ProductAttributeReader implements ProductAttributeReaderInterface
 {
 
     /**
@@ -31,19 +32,19 @@ class AttributeReader implements AttributeReaderInterface
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeMapperInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface
      */
     protected $attributeMapper;
 
     /**
      * @param \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface $productAttributeQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\AttributeMapperInterface $attributeMapper
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface $attributeMapper
      */
     public function __construct(
         ProductAttributeQueryContainerInterface $productAttributeQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
-        AttributeMapperInterface $attributeMapper
+        ProductAttributeMapperInterface $attributeMapper
     ) {
         $this->productAttributeQueryContainer = $productAttributeQueryContainer;
         $this->productQueryContainer = $productQueryContainer;

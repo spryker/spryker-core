@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductAttribute\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductAttribute\Business\Model\AttributeMapper;
-use Spryker\Zed\ProductAttribute\Business\Model\AttributeReader;
-use Spryker\Zed\ProductAttribute\Business\Model\AttributeWriter;
-use Spryker\Zed\ProductAttribute\Business\Model\ProductAttribute;
+use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapper;
+use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
+use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
+use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriter;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
 /**
@@ -22,48 +22,48 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductAttribute\Business\Model\ProductAttributeInterface
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeInterface
      */
     public function createProductAttributeManager()
     {
         return new ProductAttribute(
             $this->createAttributeReader(),
             $this->createAttributeWriter(),
-            $this->createAttributeMapper()
+            $this->createProductAttributeMapper()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductAttribute\Business\Model\AttributeReaderInterface
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface
      */
     public function createAttributeReader()
     {
-        return new AttributeReader(
+        return new ProductAttributeReader(
             $this->getQueryContainer(),
             $this->getProductQueryContainer(),
-            $this->createAttributeMapper()
+            $this->createProductAttributeMapper()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductAttribute\Business\Model\AttributeWriterInterface
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriterInterface
      */
     public function createAttributeWriter()
     {
-        return new AttributeWriter(
+        return new ProductAttributeWriter(
             $this->createAttributeReader(),
-            $this->createAttributeMapper(),
+            $this->createProductAttributeMapper(),
             $this->getLocaleFacade(),
             $this->getProductQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductAttribute\Business\Model\AttributeMapperInterface
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface
      */
-    public function createAttributeMapper()
+    public function createProductAttributeMapper()
     {
-        return new AttributeMapper(
+        return new ProductAttributeMapper(
             $this->getEncodingService()
         );
     }

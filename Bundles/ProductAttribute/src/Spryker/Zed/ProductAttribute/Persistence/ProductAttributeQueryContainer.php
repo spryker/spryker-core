@@ -120,6 +120,69 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     /**
      * @api
      *
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
+     */
+    public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale)
+    {
+        return $this->getFactory()
+            ->createProductManagementAttributeValueQuery()
+            ->clearSelectColumns()
+            ->filterByFkProductManagementAttribute($idProductManagementAttribute)
+            ->addJoin(
+                [
+                    SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
+                    (int)$idLocale,
+                ],
+                [
+                    SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
+                    SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
+                ],
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
+            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
+            ->withColumn($idLocale, 'fk_locale')
+            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation');
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryUnusedProductAttributeKeys()
+    {
+        return $this
+            ->queryProductAttributeKey()
+            ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
+            ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
+            ->filterByIdProductManagementAttribute(null)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     */
+    public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
+    {
+        return $this
+            ->queryProductManagementAttributeValueTranslation()
+            ->joinSpyProductManagementAttributeValue()
+            ->useSpyProductManagementAttributeValueQuery()
+            ->filterByFkProductManagementAttribute($idProductManagementAttribute)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
      * @param array $attributes
      * @param bool|null $isSuper
      *

@@ -5,23 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttribute\Business\Model;
+namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
-class AttributeWriter implements AttributeWriterInterface
+class ProductAttributeWriter implements ProductAttributeWriterInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeReaderInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface
      */
     protected $reader;
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeMapperInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface
      */
     protected $attributeMapper;
 
@@ -36,14 +37,14 @@ class AttributeWriter implements AttributeWriterInterface
     protected $productQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\AttributeReaderInterface $reader
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\AttributeMapperInterface $attributeMapper
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $reader
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface $attributeMapper
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct(
-        AttributeReaderInterface $reader,
-        AttributeMapperInterface $attributeMapper,
+        ProductAttributeReaderInterface $reader,
+        ProductAttributeMapperInterface $attributeMapper,
         ProductAttributeToLocaleInterface $localeFacade,
         ProductQueryContainerInterface $productQueryContainer
     ) {

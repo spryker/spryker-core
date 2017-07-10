@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttribute\Business\Model;
+namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
-interface AttributeWriterInterface
+interface ProductAttributeWriterInterface
 {
 
     /**

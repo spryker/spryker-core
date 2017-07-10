@@ -69,6 +69,32 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
     /**
      * @api
      *
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
+     */
+    public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryUnusedProductAttributeKeys();
+
+    /**
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     */
+    public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute);
+
+    /**
+     * @api
+     *
      * @param array $attributes
      * @param bool|null $isSuper
      *

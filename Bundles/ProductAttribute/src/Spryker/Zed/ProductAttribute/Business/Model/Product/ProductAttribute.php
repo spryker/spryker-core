@@ -5,37 +5,38 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttribute\Business\Model;
+namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
+use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 class ProductAttribute implements ProductAttributeInterface
 {
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeReaderInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface
      */
     protected $reader;
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeWriterInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriterInterface
      */
     protected $writer;
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\Model\AttributeMapperInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface
      */
     protected $mapper;
 
     /**
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\AttributeReaderInterface $attributeReader
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\AttributeWriterInterface $attributeWriter
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\AttributeMapperInterface $attributeMapper
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $attributeReader
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriterInterface $attributeWriter
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface $attributeMapper
      */
     public function __construct(
-        AttributeReaderInterface $attributeReader,
-        AttributeWriterInterface $attributeWriter,
-        AttributeMapperInterface $attributeMapper
+        ProductAttributeReaderInterface $attributeReader,
+        ProductAttributeWriterInterface $attributeWriter,
+        ProductAttributeMapperInterface $attributeMapper
     ) {
         $this->reader = $attributeReader;
         $this->writer = $attributeWriter;

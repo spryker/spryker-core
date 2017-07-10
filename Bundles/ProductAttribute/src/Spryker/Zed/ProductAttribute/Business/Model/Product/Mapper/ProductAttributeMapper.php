@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttribute\Business\Model;
+namespace Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper;
 
 use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilEncodingInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
-class AttributeMapper implements AttributeMapperInterface
+class ProductAttributeMapper implements ProductAttributeMapperInterface
 {
 
     /**

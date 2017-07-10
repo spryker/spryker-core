@@ -143,7 +143,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     public function extractKeysFromAttributes(array $attributes)
     {
         return $this->getFactory()
-            ->createAttributeMapper()
+            ->createProductAttributeMapper()
             ->extractKeysFromAttributes($attributes);
     }
 
@@ -159,7 +159,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     public function extractValuesFromAttributes(array $attributes)
     {
         return $this->getFactory()
-            ->createAttributeMapper()
+            ->createProductAttributeMapper()
             ->extractValuesFromAttributes($attributes);
     }
 
