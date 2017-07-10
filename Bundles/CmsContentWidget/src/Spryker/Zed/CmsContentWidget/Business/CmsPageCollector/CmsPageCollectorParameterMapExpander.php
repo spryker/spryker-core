@@ -51,7 +51,7 @@ class CmsPageCollectorParameterMapExpander implements CmsPageCollectorParameterM
     {
         $contentWidgetParameterMap = [];
         foreach ($contentPlaceholders as $content) {
-            $contentWidgetParameterMap = array_merge_recursive(
+            $contentWidgetParameterMap = array_replace_recursive(
                 $contentWidgetParameterMap,
                 $this->contentWidgetParameterMapper->map($content)
             );
