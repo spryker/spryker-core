@@ -23,6 +23,8 @@ class CreateBlockController extends AbstractController
 {
 
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    const ERROR_MESSAGE_LOST_TEMPLATE = 'Selected template doesn\'t exist anymore';
+    const MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED = 'CMS Block is successfully created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -79,13 +81,13 @@ class CreateBlockController extends AbstractController
                 ->getCmsBlockFacade()
                 ->createCmsBlock($cmsBlockForm->getData());
 
-            $this->addSuccessMessage('Page successfully created.');
+            $this->addSuccessMessage(static::MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED);
 
         } catch (CmsBlockTemplateNotFoundException $exception) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
 
             $cmsBlockForm->get(CmsBlockForm::FIELD_FK_TEMPLATE)
-                ->addError(new FormError("Selected template doesn't exist anymore"));
+                ->addError(new FormError(static::ERROR_MESSAGE_LOST_TEMPLATE));
         }
 
         return $cmsBlockTransfer;
