@@ -1,4 +1,4 @@
-# Ratepay Bundle
+# Ratepay Module
 
 ## Installation
 

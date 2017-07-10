@@ -1,4 +1,4 @@
-# ProductImage Bundle
+# ProductImage Module
 
 ## Installation
 

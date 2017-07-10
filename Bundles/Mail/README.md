@@ -1,4 +1,4 @@
-# Mail Bundle
+# Mail Module
 
 ## Installation
 

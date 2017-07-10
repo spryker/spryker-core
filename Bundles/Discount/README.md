@@ -1,4 +1,4 @@
-# Discount Bundle
+# Discount Module
 
 ## Installation
 

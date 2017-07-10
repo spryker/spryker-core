@@ -1,4 +1,4 @@
-# Twig Bundle
+# Twig Module
 
 ## Installation
 

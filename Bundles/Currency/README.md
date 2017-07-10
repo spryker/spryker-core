@@ -1,4 +1,4 @@
-# Currency Bundle
+# Currency Module
 
 ## Installation
 

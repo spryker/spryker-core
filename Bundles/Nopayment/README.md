@@ -1,4 +1,4 @@
-# Nopayment Bundle
+# Nopayment Module
 
 ## Installation
 

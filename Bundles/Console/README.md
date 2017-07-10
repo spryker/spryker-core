@@ -1,4 +1,4 @@
-# Console Bundle
+# Console Module
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# AvailabilityCheckoutConnector Bundle
+# AvailabilityCheckoutConnector Module
 
 ## Installation
 

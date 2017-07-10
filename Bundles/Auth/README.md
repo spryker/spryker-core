@@ -1,4 +1,4 @@
-# Auth Bundle
+# Auth Module
 
 ## Installation
 

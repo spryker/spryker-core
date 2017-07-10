@@ -1,4 +1,4 @@
-# CmsGui Bundle
+# CmsGui Module
 
 ## Installation
 

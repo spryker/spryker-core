@@ -1,4 +1,4 @@
-# Event Bundle
+# Event Module
 
 ## Installation
 

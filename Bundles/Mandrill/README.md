@@ -1,4 +1,4 @@
-# Mandrill Bundle
+# Mandrill Module
 
 ## Installation
 

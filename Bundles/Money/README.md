@@ -1,4 +1,4 @@
-# Money Bundle
+# Money Module
 
 ## Installation
 

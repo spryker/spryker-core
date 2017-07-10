@@ -1,4 +1,4 @@
-# Elastica Bundle
+# Elastica Module
 
 ## Installation
 

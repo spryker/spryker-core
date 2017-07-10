@@ -1,4 +1,4 @@
-# Propel Bundle
+# Propel Module
 
 ## Installation
 
