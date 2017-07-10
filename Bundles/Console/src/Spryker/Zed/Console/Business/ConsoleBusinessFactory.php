@@ -35,9 +35,9 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Silex\ServiceProviderInterface[]
      */
-    public function getServiceProvider()
+    public function getServiceProviders()
     {
-        return $this->getProvidedDependency(ConsoleDependencyProvider::SERVICE_PROVIDER);
+        return $this->getProvidedDependency(ConsoleDependencyProvider::SERVICE_PROVIDERS);
     }
 
 }

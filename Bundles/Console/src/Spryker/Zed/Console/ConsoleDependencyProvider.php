@@ -16,7 +16,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 
     const COMMANDS = 'commands';
     const EVENT_SUBSCRIBER = 'event_subscriber';
-    const SERVICE_PROVIDER = 'service provider';
+    const SERVICE_PROVIDERS = 'service provider';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,7 +27,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $this->addCommands($container);
         $this->addEventSubscriber($container);
-        $this->addServiceProvider($container);
+        $this->addServiceProviders($container);
 
         return $container;
     }
@@ -81,10 +81,10 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addServiceProvider(Container $container)
+    protected function addServiceProviders(Container $container)
     {
-        $container[static::SERVICE_PROVIDER] = function (Container $container) {
-            return $this->getServiceProvider($container);
+        $container[static::SERVICE_PROVIDERS] = function (Container $container) {
+            return $this->getServiceProviders($container);
         };
     }
 
@@ -93,7 +93,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Silex\ServiceProviderInterface[]
      */
-    protected function getServiceProvider(Container $container)
+    protected function getServiceProviders(Container $container)
     {
         return [
             new PropelServiceProvider()
