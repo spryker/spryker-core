@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
@@ -197,7 +198,7 @@ class IndexController extends AbstractController
                 if ($this->getFactory()->getStockFacade()->updateStockProduct($stockProductTransfer) > 0) {
                     $isAnyItemsUpdated = true;
                 }
-            } elseif ($stockProductTransfer->getIdStockProduct() === null && ((int)$stockProductTransfer->getQuantity() !== 0) || $stockProductTransfer->getIsNeverOutOfStock()) {
+            } elseif ($this->isStockProductTransferValid($stockProductTransfer)) {
                 $stockProductTransfer->setSku($availabilityStockTransfer->getSku());
                 if ($this->getFactory()->getStockFacade()->createStockProduct($stockProductTransfer) > 0) {
                     $isAnyItemsUpdated = true;
@@ -206,6 +207,16 @@ class IndexController extends AbstractController
         }
 
         return $isAnyItemsUpdated;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
+     *
+     * @return bool
+     */
+    protected function isStockProductTransferValid(StockProductTransfer $stockProductTransfer)
+    {
+        return $stockProductTransfer->getIdStockProduct() === null && ((int)$stockProductTransfer->getQuantity() !== 0) || $stockProductTransfer->getIsNeverOutOfStock();
     }
 
 }

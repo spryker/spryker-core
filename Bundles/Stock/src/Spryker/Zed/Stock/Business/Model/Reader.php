@@ -314,7 +314,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Orm\Zed\Stock\Persistence\SpyStock $type
+     * @param string $type
      *
      * @return bool
      */
