@@ -46,15 +46,12 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      */
     public function executePreCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $paymentProvider = $quoteTransfer->getPayment()->getPaymentProvider();
-        $pluginType = PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS;
+        $this->executePluginsForType(
+            PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,
+            $quoteTransfer,
+            $checkoutResponseTransfer
 
-        if ($this->hasPlugin($pluginType,  $paymentProvider)) {
-            $plugin = $this->findPlugin($pluginType,  $paymentProvider);
-            $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
-        }
-
-        $this->executeForCollection($quoteTransfer, $pluginType, $checkoutResponseTransfer);
+        );
     }
 
     /**
@@ -67,15 +64,12 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     {
         $this->savePaymentPriceToPay($quoteTransfer, $checkoutResponseTransfer);
 
-        $paymentProvider = $quoteTransfer->getPayment()->getPaymentProvider();
-        $pluginType = PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS;
+        $this->executePluginsForType(
+            PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS,
+            $quoteTransfer,
+            $checkoutResponseTransfer
 
-        if ($this->hasPlugin($pluginType, $paymentProvider)) {
-            $plugin = $this->findPlugin($pluginType, $paymentProvider);
-            $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
-        }
-
-        $this->executeForCollection($quoteTransfer, $pluginType, $checkoutResponseTransfer);
+        );
     }
 
     /**
@@ -86,8 +80,27 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      */
     public function executePostCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
+        $this->executePluginsForType(
+            PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS,
+            $quoteTransfer,
+            $checkoutResponseTransfer
+
+        );
+    }
+
+    /**
+     * @param string $pluginType
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function executePluginsForType(
+        $pluginType,
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
         $paymentProvider = $quoteTransfer->getPayment()->getPaymentProvider();
-        $pluginType = PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS;
 
         if ($this->hasPlugin($pluginType, $paymentProvider)) {
             $plugin = $this->findPlugin($pluginType, $paymentProvider);

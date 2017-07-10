@@ -59,11 +59,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     protected function executeSavePaymentMethodsTransaction(QuoteTransfer $quoteTransfer, $idSalesOrder)
     {
         $this->saveSinglePayment($quoteTransfer, $idSalesOrder);
-        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
-            $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
-            $salesPaymentEntity->save();
-            $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
-        }
+        $this->savePaymentCollection($quoteTransfer, $idSalesOrder);
     }
 
     /**
@@ -74,16 +70,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      */
     protected function mapSalesPaymentEntity(PaymentTransfer $paymentTransfer, $idSalesOrder)
     {
-        $paymentMethodTypeEntity = $this->paymentQueryContainer
-            ->queryPaymentMethodType(
-                $paymentTransfer->getPaymentProvider(),
-                $paymentTransfer->getPaymentMethod()
-            )
-            ->findOneOrCreate();
-
-        if ($paymentMethodTypeEntity->isNew()) {
-            $paymentMethodTypeEntity->save();
-        }
+        $paymentMethodTypeEntity = $this->findOrCreatePaymentMethodType($paymentTransfer);
 
         $salesPaymentEntity = new SpySalesPayment();
         $salesPaymentEntity->setFkSalesOrder($idSalesOrder);
@@ -103,12 +90,51 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     {
         $paymentTransfer = $quoteTransfer->getPayment();
         $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
+
         $numberOfPayments = $quoteTransfer->getPayments()->count();
         if ($numberOfPayments === 0) {
             $salesPaymentEntity->setAmount($quoteTransfer->getTotals()->getGrandTotal());
         }
-        $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
+
         $salesPaymentEntity->save();
+
+        $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    protected function savePaymentCollection(QuoteTransfer $quoteTransfer, $idSalesOrder)
+    {
+        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
+            $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
+            $salesPaymentEntity->save();
+            $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     *
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType
+     */
+    protected function findOrCreatePaymentMethodType(PaymentTransfer $paymentTransfer)
+    {
+        $paymentMethodTypeEntity = $this->paymentQueryContainer
+            ->queryPaymentMethodType(
+                $paymentTransfer->getPaymentProvider(),
+                $paymentTransfer->getPaymentMethod()
+            )
+            ->findOneOrCreate();
+
+        if ($paymentMethodTypeEntity->isNew()) {
+            $paymentMethodTypeEntity->save();
+        }
+
+        return $paymentMethodTypeEntity;
     }
 
 }

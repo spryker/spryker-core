@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\Payment\Persistence\SpySalesPayment;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
 class SalesPaymentHydrator implements SalesPaymentHydratorInterface
@@ -47,16 +48,8 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     {
         $orderTransfer->requireIdSalesOrder();
 
-        $salesPayments = $this->paymentQueryContainer
-            ->queryPaymentMethodsByIdSalesOrder($orderTransfer->getIdSalesOrder())
-            ->find();
-
-        foreach ($salesPayments as $salesPaymentEntity) {
-            $paymentTransfer = $this->mapPaymentTransfer($salesPaymentEntity);
-            $orderTransfer->addPayment($paymentTransfer);
-        }
-
-        $orderTransfer = $this->hydrate($orderTransfer);
+        $salesPayments = $this->findSalesPaymentByIdSalesOrder($orderTransfer);
+        $orderTransfer = $this->hydrate($salesPayments, $orderTransfer);
 
         return $orderTransfer;
     }
@@ -77,18 +70,19 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     }
 
     /**
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Payment\Persistence\SpySalesPayment[] $objectCollection
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function hydrate(OrderTransfer $orderTransfer)
+    protected function hydrate(ObjectCollection $objectCollection, OrderTransfer $orderTransfer)
     {
-        $updatedPayments = new ArrayObject();
-        foreach ($orderTransfer->getPayments() as $paymentTransfer) {
-            $updatedPayments[] = $this->executePaymentHydratorPlugin($paymentTransfer, $orderTransfer);
+        foreach ($objectCollection as $salesPaymentEntity) {
+            $paymentTransfer = $this->mapPaymentTransfer($salesPaymentEntity);
+            $paymentTransfer = $this->executePaymentHydratorPlugin($paymentTransfer, $orderTransfer);
+            $orderTransfer->addPayment($paymentTransfer);
         }
-
-        $orderTransfer->setPayments($updatedPayments);
 
         return $orderTransfer;
     }
@@ -106,6 +100,18 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
         }
 
         return $paymentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPayment[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findSalesPaymentByIdSalesOrder(OrderTransfer $orderTransfer)
+    {
+        return $this->paymentQueryContainer
+            ->queryPaymentMethodsByIdSalesOrder($orderTransfer->getIdSalesOrder())
+            ->find();
     }
 
 }
