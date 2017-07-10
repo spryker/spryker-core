@@ -43,7 +43,7 @@ class ResourceActionPreProcessorTest extends Test
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setRequestType('GET');
-        $apiRequestTransfer->setPath('1');
+        $apiRequestTransfer->setResourceId(1);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $this->assertSame('get', $apiRequestTransferAfter->getResourceAction());
@@ -58,7 +58,7 @@ class ResourceActionPreProcessorTest extends Test
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setRequestType('POST');
-        $apiRequestTransfer->setPath('');
+        $apiRequestTransfer->setResourceId(null);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $this->assertSame('add', $apiRequestTransferAfter->getResourceAction());
@@ -75,7 +75,7 @@ class ResourceActionPreProcessorTest extends Test
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setRequestType('POST');
-        $apiRequestTransfer->setPath('1');
+        $apiRequestTransfer->setResourceId(1);
 
         $processor->process($apiRequestTransfer);
     }
@@ -89,7 +89,7 @@ class ResourceActionPreProcessorTest extends Test
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setRequestType('PATCH');
-        $apiRequestTransfer->setPath('1');
+        $apiRequestTransfer->setResourceId(1);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $this->assertSame('update', $apiRequestTransferAfter->getResourceAction());
@@ -104,7 +104,7 @@ class ResourceActionPreProcessorTest extends Test
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setRequestType('DELETE');
-        $apiRequestTransfer->setPath('1');
+        $apiRequestTransfer->setResourceId(1);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $this->assertSame('remove', $apiRequestTransferAfter->getResourceAction());
@@ -119,7 +119,7 @@ class ResourceActionPreProcessorTest extends Test
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setRequestType('GET');
-        $apiRequestTransfer->setPath('');
+        $apiRequestTransfer->setResourceId(null);
 
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $this->assertSame('find', $apiRequestTransferAfter->getResourceAction());

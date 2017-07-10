@@ -18,9 +18,12 @@ use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Price\PriceConfig;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class Writer implements WriterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     const TOUCH_PRODUCT = 'product';
     const ENTITY_NOT_FOUND = 'entity not found';
@@ -292,24 +295,26 @@ class Writer implements WriterInterface
             return $productAbstractTransfer;
         }
 
-        $productAbstractTransfer->requireIdProductAbstract();
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
 
         $priceTransfer = $productAbstractTransfer->getPrice();
-        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
-
-        $priceProductEntity = $this->queryContainer
-            ->queryPriceProduct()
-            ->filterByFkProductAbstract($priceTransfer->getIdProductAbstract())
-            ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
-            ->findOneOrCreate();
-
-        $priceProductEntity->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
-        $priceProductEntity->setPrice($priceTransfer->getPrice());
-        $priceProductEntity->save();
-
-        $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+        $this->persistProductAbstractPriceEntity($priceTransfer, $idProductAbstract);
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->handleDatabaseTransaction(function () use ($productAbstractTransfer) {
+            return $this->executePersistProductAbstractPriceCollectionTransaction($productAbstractTransfer);
+        });
     }
 
     /**
@@ -323,8 +328,101 @@ class Writer implements WriterInterface
             return $productConcreteTransfer;
         }
 
-        $productConcreteTransfer->requireIdProductConcrete();
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
+
         $priceTransfer = $productConcreteTransfer->getPrice();
+        $this->persistProductConcretePriceEntity($priceTransfer, $idProductConcrete);
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->handleDatabaseTransaction(function () use ($productConcreteTransfer) {
+            return $this->executePersistProductConcretePriceCollectionTransaction($productConcreteTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function executePersistProductAbstractPriceCollectionTransaction(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $productAbstractTransfer = $this->persistProductAbstractPrice($productAbstractTransfer); // keep for BC reasons
+
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
+
+        foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
+            $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function executePersistProductConcretePriceCollectionTransaction(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $productConcreteTransfer = $this->persistProductConcretePrice($productConcreteTransfer); // keep for BC reasons
+
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
+
+        foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
+            $this->persistProductConcretePriceEntity($priceProductTransfer, $idProductConcrete);
+        }
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function persistProductAbstractPriceEntity(PriceProductTransfer $priceTransfer, $idProductAbstract)
+    {
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
+
+        $priceProductEntity = $this->queryContainer
+            ->queryPriceProduct()
+            ->filterByFkProductAbstract($priceTransfer->getIdProductAbstract())
+            ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
+            ->findOneOrCreate();
+
+        $priceProductEntity->setFkProductAbstract($idProductAbstract);
+        $priceProductEntity->setPrice($priceTransfer->getPrice());
+        $priceProductEntity->save();
+
+        $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+
+        return $priceTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function persistProductConcretePriceEntity(PriceProductTransfer $priceTransfer, $idProductConcrete)
+    {
         $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
 
         $priceProductEntity = $this->queryContainer
@@ -334,13 +432,13 @@ class Writer implements WriterInterface
             ->filterByFkProductAbstract(null, Criteria::ISNULL)
             ->findOneOrCreate();
 
-        $priceProductEntity->setFkProduct($productConcreteTransfer->getIdProductConcrete());
+        $priceProductEntity->setFkProduct($idProductConcrete);
         $priceProductEntity->setPrice($priceTransfer->getPrice());
         $priceProductEntity->save();
 
         $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
 
-        return $productConcreteTransfer;
+        return $priceTransfer;
     }
 
 }

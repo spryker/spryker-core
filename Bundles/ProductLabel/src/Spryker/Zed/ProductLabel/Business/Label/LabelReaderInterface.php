@@ -29,4 +29,11 @@ interface LabelReaderInterface
      */
     public function findAllByIdProductAbstract($idProductAbstract);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findAllLabelIdsByIdProductAbstract($idProductAbstract);
+
 }

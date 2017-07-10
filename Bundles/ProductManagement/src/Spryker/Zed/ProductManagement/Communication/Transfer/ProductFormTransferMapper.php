@@ -112,6 +112,11 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $priceTransfer = $this->buildProductAbstractPriceTransfer($form);
         $productAbstractTransfer->setPrice($priceTransfer);
 
+        $prices = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICES)->getData();
+        $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
+        $priceTransfers = $this->buildProductPriceTransfers($prices, $idProductAbstract);
+        $productAbstractTransfer->setPrices(new ArrayObject($priceTransfers));
+
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productAbstractTransfer->setImageSets(
             new ArrayObject($imageSetCollection)
@@ -185,6 +190,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         $priceTransfer = $this->buildProductConcretePriceTransfer($form, $productConcreteTransfer->getIdProductConcrete());
         $productConcreteTransfer->setPrice($priceTransfer);
+
+        $prices = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICES)->getData();
+        $priceTransfers = $this->buildProductPriceTransfers($prices, null, $productConcreteTransfer->getIdProductConcrete());
+        $productConcreteTransfer->setPrices(new ArrayObject($priceTransfers));
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
         $productConcreteTransfer->setStocks(new ArrayObject($stockCollection));
@@ -419,6 +428,29 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             ->setPrice($price);
 
         return $priceTransfer;
+    }
+
+    /**
+     * @param array $prices
+     * @param int|null $idProductAbstract
+     * @param int|null $idProduct
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function buildProductPriceTransfers(array $prices, $idProductAbstract = null, $idProduct = null)
+    {
+        $priceTransfers = [];
+        foreach ($prices as $priceType => $price) {
+            $priceTransfer = (new PriceProductTransfer())
+                ->setIdProductAbstract($idProductAbstract)
+                ->setIdProduct($idProduct)
+                ->setPrice($price)
+                ->setPriceTypeName($priceType);
+
+            $priceTransfers[] = $priceTransfer;
+        }
+
+        return $priceTransfers;
     }
 
     /**

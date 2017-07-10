@@ -48,6 +48,7 @@ class JavascriptQueryBuilderTransformer
     public function getFilters($type)
     {
         $ruleFields = $this->discountFacade->getQueryStringFieldsByType($type);
+        $valueOptions = $this->discountFacade->getQueryStringValueOptions($type);
 
         $transformed = [];
         foreach ($ruleFields as $ruleField) {
@@ -57,6 +58,11 @@ class JavascriptQueryBuilderTransformer
             $fieldTransformed['label'] = $ruleField;
             $fieldTransformed['type'] = 'string';
             $fieldTransformed['operators'] = $this->transformComparators($type, $ruleField);
+
+            if (!empty($valueOptions[$ruleField])) {
+                $fieldTransformed['input'] = 'select';
+                $fieldTransformed['values'] = $valueOptions[$ruleField];
+            }
 
             $transformed[] = $fieldTransformed;
         }

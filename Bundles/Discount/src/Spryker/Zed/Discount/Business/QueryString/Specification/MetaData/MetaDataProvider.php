@@ -10,6 +10,7 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
 
 class MetaDataProvider implements MetaDataProviderInterface
 {
@@ -137,6 +138,21 @@ class MetaDataProvider implements MetaDataProviderInterface
             $attributeFields[] = $specificationPlugin->getFieldName() . '.' . $attributeType;
         }
         return $attributeFields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueryStringValueOptions()
+    {
+        $valueOptions = [];
+        foreach ($this->specificationPlugins as $specificationPlugin) {
+            if ($specificationPlugin instanceof DiscountRuleWithValueOptionsPluginInterface) {
+                $valueOptions[$specificationPlugin->getFieldName()] = $specificationPlugin->getQueryStringValueOptions();
+            }
+        }
+
+        return $valueOptions;
     }
 
 }

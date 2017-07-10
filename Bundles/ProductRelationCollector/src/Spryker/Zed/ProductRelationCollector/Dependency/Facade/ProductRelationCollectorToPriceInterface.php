@@ -17,4 +17,11 @@ interface ProductRelationCollectorToPriceInterface
      */
     public function getPriceBySku($sku);
 
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findPricesBySku($sku);
+
 }

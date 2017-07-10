@@ -53,13 +53,14 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $this->addLogger($serviceContainer);
 
         if (Config::get(PropelConstants::PROPEL_DEBUG, false) && $this->hasConnection()) {
+            /** @var \Propel\Runtime\Connection\ConnectionWrapper $connection */
             $connection = Propel::getConnection();
             $connection->useDebug(true);
         }
     }
 
     /**
-     * @return \Propel\Runtime\ServiceContainer\StandardServiceContainer
+     * @return \Propel\Runtime\ServiceContainer\ServiceContainerInterface|\Propel\Runtime\ServiceContainer\StandardServiceContainer
      */
     protected function getServiceContainer()
     {

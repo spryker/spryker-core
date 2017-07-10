@@ -506,4 +506,17 @@ interface DiscountFacadeInterface
      */
     public function hydrateOrder(OrderTransfer $orderTransfer);
 
+    /**
+     * Specification:
+     * - Look for meta data provider by the given type.
+     * - Collect all available value options from all registered plugins.
+     *
+     * @api
+     *
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getQueryStringValueOptions($type);
+
 }
