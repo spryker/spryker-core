@@ -39,6 +39,7 @@
         <property name="customer" type="Customer"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="priceMode" type="string" />
     </transfer>
 
     <transfer name="Item">
@@ -51,7 +52,7 @@
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
-        <property name="Item" type="Item" />
+        <property name="originalItem" type="Item" />
     </transfer>
 
     <transfer name="CollectedDiscount">

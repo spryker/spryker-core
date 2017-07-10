@@ -17,21 +17,36 @@ class BaseCollector
      * @param int $grossPrice
      * @param int $quantity
      * @param \ArrayObject $originalItemCalculatedDiscounts
-     * @param \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
     protected function createDiscountableItemTransfer(
         $grossPrice,
         $quantity,
-        ArrayObject $originalItemCalculatedDiscounts,
-        ItemTransfer $itemTransfer = null
+        ArrayObject $originalItemCalculatedDiscounts
     ) {
         $discountableItemTransfer = new DiscountableItemTransfer();
         $discountableItemTransfer->setUnitGrossPrice($grossPrice);
         $discountableItemTransfer->setQuantity($quantity);
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($originalItemCalculatedDiscounts);
-        $discountableItemTransfer->setItem($itemTransfer);
+
+        return $discountableItemTransfer;
+    }
+
+    /**
+     * @param string $priceMode
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer
+     */
+    protected function createDiscountableItemForItemTransfer($priceMode, ItemTransfer $itemTransfer)
+    {
+        $discountableItemTransfer = $this->createDiscountableItemTransfer(
+            $this->getPrice($itemTransfer, $priceMode),
+            $itemTransfer->getQuantity(),
+            $itemTransfer->getCalculatedDiscounts()
+        );
+        $discountableItemTransfer->setOriginalItem($itemTransfer);
 
         return $discountableItemTransfer;
     }
