@@ -8,11 +8,12 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductAttributeGui\Business\ProductAttributeGuiFacade getFacade()
  * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
  */
 class ViewController extends AbstractController
@@ -42,17 +43,20 @@ class ViewController extends AbstractController
             ->handleRequest($request);
 
         $values = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAttributeFacade()
             ->getProductAbstractAttributeValues($idProductAbstract);
 
         $valueKeys = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAttributeFacade()
             ->extractKeysFromAttributes($values);
 
-        $productAbstractTransfer = $this->getFacade()->getProductAbstract($idProductAbstract);
+        $productAbstractTransfer = $this->getProductAbstractTransfer($idProductAbstract);
 
         $metaAttributes = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAttributeFacade()
             ->getMetaAttributesForProductAbstract($idProductAbstract);
 
         $localesData = $this->getLocaleData();
@@ -92,18 +96,23 @@ class ViewController extends AbstractController
             ->handleRequest($request);
 
         $values = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAttributeFacade()
             ->getProductAttributeValues($idProduct);
 
         $valueKeys = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAttributeFacade()
             ->extractKeysFromAttributes($values);
 
-        $productTransfer = $this->getFacade()->getProduct($idProduct);
-        $productAbstractTransfer = $this->getFacade()->getProductAbstract($productTransfer->getFkProductAbstract());
+        $productTransfer = $this->getProductTransfer($idProduct);
+        $productAbstractTransfer = $this->getProductAbstractTransfer(
+            $productTransfer->requireFkProductAbstract()->getFkProductAbstract()
+        );
 
         $metaAttributes = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAttributeFacade()
             ->getMetaAttributesForProduct($idProduct);
 
         $localesData = $this->getLocaleData();
@@ -145,6 +154,59 @@ class ViewController extends AbstractController
         ksort($localesData);
 
         return $localesData;
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function getProductTransfer($idProduct)
+    {
+        $entity = $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->filterByIdProduct($idProduct)
+            ->joinSpyProductLocalizedAttributes()
+            ->findOne();
+
+        $productTransfer = new ProductConcreteTransfer();
+
+        if (!$entity) {
+            return $productTransfer;
+        }
+
+        $productTransfer->setIdProductConcrete($entity->getIdProduct());
+        $productTransfer->setFkProductAbstract($entity->getFkProductAbstract());
+        $productTransfer->setSku($entity->getSku());
+
+        return $productTransfer;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function getProductAbstractTransfer($idProductAbstract)
+    {
+        $entity = $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->joinSpyProductAbstractLocalizedAttributes()
+            ->findOne();
+
+        $productAbstractTransfer = new ProductAbstractTransfer();
+
+        if (!$entity) {
+            return $productAbstractTransfer;
+        }
+
+        $productAbstractTransfer->setIdProductAbstract($entity->getIdProductAbstract());
+        $productAbstractTransfer->setSku($entity->getSku());
+
+        return $productAbstractTransfer;
     }
 
 }

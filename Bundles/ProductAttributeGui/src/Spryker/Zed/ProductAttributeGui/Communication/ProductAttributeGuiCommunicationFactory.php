@@ -39,9 +39,17 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface
+     */
+    public function getProductAttributeFacade()
+    {
+        return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
+    }
+
+    /**
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
-    protected function getProductQueryContainer()
+    public function getProductQueryContainer()
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
@@ -63,14 +71,6 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createAttributeKeyForm(array $formData, array $formOptions = [])
     {
         return $this->getFormFactory()->create(AttributeKeyForm::class, $formData, $formOptions);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
-     */
-    protected function getProductManagementQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_MANAGEMENT);
     }
 
 }

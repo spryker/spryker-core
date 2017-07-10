@@ -40,9 +40,13 @@ class SaveController extends AbstractController
 
         try {
             $statusCode = 200;
-            $this->getFacade()->saveAbstractAttributes($idProductAbstract, $data);
             $result = true;
             $message = 'Product abstract attributes saved';
+
+            $this->getFactory()
+                ->getProductAttributeFacade()
+                ->saveAbstractAttributes($idProductAbstract, $data);
+
         } catch (Exception $exception) {
             $statusCode = 500;
             $result = false;
@@ -75,9 +79,13 @@ class SaveController extends AbstractController
 
         try {
             $statusCode = 200;
-            $this->getFacade()->saveConcreteAttributes($idProduct, $data);
             $result = true;
             $message = 'Product attributes saved';
+
+            $this->getFactory()
+                ->getProductAttributeFacade()
+                ->saveConcreteAttributes($idProduct, $data);
+
         } catch (Exception $exception) {
             $statusCode = 500;
             $result = false;
