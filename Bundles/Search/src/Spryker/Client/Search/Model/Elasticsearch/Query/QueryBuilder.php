@@ -20,8 +20,8 @@ class QueryBuilder implements QueryBuilderInterface
 
     /**
      * @param string $fieldName
-     * @param float $minValue
-     * @param float $maxValue
+     * @param float|null $minValue
+     * @param float|null $maxValue
      * @param string $greaterParam
      * @param string $lessParam
      *
