@@ -1,7 +1,5 @@
 <?php
-namespace Cache;
-
-use Codeception\Actor;
+namespace ProductAttribute;
 
 /**
  * Inherited Methods
@@ -17,14 +15,12 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
- */
-class UnitTester extends Actor
+*/
+class FunctionalTester extends \Codeception\Actor
 {
-
-    use _generated\UnitTesterActions;
+    use _generated\FunctionalTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

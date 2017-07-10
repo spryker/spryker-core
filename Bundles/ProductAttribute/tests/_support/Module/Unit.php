@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Cache\Module;
+namespace ProductAttribute\Module;
 
 use Codeception\Module;
 

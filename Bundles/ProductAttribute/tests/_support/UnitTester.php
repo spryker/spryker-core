@@ -1,5 +1,5 @@
 <?php
-namespace Cache;
+namespace ProductAttribute;
 
 use Codeception\Actor;
 
