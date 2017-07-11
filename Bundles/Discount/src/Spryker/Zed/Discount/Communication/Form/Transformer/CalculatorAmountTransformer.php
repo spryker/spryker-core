@@ -19,11 +19,6 @@ class CalculatorAmountTransformer implements DataTransformerInterface
     protected $calculatorPlugins = [];
 
     /**
-     * @var string
-     */
-    protected $thousandsSeparator = ',';
-
-    /**
      * @param array $calculatorPlugins
      */
     public function __construct(array $calculatorPlugins)
