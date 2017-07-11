@@ -71,7 +71,6 @@ class CategoryType extends AbstractType
             ->addCategoryKeyField($builder)
             ->addIsActiveField($builder)
             ->addIsInMenuField($builder)
-            ->addIsClickableField($builder)
             ->addIsSearchableField($builder)
             ->addParentNodeField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addExtraParentsField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
@@ -129,22 +128,7 @@ class CategoryType extends AbstractType
     protected function addIsInMenuField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_IN_MENU, 'checkbox', [
-            'label' => 'Show in Menu',
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIsClickableField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_IS_CLICKABLE, 'checkbox', [
-            'label' => 'Clickable',
+            'label' => 'Visible in the category tree',
             'required' => false,
         ]);
 
@@ -159,7 +143,7 @@ class CategoryType extends AbstractType
     protected function addIsSearchableField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_SEARCHABLE, 'checkbox', [
-            'label' => 'Searchable',
+            'label' => 'Allow to search for this category',
             'required' => false,
         ]);
 
