@@ -412,9 +412,7 @@ class ProductAttributeFacadeTest extends Test
      */
     public function testGetMetaAttributesForProductAbstract()
     {
-        $this->createSampleAttributeMetadata();
-        $data = static::DATA_PRODUCT_ATTRIBUTES_VALUES;
-        $data[static::SUPER_ATTRIBUTE_KEY] = static::SUPER_ATTRIBUTE_VALUE;
+        $data = $this->createSampleAttributeMetadataWithSuperAttributeData();
         $productAbstractTransfer = $this->createSampleAbstractProduct(static::ABSTRACT_SKU, $data);
 
         $metaAttributes = $this->productAttributeFacade->getMetaAttributesForProductAbstract(
@@ -431,9 +429,7 @@ class ProductAttributeFacadeTest extends Test
      */
     public function testGetMetaAttributesForProduct()
     {
-        $this->createSampleAttributeMetadata();
-        $data = static::DATA_PRODUCT_ATTRIBUTES_VALUES;
-        $data[static::SUPER_ATTRIBUTE_KEY] = static::SUPER_ATTRIBUTE_VALUE;
+        $data = $this->createSampleAttributeMetadataWithSuperAttributeData();
         $productAbstractTransfer = $this->createSampleAbstractProduct(static::ABSTRACT_SKU);
         $productTransfer = $this->createSampleProduct($productAbstractTransfer, static::CONCRETE_SKU, $data);
 
@@ -658,6 +654,19 @@ class ProductAttributeFacadeTest extends Test
             ->setKey(static::FOO_ATTRIBUTE_KEY)
             ->setInputType('text');
         $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
+    }
+
+    /**
+     * @return array
+     */
+    protected function createSampleAttributeMetadataWithSuperAttributeData()
+    {
+        $this->createSampleAttributeMetadata();
+
+        $data = static::DATA_PRODUCT_ATTRIBUTES_VALUES;
+        $data[static::SUPER_ATTRIBUTE_KEY] = static::SUPER_ATTRIBUTE_VALUE;
+
+        return $data;
     }
 
 }
