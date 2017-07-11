@@ -30,4 +30,14 @@ interface ConsoleFacadeInterface
      */
     public function getEventSubscriber();
 
+    /**
+     * Specification
+     * - Returns an array of ServiceProviders
+     *
+     * @api
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    public function getServiceProviders();
+
 }

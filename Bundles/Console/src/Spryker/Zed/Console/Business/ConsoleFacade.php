@@ -16,8 +16,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
 
     /**
-     * Specification
-     * - Returns an array of console commands
+     * {@inheritdoc}
      *
      * @api
      *
@@ -29,8 +28,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * Specification
-     * - Returns an array of event subscribers
+     * {@inheritdoc}
      *
      * @api
      *
@@ -42,8 +40,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * Specification
-     * - Returns an array of ServiceProviders
+     * {@inheritdoc}
      *
      * @api
      *
