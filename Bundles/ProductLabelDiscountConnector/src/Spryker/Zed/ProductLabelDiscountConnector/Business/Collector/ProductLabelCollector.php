@@ -67,6 +67,8 @@ class ProductLabelCollector implements ProductLabelCollectorInterface
     }
 
     /**
+     * @deprecated This method calculated gross price when in tax mode, because discounts currently working with gross mode, will be removed in the future
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
      *

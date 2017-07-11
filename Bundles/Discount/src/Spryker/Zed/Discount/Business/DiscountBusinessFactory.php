@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Spryker\Zed\Discount\Business\Calculator\Calculator;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
