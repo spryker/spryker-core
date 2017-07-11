@@ -12,6 +12,7 @@ use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -111,7 +112,7 @@ class DataImporter implements
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
@@ -128,7 +129,7 @@ class DataImporter implements
                 $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
             } catch (Exception $dataImportException) {
                 if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getThrowException()) {
-                    throw new Exception($this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1));
+                    throw new DataImportException($this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1), 0, $dataImportException);
                 }
 
                 ErrorLogger::getInstance()->log($dataImportException);
