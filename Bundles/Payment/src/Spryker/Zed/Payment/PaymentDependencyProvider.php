@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payment;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
+use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollection;
 
 class PaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -40,11 +41,11 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\PaymentHydratorPluginInterface[]
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface
      */
     public function getPaymentHydrationPlugins()
     {
-        return [];
+         return new PaymentHydratorPluginCollection();
     }
 
 }

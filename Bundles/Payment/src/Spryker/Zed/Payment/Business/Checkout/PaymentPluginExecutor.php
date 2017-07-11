@@ -50,7 +50,6 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
             PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,
             $quoteTransfer,
             $checkoutResponseTransfer
-
         );
     }
 
@@ -68,7 +67,6 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
             PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS,
             $quoteTransfer,
             $checkoutResponseTransfer
-
         );
     }
 
@@ -84,7 +82,6 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
             PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS,
             $quoteTransfer,
             $checkoutResponseTransfer
-
         );
     }
 

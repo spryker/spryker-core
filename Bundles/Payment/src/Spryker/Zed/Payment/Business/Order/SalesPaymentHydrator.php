@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\Payment\Business\Order;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\Payment\Persistence\SpySalesPayment;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
 class SalesPaymentHydrator implements SalesPaymentHydratorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface[]
+     * @var array
      */
-    protected $paymentHydratePlugins = [];
+    protected $paymentHydratePluginCollection = [];
 
     /**
      * @var \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface
@@ -28,14 +28,14 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     protected $paymentQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface[] $paymentHydratePlugins
+     * @param \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface $paymentHydratePluginCollection
      * @param \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface $paymentQueryContainer
      */
     public function __construct(
-        array $paymentHydratePlugins,
+        PaymentHydratorPluginCollectionInterface $paymentHydratePluginCollection,
         PaymentQueryContainerInterface $paymentQueryContainer
     ) {
-        $this->paymentHydratePlugins = $paymentHydratePlugins;
+        $this->paymentHydratePluginCollection = $paymentHydratePluginCollection;
         $this->paymentQueryContainer = $paymentQueryContainer;
     }
 
@@ -70,7 +70,6 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     }
 
     /**
-     *
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Payment\Persistence\SpySalesPayment[] $objectCollection
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -95,8 +94,9 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
      */
     protected function executePaymentHydratorPlugin(PaymentTransfer $paymentTransfer, OrderTransfer $orderTransfer)
     {
-        if (isset($this->paymentHydratePlugins[$paymentTransfer->getPaymentProvider()])) {
-            return $this->paymentHydratePlugins[$paymentTransfer->getPaymentProvider()]->hydrate($orderTransfer, $paymentTransfer);
+        if ($this->paymentHydratePluginCollection->has($paymentTransfer->getPaymentProvider())) {
+            $paymentHydratePlugin = $this->paymentHydratePluginCollection->get($paymentTransfer->getPaymentProvider());
+            return $paymentHydratePlugin->hydrate($orderTransfer, $paymentTransfer);
         }
 
         return $paymentTransfer;
