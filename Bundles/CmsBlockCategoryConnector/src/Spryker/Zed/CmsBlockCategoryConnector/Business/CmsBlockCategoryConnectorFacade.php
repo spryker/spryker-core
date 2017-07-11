@@ -94,6 +94,19 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
+     * @param int $idCategory
+     * @param int $idCategoryTemplate
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlockCollection($idCategory, $idCategoryTemplate)
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryReader()
+            ->getCmsBlockCollection($idCategory, $idCategoryTemplate);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

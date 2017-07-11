@@ -27,4 +27,12 @@ interface CmsBlockCategoryReaderInterface
      */
     public function getRenderedCategoryList($idCmsBlock, $idLocale);
 
+    /**
+     * @param int $idCategory
+     * @param int $idCategoryTemplate
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
+
 }

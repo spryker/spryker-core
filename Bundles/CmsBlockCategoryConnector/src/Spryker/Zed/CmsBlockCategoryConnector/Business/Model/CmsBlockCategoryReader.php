@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 
 class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
@@ -67,6 +68,51 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
         }
 
         return $categoryList;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param int $idCategoryTemplate
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlockCollection($idCategory, $idCategoryTemplate)
+    {
+        $relations = $this->queryContainer
+            ->queryCmsBlockCategoryWithBlocksByIdCategory($idCategory, $idCategoryTemplate)
+            ->find();
+
+        $cmsBlockTransfers = [];
+
+        foreach ($relations as $relation) {
+            $cmsBlockTransfer = $this->createCmsBlockTransfer();
+            $cmsBlockTransfer = $this->mapCmsBlockEntityToTransfer($relation->getCmsBlock(), $cmsBlockTransfer);
+
+            $cmsBlockTransfers[] = $cmsBlockTransfer;
+        }
+
+        return $cmsBlockTransfers;
+    }
+
+    /**
+     * @return CmsBlockTransfer
+     */
+    protected function createCmsBlockTransfer()
+    {
+        return new CmsBlockTransfer();
+    }
+
+    /**
+     * @param SpyCmsBlock $spyCmsBlock
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    protected function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock, CmsBlockTransfer $cmsBlockTransfer)
+    {
+        $cmsBlockTransfer->fromArray($spyCmsBlock->toArray(), true);
+
+        return $cmsBlockTransfer;
     }
 
 }

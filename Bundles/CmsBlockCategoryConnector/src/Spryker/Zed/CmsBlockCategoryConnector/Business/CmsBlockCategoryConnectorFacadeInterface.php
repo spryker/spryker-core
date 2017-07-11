@@ -79,6 +79,17 @@ interface CmsBlockCategoryConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Get collection of related CMS Blocks
+     *
+     * @param int $idCategory
+     * @param int $idCategoryTemplate
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
+
+    /**
+     * Specification:
      * - Takes positions from configuration
      * - Creates new CMS Block category position records
      * - Does not remove/update existing records
