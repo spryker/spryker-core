@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CalculatorForm extends AbstractType
 {
+
     const MAX_MONEY_INT = 21474835;
     const MIN_MONEY_INT = 0;
 
@@ -138,7 +139,7 @@ class CalculatorForm extends AbstractType
 
         $builder->add(
             self::FIELD_AMOUNT,
-            'text',
+            'money',
             array_merge($defaultOptions, $options)
         );
 

@@ -60,10 +60,6 @@ class CalculatorAmountTransformer implements DataTransformerInterface
             return null;
         }
 
-        $amountFormatted = $value->getAmount();
-        $amountFormatted = str_replace($this->thousandsSeparator, '', $amountFormatted);
-        $value->setAmount($amountFormatted);
-
         $calculatorPlugin = $this->getCalculatorPlugin($value->getCalculatorPlugin());
         $transformedAmount = $calculatorPlugin->transformForPersistence($value->getAmount());
         $value->setAmount($transformedAmount);
