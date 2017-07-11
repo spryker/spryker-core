@@ -13,8 +13,10 @@ use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueT
 use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Formatter\ArrayFormatter;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductAbstractNotFoundException;
+use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductConcreteNotFoundException;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface;
+use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
@@ -27,28 +29,28 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
     protected $productAttributeQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
-    protected $productQueryContainer;
-
-    /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface
      */
     protected $attributeMapper;
 
     /**
+     * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface $productAttributeQueryContainer
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface $attributeMapper
+     * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
      */
     public function __construct(
         ProductAttributeQueryContainerInterface $productAttributeQueryContainer,
-        ProductQueryContainerInterface $productQueryContainer,
-        ProductAttributeMapperInterface $attributeMapper
+        ProductAttributeMapperInterface $attributeMapper,
+        ProductAttributeToProductInterface $productFacade
     ) {
         $this->productAttributeQueryContainer = $productAttributeQueryContainer;
-        $this->productQueryContainer = $productQueryContainer;
         $this->attributeMapper = $attributeMapper;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -59,6 +61,7 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
     public function getAttributesByValues(array $values)
     {
         $query = $this->queryAttributeValues($values);
+
         return $this->loadPdoStatement($query);
     }
 
@@ -78,27 +81,43 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @throws \Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductAbstractNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function getProductAbstractEntity($idProductAbstract)
+    public function getProductAbstractTransfer($idProductAbstract)
     {
-        return $this->productQueryContainer->queryProductAbstract()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->joinSpyProductAbstractLocalizedAttributes()
-            ->findOne();
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
+
+        if (!$productAbstractTransfer) {
+            throw new ProductAbstractNotFoundException(sprintf(
+                'Product abstract with id "%s" not found',
+                $idProductAbstract
+            ));
+        }
+
+        return $productAbstractTransfer;
     }
 
     /**
      * @param int $idProduct
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @throws \Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductConcreteNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function getProductEntity($idProduct)
+    public function getProductTransfer($idProduct)
     {
-        return $this->productQueryContainer->queryProduct()
-            ->filterByIdProduct($idProduct)
-            ->joinSpyProductLocalizedAttributes()
-            ->findOne();
+        $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProduct);
+
+        if (!$productConcreteTransfer) {
+            throw new ProductConcreteNotFoundException(sprintf(
+                'Product concrete with id "%s" not found',
+                $idProduct
+            ));
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**

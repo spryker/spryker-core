@@ -601,9 +601,10 @@ class ProductAttributeFacadeTest extends Test
     {
         $data = (!is_array($data)) ? static::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
-        $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setSku($sku);
-        $productAbstractTransfer->setAttributes($data);
+        $productAbstractTransfer = $this->tester->haveProductAbstract([
+            'attributes' => $data,
+            'sku' => $sku
+        ]);
 
         $localizedAttributes = $this->generateLocalizedAttributes();
         $productAbstractTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));

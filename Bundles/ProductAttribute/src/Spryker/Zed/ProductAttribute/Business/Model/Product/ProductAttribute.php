@@ -72,15 +72,12 @@ class ProductAttribute implements ProductAttributeInterface
      */
     public function getProductAbstractAttributeValues($idProductAbstract)
     {
-        $productAbstractEntity = $this->reader->getProductAbstractEntity($idProductAbstract);
+        $productAbstractTransfer = $this->reader->getProductAbstractTransfer($idProductAbstract);
 
-        $localizedAttributes = [];
-        foreach ($productAbstractEntity->getSpyProductAbstractLocalizedAttributess() as $localizedAttributeEntity) {
-            $attributesDecoded = $this->mapper->decodeJsonAttributes($localizedAttributeEntity->getAttributes());
-            $localizedAttributes[$localizedAttributeEntity->getFkLocale()] = $attributesDecoded;
-        }
-
-        return $this->generateAttributes($productAbstractEntity->getAttributes(), $localizedAttributes);
+        return $this->generateAttributes(
+            (array)$productAbstractTransfer->getAttributes(),
+            (array)$productAbstractTransfer->getLocalizedAttributes()
+        );
     }
 
     /**
@@ -91,6 +88,7 @@ class ProductAttribute implements ProductAttributeInterface
     public function getProductAttributes($idProduct)
     {
         $values = $this->getProductAttributeValues($idProduct);
+
         return $this->reader->getAttributesByValues($values);
     }
 
@@ -102,6 +100,7 @@ class ProductAttribute implements ProductAttributeInterface
     public function getMetaAttributesForProduct($idProduct)
     {
         $values = $this->getProductAttributeValues($idProduct);
+
         return $this->reader->getMetaAttributesByValues($values);
     }
 
@@ -112,31 +111,32 @@ class ProductAttribute implements ProductAttributeInterface
      */
     public function getProductAttributeValues($idProduct)
     {
-        $productEntity = $this->reader->getProductEntity($idProduct);
+        $productTransfer = $this->reader->getProductTransfer($idProduct);
 
-        $localizedAttributes = [];
-        foreach ($productEntity->getSpyProductLocalizedAttributess() as $localizedAttributeEntity) {
-            $attributesDecoded = $this->mapper->decodeJsonAttributes($localizedAttributeEntity->getAttributes());
-            $localizedAttributes[$localizedAttributeEntity->getFkLocale()] = $attributesDecoded;
-        }
-
-        return $this->generateAttributes($productEntity->getAttributes(), $localizedAttributes);
+        return $this->generateAttributes(
+            (array)$productTransfer->getAttributes(),
+            (array)$productTransfer->getLocalizedAttributes()
+        );
     }
 
     /**
-     * @param string $productAttributesJson
+     * @param array $attributes
      * @param array $localizedAttributes
      *
      * @return array
      */
-    protected function generateAttributes($productAttributesJson, array $localizedAttributes)
+    protected function generateAttributes(array $attributes, array $localizedAttributes)
     {
-        $attributes = $this->mapper->decodeJsonAttributes($productAttributesJson);
-        $attributes = [ProductAttributeConfig::DEFAULT_LOCALE => $attributes] + $localizedAttributes;
+        $result = [];
+        foreach ($localizedAttributes as $localizedAttributeTransfer) {
+            $result[$localizedAttributeTransfer->getFkLocale()] = $localizedAttributeTransfer->getAttributes();
+        }
 
-        ksort($attributes);
+        $result = [ProductAttributeConfig::DEFAULT_LOCALE => $attributes] + $result;
 
-        return $attributes;
+        ksort($result);
+
+        return $result;
     }
 
 }

@@ -46,8 +46,8 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttributeReader(
             $this->getQueryContainer(),
-            $this->getProductQueryContainer(),
-            $this->createProductAttributeMapper()
+            $this->createProductAttributeMapper(),
+            $this->getProductFacade()
         );
     }
 
@@ -58,9 +58,8 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttributeWriter(
             $this->createProductAttributeReader(),
-            $this->createProductAttributeMapper(),
             $this->getLocaleFacade(),
-            $this->getProductQueryContainer()
+            $this->getProductFacade()
         );
     }
 

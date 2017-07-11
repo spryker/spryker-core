@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
+use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 class ProductAttributeWriter implements ProductAttributeWriterInterface
@@ -22,36 +20,28 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     protected $reader;
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface
-     */
-    protected $attributeMapper;
-
-    /**
      * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface
      */
-    protected $productQueryContainer;
+    protected $productFacade;
 
     /**
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $reader
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface $attributeMapper
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
      */
     public function __construct(
         ProductAttributeReaderInterface $reader,
-        ProductAttributeMapperInterface $attributeMapper,
         ProductAttributeToLocaleInterface $localeFacade,
-        ProductQueryContainerInterface $productQueryContainer
+        ProductAttributeToProductInterface $productFacade
     ) {
         $this->reader = $reader;
-        $this->attributeMapper = $attributeMapper;
         $this->localeFacade = $localeFacade;
-        $this->productQueryContainer = $productQueryContainer;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -62,17 +52,15 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
      */
     public function saveAbstractAttributes($idProductAbstract, array $attributes)
     {
-        $formattedAttributeData = $this->getAttributesDataToSave($attributes);
+        $productAbstractTransfer = $this->reader->getProductAbstractTransfer($idProductAbstract);
+        $attributesToSave = $this->getAttributesDataToSave($attributes);
 
-        $attributesJson = $this->getNonLocalizedAttributesAsJson($formattedAttributeData);
-        unset($formattedAttributeData[ProductAttributeConfig::DEFAULT_LOCALE]);
+        $productAbstractTransfer->setAttributes(
+            $this->getNonLocalizedAttributes($attributesToSave)
+        );
 
-        $productAbstractEntity = $this->reader->getProductAbstractEntity($idProductAbstract);
-        $productAbstractEntity->setAttributes($attributesJson);
-        $productAbstractEntity->save();
-
-        $query = $this->productQueryContainer->queryProductAbstractLocalizedAttributes($idProductAbstract);
-        $this->saveLocalizedAttributes($query, $formattedAttributeData);
+        $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productAbstractTransfer->getLocalizedAttributes());
+        $this->productFacade->saveProduct($productAbstractTransfer, []);
     }
 
     /**
@@ -83,44 +71,40 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
      */
     public function saveConcreteAttributes($idProduct, array $attributes)
     {
-        $formattedAttributeData = $this->getAttributesDataToSave($attributes);
+        $productConcreteTransfer = $this->reader->getProductTransfer($idProduct);
+        $productAbstractTransfer = $this->reader->getProductAbstractTransfer($productConcreteTransfer->getFkProductAbstract());
+        $attributesToSave = $this->getAttributesDataToSave($attributes);
 
-        $attributesJson = $this->getNonLocalizedAttributesAsJson($formattedAttributeData);
-        unset($formattedAttributeData[ProductAttributeConfig::DEFAULT_LOCALE]);
+        $productConcreteTransfer->setAttributes(
+            $this->getNonLocalizedAttributes($attributesToSave)
+        );
 
-        $productEntity = $this->reader->getProductEntity($idProduct);
-        $productEntity->setAttributes($attributesJson);
-        $productEntity->save();
-
-        $query = $this->productQueryContainer->queryProductLocalizedAttributes($idProduct);
-        $this->saveLocalizedAttributes($query, $formattedAttributeData);
+        $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productConcreteTransfer->getLocalizedAttributes());
+        $this->productFacade->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery|\Propel\Runtime\ActiveQuery\Criteria $query
-     * @param array $localizedAttributes
+     * @param array $attributesToSave
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransferCollection
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
      */
-    protected function saveLocalizedAttributes(Criteria $query, array $localizedAttributes)
+    protected function updateLocalizedAttributeTransfers(array $attributesToSave, array $localizedAttributeTransferCollection)
     {
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $localizedDataToSave = [];
-            $idLocale = $localeTransfer->getIdLocale();
+        unset($attributesToSave[ProductAttributeConfig::DEFAULT_LOCALE]);
 
-            $queryToQuery = clone $query;
-            $localizedAttributeEntity = $queryToQuery
-                ->filterByFkLocale($idLocale)
-                ->findOneOrCreate();
+        foreach ($localizedAttributeTransferCollection as $localizedAttributesTransfer) {
+            $idLocale = $localizedAttributesTransfer->getLocale()->getIdLocale();
+            $localizedDataToSave = $localizedAttributesTransfer->getAttributes();
 
-            if (array_key_exists($idLocale, $localizedAttributes)) {
-                $localizedDataToSave = $localizedAttributes[$idLocale];
+            if (array_key_exists($idLocale, $attributesToSave)) {
+                $localizedDataToSave = $attributesToSave[$idLocale];
             }
 
-            $attributesJson = $this->attributeMapper->encodeJsonAttributes($localizedDataToSave);
-            $localizedAttributeEntity->setAttributes($attributesJson);
-            $localizedAttributeEntity->save();
+            $localizedAttributesTransfer->setAttributes($localizedDataToSave);
         }
+
+        return $localizedAttributeTransferCollection;
     }
 
     /**
@@ -156,16 +140,16 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     /**
      * @param array $attributeData
      *
-     * @return string
+     * @return array
      */
-    protected function getNonLocalizedAttributesAsJson(array $attributeData)
+    protected function getNonLocalizedAttributes(array $attributeData)
     {
         $productAbstractAttributes = [];
         if (array_key_exists(ProductAttributeConfig::DEFAULT_LOCALE, $attributeData)) {
             $productAbstractAttributes = $attributeData[ProductAttributeConfig::DEFAULT_LOCALE];
         }
 
-        return $this->attributeMapper->encodeJsonAttributes($productAbstractAttributes);
+        return $productAbstractAttributes;
     }
 
 }

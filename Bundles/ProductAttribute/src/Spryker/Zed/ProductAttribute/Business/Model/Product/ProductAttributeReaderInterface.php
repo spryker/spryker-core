@@ -27,16 +27,20 @@ interface ProductAttributeReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @throws \Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductAbstractNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function getProductAbstractEntity($idProductAbstract);
+    public function getProductAbstractTransfer($idProductAbstract);
 
     /**
      * @param int $idProduct
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @throws \Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductConcreteNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function getProductEntity($idProduct);
+    public function getProductTransfer($idProduct);
 
     /**
      * @param string $searchText
