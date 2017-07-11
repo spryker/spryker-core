@@ -175,24 +175,6 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToTouchInterface
-     */
-    protected function getTouchFacade()
-    {
-        return $this->getProvidedDependency(ProductAttributeDependencyProvider::FACADE_TOUCH);
-    }
-
-    /**
-     * TODO bridge
-     *
-     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
-    protected function getProductQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductAttributeDependencyProvider::QUERY_CONTAINER_PRODUCT);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilEncodingInterface
      */
     protected function getEncodingService()

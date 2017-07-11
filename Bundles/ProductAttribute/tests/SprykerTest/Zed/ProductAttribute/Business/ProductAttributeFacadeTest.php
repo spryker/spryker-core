@@ -603,7 +603,7 @@ class ProductAttributeFacadeTest extends Test
 
         $productAbstractTransfer = $this->tester->haveProductAbstract([
             'attributes' => $data,
-            'sku' => $sku
+            'sku' => $sku,
         ]);
 
         $localizedAttributes = $this->generateLocalizedAttributes();
