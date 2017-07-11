@@ -22,8 +22,15 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
 
-    const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
-    const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+    /**
+     * @deprecated Use CmsConfig::getPlaceholderPattern()
+     */
+    const CMS_PLACEHOLDER_PATTERN = '';
+
+    /**
+     * @deprecated Use CmsConfig::getPlaceholderValuePattern()
+     */
+    const CMS_PLACEHOLDER_VALUE_PATTERN = '';
 
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
@@ -82,6 +89,22 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     }
 
     /**
+     * @return string
+     */
+    protected function getPlaceholderPattern()
+    {
+        return static::CMS_PLACEHOLDER_PATTERN ?: $this->cmsConfig->getPlaceholderPattern();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPlaceholderValuePattern()
+    {
+        return static::CMS_PLACEHOLDER_VALUE_PATTERN ?: $this->cmsConfig->getPlaceholderValuePattern();
+    }
+
+    /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return array
@@ -121,8 +144,8 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
 
         $templateContent = $this->readTemplateContents($templateFile);
 
-        preg_match_all(static::CMS_PLACEHOLDER_PATTERN, $templateContent, $cmsPlaceholderLine);
-        if (count($cmsPlaceholderLine) == 0) {
+        preg_match_all($this->getPlaceholderPattern(), $templateContent, $cmsPlaceholderLine);
+        if (count($cmsPlaceholderLine) === 0) {
             throw new MissingPlaceholdersException(
                 sprintf(
                     'No placeholders found in "%s" template.',
@@ -131,7 +154,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             );
         }
 
-        preg_match_all(static::CMS_PLACEHOLDER_VALUE_PATTERN, implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
+        preg_match_all($this->getPlaceholderValuePattern(), implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
 
         return $placeholderMap[1];
     }

@@ -1,4 +1,4 @@
-# EventJournal Bundle
+# EventJournal Module
 
 ## Installation
 

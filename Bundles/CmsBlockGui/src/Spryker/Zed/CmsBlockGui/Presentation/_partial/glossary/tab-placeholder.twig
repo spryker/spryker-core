@@ -2,7 +2,7 @@
 {% set placeholderForm = '' %}
 
 {% for glossaryPlaceholder in glossaryForm.glossaryPlaceholders %}
-    {% if tab.name == glossaryPlaceholder.vars.data.placeholder %}
+    {% if tab.name == glossaryPlaceholder.vars.data.placeholder|replace({'.': '-'}) %}
         {% set placeholderForm = glossaryPlaceholder %}
     {% endif %}
 {% endfor %}

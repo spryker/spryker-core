@@ -20,8 +20,8 @@ class QueryBuilder implements QueryBuilderInterface
 
     /**
      * @param string $fieldName
-     * @param float $minValue
-     * @param float $maxValue
+     * @param float|null $minValue
+     * @param float|null $maxValue
      * @param string $greaterParam
      * @param string $lessParam
      *
@@ -29,14 +29,18 @@ class QueryBuilder implements QueryBuilderInterface
      */
     public function createRangeQuery($fieldName, $minValue, $maxValue, $greaterParam = 'gte', $lessParam = 'lte')
     {
+        $arguments = [];
+
+        if ($minValue !== null) {
+            $arguments[$greaterParam] = $minValue;
+        }
+
+        if ($maxValue !== null) {
+            $arguments[$lessParam] = $maxValue;
+        }
+
         $rangeQuery = new Range();
-        $rangeQuery->addField(
-            $fieldName,
-            [
-                $greaterParam => $minValue,
-                $lessParam => $maxValue,
-            ]
-        );
+        $rangeQuery->addField($fieldName, $arguments);
 
         return $rangeQuery;
     }

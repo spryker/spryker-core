@@ -122,6 +122,14 @@ class SubscriptionManager implements SubscriptionManagerInterface
             return $subscriptionEntity;
         }
 
+        if ($newsletterSubscriber->getEmail() !== null) {
+            $subscriptionEntity = $this->queryContainer
+                ->querySubscriptionByEmailAndNewsletterTypeName($newsletterSubscriber->getEmail(), $newsletterType->getName())
+                ->findOne();
+
+            return $subscriptionEntity;
+        }
+
         if ($newsletterSubscriber->getFkCustomer() !== null) {
             $subscriptionEntity = $this->queryContainer
                 ->querySubscriptionByIdCustomerAndNewsletterTypeName($newsletterSubscriber->getFkCustomer(), $newsletterType->getName())

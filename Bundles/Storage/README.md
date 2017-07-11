@@ -1,4 +1,4 @@
-# Storage Bundle
+# Storage Module
 
 ## Installation
 

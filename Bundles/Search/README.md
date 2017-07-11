@@ -1,4 +1,4 @@
-# Search Bundle
+# Search Module
 
 ## Installation
 

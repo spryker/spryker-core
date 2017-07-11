@@ -1,4 +1,4 @@
-# CollectorStorageConnector Bundle
+# CollectorStorageConnector Module
 [![Build Status](https://travis-ci.org/spryker/CollectorStorageConnector.svg)](https://travis-ci.org/spryker/CollectorStorageConnector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/CollectorStorageConnector/badge.svg)](https://coveralls.io/github/spryker/CollectorStorageConnector)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/CollectorStorageConnector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/CollectorStorageConnector/?branch=master)

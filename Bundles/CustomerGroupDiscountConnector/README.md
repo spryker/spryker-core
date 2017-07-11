@@ -1,4 +1,4 @@
-# CustomerGroupDiscountConnector Bundle
+# CustomerGroupDiscountConnector Module
 
 ## Installation
 

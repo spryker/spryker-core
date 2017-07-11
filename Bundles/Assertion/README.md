@@ -1,4 +1,4 @@
-# Assertion Bundle
+# Assertion Module
 
 ## Installation
 

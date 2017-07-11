@@ -49,13 +49,23 @@ class GlossaryTabs extends AbstractTabs
     {
         foreach ($this->cmsGlossaryTransfer->getGlossaryAttributes() as $glossaryAttributesTransfer) {
             $tabItemTransfer = new TabItemTransfer();
-            $tabItemTransfer->setName($glossaryAttributesTransfer->getPlaceholder());
+            $tabItemTransfer->setName($this->escapeHtmlDomId($glossaryAttributesTransfer->getPlaceholder()));
             $tabItemTransfer->setTemplate('@CmsGui/_partial/glossary/tab-placeholder.twig');
             $tabItemTransfer->setTitle(ucfirst($glossaryAttributesTransfer->getPlaceholder()));
             $tabsViewTransfer->addTab($tabItemTransfer);
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function escapeHtmlDomId($value)
+    {
+        return str_replace('.', '-', $value);
     }
 
     /**

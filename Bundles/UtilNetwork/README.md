@@ -1,4 +1,4 @@
-# UtilNetwork Bundle
+# UtilNetwork Module
 
 ## Installation
 

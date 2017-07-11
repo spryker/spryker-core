@@ -202,7 +202,6 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Range())
                                     ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
                                         'gte' => 789,
-                                        'lte' => 789,
                                     ])))))
                             ->addAggregation($expectedIntegerFacetAggregation)),
                             $expectedIntegerFacetAggregation,
@@ -226,7 +225,6 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
                                 ->addFilter((new Range())
                                     ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, [
                                         'gte' => 789,
-                                        'lte' => 789,
                                     ])))))
                             ->addAggregation($expectedIntegerFacetAggregation)),
                             $expectedIntegerFacetAggregation,
@@ -254,7 +252,9 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
         $parameters = [
             'foo' => 123,
             'bar' => 456,
-            'baz' => 789,
+            'baz' => [
+                'min' => 789,
+            ],
         ];
 
         return [$searchConfig, $expectedAggregations, $parameters];

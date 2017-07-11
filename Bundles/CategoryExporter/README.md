@@ -1,4 +1,4 @@
-# CategoryExporter Bundle
+# CategoryExporter Module
 
 ## Installation
 

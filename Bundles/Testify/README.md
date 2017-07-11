@@ -1,4 +1,4 @@
-# Testify Bundle
+# Testify Module
 
 ## Installation
 

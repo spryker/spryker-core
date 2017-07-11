@@ -1,4 +1,4 @@
-# Graphviz Bundle
+# Graphviz Module
 
 ## Installation
 

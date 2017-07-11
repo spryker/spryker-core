@@ -1,4 +1,4 @@
-# Catalog Bundle
+# Catalog Module
 
 ## Installation
 

@@ -23,6 +23,7 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
     const COL_DATA = 'data';
     const COL_VALID_FROM = 'valid_from';
     const COL_VALID_TO = 'valid_to';
+    const COL_IS_SEARCHABLE = 'is_searchable';
 
     /**
      * @return void
@@ -51,6 +52,7 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
         );
 
         $this->touchQuery->withColumn(SpyCmsVersionTableMap::COL_DATA, static::COL_DATA);
+        $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_IS_SEARCHABLE, static::COL_IS_SEARCHABLE);
         $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL, static::COL_URL);
         $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, static::COL_IS_ACTIVE);
         $this->touchQuery->withColumn(SpyCmsPageTableMap::COL_VALID_FROM, static::COL_VALID_FROM);

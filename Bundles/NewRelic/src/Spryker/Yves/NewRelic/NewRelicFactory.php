@@ -10,6 +10,9 @@ namespace Spryker\Yves\NewRelic;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\NewRelic\Plugin\ControllerListener;
 
+/**
+ * @method \Spryker\Yves\NewRelic\NewRelicConfig getConfig()
+ */
 class NewRelicFactory extends AbstractFactory
 {
 
@@ -20,7 +23,8 @@ class NewRelicFactory extends AbstractFactory
     {
         return new ControllerListener(
             $this->getNewRelicApi(),
-            $this->getSystem()
+            $this->getSystem(),
+            $this->getConfig()->getIgnorableTransactionRouteNames()
         );
     }
 

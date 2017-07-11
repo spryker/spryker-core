@@ -47,6 +47,9 @@
         <property name="stringSort" type="StringSortMap[]" />
         <property name="integerSort" type="IntegerSortMap[]" />
         <property name="category" type="CategoryMap" />
+        <property name="isActive" type="bool" />
+        <property name="activeFrom" type="string" />
+        <property name="activeTo" type="string" />
     </transfer>
 
     <transfer name="SearchResultDataMap">
