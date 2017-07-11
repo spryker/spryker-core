@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAttribute\Business;
 
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -93,7 +94,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     public function suggestKeys($searchText = '', $limit = 10)
     {
         return $this->getFactory()
-            ->createAttributeReader()
+            ->createProductAttributeReader()
             ->suggestKeys($searchText, $limit);
     }
 
@@ -110,7 +111,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     public function saveAbstractAttributes($idProductAbstract, array $attributes)
     {
         $this->getFactory()
-            ->createAttributeWriter()
+            ->createProductAttributeWriter()
             ->saveAbstractAttributes($idProductAbstract, $attributes);
     }
 
@@ -127,7 +128,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     public function saveConcreteAttributes($idProduct, array $attributes)
     {
         $this->getFactory()
-            ->createAttributeWriter()
+            ->createProductAttributeWriter()
             ->saveConcreteAttributes($idProduct, $attributes);
     }
 
@@ -161,6 +162,70 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
         return $this->getFactory()
             ->createProductAttributeMapper()
             ->extractValuesFromAttributes($attributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
+     */
+    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
+    {
+        return $this->getFactory()
+            ->createAttributeWriter()
+            ->createProductManagementAttribute($productManagementAttributeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
+     */
+    public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
+    {
+        return $this->getFactory()
+            ->createAttributeWriter()
+            ->updateProductManagementAttribute($productManagementAttributeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
+     */
+    public function getProductManagementAttribute($idProductManagementAttribute)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->getAttribute($idProductManagementAttribute);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return void
+     */
+    public function translateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
+    {
+        $this->getFactory()
+            ->createAttributeTranslator()
+            ->saveProductManagementAttributeTranslation($productManagementAttributeTransfer);
     }
 
 }

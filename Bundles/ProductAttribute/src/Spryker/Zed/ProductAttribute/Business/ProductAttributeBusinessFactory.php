@@ -7,7 +7,13 @@
 
 namespace Spryker\Zed\ProductAttribute\Business;
 
+use Spryker\Shared\ProductAttribute\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeReader;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslator;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeValueWriter;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeWriter;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttributeTransferMapper;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapper;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
@@ -27,8 +33,8 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     public function createProductAttributeManager()
     {
         return new ProductAttribute(
-            $this->createAttributeReader(),
-            $this->createAttributeWriter(),
+            $this->createProductAttributeReader(),
+            $this->createProductAttributeWriter(),
             $this->createProductAttributeMapper()
         );
     }
@@ -36,7 +42,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface
      */
-    public function createAttributeReader()
+    public function createProductAttributeReader()
     {
         return new ProductAttributeReader(
             $this->getQueryContainer(),
@@ -48,10 +54,10 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriterInterface
      */
-    public function createAttributeWriter()
+    public function createProductAttributeWriter()
     {
         return new ProductAttributeWriter(
-            $this->createAttributeReader(),
+            $this->createProductAttributeReader(),
             $this->createProductAttributeMapper(),
             $this->getLocaleFacade(),
             $this->getProductQueryContainer()
@@ -69,11 +75,80 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeWriterInterface
      */
-    protected function getProductQueryContainer()
+    public function createAttributeWriter()
     {
-        return $this->getProvidedDependency(ProductAttributeDependencyProvider::QUERY_CONTAINER_PRODUCT);
+        return new AttributeWriter(
+            $this->getQueryContainer(),
+            $this->getProductFacade(),
+            $this->getGlossaryFacade(),
+            $this->createAttributeValueWriter(),
+            $this->createAttributeGlossaryKeyBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeReaderInterface
+     */
+    public function createAttributeReader()
+    {
+        return new AttributeReader(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->createProductAttributeTransferGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslatorInterface
+     */
+    public function createAttributeTranslator()
+    {
+        return new AttributeTranslator(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder()
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getCurrentLocale()
+    {
+        return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeValueWriterInterface
+     */
+    protected function createAttributeValueWriter()
+    {
+        return new AttributeValueWriter(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttributeTransferMapperInterface
+     */
+    protected function createProductAttributeTransferGenerator()
+    {
+        return new ProductAttributeTransferMapper(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\ProductAttribute\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     */
+    protected function createAttributeGlossaryKeyBuilder()
+    {
+        return new AttributeGlossaryKeyBuilder();
     }
 
     /**
@@ -82,6 +157,40 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductAttributeDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryInterface
+     */
+    protected function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductAttributeDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductAttributeDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToTouchInterface
+     */
+    protected function getTouchFacade()
+    {
+        return $this->getProvidedDependency(ProductAttributeDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * TODO bridge
+     *
+     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     */
+    protected function getProductQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductAttributeDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 
     /**

@@ -11,11 +11,22 @@ use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Spryker\Zed\Kernel\Container;
+use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslation;
+use Spryker\Shared\ProductAttribute\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacade;
-use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
-use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
+use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryBridge;
+use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleBridge;
+use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -48,9 +59,14 @@ class ProductAttributeFacadeTest extends Test
     ];
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacade
      */
     protected $productAttributeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer
+     */
+    protected $productAttributeQueryContainer;
 
     /**
      * @var \SprykerTest\Zed\ProductAttribute\BusinessTester
@@ -65,33 +81,245 @@ class ProductAttributeFacadeTest extends Test
         parent::setUp();
 
         $this->productAttributeFacade = new ProductAttributeFacade();
-        $this->productAttributeFacade->setFactory($this->getBusinessFactory());
+        $this->productAttributeQueryContainer = new ProductAttributeQueryContainer();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory
+     * @return void
      */
-    protected function getBusinessFactory()
+    public function testCreateProductManagementAttributeCreatesNewAttributeEntity()
     {
-        $customerBusinessFactory = new ProductAttributeBusinessFactory();
-        $customerBusinessFactory->setContainer($this->getContainer());
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setKey('foo')
+            ->setInputType('bar');
 
-        return $customerBusinessFactory;
+        $productManagementAttributeTransfer = $this->productAttributeFacade->createProductManagementAttribute(
+            $productManagementAttributeTransfer
+        );
+
+        $this->assertNotNull($productManagementAttributeTransfer->getIdProductManagementAttribute());
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Container
+     * @return void
      */
-    protected function getContainer()
+    public function testCreateProductManagementAttributeCreatesNewAttributeValueEntities()
     {
-        $dependencyProvider = new ProductAttributeDependencyProvider();
-        $container = new Container();
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setKey('foo')
+            ->setInputType('bar')
+            ->setValues(new ArrayObject([
+                (new ProductManagementAttributeValueTransfer())->setValue('a'),
+                (new ProductManagementAttributeValueTransfer())->setValue('b'),
+                (new ProductManagementAttributeValueTransfer())->setValue('c'),
+            ]));
 
-        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $productManagementAttributeTransfer = $this->productAttributeFacade->createProductManagementAttribute(
+            $productManagementAttributeTransfer
+        );
 
-        $container[ProductAttributeDependencyProvider::FACADE_LOCALE] = $this->getMockBuilder(ProductAttributeToLocaleInterface::class)->getMock();
+        foreach ($productManagementAttributeTransfer->getValues() as $attributeValueTransfer) {
+            $this->assertNotNull($attributeValueTransfer->getIdProductManagementAttributeValue());
+        }
+    }
 
-        return $container;
+    /**
+     * @return void
+     */
+    public function testCreateProductManagementAttributeCreatesNewProductAttributeKey()
+    {
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setKey('foo')
+            ->setInputType('bar');
+
+        $productManagementAttributeTransfer = $this->productAttributeFacade->createProductManagementAttribute(
+            $productManagementAttributeTransfer
+        );
+
+        $productAttributeKeyEntity = $this->productAttributeQueryContainer
+            ->queryProductAttributeKey()
+            ->findOneByKey($productManagementAttributeTransfer->getKey());
+
+        $this->assertNotNull($productAttributeKeyEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateProductManagementAttributeUsesExistingProductAttributeKey()
+    {
+        $productAttributeKeyEntity = new SpyProductAttributeKey();
+        $productAttributeKeyEntity->setKey('some_unique_key_that_should_not_exist_in_db');
+        $productAttributeKeyEntity->save();
+
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setKey($productAttributeKeyEntity->getKey())
+            ->setInputType('bar');
+
+        $productManagementAttributeTransfer = $this->productAttributeFacade->createProductManagementAttribute(
+            $productManagementAttributeTransfer
+        );
+
+        $this->assertNotNull($productManagementAttributeTransfer->getIdProductManagementAttribute());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductManagementAttributeUpdatesAttributeEntity()
+    {
+        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity();
+
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute())
+            ->setKey($productAttributeKeyEntity->getSpyProductAttributeKey()->getKey())
+            ->setInputType('baz');
+
+        $actualProductManagementAttributeTransfer = $this->productAttributeFacade->updateProductManagementAttribute(
+            $productManagementAttributeTransfer
+        );
+
+        $this->assertEquals($productManagementAttributeTransfer, $actualProductManagementAttributeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductManagementAttributeUpdatesExistingAttributeValueEntities()
+    {
+        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a', 'b', 'c']);
+
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute())
+            ->setKey('foo')
+            ->setInputType('bar');
+
+        $updatedValues = ['a', 'b', 'd'];
+        foreach ($updatedValues as $updatedValue) {
+            $productManagementAttributeTransfer
+                ->addValue((new ProductManagementAttributeValueTransfer())->setValue($updatedValue));
+        }
+
+        $productManagementAttributeTransfer = $this->productAttributeFacade->updateProductManagementAttribute(
+            $productManagementAttributeTransfer
+        );
+
+        foreach ($productManagementAttributeTransfer->getValues() as $attributeValueTransfer) {
+            $this->assertContains($attributeValueTransfer->getValue(), $updatedValues);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testTranslateProductManagementAttributeKeyInGlossary()
+    {
+        $productManagementBusinessFactoryMock = $this->getMockBuilder(ProductAttributeBusinessFactory::class)
+            ->setMethods(['createAttributeTranslator'])
+            ->getMock();
+
+        $productManagementBusinessFactoryMock
+            ->method('createAttributeTranslator')
+            ->willReturn($this->getAttributeTranslationMock());
+
+        /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory $productManagementBusinessFactoryMock */
+        $this->productAttributeFacade->setFactory($productManagementBusinessFactoryMock);
+
+        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity();
+
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute())
+            ->setLocalizedKeys(new ArrayObject([
+                (new LocalizedProductManagementAttributeKeyTransfer())
+                    ->setLocaleName('aa_AA')
+                    ->setKeyTranslation('Foo'),
+                (new LocalizedProductManagementAttributeKeyTransfer())
+                    ->setLocaleName('bb_BB')
+                    ->setKeyTranslation('Bar'),
+            ]));
+
+        $this->productAttributeFacade->translateProductManagementAttribute($productManagementAttributeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTranslateProductManagementAttributeValues()
+    {
+        $productManagementBusinessFactoryMock = $this->getMockBuilder(ProductAttributeBusinessFactory::class)
+            ->setMethods(['createAttributeTranslator'])
+            ->getMock();
+
+        $productManagementBusinessFactoryMock
+            ->method('createAttributeTranslator')
+            ->willReturn($this->getAttributeTranslationMock());
+
+        /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory $productManagementBusinessFactoryMock */
+        $this->productAttributeFacade->setFactory($productManagementBusinessFactoryMock);
+
+        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a', 'b', 'c']);
+
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute());
+
+        foreach ($productAttributeKeyEntity->getSpyProductManagementAttributeValues() as $productManagementAttributeValueEntity) {
+            $productManagementAttributeValueTransfer = (new ProductManagementAttributeValueTransfer())
+                ->fromArray($productManagementAttributeValueEntity->toArray(), true);
+
+            $productManagementAttributeValueTransfer
+                ->addLocalizedValue((new ProductManagementAttributeValueTranslationTransfer())
+                    ->setFkLocale($this->getLocale('aa_AA')->getIdLocale())
+                    ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language'))
+                ->addLocalizedValue((new ProductManagementAttributeValueTranslationTransfer())
+                    ->setFkLocale($this->getLocale('bb_BB')->getIdLocale())
+                    ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language'));
+            $productManagementAttributeTransfer->addValue($productManagementAttributeValueTransfer);
+        }
+
+        $this->productAttributeFacade->translateProductManagementAttribute($productManagementAttributeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductManagementAttributeReturnsNullIfEntityDoesNotExist()
+    {
+        $this->assertNull($this->productAttributeFacade->getProductManagementAttribute(0));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductManagementAttributeReturnsFullyHydratedTransfer()
+    {
+        $productAttributeKeyEntity = $this->createProductManagementAttributeEntity(['a', 'b', 'c']);
+
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute());
+
+        foreach ($productAttributeKeyEntity->getSpyProductManagementAttributeValues() as $productManagementAttributeValueEntity) {
+            $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+            $attributeValueTranslationEntity
+                ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
+                ->setFkLocale($this->getLocale('aa_AA')->getIdLocale())
+                ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language')
+                ->save();
+
+            $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+            $attributeValueTranslationEntity
+                ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
+                ->setFkLocale($this->getLocale('bb_BB')->getIdLocale())
+                ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language')
+                ->save();
+        }
+
+        $productManagementAttributeTransfer = $this->productAttributeFacade->getProductManagementAttribute(
+            $productManagementAttributeTransfer->getIdProductManagementAttribute()
+        );
+
+        $this->assertNotNull($productManagementAttributeTransfer);
+        $this->assertCount(3, $productManagementAttributeTransfer->getValues());
+        $this->assertCount(2, $productManagementAttributeTransfer->getValues()[0]->getLocalizedValues());
     }
 
     /**
@@ -103,11 +331,101 @@ class ProductAttributeFacadeTest extends Test
 
         $productAbstractTransfer = $this->generateProductAbstractTransfer();
 
-        $productAttributes = $this->productAttributeFacade->getProductAbstractAttributeValues($productAbstractTransfer->getIdProductAbstract());
+        $productAttributes = $this->productAttributeFacade->getProductAbstractAttributeValues(
+            $productAbstractTransfer->getIdProductAbstract()
+        );
 
         print_r($productAttributes);
         print_r($productAbstractTransfer->toArray());
         die;
+    }
+
+    /**
+     * TODO move to tester
+     *
+     * @param array $values
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute
+     */
+    protected function createProductManagementAttributeEntity(array $values = [])
+    {
+        $productAttributeKeyEntity = new SpyProductAttributeKey();
+        $productAttributeKeyEntity->setKey('some_unique_key_that_should_not_exist_in_db');
+        $productAttributeKeyEntity->save();
+
+        $productManagementAttributeEntity = new SpyProductManagementAttribute();
+        $productManagementAttributeEntity
+            ->setFkProductAttributeKey($productAttributeKeyEntity->getIdProductAttributeKey())
+            ->setInputType('bar');
+        $productManagementAttributeEntity->save();
+
+        if (!empty($values)) {
+            foreach ($values as $value) {
+                $productManagementAttributeValueEntity = new SpyProductManagementAttributeValue();
+                $productManagementAttributeValueEntity
+                    ->setFkProductManagementAttribute($productManagementAttributeEntity->getIdProductManagementAttribute())
+                    ->setValue($value);
+                $productManagementAttributeValueEntity->save();
+            }
+        }
+
+        return $productManagementAttributeEntity;
+    }
+
+    /**
+     * TODO move to tester
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getAttributeTranslationMock()
+    {
+        $productManagementToLocaleBridgeMock = $this->getMockBuilder(ProductAttributeToLocaleBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $productManagementToGlossaryBridgeMock = $this->getMockBuilder(ProductAttributeToGlossaryBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $glossaryKeyBuilderMock = $this->getMockBuilder(AttributeGlossaryKeyBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $attributeTranslatorMock = $this->getMockBuilder(AttributeTranslator::class)
+            ->setConstructorArgs([
+                $this->productAttributeQueryContainer,
+                $productManagementToLocaleBridgeMock,
+                $productManagementToGlossaryBridgeMock,
+                $glossaryKeyBuilderMock,
+            ])
+            ->setMethods(['getLocaleByName'])
+            ->getMock();
+
+        $attributeTranslatorMock
+            ->method('getLocaleByName')
+            ->willReturnCallback(function ($localeName) {
+                return $this->getLocale($localeName);
+            });
+
+        return $attributeTranslatorMock;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getLocale($localeName)
+    {
+        $localeEntity = SpyLocaleQuery::create()
+            ->filterByLocaleName($localeName)
+            ->findOneOrCreate();
+
+        $localeEntity->save();
+
+        $localeTransfer = (new LocaleTransfer())->fromArray($localeEntity->toArray(), true);
+
+        return $localeTransfer;
     }
 
     /**
