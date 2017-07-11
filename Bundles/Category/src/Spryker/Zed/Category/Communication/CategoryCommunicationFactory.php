@@ -70,6 +70,10 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryCreateForm($idParentNode)
     {
         $categoryCreateForm = new CategoryType();
+        $categoryCreateForm->setFormPlugins(
+            $this->getCategoryFormPlugins()
+        );
+
         $categoryCreateDataFormProvider = $this->createCategoryCreateFormDataProvider();
         $formFactory = $this->getFormFactory();
 

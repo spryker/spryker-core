@@ -126,6 +126,7 @@ class Category
         $this->categoryAttribute->create($categoryTransfer);
         $this->categoryUrl->create($categoryTransfer);
         $this->categoryExtraParents->create($categoryTransfer);
+        $this->runUpdatePlugins($categoryTransfer);
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
 

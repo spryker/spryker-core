@@ -141,6 +141,10 @@ class CategoryDataProvider
             ->queryCategoryTemplateById($categoryTransfer->getFkCategoryTemplate())
             ->findOne();
 
+        if (!$spyCategoryTemplate) {
+            return;
+        }
+
         if (!in_array($spyCategoryTemplate->getName(), CategoryType::SUPPORTED_CATEGORY_TEMPLATE_LIST)) {
             $this->isTemplateSupported = false;
         }
