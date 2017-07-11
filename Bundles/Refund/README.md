@@ -1,4 +1,4 @@
-# Refund Bundle
+# Refund Module
 
 ## Installation
 

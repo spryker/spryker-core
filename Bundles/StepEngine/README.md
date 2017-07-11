@@ -1,4 +1,4 @@
-# StepEngine Bundle
+# StepEngine Module
 
 ## Installation
 

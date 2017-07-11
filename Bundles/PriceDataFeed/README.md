@@ -1,4 +1,4 @@
-# PriceDataFeed Bundle
+# PriceDataFeed Module
 
 ## Installation
 

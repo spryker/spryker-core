@@ -1,4 +1,4 @@
-# Availability Bundle
+# Availability Module
 
 ## Installation
 

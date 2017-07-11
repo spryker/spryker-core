@@ -1,4 +1,4 @@
-# NewRelic Bundle
+# NewRelic Module
 
 ## Installation
 

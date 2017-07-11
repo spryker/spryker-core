@@ -1,4 +1,4 @@
-# Sales Bundle
+# Sales Module
 
 ## Installation
 

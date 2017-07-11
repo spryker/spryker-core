@@ -1,4 +1,4 @@
-# UtilText Bundle
+# UtilText Module
 
 ## Installation
 

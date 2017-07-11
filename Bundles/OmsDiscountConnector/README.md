@@ -1,4 +1,4 @@
-# OmsDiscountConnector Bundle
+# OmsDiscountConnector Module
 
 ## Installation
 

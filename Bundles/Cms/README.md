@@ -1,4 +1,4 @@
-# Cms Bundle
+# Cms Module
 
 ## Installation
 

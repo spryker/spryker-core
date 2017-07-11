@@ -1,4 +1,4 @@
-# CategoryDataFeed Bundle
+# CategoryDataFeed Module
 
 ## Installation
 

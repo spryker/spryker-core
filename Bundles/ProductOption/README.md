@@ -1,4 +1,4 @@
-# ProductOption Bundle
+# ProductOption Module
 
 ## Installation
 

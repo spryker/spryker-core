@@ -1,4 +1,4 @@
-# Installer Bundle
+# Installer Module
 
 ## Installation
 

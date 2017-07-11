@@ -1,4 +1,4 @@
-# ProductAbstractDataFeed Bundle
+# ProductAbstractDataFeed Module
 
 ## Installation
 

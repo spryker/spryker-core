@@ -1,4 +1,4 @@
-# Customer Bundle
+# Customer Module
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# ProductCategory Bundle
+# ProductCategory Module
 
 ## Installation
 
