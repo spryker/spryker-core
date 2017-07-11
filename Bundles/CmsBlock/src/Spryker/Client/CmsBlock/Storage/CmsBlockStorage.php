@@ -93,7 +93,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
                 array_intersect($availableBlockNames, $blockNames);
         }
 
-        return $availableBlockNames;
+        return $availableBlockNames ?: [];
     }
 
     /**
