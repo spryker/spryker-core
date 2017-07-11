@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -73,11 +74,17 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     public function queryCmsBlockCategoryWithNamesByIdBlock($idCmsBlock, $idLocale)
     {
         return $this->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
-            ->useCategoryQuery()
-                ->useAttributeQuery()
-                    ->filterByFkLocale($idLocale)
-                ->endUse()
-            ->endUse();
+            ->addJoin(
+                [
+                    SpyCategoryTableMap::COL_ID_CATEGORY,
+                    SpyCategoryAttributeTableMap::COL_FK_LOCALE
+                ],
+                [
+                    SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
+                    $idLocale
+                ],
+                Criteria::INNER_JOIN
+            );
     }
 
     /**
