@@ -44,7 +44,7 @@ class FixedPluginTest extends Test
         $plugin = new FixedPlugin();
 
         $result = $plugin->transformFromPersistence(1113);
-        $this->assertSame('11,13', $result);
+        $this->assertSame(11.13, $result);
     }
 
     /**
