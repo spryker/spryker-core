@@ -20,7 +20,7 @@ use Spryker\Zed\Newsletter\Communication\Plugin\Mail\NewsletterUnsubscribedMailT
 use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
-class SubscriptionRequestHandler
+class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
 {
 
     /**
