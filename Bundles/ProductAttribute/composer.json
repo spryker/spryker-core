@@ -15,13 +15,14 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductAttribute\\": "tests/SprykerTest/Zed/ProductAttribute/_support/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
