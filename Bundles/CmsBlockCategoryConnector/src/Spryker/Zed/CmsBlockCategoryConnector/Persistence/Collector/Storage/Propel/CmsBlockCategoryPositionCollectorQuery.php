@@ -29,7 +29,7 @@ class CmsBlockCategoryPositionCollectorQuery extends AbstractPropelCollectorQuer
     {
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
-            SpyCmsBlockCategoryConnectorTableMap::COL_FK_CMS_BLOCK_CATEGORY_POSITION,
+            SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY,
             Criteria::INNER_JOIN
         );
         $this->touchQuery->addJoin(
@@ -62,6 +62,7 @@ class CmsBlockCategoryPositionCollectorQuery extends AbstractPropelCollectorQuer
         );
 
         $this->touchQuery->addGroupByColumn(SpyCmsBlockCategoryConnectorTableMap::COL_FK_CMS_BLOCK_CATEGORY_POSITION);
+        $this->touchQuery->addGroupByColumn(SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY);
     }
 
 }

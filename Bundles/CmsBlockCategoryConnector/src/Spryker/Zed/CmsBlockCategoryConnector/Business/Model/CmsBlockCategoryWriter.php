@@ -132,7 +132,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 
             $this->touchFacade->touchDeleted(
                 CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION,
-                $relation->getFkCmsBlockCategoryPosition()
+                $relation->getFkCategory()
             );
         }
     }
@@ -152,29 +152,28 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
                 $this->createRelations($idCmsBlocks, [$categoryTransfer->getIdCategory()], $idCmsBlockCategoryPosition);
             }
 
-            $this->touchActiveCategoryCmsBlockRelation([$categoryTransfer->getIdCategory()], $idCmsBlockCategoryPosition);
+            $this->touchActiveCategoryCmsBlockRelation([$categoryTransfer->getIdCategory()]);
         }
     }
 
     /**
      * @param array $idCategories
-     * @param int $idCmsBlockCategoryPosition
      *
      * @return void
      */
-    protected function touchActiveCategoryCmsBlockRelation(array $idCategories, $idCmsBlockCategoryPosition)
+    protected function touchActiveCategoryCmsBlockRelation(array $idCategories)
     {
         foreach ($idCategories as $idCategory) {
             $this->touchFacade->touchActive(
                 CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
                 $idCategory
             );
-        }
 
-        $this->touchFacade->touchActive(
-            CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION,
-            $idCmsBlockCategoryPosition
-        );
+            $this->touchFacade->touchActive(
+                CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION,
+                $idCategory
+            );
+        }
     }
 
     /**
@@ -281,7 +280,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 
         foreach ($cmsBlockTransfer->getIdCategories() as $idCmsBlockCategoryPosition => $idCategories) {
             $this->createRelations([$cmsBlockTransfer->getIdCmsBlock()], $idCategories, $idCmsBlockCategoryPosition);
-            $this->touchActiveCategoryCmsBlockRelation($idCategories, $idCmsBlockCategoryPosition);
+            $this->touchActiveCategoryCmsBlockRelation($idCategories);
         }
     }
 
