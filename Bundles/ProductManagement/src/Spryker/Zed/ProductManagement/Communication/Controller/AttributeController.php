@@ -74,7 +74,8 @@ class AttributeController extends AbstractController
                 ->createTransfer($attributeForm);
 
             $attributeTransfer = $this
-                ->getFacade()
+                ->getFactory()
+                ->getProductAttributeFacade()
                 ->createProductManagementAttribute($attributeTransfer);
 
             return $this->redirectResponse(sprintf(
@@ -113,7 +114,9 @@ class AttributeController extends AbstractController
                 ->createAttributeTranslationFormTransferGenerator()
                 ->createTransfer($translationForms);
 
-            $this->getFacade()->translateProductManagementAttribute($productManagementAttributeTransfer);
+            $this->getFactory()
+                ->getProductAttributeFacade()
+                ->translateProductManagementAttribute($productManagementAttributeTransfer);
 
             return $this->redirectResponse(sprintf(
                 '/product-management/attribute/view?id=%d',
@@ -165,7 +168,8 @@ class AttributeController extends AbstractController
                 ->createTransfer($attributeForm);
 
             $attributeTransfer = $this
-                ->getFacade()
+                ->getFactory()
+                ->getProductAttributeFacade()
                 ->updateProductManagementAttribute($attributeTransfer);
 
             return $this->redirectResponse(sprintf(
@@ -188,7 +192,9 @@ class AttributeController extends AbstractController
     {
         $idProductManagementAttribute = $this->castId($request->query->get(self::PARAM_ID));
 
-        $attributeTransfer = $this->getFacade()
+        $attributeTransfer = $this
+            ->getFactory()
+            ->getProductAttributeFacade()
             ->getProductManagementAttribute($idProductManagementAttribute);
 
         if (!$attributeTransfer) {

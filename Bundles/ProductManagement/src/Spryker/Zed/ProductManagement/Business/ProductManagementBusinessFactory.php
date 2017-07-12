@@ -24,33 +24,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeTranslatorInterface
-     */
-    public function createAttributeTranslator()
-    {
-        return new AttributeTranslator(
-            $this->getQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->getGlossaryFacade(),
-            $this->createAttributeGlossaryKeyBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeWriterInterface
-     */
-    public function createAttributeWriter()
-    {
-        return new AttributeWriter(
-            $this->getQueryContainer(),
-            $this->getProductFacade(),
-            $this->getGlossaryFacade(),
-            $this->createAttributeValueWriter(),
-            $this->createAttributeGlossaryKeyBuilder()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeReaderInterface
      */
     public function createAttributeReader()
@@ -68,6 +41,14 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface
+     */
+    public function getProductAttributeFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
     }
 
     /**
@@ -140,16 +121,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeValueWriterInterface
-     */
-    protected function createAttributeValueWriter()
-    {
-        return new AttributeValueWriter(
-            $this->getQueryContainer()
-        );
     }
 
     /**

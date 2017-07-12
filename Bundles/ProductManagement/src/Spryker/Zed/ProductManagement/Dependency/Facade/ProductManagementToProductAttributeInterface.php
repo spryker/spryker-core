@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Business\Attribute;
+namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
-interface AttributeWriterInterface
+interface ProductManagementToProductAttributeInterface
 {
 
     /**
@@ -25,5 +25,19 @@ interface AttributeWriterInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
     public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return void
+     */
+    public function translateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+
+    /**
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
+     */
+    public function getProductManagementAttribute($idProductManagementAttribute);
 
 }

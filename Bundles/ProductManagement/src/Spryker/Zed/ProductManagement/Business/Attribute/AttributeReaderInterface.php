@@ -31,13 +31,6 @@ interface AttributeReaderInterface
     public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '');
 
     /**
-     * @param int $idProductManagementAttribute
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
-     */
-    public function getAttribute($idProductManagementAttribute);
-
-    /**
      * @param string $searchText
      * @param int $limit
      *

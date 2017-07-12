@@ -17,6 +17,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryB
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
@@ -34,6 +35,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_CATEGORY = 'FACADE_LOCALE';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_TAX = 'FACADE_TAX';
@@ -104,6 +106,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
+        };
+
+        $container[self::FACADE_PRODUCT_ATTRIBUTE] = function (Container $container) {
+            return new ProductManagementToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
@@ -202,6 +208,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_AVAILABILITY] = function (Container $container) {
             return new ProductManagementToAvailabilityBridge($container->getLocator()->availability()->facade());
+        };
+
+        $container[self::FACADE_PRODUCT_ATTRIBUTE] = function (Container $container) {
+            return new ProductManagementToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
         };
 
         $container = $this->addStore($container);

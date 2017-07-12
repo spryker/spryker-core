@@ -99,22 +99,6 @@ class AttributeReader implements AttributeReaderInterface
     }
 
     /**
-     * @param int $idProductManagementAttribute
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
-     */
-    public function getAttribute($idProductManagementAttribute)
-    {
-        $attributeEntity = $this->getAttributeEntity($idProductManagementAttribute);
-
-        if (!$attributeEntity) {
-            return null;
-        }
-
-        return $this->productAttributeTransferMapper->convertProductAttribute($attributeEntity);
-    }
-
-    /**
      * @param string $searchText
      * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery $query
      *
