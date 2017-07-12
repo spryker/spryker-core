@@ -1,4 +1,4 @@
-# ProductSearch Bundle
+# ProductSearch Module
 
 ## Installation
 

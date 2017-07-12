@@ -1,4 +1,4 @@
-# Payolution Bundle
+# Payolution Module
 
 ## Installation
 

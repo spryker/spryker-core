@@ -82,6 +82,7 @@ class CategoryCreateDataProvider
         return [
             static::DATA_CLASS => CategoryTransfer::class,
             CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $parentCategories,
+            CategoryType::OPTION_CATEGORY_QUERY_CONTAINER => $this->queryContainer,
         ];
     }
 

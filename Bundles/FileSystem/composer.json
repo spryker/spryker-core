@@ -10,7 +10,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/fly-system": "For filesystem handling via Flysystem library"
+    "spryker/fly-system": "For filesystem handling via Flysystem library."
   },
   "autoload": {
     "psr-0": {

@@ -1,4 +1,4 @@
-# Shipment Bundle
+# Shipment Module
 
 ## Installation
 

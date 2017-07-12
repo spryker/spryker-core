@@ -1,4 +1,4 @@
-# UtilEncoding Bundle
+# UtilEncoding Module
 
 ## Installation
 

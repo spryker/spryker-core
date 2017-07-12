@@ -1,4 +1,4 @@
-# ProductRelation Bundle
+# ProductRelation Module
 
 ## Installation
 

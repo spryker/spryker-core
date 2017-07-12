@@ -68,6 +68,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
             if ($isActive) {
                 $rendered .= $twig->render($blockData['template'], [
                     'placeholders' => $blockData['placeholders'],
+                    'cmsContent' => $blockData,
                 ]);
             }
         }

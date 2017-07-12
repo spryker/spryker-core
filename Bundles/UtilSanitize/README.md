@@ -1,4 +1,4 @@
-# UtilSanitize Bundle
+# UtilSanitize Module
 
 ## Installation
 

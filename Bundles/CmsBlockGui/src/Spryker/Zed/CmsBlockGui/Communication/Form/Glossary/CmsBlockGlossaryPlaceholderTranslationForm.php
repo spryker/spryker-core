@@ -8,12 +8,15 @@
 namespace Spryker\Zed\CmsBlockGui\Communication\Form\Glossary;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
+ */
 class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
 {
 
@@ -84,6 +87,9 @@ class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
                 'class' => 'html-editor',
             ],
             'required' => false,
+            'constraints' => [
+                $this->getFactory()->createTwigContentConstraint()
+            ],
         ]);
 
         return $this;

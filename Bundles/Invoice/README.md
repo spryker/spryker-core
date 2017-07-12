@@ -1,4 +1,4 @@
-# Invoice Bundle
+# Invoice Module
 
 ## Installation
 

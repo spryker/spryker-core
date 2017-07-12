@@ -1,4 +1,4 @@
-# Touch Bundle
+# Touch Module
 
 ## Installation
 

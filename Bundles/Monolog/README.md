@@ -1,4 +1,4 @@
-# Monolog Bundle
+# Monolog Module
 
 ## Installation
 

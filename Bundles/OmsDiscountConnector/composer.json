@@ -11,8 +11,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/oms": "If you want to use Oms command plugins you need to install spryker/oms.",
-    "spryker/sales": "If you want to use ReleaseUsedVoucherCodes plugin you need to install spryker/sales."
+    "spryker/oms": "If you want to use Oms command plugins.",
+    "spryker/sales": "If you want to use ReleaseUsedVoucherCodes plugin."
   },
   "autoload": {
     "psr-0": {

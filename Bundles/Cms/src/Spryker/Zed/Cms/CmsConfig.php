@@ -14,6 +14,24 @@ class CmsConfig extends AbstractBundleConfig
 {
 
     const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
+    const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
+    const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+
+    /**
+     * @return string
+     */
+    public function getPlaceholderPattern()
+    {
+        return static::CMS_PLACEHOLDER_PATTERN;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaceholderValuePattern()
+    {
+        return static::CMS_PLACEHOLDER_VALUE_PATTERN;
+    }
 
     /**
      * @deprecated use getTemplateRealPaths() instead

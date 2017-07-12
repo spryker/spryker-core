@@ -22,7 +22,14 @@ class MaintenanceController extends AbstractController
     public function dropTimestampsAction()
     {
         $timestamps = $this->getFactory()->getStorageFacade()->getTimestamps();
+        if (count($timestamps) === 0) {
+            $this->addInfoMessage('No droppable timestamps found.');
+
+            return $this->redirectResponse(StorageMaintenanceController::URL_STORAGE_MAINTENANCE);
+        }
         $this->getFactory()->getCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
+
+        $this->addSuccessMessage(sprintf('Dropped "%d" timestamps.', count($timestamps)));
 
         return $this->redirectResponse(StorageMaintenanceController::URL_STORAGE_MAINTENANCE);
     }

@@ -12,7 +12,7 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "swiftmailer/swiftmailer": "Default Mailer"
+    "swiftmailer/swiftmailer": "Recommended to use this package as default mailer."
   },
   "autoload": {
     "psr-0": {

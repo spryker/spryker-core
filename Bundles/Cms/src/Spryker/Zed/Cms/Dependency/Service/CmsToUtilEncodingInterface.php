@@ -11,7 +11,7 @@ interface CmsToUtilEncodingInterface
 {
 
     /**
-     * @param string $value
+     * @param mixed $value
      * @param int|null $options
      * @param int|null $depth
      *

@@ -16,7 +16,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation."
+    "spryker/calculation": "If you want to use Calculation plugins."
   },
   "autoload": {
     "psr-0": {

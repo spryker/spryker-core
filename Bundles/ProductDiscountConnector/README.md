@@ -1,4 +1,4 @@
-# ProductDiscountConnector Bundle
+# ProductDiscountConnector Module
 
 ## Installation
 

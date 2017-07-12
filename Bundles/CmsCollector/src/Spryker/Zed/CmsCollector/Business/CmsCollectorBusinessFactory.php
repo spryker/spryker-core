@@ -29,7 +29,8 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $cmsVersionPageCollector = new CmsVersionStoragePageCollector(
             $this->getUtilDataReaderService(),
-            $this->createDataExtractor()
+            $this->createDataExtractor(),
+            $this->getCollectorDataExpanderPlugins()
         );
 
         $cmsVersionPageCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -113,6 +114,14 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(CmsCollectorDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return array|\Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
+     */
+    protected function getCollectorDataExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsCollectorDependencyProvider::COLLECTOR_DATA_EXPANDER_PLUGINS);
     }
 
     /**

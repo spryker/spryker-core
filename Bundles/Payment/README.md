@@ -1,4 +1,4 @@
-# Payment Bundle
+# Payment Module
 
 ## Installation
 

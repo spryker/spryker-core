@@ -1,4 +1,4 @@
-# Stock Bundle
+# Stock Module
 
 ## Installation
 

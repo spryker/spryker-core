@@ -22,14 +22,24 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
     protected $dataExtractor;
 
     /**
+     * @var array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
+     */
+    protected $collectorDataExpanderPlugins = [];
+
+    /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface $dataExtractorDataPage
+     * @param array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[] $collectorDataExpanderPlugins
      */
-    public function __construct(UtilDataReaderServiceInterface $utilDataReaderService, DataExtractorInterface $dataExtractorDataPage)
-    {
+    public function __construct(
+        UtilDataReaderServiceInterface $utilDataReaderService,
+        DataExtractorInterface $dataExtractorDataPage,
+        array $collectorDataExpanderPlugins = []
+    ) {
         parent::__construct($utilDataReaderService);
 
         $this->dataExtractor = $dataExtractorDataPage;
+        $this->collectorDataExpanderPlugins = $collectorDataExpanderPlugins;
     }
 
     /**
@@ -46,19 +56,37 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
         $cmsPageAttributeTransfer = $this->dataExtractor->extractPageAttributeByLocale($cmsPageTransfer, $localeName);
         $cmsMetaAttributeTransfer = $this->dataExtractor->extractMetaAttributeByLocales($cmsPageTransfer, $localeName);
 
-        return [
+        $placeHolders = $this->dataExtractor->extractPlaceholdersByLocale($cmsVersionDataTransfer->getCmsGlossary(), $localeName);
+
+        $baseCollectedCmsPageData = [
             'url' => $collectItemData[CmsVersionPageCollectorQuery::COL_URL],
             'valid_from' => $collectItemData[CmsVersionPageCollectorQuery::COL_VALID_FROM],
             'valid_to' => $collectItemData[CmsVersionPageCollectorQuery::COL_VALID_TO],
             'is_active' => $collectItemData[CmsVersionPageCollectorQuery::COL_IS_ACTIVE],
             'id' => $cmsPageTransfer->getFkPage(),
             'template' => $cmsVersionDataTransfer->getCmsTemplate()->getTemplatePath(),
-            'placeholders' => $this->dataExtractor->extractPlaceholdersByLocale($cmsVersionDataTransfer->getCmsGlossary(), $localeName),
+            'placeholders' => $placeHolders,
             'name' => $cmsPageAttributeTransfer->getName(),
             'meta_title' => $cmsMetaAttributeTransfer->getMetaTitle(),
             'meta_keywords' => $cmsMetaAttributeTransfer->getMetaKeywords(),
             'meta_description' => $cmsMetaAttributeTransfer->getMetaDescription(),
         ];
+
+        return $this->runDataExpanderPlugins($baseCollectedCmsPageData);
+    }
+
+    /**
+     * @param array $collectedItemData
+     *
+     * @return array
+     */
+    protected function runDataExpanderPlugins(array $collectedItemData)
+    {
+        foreach ($this->collectorDataExpanderPlugins as $dataExpanderPlugin) {
+            $collectedItemData = $dataExpanderPlugin->expand($collectedItemData, $this->locale);
+        }
+
+        return $collectedItemData;
     }
 
     /**

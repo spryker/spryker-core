@@ -1,4 +1,4 @@
-# ZedRequest Bundle
+# ZedRequest Module
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# Gui Bundle
+# Gui Module
 
 ## Installation
 

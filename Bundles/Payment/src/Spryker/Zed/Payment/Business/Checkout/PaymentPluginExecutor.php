@@ -9,10 +9,11 @@ namespace Spryker\Zed\Payment\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
-class PaymentPluginExecutor
+class PaymentPluginExecutor implements PaymentPluginExecutorInterface
 {
 
     /**
@@ -21,11 +22,20 @@ class PaymentPluginExecutor
     protected $checkoutPlugins;
 
     /**
-     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface $checkoutPlugins
+     * @var \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface
      */
-    public function __construct(CheckoutPluginCollectionInterface $checkoutPlugins)
-    {
+    protected $salesPaymentSaver;
+
+    /**
+     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface $checkoutPlugins
+     * @param \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface $salesPaymentSaver
+     */
+    public function __construct(
+        CheckoutPluginCollectionInterface $checkoutPlugins,
+        SalesPaymentSaverInterface $salesPaymentSaver
+    ) {
         $this->checkoutPlugins = $checkoutPlugins;
+        $this->salesPaymentSaver = $salesPaymentSaver;
     }
 
     /**
@@ -36,10 +46,11 @@ class PaymentPluginExecutor
      */
     public function executePreCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if ($this->hasPlugin(PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,  $quoteTransfer)) {
-            $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,  $quoteTransfer);
-            $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
-        }
+        $this->executePluginsForType(
+            PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,
+            $quoteTransfer,
+            $checkoutResponseTransfer
+        );
     }
 
     /**
@@ -50,10 +61,13 @@ class PaymentPluginExecutor
      */
     public function executeOrderSaverPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if ($this->hasPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer)) {
-            $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS, $quoteTransfer);
-            $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
-        }
+        $this->savePaymentPriceToPay($quoteTransfer, $checkoutResponseTransfer);
+
+        $this->executePluginsForType(
+            PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS,
+            $quoteTransfer,
+            $checkoutResponseTransfer
+        );
     }
 
     /**
@@ -64,52 +78,88 @@ class PaymentPluginExecutor
      */
     public function executePostCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if ($this->hasPlugin(PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS, $quoteTransfer)) {
-            $plugin = $this->findPlugin(PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS, $quoteTransfer);
+        $this->executePluginsForType(
+            PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS,
+            $quoteTransfer,
+            $checkoutResponseTransfer
+        );
+    }
+
+    /**
+     * @param string $pluginType
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function executePluginsForType(
+        $pluginType,
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        $paymentProvider = $quoteTransfer->getPayment()->getPaymentProvider();
+
+        if ($this->hasPlugin($pluginType, $paymentProvider)) {
+            $plugin = $this->findPlugin($pluginType, $paymentProvider);
+            $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        }
+
+        $this->executeForCollection($quoteTransfer, $pluginType, $checkoutResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $pluginType
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function executeForCollection(
+        QuoteTransfer $quoteTransfer,
+        $pluginType,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+
+        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
+            if (!$this->hasPlugin($pluginType, $paymentTransfer->getPaymentProvider())) {
+                 continue;
+            }
+            $plugin = $this->findPlugin($pluginType, $paymentTransfer->getPaymentProvider());
             $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
         }
     }
 
     /**
      * @param string $pluginType
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $provider
      *
      * @return bool
      */
-    protected function hasPlugin($pluginType, QuoteTransfer $quoteTransfer)
+    protected function hasPlugin($pluginType, $provider)
     {
-        $this->assertResolverRequirements($quoteTransfer);
-
-        $provider = $quoteTransfer->getPayment()->getPaymentProvider();
-
         return $this->checkoutPlugins->has($provider, $pluginType);
     }
 
     /**
      * @param string $pluginType
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $provider
      *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
      */
-    protected function findPlugin($pluginType, QuoteTransfer $quoteTransfer)
+    protected function findPlugin($pluginType, $provider)
     {
-        $this->assertResolverRequirements($quoteTransfer);
-
-        $provider = $quoteTransfer->getPayment()->getPaymentProvider();
-
         return $this->checkoutPlugins->get($provider, $pluginType);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    protected function assertResolverRequirements(QuoteTransfer $quoteTransfer)
+    protected function savePaymentPriceToPay(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $quoteTransfer->requirePayment();
-        $quoteTransfer->getPayment()
-            ->requirePaymentProvider();
+        $this->salesPaymentSaver->saveOrderPayments($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

@@ -1,4 +1,4 @@
-# Collector Bundle
+# Collector Module
 
 ## Installation
 

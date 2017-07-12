@@ -11,7 +11,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cart": "If you want to use Cart plugins you need to install spryker/cart."
+    "spryker/cart": "If you want to use Cart plugins."
   },
   "autoload": {
     "psr-0": {

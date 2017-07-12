@@ -24,13 +24,22 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     public function createStorageCmsBlockCollector()
     {
         $cmsBlockCollector = new CmsBlockCollector(
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
+            $this->getCollectorDataExpanderPlugins()
         );
 
         $cmsBlockCollector->setTouchQueryContainer($this->getTouchQueryContainer());
         $cmsBlockCollector->setQueryBuilder($this->createCmsBlockCollectorStorageQuery());
 
         return $cmsBlockCollector;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
+     */
+    protected function getCollectorDataExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsBlockCollectorDependencyProvider::COLLECTOR_DATA_EXPANDER_PLUGINS);
     }
 
     /**

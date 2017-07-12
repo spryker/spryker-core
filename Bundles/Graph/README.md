@@ -1,4 +1,4 @@
-# Graph Bundle
+# Graph Module
 
 ## Installation
 

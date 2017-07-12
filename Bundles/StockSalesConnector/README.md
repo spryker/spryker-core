@@ -1,4 +1,4 @@
-# StockSalesConnector Bundle
+# StockSalesConnector Module
 
 ## Installation
 

@@ -16,7 +16,7 @@
 
             {% for stock in form.stocks %}
 
-                {{ form_row(stock.stockType ) }} {{ form_row(stock.quantity) }}
+                {{ form_row(stock.stockType ) }} {{ form_row(stock.quantity) }}  {{ form_row(stock.is_never_out_of_stock) }}
             {% endfor %}
 
             <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />

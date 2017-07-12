@@ -1,4 +1,4 @@
-# Redis Bundle
+# Redis Module
 
 ## Installation
 

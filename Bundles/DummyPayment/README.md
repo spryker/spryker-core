@@ -1,4 +1,4 @@
-# DummyPayment Bundle
+# DummyPayment Module
 
 ## Installation
 

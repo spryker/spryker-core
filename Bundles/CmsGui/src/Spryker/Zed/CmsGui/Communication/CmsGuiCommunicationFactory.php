@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsGui\Communication;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
@@ -17,6 +18,7 @@ use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvid
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryTranslationFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
@@ -172,7 +174,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsGlossaryFormType()
     {
-        return new CmsGlossaryFormType($this->createCmsGlossaryAttributesFormType());
+        return new CmsGlossaryFormType();
     }
 
     /**
@@ -181,8 +183,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsGlossaryAttributesFormType()
     {
         return new CmsGlossaryAttributesFormType(
-            $this->getCmsFacade(),
-            $this->createUniqueGlossaryForSearchTypeConstraint()
+            $this->createCmsGlossaryTranslationFormType()
         );
     }
 
@@ -226,7 +227,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType
      */
-    protected function createUniqueGlossaryForSearchTypeConstraint()
+    public function createUniqueGlossaryForSearchTypeConstraint()
     {
         return new UniqueGlossaryForSearchType([
             UniqueGlossaryForSearchType::OPTION_GLOSSARY_FACADE => $this->getGlossaryFacade(),
@@ -250,6 +251,32 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsQueryContainer(),
             $this->getUtilEncodingService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryTranslationFormType|\Symfony\Component\Form\FormTypeInterface
+     */
+    public function createCmsGlossaryTranslationFormType()
+    {
+        return new CmsGlossaryTranslationFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent|\Symfony\Component\Validator\Constraint
+     */
+    public function createTwigContentConstraint()
+    {
+        return new TwigContent([
+            TwigContent::OPTION_TWIG_ENVIRONMENT => $this->getTwigEnvironment(),
+        ]);
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    protected function getTwigEnvironment()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::TWIG_ENVIRONMENT);
     }
 
     /**
