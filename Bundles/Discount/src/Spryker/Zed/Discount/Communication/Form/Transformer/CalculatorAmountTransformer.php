@@ -38,7 +38,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
         }
 
         $calculatorPlugin = $this->getCalculatorPlugin($value->getCalculatorPlugin());
-        $transformedAmount = $calculatorPlugin->transformFromPersistence($value->getAmount());
+        $transformedAmount = $calculatorPlugin->transformFromPersistence((int)$value->getAmount());
         $value->setAmount($transformedAmount);
 
         return $value;

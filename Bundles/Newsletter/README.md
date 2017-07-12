@@ -1,4 +1,4 @@
-# Newsletter Bundle
+# Newsletter Module
 
 ## Installation
 

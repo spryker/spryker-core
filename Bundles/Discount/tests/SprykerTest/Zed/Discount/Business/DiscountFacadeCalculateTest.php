@@ -7,8 +7,10 @@
 
 namespace SprykerTest\Zed\Discount\Business;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use DateTime;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -18,8 +20,12 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Propel\Runtime\Propel;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
+use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
@@ -156,6 +162,50 @@ class DiscountFacadeCalculateTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testWhenDiscountFilterUsedShouldFilterOutItems()
+    {
+        $discountEntity = $this->createDiscountEntity(
+            '(sku = "123" or sku = "431")',
+            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
+        );
+
+        $filterPluginMock = $this->createDiscountableItemFilterPluginMock();
+
+        $quoteTransfer = $this->createQuoteTransfer();
+
+        $filterPluginMock
+            ->expects($this->once())
+            ->method('filter')
+            ->willReturnCallback(function (CollectedDiscountTransfer $collectedDiscountTransfer) {
+
+                $discountableItems = new ArrayObject();
+                foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
+                    if ($discountableItemTransfer->getOriginalItem()->getSku() !== '123') {
+                        continue;
+                    }
+                    $discountableItems[] = $discountableItemTransfer;
+                }
+                $collectedDiscountTransfer->setDiscountableItems($discountableItems);
+
+                return $collectedDiscountTransfer;
+
+            });
+
+        $discountFacade = $this->createMockedDiscountFacade($filterPluginMock);
+
+        $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
+
+        $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
+
+        $this->assertCount(1, $cartRuleDiscounts);
+
+        $discountTransfer = $cartRuleDiscounts[0];
+        $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer()
@@ -236,6 +286,59 @@ class DiscountFacadeCalculateTest extends Test
     protected function getFacade()
     {
         return $this->getLocator()->discount()->facade();
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface $filterPluginMock
+     *
+     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
+     */
+    protected function createMockedDiscountFacade(DiscountableItemFilterPluginInterface $filterPluginMock)
+    {
+        $discountBusinessFactory = new DiscountBusinessFactory();
+        $collectorPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::COLLECTOR_PLUGINS);
+        $calculatorPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
+        $messengerFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_MESSENGER);
+        $decisionRulePlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
+
+        $container = new Container();
+
+        $container[DiscountDependencyProvider::DECISION_RULE_PLUGINS] = function () use ($decisionRulePlugins) {
+            return $decisionRulePlugins;
+        };
+
+        $container[DiscountDependencyProvider::FACADE_MESSENGER] = function () use ($messengerFacade) {
+            return $messengerFacade;
+        };
+
+        $container[DiscountDependencyProvider::COLLECTOR_PLUGINS] = function () use ($collectorPlugins) {
+            return $collectorPlugins;
+        };
+
+        $container[DiscountDependencyProvider::CALCULATOR_PLUGINS] = function () use ($calculatorPlugins) {
+            return $calculatorPlugins;
+        };
+
+        $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER] = function () use ($filterPluginMock) {
+            return [
+                $filterPluginMock
+            ];
+        };
+
+        $discountBusinessFactory->setContainer($container);
+
+        $discountFacade = new DiscountFacade();
+        $discountFacade->setFactory($discountBusinessFactory);
+
+        return $discountFacade;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface
+     */
+    protected function createDiscountableItemFilterPluginMock()
+    {
+        return $this->getMockBuilder(DiscountableItemFilterPluginInterface::class)->getMock();
     }
 
 }

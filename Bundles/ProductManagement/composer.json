@@ -18,7 +18,7 @@
     "spryker/product-group": "^1.0.0",
     "spryker/product-image": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/stock": "^4.0.0",
+    "spryker/stock": "^4.0.4",
     "spryker/symfony": "^3.0.0",
     "spryker/tax": "^4.0.0 || ^5.0.0",
     "spryker/touch": "^3.0.0",

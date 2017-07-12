@@ -10,7 +10,7 @@ namespace Spryker\Zed\Newsletter\Business\Anonymizer;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriber;
-use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
+use Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandlerInterface;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
@@ -28,9 +28,9 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
 
     /**
      * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler $subscriptionRequestHandler
+     * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandlerInterface $subscriptionRequestHandler
      */
-    public function __construct(NewsletterQueryContainerInterface $queryContainer, SubscriptionRequestHandler $subscriptionRequestHandler)
+    public function __construct(NewsletterQueryContainerInterface $queryContainer, SubscriptionRequestHandlerInterface $subscriptionRequestHandler)
     {
         $this->queryContainer = $queryContainer;
         $this->requestHandler = $subscriptionRequestHandler;

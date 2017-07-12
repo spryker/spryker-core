@@ -1,4 +1,4 @@
-# AvailabilityGui Bundle
+# AvailabilityGui Module
 
 ## Installation
 

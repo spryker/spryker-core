@@ -1,4 +1,4 @@
-# TaxProductConnector Bundle
+# TaxProductConnector Module
 
 ## Installation
 

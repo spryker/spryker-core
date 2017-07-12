@@ -66,4 +66,14 @@ class DiscountToMoneyBridge implements DiscountToMoneyInterface
         return $this->moneyFacade->convertDecimalToInteger($value);
     }
 
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertIntegerToDecimal($value)
+    {
+        return $this->moneyFacade->convertIntegerToDecimal($value);
+    }
+
 }

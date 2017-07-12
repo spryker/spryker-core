@@ -18,10 +18,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CalculatorForm extends AbstractType
 {
+
+    const MAX_MONEY_INT = 21474835;
+    const MIN_MONEY_INT = 0;
 
     const FIELD_AMOUNT = 'amount';
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
@@ -83,22 +88,9 @@ class CalculatorForm extends AbstractType
             ->addEventListener(
                 FormEvents::PRE_SUBMIT,
                 function (FormEvent $event) {
-                    $this->normalizeAmount($event);
                     $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
                 }
             );
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return void
-     */
-    protected function normalizeAmount(FormEvent $event)
-    {
-        $data = $event->getData();
-        $data[self::FIELD_AMOUNT] = str_replace(',', '.', $data[self::FIELD_AMOUNT]);
-        $event->setData($data);
     }
 
     /**
@@ -140,12 +132,14 @@ class CalculatorForm extends AbstractType
             ],
             'constraints' => [
                 new NotBlank(),
+                new LessThanOrEqual(static::MAX_MONEY_INT),
+                new GreaterThanOrEqual(static::MIN_MONEY_INT),
             ],
         ];
 
         $builder->add(
             self::FIELD_AMOUNT,
-            'text',
+            'money',
             array_merge($defaultOptions, $options)
         );
 

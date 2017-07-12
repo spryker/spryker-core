@@ -65,12 +65,12 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
 
             // non arrays and non-basic types are dependencies
             if (preg_match('/^[A-Z]\w+(\[\])?$/', $property['type'])) {
-                if (isset($property['singular'])) {
+                if (isset($property['singular']) && !isset($this->dependencies[$property['singular']])) {
                     $property['name'] = $property['singular'];
                 }
                 $property['ucfirstName'] = ucfirst($property['name']);
                 $property['type'] = str_replace('[]', '', $property['type']); // remove array marker
-                $this->dependencies[] = $property;
+                $this->dependencies[$property['name']] = $property;
                 continue;
             }
 

@@ -15,9 +15,9 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/config": "If you want to use the TwigServiceProvider you need to install spryker/config.",
-    "spryker/silex": "If you want to use the TwigServiceProvider you need to install spryker/silex.",
-    "spryker/symfony": "If you want to use the TwigServiceProvider you need to install spryker/symfony."
+    "spryker/config": "If you want to use the TwigServiceProvider.",
+    "spryker/silex": "If you want to use the TwigServiceProvider.",
+    "spryker/symfony": "If you want to use the TwigServiceProvider."
   },
   "autoload": {
     "psr-0": {

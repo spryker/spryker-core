@@ -20,6 +20,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEdi
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
@@ -169,7 +170,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
-            $this->getStore()
+            $this->getStore(),
+            $this->createProductStockHelper()
         );
     }
 
@@ -490,6 +492,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade()->getCurrentLocale(),
             $idProductAbstract
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface
+     */
+    public function createProductStockHelper()
+    {
+        return new ProductStockHelper();
     }
 
     /**

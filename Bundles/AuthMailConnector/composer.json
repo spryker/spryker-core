@@ -11,7 +11,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth": "If you want to use Auth plugins you need to install spryker/auth."
+    "spryker/auth": "If you want to use Auth plugins."
   },
   "autoload": {
     "psr-0": {

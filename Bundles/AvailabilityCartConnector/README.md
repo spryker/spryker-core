@@ -1,4 +1,4 @@
-# AvailabilityCartConnector Bundle
+# AvailabilityCartConnector Module
 
 ## Installation
 

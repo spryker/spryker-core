@@ -1,4 +1,4 @@
-# Heartbeat Bundle
+# Heartbeat Module
 
 ## Installation
 

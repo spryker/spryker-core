@@ -42,6 +42,8 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     }
 
     /**
+     * @deprecated Use getCountryByIso2Code() instead.
+     *
      * @param string $iso2Code
      *
      * @return int
@@ -49,6 +51,16 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     public function getIdCountryByIso2Code($iso2Code)
     {
         return $this->countryFacade->getIdCountryByIso2Code($iso2Code);
+    }
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function getCountryByIso2Code($iso2Code)
+    {
+        return $this->countryFacade->getCountryByIso2Code($iso2Code);
     }
 
 }

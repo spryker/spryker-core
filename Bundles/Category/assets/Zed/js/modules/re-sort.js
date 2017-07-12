@@ -8,23 +8,3 @@
 
 require('ZedGui');
 require('./re-sort/bootstrap');
-
-var writer = require('./re-sort/writer');
-var progressBar = require('./shared/progress-bar');
-
-jQuery(document).ready(function() {
-    progressBar.setSelector('#progress-bar');
-
-    var categoryNestable = jQuery('#category-list').nestable({
-        depth: 1
-    });
-
-    categoryNestable.on('change', function(event) {
-        var list = event.length ? event : jQuery(event.target);
-        window.serializedList = window.JSON.stringify(list.nestable('serialize'));
-    });
-
-    jQuery('#save-button').on('click', function() {
-        writer.save(window.serializedList, progressBar);
-    });
-});

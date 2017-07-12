@@ -1,4 +1,4 @@
-# Cart Bundle
+# Cart Module
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# Payone Bundle
+# Payone Module
 
 ## Installation
 

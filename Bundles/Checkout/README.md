@@ -1,4 +1,4 @@
-# Checkout Bundle
+# Checkout Module
 
 ## Installation
 

@@ -14,11 +14,13 @@ use Spryker\Zed\Kernel\Container;
 class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_COLLECTOR = 'CMS_BLOCL_COLLECTOR:FACADE_COLLECTOR';
+    const FACADE_COLLECTOR = 'CMS_BLOCK_COLLECTOR:FACADE_COLLECTOR';
 
-    const QUERY_CONTAINER_TOUCH = 'CMS_BLOCL_COLLECTOR:QUERY_CONTAINER_TOUCH';
+    const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_COLLECTOR:QUERY_CONTAINER_TOUCH';
 
-    const SERVICE_DATA_READER = 'CMS_BLOCL_COLLECTOR:SERVICE_DATA_READER';
+    const SERVICE_DATA_READER = 'CMS_BLOCK_COLLECTOR:SERVICE_DATA_READER';
+
+    const COLLECTOR_DATA_EXPANDER_PLUGINS = 'CMS_BLOCK_COLLECTOR:DATA_EXPANDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +33,7 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addUtilDataReaderService($container);
         $container = $this->addCollectorFacade($container);
         $container = $this->addTouchQueryContainer($container);
+        $container = $this->addCollectorDataExpanderPlugins($container);
 
         return $container;
     }
@@ -75,6 +78,30 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCollectorDataExpanderPlugins(Container $container)
+    {
+        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getCollectorDataExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * Stack of plugins which run during data collection for each item.
+     *
+     * @return array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
+     */
+    protected function getCollectorDataExpanderPlugins()
+    {
+        return [];
     }
 
 }

@@ -17,6 +17,7 @@ class StockSubForm extends AbstractType
 
     const FIELD_QUANTITY = 'quantity';
     const FIELD_STOCK_TYPE = 'stockType';
+    const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -27,7 +28,8 @@ class StockSubForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addQuantityField($builder)
-            ->addStockTypeField($builder);
+            ->addStockTypeField($builder)
+            ->addIsNeverOutOfStockCheckbox($builder);
     }
 
     /**
@@ -46,7 +48,7 @@ class StockSubForm extends AbstractType
     protected function addQuantityField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_QUANTITY, 'text', [
-            'label' => 'Stock',
+            'label' => 'Quantity',
             'constraints' => [
                 new Required(),
                 new Regex(['pattern' => '/[\d]+/']),
@@ -66,6 +68,21 @@ class StockSubForm extends AbstractType
         $builder->add(static::FIELD_STOCK_TYPE, 'text', [
             'label' => 'Stock Type',
             'disabled' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsNeverOutOfStockCheckbox(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_IS_NEVER_OUT_OF_STOCK, 'checkbox', [
+            'label' => 'Never out of stock',
+            'required' => false,
         ]);
 
         return $this;

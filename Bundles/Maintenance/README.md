@@ -1,4 +1,4 @@
-# Maintenance Bundle
+# Maintenance Module
 
 ## Installation
 

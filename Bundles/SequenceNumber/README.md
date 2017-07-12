@@ -1,4 +1,4 @@
-# SequenceNumber Bundle
+# SequenceNumber Module
 
 ## Installation
 

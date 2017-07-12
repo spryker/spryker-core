@@ -1,4 +1,4 @@
-# Acl Bundle
+# Acl Module
 
 ## Installation
 

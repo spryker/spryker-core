@@ -1,4 +1,4 @@
-# User Bundle
+# User Module
 
 ## Installation
 

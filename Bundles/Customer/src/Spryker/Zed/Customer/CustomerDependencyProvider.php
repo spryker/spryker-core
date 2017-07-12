@@ -55,10 +55,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->locale()->queryContainer();
         };
 
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
-        };
-
+        $container = $this->addStore($container);
         $container = $this->addCustomerAnonymizerPlugins($container);
 
         return $container;
@@ -77,6 +74,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::SERVICE_DATE_FORMATTER] = function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
         };
+
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -101,6 +100,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCustomerAnonymizerPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[static::STORE] = function (Container $container) {
+            return Store::getInstance();
+        };
+
+        return $container;
     }
 
 }

@@ -1,4 +1,4 @@
-# Config Bundle
+# Config Module
 
 ## Installation
 

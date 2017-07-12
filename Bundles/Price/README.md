@@ -1,4 +1,4 @@
-# Price Bundle
+# Price Module
 
 ## Installation
 
