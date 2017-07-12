@@ -609,8 +609,7 @@ class ProductAttributeFacadeTest extends Test
         $localizedAttributes = $this->generateLocalizedAttributes();
         $productAbstractTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
 
-        $idProductAbstract = $this->productFacade->addProduct($productAbstractTransfer, []);
-
+        $idProductAbstract = $this->productFacade->saveProduct($productAbstractTransfer, []);
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
         return $productAbstractTransfer;

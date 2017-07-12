@@ -121,7 +121,7 @@ class ProductAttribute implements ProductAttributeInterface
 
     /**
      * @param array $attributes
-     * @param array $localizedAttributes
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
      *
      * @return array
      */
@@ -129,7 +129,7 @@ class ProductAttribute implements ProductAttributeInterface
     {
         $result = [];
         foreach ($localizedAttributes as $localizedAttributeTransfer) {
-            $result[$localizedAttributeTransfer->getFkLocale()] = $localizedAttributeTransfer->getAttributes();
+            $result[$localizedAttributeTransfer->getLocale()->getIdLocale()] = $localizedAttributeTransfer->getAttributes();
         }
 
         $result = [ProductAttributeConfig::DEFAULT_LOCALE => $attributes] + $result;
