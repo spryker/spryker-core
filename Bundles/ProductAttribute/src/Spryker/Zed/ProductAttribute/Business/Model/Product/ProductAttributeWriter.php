@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
+use ArrayObject;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
@@ -54,12 +55,15 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     {
         $productAbstractTransfer = $this->reader->getProductAbstractTransfer($idProductAbstract);
         $attributesToSave = $this->getAttributesDataToSave($attributes);
+        $nonLocalizedAttributes = $this->getNonLocalizedAttributes($attributesToSave);
 
         $productAbstractTransfer->setAttributes(
-            $this->getNonLocalizedAttributes($attributesToSave)
+            $nonLocalizedAttributes
         );
 
-        $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productAbstractTransfer->getLocalizedAttributes());
+        $localizedAttributes = $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productAbstractTransfer->getLocalizedAttributes());
+        $productAbstractTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
+
         $this->productFacade->saveProduct($productAbstractTransfer, []);
     }
 
@@ -74,12 +78,15 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         $productConcreteTransfer = $this->reader->getProductTransfer($idProduct);
         $productAbstractTransfer = $this->reader->getProductAbstractTransfer($productConcreteTransfer->getFkProductAbstract());
         $attributesToSave = $this->getAttributesDataToSave($attributes);
+        $nonLocalizedAttributes = $this->getNonLocalizedAttributes($attributesToSave);
 
         $productConcreteTransfer->setAttributes(
-            $this->getNonLocalizedAttributes($attributesToSave)
+            $nonLocalizedAttributes
         );
 
-        $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productConcreteTransfer->getLocalizedAttributes());
+        $localizedAttributes = $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productConcreteTransfer->getLocalizedAttributes());
+        $productConcreteTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
+
         $this->productFacade->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
     }
 

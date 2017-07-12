@@ -92,7 +92,7 @@ class ProductAttributeFacadeTest extends Test
     protected $productAttributeQueryContainer;
 
     /**
-     * @var \SprykerTest\Zed\ProductAttribute\BusinessTester
+     * @var \SprykerTest\Zed\ProductAttribute\ProductAttributeBusinessTester
      */
     protected $tester;
 
@@ -445,6 +445,127 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
+    public function testSaveAbstractAttributes()
+    {
+        $productAbstractTransfer = $this->createSampleAbstractProduct(static::ABSTRACT_SKU);
+        list($metaSuperAttributeTransfer, $fooMetaAttributeTransfer) = $this->createSampleAttributeMetadata();
+
+        $attributesToSave = [
+            [
+                'key' => $fooMetaAttributeTransfer->getKey(),
+                'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
+                'locale_code' => '_',
+                'value' => 'New Foo Value',
+
+            ],
+            [
+                'key' => $fooMetaAttributeTransfer->getKey(),
+                'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
+                'locale_code' => 46,
+                'value' => '',
+
+            ],
+            [
+                'key' => $fooMetaAttributeTransfer->getKey(),
+                'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
+                'locale_code' => 66,
+                'value' => '',
+
+            ],
+            [
+                'key' => 'undefined__key',
+                'id' => null,
+                'locale_code' => 46,
+                'value' => 'xxx',
+            ],
+        ];
+
+        $this->productAttributeFacade->saveAbstractAttributes(
+            $productAbstractTransfer->getIdProductAbstract(),
+            $attributesToSave
+        );
+
+        $productAttributesValues = $this->productAttributeFacade->getProductAbstractAttributeValues(
+            $productAbstractTransfer->getIdProductAbstract()
+        );
+
+        $this->assertSame([
+            '_' => [
+                'foo' => 'New Foo Value',
+            ],
+            46 => [
+                'undefined__key' => 'xxx',
+            ],
+            66 => [
+                'foo' => 'Foo Value US',
+            ],
+        ], $productAttributesValues);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveConcreteAttributes()
+    {
+        $productAbstractTransfer = $this->createSampleAbstractProduct(static::ABSTRACT_SKU);
+        $productTransfer = $this->createSampleProduct($productAbstractTransfer, static::CONCRETE_SKU);
+        list($metaSuperAttributeTransfer, $fooMetaAttributeTransfer) = $this->createSampleAttributeMetadata();
+
+        $attributesToSave = [
+            [
+                'key' => $fooMetaAttributeTransfer->getKey(),
+                'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
+                'locale_code' => '_',
+                'value' => 'New Foo Value',
+
+            ],
+            [
+                'key' => $fooMetaAttributeTransfer->getKey(),
+                'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
+                'locale_code' => 46,
+                'value' => '',
+
+            ],
+            [
+                'key' => $fooMetaAttributeTransfer->getKey(),
+                'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
+                'locale_code' => 66,
+                'value' => '',
+
+            ],
+            [
+                'key' => 'undefined__key',
+                'id' => null,
+                'locale_code' => 46,
+                'value' => 'xxx',
+            ],
+        ];
+
+        $this->productAttributeFacade->saveConcreteAttributes(
+            $productTransfer->getIdProductConcrete(),
+            $attributesToSave
+        );
+
+        $productAttributesValues = $this->productAttributeFacade->getProductAttributeValues(
+            $productTransfer->getIdProductConcrete()
+        );
+
+        $this->assertSame([
+            '_' => [
+                'foo' => 'New Foo Value',
+            ],
+            46 => [
+                'undefined__key' => 'xxx',
+            ],
+            66 => [
+                'foo' => 'Foo Value US',
+            ],
+        ], $productAttributesValues);
+    }
+
+    /**
+     * @return void
+     */
     public function testSuggestKeys()
     {
         $this->createSampleAttributeMetadata();
@@ -639,21 +760,23 @@ class ProductAttributeFacadeTest extends Test
     }
 
     /**
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     protected function createSampleAttributeMetadata()
     {
-        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+        $productManagementAttributeTransferSuper = (new ProductManagementAttributeTransfer())
             ->setIsSuper(true)
             ->setKey(static::SUPER_ATTRIBUTE_KEY)
             ->setInputType('text');
-        $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
+        $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransferSuper);
 
-        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+        $productManagementAttributeTransferFoo = (new ProductManagementAttributeTransfer())
             ->setIsSuper(false)
             ->setKey(static::FOO_ATTRIBUTE_KEY)
             ->setInputType('text');
-        $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
+        $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransferFoo);
+
+        return [$productManagementAttributeTransferSuper, $productManagementAttributeTransferFoo];
     }
 
     /**

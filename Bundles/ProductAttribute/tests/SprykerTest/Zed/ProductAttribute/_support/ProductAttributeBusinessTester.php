@@ -1,10 +1,4 @@
 <?php
-
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
 namespace SprykerTest\Zed\ProductAttribute;
 
 use Codeception\Actor;
@@ -24,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class BusinessTester extends Actor
+class ProductAttributeBusinessTester extends Actor
 {
 
-    use _generated\BusinessTesterActions;
+    use _generated\ProductAttributeBusinessTesterActions;
 
    /**
     * Define custom actions here
