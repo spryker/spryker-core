@@ -15,7 +15,7 @@ class CategoryConfig extends SharedCategoryConfig
     /**
      * Default available template for category
      */
-    const CATEGORY_TEMPLATE_DEFAULT = 'Category';
+    const CATEGORY_TEMPLATE_DEFAULT = 'Catalog';
 
     /**
      * @return array
