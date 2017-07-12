@@ -20,8 +20,11 @@ class BaseCollector
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
-    protected function createDiscountableItemTransfer($grossPrice, $quantity, ArrayObject $originalItemCalculatedDiscounts)
-    {
+    protected function createDiscountableItemTransfer(
+        $grossPrice,
+        $quantity,
+        ArrayObject $originalItemCalculatedDiscounts
+    ) {
         $discountableItemTransfer = new DiscountableItemTransfer();
         $discountableItemTransfer->setUnitGrossPrice($grossPrice);
         $discountableItemTransfer->setQuantity($quantity);
@@ -31,6 +34,26 @@ class BaseCollector
     }
 
     /**
+     * @param string $priceMode
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer
+     */
+    protected function createDiscountableItemForItemTransfer($priceMode, ItemTransfer $itemTransfer)
+    {
+        $discountableItemTransfer = $this->createDiscountableItemTransfer(
+            $this->getPrice($itemTransfer, $priceMode),
+            $itemTransfer->getQuantity(),
+            $itemTransfer->getCalculatedDiscounts()
+        );
+        $discountableItemTransfer->setOriginalItem($itemTransfer);
+
+        return $discountableItemTransfer;
+    }
+
+    /**
+     * @deprecated This method calculated gross price when in tax mode, because discounts currently working with gross mode, will be removed in the future
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
      *
