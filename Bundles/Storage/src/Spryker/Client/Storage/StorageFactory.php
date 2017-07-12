@@ -9,6 +9,10 @@ namespace Spryker\Client\Storage;
 
 use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Storage\Cache\StorageCacheInactiveStrategy;
+use Spryker\Client\Storage\Cache\StorageCacheIncrementalStrategy;
+use Spryker\Client\Storage\Cache\StorageCacheReplaceStrategy;
+use Spryker\Client\Storage\Exception\InvalidStrategyException;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
@@ -61,6 +65,78 @@ class StorageFactory extends AbstractFactory
     protected function getConfig()
     {
         return $this->getConnectionParameters();
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     *
+     * @todo use dependencyProvider and call it get
+     */
+    protected function createStorageClient()
+    {
+        return new StorageClient();
+    }
+
+    /**
+     * @param string $storageCacheStrategy
+     *
+     * @throws \Spryker\Client\Storage\Exception\InvalidStrategyException
+     *
+     * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyInterface
+     *
+     * @todo move to strategyBuilder
+     */
+    public function createStorageCacheStrategy($storageCacheStrategy)
+    {
+        $cacheStrategyStack = $this->createCacheStrategyStack();
+
+        if (!isset($cacheStrategyStack[$storageCacheStrategy])) {
+            throw new InvalidStrategyException($storageCacheStrategy . " is not a valid storage cache strategy.");
+        }
+
+        return $cacheStrategyStack[$storageCacheStrategy];
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyInterface[]
+     */
+    protected function createCacheStrategyStack()
+    {
+        return [
+            StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE => $this->createCacheReplaceStrategy(),
+            StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL => $this->createCacheIncrementalStrategy(),
+            StorageConstants::STORAGE_CACHE_STRATEGY_INACTIVE => $this->createCacheInactiveStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\StorageCacheReplaceStrategy
+     */
+    protected function createCacheReplaceStrategy()
+    {
+        return new StorageCacheReplaceStrategy(
+            $this->createStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\StorageCacheIncrementalStrategy
+     */
+    protected function createCacheIncrementalStrategy()
+    {
+        return new StorageCacheIncrementalStrategy(
+            $this->createStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\StorageCacheInactiveStrategy
+     */
+    protected function createCacheInactiveStrategy()
+    {
+        return new StorageCacheInactiveStrategy(
+            $this->createStorageClient()
+        );
     }
 
     /**
