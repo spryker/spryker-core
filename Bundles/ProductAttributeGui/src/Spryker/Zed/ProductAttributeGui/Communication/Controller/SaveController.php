@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
-use Exception;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Throwable;
 
 /**
  * @method \Spryker\Zed\ProductAttributeGui\Business\ProductAttributeGuiFacade getFacade()
@@ -38,29 +36,14 @@ class SaveController extends AbstractController
         $json = $request->request->get(static::PARAM_JSON);
         $data = json_decode($json, true);
 
-        try {
-            $statusCode = 200;
-            $result = true;
-            $message = 'Product abstract attributes saved';
-
-            $this->getFactory()
-                ->getProductAttributeFacade()
-                ->saveAbstractAttributes($idProductAbstract, $data);
-
-        } catch (Exception $exception) {
-            $statusCode = 500;
-            $result = false;
-            $message = $exception->getMessage();
-        } catch (Throwable $exception) {
-            $statusCode = 500;
-            $result = false;
-            $message = $exception->getMessage();
-        }
+        $this->getFactory()
+            ->getProductAttributeFacade()
+            ->saveAbstractAttributes($idProductAbstract, $data);
 
         return new JsonResponse([
-            'success' => $result,
-            'message' => $message,
-        ], $statusCode);
+            'success' => true,
+            'message' => 'Product abstract attributes saved',
+        ], 200);
     }
 
     /**
@@ -77,29 +60,14 @@ class SaveController extends AbstractController
         $json = $request->request->get(static::PARAM_JSON);
         $data = json_decode($json, true);
 
-        try {
-            $statusCode = 200;
-            $result = true;
-            $message = 'Product attributes saved';
-
-            $this->getFactory()
-                ->getProductAttributeFacade()
-                ->saveConcreteAttributes($idProduct, $data);
-
-        } catch (Exception $exception) {
-            $statusCode = 500;
-            $result = false;
-            $message = $exception->getMessage();
-        } catch (Throwable $exception) {
-            $statusCode = 500;
-            $result = false;
-            $message = $exception->getMessage();
-        }
+        $this->getFactory()
+            ->getProductAttributeFacade()
+            ->saveConcreteAttributes($idProduct, $data);
 
         return new JsonResponse([
-            'success' => $result,
-            'message' => $message,
-        ], $statusCode);
+            'success' => true,
+            'message' => 'Product attributes saved',
+        ], 200);
     }
 
 }
