@@ -18,11 +18,14 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_SEARCH = 'FACADE_SEARCH';
+    const FACADE_CMS_CONTENT_WIDGET = 'FACADE_CMS_CONTENT_WIDGET';
 
     const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
     const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
+
+    const COLLECTOR_DATA_EXPANDER_PLUGINS = 'DATA_EXPANDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,27 +34,55 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_DATA_READER] = function (Container $container) {
+        $container[static::SERVICE_DATA_READER] = function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
         };
 
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+        $container[static::FACADE_COLLECTOR] = function (Container $container) {
             return new CmsCollectorToCollectorBridge($container->getLocator()->collector()->facade());
         };
 
-        $container[self::FACADE_SEARCH] = function (Container $container) {
+        $container[static::FACADE_SEARCH] = function (Container $container) {
             return new CmsCollectorToSearchBridge($container->getLocator()->search()->facade());
         };
 
-        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
         };
 
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CmsCollectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
+        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getCollectorDataExpanderPlugins();
+        };
+
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCollectorDataExpanderPlugins(Container $container)
+    {
+        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getCollectorDataExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * Stack of plugins which run during data collection for each item.
+     *
+     * @return array|\Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
+     */
+    protected function getCollectorDataExpanderPlugins()
+    {
+        return [];
     }
 
 }

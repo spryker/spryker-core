@@ -22,8 +22,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/calculation": "If you want to use Calculation plugins you need to install spryker/calculation.",
-    "spryker/checkout": "If you want to use Checkout plugins you need to install spryker/checkout."
+    "spryker/calculation": "If you want to use Calculation plugins.",
+    "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
     "psr-0": {

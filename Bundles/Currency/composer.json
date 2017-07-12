@@ -16,8 +16,8 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex.",
-    "spryker/twig": "If you want to use Currency in Twig you need to install spryker/twig."
+    "spryker/silex": "If you want to use ServiceProvider.",
+    "spryker/twig": "If you want to use currency in Twig."
   },
   "autoload": {
     "psr-0": {

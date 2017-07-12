@@ -52,10 +52,9 @@ class ItemPriceCollector extends BaseCollector implements CollectorInterface
                 continue;
             }
 
-            $discountableItems[] = $this->createDiscountableItemTransfer(
-                $this->getPrice($itemTransfer, $quoteTransfer->getPriceMode()),
-                $itemTransfer->getQuantity(),
-                $itemTransfer->getCalculatedDiscounts()
+            $discountableItems[] = $this->createDiscountableItemForItemTransfer(
+                $quoteTransfer->getPriceMode(),
+                $itemTransfer
             );
         }
 

@@ -14,7 +14,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/messenger": "Allows to use StepHandlerPluginWithMessengerInterface"
+    "spryker/messenger": "Allows to use StepHandlerPluginWithMessengerInterface."
   },
   "autoload": {
     "psr-0": {

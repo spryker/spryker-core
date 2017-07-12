@@ -16,11 +16,20 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     * @var \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
      */
-    public function __construct(UtilDataReaderServiceInterface $utilDataReaderService)
-    {
+    protected $collectorDataExpanderPlugins = [];
+
+    /**
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     * @param \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[] $collectorDataExpanderPlugins
+     */
+    public function __construct(
+        UtilDataReaderServiceInterface $utilDataReaderService,
+        array $collectorDataExpanderPlugins = []
+    ) {
         parent::__construct($utilDataReaderService);
+        $this->collectorDataExpanderPlugins = $collectorDataExpanderPlugins;
     }
 
     /**
@@ -31,18 +40,36 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
-        return [
+        $contentPlaceholders = $this->extractPlaceholders(
+            $collectItemData[CmsBlockCollectorQuery::COL_PLACEHOLDERS],
+            $collectItemData[CmsBlockCollectorQuery::COL_GLOSSARY_KEYS]
+        );
+
+        $baseCollectedCmsBlockData = [
             'id' => $collectItemData[CmsBlockCollectorQuery::COL_ID_CMS_BLOCK],
             'valid_from' => $collectItemData[CmsBlockCollectorQuery::COL_VALID_FROM],
             'valid_to' => $collectItemData[CmsBlockCollectorQuery::COL_VALID_TO],
             'is_active' => $collectItemData[CmsBlockCollectorQuery::COL_IS_ACTIVE],
             'template' => $collectItemData[CmsBlockCollectorQuery::COL_TEMPLATE_PATH],
-            'placeholders' => $this->extractPlaceholders(
-                $collectItemData[CmsBlockCollectorQuery::COL_PLACEHOLDERS],
-                $collectItemData[CmsBlockCollectorQuery::COL_GLOSSARY_KEYS]
-            ),
+            'placeholders' => $contentPlaceholders,
             'name' => $collectItemData[CmsBlockCollectorQuery::COL_NAME],
         ];
+
+        return $this->runDataExpanderPlugins($baseCollectedCmsBlockData);
+    }
+
+    /**
+     * @param array $collectedItemData
+     *
+     * @return array
+     */
+    protected function runDataExpanderPlugins(array $collectedItemData)
+    {
+        foreach ($this->collectorDataExpanderPlugins as $dataExpanderPlugin) {
+            $collectedItemData = $dataExpanderPlugin->expand($collectedItemData, $this->locale);
+        }
+
+        return $collectedItemData;
     }
 
     /**
