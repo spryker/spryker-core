@@ -22,7 +22,7 @@ class CmsBlockCategoryCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
-        return $this->extractCmsBlockNames($collectItemData[CmsBlockCategoryConnectorCollector::COL_CMS_BLOCK_NAMES]);
+        return $this->extractCmsBlockNames($collectItemData[CmsBlockCategoryConnectorCollector::COL_POSITIONS]);
     }
 
     /**
@@ -41,7 +41,18 @@ class CmsBlockCategoryCollector extends AbstractStoragePropelCollector
     protected function extractCmsBlockNames($cmsBlockNames)
     {
         $separator = ',';
-        return explode($separator, trim($cmsBlockNames));
+        $positions = explode($separator, trim($cmsBlockNames));
+
+        $cmsBlockNames = [];
+        foreach ($positions as $position) {
+            $positionCmsBlock = explode(':', $position);
+
+            if (isset($positionCmsBlock[0], $positionCmsBlock[1])) {
+                $cmsBlockNames[$positionCmsBlock[0]][] = $positionCmsBlock[1];
+            }
+        }
+
+        return $cmsBlockNames;
     }
 
     /**

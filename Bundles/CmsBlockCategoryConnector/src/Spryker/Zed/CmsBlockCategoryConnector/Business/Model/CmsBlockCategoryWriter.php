@@ -129,11 +129,6 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
                 CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
                 $relation->getFkCategory()
             );
-
-            $this->touchFacade->touchDeleted(
-                CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION,
-                $relation->getFkCategory()
-            );
         }
     }
 
@@ -166,11 +161,6 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         foreach ($idCategories as $idCategory) {
             $this->touchFacade->touchActive(
                 CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
-                $idCategory
-            );
-
-            $this->touchFacade->touchActive(
-                CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION,
                 $idCategory
             );
         }

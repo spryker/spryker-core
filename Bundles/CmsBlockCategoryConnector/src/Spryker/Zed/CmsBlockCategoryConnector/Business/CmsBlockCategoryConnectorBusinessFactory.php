@@ -62,21 +62,6 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryPositionCollector
-     */
-    public function createStorageCmsBlockCategoryPositionCollector()
-    {
-        $cmsBlockCategoryPositionCollector = new CmsBlockCategoryPositionCollector(
-            $this->getUtilDataReaderService()
-        );
-
-        $cmsBlockCategoryPositionCollector->setTouchQueryContainer($this->getTouchQueryContainer());
-        $cmsBlockCategoryPositionCollector->setQueryBuilder($this->createCmsBlockCategoryPositionStorageQueryContainer());
-
-        return $cmsBlockCategoryPositionCollector;
-    }
-
-    /**
      * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionSync
      */
     public function createCmsBlockCategoryPositionSync()
@@ -133,14 +118,6 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     protected function createCmsBlockCategoryStorageQueryContainer()
     {
         return new CmsBlockCategoryConnectorCollector();
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryPositionCollectorQuery
-     */
-    protected function createCmsBlockCategoryPositionStorageQueryContainer()
-    {
-        return new CmsBlockCategoryPositionCollectorQuery();
     }
 
 }

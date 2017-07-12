@@ -33,10 +33,4 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
      */
     const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
 
-    /**
-     * Specification:
-     * - Fill name for storage key for CMS Block to Category position relation
-     */
-    const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_POSITION = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_POSITION_NAME;
-
 }

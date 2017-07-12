@@ -22,7 +22,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
 {
 
     const OPTION_NAME = 'name';
-    const POSITION_POSTFIX = '_position';
+    const OPTION_POSITION = 'position';
 
     /**
      * @var string
@@ -83,10 +83,12 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      */
     protected function getBlockDataByOptions(array &$blockOptions)
     {
-        $blockNameKey = $this->extractBlockNameKey($blockOptions);
-        $blockOptions = $this->preparePositionOptions($blockOptions);
+        $blockName = $this->extractBlockNameOption($blockOptions);
+        $positionName = $this->extractPositionOption($blockOptions);
+
         $availableBlockNames = $this->getClient()->findBlockNamesByOptions($blockOptions, $this->localeName);
-        $availableBlockNames = $this->filterAvailableBlockNames($blockNameKey, $availableBlockNames);
+        $availableBlockNames = $this->filterPosition($positionName, $availableBlockNames);
+        $availableBlockNames = $this->filterAvailableBlockNames($blockName, $availableBlockNames);
 
         return $this->getClient()->findBlocksByNames($availableBlockNames, $this->localeName);
     }
@@ -94,33 +96,42 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     /**
      * @param array $blockOptions
      *
-     * @return array
+     * @return string
      */
-    protected function preparePositionOptions($blockOptions)
+    protected function extractPositionOption(array &$blockOptions)
     {
-        foreach ($blockOptions as $optionKey => $optionValue) {
-            if (strpos($optionKey, static::POSITION_POSTFIX) !== false) {
-                $resourceName = rtrim($optionKey, static::POSITION_POSTFIX);
+        $positionName = isset($blockOptions[static::OPTION_POSITION]) ? $blockOptions[static::OPTION_POSITION] : '';
+        $positionName = strtolower($positionName);
+        unset($blockOptions[static::OPTION_POSITION]);
 
-                if (isset($blockOptions[$resourceName])) {
-                    $blockOptions[$optionKey] = $optionValue . $blockOptions[$resourceName];
-                } else {
-                    unset($blockOptions[$optionKey]);
-                }
-            }
-        }
-
-        return $blockOptions;
+        return $positionName;
     }
 
     /**
-     * @param string $blockNameKey
+     * @param string $positionName
      * @param array $availableBlockNames
      *
      * @return array
      */
-    protected function filterAvailableBlockNames($blockNameKey, array $availableBlockNames)
+    protected function filterPosition($positionName, array $availableBlockNames)
     {
+        if ($positionName && is_array(current($availableBlockNames))) {
+            return isset($availableBlockNames[$positionName]) ? $availableBlockNames[$positionName] : [];
+        }
+
+        return $availableBlockNames;
+    }
+
+    /**
+     * @param string $blockName
+     * @param array $availableBlockNames
+     *
+     * @return array
+     */
+    protected function filterAvailableBlockNames($blockName, array $availableBlockNames)
+    {
+        $blockNameKey = $this->generateBlockNameKey($blockName);
+
         if ($blockNameKey) {
             if (!$availableBlockNames || in_array($blockNameKey, $availableBlockNames)) {
                 $availableBlockNames = [$blockNameKey];
@@ -147,12 +158,12 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      *
      * @return string
      */
-    protected function extractBlockNameKey(array &$blockOptions)
+    protected function extractBlockNameOption(array &$blockOptions)
     {
         $blockName = isset($blockOptions[static::OPTION_NAME]) ? $blockOptions[static::OPTION_NAME] : null;
         unset($blockOptions[static::OPTION_NAME]);
 
-        return $this->getClient()->generateBlockNameKey($blockName, $this->localeName);
+        return $blockName;
     }
 
     /**
@@ -163,6 +174,15 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     protected function validateBlock($cmsBlockData)
     {
         return !($cmsBlockData === null);
+    }
+
+    /**
+     * @param string $blockName
+     * @return string
+     */
+    protected function generateBlockNameKey($blockName)
+    {
+        return $this->getClient()->generateBlockNameKey($blockName, $this->localeName);
     }
 
     /**
