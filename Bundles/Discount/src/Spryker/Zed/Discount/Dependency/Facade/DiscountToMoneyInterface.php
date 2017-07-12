@@ -40,4 +40,11 @@ interface DiscountToMoneyInterface
      */
     public function convertDecimalToInteger($value);
 
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertIntegerToDecimal($value);
+
 }

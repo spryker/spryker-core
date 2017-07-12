@@ -55,13 +55,11 @@ class FixedPlugin extends AbstractCalculatorPlugin
      *
      * @param int $value
      *
-     * @return string
+     * @return float
      */
     public function transformFromPersistence($value)
     {
-        $moneyTransfer = $this->getMoneyPlugin()->fromInteger((int)$value);
-
-        return $this->getMoneyPlugin()->formatWithoutSymbol($moneyTransfer);
+        return $this->getMoneyPlugin()->convertIntegerToDecimal($value);
     }
 
     /**

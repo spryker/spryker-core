@@ -2,16 +2,7 @@
 <hr />
 
 {{ form_row(discountForm.discountCalculator.calculator_plugin) }}
-
-<div class="form-group {% if discountForm.discountCalculator.amount.vars.errors|length > 0 %}has-error{% endif %}">
-    {{ form_label(discountForm.discountCalculator.amount) }}
-    <div class="input-group">
-        {{ form_widget(discountForm.discountCalculator.amount) }}
-        <div class="input-group-addon">&euro;</div>
-    </div>
-    {{ form_errors(discountForm.discountCalculator.amount) }}
-</div>
-
+{{ form_row(discountForm.discountCalculator.amount) }}
 {{ form_row(discountForm.discountCalculator.collector_query_string) }}
 
 <div id="builder_calculation" class="query-builder-container {% if discountForm.discountCalculator.collector_query_string.vars.errors|length > 0 %}has-error{% endif %}">
