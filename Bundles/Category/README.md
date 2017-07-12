@@ -1,4 +1,4 @@
-# Category Bundle
+# Category Module
 
 ## Installation
 

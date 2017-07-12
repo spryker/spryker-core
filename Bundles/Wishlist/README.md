@@ -1,4 +1,4 @@
-# Wishlist Bundle
+# Wishlist Module
 
 ## Installation
 

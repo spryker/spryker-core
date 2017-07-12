@@ -1,4 +1,4 @@
-# AvailabilityDataFeed Bundle
+# AvailabilityDataFeed Module
 
 ## Installation
 

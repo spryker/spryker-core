@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
-use Spryker\Zed\CmsBlockGui\CmsBlockGuiConfig;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -24,6 +23,8 @@ class CreateBlockController extends AbstractController
 {
 
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    const ERROR_MESSAGE_LOST_TEMPLATE = 'Selected template doesn\'t exist anymore';
+    const MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED = 'CMS Block successfully created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -34,7 +35,7 @@ class CreateBlockController extends AbstractController
     {
         $this->getFactory()
             ->getCmsBlockFacade()
-            ->syncTemplate(CmsBlockGuiConfig::CMS_BLOCK_TEMPLATE_PATH);
+            ->syncTemplate($this->getFactory()->getConfig()->getTemplatePath());
 
         $availableLocales = $this->getFactory()
             ->getLocaleFacade()
@@ -80,13 +81,13 @@ class CreateBlockController extends AbstractController
                 ->getCmsBlockFacade()
                 ->createCmsBlock($cmsBlockForm->getData());
 
-            $this->addSuccessMessage('Page successfully created.');
+            $this->addSuccessMessage(static::MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED);
 
         } catch (CmsBlockTemplateNotFoundException $exception) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
 
             $cmsBlockForm->get(CmsBlockForm::FIELD_FK_TEMPLATE)
-                ->addError(new FormError("Selected template doesn't exist anymore"));
+                ->addError(new FormError(static::ERROR_MESSAGE_LOST_TEMPLATE));
         }
 
         return $cmsBlockTransfer;

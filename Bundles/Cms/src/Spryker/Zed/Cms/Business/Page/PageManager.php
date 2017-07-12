@@ -249,7 +249,7 @@ class PageManager implements PageManagerInterface
             $this->glossaryFacade->touchTranslationForKeyId($pageMapping->getFkGlossaryKey(), $localeTransfer);
         }
 
-        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage(), true);
+        $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $pageTransfer->getIdCmsPage(), false);
     }
 
     /**

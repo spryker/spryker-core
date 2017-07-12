@@ -1,4 +1,4 @@
-# Braintree Bundle
+# Braintree Module
 
 ## Installation
 

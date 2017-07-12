@@ -1,4 +1,4 @@
-# Silex Bundle
+# Silex Module
 
 ## Installation
 

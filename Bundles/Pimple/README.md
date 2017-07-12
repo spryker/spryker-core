@@ -1,4 +1,4 @@
-# Pimple Bundle
+# Pimple Module
 
 ## Installation
 

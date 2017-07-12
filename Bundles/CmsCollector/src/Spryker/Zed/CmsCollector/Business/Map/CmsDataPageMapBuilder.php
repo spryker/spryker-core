@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\CmsCollector\Business\Map;
 
+use DateTime;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
+use Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -55,10 +57,15 @@ class CmsDataPageMapBuilder implements PageMapInterface
         $cmsPageAttributeTransfer = $this->dataExtractor->extractPageAttributeByLocale($cmsPageTransfer, $localeName);
         $cmsMetaAttributeTransfer = $this->dataExtractor->extractMetaAttributeByLocales($cmsPageTransfer, $localeName);
 
+        $isActive = $cmsPageData[AbstractCmsVersionPageCollector::COL_IS_ACTIVE] && $cmsPageData[AbstractCmsVersionPageCollector::COL_IS_SEARCHABLE];
+
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore(Store::getInstance()->getStoreName())
             ->setLocale($localeTransfer->getLocaleName())
-            ->setType(static::TYPE_CMS_PAGE);
+            ->setType(static::TYPE_CMS_PAGE)
+            ->setIsActive($isActive);
+
+        $this->setActiveInDateRange($cmsPageData, $pageMapTransfer);
 
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $cmsPageTransfer->getFkPage())
@@ -74,6 +81,27 @@ class CmsDataPageMapBuilder implements PageMapInterface
             ->addCompletionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName());
 
         return $pageMapTransfer;
+    }
+
+    /**
+     * @param array $cmsPageData
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     *
+     * @return void
+     */
+    protected function setActiveInDateRange(array $cmsPageData, PageMapTransfer $pageMapTransfer)
+    {
+        if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]) {
+            $pageMapTransfer->setActiveFrom(
+                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]))->format('Y-m-d')
+            );
+        }
+
+        if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]) {
+            $pageMapTransfer->setActiveTo(
+                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]))->format('Y-m-d')
+            );
+        }
     }
 
     /**

@@ -1,4 +1,4 @@
-# ProductManagement Bundle
+# ProductManagement Module
 
 ## Installation
 

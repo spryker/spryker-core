@@ -1,4 +1,4 @@
-# Kernel Bundle
+# Kernel Module
 
 ## Installation
 

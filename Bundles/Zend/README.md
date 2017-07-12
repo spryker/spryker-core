@@ -1,4 +1,4 @@
-# Zend Bundle
+# Zend Module
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# Session Bundle
+# Session Module
 
 ## Installation
 

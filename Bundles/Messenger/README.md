@@ -1,4 +1,4 @@
-# Messenger Bundle
+# Messenger Module
 
 ## Installation
 

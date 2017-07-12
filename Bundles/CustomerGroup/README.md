@@ -1,4 +1,4 @@
-# CustomerGroup Bundle
+# CustomerGroup Module
 
 ## Installation
 

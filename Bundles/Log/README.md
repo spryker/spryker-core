@@ -1,4 +1,4 @@
-# Log Bundle
+# Log Module
 
 ## Installation
 

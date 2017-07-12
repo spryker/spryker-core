@@ -1,4 +1,4 @@
-# ProductCartConnector Bundle
+# ProductCartConnector Module
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# Application Bundle
+# Application Module
 
 ## Installation
 

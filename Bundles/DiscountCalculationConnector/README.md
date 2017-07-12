@@ -1,4 +1,4 @@
-# DiscountCalculationConnector Bundle
+# DiscountCalculationConnector Module
 
 ## Installation
 

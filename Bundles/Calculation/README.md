@@ -1,4 +1,4 @@
-# Calculation Bundle
+# Calculation Module
 
 ## Installation
 

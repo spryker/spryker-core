@@ -1,4 +1,4 @@
-# Guzzle Bundle
+# Guzzle Module
 
 ## Installation
 

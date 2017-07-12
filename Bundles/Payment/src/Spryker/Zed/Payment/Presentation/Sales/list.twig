@@ -1,42 +1,24 @@
 <div class="row">
     <div class="col-sm-12">
 
-        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Payment Logs' } %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Payments' } %}
 
             {% block widget_content %}
 
                 <table class="footable table table-striped toggle-arrow-tiny">
                     <thead>
                     <tr class="text-left">
-                        <th>{{ "Transaction ID" | trans }}</th>
-                        <th>{{ "Request" | trans }}</th>
-                        <th>{{ "Status" | trans }}</th>
-                        <th>{{ "Receivable" | trans }}</th>
-                        <th>{{ 'Balance' | trans }}</th>
-                        <th>{{ "Price" | trans }}</th>
-                        <th>{{ "Time" | trans }}</th>
+                        <th>{{ "Payment provider" | trans }}</th>
+                        <th>{{ "Payment method" | trans }}</th>
+                        <th>{{ "Amount" | trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for log in logs %}
+                    {% for payment in payments %}
                         <tr>
-                            {% if log.logType == 'SpyPaymentPayoneTransactionStatusLog' %}
-                                <td>{{ log.TransactionId }}</td>
-                                <td><i>{{ 'Response' | trans }}</i></td>
-                                <td>{{ log.Status }}</td>
-                                <td>{{ log.Receivable | money }}</td>
-                                <td>{{ log.Balance | money }}</td>
-                                <td>{{ log.Price | money }}</td>
-                                <td>{{ log.CreatedAt | date }}</td>
-                            {% else %}
-                                <td>{{ log.TransactionId }}</td>
-                                <td>{{ log.Request }}</td>
-                                <td>{{ log.Status }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ log.CreatedAt | date }}</td>
-                            {% endif %}
+                            <td>{{ payment.paymentProvider }}</td>
+                            <td>{{ payment.paymentMethod }}</td>
+                            <td>{{ payment.amount | money }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

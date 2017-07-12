@@ -1,4 +1,4 @@
-# Development Bundle
+# Development Module
 
 ## Installation
 

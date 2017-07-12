@@ -49,7 +49,7 @@ class CmsBlockGlossaryTabs extends AbstractTabs
     {
         foreach ($this->glossaryTransfer->getGlossaryPlaceholders() as $glossaryPlaceholderTransfer) {
             $tabItemTransfer = new TabItemTransfer();
-            $tabItemTransfer->setName($glossaryPlaceholderTransfer->getPlaceholder());
+            $tabItemTransfer->setName($this->escapeHtmlDomId($glossaryPlaceholderTransfer->getPlaceholder()));
             $tabItemTransfer->setTemplate('@CmsBlockGui/_partial/glossary/tab-placeholder.twig');
             $tabItemTransfer->setTitle(ucfirst($glossaryPlaceholderTransfer->getPlaceholder()));
             $tabsViewTransfer->addTab($tabItemTransfer);
@@ -69,6 +69,16 @@ class CmsBlockGlossaryTabs extends AbstractTabs
             ->setIsNavigable(true);
 
         return $this;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function escapeHtmlDomId($value)
+    {
+        return str_replace('.', '-', $value);
     }
 
 }

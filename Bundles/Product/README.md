@@ -1,4 +1,4 @@
-# Product Bundle
+# Product Module
 
 ## Installation
 

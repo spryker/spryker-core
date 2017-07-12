@@ -1,4 +1,4 @@
-# PriceCartConnector Bundle
+# PriceCartConnector Module
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# Glossary Bundle
+# Glossary Module
 
 ## Installation
 

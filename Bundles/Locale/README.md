@@ -1,4 +1,4 @@
-# Locale Bundle
+# Locale Module
 
 ## Installation
 
