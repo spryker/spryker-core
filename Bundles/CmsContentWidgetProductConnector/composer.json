@@ -15,7 +15,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/twig" : "Required by Yves Twig function."
+    "spryker/twig": "Required by Yves Twig function."
   },
   "autoload": {
     "psr-0": {

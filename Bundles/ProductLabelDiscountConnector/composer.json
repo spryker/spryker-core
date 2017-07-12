@@ -11,8 +11,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
@@ -24,6 +22,14 @@
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
@@ -31,11 +37,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ]
+  }
 }
