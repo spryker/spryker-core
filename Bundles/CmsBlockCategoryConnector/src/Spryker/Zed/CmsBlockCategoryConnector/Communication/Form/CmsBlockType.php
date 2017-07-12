@@ -99,7 +99,7 @@ class CmsBlockType extends AbstractType
      */
     protected function addWarningLabel(FormBuilderInterface $builder, array $wrongCategoryList, array $categoryList)
     {
-        $warningCategoryList = '';
+        $warningCategoryList = [];
         foreach ($wrongCategoryList as $idCmsBlockCategoryPosition => $list) {
             foreach ($list as $idCategory) {
                 if ($categoryList[$idCategory]) {
