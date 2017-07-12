@@ -64,7 +64,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         $localizedAttributes = $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productAbstractTransfer->getLocalizedAttributes());
         $productAbstractTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
 
-        $this->productFacade->saveProduct($productAbstractTransfer, []);
+        $this->productFacade->saveProductAbstract($productAbstractTransfer);
     }
 
     /**
@@ -76,7 +76,6 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     public function saveConcreteAttributes($idProduct, array $attributes)
     {
         $productConcreteTransfer = $this->reader->getProductTransfer($idProduct);
-        $productAbstractTransfer = $this->reader->getProductAbstractTransfer($productConcreteTransfer->getFkProductAbstract());
         $attributesToSave = $this->getAttributesDataToSave($attributes);
         $nonLocalizedAttributes = $this->getNonLocalizedAttributes($attributesToSave);
 
@@ -87,7 +86,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         $localizedAttributes = $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productConcreteTransfer->getLocalizedAttributes());
         $productConcreteTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
 
-        $this->productFacade->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
+        $this->productFacade->saveProductConcrete($productConcreteTransfer);
     }
 
     /**

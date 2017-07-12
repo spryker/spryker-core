@@ -111,6 +111,30 @@ class ProductAttributeToProductBridge implements ProductAttributeToProductInterf
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
+     *
+     * @return int
+     */
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->productFacade->saveProductAbstract($productAbstractTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
+     *
+     * @return int
+     */
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->productFacade->saveProductConcrete($productConcreteTransfer);
+    }
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
