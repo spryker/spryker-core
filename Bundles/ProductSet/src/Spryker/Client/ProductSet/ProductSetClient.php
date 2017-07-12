@@ -53,4 +53,20 @@ class ProductSetClient extends AbstractClient implements ProductSetClientInterfa
             ->mapDataToTransfer($productSetStorageData);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductSet
+     *
+     * @return \Generated\Shared\Transfer\ProductSetStorageTransfer|null
+     */
+    public function findProductSetByIdProductSet($idProductSet)
+    {
+        return $this->getFactory()
+            ->createProductSetStorage()
+            ->findProductSetByIdProductSet($idProductSet);
+    }
+
 }

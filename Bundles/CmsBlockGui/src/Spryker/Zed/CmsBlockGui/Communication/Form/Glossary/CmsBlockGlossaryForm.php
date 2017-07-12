@@ -8,11 +8,14 @@
 namespace Spryker\Zed\CmsBlockGui\Communication\Form\Glossary;
 
 use Spryker\Zed\CmsBlockGui\Communication\Form\ArrayObjectTransformerTrait;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
+ */
 class CmsBlockGlossaryForm extends AbstractType
 {
 
@@ -20,19 +23,6 @@ class CmsBlockGlossaryForm extends AbstractType
     const OPTION_DATA_CLASS_PLACEHOLDERS = 'data_class_glossary_placeholders';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface
-     */
-    protected $cmsBlockGlossaryPlaceholderForm;
-
-    /**
-     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm $cmsBlockGlossaryPlaceholderForm
-     */
-    public function __construct(CmsBlockGlossaryPlaceholderForm $cmsBlockGlossaryPlaceholderForm)
-    {
-        $this->cmsBlockGlossaryPlaceholderForm = $cmsBlockGlossaryPlaceholderForm;
-    }
 
     /**
      * @return string
@@ -72,7 +62,7 @@ class CmsBlockGlossaryForm extends AbstractType
     protected function addCmsBlockGlossaryPlaceholderFormCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_GLOSSARY_PLACEHOLDERS, CollectionType::class, [
-            'type' => $this->cmsBlockGlossaryPlaceholderForm,
+            'type' => $this->getFactory()->createCmsBlockGlossaryPlaceholderFormType(),
             'allow_add' => true,
             'entry_options' => [
                 'data_class' => $options[static::OPTION_DATA_CLASS_PLACEHOLDERS],

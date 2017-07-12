@@ -1,0 +1,23 @@
+{% if cmsContentWidgetTemplateList is defined and cmsContentWidgetTemplateList.cmsContentWidgetConfigurationList|length > 0 %}
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>{{ 'Cms content widgets' }}</strong>
+            </div>
+            <div class="panel-body">
+                {% for cmsWidgetConfiguration in cmsContentWidgetTemplateList.cmsContentWidgetConfigurationList %}
+                    <strong>{{ cmsWidgetConfiguration.functionName }}</strong> <br />
+                    {{ 'Usage information:' | trans }}
+                    {{ cmsWidgetConfiguration.usageInformation }} <br />
+                    {{ 'Available templates:' | trans }} <br />
+                    <ul>
+                        {% for templateName, templatePath in cmsWidgetConfiguration.templates %}
+                            <li> <strong>{{ templateName }}</strong> ({{ templatePath }}) </li>
+                        {% endfor %}
+                    </ul>
+                    <hr />
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -8,8 +8,7 @@
 namespace Spryker\Zed\CmsGui\Communication\Form\Glossary;
 
 use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
-use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -24,6 +23,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ */
 class CmsGlossaryAttributesFormType extends AbstractType
 {
 
@@ -40,28 +42,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
     const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface
-     */
-    protected $cmsFacade;
-
-    /**
-     * @var \Symfony\Component\Validator\Constraint
-     */
-    protected $uniqueGlossaryForSearchTypeConstraint;
-
-    /**
-     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
-     * @param \Symfony\Component\Validator\Constraint $uniqueGlossaryForSearchTypeConstraint
-     */
-    public function __construct(
-        CmsGuiToCmsInterface $cmsFacade,
-        Constraint $uniqueGlossaryForSearchTypeConstraint
-    ) {
-        $this->cmsFacade = $cmsFacade;
-        $this->uniqueGlossaryForSearchTypeConstraint = $uniqueGlossaryForSearchTypeConstraint;
-    }
 
     /**
      * @return string
@@ -116,7 +96,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
     {
         $builder->add(static::FIELD_TRANSLATION_KEY, TextType::class, [
             'constraints' => [
-                $this->uniqueGlossaryForSearchTypeConstraint,
+                $this->getFactory()->createUniqueGlossaryForSearchTypeConstraint(),
             ],
         ]);
 
@@ -198,7 +178,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
     protected function addTranslationsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
-            'type' => new CmsGlossaryTranslationFormType(),
+            'type' => $this->getFactory()->createCmsGlossaryTranslationFormType(),
             'allow_add' => true,
         ]);
 
@@ -223,7 +203,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
             'methods' => [
                 function ($placeholder, ExecutionContextInterface $context) {
                     $formData = $context->getRoot()->getViewData();
-                    if ($this->cmsFacade->hasPagePlaceholderMapping($formData[static::FIELD_FK_PAGE], $placeholder)) {
+                    if ($this->getFactory()->getCmsFacade()->hasPagePlaceholderMapping($formData[static::FIELD_FK_PAGE], $placeholder)) {
                         $context->addViolation('Placeholder has already mapped.');
                     }
                 },

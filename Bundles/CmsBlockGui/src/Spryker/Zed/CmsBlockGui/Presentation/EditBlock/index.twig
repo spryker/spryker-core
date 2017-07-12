@@ -14,11 +14,17 @@
 
 {% block content %}
 
-    {{ form_start(cmsBlockForm) }}
-        {{ form_widget(cmsBlockForm) }}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS Block' | trans } %}
+        {% block widget_content %}
 
-        <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
-    {{ form_end(cmsBlockForm) }}
+            {{ form_start(cmsBlockForm) }}
+            {{ form_widget(cmsBlockForm) }}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(cmsBlockForm) }}
+
+        {% endblock %}
+    {% endembed %}
 
 {% endblock %}
 

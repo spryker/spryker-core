@@ -14,6 +14,7 @@ use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Client\CmsBlock\CmsBlockClientInterface getClient()
+ * @method \Spryker\Yves\CmsBlock\CmsBlockFactory getFactory()
  */
 class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPluginInterface
 {
@@ -45,9 +46,28 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
                     $translation = '';
                 }
 
-                return $translation;
+                return $this->renderCmsTwigContent($translation, $identifier, $context);
+
             }, ['needs_context' => true]),
         ];
+    }
+
+    /**
+     * @param string $translation
+     * @param string $identifier
+     * @param array $context
+     *
+     * @return string
+     */
+    protected function renderCmsTwigContent($translation, $identifier, array $context)
+    {
+        $twigRenderedPlugin = $this->getFactory()->getCmsBlockTwigContentRendererPlugin();
+        if (!$twigRenderedPlugin) {
+            return $translation;
+        }
+
+        $renderedTwigContent = $twigRenderedPlugin->render([$identifier => $translation], $context);
+        return $renderedTwigContent[$identifier];
     }
 
     /**

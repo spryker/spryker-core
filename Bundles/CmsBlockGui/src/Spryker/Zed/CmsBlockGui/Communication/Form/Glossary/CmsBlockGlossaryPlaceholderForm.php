@@ -8,8 +8,7 @@
 namespace Spryker\Zed\CmsBlockGui\Communication\Form\Glossary;
 
 use Spryker\Zed\CmsBlockGui\Communication\Form\ArrayObjectTransformerTrait;
-use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,6 +17,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
+ */
 class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {
 
@@ -31,19 +33,6 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @var \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface
-     */
-    protected $cmsBlockFacade;
-
-    /**
-     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
-     */
-    public function __construct(CmsBlockGuiToCmsBlockInterface $cmsBlockFacade)
-    {
-        $this->cmsBlockFacade = $cmsBlockFacade;
-    }
 
     /**
      * @return string
@@ -148,7 +137,7 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     protected function addTranslationsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
-            'type' => new CmsBlockGlossaryPlaceholderTranslationForm(),
+            'type' => $this->getFactory()->createCmsBlockGlossaryPlaceholderTranslationFormType(),
             'allow_add' => true,
         ]);
 

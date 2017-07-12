@@ -9,11 +9,15 @@ namespace Spryker\Client\ProductSet;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductSet\Dependency\Client\ProductSetToLocaleBridge;
+use Spryker\Client\ProductSet\Dependency\Client\ProductSetToStorageBridge;
 
 class ProductSetDependencyProvider extends AbstractDependencyProvider
 {
 
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     const PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS = 'PLUGIN_PRODUCT_SET_SEARCH_RESULT_FORMATTERS';
     const PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS = 'PLUGIN_PRODUCT_SET_SEARCH_QUERY_EXPANDERS';
@@ -26,6 +30,8 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $this->provideSearchClient($container);
+        $this->provideStorageClient($container);
+        $this->provideLocaleClient($container);
 
         $this->provideProductSetListResultFormatterPlugins($container);
         $this->provideProductSetListQueryExpanderPlugins($container);
@@ -83,6 +89,30 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
     protected function getProductSetListQueryExpanderPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideStorageClient(Container $container)
+    {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
+            return new ProductSetToStorageBridge($container->getLocator()->storage()->client());
+        };
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideLocaleClient(Container $container)
+    {
+        $container[static::CLIENT_LOCALE] = function (Container $container) {
+            return new ProductSetToLocaleBridge($container->getLocator()->locale()->client());
+        };
     }
 
 }

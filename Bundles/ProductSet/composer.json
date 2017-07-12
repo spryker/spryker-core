@@ -9,6 +9,7 @@
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/search": "^6.0.0",
+    "spryker/storage": "^3.0.0",
     "spryker/touch": "^3.0.0",
     "spryker/url": "^3.0.0"
   },
