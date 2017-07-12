@@ -17,7 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/log": "If you want to use the Log feature in console commands, install this package and add ConsoleLogPlugin to the list of EventSubscriber in your ConsoleDependencyProvider"
+    "spryker/log": "If you want to use the Log feature in console commands, install this package and add ConsoleLogPlugin to the list of EventSubscriber in your ConsoleDependencyProvider."
   },
   "autoload": {
     "psr-0": {

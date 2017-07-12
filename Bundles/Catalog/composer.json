@@ -11,8 +11,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/elastica": "If you want to use Elastica plugins you need to install spryker/elastica.",
-    "spryker/config": "If you want to use Elastica plugins you need to install spryker/config."
+    "spryker/elastica": "If you want to use Elastica plugins.",
+    "spryker/config": "If you want to use Elastica plugins."
   },
   "autoload": {
     "psr-0": {

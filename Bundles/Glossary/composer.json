@@ -21,8 +21,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/installer": "If you want to use Installer plugins you need to install spryker/installer.",
-    "spryker/twig": "If you want to use Twig with Gui you need to install spryker/twig."
+    "spryker/installer": "If you want to use Installer plugins.",
+    "spryker/twig": "If you want to use Twig with Gui."
   },
   "autoload": {
     "psr-0": {

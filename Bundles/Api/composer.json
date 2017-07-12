@@ -17,7 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/log": "For logging request and response"
+    "spryker/log": "For logging request and response."
   },
   "autoload": {
     "psr-0": {

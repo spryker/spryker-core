@@ -11,7 +11,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider you need to install spryker/silex."
+    "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
     "psr-0": {

@@ -29,7 +29,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/sales": "If you want to use Oms command plugins (they use spryker/sales) you need to install spryker/sales."
+    "spryker/sales": "If you want to use Oms command plugins."
   },
   "autoload": {
     "psr-0": {
