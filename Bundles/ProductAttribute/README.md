@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/product-attribute-gui
+composer require spryker/product-attribute
 ```
 
 ## Documentation
