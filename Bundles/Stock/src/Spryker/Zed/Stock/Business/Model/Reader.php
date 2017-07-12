@@ -286,7 +286,8 @@ class Reader implements ReaderInterface
             $productConcreteTransfer->addStock($stockProductTransfer);
         }
 
-        $this->addEmptyStockType($productConcreteTransfer);
+        //TODO https://spryker.atlassian.net/browse/CORE-1550 the fix in develop
+        //$this->addEmptyStockType($productConcreteTransfer);
 
         return $productConcreteTransfer;
     }
