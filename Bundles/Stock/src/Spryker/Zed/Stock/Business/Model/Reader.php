@@ -286,47 +286,7 @@ class Reader implements ReaderInterface
             $productConcreteTransfer->addStock($stockProductTransfer);
         }
 
-        $this->addEmptyStockType($productConcreteTransfer);
-
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function addEmptyStockType(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $allStockType = $this->getStockTypes();
-
-        foreach ($allStockType as $type) {
-            if ($this->stockTypeExist($productConcreteTransfer, $type)) {
-                continue;
-            }
-            $stockProductTransfer = new StockProductTransfer();
-            $stockProductTransfer->setStockType($type);
-            $stockProductTransfer->setQuantity(0);
-
-            $productConcreteTransfer->addStock($stockProductTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param string $type
-     *
-     * @return bool
-     */
-    protected function stockTypeExist(ProductConcreteTransfer $productConcreteTransfer, $type)
-    {
-        foreach ($productConcreteTransfer->getStocks() as $stockProduct) {
-            if ($stockProduct->getStockType() === $type) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
 }
