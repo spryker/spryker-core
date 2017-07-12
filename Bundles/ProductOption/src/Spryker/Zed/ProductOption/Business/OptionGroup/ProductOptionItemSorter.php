@@ -51,7 +51,11 @@ class ProductOptionItemSorter implements ProductOptionItemSorterInterface
     protected function sortItemsBySku(array $items)
     {
         usort($items, function (ItemTransfer $item1, ItemTransfer $item2) {
-            return $item1->getSku() > $item2->getSku();
+            if ($item1->getSku() !== $item2->getSku()) {
+                return $item1->getSku() > $item2->getSku();
+            }
+
+            return $item1->getIdSalesOrderItem() > $item2->getIdSalesOrderItem();
         });
 
         return $items;
