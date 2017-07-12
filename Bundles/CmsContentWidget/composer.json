@@ -20,7 +20,7 @@
   "suggest": {
     "spryker/cms-collector": "If you want to expand cms pages collector with content widget mapping, provides plugin.",
     "spryker/cms-block-collector": "If you want to expand cms block collector with content widget mapping, provides plugin.",
-    "spryker/silex": "Needed to get twig environment for content widget service provider."
+    "spryker/silex": "Needed to get Twig environment for content widget service provider."
   },
   "autoload": {
     "psr-0": {
