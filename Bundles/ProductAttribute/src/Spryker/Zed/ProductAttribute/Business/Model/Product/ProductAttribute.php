@@ -48,17 +48,6 @@ class ProductAttribute implements ProductAttributeInterface
      *
      * @return array
      */
-    public function getProductAbstractAttributes($idProductAbstract)
-    {
-        $values = $this->getProductAbstractAttributeValues($idProductAbstract);
-        return $this->reader->getAttributesByValues($values);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return array
-     */
     public function getMetaAttributesForProductAbstract($idProductAbstract)
     {
         $values = $this->getProductAbstractAttributeValues($idProductAbstract);
@@ -78,18 +67,6 @@ class ProductAttribute implements ProductAttributeInterface
             (array)$productAbstractTransfer->getAttributes(),
             (array)$productAbstractTransfer->getLocalizedAttributes()
         );
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @return array
-     */
-    public function getProductAttributes($idProduct)
-    {
-        $values = $this->getProductAttributeValues($idProduct);
-
-        return $this->reader->getAttributesByValues($values);
     }
 
     /**

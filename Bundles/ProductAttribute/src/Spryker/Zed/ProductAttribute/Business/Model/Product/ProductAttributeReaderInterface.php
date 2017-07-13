@@ -15,13 +15,6 @@ interface ProductAttributeReaderInterface
      *
      * @return array
      */
-    public function getAttributesByValues(array $values);
-
-    /**
-     * @param array $values
-     *
-     * @return array
-     */
     public function getMetaAttributesByValues(array $values);
 
     /**

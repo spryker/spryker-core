@@ -450,9 +450,7 @@ class ProductAttributeFacadeTest extends Test
             46 => [
                 'undefined__key' => 'xxx',
             ],
-            66 => [
-                'foo' => 'Foo Value US',
-            ],
+            66 => [],
         ], $productAttributesValues);
     }
 
@@ -508,9 +506,7 @@ class ProductAttributeFacadeTest extends Test
             46 => [
                 'undefined__key' => 'xxx',
             ],
-            66 => [
-                'foo' => 'Foo Value US',
-            ],
+            66 => [],
         ], $productAttributesValues);
     }
 

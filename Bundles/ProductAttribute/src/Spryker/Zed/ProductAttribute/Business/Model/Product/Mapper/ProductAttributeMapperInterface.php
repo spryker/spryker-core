@@ -70,11 +70,4 @@ interface ProductAttributeMapperInterface
      */
     public function extractValuesFromAttributes(array $productAttributes);
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    public function hydrateAttributeItem(array $data);
-
 }

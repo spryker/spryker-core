@@ -127,32 +127,4 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
         return array_unique($values);
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    public function hydrateAttributeItem(array $data)
-    {
-        $keys = [
-            'id_product_attribute_key',
-            'key',
-            'is_super',
-            'id_product_attribute_key',
-            'id_product_management_attribute',
-            'id_product_management_attribute_value',
-            'id_product_management_attribute_value_translation',
-            'attribute_key',
-            'attribute_value',
-            'fk_locale',
-            'translation',
-            'uppercase_key',
-            'uppercase_value',
-        ];
-
-        $result = array_combine($keys, array_values($data));
-
-        return $result;
-    }
-
 }

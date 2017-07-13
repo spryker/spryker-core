@@ -15,13 +15,6 @@ interface ProductAttributeInterface
      *
      * @return array
      */
-    public function getProductAbstractAttributes($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return array
-     */
     public function getMetaAttributesForProductAbstract($idProductAbstract);
 
     /**
@@ -30,13 +23,6 @@ interface ProductAttributeInterface
      * @return array
      */
     public function getProductAbstractAttributeValues($idProductAbstract);
-
-    /**
-     * @param int $idProduct
-     *
-     * @return array
-     */
-    public function getProductAttributes($idProduct);
 
     /**
      * @param int $idProduct

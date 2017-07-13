@@ -9,9 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeTableMap;
-use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTableMap;
-use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductAbstractNotFoundException;
 use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductConcreteNotFoundException;
@@ -51,18 +48,6 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
         $this->productAttributeQueryContainer = $productAttributeQueryContainer;
         $this->attributeMapper = $attributeMapper;
         $this->productFacade = $productFacade;
-    }
-
-    /**
-     * @param array $values
-     *
-     * @return array
-     */
-    public function getAttributesByValues(array $values)
-    {
-        $query = $this->queryAttributeValues($values);
-
-        return $this->loadPdoStatement($query);
     }
 
     /**
@@ -131,52 +116,6 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
         $query = $this->querySuggestKeys($searchText, $limit);
 
         return $this->attributeMapper->maSuggestKeys($query->find());
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\Criteria $query
-     *
-     * @return array
-     */
-    protected function loadPdoStatement(Criteria $query)
-    {
-        $pdoStatement = $query->doSelect();
-
-        $results = [];
-        while ($data = $pdoStatement->fetch()) {
-            $item = $this->attributeMapper->hydrateAttributeItem($data);
-            $results[] = $item;
-        }
-
-        return $results;
-    }
-
-    /**
-     * @param array $productAttributes
-     * @param bool|null $isSuper
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function queryAttributeValues(array $productAttributes = [], $isSuper = null)
-    {
-        $keys = $this->attributeMapper->extractKeysFromAttributes($productAttributes);
-
-        $query = $this->productAttributeQueryContainer
-            ->queryAttributeValues($keys, $isSuper)
-            ->clearSelectColumns()
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_ID_PRODUCT_ATTRIBUTE_KEY, 'id_product_attribute_key')
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'id_product_management_attribute')
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE_TRANSLATION, 'id_product_management_attribute_value_translation')
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, 'attribute_key')
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'attribute_value')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE, 'fk_locale')
-            ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation')
-            ->orderBy(SpyProductAttributeKeyTableMap::COL_KEY)
-            ->orderBy(SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE)
-            ->orderBy(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION);
-
-        return $query;
     }
 
     /**
