@@ -593,4 +593,18 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->syncFromConfig();
     }
 
+    /**
+     * @api
+     *
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
+     */
+    public function findCategoryTemplateByName($name)
+    {
+        return $this->getFactory()
+            ->createCategoryTemplateReader()
+            ->findCategoryTemplateByName($name);
+    }
+
 }

@@ -127,6 +127,22 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      *
      * @api
      *
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCategoryPositionTransfer|null
+     */
+    public function findCmsBlockCategoryPositionByName($name)
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryPositionReader()
+            ->findCmsBlockCategoryPositionByName($name);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

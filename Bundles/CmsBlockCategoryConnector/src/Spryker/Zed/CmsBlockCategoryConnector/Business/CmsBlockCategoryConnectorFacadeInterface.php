@@ -104,6 +104,20 @@ interface CmsBlockCategoryConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Finds a position by name
+     * - Hydrates transfer object
+     * - Returns NULL if position does not exist
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCategoryPositionTransfer|null
+     */
+    public function findCmsBlockCategoryPositionByName($name);
+
+    /**
+     * Specification:
      * - Hydrate CMS Block to Category relation with block names
      * - Collect relation to Storage
      *

@@ -436,4 +436,18 @@ interface CategoryFacadeInterface
      */
     public function syncCategoryTemplate();
 
+    /**
+     * Specification:
+     * - Finds a template by the specified name
+     * - Hydrates a CategoryTemplateTransfer
+     * - Returns NULL if a template does not exist
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
+     */
+    public function findCategoryTemplateByName($name);
+
 }

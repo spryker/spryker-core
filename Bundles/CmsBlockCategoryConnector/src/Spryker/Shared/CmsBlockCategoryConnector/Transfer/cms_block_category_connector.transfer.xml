@@ -13,4 +13,9 @@
         <property name="idCmsBlocks" type="[]" />
     </transfer>
 
+    <transfer name="CmsBlockCategoryPosition">
+        <property name="idCmsBlockCategoryPosition" type="int" />
+        <property name="name" type="string" />
+    </transfer>
+
 </transfers>
