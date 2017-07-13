@@ -328,7 +328,7 @@ class ProductAttributeFacadeTest extends Test
             $productAbstractTransfer->getIdProductAbstract()
         );
 
-        $this->assertSame(ProductAttributeBusinessTester::PRODUCT_ATTRIBUTE_VALUES, $productAttributesValues);
+        $this->assertSame($this->tester->getSampleLocalizedProductAttributeValues(), $productAttributesValues);
     }
 
     /**
@@ -343,7 +343,7 @@ class ProductAttributeFacadeTest extends Test
             $productTransfer->getIdProductConcrete()
         );
 
-        $this->assertSame(ProductAttributeBusinessTester::PRODUCT_ATTRIBUTE_VALUES, $productValues);
+        $this->assertSame($this->tester->getSampleLocalizedProductAttributeValues(), $productValues);
     }
 
     /**
@@ -429,7 +429,7 @@ class ProductAttributeFacadeTest extends Test
             [
                 'key' => 'undefined__key',
                 'id' => null,
-                'locale_code' => 46,
+                'locale_code' => $this->tester->getLocaleOne()->getIdLocale(),
                 'value' => 'xxx',
             ],
         ];
@@ -443,15 +443,19 @@ class ProductAttributeFacadeTest extends Test
             $productAbstractTransfer->getIdProductAbstract()
         );
 
-        $this->assertSame([
+        $expectedResult = [
             '_' => [
                 'foo' => 'New Foo Value',
             ],
-            46 => [
+            $this->tester->getLocaleOne()->getIdLocale() => [
                 'undefined__key' => 'xxx',
             ],
-            66 => [],
-        ], $productAttributesValues);
+            $this->tester->getLocaleTwo()->getIdLocale() => [],
+        ];
+
+        ksort($expectedResult);
+
+        $this->assertSame($expectedResult, $productAttributesValues);
     }
 
     /**
@@ -473,19 +477,19 @@ class ProductAttributeFacadeTest extends Test
             [
                 'key' => $fooMetaAttributeTransfer->getKey(),
                 'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
-                'locale_code' => 46,
+                'locale_code' => $this->tester->getLocaleOne()->getIdLocale(),
                 'value' => '',
             ],
             [
                 'key' => $fooMetaAttributeTransfer->getKey(),
                 'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
-                'locale_code' => 66,
+                'locale_code' => $this->tester->getLocaleTwo()->getIdLocale(),
                 'value' => '',
             ],
             [
                 'key' => 'undefined__key',
                 'id' => null,
-                'locale_code' => 46,
+                'locale_code' => $this->tester->getLocaleOne()->getIdLocale(),
                 'value' => 'xxx',
             ],
         ];
@@ -499,15 +503,19 @@ class ProductAttributeFacadeTest extends Test
             $productTransfer->getIdProductConcrete()
         );
 
-        $this->assertSame([
+        $expectedResult = [
             '_' => [
                 'foo' => 'New Foo Value',
             ],
-            46 => [
+            $this->tester->getLocaleOne()->getIdLocale() => [
                 'undefined__key' => 'xxx',
             ],
-            66 => [],
-        ], $productAttributesValues);
+            $this->tester->getLocaleTwo()->getIdLocale() => [],
+        ];
+
+        ksort($expectedResult);
+
+        $this->assertSame($expectedResult, $productAttributesValues);
     }
 
     /**
@@ -541,7 +549,7 @@ class ProductAttributeFacadeTest extends Test
      */
     public function testExtractKeysFromAttributes()
     {
-        $keys = $this->productAttributeFacade->extractKeysFromAttributes(ProductAttributeBusinessTester::PRODUCT_ATTRIBUTE_VALUES);
+        $keys = $this->productAttributeFacade->extractKeysFromAttributes($this->tester->getSampleLocalizedProductAttributeValues());
 
         $this->assertSame(['foo', 'bar'], $keys);
     }
@@ -551,14 +559,19 @@ class ProductAttributeFacadeTest extends Test
      */
     public function testExtractValuesFromAttributes()
     {
-        $values = $this->productAttributeFacade->extractValuesFromAttributes(ProductAttributeBusinessTester::PRODUCT_ATTRIBUTE_VALUES);
+        $values = $this->productAttributeFacade->extractValuesFromAttributes($this->tester->getSampleLocalizedProductAttributeValues());
 
-        $this->assertSame([
+        $expectedValues = [
             'Foo Value',
             '20 units',
             'Foo Value DE',
             'Foo Value US',
-        ], $values);
+        ];
+
+        sort($expectedValues);
+        sort($values);
+
+        $this->assertSame($expectedValues, $values);
     }
 
     /**

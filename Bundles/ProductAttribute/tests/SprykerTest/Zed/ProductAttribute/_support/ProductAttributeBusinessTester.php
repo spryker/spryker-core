@@ -14,6 +14,7 @@ use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
+use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 /**
  * Inherited Methods
@@ -46,26 +47,15 @@ class ProductAttributeBusinessTester extends Actor
         'bar' => '20 units',
     ];
 
-    const DATA_PRODUCT_LOCALIZED_ATTRIBUTES_VALUES = [
-        46 => [
-            'foo' => 'Foo Value DE',
-        ],
-        66 => [
-            'foo' => 'Foo Value US',
-        ],
-    ];
-    const PRODUCT_ATTRIBUTE_VALUES = [
-        '_' => [
-            'foo' => 'Foo Value',
-            'bar' => '20 units',
-        ],
-        46 => [
-            'foo' => 'Foo Value DE',
-        ],
-        66 => [
-            'foo' => 'Foo Value US',
-        ],
-    ];
+    /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected $localeTransferOne;
+
+    /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected $localeTransferTwo;
 
     /**
      * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface
@@ -76,6 +66,56 @@ class ProductAttributeBusinessTester extends Actor
      * @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface
      */
     protected $productAttributeFacade;
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleOne()
+    {
+        if ($this->localeTransferOne === null) {
+            $this->localeTransferOne = $this->haveLocale();
+        }
+
+        return $this->localeTransferOne;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleTwo()
+    {
+        if ($this->localeTransferTwo === null) {
+            $this->localeTransferTwo = $this->haveLocale();
+        }
+
+        return $this->localeTransferTwo;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSampleLocalizedProductAttributeValues()
+    {
+        $localeTransfer = $this->getLocaleOne();
+        $localeTransfer2 = $this->getLocaleTwo();
+
+        $result = [
+            '_' => [
+                'foo' => 'Foo Value',
+                'bar' => '20 units',
+            ],
+            $localeTransfer->getIdLocale() => [
+                'foo' => 'Foo Value DE',
+            ],
+            $localeTransfer2->getIdLocale() => [
+                'foo' => 'Foo Value US',
+            ],
+        ];
+
+        ksort($result);
+
+        return $result;
+    }
 
     /**
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
@@ -151,7 +191,10 @@ class ProductAttributeBusinessTester extends Actor
     public function generateLocalizedAttributes()
     {
         $results = [];
-        foreach (static::DATA_PRODUCT_LOCALIZED_ATTRIBUTES_VALUES as $idLocale => $localizedData) {
+        $data = $this->getSampleLocalizedProductAttributeValues();
+        unset($data[ProductAttributeConfig::DEFAULT_LOCALE]);
+
+        foreach ($data as $idLocale => $localizedData) {
             $localeTransfer = new LocaleTransfer();
             $localeTransfer->setIdLocale($idLocale);
 
