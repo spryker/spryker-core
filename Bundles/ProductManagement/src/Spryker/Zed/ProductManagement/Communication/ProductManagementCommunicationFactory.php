@@ -420,6 +420,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductFormTransferGenerator()
     {
         return new ProductFormTransferMapper(
+            $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->getUtilTextService(),
@@ -509,7 +510,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
     }
-
 
     /**
      * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
