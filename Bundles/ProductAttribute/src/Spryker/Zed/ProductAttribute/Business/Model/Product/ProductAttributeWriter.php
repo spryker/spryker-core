@@ -101,7 +101,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
 
         foreach ($localizedAttributeTransferCollection as $localizedAttributesTransfer) {
             $idLocale = $localizedAttributesTransfer->getLocale()->getIdLocale();
-            $localizedDataToSave = $localizedAttributesTransfer->getAttributes();
+            $localizedDataToSave = [];
 
             if (array_key_exists($idLocale, $attributesToSave)) {
                 $localizedDataToSave = $attributesToSave[$idLocale];
