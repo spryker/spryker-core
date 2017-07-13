@@ -10,7 +10,6 @@ namespace SprykerTest\Client\Storage\Cache;
 use Codeception\TestCase\Test;
 use Predis\Client as PredisClient;
 use Spryker\Client\Storage\Cache\StorageCacheStrategyHelper;
-use Spryker\Client\Storage\Cache\StorageCacheStrategyHelperInterface;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Client\Storage\StorageClient;
 use Spryker\Client\Storage\StorageConfig;
@@ -46,7 +45,7 @@ abstract class AbstractStorageCacheStrategyTest extends Test
     protected $cacheDataProvider;
 
     /**
-     * @var StorageCacheStrategyHelperInterface
+     * @var \Spryker\Client\Storage\Cache\StorageCacheStrategyHelperInterface
      */
     protected $storageCacheStrategyHelper;
 

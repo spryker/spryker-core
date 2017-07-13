@@ -98,7 +98,7 @@ class StorageCacheStrategyFactory
     }
 
     /**
-     * @return StorageCacheStrategyHelper
+     * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyHelper
      */
     protected function createStorageCacheStrategyHelper()
     {
