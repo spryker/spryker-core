@@ -24,36 +24,4 @@ class ProductAttributeGuiConfig extends AbstractBundleConfig
     const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
     const LOCALE_CODE = 'locale_code';
 
-    /**
-     * @return string
-     */
-    public function getCachePath()
-    {
-        return APPLICATION_ROOT_DIR . '/data/' . static::STORE_PATTERN_MARKER . '/cache';
-    }
-
-    /**
-     * @return string
-     */
-    public function getAutoloaderCachePath()
-    {
-        return APPLICATION_ROOT_DIR . '/data/' . static::STORE_PATTERN_MARKER . '/autoloader';
-    }
-
-    /**
-     * @return string
-     */
-    public function getStorePatternMarker()
-    {
-        return static::STORE_PATTERN_MARKER;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllowedStores()
-    {
-        return Store::getInstance()->getAllowedStores();
-    }
-
 }
