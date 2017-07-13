@@ -94,7 +94,7 @@ function AttributeManager() {
             dataToAdd.push(item);
         }
 
-        dataToAdd.push('<div style="text-align: center;"><a data-key="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a></div>');
+        dataToAdd.push('<div style="text-align: left;"><a data-key="' + key + '" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a></div>');
 
         return dataToAdd;
     };
