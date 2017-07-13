@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAttributeGui;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductAttributeGuiConfig extends AbstractBundleConfig
