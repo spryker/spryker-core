@@ -445,7 +445,7 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
-        if (preg_match('/(string|int|float|bool|boolean)/', $property['type'])) {
+        if (preg_match('/^(string|int|float|bool|boolean)$/', $property['type'])) {
             return false;
         }
 
