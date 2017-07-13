@@ -19,7 +19,6 @@ class CategoryType extends AbstractType
 
     const FIELD_CMS_BLOCKS = 'id_cms_blocks';
 
-    const OPTION_IS_TEMPLATE_SUPPORTED = 'option-is-template-supported';
     const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
     const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
     const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
@@ -68,7 +67,6 @@ class CategoryType extends AbstractType
         $resolver
             ->setRequired(static::OPTION_CMS_BLOCK_LIST)
             ->setRequired(static::OPTION_CMS_BLOCK_POSITION_LIST)
-            ->setRequired(static::OPTION_IS_TEMPLATE_SUPPORTED)
             ->setRequired(static::OPTION_WRONG_CMS_BLOCK_LIST)
             ->setRequired(static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST);
     }

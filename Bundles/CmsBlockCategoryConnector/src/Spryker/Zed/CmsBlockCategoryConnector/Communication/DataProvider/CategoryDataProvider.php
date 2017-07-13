@@ -33,11 +33,6 @@ class CategoryDataProvider
     protected $categoryQueryContainer;
 
     /**
-     * @var bool
-     */
-    protected $isTemplateSupported = true;
-
-    /**
      * @var array
      */
     protected $wrongCmsBlocks = [];
@@ -71,7 +66,6 @@ class CategoryDataProvider
             'data_class' => CategoryTransfer::class,
             CategoryType::OPTION_CMS_BLOCK_LIST => $this->getCmsBlockList(),
             CategoryType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList(),
-            CategoryType::OPTION_IS_TEMPLATE_SUPPORTED => $this->isTemplateSupported(),
             CategoryType::OPTION_WRONG_CMS_BLOCK_LIST => $this->getWrongCmsBlockList(),
             CategoryType::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST => $this->getAssignedIdCmsBlocksForTemplates()
         ];
@@ -84,7 +78,6 @@ class CategoryDataProvider
      */
     public function getData(CategoryTransfer $categoryTransfer)
     {
-        $this->assertTemplate($categoryTransfer);
         $this->populateAssignedCmsBlocksForTemplates($categoryTransfer);
 
         $idCmsBlocks = [];
@@ -179,26 +172,6 @@ class CategoryDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
-    protected function assertTemplate(CategoryTransfer $categoryTransfer)
-    {
-        $spyCategoryTemplate = $this->categoryQueryContainer
-            ->queryCategoryTemplateById($categoryTransfer->getFkCategoryTemplate())
-            ->findOne();
-
-        if (!$spyCategoryTemplate) {
-            return;
-        }
-
-        if (!in_array($spyCategoryTemplate->getName(), CategoryType::SUPPORTED_CATEGORY_TEMPLATE_LIST)) {
-            $this->isTemplateSupported = false;
-        }
-    }
-
-    /**
      * @param SpyCmsBlock $spyCmsBlock
      *
      * @return void
@@ -223,14 +196,6 @@ class CategoryDataProvider
         if ($invalid) {
             $this->wrongCmsBlocks[$spyCmsBlock->getIdCmsBlock()] = $spyCmsBlock->getName();
         }
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isTemplateSupported()
-    {
-        return $this->isTemplateSupported;
     }
 
     /**
