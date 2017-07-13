@@ -29,7 +29,7 @@ class ProductAttributeConfig extends AbstractBundleConfig
      */
     public function getCachePath()
     {
-        return APPLICATION_ROOT_DIR . '/data/' . static::STORE_PATTERN_MARKER . '/cache';
+        return APPLICATION_DATA . '/' . static::STORE_PATTERN_MARKER . '/cache';
     }
 
     /**
@@ -37,7 +37,7 @@ class ProductAttributeConfig extends AbstractBundleConfig
      */
     public function getAutoloaderCachePath()
     {
-        return APPLICATION_ROOT_DIR . '/data/' . static::STORE_PATTERN_MARKER . '/autoloader';
+        return APPLICATION_DATA . '/' . static::STORE_PATTERN_MARKER . '/autoloader';
     }
 
     /**

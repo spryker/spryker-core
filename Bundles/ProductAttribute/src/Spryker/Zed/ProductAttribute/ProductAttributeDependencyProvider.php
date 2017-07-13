@@ -31,10 +31,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addUtilEncodingService($container);
-
-        $container = $this->getLocaleFacade($container);
-        $container = $this->getGlossaryFacade($container);
-        $container = $this->getProductFacade($container);
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addGlossaryFacade($container);
+        $container = $this->addProductFacade($container);
 
         return $container;
     }
@@ -58,7 +57,7 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getLocaleFacade(Container $container)
+    protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductAttributeToLocaleBridge($container->getLocator()->locale()->facade());
@@ -72,7 +71,7 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getGlossaryFacade(Container $container)
+    protected function addGlossaryFacade(Container $container)
     {
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductAttributeToGlossaryBridge($container->getLocator()->glossary()->facade());
@@ -86,7 +85,7 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getProductFacade(Container $container)
+    protected function addProductFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductAttributeToProductBridge($container->getLocator()->product()->facade());
