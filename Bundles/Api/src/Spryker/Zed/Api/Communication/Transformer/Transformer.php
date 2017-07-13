@@ -62,7 +62,7 @@ class Transformer implements TransformerInterface
      */
     protected function addResponseContent(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response)
     {
-        if ($apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getType() === ApiOptionsTransfer::class) {
+        if ($this->isContentless($apiResponseTransfer)) {
             return $response;
         }
 
@@ -96,6 +96,16 @@ class Transformer implements TransformerInterface
         $response->setContent($content);
 
         return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
+     *
+     * @return bool
+     */
+    protected function isContentless(ApiResponseTransfer $apiResponseTransfer)
+    {
+        return $apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getType() === ApiOptionsTransfer::class;
     }
 
 }
