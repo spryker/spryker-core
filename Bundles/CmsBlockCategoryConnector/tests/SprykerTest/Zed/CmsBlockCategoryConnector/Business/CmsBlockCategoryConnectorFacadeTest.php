@@ -83,6 +83,20 @@ class CmsBlockCategoryConnectorFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testSyncCmsBlockCategoryPosition()
+    {
+        $this->createCmsBlockCategoryConnectorFacade()
+            ->syncCmsBlockCategoryPosition();
+
+        $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
+            ->findCmsBlockCategoryPositionByName(CmsBlockCategoryConnectorConfig::CMS_BLOCK_CATEGORY_POSITION_MIDDLE);
+
+        $this->assertNotEmpty($cmsBlockCategoryPositionTransfer);
+    }
+
+    /**
      * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface
      */
     protected function createCmsBlockCategoryConnectorFacade()
