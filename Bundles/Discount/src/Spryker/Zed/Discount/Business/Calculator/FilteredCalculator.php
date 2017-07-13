@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
@@ -57,7 +55,6 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
         $filteredDiscountTransfer = $this->discountableItemFilter->filter($collectedDiscountTransfer);
 
         return (array)$filteredDiscountTransfer->getDiscountableItems();
-
     }
 
 }
