@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilterInterface;
@@ -40,38 +43,21 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
-    public function calculate(array $discounts, QuoteTransfer $quoteTransfer)
+    protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
-        $collectedDiscounts = $this->calculateDiscountAmount($discounts, $quoteTransfer);
-        $collectedDiscounts = $this->filterExclusiveDiscounts($collectedDiscounts);
-        $collectedDiscounts = $this->filterCollectedDiscounts($collectedDiscounts);
+        $collectedItems = parent::collectItems($quoteTransfer, $discountTransfer);
 
-        $this->distributeDiscountAmount($collectedDiscounts);
+        $collectedDiscountTransfer = $this->createCollectedDiscountTransfer($discountTransfer, $collectedItems);
 
-        return $collectedDiscounts;
-    }
+        $filteredDiscountTransfer = $this->discountableItemFilter->filter($collectedDiscountTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscounts
-     *
-     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
-     */
-    protected function filterCollectedDiscounts(array $collectedDiscounts)
-    {
-        $filteredCollectedDiscounts = [];
-        foreach ($collectedDiscounts as $collectedDiscountTransfer) {
-            $filteredCollectedDiscountTransfer = $this->discountableItemFilter->filter($collectedDiscountTransfer);
-            if (!$filteredCollectedDiscountTransfer || count($filteredCollectedDiscountTransfer->getDiscountableItems()) === 0) {
-                continue;
-            }
-            $filteredCollectedDiscounts[] = $filteredCollectedDiscountTransfer;
-        }
-        return $filteredCollectedDiscounts;
+        return (array)$filteredDiscountTransfer->getDiscountableItems();
+
     }
 
 }
