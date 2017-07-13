@@ -48,14 +48,14 @@
 
     <transfer name="Order">
         <property name="bundleItems" type="Item[]" singular="bundleItem" />
-        <property name="itemGroups" type="ProductGroup[]" singular="itemGroup" />
+        <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup" />
     </transfer>
 
     <transfer name="ProductConcrete">
         <property name="ProductBundle" type="ProductBundle" />
     </transfer>
 
-    <transfer name="ProductGroup">
+    <transfer name="ProductBundleGroup">
         <property name="isBundle" type="bool" />
         <property name="bundleItem" type="Item" />
         <property name="groupImage" type="string" />

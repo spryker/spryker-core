@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Sales;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductGroupTransfer;
+use Generated\Shared\Transfer\ProductBundleGroupTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculationInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 
@@ -95,7 +95,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
      */
     protected function getItemGroups(OrderTransfer $orderTransfer)
     {
@@ -108,7 +108,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
      */
     protected function getBundleGroups(OrderTransfer $orderTransfer)
     {
@@ -119,7 +119,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
 
         foreach ($bundleItems as $bundleId => $bundleGroupItem) {
             $associatedItems = [];
-            $productGroup = new ProductGroupTransfer();
+            $productGroup = new ProductBundleGroupTransfer();
             $rowCount = 0;
             foreach ($items as $itemTransfer) {
                 if ((int)$itemTransfer->getRelatedBundleItemIdentifier() === $bundleId) {
@@ -143,7 +143,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductGroupTransfer[]
+     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
      */
     protected function getSingleItemGroups(OrderTransfer $orderTransfer)
     {
@@ -159,7 +159,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
         $result = [];
 
         foreach ($singleItems as $singleItem) {
-            $productGroup = new ProductGroupTransfer();
+            $productGroup = new ProductBundleGroupTransfer();
             $productGroup->setGroupItems(new ArrayObject([$singleItem]));
             $productGroup->setIsBundle(false);
 
