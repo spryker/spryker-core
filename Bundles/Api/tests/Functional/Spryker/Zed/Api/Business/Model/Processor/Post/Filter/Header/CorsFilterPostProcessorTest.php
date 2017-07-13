@@ -54,8 +54,8 @@ class CorsFilterPostProcessorTest extends Test
         $this->assertSame(['GET', 'PATCH', 'DELETE', 'OPTIONS'], $apiResponseTransfer->getOptions());
 
         $expected = [
-            'Access-Control-Request-Headers' => "origin, x-requested-with, accept",
-            'Access-Control-Request-Methods' => "GET, PATCH, DELETE, OPTIONS",
+            'Access-Control-Allow-Headers' => "origin, x-requested-with, accept",
+            'Access-Control-Allow-Methods' => "GET, PATCH, DELETE, OPTIONS",
             'Access-Control-Allow-Origin' => "*",
         ];
         $this->assertSame($expected, $apiResponseTransfer->getHeaders());
@@ -77,8 +77,8 @@ class CorsFilterPostProcessorTest extends Test
         $this->assertSame(['GET', 'POST', 'OPTIONS'], $apiResponseTransfer->getOptions());
 
         $expected = [
-            'Access-Control-Request-Headers' => "origin, x-requested-with, accept",
-            'Access-Control-Request-Methods' => "GET, POST, OPTIONS",
+            'Access-Control-Allow-Headers' => "origin, x-requested-with, accept",
+            'Access-Control-Allow-Methods' => "GET, POST, OPTIONS",
             'Access-Control-Allow-Origin' => "*",
         ];
         $this->assertSame($expected, $apiResponseTransfer->getHeaders());

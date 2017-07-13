@@ -14,11 +14,11 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
 /**
  * OPTIONS response.
+ *
+ * This will set the HTTP success code to not contain any response body.
  */
 class OptionsActionPostProcessor implements PostProcessorInterface
 {
-
-    const HEADER_ALLOW = 'Allow';
 
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
@@ -37,15 +37,6 @@ class OptionsActionPostProcessor implements PostProcessorInterface
         }
 
         $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_SUCCESS);
-
-        $options = $apiResponseTransfer->getOptions();
-        foreach ($options as $key => $value) {
-            $options[$key] = strtoupper($value);
-        }
-
-        $headers = $apiResponseTransfer->getHeaders();
-        $headers[static::HEADER_ALLOW] = implode(', ', $options);
-        $apiResponseTransfer->setHeaders($headers);
 
         return $apiResponseTransfer;
     }
