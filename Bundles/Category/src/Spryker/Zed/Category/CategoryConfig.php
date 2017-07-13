@@ -8,8 +8,9 @@
 namespace Spryker\Zed\Category;
 
 use Spryker\Shared\Category\CategoryConfig as SharedCategoryConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class CategoryConfig extends SharedCategoryConfig
+class CategoryConfig extends AbstractBundleConfig
 {
 
     /**
