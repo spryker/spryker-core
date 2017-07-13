@@ -1,0 +1,54 @@
+<?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
+namespace Spryker\Client\Storage\Cache;
+
+interface StorageCacheStrategyHelperInterface
+{
+    /**
+     * @param string $cacheKey
+     *
+     * @return void
+     */
+    public function setCache($cacheKey);
+
+    /**
+     * @return array
+     */
+    public function getCachedKeys();
+
+    /**
+     * @param string $key
+     *
+     * @return void
+     */
+    public function unsetCachedKey($key);
+
+    /**
+     * @return void
+     */
+    public function unsetLastCachedKey();
+
+    /**
+     * @param string $status
+     *
+     * @return bool
+     */
+    public function isNewKey($status);
+
+    /**
+     * @param string $status
+     *
+     * @return bool
+     */
+    public function isUsedKey($status);
+
+    /**
+     * @param string $status
+     *
+     * @return bool
+     */
+    public function isUnusedKey($status);
+}

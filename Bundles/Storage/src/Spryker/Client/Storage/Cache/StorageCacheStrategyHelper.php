@@ -8,24 +8,33 @@
 namespace Spryker\Client\Storage\Cache;
 
 use Spryker\Client\Storage\StorageClient;
-use Spryker\Client\Storage\StorageClientWithCacheInterface;
-use Spryker\Zed\Storage\StorageConfig;
+use Spryker\Client\Storage\StorageClientInterface;
+use Spryker\Client\Storage\StorageConfig;
 
-// @todo remove abstract
-abstract class AbstractStorageCacheStrategy implements StorageCacheStrategyInterface
+class StorageCacheStrategyHelper implements StorageCacheStrategyHelperInterface
 {
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientWithCacheInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @param \Spryker\Client\Storage\StorageClientWithCacheInterface $storageClient
+     * @var \Spryker\Client\Storage\StorageConfig
      */
-    public function __construct(StorageClientWithCacheInterface $storageClient)
-    {
+    protected $storageConfig;
+
+    /**
+     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
+     * @param \Spryker\Client\Storage\StorageConfig $storageConfig
+     */
+    public function __construct(
+        StorageClientInterface $storageClient,
+        StorageConfig $storageConfig
+    ) {
+
         $this->storageClient = $storageClient;
+        $this->storageConfig = $storageConfig;
     }
 
     /**
@@ -33,16 +42,16 @@ abstract class AbstractStorageCacheStrategy implements StorageCacheStrategyInter
      *
      * @return void
      */
-    protected function setCache($cacheKey)
+    public function setCache($cacheKey)
     {
-        $ttl = StorageConfig::STORAGE_CACHE_TTL;
+        $ttl = $this->storageConfig->getStorageCacheTtl();
         $this->storageClient->getService()->set($cacheKey, json_encode(array_keys($this->getCachedKeys())), $ttl);
     }
 
     /**
      * @return array
      */
-    protected function getCachedKeys()
+    public function getCachedKeys()
     {
         return $this->storageClient->getCachedKeys();
     }
@@ -52,7 +61,7 @@ abstract class AbstractStorageCacheStrategy implements StorageCacheStrategyInter
      *
      * @return void
      */
-    protected function unsetCachedKey($key)
+    public function unsetCachedKey($key)
     {
         $this->storageClient->unsetCachedKey($key);
     }
@@ -60,7 +69,7 @@ abstract class AbstractStorageCacheStrategy implements StorageCacheStrategyInter
     /**
      * @return void
      */
-    protected function unsetLastCachedKey()
+    public function unsetLastCachedKey()
     {
         $this->storageClient->unsetLastCachedKey();
     }
@@ -70,7 +79,7 @@ abstract class AbstractStorageCacheStrategy implements StorageCacheStrategyInter
      *
      * @return bool
      */
-    protected function isNewKey($status)
+    public function isNewKey($status)
     {
         return $status === StorageClient::KEY_NEW;
     }
@@ -80,7 +89,7 @@ abstract class AbstractStorageCacheStrategy implements StorageCacheStrategyInter
      *
      * @return bool
      */
-    protected function isUsedKey($status)
+    public function isUsedKey($status)
     {
         return $status === StorageClient::KEY_USED;
     }
@@ -90,7 +99,7 @@ abstract class AbstractStorageCacheStrategy implements StorageCacheStrategyInter
      *
      * @return bool
      */
-    protected function isUnusedKey($status)
+    public function isUnusedKey($status)
     {
         return $status === StorageClient::KEY_INIT;
     }

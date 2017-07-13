@@ -10,13 +10,12 @@ namespace Spryker\Client\Storage;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Shared\Storage\StorageConstants;
-use Spryker\Zed\Storage\StorageConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Client\Storage\StorageFactory getFactory()
  */
-class StorageClient extends AbstractClient implements StorageClientWithCacheInterface
+class StorageClient extends AbstractClient implements StorageClientInterface
 {
 
     const KEY_USED = 'used';
@@ -38,14 +37,14 @@ class StorageClient extends AbstractClient implements StorageClientWithCacheInte
     protected static $bufferedValues;
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface
      */
     public static $service;
 
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\StorageClientInterface $service
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface $service
      */
     public function getService()
     {
@@ -71,9 +70,7 @@ class StorageClient extends AbstractClient implements StorageClientWithCacheInte
      *
      * @param array $keys
      *
-     * @return mixed
-     *
-     * @todo add to the interface
+     * @return array
      */
     public function setCachedKeys($keys)
     {
@@ -349,7 +346,10 @@ class StorageClient extends AbstractClient implements StorageClientWithCacheInte
             }
 
             if ($updateCache) {
-                $ttl = StorageConfig::STORAGE_CACHE_TTL;
+                $ttl = self::getFactory()
+                    ->getStorageClientConfig()
+                    ->getStorageCacheTtl();
+
                 self::$service->set($cacheKey, json_encode(array_keys(self::$cachedKeys)), $ttl);
             }
         }

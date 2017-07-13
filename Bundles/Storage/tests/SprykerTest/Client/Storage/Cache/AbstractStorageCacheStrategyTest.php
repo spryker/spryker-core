@@ -9,8 +9,11 @@ namespace SprykerTest\Client\Storage\Cache;
 
 use Codeception\TestCase\Test;
 use Predis\Client as PredisClient;
+use Spryker\Client\Storage\Cache\StorageCacheStrategyHelper;
+use Spryker\Client\Storage\Cache\StorageCacheStrategyHelperInterface;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Client\Storage\StorageClient;
+use Spryker\Client\Storage\StorageConfig;
 use SprykerTest\Client\Storage\Helper\CacheDataProvider;
 
 /**
@@ -28,14 +31,24 @@ abstract class AbstractStorageCacheStrategyTest extends Test
     const TEST_CACHE_KEY = 'StorageClient_testKey';
 
     /**
-     * @var \SprykerTest\Zed\ProductLabel\BusinessTester
-     */
-    protected $tester;
-
-    /**
      * @var \Spryker\Client\Storage\StorageClient
      */
     protected $storageClientMock;
+
+    /**
+     * @var \Spryker\Client\Storage\StorageConfig
+     */
+    protected $storageClientConfigMock;
+
+    /**
+     * @var \SprykerTest\Client\Storage\Helper\CacheDataProvider
+     */
+    protected $cacheDataProvider;
+
+    /**
+     * @var StorageCacheStrategyHelperInterface
+     */
+    protected $storageCacheStrategyHelper;
 
     /**
      * @return void
@@ -56,7 +69,24 @@ abstract class AbstractStorageCacheStrategyTest extends Test
             ->setConstructorArgs([$predisClientMock])
             ->getMock();
 
-        $this->storageClientMock->method('getService')->willReturn($redisServiceMock);
+        $this->storageClientConfigMock = $this
+            ->getMockBuilder(StorageConfig::class)
+            ->getMock();
+
+        $this->cacheDataProvider = new CacheDataProvider($this->storageClientConfigMock);
+
+        $this->storageCacheStrategyHelper = new StorageCacheStrategyHelper(
+            $this->storageClientMock,
+            $this->storageClientConfigMock
+        );
+
+        $this->storageClientMock
+            ->method('getService')
+            ->willReturn($redisServiceMock);
+
+        $this->storageClientConfigMock
+            ->method('getStorageCacheIncrementalStrategyKeySizeLimit')
+            ->willReturn(100);
     }
 
     /**
@@ -73,7 +103,7 @@ abstract class AbstractStorageCacheStrategyTest extends Test
      */
     protected function setCachedKeysByType($testType)
     {
-        $this->storageClientMock->setCachedKeys(CacheDataProvider::getTestCacheDataInput($testType));
+        $this->storageClientMock->setCachedKeys($this->cacheDataProvider->getTestCacheDataInput($testType));
     }
 
 }

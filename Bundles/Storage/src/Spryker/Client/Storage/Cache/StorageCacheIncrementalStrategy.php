@@ -7,10 +7,34 @@
 
 namespace Spryker\Client\Storage\Cache;
 
-use Spryker\Zed\Storage\StorageConfig;
+use Spryker\Client\Storage\StorageClient;
+use Spryker\Client\Storage\StorageConfig;
 
-class StorageCacheIncrementalStrategy extends AbstractStorageCacheStrategy
+class StorageCacheIncrementalStrategy implements StorageCacheStrategyInterface
 {
+
+    /**
+     * @var StorageCacheStrategyHelperInterface
+     */
+    protected $storageCacheStrategyHelper;
+
+    /**
+     * @var StorageConfig
+     */
+    protected $storageClientConfig;
+
+    /**
+     * @param StorageCacheStrategyHelperInterface $storageCacheStrategyHelper
+     * @param StorageConfig $storageClientConfig
+     */
+    public function __construct(
+        StorageCacheStrategyHelperInterface $storageCacheStrategyHelper,
+        StorageConfig $storageClientConfig
+    )
+    {
+        $this->storageCacheStrategyHelper = $storageCacheStrategyHelper;
+        $this->storageClientConfig = $storageClientConfig;
+    }
 
     /**
      * @param string $cacheKey
@@ -23,7 +47,7 @@ class StorageCacheIncrementalStrategy extends AbstractStorageCacheStrategy
         $isUpdateCacheNeeded = $this->isUpdateCacheNeeded($areKeysRemoved);
 
         if ($isUpdateCacheNeeded) {
-            $this->setCache($cacheKey);
+            $this->storageCacheStrategyHelper->setCache($cacheKey);
         }
     }
 
@@ -51,7 +75,7 @@ class StorageCacheIncrementalStrategy extends AbstractStorageCacheStrategy
      */
     protected function getOverLimitSize()
     {
-        return count($this->getCachedKeys()) - StorageConfig::STORAGE_CACHE_STRATEGY_INCREMENTAL_KEY_SIZE_LIMIT;
+        return count($this->storageCacheStrategyHelper->getCachedKeys()) - $this->storageClientConfig->getStorageCacheIncrementalStrategyKeySizeLimit();
     }
 
     /**
@@ -69,9 +93,9 @@ class StorageCacheIncrementalStrategy extends AbstractStorageCacheStrategy
     {
         $areUnusedKeysRemoved = false;
 
-        foreach ($this->getCachedKeys() as $key => $status) {
-            if ($this->isUnusedKey($status) && $this->isOverLimit()) {
-                $this->unsetCachedKey($key);
+        foreach ($this->storageCacheStrategyHelper->getCachedKeys() as $key => $status) {
+            if ($this->storageCacheStrategyHelper->isUnusedKey($status) && $this->isOverLimit()) {
+                $this->storageCacheStrategyHelper->unsetCachedKey($key);
                 $areUnusedKeysRemoved = true;
             }
         }
@@ -87,7 +111,7 @@ class StorageCacheIncrementalStrategy extends AbstractStorageCacheStrategy
         $overLimitSize = $this->getOverLimitSize();
 
         for ($i = 0; $i < $overLimitSize; $i++) {
-            $this->unsetLastCachedKey();
+            $this->storageCacheStrategyHelper->unsetLastCachedKey();
         }
     }
 
@@ -107,18 +131,10 @@ class StorageCacheIncrementalStrategy extends AbstractStorageCacheStrategy
 
     /**
      * @return bool
-     *
-     * @todo array_search or not
      */
     protected function isNewKeyAdded()
     {
-        foreach ($this->getCachedKeys() as $key => $status) {
-            if ($this->isNewKey($status)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_search(StorageClient::KEY_NEW, $this->storageCacheStrategyHelper->getCachedKeys()) !== false;
     }
 
 }

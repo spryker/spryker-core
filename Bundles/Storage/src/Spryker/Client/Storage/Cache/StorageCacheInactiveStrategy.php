@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Storage\Cache;
 
-class StorageCacheInactiveStrategy extends AbstractStorageCacheStrategy
+class StorageCacheInactiveStrategy implements StorageCacheStrategyInterface
 {
 
     /**

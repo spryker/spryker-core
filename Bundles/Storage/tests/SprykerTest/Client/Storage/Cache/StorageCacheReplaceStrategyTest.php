@@ -31,10 +31,12 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
     {
         $this->setCachedKeysByType($testType);
 
-        $replaceStrategy = new StorageCacheReplaceStrategy($this->storageClientMock);
+        $replaceStrategy = new StorageCacheReplaceStrategy(
+            $this->storageCacheStrategyHelper
+        );
         $replaceStrategy->updateCache(self::TEST_CACHE_KEY);
 
-        $expectedOutput = CacheDataProvider::getExpectedOutputForReplaceStrategy($testType);
+        $expectedOutput = $this->cacheDataProvider->getExpectedOutputForReplaceStrategy($testType);
         $this->assertSame(
             $this->storageClientMock->getCachedKeys(),
             $expectedOutput

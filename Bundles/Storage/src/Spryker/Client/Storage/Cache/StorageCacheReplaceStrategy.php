@@ -7,8 +7,22 @@
 
 namespace Spryker\Client\Storage\Cache;
 
-class StorageCacheReplaceStrategy extends AbstractStorageCacheStrategy
+class StorageCacheReplaceStrategy implements StorageCacheStrategyInterface
 {
+
+    /**
+     * @var StorageCacheStrategyHelperInterface
+     */
+    protected $storageCacheStrategyHelper;
+
+    /**
+     * StorageCacheReplaceStrategy constructor.
+     * @param StorageCacheStrategyHelperInterface $storageCacheStrategyHelper
+     */
+    public function __construct(StorageCacheStrategyHelperInterface $storageCacheStrategyHelper)
+    {
+        $this->storageCacheStrategyHelper = $storageCacheStrategyHelper;
+    }
 
     /**
      * @param string $cacheKey
@@ -19,9 +33,9 @@ class StorageCacheReplaceStrategy extends AbstractStorageCacheStrategy
     {
         $isUpdateCacheNeeded = false;
 
-        foreach ($this->getCachedKeys() as $key => $status) {
-            if ($this->isUnusedKey($status)) {
-                $this->unsetCachedKey($key);
+        foreach ($this->storageCacheStrategyHelper->getCachedKeys() as $key => $status) {
+            if ($this->storageCacheStrategyHelper->isUnusedKey($status)) {
+                $this->storageCacheStrategyHelper->unsetCachedKey($key);
             }
 
             if ($this->isUpdateNeeded($status)) {
@@ -30,7 +44,7 @@ class StorageCacheReplaceStrategy extends AbstractStorageCacheStrategy
         }
 
         if ($isUpdateCacheNeeded) {
-            $this->setCache($cacheKey);
+            $this->storageCacheStrategyHelper->setCache($cacheKey);
         }
     }
 
@@ -41,7 +55,7 @@ class StorageCacheReplaceStrategy extends AbstractStorageCacheStrategy
      */
     protected function isUpdateNeeded($status)
     {
-        return $this->isNewKey($status) || $this->isUsedKey($status);
+        return $this->storageCacheStrategyHelper->isNewKey($status) || $this->storageCacheStrategyHelper->isUsedKey($status);
     }
 
 }

@@ -7,11 +7,10 @@
 
 namespace SprykerTest\Client\Storage\Helper;
 
-use Codeception\Module;
 use Spryker\Client\Storage\StorageClient;
-use Spryker\Zed\Storage\StorageConfig;
+use Spryker\Client\Storage\StorageConfig;
 
-class CacheDataProvider extends Module
+class CacheDataProvider
 {
 
     const TEST_TYPE_NEW_KEYS = 'TEST_TYPE_NEW_CACHE';
@@ -28,11 +27,24 @@ class CacheDataProvider extends Module
     const OVER_LIMIT_SIZE = 50;
 
     /**
+     * @var \Spryker\Client\Storage\StorageConfig
+     */
+    protected $storageClientConfigMock;
+
+    /**
+     * @param \Spryker\Client\Storage\StorageConfig $storageClientConfigMock
+     */
+    public function __construct(StorageConfig $storageClientConfigMock)
+    {
+        $this->storageClientConfigMock = $storageClientConfigMock;
+    }
+
+    /**
      * @param string $testType
      *
      * @return array
      */
-    public static function getTestCacheDataInput($testType)
+    public function getTestCacheDataInput($testType)
     {
         $cacheData = [];
 
@@ -111,7 +123,7 @@ class CacheDataProvider extends Module
      *
      * @return array
      */
-    public static function getExpectedOutputForReplaceStrategy($testType)
+    public function getExpectedOutputForReplaceStrategy($testType)
     {
         $expectedOutput = [];
 
@@ -164,7 +176,7 @@ class CacheDataProvider extends Module
      *
      * @return array
      */
-    public static function getExpectedOutputForIncrementalStrategy($testType)
+    public function getExpectedOutputForIncrementalStrategy($testType)
     {
         $expectedOutput = [];
 
@@ -245,7 +257,7 @@ class CacheDataProvider extends Module
     private function generateOverLimitCacheInput($testType)
     {
         $cache = [];
-        $cacheSize = StorageConfig::STORAGE_CACHE_STRATEGY_INCREMENTAL_KEY_SIZE_LIMIT;
+        $cacheSize = $this->storageClientConfigMock->getStorageCacheIncrementalStrategyKeySizeLimit();
         $cacheSizeWithOverLimit = $cacheSize + self::OVER_LIMIT_SIZE;
 
         for ($i = 0; $i < $cacheSizeWithOverLimit; $i++) {
@@ -296,7 +308,7 @@ class CacheDataProvider extends Module
     private function generateOverLimitCacheOutput($testType)
     {
         $cache = [];
-        $cacheSize = StorageConfig::STORAGE_CACHE_STRATEGY_INCREMENTAL_KEY_SIZE_LIMIT;
+        $cacheSize = $this->storageClientConfigMock->getStorageCacheIncrementalStrategyKeySizeLimit();
 
         for ($i = 0; $i < $cacheSize; $i++) {
             $key = 'kv:key' . ($i + 1);

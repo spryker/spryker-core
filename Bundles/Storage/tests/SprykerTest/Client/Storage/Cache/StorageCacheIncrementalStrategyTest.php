@@ -31,10 +31,13 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     {
         $this->setCachedKeysByType($testType);
 
-        $incrementalStrategy = new StorageCacheIncrementalStrategy($this->storageClientMock);
+        $incrementalStrategy = new StorageCacheIncrementalStrategy(
+            $this->storageCacheStrategyHelper,
+            $this->storageClientConfigMock
+        );
         $incrementalStrategy->updateCache(self::TEST_CACHE_KEY);
 
-        $expectedOutput = CacheDataProvider::getExpectedOutputForIncrementalStrategy($testType);
+        $expectedOutput = $this->cacheDataProvider->getExpectedOutputForIncrementalStrategy($testType);
         $this->assertSame(
             $this->storageClientMock->getCachedKeys(),
             $expectedOutput
