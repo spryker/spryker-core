@@ -14,8 +14,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
 /**
  * OPTIONS response.
- *
- * This will set the HTTP success code to not contain any response body.
  */
 class OptionsActionPostProcessor implements PostProcessorInterface
 {
