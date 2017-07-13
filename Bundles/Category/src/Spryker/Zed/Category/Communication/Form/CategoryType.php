@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
@@ -108,9 +109,19 @@ class CategoryType extends AbstractType
                 new NotBlank(),
                 new Callback([
                     'methods' => [
-                        function ($key, ExecutionContextInterface $contextInterface) use ($categoryQueryContainer) {
-                            if ($categoryQueryContainer->queryCategoryByKey($key)->count() > 0) {
-                                $contextInterface->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
+                        function ($key, ExecutionContextInterface $context) use ($categoryQueryContainer) {
+                            $data = $context->getRoot()->getData();
+
+                            $exists = false;
+                            if ($data instanceof CategoryTransfer) {
+                                $exists = $categoryQueryContainer
+                                        ->queryCategoryByKey($key)
+                                        ->filterByIdCategory($data->getIdCategory(), '<>')
+                                        ->count() > 0;
+                            }
+
+                            if ($exists) {
+                                $context->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
                             }
                         },
                     ],
