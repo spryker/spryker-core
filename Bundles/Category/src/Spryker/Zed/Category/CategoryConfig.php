@@ -19,6 +19,16 @@ class CategoryConfig extends AbstractBundleConfig
     const CATEGORY_TEMPLATE_DEFAULT = 'Catalog';
 
     /**
+     * Used as `item_type` for touch mechanism.
+     */
+    const RESOURCE_TYPE_CATEGORY_NODE = SharedCategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
+
+    /**
+     * Used as `item_type` for touch mechanism.
+     */
+    const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
+
+    /**
      * @return array
      */
     public function getTemplateList()
