@@ -20,6 +20,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEdi
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
 use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
@@ -169,7 +170,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
-            $this->getStore()
+            $this->getStore(),
+            $this->createProductStockHelper()
         );
     }
 
@@ -418,7 +420,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductFormTransferGenerator()
     {
         return new ProductFormTransferMapper(
-            $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->getUtilTextService(),
@@ -494,12 +495,21 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface
+     */
+    public function createProductStockHelper()
+    {
+        return new ProductStockHelper();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface
      */
     public function getProductAttributeFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
     }
+
 
     /**
      * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface

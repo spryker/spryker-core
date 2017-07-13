@@ -328,9 +328,6 @@ class StockFacadeTest extends Test
 
         $this->assertNotEmpty($productConcreteTransfer->getStocks());
         foreach ($productConcreteTransfer->getStocks() as $stock) {
-            if ($stock->getIdStockProduct() === null) {
-                continue;
-            }
             $this->assertTrue($stock->getQuantity() > 0);
             $this->assertEquals($stock->getSku(), self::CONCRETE_SKU);
         }

@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use Everon\Component\Collection\Collection;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\BundledProductForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
@@ -18,10 +22,70 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
+use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider
 {
+
+    /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface
+     */
+    protected $productStockHelper;
+
+    /**
+     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
+     * @param array $attributeCollection
+     * @param array $taxCollection
+     * @param string $imageUrlPrefix
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
+     * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface $productStockHelper
+     */
+    public function __construct(
+        CategoryQueryContainerInterface $categoryQueryContainer,
+        ProductManagementQueryContainerInterface $productManagementQueryContainer,
+        ProductQueryContainerInterface $productQueryContainer,
+        StockQueryContainerInterface $stockQueryContainer,
+        ProductManagementToPriceInterface $priceFacade,
+        ProductManagementToProductInterface $productFacade,
+        ProductManagementToProductImageInterface $productImageFacade,
+        LocaleProvider $localeProvider,
+        LocaleTransfer $currentLocale,
+        array $attributeCollection,
+        array $taxCollection,
+        $imageUrlPrefix,
+        ProductManagementToStoreInterface $store,
+        ProductStockHelperInterface $productStockHelper
+    ) {
+        $this->categoryQueryContainer = $categoryQueryContainer;
+        $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->productQueryContainer = $productQueryContainer;
+        $this->stockQueryContainer = $stockQueryContainer;
+        $this->productImageFacade = $productImageFacade;
+        $this->localeProvider = $localeProvider;
+        $this->priceFacade = $priceFacade;
+        $this->productFacade = $productFacade;
+        $this->currentLocale = $currentLocale;
+        $this->attributeTransferCollection = new Collection($attributeCollection);
+        $this->taxCollection = $taxCollection;
+        $this->imageUrlPrefix = $imageUrlPrefix;
+        $this->store = $store;
+        $this->productStockHelper = $productStockHelper;
+    }
 
     /**
      * @param int|null $idProductAbstract
@@ -162,6 +226,9 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
             $formData[ProductFormAdd::FORM_PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICES][$priceType] = $priceTransfer ? $priceTransfer->getPrice() : null;
         }
+
+        $stockType = $this->stockQueryContainer->queryAllStockTypes()->find()->getData();
+        $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
 
         $stockCollection = $productTransfer->getStocks();
 
