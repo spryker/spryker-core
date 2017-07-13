@@ -196,7 +196,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
      * @param array $idCmsBlocks
      * @param array $idCategories
      * @param int $idCmsBlockCategoryPosition
-     * @param int $idCategoryTemplate
+     * @param int|null $idCategoryTemplate
      *
      * @return void
      */

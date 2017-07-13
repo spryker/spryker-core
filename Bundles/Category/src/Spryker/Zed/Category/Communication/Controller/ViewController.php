@@ -1,13 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\Category\Communication\Controller;
-
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 
 /**
  * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
@@ -20,13 +22,14 @@ class ViewController extends AbstractController
     const QUERY_PARAM_ID_CATEGORY = 'id-category';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array
      */
     public function indexAction(Request $request)
     {
-
         $idCategory = $request->query->getInt(static::QUERY_PARAM_ID_CATEGORY);
 
         $categoryTransfer = $this->getFacade()
@@ -44,13 +47,13 @@ class ViewController extends AbstractController
         foreach ($readPlugins as $readPlugin) {
             $renderedRelations[] = [
                 'name' => $readPlugin->getRelationName(),
-                'items' => $readPlugin->getRelations($categoryTransfer, $localeTransfer)
+                'items' => $readPlugin->getRelations($categoryTransfer, $localeTransfer),
             ];
         }
 
         return $this->viewResponse([
             'category' => $categoryTransfer,
-            'renderedRelations' => $renderedRelations
+            'renderedRelations' => $renderedRelations,
         ]);
     }
 

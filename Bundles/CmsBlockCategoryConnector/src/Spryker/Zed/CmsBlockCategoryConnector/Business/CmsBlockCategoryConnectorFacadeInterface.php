@@ -81,10 +81,12 @@ interface CmsBlockCategoryConnectorFacadeInterface
      * Specification:
      * - Get collection of related CMS Blocks
      *
+     * @api
+     *
      * @param int $idCategory
      * @param int $idCategoryTemplate
      *
-     * @return CmsBlockTransfer[]
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
 

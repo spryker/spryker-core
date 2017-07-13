@@ -179,6 +179,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
 
     /**
      * @param string $blockName
+     *
      * @return string
      */
     protected function generateBlockNameKey($blockName)

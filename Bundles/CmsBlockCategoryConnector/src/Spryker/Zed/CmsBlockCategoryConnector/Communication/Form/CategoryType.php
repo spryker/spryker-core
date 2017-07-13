@@ -93,8 +93,8 @@ class CategoryType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'data-assigned-cms-blocks' => \json_encode($assignedForPosition),
-                    'data-supported-templates' => \json_encode(static::SUPPORTED_CATEGORY_TEMPLATE_LIST)
-                ]
+                    'data-supported-templates' => \json_encode(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
+                ],
             ]);
         }
 
@@ -102,7 +102,7 @@ class CategoryType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $wrongCmsBlockList
      *
      * @return $this
@@ -133,4 +133,5 @@ class CategoryType extends AbstractType
 
         return $warningMessage;
     }
+
 }

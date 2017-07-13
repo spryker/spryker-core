@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
+use DateTime;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CategoryType;
@@ -67,7 +68,7 @@ class CategoryDataProvider
             CategoryType::OPTION_CMS_BLOCK_LIST => $this->getCmsBlockList(),
             CategoryType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList(),
             CategoryType::OPTION_WRONG_CMS_BLOCK_LIST => $this->getWrongCmsBlockList(),
-            CategoryType::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST => $this->getAssignedIdCmsBlocksForTemplates()
+            CategoryType::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST => $this->getAssignedIdCmsBlocksForTemplates(),
         ];
     }
 
@@ -124,7 +125,7 @@ class CategoryDataProvider
     }
 
     /**
-     * @param CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
@@ -172,7 +173,7 @@ class CategoryDataProvider
     }
 
     /**
-     * @param SpyCmsBlock $spyCmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
      * @return void
      */
@@ -184,7 +185,7 @@ class CategoryDataProvider
             $invalid = true;
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
         if ($spyCmsBlock->getValidFrom() && $spyCmsBlock->getValidFrom() > $now) {
             $invalid = true;
         }

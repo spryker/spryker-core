@@ -31,7 +31,7 @@ interface CmsBlockCategoryReaderInterface
      * @param int $idCategory
      * @param int $idCategoryTemplate
      *
-     * @return CmsBlockTransfer[]
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
 

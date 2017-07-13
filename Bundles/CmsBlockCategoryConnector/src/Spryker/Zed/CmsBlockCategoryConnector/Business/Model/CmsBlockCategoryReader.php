@@ -74,7 +74,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
      * @param int $idCategory
      * @param int $idCategoryTemplate
      *
-     * @return CmsBlockTransfer[]
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate)
     {
@@ -95,7 +95,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
     }
 
     /**
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     protected function createCmsBlockTransfer()
     {
@@ -103,10 +103,10 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
     }
 
     /**
-     * @param SpyCmsBlock $spyCmsBlock
-     * @param CmsBlockTransfer $cmsBlockTransfer
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     protected function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock, CmsBlockTransfer $cmsBlockTransfer)
     {

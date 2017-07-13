@@ -77,11 +77,11 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
             ->addJoin(
                 [
                     SpyCategoryTableMap::COL_ID_CATEGORY,
-                    SpyCategoryAttributeTableMap::COL_FK_LOCALE
+                    SpyCategoryAttributeTableMap::COL_FK_LOCALE,
                 ],
                 [
                     SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
-                    $idLocale
+                    $idLocale,
                 ],
                 Criteria::INNER_JOIN
             );

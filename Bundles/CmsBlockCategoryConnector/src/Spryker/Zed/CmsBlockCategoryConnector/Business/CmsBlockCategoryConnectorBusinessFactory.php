@@ -8,13 +8,11 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollector;
-use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryPositionCollector;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionSync;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryReader;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriter;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
-use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryPositionCollectorQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
