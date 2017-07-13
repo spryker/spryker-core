@@ -5,12 +5,12 @@
 
     <transfer name="CmsBlock">
         <property name="idCmsBlock" type="int" />
-        <property name="idCategories" type="int[]" />
+        <property name="idCategories" type="[]" />
     </transfer>
 
     <transfer name="Category">
         <property name="idCategory" type="int" />
-        <property name="idCmsBlocks" type="int[]" />
+        <property name="idCmsBlocks" type="[]" />
     </transfer>
 
 </transfers>
