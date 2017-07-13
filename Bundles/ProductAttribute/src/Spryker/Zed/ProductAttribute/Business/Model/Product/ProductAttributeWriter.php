@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 use ArrayObject;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
+use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 class ProductAttributeWriter implements ProductAttributeWriterInterface
@@ -125,8 +126,8 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         $keysToRemove = [];
 
         foreach ($attributes as $attribute) {
-            $localeCode = $attribute[ProductAttributeConfig::LOCALE_CODE];
-            $key = $attribute[ProductAttributeConfig::KEY];
+            $localeCode = $attribute[ProductAttributeQueryContainer::LOCALE_CODE];
+            $key = $attribute[ProductAttributeQueryContainer::KEY];
             $value = trim($attribute['value']);
 
             if ($value !== '') {

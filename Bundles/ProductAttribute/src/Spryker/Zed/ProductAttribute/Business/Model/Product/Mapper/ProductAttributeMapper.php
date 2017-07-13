@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper;
 
 use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilEncodingInterface;
-use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
+use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer;
 
 class ProductAttributeMapper implements ProductAttributeMapperInterface
 {
@@ -55,8 +55,8 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
     {
         $results = [];
         foreach ($metaAttributeCollection as $metaAttribute) {
-            unset($metaAttribute[ProductAttributeConfig::ID_PRODUCT_ATTRIBUTE_KEY]);
-            $results[$metaAttribute[ProductAttributeConfig::KEY]] = $metaAttribute;
+            unset($metaAttribute[ProductAttributeQueryContainer::ID_PRODUCT_ATTRIBUTE_KEY]);
+            $results[$metaAttribute[ProductAttributeQueryContainer::KEY]] = $metaAttribute;
         }
 
         return $results;
@@ -72,7 +72,7 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
         $results = [];
 
         foreach ($metaAttributeCollection as $keyEntity) {
-            unset($keyEntity[ProductAttributeConfig::ID_PRODUCT_ATTRIBUTE_KEY]);
+            unset($keyEntity[ProductAttributeQueryContainer::ID_PRODUCT_ATTRIBUTE_KEY]);
             $results[] = $keyEntity;
         }
 

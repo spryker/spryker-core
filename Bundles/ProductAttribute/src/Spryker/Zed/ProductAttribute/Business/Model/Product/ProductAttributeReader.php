@@ -14,8 +14,8 @@ use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductAbstractNotFoun
 use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductConcreteNotFoundException;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
+use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface;
-use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 class ProductAttributeReader implements ProductAttributeReaderInterface
 {
@@ -130,11 +130,11 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
         $query = $this->productAttributeQueryContainer
             ->queryMetaAttributesByKeys($keys)
             ->clearSelectColumns()
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, ProductAttributeConfig::KEY)
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, ProductAttributeConfig::IS_SUPER)
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, ProductAttributeConfig::ATTRIBUTE_ID)
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, ProductAttributeConfig::ALLOW_INPUT)
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, ProductAttributeConfig::INPUT_TYPE);
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, ProductAttributeQueryContainer::KEY)
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, ProductAttributeQueryContainer::IS_SUPER)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, ProductAttributeQueryContainer::ATTRIBUTE_ID)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, ProductAttributeQueryContainer::ALLOW_INPUT)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, ProductAttributeQueryContainer::INPUT_TYPE);
 
         return $query;
     }
@@ -150,11 +150,11 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
         $query = $this->productAttributeQueryContainer
             ->querySuggestKeys($searchText, $limit)
             ->clearSelectColumns()
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, ProductAttributeConfig::KEY)
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, ProductAttributeConfig::IS_SUPER)
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, ProductAttributeConfig::ATTRIBUTE_ID)
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, ProductAttributeConfig::ALLOW_INPUT)
-            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, ProductAttributeConfig::INPUT_TYPE)
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, ProductAttributeQueryContainer::KEY)
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_IS_SUPER, ProductAttributeQueryContainer::IS_SUPER)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, ProductAttributeQueryContainer::ATTRIBUTE_ID)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_ALLOW_INPUT, ProductAttributeQueryContainer::ALLOW_INPUT)
+            ->withColumn(SpyProductManagementAttributeTableMap::COL_INPUT_TYPE, ProductAttributeQueryContainer::INPUT_TYPE)
             ->orderByKey()
             ->setFormatter(new ArrayFormatter());
 
