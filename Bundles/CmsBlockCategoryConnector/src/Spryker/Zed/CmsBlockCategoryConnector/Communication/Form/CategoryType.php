@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
+use Spryker\Zed\Gui\Communication\Form\Type\LabelType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,7 @@ class CategoryType extends AbstractType
     const OPTION_IS_TEMPLATE_SUPPORTED = 'option-is-template-supported';
     const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
     const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+    const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
 
     /**
      * @var array
@@ -47,6 +49,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options[static::OPTION_IS_TEMPLATE_SUPPORTED]) {
+            $this->addWarningLabels($builder, $options[static::OPTION_WRONG_CMS_BLOCK_LIST]);
             $this->addCmsBlockFields($builder, $options[static::OPTION_CMS_BLOCK_POSITION_LIST], $options[static::OPTION_CMS_BLOCK_LIST]);
         }
     }
@@ -61,7 +64,8 @@ class CategoryType extends AbstractType
         $resolver
             ->setRequired(static::OPTION_CMS_BLOCK_LIST)
             ->setRequired(static::OPTION_CMS_BLOCK_POSITION_LIST)
-            ->setRequired(static::OPTION_IS_TEMPLATE_SUPPORTED);
+            ->setRequired(static::OPTION_IS_TEMPLATE_SUPPORTED)
+            ->setRequired(static::OPTION_WRONG_CMS_BLOCK_LIST);
     }
 
     /**
@@ -86,4 +90,36 @@ class CategoryType extends AbstractType
         return $this;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $wrongCmsBlockList
+     *
+     * @return $this
+     */
+    protected function addWarningLabels(FormBuilderInterface $builder, array $wrongCmsBlockList)
+    {
+        if (empty($wrongCmsBlockList)) {
+            return $this;
+        }
+
+        $builder->add(static::FIELD_CMS_BLOCKS . '_label', new LabelType(), [
+            'text' => $this->formatWrongCmsBlockWarningMessage($wrongCmsBlockList),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param array $wrongCmsBlockList
+     *
+     * @return string
+     */
+    protected function formatWrongCmsBlockWarningMessage(array $wrongCmsBlockList)
+    {
+        $warningMessage = '<i class="fa fa-exclamation-triangle"></i> ';
+        $warningMessage .= 'The following blocks are not published: ';
+        $warningMessage .= implode(', ', $wrongCmsBlockList);
+
+        return $warningMessage;
+    }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CategoryType;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface;
@@ -37,6 +38,11 @@ class CategoryDataProvider
     protected $isTemplateSupported = true;
 
     /**
+     * @var array
+     */
+    protected $wrongCmsBlocks = [];
+
+    /**
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface $categoryQueryContainer
@@ -61,6 +67,7 @@ class CategoryDataProvider
             CategoryType::OPTION_CMS_BLOCK_LIST => $this->getCmsBlockList(),
             CategoryType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList(),
             CategoryType::OPTION_IS_TEMPLATE_SUPPORTED => $this->isTemplateSupported(),
+            CategoryType::OPTION_WRONG_CMS_BLOCK_LIST => $this->getWrongCmsBlockList()
         ];
     }
 
@@ -102,6 +109,7 @@ class CategoryDataProvider
 
         foreach ($query as $item) {
             $assignedBlocks[$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCmsBlock();
+            $this->assertCmsBlock($item->getCmsBlock());
         }
 
         return $assignedBlocks;
@@ -151,11 +159,46 @@ class CategoryDataProvider
     }
 
     /**
+     * @param SpyCmsBlock $spyCmsBlock
+     *
+     * @return void
+     */
+    protected function assertCmsBlock(SpyCmsBlock $spyCmsBlock)
+    {
+        $invalid = false;
+
+        if (!$spyCmsBlock->getIsActive()) {
+            $invalid = true;
+        }
+
+        $now = new \DateTime();
+        if ($spyCmsBlock->getValidFrom() && $spyCmsBlock->getValidFrom() > $now) {
+            $invalid = true;
+        }
+
+        if ($spyCmsBlock->getValidTo() && $spyCmsBlock->getValidTo() < $now) {
+            $invalid = true;
+        }
+
+        if ($invalid) {
+            $this->wrongCmsBlocks[$spyCmsBlock->getIdCmsBlock()] = $spyCmsBlock->getName();
+        }
+    }
+
+    /**
      * @return bool
      */
     protected function isTemplateSupported()
     {
         return $this->isTemplateSupported;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getWrongCmsBlockList()
+    {
+        return $this->wrongCmsBlocks;
     }
 
 }
