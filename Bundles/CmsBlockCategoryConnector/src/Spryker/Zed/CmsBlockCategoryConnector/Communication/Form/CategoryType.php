@@ -23,6 +23,7 @@ class CategoryType extends AbstractType
     const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
     const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
     const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
+    const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
 
     /**
      * @var array
@@ -48,10 +49,13 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($options[static::OPTION_IS_TEMPLATE_SUPPORTED]) {
-            $this->addWarningLabels($builder, $options[static::OPTION_WRONG_CMS_BLOCK_LIST]);
-            $this->addCmsBlockFields($builder, $options[static::OPTION_CMS_BLOCK_POSITION_LIST], $options[static::OPTION_CMS_BLOCK_LIST]);
-        }
+        $this->addWarningLabels($builder, $options[static::OPTION_WRONG_CMS_BLOCK_LIST]);
+        $this->addCmsBlockFields(
+            $builder,
+            $options[static::OPTION_CMS_BLOCK_POSITION_LIST],
+            $options[static::OPTION_CMS_BLOCK_LIST],
+            $options[static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST]
+        );
     }
 
     /**
@@ -65,25 +69,34 @@ class CategoryType extends AbstractType
             ->setRequired(static::OPTION_CMS_BLOCK_LIST)
             ->setRequired(static::OPTION_CMS_BLOCK_POSITION_LIST)
             ->setRequired(static::OPTION_IS_TEMPLATE_SUPPORTED)
-            ->setRequired(static::OPTION_WRONG_CMS_BLOCK_LIST);
+            ->setRequired(static::OPTION_WRONG_CMS_BLOCK_LIST)
+            ->setRequired(static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $positions
      * @param array $choices
+     * @param array $assignedCmsBlocksForTemplates
      *
      * @return $this
      */
-    protected function addCmsBlockFields(FormBuilderInterface $builder, array $positions, array $choices)
+    protected function addCmsBlockFields(FormBuilderInterface $builder, array $positions, array $choices, array $assignedCmsBlocksForTemplates)
     {
         foreach ($positions as $idCmsBlockCategoryPosition => $positionName) {
+            $assignedForPosition = isset($assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition]) ?
+                $assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition] : [];
+
             $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition, new Select2ComboBoxType(), [
                 'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idCmsBlockCategoryPosition . ']',
                 'label' => 'CMS Blocks: ' . $positionName,
                 'choices' => $choices,
                 'multiple' => true,
                 'required' => false,
+                'attr' => [
+                    'data-assigned-cms-blocks' => \json_encode($assignedForPosition),
+                    'data-supported-templates' => \json_encode(static::SUPPORTED_CATEGORY_TEMPLATE_LIST)
+                ]
             ]);
         }
 

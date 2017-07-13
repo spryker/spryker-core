@@ -54,7 +54,16 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory, $idCategoryTemplate);
+    public function queryCmsBlockCategoryWithBlocksByIdCategoryIdTemplate($idCategory, $idCategoryTemplate);
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory);
 
     /**
      * @api

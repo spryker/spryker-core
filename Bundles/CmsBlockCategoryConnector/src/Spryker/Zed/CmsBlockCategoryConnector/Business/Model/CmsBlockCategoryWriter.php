@@ -83,37 +83,23 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
      */
     protected function updateCategoryCmsBlockRelationsTransaction(CategoryTransfer $categoryTransfer)
     {
-        $spyCategory = $this->categoryQueryContainer
-            ->queryCategoryById($categoryTransfer->getIdCategory())
-            ->findOne();
-
-        $touchOnly = false;
-
-        if ($spyCategory->getFkCategoryTemplate() !== $categoryTransfer->getFkCategoryTemplate()) {
-            $touchOnly = true;
-        }
-
-        $this->deleteCategoryCmsBlockRelations($categoryTransfer, $touchOnly);
-        $this->createCategoryCmsBlockRelations($categoryTransfer, $touchOnly);
+        $this->deleteCategoryCmsBlockRelations($categoryTransfer);
+        $this->createCategoryCmsBlockRelations($categoryTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param bool $touchOnly
      *
      * @return void
      */
-    protected function deleteCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer, $touchOnly = false)
+    protected function deleteCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer)
     {
         $categoryTransfer->requireIdCategory();
 
         $query = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCategory($categoryTransfer->getIdCategory(), $categoryTransfer->getFkCategoryTemplate());
 
-        if (!$touchOnly) {
-            $this->deleteRelations($query);
-        }
-
+        $this->deleteRelations($query);
         $this->touchDeleteCategoryCmsBlockRelation($query);
     }
 
@@ -134,19 +120,20 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param bool $touchOnly
      *
      * @return void
      */
-    protected function createCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer, $touchOnly = false)
+    protected function createCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer)
     {
         $categoryTransfer->requireIdCategory();
 
         foreach ($categoryTransfer->getIdCmsBlocks() as $idCmsBlockCategoryPosition => $idCmsBlocks) {
-            if (!$touchOnly) {
-                $this->createRelations($idCmsBlocks, [$categoryTransfer->getIdCategory()], $idCmsBlockCategoryPosition);
-            }
-
+            $this->createRelations(
+                $idCmsBlocks,
+                [$categoryTransfer->getIdCategory()],
+                $idCmsBlockCategoryPosition,
+                $categoryTransfer->getFkCategoryTemplate()
+            );
             $this->touchActiveCategoryCmsBlockRelation([$categoryTransfer->getIdCategory()]);
         }
     }
@@ -209,20 +196,24 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
      * @param array $idCmsBlocks
      * @param array $idCategories
      * @param int $idCmsBlockCategoryPosition
+     * @param int $idCategoryTemplate
      *
      * @return void
      */
-    protected function createRelations(array $idCmsBlocks, array $idCategories, $idCmsBlockCategoryPosition)
+    protected function createRelations(array $idCmsBlocks, array $idCategories, $idCmsBlockCategoryPosition, $idCategoryTemplate = null)
     {
         foreach ($idCategories as $idCategory) {
-            $spyCategory = $this->getCategoryById($idCategory);
+            if ($idCategoryTemplate === null) {
+                $spyCategory = $this->getCategoryById($idCategory);
+                $idCategoryTemplate = $spyCategory->getFkCategoryTemplate();
+            }
 
             foreach ($idCmsBlocks as $idCmsBlock) {
                 $this->createRelation(
                     $idCmsBlock,
                     $idCategory,
                     $idCmsBlockCategoryPosition,
-                    $spyCategory->getFkCategoryTemplate()
+                    $idCategoryTemplate
                 );
             }
         }

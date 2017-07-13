@@ -30,7 +30,7 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
     /**
      * A name of category template: Category and CmsBlock contents are together
      */
-    const CATEGORY_TEMPLATE_WITH_CMS_BLOCK = 'Catalog & CMS Blocks';
+    const CATEGORY_TEMPLATE_WITH_CMS_BLOCK = 'Catalog and CMS Blocks';
 
     /**
      * A name of category template: CmsBlock content is presented alone

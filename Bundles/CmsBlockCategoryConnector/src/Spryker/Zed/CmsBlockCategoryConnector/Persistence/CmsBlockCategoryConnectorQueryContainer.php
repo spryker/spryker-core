@@ -95,9 +95,23 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory, $idCategoryTemplate)
+    public function queryCmsBlockCategoryWithBlocksByIdCategoryIdTemplate($idCategory, $idCategoryTemplate)
     {
         return $this->queryCmsBlockCategoryConnectorByIdCategory($idCategory, $idCategoryTemplate)
+            ->joinCmsBlock();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
+    {
+        return $this->queryCmsBlockCategoryConnector()
+            ->filterByFkCategory($idCategory)
             ->joinCmsBlock();
     }
 

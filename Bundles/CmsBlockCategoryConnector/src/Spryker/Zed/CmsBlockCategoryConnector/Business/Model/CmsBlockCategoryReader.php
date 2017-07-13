@@ -79,7 +79,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate)
     {
         $relations = $this->queryContainer
-            ->queryCmsBlockCategoryWithBlocksByIdCategory($idCategory, $idCategoryTemplate)
+            ->queryCmsBlockCategoryWithBlocksByIdCategoryIdTemplate($idCategory, $idCategoryTemplate)
             ->find();
 
         $cmsBlockTransfers = [];
