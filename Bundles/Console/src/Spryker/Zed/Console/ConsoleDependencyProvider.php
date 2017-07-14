@@ -25,9 +25,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $this->addCommands($container);
-        $this->addEventSubscriber($container);
-        $this->addServiceProviders($container);
+        $container = $this->addCommands($container);
+        $container = $this->addEventSubscriber($container);
+        $container = $this->addServiceProviders($container);
 
         return $container;
     }

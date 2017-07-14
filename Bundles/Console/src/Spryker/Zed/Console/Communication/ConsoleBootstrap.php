@@ -20,7 +20,7 @@ class ConsoleBootstrap extends Application
 {
 
     /**
-     * @var \Spryker\Zed\Console\Business\ConsoleFacade
+     * @var \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
     protected $facade;
 
@@ -90,7 +90,7 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @return \Spryker\Zed\Console\Business\ConsoleFacade
+     * @return \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
     protected function getFacade()
     {
