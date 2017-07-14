@@ -16,7 +16,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 
     const COMMANDS = 'commands';
     const EVENT_SUBSCRIBER = 'event_subscriber';
-    const SERVICE_PROVIDERS = 'service provider';
+    const SERVICE_PROVIDERS = 'service providers';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
