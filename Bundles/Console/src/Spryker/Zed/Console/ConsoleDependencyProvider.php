@@ -35,13 +35,15 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCommands(Container $container)
     {
         $container[self::COMMANDS] = function (Container $container) {
             return $this->getConsoleCommands($container);
         };
+
+        return $container;
     }
 
     /**
@@ -57,13 +59,15 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addEventSubscriber(Container $container)
     {
         $container[static::EVENT_SUBSCRIBER] = function (Container $container) {
             return $this->getEventSubscriber($container);
         };
+
+        return $container;
     }
 
     /**
@@ -79,13 +83,15 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addServiceProviders(Container $container)
     {
         $container[static::SERVICE_PROVIDERS] = function (Container $container) {
             return $this->getServiceProviders($container);
         };
+
+        return $container;
     }
 
     /**

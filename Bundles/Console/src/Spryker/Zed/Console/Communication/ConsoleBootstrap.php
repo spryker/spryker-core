@@ -22,12 +22,12 @@ class ConsoleBootstrap extends Application
     /**
      * @var \Spryker\Zed\Console\Business\ConsoleFacade
      */
-    private $facade;
+    protected $facade;
 
     /**
      * @var \Spryker\Shared\Kernel\Communication\Application
      */
-    private $application;
+    protected $application;
 
     /**
      * @param string $name
