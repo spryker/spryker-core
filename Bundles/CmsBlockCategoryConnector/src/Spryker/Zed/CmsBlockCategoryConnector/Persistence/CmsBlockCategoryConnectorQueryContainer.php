@@ -44,7 +44,7 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
             ->addJoin(
                 [SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY_TEMPLATE],
                 [SpyCategoryTableMap::COL_ID_CATEGORY, SpyCategoryTableMap::COL_FK_CATEGORY_TEMPLATE],
-                Criteria::RIGHT_JOIN
+                Criteria::JOIN
             );
     }
 
