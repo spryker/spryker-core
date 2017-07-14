@@ -35,7 +35,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Test
         $this->createCmsBlockCategoryConnectorFacade()
             ->syncCmsBlockCategoryPosition();
         $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
-            ->findCmsBlockCategoryPositionByName(CmsBlockCategoryConnectorConfig::CMS_BLOCK_CATEGORY_POSITION_MIDDLE);
+            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
 
         $categoryTransfer = $this->tester->haveCategory();
         $cmsBlockTransfer->setFkTemplate($categoryTransfer->getFkCategoryTemplate());
@@ -65,7 +65,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Test
             ->syncCmsBlockCategoryPosition();
 
         $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
-            ->findCmsBlockCategoryPositionByName(CmsBlockCategoryConnectorConfig::CMS_BLOCK_CATEGORY_POSITION_MIDDLE);
+            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
 
         $categoryTransfer = $this->tester->haveCategory();
         $cmsBlockTransfer->setFkTemplate($categoryTransfer->getFkCategoryTemplate());
@@ -91,7 +91,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Test
             ->syncCmsBlockCategoryPosition();
 
         $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
-            ->findCmsBlockCategoryPositionByName(CmsBlockCategoryConnectorConfig::CMS_BLOCK_CATEGORY_POSITION_MIDDLE);
+            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
 
         $this->assertNotEmpty($cmsBlockCategoryPositionTransfer);
     }
@@ -102,6 +102,14 @@ class CmsBlockCategoryConnectorFacadeTest extends Test
     protected function createCmsBlockCategoryConnectorFacade()
     {
         return $this->tester->getLocator()->cmsBlockCategoryConnector()->facade();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultPositionName()
+    {
+        return (new CmsBlockCategoryConnectorConfig())->getCmsBlockCategoryPositionDefault();
     }
 
 }

@@ -36,7 +36,7 @@ class ViewController extends AbstractController
             ->read($idCategory);
 
         if (!$categoryTransfer) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException('Category ID [' . $idCategory . '] is not found');
         }
 
         $localeTransfer = $this->getFactory()->getCurrentLocale();

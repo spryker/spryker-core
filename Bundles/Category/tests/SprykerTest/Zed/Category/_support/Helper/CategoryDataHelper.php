@@ -5,6 +5,7 @@ namespace SprykerTest\Zed\Category\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CategoryBuilder;
 use Generated\Shared\DataBuilder\NodeBuilder;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\CategoryConfig;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -25,9 +26,11 @@ class CategoryDataHelper extends Module
         $categoryTransfer->setCategoryNode($node);
         $categoryTransfer->setParentCategoryNode($node);
 
-        $categoryTemplateTransfer = $this->haveCategoryTemplate();
+        if (empty($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
+            $categoryTemplateTransfer = $this->haveCategoryTemplate();
+            $categoryTransfer->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate());
+        }
 
-        $categoryTransfer->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate());
         $this->getCategoryFacade()->create($categoryTransfer);
 
         return $categoryTransfer;

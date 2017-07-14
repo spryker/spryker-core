@@ -112,7 +112,7 @@ class CmsBlockType extends AbstractType
             return;
         }
 
-        $builder->add(static::FIELD_CATEGORIES . '_label', new LabelType(), [
+        $builder->add(static::FIELD_CATEGORIES . '_label', LabelType::class, [
             'text' => $this->formatWrongCategoryTemplateWarningMessage($warningCategoryList),
         ]);
     }
@@ -143,7 +143,7 @@ class CmsBlockType extends AbstractType
      */
     protected function addCategoryField(FormBuilderInterface $builder, array $categoryList, $idCmsBlockCategoryPosition, $positionName)
     {
-        $builder->add(static::FIELD_CATEGORIES . '_' . $idCmsBlockCategoryPosition, new Select2ComboBoxType(), [
+        $builder->add(static::FIELD_CATEGORIES . '_' . $idCmsBlockCategoryPosition, Select2ComboBoxType::class, [
             'property_path' => static::FIELD_CATEGORIES . '[' . $idCmsBlockCategoryPosition . ']',
             'label' => 'Categories: ' . $positionName,
             'choices' => $categoryList,

@@ -13,19 +13,9 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
 {
 
     /**
-     * Position at the top of a category page
+     * Default position
      */
-    const CMS_BLOCK_CATEGORY_POSITION_TOP = 'Top';
-
-    /**
-     * Position at the middle of a category page
-     */
-    const CMS_BLOCK_CATEGORY_POSITION_MIDDLE = 'Middle';
-
-    /**
-     * Position at the bottom of a category page
-     */
-    const CMS_BLOCK_CATEGORY_POSITION_BOTTOM = 'Bottom';
+    const CMS_BLOCK_CATEGORY_POSITION_DEFAULT = '';
 
     /**
      * A name of category template: Category and CmsBlock contents are together
@@ -43,10 +33,17 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
     public function getCmsBlockCategoryPositionList()
     {
         return [
-            static::CMS_BLOCK_CATEGORY_POSITION_TOP,
-            static::CMS_BLOCK_CATEGORY_POSITION_MIDDLE,
-            static::CMS_BLOCK_CATEGORY_POSITION_BOTTOM,
+            static::CMS_BLOCK_CATEGORY_POSITION_DEFAULT
         ];
     }
 
+    /**
+     * @return string
+     */
+    public function getCmsBlockCategoryPositionDefault()
+    {
+        $list = $this->getCmsBlockCategoryPositionList();
+
+        return array_shift($list);
+    }
 }

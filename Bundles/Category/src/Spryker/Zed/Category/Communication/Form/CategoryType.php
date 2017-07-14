@@ -238,7 +238,7 @@ class CategoryType extends AbstractType
      */
     protected function addTemplateField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(static::FIELD_TEMPLATE, new Select2ComboBoxType(), [
+        $builder->add(static::FIELD_TEMPLATE, Select2ComboBoxType::class, [
             'label' => 'Template',
             'choices' => $choices,
             'required' => true,

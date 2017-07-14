@@ -85,7 +85,7 @@ class CategoryType extends AbstractType
             $assignedForPosition = isset($assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition]) ?
                 $assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition] : [];
 
-            $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition, new Select2ComboBoxType(), [
+            $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition, Select2ComboBoxType::class, [
                 'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idCmsBlockCategoryPosition . ']',
                 'label' => 'CMS Blocks: ' . $positionName,
                 'choices' => $choices,
@@ -113,7 +113,7 @@ class CategoryType extends AbstractType
             return $this;
         }
 
-        $builder->add(static::FIELD_CMS_BLOCKS . '_label', new LabelType(), [
+        $builder->add(static::FIELD_CMS_BLOCKS . '_label', LabelType::class, [
             'text' => $this->formatWrongCmsBlockWarningMessage($wrongCmsBlockList),
         ]);
 
