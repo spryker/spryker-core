@@ -233,7 +233,7 @@
         <id-method-parameter value="spy_sales_expense_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_item_metadata" phpName="SpySalesOrderItemMetadata">
+    <table name="spy_sales_order_item_metadata">
         <column name="id_sales_order_item_metadata" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="super_attributes" type="LONGVARCHAR" required="true"/>

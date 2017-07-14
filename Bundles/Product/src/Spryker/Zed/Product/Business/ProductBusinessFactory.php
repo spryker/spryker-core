@@ -14,8 +14,6 @@ use Spryker\Zed\Product\Business\Attribute\AttributeLoader;
 use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
-use Spryker\Zed\Product\Business\Product\ItemMetadataHydrator;
-use Spryker\Zed\Product\Business\Product\ItemMetadataSaver;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenerator;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductConcreteNameGenerator;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterCreateObserverPluginManager;
@@ -31,7 +29,6 @@ use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteReadObserverPlugi
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
-use Spryker\Zed\Product\Business\Product\ProductIdHydrator;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
@@ -531,38 +528,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\ItemMetadataSaverInterface
-     */
-    public function createItemMetadataSaver()
-    {
-        return new ItemMetadataSaver(
-            $this->getUtilEncodingService(),
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\ItemMetadataHydratorInterface
-     */
-    public function createItemMetadataHydrator()
-    {
-        return new ItemMetadataHydrator(
-            $this->getUtilEncodingService(),
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductIdHydratorInterface
-     */
-    public function createProductIdHydrator()
-    {
-        return new ProductIdHydrator(
-            $this->getQueryContainer()
-        );
     }
 
 }

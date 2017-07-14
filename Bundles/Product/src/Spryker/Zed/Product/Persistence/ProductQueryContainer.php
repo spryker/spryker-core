@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -192,32 +191,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 ->filterByFkLocale($idLocale)
                 ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
-    }
-
-    /**
-     * @api
-     *
-     * @param int $fkSalesOrderItem
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery
-     */
-    public function queryProductMetadata($fkSalesOrderItem)
-    {
-        return $this->getFactory()->createProductMetadataQuery()->filterByFkSalesOrderItem($fkSalesOrderItem);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $attributeKeys
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
-     */
-    public function queryMatchingSuperAttributes(array $attributeKeys)
-    {
-        return $this->queryProductAttributeKey()
-            ->filterByIsSuper(true)
-            ->filterByKey($attributeKeys, Criteria::IN);
     }
 
 }

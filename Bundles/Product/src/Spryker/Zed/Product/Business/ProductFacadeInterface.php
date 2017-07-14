@@ -7,13 +7,10 @@
 
 namespace Spryker\Zed\Product\Business;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductFacadeInterface
@@ -693,42 +690,5 @@ interface ProductFacadeInterface
      * @return array
      */
     public function decodeProductAttributes($attributes);
-
-    /**
-     * Specification:
-     * - Saves product metadata information (image, super attributes) into a sales table to hydrate them later
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     *
-     * @return void
-     */
-    public function saveItemMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
-    /**
-     * Specification:
-     * - Hydrates product meta information (image, super attributes) into an order transfer
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateItemMetadata(OrderTransfer $orderTransfer);
-
-    /**
-     * Specification:
-     * - Hydrates product ids (abstract / concrete) into an order based on their sku
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateProductIds(OrderTransfer $orderTransfer);
 
 }

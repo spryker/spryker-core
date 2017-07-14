@@ -5,36 +5,36 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product;
+namespace Spryker\Zed\SalesProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
-use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
+use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface;
 
 class ItemMetadataHydrator implements ItemMetadataHydratorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
+     * @var \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     * @var \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface
      */
-    protected $productQueryContainer;
+    protected $salesProductConnectorQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface $SalesProductConnectorQueryContainer
      */
     public function __construct(
-        ProductToUtilEncodingInterface $utilEncodingService,
-        ProductQueryContainerInterface $productQueryContainer
+        SalesProductConnectorToUtilEncodingInterface $utilEncodingService,
+        SalesProductConnectorQueryContainerInterface $SalesProductConnectorQueryContainer
     ) {
-        $this->productQueryContainer = $productQueryContainer;
+        $this->salesProductConnectorQueryContainer = $SalesProductConnectorQueryContainer;
         $this->utilEncodingService = $utilEncodingService;
     }
 
@@ -65,7 +65,7 @@ class ItemMetadataHydrator implements ItemMetadataHydratorInterface
      */
     protected function findMetadata($idSalesOrderItem)
     {
-        $metadataEntity = $this->productQueryContainer->queryProductMetadata($idSalesOrderItem)->findOne();
+        $metadataEntity = $this->salesProductConnectorQueryContainer->queryProductMetadata($idSalesOrderItem)->findOne();
 
         return $metadataEntity;
     }

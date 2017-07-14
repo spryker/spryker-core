@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product;
+namespace Spryker\Zed\SalesProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface;
 
 class ProductIdHydrator implements ProductIdHydratorInterface
 {
 
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     * @var \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface
      */
-    protected $productQueryContainer;
+    protected $salesProductConnectorQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface $SalesProductConnectorQueryContainer
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
+    public function __construct(SalesProductConnectorQueryContainerInterface $SalesProductConnectorQueryContainer)
     {
-        $this->productQueryContainer = $productQueryContainer;
+        $this->salesProductConnectorQueryContainer = $SalesProductConnectorQueryContainer;
     }
 
     /**
@@ -54,7 +54,7 @@ class ProductIdHydrator implements ProductIdHydratorInterface
      */
     protected function findConcreteProduct($sku)
     {
-        return $this->productQueryContainer
+        return $this->salesProductConnectorQueryContainer
             ->queryProductConcreteBySku($sku)
             ->findOne();
     }

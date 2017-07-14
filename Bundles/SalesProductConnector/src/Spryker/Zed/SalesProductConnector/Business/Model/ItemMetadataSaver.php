@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product;
+namespace Spryker\Zed\SalesProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
-use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
+use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface;
 
 class ItemMetadataSaver implements ItemMetadataSaverInterface
 {
@@ -21,25 +21,25 @@ class ItemMetadataSaver implements ItemMetadataSaverInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
+     * @var \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface
      */
     private $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     * @var \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface
      */
-    protected $productQueryContainer;
+    protected $salesProductConnectorQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface $salesProductConnectorQueryContainer
      */
     public function __construct(
-        ProductToUtilEncodingInterface $utilEncodingService,
-        ProductQueryContainerInterface $productQueryContainer
+        SalesProductConnectorToUtilEncodingInterface $utilEncodingService,
+        SalesProductConnectorQueryContainerInterface $salesProductConnectorQueryContainer
     ) {
 
-        $this->productQueryContainer = $productQueryContainer;
+        $this->salesProductConnectorQueryContainer = $salesProductConnectorQueryContainer;
         $this->utilEncodingService = $utilEncodingService;
     }
 
@@ -111,7 +111,7 @@ class ItemMetadataSaver implements ItemMetadataSaverInterface
         $concreteAttributes = $itemTransfer->getConcreteAttributes();
         $attributeKeys = array_keys($concreteAttributes);
 
-        $matchingAttributes = $this->productQueryContainer->queryMatchingSuperAttributes($attributeKeys)->find();
+        $matchingAttributes = $this->salesProductConnectorQueryContainer->queryMatchingSuperAttributes($attributeKeys)->find();
         $superAttributes = $this->filterMatchingSuperAttributes($concreteAttributes, iterator_to_array($matchingAttributes));
 
         return $superAttributes;

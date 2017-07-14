@@ -12,7 +12,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
@@ -61,14 +60,6 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAttributeKeyQuery()
     {
         return SpyProductAttributeKeyQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery
-     */
-    public function createProductMetadataQuery()
-    {
-        return SpySalesOrderItemMetadataQuery::create();
     }
 
     /**

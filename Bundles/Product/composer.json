@@ -8,7 +8,6 @@
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0",
@@ -23,7 +22,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to save product specific information during checkout"
+    "spryker/checkout": "If you want to save product specific information during checkout",
+    "spryker/sales-product-connector": "If you want to save and display product specific metadata for orders"
   },
   "autoload": {
     "psr-4": {
