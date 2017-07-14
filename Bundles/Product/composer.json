@@ -21,10 +21,6 @@
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/checkout": "If you want to save product specific information during checkout",
-    "spryker/sales-product-connector": "If you want to save and display product specific metadata for orders"
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
