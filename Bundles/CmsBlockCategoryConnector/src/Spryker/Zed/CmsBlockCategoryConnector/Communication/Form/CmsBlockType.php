@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
-use Spryker\Zed\Gui\Communication\Form\Type\LabelType;
+use Spryker\Zed\Gui\Communication\Form\Type\ParagraphType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,7 +47,7 @@ class CmsBlockType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addWarningLabel(
+        $this->addWarningParagraphs(
             $builder,
             $options[static::OPTION_WRONG_TEMPLATE_CATEGORY_LIST],
             $options[static::OPTION_CATEGORY_ARRAY]
@@ -97,7 +97,7 @@ class CmsBlockType extends AbstractType
      *
      * @return void
      */
-    protected function addWarningLabel(FormBuilderInterface $builder, array $wrongCategoryList, array $categoryList)
+    protected function addWarningParagraphs(FormBuilderInterface $builder, array $wrongCategoryList, array $categoryList)
     {
         $warningCategoryList = [];
         foreach ($wrongCategoryList as $idCmsBlockCategoryPosition => $list) {
@@ -112,7 +112,7 @@ class CmsBlockType extends AbstractType
             return;
         }
 
-        $builder->add(static::FIELD_CATEGORIES . '_label', LabelType::class, [
+        $builder->add(static::FIELD_CATEGORIES . '_paragraph', ParagraphType::class, [
             'text' => $this->formatWrongCategoryTemplateWarningMessage($warningCategoryList),
         ]);
     }
@@ -124,7 +124,7 @@ class CmsBlockType extends AbstractType
      */
     protected function formatWrongCategoryTemplateWarningMessage(array $categoryList)
     {
-        $warningMessage = '<i class="fa fa-exclamation-triangle"></i>';
+        $warningMessage = '<i class="fa fa-exclamation-triangle"></i> ';
         $warningMessage .= 'Please note, for categories: ';
         $warningMessage .= implode(',', $categoryList);
         $warningMessage .= ', this block will not be displayed. To display the block please change category template to one of';

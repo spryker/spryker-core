@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
-use Spryker\Zed\Gui\Communication\Form\Type\LabelType;
+use Spryker\Zed\Gui\Communication\Form\Type\ParagraphType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -51,7 +51,7 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addWarningLabels($builder, $options[static::OPTION_WRONG_CMS_BLOCK_LIST]);
+        $this->addWarningParagraphs($builder, $options[static::OPTION_WRONG_CMS_BLOCK_LIST]);
         $this->addCmsBlockFields(
             $builder,
             $options[static::OPTION_CMS_BLOCK_POSITION_LIST],
@@ -110,13 +110,13 @@ class CategoryType extends AbstractType
      *
      * @return $this
      */
-    protected function addWarningLabels(FormBuilderInterface $builder, array $wrongCmsBlockList)
+    protected function addWarningParagraphs(FormBuilderInterface $builder, array $wrongCmsBlockList)
     {
         if (empty($wrongCmsBlockList)) {
             return $this;
         }
 
-        $builder->add(static::FIELD_CMS_BLOCKS . '_label', LabelType::class, [
+        $builder->add(static::FIELD_CMS_BLOCKS . '_paragraph', ParagraphType::class, [
             'text' => $this->formatWrongCmsBlockWarningMessage($wrongCmsBlockList),
         ]);
 

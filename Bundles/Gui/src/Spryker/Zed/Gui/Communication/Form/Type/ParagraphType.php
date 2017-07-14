@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LabelType extends AbstractType
+class ParagraphType extends AbstractType
 {
 
     const OPTION_TEXT = 'text';
@@ -36,6 +36,10 @@ class LabelType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired([
+            static::OPTION_TEXT,
+        ]);
+
         $resolver->setDefaults([
             static::OPTION_TEXT => 'Label text',
             'label' => false,
