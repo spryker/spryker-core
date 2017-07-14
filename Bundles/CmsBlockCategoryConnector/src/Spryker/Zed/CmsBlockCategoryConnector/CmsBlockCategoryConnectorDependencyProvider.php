@@ -27,6 +27,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_CATEGORY_CONNECTOR:QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_DATA_READER';
+    const SERVICE_ENCODE = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_ENCODE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +40,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
         $container = $this->addLocaleFacade($container);
         $container = $this->addCategoryQueryContainer($container);
         $container = $this->addCmsBlockQueryContainer($container);
+        $container = $this->addEncodeService($container);
 
         return $container;
     }
@@ -153,6 +155,20 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     {
         $container[static::QUERY_CONTAINER_CMS_BLOCK] = function (Container $container) {
             return new CmsBlockCategoryConnectorToCmsBlockQueryContainerBridge($container->getLocator()->cmsBlock()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addEncodeService(Container $container)
+    {
+        $container[static::SERVICE_ENCODE] = function (Container $container) {
+            return $container->getLocator()->utilEncoding()->service();
         };
 
         return $container;

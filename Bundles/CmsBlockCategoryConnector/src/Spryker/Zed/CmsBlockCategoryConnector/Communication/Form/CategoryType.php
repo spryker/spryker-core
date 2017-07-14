@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\Gui\Communication\Form\Type\LabelType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
@@ -31,6 +32,19 @@ class CategoryType extends AbstractType
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];
+
+    /**
+     * @var UtilEncodingServiceInterface
+     */
+    protected $encodingService;
+
+    /**
+     * @param UtilEncodingServiceInterface $encodingService
+     */
+    public function __construct(UtilEncodingServiceInterface $encodingService)
+    {
+        $this->encodingService = $encodingService;
+    }
 
     /**
      * @return string
@@ -92,8 +106,8 @@ class CategoryType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                 'attr' => [
-                    'data-assigned-cms-blocks' => \json_encode($assignedForPosition),
-                    'data-supported-templates' => \json_encode(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
+                    'data-assigned-cms-blocks' => $this->encodingService->encodeJson($assignedForPosition),
+                    'data-supported-templates' => $this->encodingService->encodeJson(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
                 ],
             ]);
         }
