@@ -27,7 +27,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_CATEGORY_CONNECTOR:QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_DATA_READER';
-    const SERVICE_ENCODE = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_ENCODE';
+    const SERVICE_UTIL_ENCODING = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -167,7 +167,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addEncodeService(Container $container)
     {
-        $container[static::SERVICE_ENCODE] = function (Container $container) {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
         };
 

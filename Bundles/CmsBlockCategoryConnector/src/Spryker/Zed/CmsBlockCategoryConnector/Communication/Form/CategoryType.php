@@ -95,8 +95,8 @@ class CategoryType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                 'attr' => [
-                    'data-assigned-cms-blocks' => $this->getFactory()->getEncodeService()->encodeJson($assignedForPosition),
-                    'data-supported-templates' => $this->getFactory()->getEncodeService()->encodeJson(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
+                    'data-assigned-cms-blocks' => $this->getFactory()->getUtilEncodingService()->encodeJson($assignedForPosition),
+                    'data-supported-templates' => $this->getFactory()->getUtilEncodingService()->encodeJson(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
                 ],
             ]);
         }

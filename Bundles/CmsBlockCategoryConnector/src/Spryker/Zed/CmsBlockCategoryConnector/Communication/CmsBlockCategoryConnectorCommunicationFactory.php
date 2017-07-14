@@ -70,9 +70,9 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     /**
      * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
-    public function getEncodeService()
+    public function getUtilEncodingService()
     {
-        return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::SERVICE_ENCODE);
+        return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
