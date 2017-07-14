@@ -64,9 +64,23 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
      */
     public function createCategoryType()
     {
-        return new CategoryType(
-            $this->getEncodeService()
-        );
+        return new CategoryType();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     */
+    public function getEncodeService()
+    {
+        return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::SERVICE_ENCODE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector
+     */
+    public function createCmsBlockCategoryStorageQueryContainer()
+    {
+        return new CmsBlockCategoryConnectorCollector();
     }
 
     /**
@@ -104,22 +118,6 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     protected function getCmsBlockQueryContainer()
     {
         return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::QUERY_CONTAINER_CMS_BLOCK);
-    }
-
-    /**
-     * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
-     */
-    protected function getEncodeService()
-    {
-        return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::SERVICE_ENCODE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector
-     */
-    public function createCmsBlockCategoryStorageQueryContainer()
-    {
-        return new CmsBlockCategoryConnectorCollector();
     }
 
 }

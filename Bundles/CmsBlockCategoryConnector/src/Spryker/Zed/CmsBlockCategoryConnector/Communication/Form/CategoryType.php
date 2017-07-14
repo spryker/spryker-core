@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\Gui\Communication\Form\Type\LabelType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
+ */
 class CategoryType extends AbstractType
 {
 
@@ -32,19 +34,6 @@ class CategoryType extends AbstractType
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];
-
-    /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
-     */
-    protected $encodingService;
-
-    /**
-     * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $encodingService
-     */
-    public function __construct(UtilEncodingServiceInterface $encodingService)
-    {
-        $this->encodingService = $encodingService;
-    }
 
     /**
      * @return string
@@ -106,8 +95,8 @@ class CategoryType extends AbstractType
                 'multiple' => true,
                 'required' => false,
                 'attr' => [
-                    'data-assigned-cms-blocks' => $this->encodingService->encodeJson($assignedForPosition),
-                    'data-supported-templates' => $this->encodingService->encodeJson(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
+                    'data-assigned-cms-blocks' => $this->getFactory()->getEncodeService()->encodeJson($assignedForPosition),
+                    'data-supported-templates' => $this->getFactory()->getEncodeService()->encodeJson(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
                 ],
             ]);
         }
