@@ -16,7 +16,7 @@ class CategoryConfig extends AbstractBundleConfig
     /**
      * Default available template for category
      */
-    const CATEGORY_TEMPLATE_DEFAULT = 'Catalog';
+    const CATEGORY_TEMPLATE_DEFAULT = 'Catalog (default)';
 
     /**
      * Used as `item_type` for touch mechanism.
