@@ -46,4 +46,5 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
 
         return array_shift($list);
     }
+
 }

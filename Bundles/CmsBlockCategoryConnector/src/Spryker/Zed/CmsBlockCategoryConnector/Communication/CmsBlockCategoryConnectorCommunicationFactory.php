@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication;
 
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider\CategoryDataProvider;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider\CmsBlockDataProvider;
@@ -108,7 +107,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return UtilEncodingServiceInterface
+     * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
     protected function getEncodeService()
     {

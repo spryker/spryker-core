@@ -34,12 +34,12 @@ class CategoryType extends AbstractType
     ];
 
     /**
-     * @var UtilEncodingServiceInterface
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
     protected $encodingService;
 
     /**
-     * @param UtilEncodingServiceInterface $encodingService
+     * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $encodingService
      */
     public function __construct(UtilEncodingServiceInterface $encodingService)
     {
