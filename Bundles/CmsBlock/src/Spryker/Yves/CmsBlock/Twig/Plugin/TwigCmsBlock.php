@@ -116,7 +116,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      */
     protected function filterPosition($positionName, array $availableBlockNames)
     {
-        if ($positionName && is_array(current($availableBlockNames))) {
+        if (is_array(current($availableBlockNames))) {
             return isset($availableBlockNames[$positionName]) ? $availableBlockNames[$positionName] : [];
         }
 

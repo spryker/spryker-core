@@ -3,7 +3,7 @@
   "description": "CmsBlockProductConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/cms-block": "^1.0.0",
+    "spryker/cms-block": "^2.0.0",
     "spryker/collector": "^5.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
