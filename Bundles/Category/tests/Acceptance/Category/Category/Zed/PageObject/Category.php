@@ -12,6 +12,7 @@ class Category
 
     const FORM_FIELD_CATEGORY_KEY = 'category[category_key]';
     const FORM_FIELD_CATEGORY_PARENT = 'category[parent_category_node]';
+    const FORM_FIELD_CATEGORY_TEMPLATE = 'category[fk_category_template]';
     const FORM_FIELD_CATEGORY_IS_ACTIVE = 'category[is_active]';
     const FORM_FIELD_CATEGORY_IS_IN_MENU = 'category[is_in_menu]';
     const FORM_FIELD_CATEGORY_IS_MAIN = 'category[is_main]';
@@ -35,6 +36,7 @@ class Category
         return [
             self::FORM_FIELD_CATEGORY_KEY => $categoryKey,
             self::FORM_FIELD_CATEGORY_PARENT => 1,
+            self::FORM_FIELD_CATEGORY_TEMPLATE => 1,
             'attributes' => [
                 'en_US' => self::getAttributesSelector($categoryKey, 'en_US', 0),
                 'de_DE' => self::getAttributesSelector($categoryKey, 'de_DE', 1),
