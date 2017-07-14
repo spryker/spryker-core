@@ -29,6 +29,8 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $this->getFacade()->syncCategoryTemplate();
+
         $idParentNode = $this->readParentNodeId($request);
         $form = $this->getFactory()->createCategoryCreateForm($idParentNode);
         $form->handleRequest($request);
