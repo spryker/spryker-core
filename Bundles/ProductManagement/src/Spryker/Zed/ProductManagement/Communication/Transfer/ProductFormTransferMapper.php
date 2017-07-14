@@ -217,6 +217,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $attributes = array_filter($attributes);
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->fromArray($data, true)
             ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
             ->setSku(
                 $this->utilTextService->generateSlug($data[ProductFormAdd::FIELD_SKU])
