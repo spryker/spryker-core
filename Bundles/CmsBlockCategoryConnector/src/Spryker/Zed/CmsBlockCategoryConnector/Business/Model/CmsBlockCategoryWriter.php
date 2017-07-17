@@ -196,13 +196,15 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
      * @param array $idCmsBlocks
      * @param array $idCategories
      * @param int $idCmsBlockCategoryPosition
-     * @param int|null $idCategoryTemplate
+     * @param int|null $idCategoryTemplateForced
      *
      * @return void
      */
-    protected function createRelations(array $idCmsBlocks, array $idCategories, $idCmsBlockCategoryPosition, $idCategoryTemplate = null)
+    protected function createRelations(array $idCmsBlocks, array $idCategories, $idCmsBlockCategoryPosition, $idCategoryTemplateForced = null)
     {
         foreach ($idCategories as $idCategory) {
+            $idCategoryTemplate = $idCategoryTemplateForced;
+
             if ($idCategoryTemplate === null) {
                 $spyCategory = $this->getCategoryById($idCategory);
                 $idCategoryTemplate = $spyCategory->getFkCategoryTemplate();

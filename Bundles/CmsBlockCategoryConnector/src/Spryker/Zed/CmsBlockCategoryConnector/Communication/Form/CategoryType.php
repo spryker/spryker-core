@@ -131,7 +131,7 @@ class CategoryType extends AbstractType
     protected function formatWrongCmsBlockWarningMessage(array $wrongCmsBlockList)
     {
         $warningMessage = '<i class="fa fa-exclamation-triangle"></i> ';
-        $warningMessage .= 'The following blocks are not published: ';
+        $warningMessage .= 'The following blocks are deactivated or not valid: ';
         $warningMessage .= implode(', ', $wrongCmsBlockList);
 
         return $warningMessage;

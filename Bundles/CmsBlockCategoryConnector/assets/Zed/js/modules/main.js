@@ -12,6 +12,11 @@ $(document).ready( function () {
         var idCategoryTemplate = $item.val();
 
         if (!idCategoryTemplate) {
+            $("select[id^='category_id_cms_blocks_']").each(function (key, selectCmsBlock) {
+                $(selectCmsBlock).prev('label').hide();
+                $(selectCmsBlock).next('.select2-container').hide();
+            });
+
             return;
         }
 
