@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Session\Exception;
 
-use \Exception;
+use Exception;
 
 class SessionHandlerNotFoundInSessionHandlerPoolException extends Exception
 {

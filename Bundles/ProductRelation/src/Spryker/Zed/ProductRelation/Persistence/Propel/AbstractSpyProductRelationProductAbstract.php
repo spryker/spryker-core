@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductRelation\Persistence\Propel;
 
-use \Orm\Zed\ProductRelation\Persistence\Base\SpyProductRelationProductAbstract as BaseSpyProductRelationProductAbstract;
+use Orm\Zed\ProductRelation\Persistence\Base\SpyProductRelationProductAbstract as BaseSpyProductRelationProductAbstract;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_relation_product_abstract' table.
