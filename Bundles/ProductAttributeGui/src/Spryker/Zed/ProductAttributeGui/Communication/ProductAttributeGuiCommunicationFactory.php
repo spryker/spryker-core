@@ -55,7 +55,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyFormDataProvider
+     * @return \Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyFormDataProviderInterface
      */
     public function createAttributeKeyFormDataProvider()
     {

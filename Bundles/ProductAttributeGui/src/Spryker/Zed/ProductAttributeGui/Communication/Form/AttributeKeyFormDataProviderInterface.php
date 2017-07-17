@@ -7,23 +7,17 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
-class AttributeKeyFormDataProvider implements AttributeKeyFormDataProviderInterface
+interface AttributeKeyFormDataProviderInterface
 {
 
     /**
      * @return array
      */
-    public function getData()
-    {
-        return [];
-    }
+    public function getData();
 
     /**
      * @return array
      */
-    public function getOptions()
-    {
-        return [];
-    }
+    public function getOptions();
 
 }
