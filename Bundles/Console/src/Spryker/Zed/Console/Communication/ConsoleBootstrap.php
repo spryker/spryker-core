@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Console\Communication;
 
-use Silex\Application as SilexApplication;
+use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Zed\Console\Business\Model\Environment;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,9 +20,14 @@ class ConsoleBootstrap extends Application
 {
 
     /**
-     * @var \Spryker\Zed\Console\Business\ConsoleFacade
+     * @var \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
-    private $facade;
+    protected $facade;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Communication\Application
+     */
+    protected $application;
 
     /**
      * @param string $name
@@ -36,8 +41,11 @@ class ConsoleBootstrap extends Application
         $this->setCatchExceptions(false);
         $this->addEventDispatcher();
 
-        $propelService = new PropelServiceProvider();
-        $propelService->boot(new SilexApplication());
+        $this->application = new SprykerApplication();
+
+        $this->registerServiceProviders();
+
+        Pimple::setApplication($this->application);
     }
 
     /**
@@ -51,6 +59,18 @@ class ConsoleBootstrap extends Application
             $eventDispatcher->addSubscriber($subscriber);
         }
         $this->setDispatcher($eventDispatcher);
+    }
+
+    /**
+     * @return void
+     */
+    private function registerServiceProviders()
+    {
+        $serviceProviders = $this->getFacade()->getServiceProviders();
+
+        foreach ($serviceProviders as $serviceProvider) {
+            $this->application->register($serviceProvider);
+        }
     }
 
     /**
@@ -70,7 +90,7 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @return \Spryker\Zed\Console\Business\ConsoleFacade
+     * @return \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
     protected function getFacade()
     {
@@ -106,6 +126,8 @@ class ConsoleBootstrap extends Application
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $output->writeln($this->getInfoText());
+
+        $this->application->boot();
 
         return parent::doRun($input, $output);
     }

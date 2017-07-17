@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PropelOrm\Business\Transaction;
 
-use \Closure;
+use Closure;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
 

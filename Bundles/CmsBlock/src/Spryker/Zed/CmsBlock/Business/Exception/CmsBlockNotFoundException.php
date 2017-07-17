@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Exception;
 
-use \Exception;
+use Exception;
 
 class CmsBlockNotFoundException extends Exception
 {

@@ -19,8 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class BundleCreateConsole extends Console
 {
 
-    const COMMAND_NAME = 'dev:bundle:create';
-    const ARGUMENT_BUNDLE = 'bundle';
+    const COMMAND_NAME = 'dev:module:create';
+    const ARGUMENT_BUNDLE = 'module';
     const ARGUMENT_FILE = 'file';
     const OPTION_FORCE = 'force';
 
@@ -33,9 +33,9 @@ class BundleCreateConsole extends Console
 
         $this->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Create basic core bundle (Spryker core dev only).');
+            ->setDescription('Create basic core module (Spryker core dev only).');
 
-        $this->addArgument(static::ARGUMENT_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle to create or sync. Use "all" for all.');
+        $this->addArgument(static::ARGUMENT_BUNDLE, InputArgument::REQUIRED, 'Name of core module to create or sync. Use "all" for all.');
         $this->addArgument(static::ARGUMENT_FILE, InputArgument::OPTIONAL, 'Name of file to create or sync.');
         $this->addOption(static::OPTION_FORCE, 'f', InputOption::VALUE_NONE, 'Force the command, will overwrite existing files.');
     }
@@ -51,9 +51,9 @@ class BundleCreateConsole extends Console
         $bundle = $this->input->getArgument(static::ARGUMENT_BUNDLE);
 
         if ($bundle !== 'all') {
-            $message = 'Create or update Spryker core bundle ' . $bundle;
+            $message = 'Create or update Spryker core module ' . $bundle;
         } else {
-            $message = 'Sync all Spryker core bundles';
+            $message = 'Sync all Spryker core modules';
         }
 
         $this->info($message);

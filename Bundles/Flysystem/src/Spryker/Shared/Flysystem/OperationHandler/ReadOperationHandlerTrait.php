@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\Flysystem\OperationHandler;
 
-use \Closure;
-use \Exception;
+use Closure;
+use Exception;
 use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
 
 trait ReadOperationHandlerTrait
