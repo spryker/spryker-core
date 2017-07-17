@@ -35,10 +35,6 @@ class ViewController extends AbstractController
         $categoryTransfer = $this->getFacade()
             ->read($idCategory);
 
-        if (!$categoryTransfer) {
-            throw new NotFoundHttpException('Category ID [' . $idCategory . '] is not found');
-        }
-
         $localeTransfer = $this->getFactory()->getCurrentLocale();
         $readPlugins = $this->getFactory()
             ->getRelationReadPluginStack();

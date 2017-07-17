@@ -108,7 +108,7 @@ class CmsBlockType extends AbstractType
             }
         }
 
-        if (empty($warningCategoryList)) {
+        if (!$warningCategoryList) {
             return;
         }
 

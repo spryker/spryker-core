@@ -112,7 +112,7 @@ class CategoryType extends AbstractType
      */
     protected function addWarningParagraphs(FormBuilderInterface $builder, array $wrongCmsBlockList)
     {
-        if (empty($wrongCmsBlockList)) {
+        if (!$wrongCmsBlockList) {
             return $this;
         }
 

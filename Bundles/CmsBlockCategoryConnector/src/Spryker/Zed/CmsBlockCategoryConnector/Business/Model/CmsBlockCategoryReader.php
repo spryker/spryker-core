@@ -85,21 +85,13 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
         $cmsBlockTransfers = [];
 
         foreach ($relations as $relation) {
-            $cmsBlockTransfer = $this->createCmsBlockTransfer();
+            $cmsBlockTransfer = new CmsBlockTransfer();
             $cmsBlockTransfer = $this->mapCmsBlockEntityToTransfer($relation->getCmsBlock(), $cmsBlockTransfer);
 
             $cmsBlockTransfers[] = $cmsBlockTransfer;
         }
 
         return $cmsBlockTransfers;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    protected function createCmsBlockTransfer()
-    {
-        return new CmsBlockTransfer();
     }
 
     /**

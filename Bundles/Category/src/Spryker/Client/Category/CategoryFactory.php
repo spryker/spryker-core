@@ -34,7 +34,7 @@ class CategoryFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Category\KeyBuilder\CategoryNodeKeyBuilder
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected function getCategoryNodeKeyBuilder()
     {
