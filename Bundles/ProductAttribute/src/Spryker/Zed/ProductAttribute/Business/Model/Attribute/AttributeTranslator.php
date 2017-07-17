@@ -61,34 +61,15 @@ class AttributeTranslator implements AttributeTranslatorInterface
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function saveProductManagementAttributeTranslation(ProductManagementAttributeTransfer $attributeTransfer)
     {
         $attributeTransfer->requireIdProductManagementAttribute();
 
-        $this->productAttributeQueryContainer
-            ->getConnection()
-            ->beginTransaction();
-
-        try {
-            $this->saveAttributeKeyTranslations($attributeTransfer);
-            $this->resetAttributeValueTranslations($attributeTransfer->getIdProductManagementAttribute());
-            $this->saveAttributeValueTranslations($attributeTransfer->getValues());
-
-            $this->productAttributeQueryContainer
-                ->getConnection()
-                ->commit();
-
-        } catch (\Exception $e) {
-            $this->productAttributeQueryContainer
-                ->getConnection()
-                ->rollBack();
-
-            throw $e;
-        }
+        $this->saveAttributeKeyTranslations($attributeTransfer);
+        $this->resetAttributeValueTranslations($attributeTransfer->getIdProductManagementAttribute());
+        $this->saveAttributeValueTranslations($attributeTransfer->getValues());
     }
 
     /**

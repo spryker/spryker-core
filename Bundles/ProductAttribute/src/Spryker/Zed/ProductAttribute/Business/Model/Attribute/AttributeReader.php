@@ -7,11 +7,6 @@
 
 namespace Spryker\Zed\ProductAttribute\Business\Model\Attribute;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
-use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTableMap;
-use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
-use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
-use PDO;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface;
@@ -54,17 +49,20 @@ class AttributeReader implements AttributeReaderInterface
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      * @param string $searchText
-     * @param int $offset
+     * @param int|null $offset
      * @param int $limit
      *
      * @return array
      */
-    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10)
+    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = null, $limit = 10)
     {
-        $query = $this->productAttributeQueryContainer
-            ->queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
-
-        $this->updateQuerySearchTextConditions($searchText, $query);
+        $query = $this->productAttributeQueryContainer->queryProductManagementAttributeValueWithTranslation(
+            $idProductManagementAttribute,
+            $idLocale,
+            $searchText,
+            $offset,
+            $limit
+        );
 
         $results = [];
         foreach ($query->find() as $attributeEntity) {
@@ -85,15 +83,24 @@ class AttributeReader implements AttributeReaderInterface
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      * @param string $searchText
+     * @param int|null $offset
+     * @param int $limit
      *
      * @return int
      */
-    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '')
-    {
-        $query = $this->productAttributeQueryContainer
-            ->queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
+    public function getAttributeValueSuggestionsCount(
+        $idProductManagementAttribute,
+        $idLocale,
+        $searchText = '',
+        $offset = null,
+        $limit = 10
+    ) {
 
-        $this->updateQuerySearchTextConditions($searchText, $query);
+        $query = $this->productAttributeQueryContainer->queryProductManagementAttributeValueWithTranslation(
+            $idProductManagementAttribute,
+            $idLocale,
+            $searchText
+        );
 
         return $query->count();
     }
@@ -115,34 +122,13 @@ class AttributeReader implements AttributeReaderInterface
     }
 
     /**
-     * @param string $searchText
-     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery $query
-     *
-     * @return void
-     */
-    protected function updateQuerySearchTextConditions($searchText, SpyProductManagementAttributeValueQuery $query)
-    {
-        $searchText = trim($searchText);
-        if ($searchText !== '') {
-            $term = '%' . mb_strtoupper($searchText) . '%';
-
-            $query
-                ->where('UPPER(' . SpyProductManagementAttributeValueTableMap::COL_VALUE . ') LIKE ?', $term, PDO::PARAM_STR)
-                ->_or()
-                ->where('UPPER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') LIKE ?', $term, PDO::PARAM_STR);
-        }
-    }
-
-    /**
      * @param int $idProductManagementAttribute
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute|null
      */
     protected function getAttributeEntity($idProductManagementAttribute)
     {
-        return $this->productAttributeQueryContainer
-            ->queryProductManagementAttribute()
-            ->findOneByIdProductManagementAttribute($idProductManagementAttribute);
+        return $this->productAttributeQueryContainer->queryProductManagementAttributeById($idProductManagementAttribute);
     }
 
     /**
@@ -154,16 +140,8 @@ class AttributeReader implements AttributeReaderInterface
     public function suggestUnusedKeys($searchText = '', $limit = 10)
     {
         $query = $this->productAttributeQueryContainer
-            ->queryUnusedProductAttributeKeys()
-            ->limit($limit)
+            ->queryUnusedProductAttributeKeys($searchText, $limit)
             ->setFormatter(new PropelArraySetFormatter());
-
-        $searchText = trim($searchText);
-        if ($searchText !== '') {
-            $term = '%' . mb_strtoupper($searchText) . '%';
-
-            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, PDO::PARAM_STR);
-        }
 
         return $query->find();
     }
@@ -174,8 +152,7 @@ class AttributeReader implements AttributeReaderInterface
     public function getProductAttributeCollection()
     {
         $collection = $this->productAttributeQueryContainer
-            ->queryProductManagementAttribute()
-            ->innerJoinSpyProductAttributeKey()
+            ->queryProductAttributeCollection()
             ->find();
 
         return $this->productAttributeTransferMapper->convertProductAttributeCollection($collection);

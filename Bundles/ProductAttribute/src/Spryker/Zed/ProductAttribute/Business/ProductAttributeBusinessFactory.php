@@ -113,14 +113,6 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function getCurrentLocale()
-    {
-        return $this->getLocaleFacade()->getCurrentLocale();
-    }
-
-    /**
      * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeValueWriterInterface
      */
     protected function createAttributeValueWriter()

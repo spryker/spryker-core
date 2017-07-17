@@ -71,17 +71,29 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
      *
      * @param int $idProductManagementAttribute
      * @param int $idLocale
+     * @param string $searchText
+     * @param int|null $offset
+     * @param int $limit
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
-    public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
+    public function queryProductManagementAttributeValueWithTranslation(
+        $idProductManagementAttribute,
+        $idLocale,
+        $searchText = '',
+        $offset = null,
+        $limit = 10
+    );
 
     /**
      * @api
      *
+     * @param string $searchText
+     * @param int $limit
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function queryUnusedProductAttributeKeys();
+    public function queryUnusedProductAttributeKeys($searchText = '', $limit = 10);
 
     /**
      * @api
@@ -101,5 +113,30 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryAttributeValues(array $attributes = [], $isSuper = null);
+
+    /**
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute
+     */
+    public function queryProductManagementAttributeById($idProductManagementAttribute);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
+     */
+    public function queryProductAttributeCollection();
+
+    /**
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
+     */
+    public function queryProductManagementAttributeValueByAttributeId($idProductManagementAttribute);
 
 }

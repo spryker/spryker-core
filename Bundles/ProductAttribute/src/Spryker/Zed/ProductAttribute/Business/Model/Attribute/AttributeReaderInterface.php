@@ -14,21 +14,29 @@ interface AttributeReaderInterface
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      * @param string $searchText
-     * @param int $offset
+     * @param int|null $offset
      * @param int $limit
      *
      * @return array
      */
-    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10);
+    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = null, $limit = 10);
 
     /**
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      * @param string $searchText
+     * @param int|null $offset
+     * @param int $limit
      *
      * @return int
      */
-    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '');
+    public function getAttributeValueSuggestionsCount(
+        $idProductManagementAttribute,
+        $idLocale,
+        $searchText = '',
+        $offset = null,
+        $limit = 10
+    );
 
     /**
      * @param int $idProductManagementAttribute

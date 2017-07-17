@@ -67,8 +67,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function queryProductManagementAttributeValueQuery()
     {
-        return $this->getFactory()
-            ->createProductManagementAttributeValueQuery();
+        return $this->getFactory()->createProductManagementAttributeValueQuery();
     }
 
     /**
@@ -78,8 +77,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function queryProductManagementAttributeValueTranslation()
     {
-        return $this->getFactory()
-            ->createProductManagementAttributeValueTranslationQuery();
+        return $this->getFactory()->createProductManagementAttributeValueTranslationQuery();
     }
 
     /**
@@ -91,8 +89,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function queryMetaAttributesByKeys(array $attributeKeys)
     {
-        return $this
-            ->queryProductAttributeKey()
+        return $this->queryProductAttributeKey()
             ->leftJoinSpyProductManagementAttribute()
             ->filterByKey_In($attributeKeys)
             ->setIgnoreCase(true);
@@ -108,8 +105,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function querySuggestKeys($searchText, $limit = 10)
     {
-        $query = $this
-            ->queryProductAttributeKey()
+        $query = $this->queryProductAttributeKey()
             ->filterByIsSuper(false)
             ->useSpyProductManagementAttributeQuery()
             ->endUse()
@@ -130,45 +126,78 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      *
      * @param int $idProductManagementAttribute
      * @param int $idLocale
+     * @param string $searchText
+     * @param int|null $offset
+     * @param int $limit
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
-    public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale)
-    {
-        return $this->getFactory()
+    public function queryProductManagementAttributeValueWithTranslation(
+        $idProductManagementAttribute,
+        $idLocale,
+        $searchText = '',
+        $offset = null,
+        $limit = 10
+    ) {
+
+        $query = $this->getFactory()
             ->createProductManagementAttributeValueQuery()
             ->clearSelectColumns()
             ->filterByFkProductManagementAttribute($idProductManagementAttribute)
-            ->addJoin(
-                [
-                    SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
-                    (int)$idLocale,
-                ],
-                [
+            ->addJoin([
+                SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
+                (int)$idLocale,
+            ], [
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
-                ],
-                Criteria::LEFT_JOIN
-            )
+                ], Criteria::LEFT_JOIN)
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
             ->withColumn($idLocale, 'fk_locale')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation');
+
+        $searchText = trim($searchText);
+        if ($searchText !== '') {
+            $term = '%' . mb_strtoupper($searchText) . '%';
+
+            $query->where('UPPER(' . SpyProductManagementAttributeValueTableMap::COL_VALUE . ') LIKE ?', $term, PDO::PARAM_STR)
+                ->_or()
+                ->where('UPPER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') LIKE ?', $term, PDO::PARAM_STR);
+        }
+
+        if ($offset !== null) {
+            $query->setOffset($offset);
+        }
+
+        $query->setLimit($limit);
+
+        return $query;
     }
 
     /**
      * @api
      *
+     * @param string $searchText
+     * @param int $limit
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function queryUnusedProductAttributeKeys()
+    public function queryUnusedProductAttributeKeys($searchText = '', $limit = 10)
     {
-        return $this
-            ->queryProductAttributeKey()
+        $query = $this->queryProductAttributeKey()
             ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
             ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
             ->filterByIdProductManagementAttribute(null)
             ->endUse();
+
+        $searchText = trim($searchText);
+        if ($searchText !== '') {
+            $term = '%' . mb_strtoupper($searchText) . '%';
+
+            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, PDO::PARAM_STR);
+        }
+
+        return $query;
     }
 
     /**
@@ -180,8 +209,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
     {
-        return $this
-            ->queryProductManagementAttributeValueTranslation()
+        return $this->queryProductManagementAttributeValueTranslation()
             ->joinSpyProductManagementAttributeValue()
             ->useSpyProductManagementAttributeValueQuery()
             ->filterByFkProductManagementAttribute($idProductManagementAttribute)
@@ -213,6 +241,46 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
         }
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute
+     */
+    public function queryProductManagementAttributeById($idProductManagementAttribute)
+    {
+        return $this
+            ->queryProductManagementAttribute()
+            ->findOneByIdProductManagementAttribute($idProductManagementAttribute);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
+     */
+    public function queryProductAttributeCollection()
+    {
+        return $this
+            ->queryProductManagementAttribute()
+            ->innerJoinSpyProductAttributeKey();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
+     */
+    public function queryProductManagementAttributeValueByAttributeId($idProductManagementAttribute)
+    {
+        return $this
+            ->queryProductManagementAttributeValue()
+            ->filterByFkProductManagementAttribute($idProductManagementAttribute);
     }
 
     /**

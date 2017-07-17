@@ -82,8 +82,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
         $result = [];
 
         $attributeValues = $this->productAttributeQueryContainer
-            ->queryProductManagementAttributeValue()
-            ->filterByFkProductManagementAttribute($idProductManagementAttribute)
+            ->queryProductManagementAttributeValueByAttributeId($idProductManagementAttribute)
             ->find();
 
         foreach ($attributeValues as $attributeValue) {

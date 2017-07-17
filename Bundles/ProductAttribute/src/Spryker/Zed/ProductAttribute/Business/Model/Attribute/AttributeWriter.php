@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Attribute;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
+use Spryker\Shared\ProductAttribute\Code\KeyBuilder\GlossaryKeyBuilderInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface;
@@ -54,7 +55,7 @@ class AttributeWriter implements AttributeWriterInterface
         ProductAttributeToProductInterface $productFacade,
         ProductAttributeToGlossaryInterface $glossaryFacade,
         AttributeValueWriterInterface $attributeValueWriter,
-        $glossaryKeyBuilder
+        GlossaryKeyBuilderInterface $glossaryKeyBuilder
     ) {
         $this->productAttributeQueryContainer = $productAttributeQueryContainer;
         $this->productFacade = $productFacade;
