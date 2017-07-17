@@ -52,11 +52,6 @@ class OptionsActionPostProcessorTest extends Test
 
         $apiResponseTransfer = $processor->process($apiRequestTransfer, $apiResponseTransfer);
         $this->assertSame(ApiConfig::HTTP_CODE_SUCCESS, $apiResponseTransfer->getCode());
-
-        $expected = [
-            'Allow' => 'FOO, BAR',
-        ];
-        $this->assertSame($expected, $apiResponseTransfer->getHeaders());
     }
 
 }
