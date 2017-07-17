@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
@@ -97,21 +98,26 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $categoryTransfer->requireIdCategory();
 
         $query = $this->queryContainer
-            ->queryCmsBlockCategoryConnectorByIdCategory($categoryTransfer->getIdCategory(), $categoryTransfer->getFkCategoryTemplate());
+            ->queryCmsBlockCategoryConnectorByIdCategory(
+                $categoryTransfer->getIdCategory(),
+                    $categoryTransfer->getFkCategoryTemplate()
+            );
 
-        $this->touchDeleteCategoryCmsBlockRelation($query);
-        $this->deleteRelations($query);
+        $relations = $query->find();
+
+        $this->deleteRelations($relations);
+        $this->touchDeleteCategoryCmsBlockRelation($relations);
     }
 
     /**
-     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery $query
+     * @param ObjectCollection|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector[] $relations
      *
      * @return void
      */
-    protected function touchDeleteCategoryCmsBlockRelation(SpyCmsBlockCategoryConnectorQuery $query)
+    protected function touchDeleteCategoryCmsBlockRelation(ObjectCollection $relations)
     {
-        foreach ($query->find() as $relation) {
-            $this->touchFacade->touchDeleted(
+        foreach ($relations as $relation) {
+            $this->touchFacade->touchActive(
                 CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR,
                 $relation->getFkCategory()
             );
@@ -176,18 +182,20 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $query = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock());
 
-        $this->touchDeleteCategoryCmsBlockRelation($query);
-        $this->deleteRelations($query);
+        $relations = $query->find();
+
+        $this->deleteRelations($relations);
+        $this->touchDeleteCategoryCmsBlockRelation($relations);
     }
 
     /**
-     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery $query
+     * @param ObjectCollection|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector[] $relations
      *
      * @return void
      */
-    protected function deleteRelations(SpyCmsBlockCategoryConnectorQuery $query)
+    protected function deleteRelations(ObjectCollection $relations)
     {
-        foreach ($query->find() as $relation) {
+        foreach ($relations as $relation) {
             $relation->delete();
         }
     }
