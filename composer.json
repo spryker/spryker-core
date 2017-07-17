@@ -142,6 +142,7 @@
     "spryker/refund": "*",
     "spryker/sales": "*",
     "spryker/sales-aggregator": "*",
+    "spryker/sales-product-connector": "*",
     "spryker/sales-split": "*",
     "spryker/search": "*",
     "spryker/sequence-number": "*",
