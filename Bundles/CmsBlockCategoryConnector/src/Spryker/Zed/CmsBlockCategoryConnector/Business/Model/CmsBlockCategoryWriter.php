@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
-use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchInterface;
@@ -100,7 +99,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $query = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCategory(
                 $categoryTransfer->getIdCategory(),
-                    $categoryTransfer->getFkCategoryTemplate()
+                $categoryTransfer->getFkCategoryTemplate()
             );
 
         $relations = $query->find();
@@ -110,7 +109,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param ObjectCollection|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector[] $relations
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector[] $relations
      *
      * @return void
      */
@@ -189,7 +188,7 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     }
 
     /**
-     * @param ObjectCollection|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector[] $relations
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector[] $relations
      *
      * @return void
      */
