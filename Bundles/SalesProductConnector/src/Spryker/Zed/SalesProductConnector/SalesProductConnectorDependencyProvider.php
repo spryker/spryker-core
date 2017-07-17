@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesProductConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesProductConnector\Dependency\QueryContainer\ProductToSalesProductConnectorQueryContainerBridge;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingBridge;
 
 class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
@@ -40,7 +41,7 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return $container->getLocator()->product()->queryContainer(); //new ProductToSalesProductConnectorQueryContainerBridge(
+            return new ProductToSalesProductConnectorQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
 
         return $container;
