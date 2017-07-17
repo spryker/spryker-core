@@ -99,8 +99,8 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $query = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCategory($categoryTransfer->getIdCategory(), $categoryTransfer->getFkCategoryTemplate());
 
-        $this->deleteRelations($query);
         $this->touchDeleteCategoryCmsBlockRelation($query);
+        $this->deleteRelations($query);
     }
 
     /**
@@ -176,8 +176,8 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
         $query = $this->queryContainer
             ->queryCmsBlockCategoryConnectorByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock());
 
-        $this->deleteRelations($query);
         $this->touchDeleteCategoryCmsBlockRelation($query);
+        $this->deleteRelations($query);
     }
 
     /**
