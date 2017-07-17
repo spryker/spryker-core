@@ -6,19 +6,17 @@
 composer require spryker/product-bundle
 ```
 
-The following information describes how to install the newly released ´Product´ bundle (01/2017).
-These instructions are only relevant if you need to add this bundle to an already installed version of the Framework.
-If you have not yet installed the Spryker Framework, ignore these instructions as include this bundle in all versions released after January 2017.
+The following information describes how to install the newly released ´Product´ module (01/2017).
+These instructions are only relevant if you need to add this module to an already installed version of the Framework.
+If you have not yet installed the Spryker Framework, ignore these instructions as include this module in all versions released after January 2017.
 
-You can download and install this bundle from: https://github.com/spryker/spryker/tree/feature/core-520-product-bundles/Bundles/ProductBundle
-
-Make sure you updated bundles to:
+Make sure you updated modules to:
 
 Calculation: >=2.2.0, ProductOption: >=3.1.0, SalesAggregator: >=3.1.0, Tax: >=3.1.0 ,  Cart: >= 2.4.0.  Those all minor releases are BC.
 
 ### Plugin configuration
 
-Plugin configuration is the process of incorporating the bundle into the Spryker framework by registering the bundle plugins.
+Plugin configuration is the process of incorporating the module into the project by registering the bundle plugins.
 
 **To Register the bundle's plugins**:
 
@@ -123,7 +121,7 @@ DROP TABLE IF EXISTS "spy_sales_order_item_bundle_item" CASCADE;`
 `DROP TABLE IF EXISTS "spy_product_to_bundle" CASCADE;`
 
 ### Yves/Project changes
-The following information describes the modifications that need to be done to Yves. You can find the Product bundle demo implementation and all code for Yves in the current Spryker demoshop.
+The following information describes the modifications that need to be done to Yves. You can find the Product module demo implementation and all code for Yves in the current Spryker demoshop.
 
 ### Cart
 The way the cart stores the quantity of items has changed.
@@ -148,7 +146,7 @@ instead of `CartOperationHandler` use `\Pyz\Yves\Cart\Handler\ProductBundleCartO
 
 
   * `src/Pyz/Yves/Cart/Theme/default/cart/parts/cart-item.twig` and `src/Pyz/Yves/Cart/Theme/default/cart/index.twig` - now handle product bundles.
-  * Project has received a new bundle called `ProductBundle` in which the bundle grouper is currently stored. This groups items for presentation in `\Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper`
+  * Project has received a new module called `ProductBundle` in which the bundle grouper is currently stored. This groups items for presentation in `\Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper`
 
 As result, views where items are displayed have also to be changed in `\Pyz\Yves\Cart\Controller\CartController::indexAction`:
 
@@ -203,7 +201,7 @@ $bundleItemGrouper = $this->getFactory()->createProductBundleGroupper();
        ];
 ```
 
-Take the new implementation for listing order items, including bundles `src/Pyz/Yves/Customer/Theme/default/order/partials/order-items.twig`.
+Take the new implementation for listing order items, including `src/Pyz/Yves/Customer/Theme/default/order/partials/order-items.twig`.
 
 
 ## Documentation
