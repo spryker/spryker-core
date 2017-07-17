@@ -17,6 +17,7 @@ class Category
     const FORM_FIELD_CATEGORY_IS_IN_MENU = 'category[is_in_menu]';
     const FORM_FIELD_CATEGORY_IS_MAIN = 'category[is_main]';
     const FORM_FIELD_CATEGORY_IS_CLICKABLE = 'category[is_clickable]';
+    const FORM_FIELD_CATEGORY_IS_SEARCHABLE= 'category[is_searchable]';
 
     const FORM_FIELD_CATEGORY_NAME_PATTERN = 'category[localized_attributes][%d][name]';
     const FORM_FIELD_CATEGORY_TITLE_PATTERN = 'category[localized_attributes][%d][meta_title]';

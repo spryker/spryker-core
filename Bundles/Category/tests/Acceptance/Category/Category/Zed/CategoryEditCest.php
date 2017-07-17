@@ -47,11 +47,11 @@ class CategoryEditCest
 
         $i->cantSeeCheckboxIsChecked(CategoryEditPage::FORM_FIELD_CATEGORY_IS_ACTIVE);
         $i->seeCheckboxIsChecked(CategoryEditPage::FORM_FIELD_CATEGORY_IS_IN_MENU);
-        $i->seeCheckboxIsChecked(CategoryEditPage::FORM_FIELD_CATEGORY_IS_CLICKABLE);
+        $i->seeCheckboxIsChecked(CategoryEditPage::FORM_FIELD_CATEGORY_IS_SEARCHABLE);
 
         $i->click(['name' => CategoryEditPage::FORM_FIELD_CATEGORY_IS_ACTIVE]);
         $i->click(['name' => CategoryEditPage::FORM_FIELD_CATEGORY_IS_IN_MENU]);
-        $i->click(['name' => CategoryEditPage::FORM_FIELD_CATEGORY_IS_CLICKABLE]);
+        $i->click(['name' => CategoryEditPage::FORM_FIELD_CATEGORY_IS_SEARCHABLE]);
 
         $i->click(CategoryEditPage::SUBMIT_BUTTON);
 
