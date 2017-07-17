@@ -79,4 +79,9 @@
         <property name="errors" type="CustomerError[]" singular="error" />
     </transfer>
 
+    <transfer name="Order">
+        <property name="fkCustomer" type="int" />
+        <property name="customer" type="Customer" />
+    </transfer>
+
 </transfers>

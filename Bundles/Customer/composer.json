@@ -28,7 +28,8 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins."
+    "spryker/checkout": "If you want to use Checkout plugins.",
+    "spryker/sales": "If you want customer information in sales."
   },
   "autoload": {
     "psr-4": {

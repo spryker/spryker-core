@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -116,7 +117,7 @@ class CategoryType extends AbstractType
                             if ($data instanceof CategoryTransfer) {
                                 $exists = $categoryQueryContainer
                                         ->queryCategoryByKey($key)
-                                        ->filterByIdCategory($data->getIdCategory(), '<>')
+                                        ->filterByIdCategory($data->getIdCategory(), Criteria::NOT_EQUAL)
                                         ->count() > 0;
                             }
 
