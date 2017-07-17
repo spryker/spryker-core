@@ -15,6 +15,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge;
+use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerBridge;
 
@@ -30,6 +31,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
     const QUERY_CONTAINER_SALES = 'sales query container';
     const QUERY_CONTAINER_STOCK = 'stock query container';
+    const QUERY_CONTAINER_PRODUCT = 'product query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -64,6 +66,10 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::QUERY_CONTAINER_STOCK] = function (Container $container) {
             return new ProductBundleToStockQueryContainerBridge($container->getLocator()->stock()->queryContainer());
+        };
+
+        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return new ProductBundleToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
 
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {

@@ -147,4 +147,22 @@ interface ProductOptionFacadeInterface
      */
     public function hydrateSalesOrderProductOptions(OrderTransfer $orderTransfer);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function sortSalesOrderItemsByOptions(OrderTransfer $orderTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateProductOptionGroupIds(OrderTransfer $orderTransfer);
+
 }

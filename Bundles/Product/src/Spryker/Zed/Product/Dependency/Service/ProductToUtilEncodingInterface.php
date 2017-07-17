@@ -9,7 +9,7 @@ interface ProductToUtilEncodingInterface
 {
 
     /**
-     * @param string $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
@@ -18,7 +18,7 @@ interface ProductToUtilEncodingInterface
     public function encodeJson($value, $options = null, $depth = null);
 
     /**
-     * @param array $jsonString
+     * @param string $jsonString
      * @param bool $assoc
      * @param int|null $depth
      * @param int|null $options

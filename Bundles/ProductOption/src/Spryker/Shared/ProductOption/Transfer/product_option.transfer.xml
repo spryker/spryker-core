@@ -5,6 +5,7 @@
 
     <transfer name="ProductOption">
         <property name="idProductOptionValue" type="int" />
+        <property name="idGroup" type="int" />
         <property name="groupName" type="string" />
         <property name="value" type="string" />
         <property name="sku" type="string" />

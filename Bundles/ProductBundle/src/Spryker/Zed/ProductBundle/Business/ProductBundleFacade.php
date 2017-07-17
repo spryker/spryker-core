@@ -248,4 +248,20 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
             ->hydrate($orderTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateProductBundleIds(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createProductBundlesIdHydrator()
+            ->hydrate($orderTransfer);
+    }
+
 }

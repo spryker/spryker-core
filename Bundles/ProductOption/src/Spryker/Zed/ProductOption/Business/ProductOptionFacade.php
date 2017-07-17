@@ -187,4 +187,30 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->hydrate($orderTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function sortSalesOrderItemsByOptions(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionItemSorter()
+            ->sortItemsBySkuAndOptions($orderTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateProductOptionGroupIds(OrderTransfer $orderTransfer)
+    {
+        return $this->getFactory()->createProductOptionGroupIdHydrator()->hydrateProductOptionGroupIds($orderTransfer);
+    }
+
 }

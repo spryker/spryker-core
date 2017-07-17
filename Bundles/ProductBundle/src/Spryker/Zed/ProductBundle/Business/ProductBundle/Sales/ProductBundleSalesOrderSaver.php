@@ -99,8 +99,25 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
         $salesOrderItemBundleEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
         $salesOrderItemBundleEntity->setNetPrice($itemTransfer->getUnitNetPrice());
         $salesOrderItemBundleEntity->setPrice($itemTransfer->getUnitPrice());
+        $salesOrderItemBundleEntity->setImage($this->determineImage($itemTransfer));
 
         return $salesOrderItemBundleEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return null|string
+     */
+    protected function determineImage(ItemTransfer $itemTransfer)
+    {
+        $images = $itemTransfer->getImages();
+
+        if (count($images) === 0) {
+            return null;
+        }
+
+        return $images[0]->getExternalUrlSmall();
     }
 
     /**
