@@ -10,6 +10,9 @@ namespace SprykerTest\Zed\ProductNew\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Shared\ProductNew\ProductNewConfig;
+use Spryker\Zed\ProductNew\Business\ProductNewBusinessFactory;
+use Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -44,7 +47,7 @@ class ProductNewFacadeTest extends Test
         ]);
 
         // Act
-        $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()->findProductLabelProductAbstractRelationChanges();
+        $productLabelProductAbstractRelationTransfers = $this->getFacade()->findProductLabelProductAbstractRelationChanges();
 
         // Assert
         $this->assertCount(1, $productLabelProductAbstractRelationTransfers, 'Result should have been matched expected number of label relation changes.');
@@ -76,7 +79,7 @@ class ProductNewFacadeTest extends Test
         ]);
 
         // Act
-        $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()->findProductLabelProductAbstractRelationChanges();
+        $productLabelProductAbstractRelationTransfers = $this->getFacade()->findProductLabelProductAbstractRelationChanges();
 
         // Assert
         $this->assertCount(0, $productLabelProductAbstractRelationTransfers, 'Result should have been matched expected number of label relation changes.');
@@ -95,11 +98,13 @@ class ProductNewFacadeTest extends Test
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-1 minute')),
             ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('+1 minute')),
         ]);
-
-        $this->tester->haveProductLabelToAbstractProductRelation($productLabelTransfer->getIdProductLabel(), $productAbstractTransfer->getIdProductAbstract());
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productAbstractTransfer->getIdProductAbstract()
+        );
 
         // Act
-        $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()->findProductLabelProductAbstractRelationChanges();
+        $productLabelProductAbstractRelationTransfers = $this->getFacade()->findProductLabelProductAbstractRelationChanges();
 
         // Assert
         $this->assertCount(0, $productLabelProductAbstractRelationTransfers, 'Result should have been matched expected number of label relation changes.');
@@ -118,11 +123,13 @@ class ProductNewFacadeTest extends Test
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-2 minute')),
             ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('-1 minute')),
         ]);
-
-        $this->tester->haveProductLabelToAbstractProductRelation($productLabelTransfer->getIdProductLabel(), $productAbstractTransfer->getIdProductAbstract());
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productAbstractTransfer->getIdProductAbstract()
+        );
 
         // Act
-        $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()->findProductLabelProductAbstractRelationChanges();
+        $productLabelProductAbstractRelationTransfers = $this->getFacade()->findProductLabelProductAbstractRelationChanges();
 
         // Assert
         $this->assertCount(1, $productLabelProductAbstractRelationTransfers, 'Result should have been matched expected number of label relation changes.');
@@ -148,11 +155,13 @@ class ProductNewFacadeTest extends Test
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-1 minute')),
             ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('+1 minute')),
         ]);
-
-        $this->tester->haveProductLabelToAbstractProductRelation($productLabelTransfer->getIdProductLabel(), $productAbstractTransfer->getIdProductAbstract());
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productAbstractTransfer->getIdProductAbstract()
+        );
 
         // Act
-        $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()->findProductLabelProductAbstractRelationChanges();
+        $productLabelProductAbstractRelationTransfers = $this->getFacade()->findProductLabelProductAbstractRelationChanges();
 
         // Assert
         $this->assertCount(0, $productLabelProductAbstractRelationTransfers, 'Result should have been matched expected number of label relation changes.');
@@ -173,7 +182,7 @@ class ProductNewFacadeTest extends Test
         ]);
 
         // Act
-        $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()->findProductLabelProductAbstractRelationChanges();
+        $productLabelProductAbstractRelationTransfers = $this->getFacade()->findProductLabelProductAbstractRelationChanges();
 
         // Assert
         $this->assertCount(0, $productLabelProductAbstractRelationTransfers, 'Result should have been matched expected number of label relation changes.');
@@ -185,6 +194,27 @@ class ProductNewFacadeTest extends Test
     protected function getLabelNewName()
     {
         return 'TEST_NEW_LABEL';
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductNew\Business\ProductNewFacadeInterface
+     */
+    protected function getFacade()
+    {
+        $configMock = $this->getMockBuilder(ProductNewConfig::class)->getMock();
+        $configMock->method('getLabelNewName')->willReturn($this->getLabelNewName());
+
+        $factoryMock = $this->getMockBuilder(ProductNewBusinessFactory::class)
+            ->setMethods(['createProductNewConfig'])
+            ->getMock();
+        $factoryMock->method('createProductNewConfig')->willReturn($configMock);
+
+        $factoryMock->setQueryContainer(new ProductNewQueryContainer());
+
+        $facade = $this->tester->getFacade();
+        $facade->setFactory($factoryMock);
+
+        return $facade;
     }
 
 }

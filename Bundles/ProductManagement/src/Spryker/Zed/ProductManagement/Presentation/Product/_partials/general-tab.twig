@@ -27,7 +27,10 @@
     {% endif %}
 {% endfor %}
 
-<p>
-{{ form_row(form.new_from) }}
-{{ form_row(form.new_to) }}
-</p>
+{% if form.new_from is defined %}
+    <p>{{ form_row(form.new_from) }}</p>
+{% endif %}
+
+{% if form.new_to is defined %}
+    <p>{{ form_row(form.new_to) }}</p>
+{% endif %}

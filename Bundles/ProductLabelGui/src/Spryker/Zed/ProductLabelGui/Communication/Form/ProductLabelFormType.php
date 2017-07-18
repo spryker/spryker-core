@@ -27,7 +27,6 @@ class ProductLabelFormType extends AbstractType
 
     const FIELD_NAME = 'name';
     const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
-    const FIELD_DYNAMIC_FLAG = 'isDynamic';
     const FIELD_STATUS_FLAG = 'isActive';
     const FIELD_VALID_FROM_DATE = 'validFrom';
     const FIELD_VALID_TO_DATE = 'validTo';
@@ -93,7 +92,6 @@ class ProductLabelFormType extends AbstractType
             ->addNameField($builder)
             ->addStatusFlagField($builder)
             ->addExclusiveFlagField($builder)
-            ->addDynamicFlagField($builder)
             ->addValidFromField($builder)
             ->addValidToField($builder)
             ->addFontEndReferenceField($builder)
@@ -135,28 +133,6 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => 'Is Exclusive',
                 'required' => false,
-            ]
-        );
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addDynamicFlagField(FormBuilderInterface $builder)
-    {
-        $builder->add(
-            static::FIELD_DYNAMIC_FLAG,
-            CheckboxType::class,
-            [
-                'label' => 'Is Dynamic',
-                'required' => false,
-                'attr' => [
-                    'class' => 'js-is-dynamic-label',
-                ],
             ]
         );
 

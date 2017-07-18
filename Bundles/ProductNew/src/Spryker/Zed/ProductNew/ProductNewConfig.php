@@ -11,13 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductNewConfig extends AbstractBundleConfig
 {
-
-    /**
-     * @return string
-     */
-    public function getLabelNewName()
-    {
-        return 'NEW';
-    }
-
 }

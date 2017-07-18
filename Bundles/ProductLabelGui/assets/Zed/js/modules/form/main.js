@@ -6,7 +6,6 @@
 'use strict';
 
 require('ZedGui');
-require('./dynamic-label');
 var datePicker = require('./date-picker');
 var availableProductTable = require('./available-product-table');
 var assignedProductTable = require('./assigned-product-table');
