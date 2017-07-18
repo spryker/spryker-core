@@ -35,6 +35,20 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return ShipmentCarrierTransfer[]
+     */
+    public function findCarriers()
+    {
+        return $this->getFactory()
+            ->createShipmentCarrierReader()
+            ->findCarriers();
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer

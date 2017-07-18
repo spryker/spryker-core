@@ -26,6 +26,16 @@ interface ShipmentFacadeInterface
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer);
 
     /**
+     * Specification:
+     * - Finds list of carrier transfers from database
+     *
+     * @api
+     *
+     * @return ShipmentCarrierTransfer[]
+     */
+    public function findCarriers();
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer

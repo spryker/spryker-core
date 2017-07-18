@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
+use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
@@ -28,6 +29,16 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createCarrier()
     {
         return new Carrier();
+    }
+
+    /**
+     * @return ShipmentCarrierReader
+     */
+    public function createShipmentCarrierReader()
+    {
+        return new ShipmentCarrierReader(
+            $this->getQueryContainer()
+        );
     }
 
     /**
