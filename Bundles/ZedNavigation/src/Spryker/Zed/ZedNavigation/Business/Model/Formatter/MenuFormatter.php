@@ -90,7 +90,6 @@ class MenuFormatter implements MenuFormatterInterface
         $formattedPages = [];
         $currentLevel++;
 
-
         foreach ($pages as $page) {
 
             $formattedPage = $this->formatPage($page);
@@ -111,14 +110,13 @@ class MenuFormatter implements MenuFormatterInterface
                 $children = [];
             }
 
-            if($includeInvisible){
+            if ($includeInvisible) {
                 $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
-            }else{
+            } else {
                 if (!isset($page[self::VISIBLE]) || (isset($page[self::VISIBLE]) && $page[self::VISIBLE])) {
                     $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
                 }
             }
-
 
         }
 
