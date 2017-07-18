@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -30,6 +31,8 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
+     * @throws \Spryker\Zed\CmsBlockCategoryConnector\Business\Exception\CmsBlockCategoryPositionNotFound
+     *
      * @return void
      */
     public function updateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer)
@@ -37,6 +40,24 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
         $this->getFactory()
             ->createCmsBlockCategoryWrite()
             ->updateCmsBlock($cmsBlockTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\CmsBlockCategoryConnector\Business\Exception\CmsBlockCategoryPositionNotFound
+     *
+     * @return void
+     */
+    public function updateCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer)
+    {
+        $this->getFactory()
+            ->createCmsBlockCategoryWrite()
+            ->updateCategory($categoryTransfer);
     }
 
     /**
@@ -70,6 +91,51 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
         return $this->getFactory()
             ->createCmsBlockCategoryReader()
             ->getRenderedCategoryList($idCmsBlock, $idLocale);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     * @param int $idCategoryTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     */
+    public function getCmsBlockCollection($idCategory, $idCategoryTemplate)
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryReader()
+            ->getCmsBlockCollection($idCategory, $idCategoryTemplate);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncCmsBlockCategoryPosition()
+    {
+        $this->getFactory()
+            ->createCmsBlockCategoryPositionSync()
+            ->syncFromConfig();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCategoryPositionTransfer|null
+     */
+    public function findCmsBlockCategoryPositionByName($name)
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryPositionReader()
+            ->findCmsBlockCategoryPositionByName($name);
     }
 
     /**

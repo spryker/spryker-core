@@ -24,6 +24,13 @@
 
         <property name="parentCategoryNode" type="Node" />
         <property name="extraParents" singular="extraParent" type="Node[]" />
+        <property name="fkCategoryTemplate" type="int" />
+    </transfer>
+
+    <transfer name="CategoryTemplate">
+        <property name="idCategoryTemplate" type="int" />
+        <property name="name" type="string" />
+        <property name="templatePath" type="string" />
     </transfer>
 
     <transfer name="Node">

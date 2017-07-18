@@ -25,6 +25,7 @@ class CategoryCreatePage extends Category
         return [
             self::FORM_FIELD_CATEGORY_KEY => $categoryKey,
             self::FORM_FIELD_CATEGORY_PARENT => 1,
+            self::FORM_FIELD_CATEGORY_TEMPLATE => 1,
             'attributes' => [
                 'en_US' => self::getAttributesSelector($categoryKey, 'en_US', 0),
                 'de_DE' => self::getAttributesSelector($categoryKey, 'de_DE', 1),

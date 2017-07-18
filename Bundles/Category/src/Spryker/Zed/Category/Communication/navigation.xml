@@ -9,5 +9,32 @@
         <order>0</order>
         <shortcut>c</shortcut>
         <icon>fa-sitemap</icon>
+
+        <pages>
+            <view-category>
+                <label>View Category</label>
+                <title>View Category</title>
+                <bundle>category</bundle>
+                <controller>view</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </view-category>
+            <edit-category>
+                <label>Edit Category</label>
+                <title>Edit Category</title>
+                <bundle>category</bundle>
+                <controller>edit</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </edit-category>
+            <create-category>
+                <label>Category</label>
+                <title>Create Category</title>
+                <bundle>category</bundle>
+                <controller>create</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </create-category>
+        </pages>
     </category>
 </config>

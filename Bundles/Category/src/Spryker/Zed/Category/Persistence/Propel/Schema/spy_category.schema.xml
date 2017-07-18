@@ -8,9 +8,16 @@
         <column name="is_in_menu" default="true" type="BOOLEAN" />
         <column name="is_clickable" default="true" type="BOOLEAN" />
         <column name="is_searchable" default="true" type="BOOLEAN" />
+        <column name="fk_category_template" type="INTEGER" />
+
+        <foreign-key foreignTable="spy_category_template" phpName="CategoryTemplate">
+            <reference local="fk_category_template" foreign="id_category_template"/>
+        </foreign-key>
+
         <unique name="spy_category-category_key">
             <unique-column name="category_key"/>
         </unique>
+
         <id-method-parameter value="spy_category_pk_seq"/>
     </table>
 

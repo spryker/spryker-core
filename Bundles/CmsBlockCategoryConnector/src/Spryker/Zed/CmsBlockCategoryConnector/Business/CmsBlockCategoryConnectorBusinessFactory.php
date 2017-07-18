@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollector;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionReader;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionSync;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryReader;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriter;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
@@ -28,7 +30,18 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockCategoryWriter(
             $this->getQueryContainer(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getCategoryQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionReaderInterface
+     */
+    public function createCmsBlockCategoryPositionReader()
+    {
+        return new CmsBlockCategoryPositionReader(
+            $this->getQueryContainer()
         );
     }
 
@@ -55,6 +68,17 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
         $cmsBlockCategoryCollector->setQueryBuilder($this->createCmsBlockCategoryStorageQueryContainer());
 
         return $cmsBlockCategoryCollector;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionSyncInterface
+     */
+    public function createCmsBlockCategoryPositionSync()
+    {
+        return new CmsBlockCategoryPositionSync(
+            $this->getQueryContainer(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -87,6 +111,14 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getTouchQueryContainer()
     {
         return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::QUERY_CONTAINER_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface
+     */
+    protected function getCategoryQueryContainer()
+    {
+        return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
     /**

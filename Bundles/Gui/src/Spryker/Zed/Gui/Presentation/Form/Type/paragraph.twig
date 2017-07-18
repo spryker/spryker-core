@@ -1,0 +1,7 @@
+{% block label_widget %}
+    {% set css = '' %}
+    {% if form.vars.attr.class is defined %}
+        {% set css =  form.vars.attr.class %}
+    {% endif %}
+    <p class="{{ css }}">{{ form.vars.text | raw }}</p>
+{% endblock label_widget %}

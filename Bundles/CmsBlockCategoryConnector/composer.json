@@ -3,16 +3,17 @@
   "description": "CmsBlockCategoryConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/category": "^3.0.0",
-    "spryker/cms-block": "^1.0.0",
+    "spryker/category": "^4.0.0",
+    "spryker/cms-block": "^2.0.0",
     "spryker/collector": "^5.0.0",
-    "spryker/gui": "^3.0.0",
+    "spryker/gui": "^3.6.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0",
-    "spryker/util-data-reader": "^1.0.0"
+    "spryker/util-data-reader": "^1.0.0",
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

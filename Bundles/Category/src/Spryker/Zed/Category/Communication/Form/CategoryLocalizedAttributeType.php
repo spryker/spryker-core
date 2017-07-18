@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryLocalizedAttributeType extends AbstractType
@@ -44,18 +43,6 @@ class CategoryLocalizedAttributeType extends AbstractType
         $resolver->setDefaults([
             'data_class' => CategoryLocalizedAttributesTransfer::class,
         ]);
-    }
-
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 
     /**

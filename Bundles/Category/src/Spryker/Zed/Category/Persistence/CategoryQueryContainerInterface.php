@@ -228,7 +228,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $categoryKey
+     * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
@@ -463,5 +463,30 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryResourceUrlByCategoryNodeId($idCategoryNode);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplate();
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryTemplate
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplateById($idCategoryTemplate);
+
+    /**
+     * @api
+     *
+     * @param string $nameCategoryTemplate
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplateByName($nameCategoryTemplate);
 
 }

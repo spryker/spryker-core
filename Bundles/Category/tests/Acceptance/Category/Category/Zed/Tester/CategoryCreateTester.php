@@ -26,6 +26,7 @@ class CategoryCreateTester extends ZedAcceptanceTester
         $category = CategoryCreatePage::getCategorySelectorsWithValues($categoryName);
         $i->fillField(CategoryCreatePage::FORM_FIELD_CATEGORY_KEY, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_KEY]);
         $i->selectOption(CategoryCreatePage::FORM_FIELD_CATEGORY_PARENT, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_PARENT]);
+        $i->selectOption(CategoryCreatePage::FORM_FIELD_CATEGORY_TEMPLATE, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_TEMPLATE]);
 
         $localizedAttributes = $category['attributes'];
 

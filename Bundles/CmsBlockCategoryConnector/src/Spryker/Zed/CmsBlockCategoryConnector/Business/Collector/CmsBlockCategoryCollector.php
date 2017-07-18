@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Collector;
 
-use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConstants;
+use Spryker\Shared\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -22,7 +22,7 @@ class CmsBlockCategoryCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
-        return $this->extractCmsBlockNames($collectItemData[CmsBlockCategoryConnectorCollector::COL_CMS_BLOCK_NAMES]);
+        return $this->extractCmsBlockNames($collectItemData[CmsBlockCategoryConnectorCollector::COL_POSITIONS]);
     }
 
     /**
@@ -30,7 +30,7 @@ class CmsBlockCategoryCollector extends AbstractStoragePropelCollector
      */
     protected function collectResourceType()
     {
-        return CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR;
+        return CmsBlockCategoryConnectorConfig::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR;
     }
 
     /**
@@ -41,7 +41,18 @@ class CmsBlockCategoryCollector extends AbstractStoragePropelCollector
     protected function extractCmsBlockNames($cmsBlockNames)
     {
         $separator = ',';
-        return explode($separator, trim($cmsBlockNames));
+        $positions = explode($separator, trim($cmsBlockNames));
+
+        $cmsBlockNames = [];
+        foreach ($positions as $position) {
+            $positionCmsBlock = explode(':', $position);
+
+            if (isset($positionCmsBlock[0], $positionCmsBlock[1])) {
+                $cmsBlockNames[$positionCmsBlock[0]][] = $positionCmsBlock[1];
+            }
+        }
+
+        return $cmsBlockNames;
     }
 
     /**

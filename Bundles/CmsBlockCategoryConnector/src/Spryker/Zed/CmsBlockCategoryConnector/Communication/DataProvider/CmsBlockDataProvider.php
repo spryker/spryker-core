@@ -8,12 +8,13 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockCategoryType;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
+use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockType;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
 
-class CmsBlockCategoryDataProvider
+class CmsBlockDataProvider
 {
 
     /**
@@ -30,6 +31,11 @@ class CmsBlockCategoryDataProvider
      * @var \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface
      */
     protected $localeFacade;
+
+    /**
+     * @var array
+     */
+    protected $idCategoriesWithWrongTemplate = [];
 
     /**
      * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainer
@@ -53,7 +59,9 @@ class CmsBlockCategoryDataProvider
     {
         return [
             'data_class' => CmsBlockTransfer::class,
-            CmsBlockCategoryType::OPTION_CATEGORY_ARRAY => $this->getCategoryList(),
+            CmsBlockType::OPTION_CATEGORY_ARRAY => $this->getCategoryList(),
+            CmsBlockType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList(),
+            CmsBlockType::OPTION_WRONG_TEMPLATE_CATEGORY_LIST => $this->getWrongTemplateCategoryList(),
         ];
     }
 
@@ -82,10 +90,43 @@ class CmsBlockCategoryDataProvider
      */
     protected function getAssignedCategoryIds($idCmsBlock)
     {
-        return $this->cmsBlockCategoryConnectorQueryContainer
+        $query = $this->cmsBlockCategoryConnectorQueryContainer
             ->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
-            ->find()
-            ->getColumnValues('fkCategory');
+            ->find();
+
+        $assignedIdCategories = [];
+
+        foreach ($query as $item) {
+            $assignedIdCategories[$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCategory();
+            $this->assertCmsBlockTemplate($item);
+        }
+
+        return $assignedIdCategories;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getWrongTemplateCategoryList()
+    {
+        return $this->idCategoriesWithWrongTemplate;
+    }
+
+    /**
+     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector
+     *
+     * @return void
+     */
+    protected function assertCmsBlockTemplate(SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector)
+    {
+        $categoryTemplateName = $spyCmsBlockCategoryConnector->getCategory()
+            ->getCategoryTemplate()
+            ->getName();
+
+        if (!in_array($categoryTemplateName, CmsBlockType::SUPPORTED_CATEGORY_TEMPLATE_LIST)) {
+            $this->idCategoriesWithWrongTemplate[$spyCmsBlockCategoryConnector->getFkCmsBlockCategoryPosition()][] =
+                $spyCmsBlockCategoryConnector->getFkCategory();
+        }
     }
 
     /**
@@ -103,10 +144,24 @@ class CmsBlockCategoryDataProvider
         /** @var \Orm\Zed\Category\Persistence\SpyCategory $spyCategory */
         foreach ($categoryCollection as $spyCategory) {
             $categoryName = $spyCategory->getLocalisedAttributes($idLocale)->getFirst()->getName();
-            $categoryList[$spyCategory->getIdCategory()] = $categoryName;
+            $categoryTemplate = $spyCategory->getCategoryTemplate()->getName();
+
+            $categoryList[$spyCategory->getIdCategory()] = $categoryName . ' (' . $categoryTemplate . ')';
         }
 
         return $categoryList;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPositionList()
+    {
+        return $this->cmsBlockCategoryConnectorQueryContainer
+            ->queryCmsBlockCategoryPosition()
+            ->orderByIdCmsBlockCategoryPosition()
+            ->find()
+            ->toKeyValue('idCmsBlockCategoryPosition', 'name');
     }
 
 }

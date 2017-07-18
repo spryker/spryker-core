@@ -10,16 +10,6 @@ namespace Spryker\Shared\Category;
 interface CategoryConstants
 {
 
-    /**
-     * @deprecated Use `CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE` instead.
-     */
-    const RESOURCE_TYPE_CATEGORY_NODE = 'categorynode';
-
-    /**
-     * @deprecated Use `CategoryConfig::RESOURCE_TYPE_NAVIGATION` instead.
-     */
-    const RESOURCE_TYPE_NAVIGATION = 'navigation';
-
     const PARAM_ID_NODE = 'id-node';
     const PARAM_ID_PARENT_NODE = 'id-parent-node';
     const PARAM_ID_CATEGORY = 'id-category';

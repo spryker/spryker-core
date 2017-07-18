@@ -3,6 +3,7 @@
 namespace SprykerTest\Zed\CmsBlockCategoryConnector\Business;
 
 use Codeception\TestCase\Test;
+use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -31,8 +32,16 @@ class CmsBlockCategoryConnectorFacadeTest extends Test
 
         $this->assertEmpty($cmsBlockTransfer->getIdCategories());
 
+        $this->createCmsBlockCategoryConnectorFacade()
+            ->syncCmsBlockCategoryPosition();
+        $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
+            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
+
         $categoryTransfer = $this->tester->haveCategory();
-        $cmsBlockTransfer->setIdCategories([$categoryTransfer->getIdCategory()]);
+        $cmsBlockTransfer->setFkTemplate($categoryTransfer->getFkCategoryTemplate());
+        $cmsBlockTransfer->setIdCategories([
+            $cmsBlockCategoryPositionTransfer->getIdCmsBlockCategoryPosition() => [$categoryTransfer->getIdCategory()],
+        ]);
 
         $this->createCmsBlockCategoryConnectorFacade()
             ->updateCmsBlockCategoryRelations($cmsBlockTransfer);
@@ -52,8 +61,17 @@ class CmsBlockCategoryConnectorFacadeTest extends Test
 
         $this->assertEmpty($cmsBlockTransfer->getIdCategories());
 
+        $this->createCmsBlockCategoryConnectorFacade()
+            ->syncCmsBlockCategoryPosition();
+
+        $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
+            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
+
         $categoryTransfer = $this->tester->haveCategory();
-        $cmsBlockTransfer->setIdCategories([$categoryTransfer->getIdCategory()]);
+        $cmsBlockTransfer->setFkTemplate($categoryTransfer->getFkCategoryTemplate());
+        $cmsBlockTransfer->setIdCategories([
+            $cmsBlockCategoryPositionTransfer->getIdCmsBlockCategoryPosition() => [$categoryTransfer->getIdCategory()],
+        ]);
 
         $this->createCmsBlockCategoryConnectorFacade()
             ->updateCmsBlockCategoryRelations($cmsBlockTransfer);
@@ -65,11 +83,33 @@ class CmsBlockCategoryConnectorFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testSyncCmsBlockCategoryPosition()
+    {
+        $this->createCmsBlockCategoryConnectorFacade()
+            ->syncCmsBlockCategoryPosition();
+
+        $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
+            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
+
+        $this->assertNotEmpty($cmsBlockCategoryPositionTransfer);
+    }
+
+    /**
      * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface
      */
     protected function createCmsBlockCategoryConnectorFacade()
     {
         return $this->tester->getLocator()->cmsBlockCategoryConnector()->facade();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultPositionName()
+    {
+        return (new CmsBlockCategoryConnectorConfig())->getCmsBlockCategoryPositionDefault();
     }
 
 }

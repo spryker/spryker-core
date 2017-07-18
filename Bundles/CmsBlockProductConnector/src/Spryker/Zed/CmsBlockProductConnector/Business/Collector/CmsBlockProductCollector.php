@@ -22,7 +22,9 @@ class CmsBlockProductCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
-        return $this->extractCmsBlockNames($collectItemData[CmsBlockProductConnectorCollectorQuery::COL_CMS_BLOCK_NAMES]);
+        $cmsBlockNames = $this->extractCmsBlockNames($collectItemData[CmsBlockProductConnectorCollectorQuery::COL_CMS_BLOCK_NAMES]);
+
+        return ['' => $cmsBlockNames];
     }
 
     /**
