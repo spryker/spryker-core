@@ -228,7 +228,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $categoryKey
+     * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */

@@ -542,7 +542,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
-     * @param int $categoryKey
+     * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
