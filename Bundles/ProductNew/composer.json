@@ -5,7 +5,7 @@
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/product": "^5.0.0",
-    "spryker/product-label": "^2.0.0",
+    "spryker/product-label": "^2.1.0",
     "spryker/propel-orm": "^1.1.0"
   },
   "require-dev": {
