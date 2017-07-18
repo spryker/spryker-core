@@ -32,6 +32,7 @@
     <transfer name="StorageProductLabel">
         <property name="idProductLabel" type="int"/>
         <property name="name" type="string"/>
+        <property name="key" type="string"/>
         <property name="isExclusive" type="bool"/>
         <property name="position" type="int"/>
         <property name="frontEndReference" type="string"/>

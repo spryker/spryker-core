@@ -26,8 +26,8 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
     public function queryProductLabelByName($labelName)
     {
         return $this->getFactory()
-            ->createProductLabelQuery()
-            ->filterByName($labelName);
+            ->getProductLabelQueryContainer()
+            ->queryProductLabelByName($labelName);
     }
 
     /**
@@ -40,8 +40,8 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
     public function queryRelationsBecomingInactive($idProductLabel)
     {
         return $this->getFactory()
-            ->createProductLabelProductAbstractQuery()
-            ->filterByFkProductLabel($idProductLabel)
+            ->getProductLabelQueryContainer()
+            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
             ->useSpyProductAbstractQuery()
                 ->filterByNewTo('now', Criteria::LESS_THAN)
             ->endUse();
@@ -57,7 +57,8 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
     public function queryRelationsBecomingActive($idProductLabel)
     {
         return $this->getFactory()
-            ->createProductAbstractQuery()
+            ->getProductQueryContainer()
+            ->queryProductAbstract()
             ->filterByNewFrom('now', Criteria::LESS_EQUAL)
             ->filterByNewTo('now', Criteria::GREATER_THAN)
             ->useSpyProductLabelProductAbstractQuery('rel', Criteria::LEFT_JOIN)

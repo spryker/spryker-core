@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
-use Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
@@ -92,22 +91,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             $filterValue = [$filterValue];
         }
 
-        // TODO: refactor
-        $plugin = $facetConfigTransfer->getValueTransformer();
-        $valueTransformerPlugin = null;
-        if ($plugin) {
-            $valueTransformerPlugin = new $plugin();
-
-            if (!$valueTransformerPlugin instanceof FacetSearchResultValueTransformerPluginInterface) {
-                throw new \Exception('Ain\'t good!');
-            }
-        }
-
         foreach ($filterValue as $value) {
-            if ($valueTransformerPlugin) {
-                $value = $valueTransformerPlugin->transformFromDisplay($value);
-            }
-
             $query = $this->createFacetFilterQuery($facetConfigTransfer, $value);
 
             if ($query !== null) {
@@ -130,15 +114,11 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             return null;
         }
 
-        // TODO: refactor
-        $plugin = $facetConfigTransfer->getValueTransformer();
-        if ($plugin) {
-            $valueTransformerPlugin = new $plugin();
+        $valueTransformerPlugin = $this->getFactory()
+            ->createFacetValueTransformerFactory()
+            ->createTransformer($facetConfigTransfer);
 
-            if (!$valueTransformerPlugin instanceof FacetSearchResultValueTransformerPluginInterface) {
-                throw new \Exception('Ain\'t good!');
-            }
-
+        if ($valueTransformerPlugin) {
             $filterValue = $valueTransformerPlugin->transformFromDisplay($filterValue);
         }
 

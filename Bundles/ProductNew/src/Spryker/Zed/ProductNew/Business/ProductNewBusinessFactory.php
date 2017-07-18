@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductNew\Business;
 
+use Spryker\Shared\ProductNew\ProductNewConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductNew\Business\Label\ProductAbstractRelationReader;
 
@@ -22,7 +23,15 @@ class ProductNewBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductAbstractRelationReader()
     {
-        return new ProductAbstractRelationReader($this->getQueryContainer(), $this->getConfig());
+        return new ProductAbstractRelationReader($this->getQueryContainer(), $this->createProductNewConfig());
+    }
+
+    /**
+     * @return \Spryker\Shared\ProductNew\ProductNewConfig
+     */
+    protected function createProductNewConfig()
+    {
+        return new ProductNewConfig();
     }
 
 }

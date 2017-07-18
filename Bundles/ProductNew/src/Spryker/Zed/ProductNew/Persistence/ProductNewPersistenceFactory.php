@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\ProductNew\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductNew\ProductNewDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductNew\ProductNewConfig getConfig()
@@ -20,27 +18,19 @@ class ProductNewPersistenceFactory extends AbstractPersistenceFactory
 {
 
     /**
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     * @return \Spryker\Zed\ProductNew\Dependency\QueryContainer\ProductNewToProductLabelInterface
      */
-    public function createProductLabelQuery()
+    public function getProductLabelQueryContainer()
     {
-        return SpyProductLabelQuery::create();
+        return $this->getProvidedDependency(ProductNewDependencyProvider::QUERY_CONTAINER_PRODUCT_LABEL);
     }
 
     /**
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     * @return \Spryker\Zed\ProductNew\Dependency\QueryContainer\ProductNewToProductInterface
      */
-    public function createProductLabelProductAbstractQuery()
+    public function getProductQueryContainer()
     {
-        return SpyProductLabelProductAbstractQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function createProductAbstractQuery()
-    {
-        return SpyProductAbstractQuery::create();
+        return $this->getProvidedDependency(ProductNewDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 
 }

@@ -8,33 +8,22 @@
 namespace Spryker\Client\ProductLabel\Storage;
 
 use Generated\Shared\Transfer\StorageProductLabelTransfer;
-use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface;
-use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
-use Spryker\Shared\ProductLabel\ProductLabelConstants;
+use Spryker\Client\ProductLabel\Storage\Dictionary\DictionaryFactory;
 
 class LabelDictionaryReader implements LabelDictionaryReaderInterface
 {
 
     /**
-     * @var \Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface
+     * @var \Spryker\Client\ProductLabel\Storage\Dictionary\DictionaryFactory
      */
-    protected $storageClient;
+    protected $dictionaryFactory;
 
     /**
-     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     * @param \Spryker\Client\ProductLabel\Storage\Dictionary\DictionaryFactory $dictionaryFactory
      */
-    protected $keyBuilder;
-
-    /**
-     * @param \Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface $storageClient
-     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
-     */
-    public function __construct(
-        ProductLabelToStorageInterface $storageClient,
-        KeyBuilderInterface $keyBuilder
-    ) {
-        $this->storageClient = $storageClient;
-        $this->keyBuilder = $keyBuilder;
+    public function __construct(DictionaryFactory $dictionaryFactory)
+    {
+        $this->dictionaryFactory = $dictionaryFactory;
     }
 
     /**
@@ -58,15 +47,11 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
      */
-    public function findStorageProductLabelByIdProductLabel($idProductLabel, $localeName)
+    public function findLabelByIdProductLabel($idProductLabel, $localeName)
     {
-        $dictionary = $this->getLabelDictionary($localeName);
-
-        if (!array_key_exists($idProductLabel, $dictionary)) {
-            return null;
-        }
-
-        return $dictionary[$idProductLabel];
+        return $this->dictionaryFactory
+            ->createDictionaryByIdProductLabel()
+            ->findLabel($idProductLabel, $localeName);
     }
 
     /**
@@ -75,15 +60,24 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
      */
-    public function findStorageProductLabelByName($labelName, $localeName)
+    public function findLabelByLocalizedName($labelName, $localeName)
     {
-        $dictionary = $this->getLabelDictionaryByName($localeName);
+        return $this->dictionaryFactory
+            ->createDictionaryByLocalizedName()
+            ->findLabel($labelName, $localeName);
+    }
 
-        if (!array_key_exists($labelName, $dictionary)) {
-            return null;
-        }
-
-        return $dictionary[$labelName];
+    /**
+     * @param int $labelName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findLabelByName($labelName, $localeName)
+    {
+        return $this->dictionaryFactory
+            ->createDictionaryByName()
+            ->findLabel($labelName, $localeName);
     }
 
     /**
@@ -94,7 +88,10 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
      */
     protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName)
     {
-        $dictionary = $this->getLabelDictionary($localeName);
+        $dictionary = $this->dictionaryFactory
+            ->createDictionaryByIdProductLabel()
+            ->getDictionary($localeName);
+
         $productLabelCollection = [];
 
         foreach ($idsProductLabel as $idProductLabel) {
@@ -106,89 +103,6 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
         }
 
         return $productLabelCollection;
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
-     */
-    protected function getLabelDictionary($localeName)
-    {
-        static $labelDictionary = null;
-
-        if ($labelDictionary === null) {
-            $labelDictionary = $this->initializeLabelDictionary($localeName);
-        }
-
-        return $labelDictionary;
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
-     */
-    protected function getLabelDictionaryByName($localeName)
-    {
-        static $labelDictionaryByName = null;
-
-        if ($labelDictionaryByName === null) {
-            $labelDictionaryByName = $this->initializeLabelDictionaryByName($localeName);
-        }
-
-        return $labelDictionaryByName;
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
-     */
-    protected function initializeLabelDictionary($localeName)
-    {
-        $labelsByIds = [];
-
-        foreach ($this->readLabelDictionary($localeName) as $productLabelData) {
-            $storageProductLabelTransfer = new StorageProductLabelTransfer();
-            $storageProductLabelTransfer->fromArray($productLabelData, true);
-
-            $labelsByIds[$storageProductLabelTransfer->getIdProductLabel()] = $storageProductLabelTransfer;
-        }
-
-        return $labelsByIds;
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return array
-     */
-    protected function initializeLabelDictionaryByName($localeName)
-    {
-        $labelDictionaryByName = [];
-
-        $labelDictionary = $this->getLabelDictionary($localeName);
-        foreach ($labelDictionary as $storageProductLabelTransfer) {
-            $labelDictionaryByName[$storageProductLabelTransfer->getName()] = $storageProductLabelTransfer;
-        }
-
-        return $labelDictionaryByName;
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return array
-     */
-    protected function readLabelDictionary($localeName)
-    {
-        $storageKey = $this->keyBuilder->generateKey(
-            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
-            $localeName
-        );
-
-        return $this->storageClient->get($storageKey);
     }
 
     /**

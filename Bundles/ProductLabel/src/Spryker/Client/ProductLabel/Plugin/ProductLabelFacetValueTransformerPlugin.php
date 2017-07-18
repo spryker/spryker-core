@@ -13,7 +13,6 @@ use Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPlu
 /**
  * @method \Spryker\Client\ProductLabel\ProductLabelFactory getFactory()
  */
-// TODO: add Search module dependency to composer
 class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements FacetSearchResultValueTransformerPluginInterface
 {
 
@@ -26,7 +25,7 @@ class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements 
     {
         $storageProductLabelTransfer = $this->getFactory()
             ->createLabelDictionaryReader()
-            ->findStorageProductLabelByIdProductLabel($value, $this->getCurrentLocale());
+            ->findLabelByIdProductLabel($value, $this->getCurrentLocale());
 
         if (!$storageProductLabelTransfer) {
             return $value;
@@ -44,7 +43,7 @@ class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements 
     {
         $storageProductLabelTransfer = $this->getFactory()
             ->createLabelDictionaryReader()
-            ->findStorageProductLabelByName($value, $this->getCurrentLocale());
+            ->findLabelByLocalizedName($value, $this->getCurrentLocale());
 
         if (!$storageProductLabelTransfer) {
             return $value;

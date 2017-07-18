@@ -24,14 +24,22 @@ interface LabelDictionaryReaderInterface
      *
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
      */
-    public function findStorageProductLabelByIdProductLabel($idProductLabel, $localeName);
+    public function findLabelByIdProductLabel($idProductLabel, $localeName);
 
     /**
-     * @param string $productName
+     * @param string $labelName
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
      */
-    public function findStorageProductLabelByName($productName, $localeName);
+    public function findLabelByLocalizedName($labelName, $localeName);
+
+    /**
+     * @param int $labelName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findLabelByName($labelName, $localeName);
 
 }

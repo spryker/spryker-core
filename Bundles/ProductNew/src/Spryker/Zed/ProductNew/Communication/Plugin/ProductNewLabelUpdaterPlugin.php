@@ -12,6 +12,7 @@ use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPlugin
 
 /**
  * @method \Spryker\Zed\ProductNew\Business\ProductNewFacadeInterface getFacade
+ * @method \Spryker\Zed\ProductNew\Business\ProductNewFacade getFacade()
  */
 class ProductNewLabelUpdaterPlugin extends AbstractPlugin implements ProductLabelRelationUpdaterPluginInterface
 {

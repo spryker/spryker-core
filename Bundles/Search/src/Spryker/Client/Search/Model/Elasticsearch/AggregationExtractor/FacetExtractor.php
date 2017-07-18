@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
-use Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation;
 
 class FacetExtractor implements AggregationExtractorInterface
@@ -23,11 +22,24 @@ class FacetExtractor implements AggregationExtractorInterface
     protected $facetConfigTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @var \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer)
+    protected $facetValueTransformerFactory;
+
+    /**
+     * @var \Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface|null
+     */
+    protected $valueTransformerPlugin;
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface $facetValueTransformerFactory
+     */
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, FacetValueTransformerFactoryInterface $facetValueTransformerFactory)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
+        $this->facetValueTransformerFactory = $facetValueTransformerFactory;
+        $this->valueTransformerPlugin = $facetValueTransformerFactory->createTransformer($facetConfigTransfer);
     }
 
     /**
@@ -98,16 +110,8 @@ class FacetExtractor implements AggregationExtractorInterface
     {
         $value = $valueBucket['key'];
 
-        // TODO: refactor
-        $plugin = $this->facetConfigTransfer->getValueTransformer();
-        if ($plugin) {
-            $valueTransformerPlugin = new $plugin();
-
-            if (!$valueTransformerPlugin instanceof FacetSearchResultValueTransformerPluginInterface) {
-                throw new \Exception('Ain\'t good!');
-            }
-
-            $value = $valueTransformerPlugin->transformForDisplay($value);
+        if ($this->valueTransformerPlugin) {
+            $value = $this->valueTransformerPlugin->transformForDisplay($value);
         }
 
         return $value;

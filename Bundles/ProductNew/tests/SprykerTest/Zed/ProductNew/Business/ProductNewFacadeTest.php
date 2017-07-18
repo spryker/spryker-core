@@ -36,7 +36,7 @@ class ProductNewFacadeTest extends Test
     {
         // Arrange
         $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->tester->getFacade()->getLabelNewName(),
+            ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $productAbstractTransfer = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-1 minute')),
@@ -64,7 +64,7 @@ class ProductNewFacadeTest extends Test
     {
         // Arrange
         $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->tester->getFacade()->getLabelNewName(),
+            ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $this->tester->haveProductAbstract([
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-2 minute')),
@@ -89,7 +89,7 @@ class ProductNewFacadeTest extends Test
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->tester->getFacade()->getLabelNewName(),
+            ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $productAbstractTransfer = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-1 minute')),
@@ -112,7 +112,7 @@ class ProductNewFacadeTest extends Test
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->tester->getFacade()->getLabelNewName(),
+            ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $productAbstractTransfer = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-2 minute')),
@@ -142,7 +142,7 @@ class ProductNewFacadeTest extends Test
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->tester->getFacade()->getLabelNewName(),
+            ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $productAbstractTransfer = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-1 minute')),
@@ -165,7 +165,7 @@ class ProductNewFacadeTest extends Test
     {
         // Arrange
         $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->tester->getFacade()->getLabelNewName(),
+            ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $this->tester->haveProductAbstract([
             ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-2 minute')),
@@ -177,6 +177,14 @@ class ProductNewFacadeTest extends Test
 
         // Assert
         $this->assertCount(0, $productLabelProductAbstractRelationTransfers, 'Result should have been matched expected number of label relation changes.');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLabelNewName()
+    {
+        return 'TEST_NEW_LABEL';
     }
 
 }

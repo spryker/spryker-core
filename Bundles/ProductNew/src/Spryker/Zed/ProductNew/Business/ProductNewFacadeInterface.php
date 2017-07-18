@@ -12,16 +12,6 @@ interface ProductNewFacadeInterface
 
     /**
      * Specification:
-     * - Returns the name of the "new" product label from bundle configuration.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getLabelNewName();
-
-    /**
-     * Specification:
      * - Returns a list of Product Label - Product Abstract relation to assign and deassign.
      * - The relation changes are based on the "new from" and "new to" attributes of the products.
      * - Products that haven't got the "new" label yet and the current time is between their "new from-to" date range, are

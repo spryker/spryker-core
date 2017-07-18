@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
+use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -72,7 +73,8 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
             $pluginName = get_class($productLabelRelationUpdaterPlugin);
             $productLabelProductAbstractRelationTransfers = $productLabelRelationUpdaterPlugin->findProductLabelProductAbstractRelationChanges();
 
-            $this->debug(sprintf('%s - Found %d labels to update.',
+            $this->debug(sprintf(
+                '%s - Found %d labels to update.',
                 $pluginName,
                 count($productLabelProductAbstractRelationTransfers)
             ));
@@ -90,28 +92,63 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
     protected function updateRelations($productLabelProductAbstractRelationTransfers, $pluginName)
     {
         foreach ($productLabelProductAbstractRelationTransfers as $productLabelProductAbstractRelationTransfer) {
-            $this->info(sprintf('%s - Deassigning %d products from label #%d.',
-                $pluginName,
-                count($productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign()),
-                $productLabelProductAbstractRelationTransfer->getIdProductLabel()
-            ));
-
-            $this->productAbstractRelationDeleter->removeRelations(
-                $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
-                $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign()
-            );
-
-            $this->info(sprintf('%s - Assigning %d products to label #%d.',
-                $pluginName,
-                count($productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign()),
-                $productLabelProductAbstractRelationTransfer->getIdProductLabel()
-            ));
-
-            $this->productAbstractRelationWriter->addRelations(
-                $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
-                $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign()
-            );
+            $this->deAssign($productLabelProductAbstractRelationTransfer, $pluginName);
+            $this->assign($productLabelProductAbstractRelationTransfer, $pluginName);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer
+     * @param string $pluginName
+     *
+     * @return void
+     */
+    protected function deAssign(ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer, $pluginName)
+    {
+        $toBeDeAssigned = count($productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign());
+
+        if (!$toBeDeAssigned) {
+            return;
+        }
+
+        $this->info(sprintf(
+            '%s - Deassigning %d products from label #%d.',
+            $pluginName,
+            $toBeDeAssigned,
+            $productLabelProductAbstractRelationTransfer->getIdProductLabel()
+        ));
+
+        $this->productAbstractRelationDeleter->removeRelations(
+            $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
+            $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer
+     * @param string $pluginName
+     *
+     * @return void
+     */
+    protected function assign(ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer, $pluginName)
+    {
+        $toBeAssigned = count($productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign());
+
+        if (!$toBeAssigned) {
+            return;
+        }
+
+        $this->info(sprintf(
+            '%s - Assigning %d products to label #%d.',
+            $pluginName,
+            $toBeAssigned,
+            $productLabelProductAbstractRelationTransfer->getIdProductLabel()
+        ));
+
+        $this->productAbstractRelationWriter->addRelations(
+            $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
+            $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign()
+        );
     }
 
     /**

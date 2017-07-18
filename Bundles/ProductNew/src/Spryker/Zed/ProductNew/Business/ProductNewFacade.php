@@ -20,20 +20,6 @@ class ProductNewFacade extends AbstractFacade implements ProductNewFacadeInterfa
      *
      * @api
      *
-     * @return string
-     */
-    public function getLabelNewName()
-    {
-        return $this->getFactory()
-            ->getConfig()
-            ->getLabelNewName();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges()

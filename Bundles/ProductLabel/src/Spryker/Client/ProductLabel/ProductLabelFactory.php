@@ -8,9 +8,9 @@
 namespace Spryker\Client\ProductLabel;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductLabel\Storage\Dictionary\DictionaryFactory;
 use Spryker\Client\ProductLabel\Storage\LabelDictionaryReader;
 use Spryker\Client\ProductLabel\Storage\ProductAbstractRelationReader;
-use Spryker\Shared\ProductLabel\KeyBuilder\LabelDictionaryKeyBuilder;
 use Spryker\Shared\ProductLabel\KeyBuilder\ProductAbstractRelationKeyBuilder;
 
 class ProductLabelFactory extends AbstractFactory
@@ -41,18 +41,15 @@ class ProductLabelFactory extends AbstractFactory
      */
     public function createLabelDictionaryReader()
     {
-        return new LabelDictionaryReader(
-            $this->getStorageClient(),
-            $this->createLabelDictionaryKeyBuilder()
-        );
+        return new LabelDictionaryReader($this->createDictionaryFactory());
     }
 
     /**
-     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     * @return \Spryker\Client\ProductLabel\Storage\Dictionary\DictionaryFactory
      */
-    protected function createLabelDictionaryKeyBuilder()
+    protected function createDictionaryFactory()
     {
-        return new LabelDictionaryKeyBuilder();
+        return new DictionaryFactory();
     }
 
     /**
