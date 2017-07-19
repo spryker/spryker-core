@@ -10,21 +10,22 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Zed\Shipment\ShipmentConfig;
 
-class CarrierDiscountCollector implements CarrierDiscountCollectorInterface
+class MethodDiscountCollector implements MethodDiscountCollectorInterface
 {
 
     /**
-     * @var CarrierDiscountDecisionRuleInterface
+     * @var MethodDiscountDecisionRuleInterface
      */
-    protected $carrierDiscountDecisionRule;
+    protected $methodDiscountDecisionRule;
 
     /**
-     * @param CarrierDiscountDecisionRuleInterface $carrierDiscountDecisionRule
+     * @param MethodDiscountDecisionRuleInterface $methodDiscountDecisionRule
      */
-    public function __construct(CarrierDiscountDecisionRuleInterface $carrierDiscountDecisionRule)
+    public function __construct(MethodDiscountDecisionRuleInterface $methodDiscountDecisionRule)
     {
-        $this->carrierDiscountDecisionRule = $carrierDiscountDecisionRule;
+        $this->methodDiscountDecisionRule = $methodDiscountDecisionRule;
     }
 
     /**
@@ -39,7 +40,7 @@ class CarrierDiscountCollector implements CarrierDiscountCollectorInterface
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                $isSatisfied = $this->carrierDiscountDecisionRule->isSatisfiedBy($quoteTransfer, $expenseTransfer, $clauseTransfer);
+                $isSatisfied = $this->methodDiscountDecisionRule->isSatisfiedBy($quoteTransfer, $expenseTransfer, $clauseTransfer);
 
                 if ($isSatisfied) {
                     $discountableItems[] = $this->createDiscountableItemTransfer($expenseTransfer, $quoteTransfer->getPriceMode());

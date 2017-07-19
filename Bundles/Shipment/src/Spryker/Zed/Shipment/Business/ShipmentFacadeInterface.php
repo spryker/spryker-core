@@ -36,6 +36,16 @@ interface ShipmentFacadeInterface
     public function findCarriers();
 
     /**
+     * Specification:
+     * - Finds list of shipment method transfers from database
+     *
+     * @api
+     *
+     * @return ShipmentMethodTransfer[]
+     */
+    public function findMethods();
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer

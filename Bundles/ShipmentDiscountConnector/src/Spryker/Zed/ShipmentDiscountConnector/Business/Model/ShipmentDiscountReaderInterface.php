@@ -10,4 +10,9 @@ interface ShipmentDiscountReaderInterface
      */
     public function getCarrierList();
 
+    /**
+     * @return array
+     */
+    public function getMethodList();
+
 }

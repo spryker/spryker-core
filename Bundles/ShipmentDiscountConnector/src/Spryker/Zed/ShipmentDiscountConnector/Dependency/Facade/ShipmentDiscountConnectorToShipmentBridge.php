@@ -31,6 +31,14 @@ class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConne
     }
 
     /**
+     * @return ShipmentMethodTransfer[]
+     */
+    public function findMethods()
+    {
+        return $this->shipmentFacade->findMethods();
+    }
+
+    /**
      * @param int $idShipmentMethod
      *
      * @return ShipmentMethodTransfer|null

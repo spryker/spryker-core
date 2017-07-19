@@ -35,4 +35,19 @@ class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
         return $list;
     }
 
+    /**
+     * @return array
+     */
+    public function getMethodList()
+    {
+        $shipmentMethodTransfers = $this->shipmentFacade->findMethods();
+
+        $list = [];
+        foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
+            $list[$shipmentMethodTransfer->getIdShipmentMethod()] = $shipmentMethodTransfer->getName();
+        }
+
+        return $list;
+    }
+
 }

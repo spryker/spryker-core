@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFacadeInterface getFacade()
  */
-class CarrierDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
+class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
     /**
      * Specification:
@@ -37,7 +37,7 @@ class CarrierDecisionRulePlugin extends AbstractPlugin implements DecisionRulePl
         ClauseTransfer $clauseTransfer
     ) {
         return $this->getFacade()
-            ->isCarrierSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+            ->isMethodSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
@@ -49,7 +49,7 @@ class CarrierDecisionRulePlugin extends AbstractPlugin implements DecisionRulePl
      */
     public function getFieldName()
     {
-        return 'shipment-carrier';
+        return 'shipment-method';
     }
 
     /**
@@ -67,8 +67,7 @@ class CarrierDecisionRulePlugin extends AbstractPlugin implements DecisionRulePl
      */
     public function getQueryStringValueOptions()
     {
-        return $this->getFacade()
-            ->getCarrierList();
+        return $this->getFacade()->getMethodList();
     }
 
 }

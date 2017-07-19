@@ -132,6 +132,25 @@ class Method
     }
 
     /**
+     * @return ShipmentMethodTransfer[]
+     */
+    public function findShipmentMethodTransfers()
+    {
+        $shipmentMethodTransfers = [];
+
+        $query = $this->queryContainer
+            ->queryActiveMethods();
+
+        foreach ($query->find() as $spyShipmentMethod) {
+            $shipmentMethodTransfer = new ShipmentMethodTransfer();
+            $shipmentMethodTransfer = $this->mapEntityToTransfer($spyShipmentMethod, $shipmentMethodTransfer);
+            $shipmentMethodTransfers[] = $shipmentMethodTransfer;
+        }
+
+        return $shipmentMethodTransfers;
+    }
+
+    /**
      * @param int $idMethod
      *
      * @return bool

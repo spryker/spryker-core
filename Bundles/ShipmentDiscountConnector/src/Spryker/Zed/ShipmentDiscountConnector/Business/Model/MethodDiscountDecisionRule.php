@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface;
 
-class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterface
+class MethodDiscountDecisionRule implements MethodDiscountDecisionRuleInterface
 {
 
     /**
@@ -20,23 +20,15 @@ class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterfac
     protected $discountFacade;
 
     /**
-     * @var ShipmentDiscountConnectorToShipmentInterface
-     */
-    protected $shipmentFacade;
-
-    /**
      * @param ShipmentDiscountConnectorToDiscountInterface $discountFacade
-     * @param ShipmentDiscountConnectorToShipmentInterface $shipmentFacade
      */
-    public function __construct(
-        ShipmentDiscountConnectorToDiscountInterface $discountFacade,
-        ShipmentDiscountConnectorToShipmentInterface $shipmentFacade
-    ) {
+    public function __construct(ShipmentDiscountConnectorToDiscountInterface $discountFacade)
+    {
         $this->discountFacade = $discountFacade;
-        $this->shipmentFacade = $shipmentFacade;
     }
 
     /**
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -45,7 +37,7 @@ class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterfac
      *
      * @return bool
      */
-    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer)
+    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer , ClauseTransfer $clauseTransfer)
     {
         $shipment = $quoteTransfer->getShipment();
 
@@ -53,21 +45,17 @@ class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterfac
             return false;
         }
 
-        $idShipmentCarrier = null;
-
-        if ($shipment->getCarrier()) {
-            $idShipmentCarrier = $shipment->getCarrier()->getIdShipmentCarrier();
-        }
+        $idShipmentMethod = null;
 
         if ($shipment->getMethod()) {
-            $shipmentMethodTransfer = $this->shipmentFacade->findMethodById($shipment->getMethod()->getIdShipmentMethod());
-            $idShipmentCarrier = $shipmentMethodTransfer->getFkShipmentCarrier();
+            $idShipmentMethod = $shipment->getMethod()->getIdShipmentMethod();
         }
 
-        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
+        if ($idShipmentMethod && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentMethod)) {
             return true;
         }
 
         return false;
     }
+
 }

@@ -27,6 +27,13 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
             ->getCarrierList();
     }
 
+    public function getMethodList()
+    {
+        return $this->getFactory()
+            ->createShipmentDiscountConnectorReader()
+            ->getMethodList();
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -50,6 +57,23 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     */
+    public function collectDiscountByShipmentMethod(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this->getFactory()
+            ->createMethodDiscountCollector()
+            ->collect($quoteTransfer, $clauseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -58,7 +82,26 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function isCarrierSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createCarrierDiscountRule()
+            ->createCarrierDiscountDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Compare chosen for order shipment carrier with a carrier in condition
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isMethodSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this->getFactory()
+            ->createMethodDiscountDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 

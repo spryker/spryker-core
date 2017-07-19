@@ -20,6 +20,10 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountCollecto
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountCollectorInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountDecisionRuleInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountCollector;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountCollectorInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRule;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountConnectorReader;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReader;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReaderInterface;
@@ -49,18 +53,38 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCarrierDiscountCollector()
     {
         return new CarrierDiscountCollector(
-            $this->createCarrierDiscountRule()
+            $this->createCarrierDiscountDecisionRule()
         );
     }
 
     /**
      * @return CarrierDiscountDecisionRuleInterface
      */
-    public function createCarrierDiscountRule()
+    public function createCarrierDiscountDecisionRule()
     {
         return new CarrierDiscountDecisionRule(
             $this->getDiscountFacade(),
             $this->getShipmentFacade()
+        );
+    }
+
+    /**
+     * @return MethodDiscountCollectorInterface
+     */
+    public function createMethodDiscountCollector()
+    {
+        return new MethodDiscountCollector(
+            $this->createMethodDiscountDecisionRule()
+        );
+    }
+
+    /**
+     * @return MethodDiscountDecisionRuleInterface
+     */
+    public function createMethodDiscountDecisionRule()
+    {
+        return new MethodDiscountDecisionRule(
+            $this->getDiscountFacade()
         );
     }
 

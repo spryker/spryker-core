@@ -13,6 +13,11 @@ interface ShipmentDiscountConnectorToShipmentInterface
     public function findCarriers();
 
     /**
+     * @return ShipmentMethodTransfer[]
+     */
+    public function findMethods();
+
+    /**
      * @param int $idShipmentMethod
      *
      * @return ShipmentMethodTransfer|null
