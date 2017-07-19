@@ -91,8 +91,8 @@ class MenuFormatter implements MenuFormatterInterface
         $currentLevel++;
 
         foreach ($pages as $page) {
-
             $formattedPage = $this->formatPage($page);
+
             if (isset($page[self::PAGES]) && !empty($page[self::PAGES])) {
                 $this->menuLevelValidator->validate($currentLevel, $formattedPage[self::TITLE]);
                 $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel, $includeInvisible);
@@ -102,6 +102,7 @@ class MenuFormatter implements MenuFormatterInterface
                 $formattedPages[self::CHILD_IS_ACTIVE] = true;
                 $formattedPage[self::IS_ACTIVE] = true;
             }
+
             if (!empty($children)) {
                 unset($children[self::CHILD_IS_ACTIVE]);
                 if (!empty($children)) {
@@ -112,12 +113,9 @@ class MenuFormatter implements MenuFormatterInterface
 
             if ($includeInvisible) {
                 $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
-            } else {
-                if (!isset($page[self::VISIBLE]) || (isset($page[self::VISIBLE]) && $page[self::VISIBLE])) {
-                    $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
-                }
+            } elseif (!isset($page[self::VISIBLE]) || (isset($page[self::VISIBLE]) && $page[self::VISIBLE])) {
+                $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
             }
-
         }
 
         return $formattedPages;
