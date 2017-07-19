@@ -320,6 +320,7 @@ class Method
     protected function mapEntityToTransfer(SpyShipmentMethod $spyShipmentMethod, ShipmentMethodTransfer $shipmentMethodTransfer)
     {
         $shipmentMethodTransfer->fromArray($spyShipmentMethod->toArray(), true);
+        $shipmentMethodTransfer->setCarrierName($spyShipmentMethod->getShipmentCarrier()->getName());
 
         return $shipmentMethodTransfer;
     }

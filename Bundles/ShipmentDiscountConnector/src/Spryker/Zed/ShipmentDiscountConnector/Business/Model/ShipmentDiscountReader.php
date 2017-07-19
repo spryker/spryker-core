@@ -44,7 +44,8 @@ class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
 
         $list = [];
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
-            $list[$shipmentMethodTransfer->getIdShipmentMethod()] = $shipmentMethodTransfer->getName();
+            $list[$shipmentMethodTransfer->getIdShipmentMethod()] = $shipmentMethodTransfer->getName() .
+                ' (' . $shipmentMethodTransfer->getCarrierName() . ')';
         }
 
         return $list;
