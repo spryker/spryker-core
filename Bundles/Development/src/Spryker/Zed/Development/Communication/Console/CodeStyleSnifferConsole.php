@@ -65,9 +65,13 @@ class CodeStyleSnifferConsole extends Console
                 $message = 'Check code style in "' . $bundle . '" module';
             }
         }
-        $this->info($message);
 
         $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
+        if ($path) {
+            $message .= ' (' . $path . ')';
+        }
+
+        $this->info($message);
 
         return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
     }

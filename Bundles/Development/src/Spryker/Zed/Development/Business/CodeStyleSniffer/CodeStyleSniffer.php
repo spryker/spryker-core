@@ -83,11 +83,11 @@ class CodeStyleSniffer
      */
     protected function resolvePath($bundle, $path = null)
     {
-        $path = trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : null;
 
         if ($bundle) {
             if (strtolower($bundle) === static::BUNDLE_ALL) {
-                return $this->pathToBundles;
+                return rtrim($this->pathToBundles, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
             return $this->getPathToBundle($bundle, $path);
@@ -107,6 +107,7 @@ class CodeStyleSniffer
     protected function getPathToBundle($bundle, $pathSuffix = null)
     {
         $lookupPaths = $this->buildPaths($bundle, $pathSuffix);
+
         foreach ($lookupPaths as $path) {
             if ($this->isPathValid($path)) {
                 return $path;
@@ -175,9 +176,9 @@ class CodeStyleSniffer
      */
     protected function getPathToSprykerBundle($bundle, $pathSuffix = null)
     {
-        return implode(DIRECTORY_SEPARATOR, [
-            rtrim($this->pathToBundles, DIRECTORY_SEPARATOR),
-            $bundle,
+        return implode('', [
+            rtrim($this->pathToBundles, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+            $bundle . DIRECTORY_SEPARATOR,
             $pathSuffix,
         ]);
     }
@@ -190,9 +191,9 @@ class CodeStyleSniffer
      */
     protected function getPathToSprykerPackageNonSplit($bundle, $pathSuffix = null)
     {
-        return implode(DIRECTORY_SEPARATOR, [
-            rtrim(dirname(dirname($this->pathToBundles)), DIRECTORY_SEPARATOR),
-            $bundle,
+        return implode('', [
+            rtrim(dirname(dirname($this->pathToBundles)), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+            $bundle . DIRECTORY_SEPARATOR,
             $pathSuffix,
         ]);
     }
