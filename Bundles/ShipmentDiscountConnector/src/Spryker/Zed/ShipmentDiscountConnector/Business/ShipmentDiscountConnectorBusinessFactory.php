@@ -59,7 +59,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCarrierDiscountRule()
     {
         return new CarrierDiscountDecisionRule(
-            $this->getDiscountFacade()
+            $this->getDiscountFacade(),
+            $this->getShipmentFacade()
         );
     }
 

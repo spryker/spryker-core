@@ -45,6 +45,19 @@ interface ShipmentFacadeInterface
     public function createMethod(ShipmentMethodTransfer $methodTransfer);
 
     /**
+     * Specification:
+     * - Finds a shipment method by ID
+     * - Returns NULL if the method does not exist
+     *
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod);
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

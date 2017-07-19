@@ -64,7 +64,7 @@ class Method
         foreach ($methods as $shipmentMethodEntity) {
             $shipmentMethodTransfer = new ShipmentMethodTransfer();
             $shipmentMethodTransfer->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity));
-            $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray());
+            $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
 
             if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
                 $shipmentMethodTransfer->setDefaultPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
@@ -105,7 +105,28 @@ class Method
         $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
         $shipmentMethodTransferEntity = $methodQuery->findOne();
 
-        $shipmentMethodTransfer->fromArray($shipmentMethodTransferEntity->toArray());
+        $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodTransferEntity, $shipmentMethodTransfer);
+
+        return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodTransferById($idShipmentMethod)
+    {
+        $spyShipmentMethod = $this->queryContainer
+            ->queryMethodByIdMethod($idShipmentMethod)
+            ->findOne();
+
+        if (!$spyShipmentMethod) {
+            return null;
+        }
+
+        $shipmentMethodTransfer = new ShipmentMethodTransfer();
+        $shipmentMethodTransfer = $this->mapEntityToTransfer($spyShipmentMethod, $shipmentMethodTransfer);
 
         return $shipmentMethodTransfer;
     }
@@ -269,6 +290,19 @@ class Method
         }
 
         return $shipmentMethodEntity->getShipmentCarrier()->getName();
+    }
+
+    /**
+     * @param SpyShipmentMethod $spyShipmentMethod
+     * @param ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return ShipmentMethodTransfer
+     */
+    protected function mapEntityToTransfer(SpyShipmentMethod $spyShipmentMethod, ShipmentMethodTransfer $shipmentMethodTransfer)
+    {
+        $shipmentMethodTransfer->fromArray($spyShipmentMethod->toArray(), true);
+
+        return $shipmentMethodTransfer;
     }
 
 }

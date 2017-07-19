@@ -8,6 +8,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface;
 
 class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterface
 {
@@ -18,11 +19,20 @@ class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterfac
     protected $discountFacade;
 
     /**
-     * @param ShipmentDiscountConnectorToDiscountInterface $discountFacade
+     * @var ShipmentDiscountConnectorToShipmentInterface
      */
-    public function __construct(ShipmentDiscountConnectorToDiscountInterface $discountFacade)
-    {
+    protected $shipmentFacade;
+
+    /**
+     * @param ShipmentDiscountConnectorToDiscountInterface $discountFacade
+     * @param ShipmentDiscountConnectorToShipmentInterface $shipmentFacade
+     */
+    public function __construct(
+        ShipmentDiscountConnectorToDiscountInterface $discountFacade,
+        ShipmentDiscountConnectorToShipmentInterface $shipmentFacade
+    ) {
         $this->discountFacade = $discountFacade;
+        $this->shipmentFacade = $shipmentFacade;
     }
 
     /**
@@ -36,16 +46,24 @@ class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterfac
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $currentItemTransfer, ClauseTransfer $clauseTransfer)
     {
-        if (!$quoteTransfer->getShipment()) {
+        $shipment = $quoteTransfer->getShipment();
+
+        if (!$shipment) {
             return false;
         }
 
-        if (!$quoteTransfer->getShipment()->getCarrier()) {
-            return false;
+        $idShipmentCarrier = null;
+
+        if ($shipment->getCarrier()) {
+            $idShipmentCarrier = $shipment->getCarrier()->getIdShipmentCarrier();
         }
 
-        $idShipmentCarrier = $quoteTransfer->getShipment()->getCarrier()->getIdShipmentCarrier();
-        if ($this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
+        if ($shipment->getMethod()) {
+            $shipmentMethodTransfer = $this->shipmentFacade->findMethodById($shipment->getMethod()->getIdShipmentMethod());
+            $idShipmentCarrier = $shipmentMethodTransfer->getFkShipmentCarrier();
+        }
+
+        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
             return true;
         }
 

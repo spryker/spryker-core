@@ -63,6 +63,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod)
+    {
+        return $this->getFactory()
+            ->createMethod()
+            ->findShipmentMethodTransferById($idShipmentMethod);
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

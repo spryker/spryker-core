@@ -3,6 +3,7 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade;
 
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 
 class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConnectorToShipmentInterface
@@ -27,6 +28,16 @@ class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConne
     public function findCarriers()
     {
         return $this->shipmentFacade->findCarriers();
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod)
+    {
+        return $this->shipmentFacade->findMethodById($idShipmentMethod);
     }
 
 }
