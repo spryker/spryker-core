@@ -6,9 +6,9 @@
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.1.0",
+    "spryker/log": "^2.0.0 || ^3.0.0",
     "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.1.0",
-    "spryker/search": "^6.4.0",
     "spryker/storage": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.1.0",
@@ -20,7 +20,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use the ProductLabelTwigServiceProvider."
+    "spryker/silex": "If you want to use the ProductLabelTwigServiceProvider.",
+    "spryker/search": "(^6.4.0) If you want to use ProductLabelFacetValueTransformerPlugin."
   },
   "autoload": {
     "psr-4": {
