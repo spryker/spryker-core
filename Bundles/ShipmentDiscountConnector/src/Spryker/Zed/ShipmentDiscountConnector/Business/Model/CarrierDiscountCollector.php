@@ -1,13 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
-
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
@@ -15,12 +17,12 @@ class CarrierDiscountCollector implements CarrierDiscountCollectorInterface
 {
 
     /**
-     * @var CarrierDiscountDecisionRuleInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountDecisionRuleInterface
      */
     protected $carrierDiscountDecisionRule;
 
     /**
-     * @param CarrierDiscountDecisionRuleInterface $carrierDiscountDecisionRule
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountDecisionRuleInterface $carrierDiscountDecisionRule
      */
     public function __construct(CarrierDiscountDecisionRuleInterface $carrierDiscountDecisionRule)
     {

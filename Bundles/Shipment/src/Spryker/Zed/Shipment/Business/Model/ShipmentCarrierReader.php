@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\Shipment\Business\Model;
-
 
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
@@ -10,13 +13,14 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentCarrierReader
 {
+
     /**
-     * @var ShipmentQueryContainerInterface
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected $shipmentQueryContainer;
 
     /**
-     * @param ShipmentQueryContainerInterface $shipmentQueryContainer
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
      */
     public function __construct(ShipmentQueryContainerInterface $shipmentQueryContainer)
     {
@@ -24,7 +28,7 @@ class ShipmentCarrierReader
     }
 
     /**
-     * @return ShipmentCarrierTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
     public function findCarriers()
     {
@@ -43,10 +47,10 @@ class ShipmentCarrierReader
     }
 
     /**
-     * @param SpyShipmentCarrier $spyShipmentCarrier
-     * @param ShipmentCarrierTransfer $shipmentCarrierTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrier $spyShipmentCarrier
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
      *
-     * @return ShipmentCarrierTransfer
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
     protected function mapEntityToTransfer(SpyShipmentCarrier $spyShipmentCarrier, ShipmentCarrierTransfer $shipmentCarrierTransfer)
     {

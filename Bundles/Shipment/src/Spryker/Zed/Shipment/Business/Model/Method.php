@@ -113,7 +113,7 @@ class Method
     /**
      * @param int $idShipmentMethod
      *
-     * @return ShipmentMethodTransfer|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findShipmentMethodTransferById($idShipmentMethod)
     {
@@ -132,7 +132,7 @@ class Method
     }
 
     /**
-     * @return ShipmentMethodTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function findShipmentMethodTransfers()
     {
@@ -312,10 +312,10 @@ class Method
     }
 
     /**
-     * @param SpyShipmentMethod $spyShipmentMethod
-     * @param ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $spyShipmentMethod
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
-     * @return ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     protected function mapEntityToTransfer(SpyShipmentMethod $spyShipmentMethod, ShipmentMethodTransfer $shipmentMethodTransfer)
     {

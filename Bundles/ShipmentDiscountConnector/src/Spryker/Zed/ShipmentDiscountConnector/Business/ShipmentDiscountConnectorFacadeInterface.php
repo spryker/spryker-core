@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\ShipmentDiscountConnector\Business;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -98,7 +102,6 @@ interface ShipmentDiscountConnectorFacadeInterface
      * @return bool
      */
     public function isMethodSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
-
 
     /**
      * Specification:

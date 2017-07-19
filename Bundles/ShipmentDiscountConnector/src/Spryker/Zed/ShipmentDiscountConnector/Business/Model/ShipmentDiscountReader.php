@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
 
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface;
 
@@ -9,14 +13,15 @@ class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
 {
 
     /**
-     * @var ShipmentDiscountConnectorToShipmentInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface
      */
     protected $shipmentFacade;
 
     /**
-     * @param ShipmentDiscountConnectorToShipmentInterface $shipmentFacade
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface $shipmentFacade
      */
-    public function __construct(ShipmentDiscountConnectorToShipmentInterface $shipmentFacade) {
+    public function __construct(ShipmentDiscountConnectorToShipmentInterface $shipmentFacade)
+    {
         $this->shipmentFacade = $shipmentFacade;
     }
 

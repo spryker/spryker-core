@@ -39,7 +39,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @return ShipmentCarrierTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
     public function findCarriers()
     {
@@ -53,7 +53,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @return ShipmentMethodTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function findMethods()
     {
@@ -83,7 +83,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @param int $idShipmentMethod
      *
-     * @return ShipmentMethodTransfer|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findMethodById($idShipmentMethod)
     {

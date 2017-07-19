@@ -1,22 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade;
 
-
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 
 class ShipmentDiscountConnectorToDiscountBridge implements ShipmentDiscountConnectorToDiscountInterface
 {
 
     /**
-     * @var DiscountFacadeInterface
+     * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
     protected $discountFacade;
 
     /**
-     * @param DiscountFacadeInterface $discountFacade
+     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
      */
     public function __construct($discountFacade)
     {
@@ -26,8 +28,6 @@ class ShipmentDiscountConnectorToDiscountBridge implements ShipmentDiscountConne
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $compareWith
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */

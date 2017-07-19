@@ -32,7 +32,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ShipmentCarrierReader
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader
      */
     public function createShipmentCarrierReader()
     {

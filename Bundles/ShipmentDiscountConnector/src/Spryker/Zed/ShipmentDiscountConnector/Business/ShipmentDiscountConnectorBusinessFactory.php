@@ -8,31 +8,13 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Shipment\Business\Model\Carrier;
-use Spryker\Zed\Shipment\Business\Model\Method;
-use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
-use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
-use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
-use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
-use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
-use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountCollector;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountCollectorInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountDecisionRule;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountCollector;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountCollectorInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRule;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountCollector;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountCollectorInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountDecisionRule;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountDecisionRuleInterface;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountConnectorReader;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReader;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReaderInterface;
-use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
-use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface;
 use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyProvider;
 
 /**
@@ -42,7 +24,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return ShipmentDiscountReaderInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReaderInterface
      */
     public function createShipmentDiscountConnectorReader()
     {
@@ -52,7 +34,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CarrierDiscountCollectorInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountCollectorInterface
      */
     public function createCarrierDiscountCollector()
     {
@@ -62,7 +44,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CarrierDiscountDecisionRuleInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountDecisionRuleInterface
      */
     public function createCarrierDiscountDecisionRule()
     {
@@ -73,7 +55,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MethodDiscountCollectorInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountCollectorInterface
      */
     public function createMethodDiscountCollector()
     {
@@ -83,7 +65,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return MethodDiscountDecisionRuleInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRuleInterface
      */
     public function createMethodDiscountDecisionRule()
     {
@@ -93,7 +75,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceDiscountCollectorInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountCollectorInterface
      */
     public function createPriceDiscountCollector()
     {
@@ -103,7 +85,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PriceDiscountDecisionRuleInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountDecisionRuleInterface
      */
     public function createPriceDiscountDecisionRule()
     {
@@ -113,7 +95,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ShipmentDiscountConnectorToDiscountInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface
      */
     public function getDiscountFacade()
     {
@@ -121,7 +103,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ShipmentDiscountConnectorToShipmentInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface
      */
     public function getShipmentFacade()
     {

@@ -1,21 +1,22 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade;
-
-
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 
 class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConnectorToShipmentInterface
 {
 
     /**
-     * @var ShipmentFacadeInterface
+     * @var \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
      */
     protected $shipmentFacade;
 
     /**
-     * @param ShipmentFacadeInterface $shipmentFacade
+     * @param \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface $shipmentFacade
      */
     public function __construct($shipmentFacade)
     {
@@ -31,7 +32,7 @@ class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConne
     }
 
     /**
-     * @return ShipmentMethodTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function findMethods()
     {
@@ -41,7 +42,7 @@ class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConne
     /**
      * @param int $idShipmentMethod
      *
-     * @return ShipmentMethodTransfer|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findMethodById($idShipmentMethod)
     {

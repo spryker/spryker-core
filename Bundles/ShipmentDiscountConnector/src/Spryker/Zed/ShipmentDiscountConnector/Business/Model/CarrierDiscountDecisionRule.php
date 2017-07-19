@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
 
-
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface;
@@ -15,18 +17,18 @@ class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterfac
 {
 
     /**
-     * @var ShipmentDiscountConnectorToDiscountInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface
      */
     protected $discountFacade;
 
     /**
-     * @var ShipmentDiscountConnectorToShipmentInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface
      */
     protected $shipmentFacade;
 
     /**
-     * @param ShipmentDiscountConnectorToDiscountInterface $discountFacade
-     * @param ShipmentDiscountConnectorToShipmentInterface $shipmentFacade
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface $discountFacade
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface $shipmentFacade
      */
     public function __construct(
         ShipmentDiscountConnectorToDiscountInterface $discountFacade,
@@ -40,8 +42,6 @@ class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterfac
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */
@@ -70,4 +70,5 @@ class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterfac
 
         return false;
     }
+
 }

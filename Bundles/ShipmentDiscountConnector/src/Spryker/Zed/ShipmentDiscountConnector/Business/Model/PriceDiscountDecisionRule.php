@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
-
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -13,12 +16,12 @@ class PriceDiscountDecisionRule implements PriceDiscountDecisionRuleInterface
 {
 
     /**
-     * @var ShipmentDiscountConnectorToDiscountInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface
      */
     protected $discountFacade;
 
     /**
-     * @param ShipmentDiscountConnectorToDiscountInterface $discountFacade
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface $discountFacade
      */
     public function __construct(ShipmentDiscountConnectorToDiscountInterface $discountFacade)
     {
@@ -26,12 +29,9 @@ class PriceDiscountDecisionRule implements PriceDiscountDecisionRuleInterface
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */

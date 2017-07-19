@@ -31,7 +31,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @return ShipmentCarrierTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
     public function findCarriers();
 
@@ -41,7 +41,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @return ShipmentMethodTransfer[]
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function findMethods();
 
@@ -63,7 +63,7 @@ interface ShipmentFacadeInterface
      *
      * @param int $idShipmentMethod
      *
-     * @return ShipmentMethodTransfer|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findMethodById($idShipmentMethod);
 
