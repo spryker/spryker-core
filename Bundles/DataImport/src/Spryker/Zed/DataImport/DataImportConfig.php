@@ -18,7 +18,24 @@ class DataImportConfig extends AbstractBundleConfig
      */
     public function getDataImportRootPath()
     {
-        return rtrim($this->get(DataImportConstants::IMPORT_FILE_ROOT_PATH), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $defaultPath = $this->getDefaultPath();
+        $dataImportRootPath = $this->get(DataImportConstants::IMPORT_FILE_ROOT_PATH, $defaultPath);
+
+        return rtrim($dataImportRootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @return string
+     */
+    private function getDefaultPath()
+    {
+        $pathParts = [
+            APPLICATION_ROOT_DIR,
+            'data',
+            'import',
+        ];
+
+        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
     }
 
 }
