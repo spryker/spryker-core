@@ -19,7 +19,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/collector-storage-connector": "You need to add this bundle if you want to use dropStorageTimestamps functionality from Collector bundle"
+    "spryker/collector-storage-connector": "You need to add this module if you want to use dropStorageTimestamps functionality from Collector module"
   },
   "autoload": {
     "psr-0": {
