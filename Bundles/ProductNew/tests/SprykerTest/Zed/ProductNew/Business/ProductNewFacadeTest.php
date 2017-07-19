@@ -33,17 +33,22 @@ class ProductNewFacadeTest extends Test
     protected $tester;
 
     /**
+     * @dataProvider validTimeRangeProductsToAssignDataProvider
+     *
+     * @param string $newFrom
+     * @param string $newTo
+     *
      * @return void
      */
-    public function testFindProductsToAssignShouldReturnValidTimeRangeResults()
+    public function testFindProductsToAssignShouldReturnValidTimeRangeResults($newFrom, $newTo)
     {
         // Arrange
         $this->tester->haveProductLabel([
             ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $productAbstractTransfer = $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-1 minute')),
-            ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('+1 minute')),
+            ProductAbstractTransfer::NEW_FROM => $newFrom,
+            ProductAbstractTransfer::NEW_TO => $newTo,
         ]);
 
         // Act
@@ -61,21 +66,22 @@ class ProductNewFacadeTest extends Test
     }
 
     /**
+     * @dataProvider invalidTimeRangeProductsToAssignDataProvider
+     *
+     * @param string $newFrom
+     * @param string $newTo
+     *
      * @return void
      */
-    public function testFindProductsToAssignShouldNotReturnInvalidTimeRangeResults()
+    public function testFindProductsToAssignShouldNotReturnInvalidTimeRangeResults($newFrom, $newTo)
     {
         // Arrange
         $this->tester->haveProductLabel([
             ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-2 minute')),
-            ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('-1 minute')),
-        ]);
-        $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('+1 minute')),
-            ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('+2 minute')),
+            ProductAbstractTransfer::NEW_FROM => $newFrom,
+            ProductAbstractTransfer::NEW_TO => $newTo,
         ]);
 
         // Act
@@ -86,17 +92,22 @@ class ProductNewFacadeTest extends Test
     }
 
     /**
+     * @dataProvider validTimeRangeProductsToAssignDataProvider
+     *
+     * @param string $newFrom
+     * @param string $newTo
+     *
      * @return void
      */
-    public function testFindProductsToAssignShouldNotReturnAlreadyAssignedResults()
+    public function testFindProductsToAssignShouldNotReturnAlreadyAssignedResults($newFrom, $newTo)
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
             ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $productAbstractTransfer = $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-1 minute')),
-            ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('+1 minute')),
+            ProductAbstractTransfer::NEW_FROM => $newFrom,
+            ProductAbstractTransfer::NEW_TO => $newTo,
         ]);
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
@@ -111,17 +122,22 @@ class ProductNewFacadeTest extends Test
     }
 
     /**
+     * @dataProvider invalidTimeRangeProductsToAssignDataProvider
+     *
+     * @param string $newFrom
+     * @param string $newTo
+     *
      * @return void
      */
-    public function testFindProductsToDeassignShouldReturnValidTimeRangeResults()
+    public function testFindProductsToDeassignShouldReturnValidTimeRangeResults($newFrom, $newTo)
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
             ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $productAbstractTransfer = $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-2 minute')),
-            ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('-1 minute')),
+            ProductAbstractTransfer::NEW_FROM => $newFrom,
+            ProductAbstractTransfer::NEW_TO => $newTo,
         ]);
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
@@ -143,17 +159,22 @@ class ProductNewFacadeTest extends Test
     }
 
     /**
+     * @dataProvider validTimeRangeProductsToAssignDataProvider
+     *
+     * @param string $newFrom
+     * @param string $newTo
+     *
      * @return void
      */
-    public function testFindProductsToDeassignShouldNotReturnInvalidTimeRangeResults()
+    public function testFindProductsToDeassignShouldNotReturnInvalidTimeRangeResults($newFrom, $newTo)
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
             ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $productAbstractTransfer = $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-1 minute')),
-            ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('+1 minute')),
+            ProductAbstractTransfer::NEW_FROM => $newFrom,
+            ProductAbstractTransfer::NEW_TO => $newTo,
         ]);
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
@@ -168,17 +189,22 @@ class ProductNewFacadeTest extends Test
     }
 
     /**
+     * @dataProvider invalidTimeRangeProductsToAssignDataProvider
+     *
+     * @param string $newFrom
+     * @param string $newTo
+     *
      * @return void
      */
-    public function testFindProductsToDeassignShouldNotReturnNotAssignedResults()
+    public function testFindProductsToDeassignShouldNotReturnNotAssignedResults($newFrom, $newTo)
     {
         // Arrange
         $this->tester->haveProductLabel([
             ProductLabelTransfer::NAME => $this->getLabelNewName(),
         ]);
         $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::NEW_FROM => date('Y-m-d H:i:s', strtotime('-2 minute')),
-            ProductAbstractTransfer::NEW_TO => date('Y-m-d H:i:s', strtotime('-1 minute')),
+            ProductAbstractTransfer::NEW_FROM => $newFrom,
+            ProductAbstractTransfer::NEW_TO => $newTo,
         ]);
 
         // Act
@@ -215,6 +241,56 @@ class ProductNewFacadeTest extends Test
         $facade->setFactory($factoryMock);
 
         return $facade;
+    }
+
+    /**
+     * @return array
+     */
+    public function validTimeRangeProductsToAssignDataProvider()
+    {
+        return [
+            'simple time range' => [
+                date('Y-m-d H:i:s', strtotime('-1 minute')),
+                date('Y-m-d H:i:s', strtotime('+1 minute')),
+            ],
+            'open from time range' => [
+                null,
+                date('Y-m-d H:i:s', strtotime('+1 minute')),
+            ],
+            'open to time range' => [
+                date('Y-m-d H:i:s', strtotime('-1 minute')),
+                null,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidTimeRangeProductsToAssignDataProvider()
+    {
+        return [
+            'time range in the future' => [
+                date('Y-m-d H:i:s', strtotime('+1 minute')),
+                date('Y-m-d H:i:s', strtotime('+2 minute')),
+            ],
+            'time range in the past' => [
+                date('Y-m-d H:i:s', strtotime('-2 minute')),
+                date('Y-m-d H:i:s', strtotime('-1 minute')),
+            ],
+            'open from time range in the past' => [
+                null,
+                date('Y-m-d H:i:s', strtotime('-1 minute')),
+            ],
+            'open to time range in the future' => [
+                date('Y-m-d H:i:s', strtotime('+1 minute')),
+                null,
+            ],
+            'time range not defined' => [
+                null,
+                null,
+            ],
+        ];
     }
 
 }

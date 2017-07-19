@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductNew\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -39,11 +42,19 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
      */
     public function queryRelationsBecomingInactive($idProductLabel)
     {
+        $timeRangeCriteria = $this->createValidTimeRangeCriteria(true);
+
         return $this->getFactory()
             ->getProductLabelQueryContainer()
             ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
             ->useSpyProductAbstractQuery()
-                ->filterByNewTo('now', Criteria::LESS_THAN)
+                ->mergeWith($timeRangeCriteria)
+                ->_or()
+                ->where(sprintf(
+                    '%s IS NULL AND %s IS NULL',
+                    SpyProductAbstractTableMap::COL_NEW_FROM,
+                    SpyProductAbstractTableMap::COL_NEW_TO
+                ))
             ->endUse();
     }
 
@@ -56,15 +67,45 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
      */
     public function queryRelationsBecomingActive($idProductLabel)
     {
+        $timeRangeCriteria = $this->createValidTimeRangeCriteria(false);
+
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()
-            ->filterByNewFrom('now', Criteria::LESS_EQUAL)
-            ->filterByNewTo('now', Criteria::GREATER_THAN)
+                ->mergeWith($timeRangeCriteria)
             ->useSpyProductLabelProductAbstractQuery('rel', Criteria::LEFT_JOIN)
                 ->filterByFkProductLabel(null, Criteria::ISNULL)
             ->endUse()
             ->addJoinCondition('rel', sprintf('rel.fk_product_label = %d', $idProductLabel));
+    }
+
+    /**
+     * @param bool $isNegative
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function createValidTimeRangeCriteria($isNegative)
+    {
+        $clause = sprintf(
+            '%3$s (
+                (%1$s <= ? OR (
+                    %1$s IS NULL AND
+                    %2$s IS NOT NULL
+                )) AND
+                (%2$s >= ? OR (
+                    %2$s IS NULL AND
+                    %1$s IS NOT NULL
+                ))
+            )',
+            SpyProductAbstractTableMap::COL_NEW_FROM,
+            SpyProductAbstractTableMap::COL_NEW_TO,
+            $isNegative ? 'NOT' : ''
+        );
+
+        $criteria = new ModelCriteria(null, SpyProductAbstract::class);
+        $criteria->where($clause, ['now', 'now']);
+
+        return $criteria;
     }
 
 }
