@@ -19,7 +19,7 @@ class ComposerJsonUpdaterConsole extends Console
 {
 
     const COMMAND_NAME = 'dev:dependency:update-composer-files';
-    const OPTION_BUNDLE = 'bundle';
+    const OPTION_BUNDLE = 'module';
     const VERBOSE = 'verbose';
 
     /**
@@ -32,9 +32,9 @@ class ComposerJsonUpdaterConsole extends Console
         $this
             ->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Update composer.json of core bundles (Spryker core dev only).');
+            ->setDescription('Update composer.json of core modules (Spryker core dev only).');
 
-        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle (comma separated for multiple ones)');
+        $this->addOption(static::OPTION_BUNDLE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module (comma separated for multiple ones)');
     }
 
     /**
@@ -55,7 +55,7 @@ class ComposerJsonUpdaterConsole extends Console
 
         $processedBundles = $this->getFacade()->updateComposerJsonInBundles($bundles);
         if ($this->input->getOption(static::VERBOSE)) {
-            $this->output->writeln(count($processedBundles) . ' bundles updated:');
+            $this->output->writeln(count($processedBundles) . ' modules updated:');
             foreach ($processedBundles as $processedBundle) {
                 $this->output->writeln('- '. $processedBundle);
             }

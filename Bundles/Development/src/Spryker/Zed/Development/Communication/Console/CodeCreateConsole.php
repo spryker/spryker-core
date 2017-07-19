@@ -19,8 +19,8 @@ class CodeCreateConsole extends Console
 {
 
     const COMMAND_NAME = 'dev:bridge:create';
-    const OPTION_BUNDLE = 'from bundle';
-    const OPTION_TO_BUNDLE = 'to bundle';
+    const OPTION_BUNDLE = 'from module';
+    const OPTION_TO_BUNDLE = 'to module';
 
     /**
      * @return void
@@ -33,8 +33,8 @@ class CodeCreateConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Create bridge and facade interface (Spryker core dev only)');
 
-        $this->addArgument(static::OPTION_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle where the bridge should be created in');
-        $this->addArgument(static::OPTION_TO_BUNDLE, InputArgument::REQUIRED, 'Name of core bundle to which the bundle must be connected to');
+        $this->addArgument(static::OPTION_BUNDLE, InputArgument::REQUIRED, 'Name of core module where the bridge should be created in');
+        $this->addArgument(static::OPTION_TO_BUNDLE, InputArgument::REQUIRED, 'Name of core module to which the module must be connected to');
     }
 
     /**

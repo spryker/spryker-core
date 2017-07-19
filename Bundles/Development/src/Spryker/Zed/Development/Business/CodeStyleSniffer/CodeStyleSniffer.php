@@ -83,6 +83,8 @@ class CodeStyleSniffer
      */
     protected function resolvePath($bundle, $path = null)
     {
+        $path = trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
         if ($bundle) {
             if (strtolower($bundle) === static::BUNDLE_ALL) {
                 return $this->pathToBundles;
@@ -91,9 +93,7 @@ class CodeStyleSniffer
             return $this->getPathToBundle($bundle, $path);
         }
 
-        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-
-        return rtrim($this->applicationRoot, DIRECTORY_SEPARATOR) . $path;
+        return rtrim($this->applicationRoot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $path;
     }
 
     /**
@@ -114,7 +114,7 @@ class CodeStyleSniffer
         }
 
         $message = sprintf(
-            'Could not find valid paths to your bundle "%s". Lookup paths "%s". Maybe there is a typo in the bundle name?',
+            'Could not find valid paths to your module "%s". Lookup paths "%s". Maybe there is a typo in the module name?',
             $bundle,
             implode(', ', $lookupPaths)
         );
