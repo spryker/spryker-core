@@ -24,6 +24,10 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountCollector
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountCollectorInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRuleInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountCollector;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountCollectorInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountDecisionRule;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountConnectorReader;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReader;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReaderInterface;
@@ -84,6 +88,26 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMethodDiscountDecisionRule()
     {
         return new MethodDiscountDecisionRule(
+            $this->getDiscountFacade()
+        );
+    }
+
+    /**
+     * @return PriceDiscountCollectorInterface
+     */
+    public function createPriceDiscountCollector()
+    {
+        return new PriceDiscountCollector(
+            $this->createPriceDiscountDecisionRule()
+        );
+    }
+
+    /**
+     * @return PriceDiscountDecisionRuleInterface
+     */
+    public function createPriceDiscountDecisionRule()
+    {
+        return new PriceDiscountDecisionRule(
             $this->getDiscountFacade()
         );
     }

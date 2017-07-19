@@ -60,6 +60,19 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Collects discountable items from the given quote by the shipment price
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     */
+    public function collectDiscountByShipmentPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
+
+    /**
+     * Specification:
      * - Compare chosen for the order shipment carrier with a carrier in condition
      *
      * @api
@@ -86,5 +99,19 @@ interface ShipmentDiscountConnectorFacadeInterface
      */
     public function isMethodSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
+
+    /**
+     * Specification:
+     * - Compare chosen for order shipment carrier with a shipment price in condition
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isPriceSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
 
 }

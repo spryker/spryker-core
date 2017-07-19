@@ -74,6 +74,23 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     */
+    public function collectDiscountByShipmentPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this->getFactory()
+            ->createPriceDiscountCollector()
+            ->collect($quoteTransfer, $clauseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -87,8 +104,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
-     * Specification:
-     * - Compare chosen for order shipment carrier with a carrier in condition
+     * {@inheritdoc}
      *
      * @api
      *
@@ -102,6 +118,24 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     {
         return $this->getFactory()
             ->createMethodDiscountDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isPriceSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this->getFactory()
+            ->createPriceDiscountDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
