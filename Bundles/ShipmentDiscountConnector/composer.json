@@ -1,0 +1,51 @@
+{
+  "name": "spryker/shipment-discount-connector",
+  "description": "Shipment discount module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/discount": "^5.0.1",
+    "spryker/shipment": "^4.4.0"
+
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/country": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
+      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
