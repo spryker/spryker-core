@@ -118,10 +118,12 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getZedDirectoryPathPattern()
     {
-        return [
-            'src/*/Zed/*/Presentation',
-            'vendor/*/*/src/*/Zed/*/Presentation',
-        ];
+        $directories = array_merge(
+            glob('vendor/*/*/src/*/Zed/*/Presentation'),
+            glob('src/*/Zed/*/Presentation')
+        );
+
+        return $directories;
     }
 
     /**
@@ -140,11 +142,12 @@ class TwigConfig extends AbstractBundleConfig
     public function getYvesDirectoryPathPattern()
     {
         $currentThemeName = $this->get(TwigConstants::YVES_THEME);
-
-        return array_merge(
-            glob('src/*/Yves/*/Theme/' . $currentThemeName),
-            glob('vendor/*/*/src/*/Yves/*/Theme/' . $currentThemeName)
+        $directories = array_merge(
+            glob('vendor/*/*/src/*/Yves/*/Theme/' . $currentThemeName),
+            glob('src/*/Yves/*/Theme/' . $currentThemeName)
         );
+
+        return $directories;
     }
 
 }
