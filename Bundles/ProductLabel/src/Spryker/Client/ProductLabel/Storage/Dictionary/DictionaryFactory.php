@@ -19,7 +19,11 @@ class DictionaryFactory extends AbstractFactory
      */
     public function createDictionaryByIdProductLabel()
     {
-        return new LabelDictionaryByIdProductLabel($this->getStorageClient(), $this->createLabelDictionaryKeyBuilder());
+        return new LabelDictionary(
+            $this->getStorageClient(),
+            $this->createLabelDictionaryKeyBuilder(),
+            $this->createKeyByIdProductLabelStrategy()
+        );
     }
 
     /**
@@ -27,7 +31,11 @@ class DictionaryFactory extends AbstractFactory
      */
     public function createDictionaryByLocalizedName()
     {
-        return new LabelDictionaryByLocalizedName($this->getStorageClient(), $this->createLabelDictionaryKeyBuilder());
+        return new LabelDictionary(
+            $this->getStorageClient(),
+            $this->createLabelDictionaryKeyBuilder(),
+            $this->createKeyByLocalizedNameStrategy()
+        );
     }
 
     /**
@@ -35,7 +43,11 @@ class DictionaryFactory extends AbstractFactory
      */
     public function createDictionaryByName()
     {
-        return new LabelDictionaryByName($this->getStorageClient(), $this->createLabelDictionaryKeyBuilder());
+        return new LabelDictionary(
+            $this->getStorageClient(),
+            $this->createLabelDictionaryKeyBuilder(),
+            $this->createKeyByNameStrategy()
+        );
     }
 
     /**
@@ -52,6 +64,30 @@ class DictionaryFactory extends AbstractFactory
     protected function createLabelDictionaryKeyBuilder()
     {
         return new LabelDictionaryKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductLabel\Storage\Dictionary\KeyStrategyInterface
+     */
+    protected function createKeyByIdProductLabelStrategy()
+    {
+        return new KeyByIdProductLabelStrategy();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductLabel\Storage\Dictionary\KeyStrategyInterface
+     */
+    protected function createKeyByLocalizedNameStrategy()
+    {
+        return new KeyByLocalizedNameStrategy();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductLabel\Storage\Dictionary\KeyStrategyInterface
+     */
+    protected function createKeyByNameStrategy()
+    {
+        return new KeyByNameStrategy();
     }
 
 }

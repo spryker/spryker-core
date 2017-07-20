@@ -9,17 +9,14 @@ namespace Spryker\Client\ProductLabel\Storage\Dictionary;
 
 use Generated\Shared\Transfer\StorageProductLabelTransfer;
 
-class LabelDictionaryByName extends AbstractLabelDictionary
+interface KeyStrategyInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\StorageProductLabelTransfer $storageProductLabelTransfer
      *
-     * @return int
+     * @return mixed
      */
-    protected function getDictionaryKey(StorageProductLabelTransfer $storageProductLabelTransfer)
-    {
-        return $storageProductLabelTransfer->getKey();
-    }
+    public function getDictionaryKey(StorageProductLabelTransfer $storageProductLabelTransfer);
 
 }

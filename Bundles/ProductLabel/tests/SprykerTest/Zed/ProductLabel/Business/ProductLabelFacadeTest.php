@@ -286,8 +286,6 @@ class ProductLabelFacadeTest extends Test
             'isPublished' => false,
         ]);
 
-        sleep(1);
-
         $referenceTime = new DateTime('now');
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();
@@ -309,8 +307,6 @@ class ProductLabelFacadeTest extends Test
             'validTo' => (new DateTime())->setTimestamp(strtotime('-1 day'))->format('Y-m-d'),
             'isPublished' => true,
         ]);
-
-        sleep(1);
 
         $referenceTime = new DateTime('now');
         $productLabelFacade = $this->getProductLabelFacade();
@@ -335,8 +331,6 @@ class ProductLabelFacadeTest extends Test
         ]);
         $referenceTime = new DateTime('now');
 
-        sleep(1);
-
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();
 
@@ -358,8 +352,6 @@ class ProductLabelFacadeTest extends Test
             'isPublished' => false,
         ]);
         $referenceTime = new DateTime('now');
-
-        sleep(1);
 
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();

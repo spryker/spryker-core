@@ -12,7 +12,7 @@ use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
-abstract class AbstractLabelDictionary implements LabelDictionaryInterface
+class LabelDictionary implements LabelDictionaryInterface
 {
 
     /**
@@ -26,15 +26,23 @@ abstract class AbstractLabelDictionary implements LabelDictionaryInterface
     protected $keyBuilder;
 
     /**
+     * @var \Spryker\Client\ProductLabel\Storage\Dictionary\KeyStrategyInterface
+     */
+    protected $dictionaryKeyStrategy;
+
+    /**
      * @param \Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface $storageClient
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Client\ProductLabel\Storage\Dictionary\KeyStrategyInterface $dictionaryKeyStrategy
      */
     public function __construct(
         ProductLabelToStorageInterface $storageClient,
-        KeyBuilderInterface $keyBuilder
+        KeyBuilderInterface $keyBuilder,
+        KeyStrategyInterface $dictionaryKeyStrategy
     ) {
         $this->storageClient = $storageClient;
         $this->keyBuilder = $keyBuilder;
+        $this->dictionaryKeyStrategy = $dictionaryKeyStrategy;
     }
 
     /**
@@ -61,13 +69,15 @@ abstract class AbstractLabelDictionary implements LabelDictionaryInterface
      */
     public function getDictionary($localeName)
     {
-        static $labelDictionary = null;
+        static $labelDictionary = [];
 
-        if ($labelDictionary === null) {
-            $labelDictionary = $this->initializeLabelDictionary($localeName);
+        $strategy = get_class($this->dictionaryKeyStrategy);
+
+        if (!isset($labelDictionary[$strategy])) {
+            $labelDictionary[$strategy] = $this->initializeLabelDictionary($localeName);
         }
 
-        return $labelDictionary;
+        return $labelDictionary[$strategy];
     }
 
     /**
@@ -83,7 +93,8 @@ abstract class AbstractLabelDictionary implements LabelDictionaryInterface
             $storageProductLabelTransfer = new StorageProductLabelTransfer();
             $storageProductLabelTransfer->fromArray($productLabelData, true);
 
-            $labelsByIds[$this->getDictionaryKey($storageProductLabelTransfer)] = $storageProductLabelTransfer;
+            $dictionaryKey = $this->dictionaryKeyStrategy->getDictionaryKey($storageProductLabelTransfer);
+            $labelsByIds[$dictionaryKey] = $storageProductLabelTransfer;
         }
 
         return $labelsByIds;
@@ -103,12 +114,5 @@ abstract class AbstractLabelDictionary implements LabelDictionaryInterface
 
         return $this->storageClient->get($storageKey);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\StorageProductLabelTransfer $storageProductLabelTransfer
-     *
-     * @return mixed
-     */
-    abstract protected function getDictionaryKey(StorageProductLabelTransfer $storageProductLabelTransfer);
 
 }
