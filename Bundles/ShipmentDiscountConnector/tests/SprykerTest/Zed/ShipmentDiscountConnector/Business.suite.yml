@@ -5,7 +5,3 @@ modules:
     - \SprykerTest\Shared\Testify\Helper\LocatorHelper
     - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
     - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-    - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
-    - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
-    - \SprykerTest\Zed\Shipment\Helper\ShipmentDataHelper
-
