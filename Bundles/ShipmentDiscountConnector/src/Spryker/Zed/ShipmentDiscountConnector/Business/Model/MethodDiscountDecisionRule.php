@@ -54,8 +54,8 @@ class MethodDiscountDecisionRule implements MethodDiscountDecisionRuleInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */

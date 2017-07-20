@@ -2,6 +2,7 @@
 
 namespace SprykerTest\Zed\ShipmentDiscountConnector\Business;
 
+use ArrayObject;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -11,6 +12,16 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group ShipmentDiscountConnector
+ * @group Business
+ * @group Facade
+ * @group ShipmentDiscountConnectorFacadeTest
+ * Add your own group annotations below this line
+ */
 class ShipmentDiscountConnectorFacadeTest extends Test
 {
 
@@ -19,6 +30,9 @@ class ShipmentDiscountConnectorFacadeTest extends Test
      */
     protected $tester;
 
+    /**
+     * @return void
+     */
     public function testIsCarrierSatisfiedBy()
     {
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
@@ -35,8 +49,8 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $itemTransfer = new ItemTransfer();
         $quoteTransfer = (new QuoteTransfer())
             ->setShipment($shipmentTransfer)
-            ->setItems(new \ArrayObject([$itemTransfer]))
-            ->setExpenses(new \ArrayObject([$expenseTransfer]));
+            ->setItems(new ArrayObject([$itemTransfer]))
+            ->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -45,13 +59,16 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => $shipmentTransfer->getCarrier()->getIdShipmentCarrier(),
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->isCarrierSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testIsMethodSatisfiedBy()
     {
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
@@ -68,8 +85,8 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $itemTransfer = new ItemTransfer();
         $quoteTransfer = (new QuoteTransfer())
             ->setShipment($shipmentTransfer)
-            ->setItems(new \ArrayObject([$itemTransfer]))
-            ->setExpenses(new \ArrayObject([$expenseTransfer]));
+            ->setItems(new ArrayObject([$itemTransfer]))
+            ->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -78,13 +95,16 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => $shipmentMethodTransfer->getIdShipmentMethod(),
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->isMethodSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testIsPriceSatisfiedBy()
     {
         $itemTransfer = new ItemTransfer();
@@ -93,12 +113,12 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'type' => 'SHIPMENT_EXPENSE_TYPE',
             'unitGrossPrice' => 2500,
             'taxRate' => 19,
-            'quantity' => 1
+            'quantity' => 1,
         ]);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems(new \ArrayObject([$itemTransfer]));
-        $quoteTransfer->setExpenses(new \ArrayObject([$expenseTransfer]));
+        $quoteTransfer->setItems(new ArrayObject([$itemTransfer]));
+        $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -107,13 +127,16 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => 20,
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->isPriceSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testCollectDiscountByShipmentCarrier()
     {
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
@@ -129,8 +152,8 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $quoteTransfer = (new QuoteTransfer())
             ->setShipment($shipmentTransfer)
-            ->setItems(new \ArrayObject([new ItemTransfer()]))
-            ->setExpenses(new \ArrayObject([$expenseTransfer]));
+            ->setItems(new ArrayObject([new ItemTransfer()]))
+            ->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -139,7 +162,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => $shipmentTransfer->getCarrier()->getIdShipmentCarrier(),
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->collectDiscountByShipmentCarrier($quoteTransfer, $clauseTransfer);
@@ -147,6 +170,9 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $this->assertCount(1, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testCollectDiscountByShipmentMethod()
     {
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
@@ -162,8 +188,8 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $quoteTransfer = (new QuoteTransfer())
             ->setShipment($shipmentTransfer)
-            ->setItems(new \ArrayObject([new ItemTransfer()]))
-            ->setExpenses(new \ArrayObject([$expenseTransfer]));
+            ->setItems(new ArrayObject([new ItemTransfer()]))
+            ->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -172,13 +198,16 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => $shipmentMethodTransfer->getIdShipmentMethod(),
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->collectDiscountByShipmentMethod($quoteTransfer, $clauseTransfer);
         $this->assertCount(1, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testCollectDiscountByShipmentPrice()
     {
         $itemTransfer = new ItemTransfer();
@@ -189,8 +218,8 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         ]);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems(new \ArrayObject([$itemTransfer]));
-        $quoteTransfer->setExpenses(new \ArrayObject([$expenseTransfer]));
+        $quoteTransfer->setItems(new ArrayObject([$itemTransfer]));
+        $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -199,13 +228,16 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => 20,
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->collectDiscountByShipmentPrice($quoteTransfer, $clauseTransfer);
         $this->assertCount(1, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testCollectDiscountByShipmentCarrierNegative()
     {
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
@@ -221,8 +253,8 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $quoteTransfer = (new QuoteTransfer())
             ->setShipment($shipmentTransfer)
-            ->setItems(new \ArrayObject([new ItemTransfer()]))
-            ->setExpenses(new \ArrayObject([$expenseTransfer]));
+            ->setItems(new ArrayObject([new ItemTransfer()]))
+            ->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -231,7 +263,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => 2,
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->collectDiscountByShipmentCarrier($quoteTransfer, $clauseTransfer);
@@ -239,6 +271,9 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $this->assertCount(0, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testCollectDiscountByShipmentMethodNegative()
     {
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
@@ -254,8 +289,8 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $quoteTransfer = (new QuoteTransfer())
             ->setShipment($shipmentTransfer)
-            ->setItems(new \ArrayObject([new ItemTransfer()]))
-            ->setExpenses(new \ArrayObject([$expenseTransfer]));
+            ->setItems(new ArrayObject([new ItemTransfer()]))
+            ->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -264,13 +299,16 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => 2,
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->collectDiscountByShipmentMethod($quoteTransfer, $clauseTransfer);
         $this->assertCount(0, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testCollectDiscountByShipmentPriceNegative()
     {
         $itemTransfer = new ItemTransfer();
@@ -281,8 +319,8 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         ]);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setItems(new \ArrayObject([$itemTransfer]));
-        $quoteTransfer->setExpenses(new \ArrayObject([$expenseTransfer]));
+        $quoteTransfer->setItems(new ArrayObject([$itemTransfer]));
+        $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
@@ -291,7 +329,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'value' => 40,
             'acceptedTypes' => [
                 'number'
-            ]
+            ],
         ], true);
 
         $result = $this->createFacade()->collectDiscountByShipmentPrice($quoteTransfer, $clauseTransfer);

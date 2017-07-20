@@ -32,6 +32,13 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
             ->getCarrierList();
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
     public function getMethodList()
     {
         return $this->getFactory()

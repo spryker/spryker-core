@@ -37,5 +37,4 @@ interface PriceDiscountDecisionRuleInterface
      */
     public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer);
 
-
 }

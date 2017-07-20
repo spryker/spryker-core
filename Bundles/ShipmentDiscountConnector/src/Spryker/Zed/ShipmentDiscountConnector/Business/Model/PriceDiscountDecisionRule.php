@@ -48,9 +48,9 @@ class PriceDiscountDecisionRule implements PriceDiscountDecisionRuleInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param ExpenseTransfer $expenseTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
@@ -60,8 +60,8 @@ class PriceDiscountDecisionRule implements PriceDiscountDecisionRuleInterface
     }
 
     /**
-     * @param ExpenseTransfer $expenseTransfer
-     * @param ClauseTransfer $clauseTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
