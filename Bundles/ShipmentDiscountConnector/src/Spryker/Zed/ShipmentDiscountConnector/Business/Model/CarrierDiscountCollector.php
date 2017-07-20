@@ -41,7 +41,7 @@ class CarrierDiscountCollector implements CarrierDiscountCollectorInterface
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                $isSatisfied = $this->carrierDiscountDecisionRule->isSatisfiedBy($quoteTransfer, $expenseTransfer, $clauseTransfer);
+                $isSatisfied = $this->carrierDiscountDecisionRule->isExpenseSatisfiedBy($quoteTransfer, $expenseTransfer, $clauseTransfer);
 
                 if ($isSatisfied) {
                     $discountableItems[] = $this->createDiscountableItemTransfer($expenseTransfer, $quoteTransfer->getPriceMode());
