@@ -56,7 +56,7 @@ class ZedNavigationBuilder
     {
         $navigationPages = $this->navigationCollector->getNavigation();
 
-        $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, true);
+        $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, false);
         $breadcrumb = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, true);
         $path = $this->pathExtractor->extractPathFromMenu($breadcrumb);
 
