@@ -44,7 +44,7 @@ class PriceDiscountDecisionRule implements PriceDiscountDecisionRuleInterface
             $result |= $this->isSatisfiedPrice($expenseTransfer, $clauseTransfer);
         }
 
-        return $result;
+        return (bool)$result;
     }
 
     /**
