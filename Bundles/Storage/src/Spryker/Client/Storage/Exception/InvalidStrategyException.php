@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage;
+namespace Spryker\Client\Storage\Exception;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Exception;
 
-class StorageConfig extends AbstractBundleConfig
+class InvalidStrategyException extends Exception
 {
-
-    const DEFAULT_REDIS_DATABASE = 0;
-
 }
