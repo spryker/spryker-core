@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 
-class MethodDiscountDecisionRule implements MethodDiscountDecisionRuleInterface
+class MethodDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {
 
     /**

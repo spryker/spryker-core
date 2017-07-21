@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface;
 
-class CarrierDiscountDecisionRule implements CarrierDiscountDecisionRuleInterface
+class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {
 
     /**

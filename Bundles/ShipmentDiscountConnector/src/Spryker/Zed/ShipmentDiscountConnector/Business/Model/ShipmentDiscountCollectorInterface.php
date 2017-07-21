@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface PriceDiscountCollectorInterface
+interface ShipmentDiscountCollectorInterface
 {
 
     /**

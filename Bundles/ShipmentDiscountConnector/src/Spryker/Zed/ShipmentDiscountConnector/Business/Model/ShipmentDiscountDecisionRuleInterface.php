@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface PriceDiscountDecisionRuleInterface
+interface ShipmentDiscountDecisionRuleInterface
 {
 
     /**

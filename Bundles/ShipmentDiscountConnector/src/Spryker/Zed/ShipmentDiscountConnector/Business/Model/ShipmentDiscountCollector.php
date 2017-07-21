@@ -13,20 +13,20 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
-class MethodDiscountCollector implements MethodDiscountCollectorInterface
+class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
 {
 
     /**
-     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRuleInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */
-    protected $methodDiscountDecisionRule;
+    protected $shipmentDiscountDecisionRule;
 
     /**
-     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRuleInterface $methodDiscountDecisionRule
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
      */
-    public function __construct(MethodDiscountDecisionRuleInterface $methodDiscountDecisionRule)
+    public function __construct(ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule)
     {
-        $this->methodDiscountDecisionRule = $methodDiscountDecisionRule;
+        $this->shipmentDiscountDecisionRule = $carrierDiscountDecisionRule;
     }
 
     /**
@@ -41,7 +41,7 @@ class MethodDiscountCollector implements MethodDiscountCollectorInterface
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                $isSatisfied = $this->methodDiscountDecisionRule->isExpenseSatisfiedBy($quoteTransfer, $expenseTransfer, $clauseTransfer);
+                $isSatisfied = $this->shipmentDiscountDecisionRule->isExpenseSatisfiedBy($quoteTransfer, $expenseTransfer, $clauseTransfer);
 
                 if ($isSatisfied) {
                     $discountableItems[] = $this->createDiscountableItemTransfer($expenseTransfer, $quoteTransfer->getPriceMode());
@@ -69,6 +69,8 @@ class MethodDiscountCollector implements MethodDiscountCollectorInterface
     }
 
     /**
+     * todo: Change everywhere to private
+     *
      * @deprecated This method calculated gross price when in tax mode, because discounts currently working with gross mode, will be removed in the future
      *
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
@@ -76,7 +78,7 @@ class MethodDiscountCollector implements MethodDiscountCollectorInterface
      *
      * @return int
      */
-    protected function getPrice(ExpenseTransfer $expenseTransfer, $priceMode)
+    private function getPrice(ExpenseTransfer $expenseTransfer, $priceMode)
     {
         if ($priceMode === 'NET_MODE') {
             return $expenseTransfer->getUnitNetPrice() + (int)round($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getTaxRate() / 100);
