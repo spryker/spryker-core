@@ -9,8 +9,8 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\CarrierDiscountDecisionRule;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\PriceDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\MethodDiscountDecisionRule;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\PriceDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReader;
 use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyProvider;
