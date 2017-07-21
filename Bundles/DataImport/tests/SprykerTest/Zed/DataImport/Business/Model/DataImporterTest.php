@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\DataImport\Model;
 
 use Codeception\TestCase\Test;
+use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -102,14 +103,33 @@ class DataImporterTest extends Test
     /**
      * @return void
      */
-    public function testImportTriggersDataSetImporterFailedEventAndDataSetImportFailedEventIfThereWasAnException()
+    public function testImportThrowsExceptionWhenThrowExceptionFlagSet()
+    {
+        $this->expectException(Exception::class);
+
+        $dataImporter = $this->getDataImporter();
+        $dataSetImporter = $this->tester->getFactory()->createDataSetStepBroker();
+        $dataSetImporter->addStep($this->tester->getFailingDataImportStepMock());
+        $dataImporter->addDataSetStepBroker($dataSetImporter);
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setThrowException(true);
+        $dataImporter->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportLogsExceptionWhenThrowExceptionFlagNotSet()
     {
         $dataImporter = $this->getDataImporter();
         $dataSetImporter = $this->tester->getFactory()->createDataSetStepBroker();
         $dataSetImporter->addStep($this->tester->getFailingDataImportStepMock());
         $dataImporter->addDataSetStepBroker($dataSetImporter);
 
-        $dataImporter->import();
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setThrowException(false);
+        $dataImporter->import($dataImportConfigurationTransfer);
     }
 
     /**

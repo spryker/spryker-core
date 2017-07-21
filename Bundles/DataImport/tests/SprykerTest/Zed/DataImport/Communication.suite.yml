@@ -1,8 +1,0 @@
-class_name: CommunicationTester
-modules:
-    enabled:
-        - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-        - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-        - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-        - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
-            depends: \SprykerTest\Shared\Testify\Helper\BundleConfig

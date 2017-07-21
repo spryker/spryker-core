@@ -69,6 +69,10 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function afterExecute()
     {
+        if (empty($this->mainTouchables)) {
+            return;
+        }
+
         $mainTouchAblesItemKey = key($this->mainTouchables);
 
         if (!$this->bulkSize || $this->bulkSize === 1 || count($this->mainTouchables[$mainTouchAblesItemKey]) >= $this->bulkSize) {

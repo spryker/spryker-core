@@ -49,11 +49,16 @@ class DataImportConsole extends Console
     const OPTION_CSV_HAS_HEADER = 'has-header';
     const OPTION_CSV_HAS_HEADER_SHORT = 'r';
 
+    const OPTION_THROW_EXCEPTION = 'throw-exception';
+    const OPTION_THROW_EXCEPTION_SHORT = 't';
+
     /**
      * @return void
      */
     protected function configure()
     {
+        $this->addOption(static::OPTION_THROW_EXCEPTION, static::OPTION_THROW_EXCEPTION_SHORT, InputOption::VALUE_OPTIONAL, 'Set this option to throw exceptions when they occur.');
+
         if ($this->getName()) {
             $this->addOption(static::OPTION_FILE_NAME, static::OPTION_FILE_NAME_SHORT, InputOption::VALUE_REQUIRED, 'Defines which file to use for data import.');
             $this->addOption(static::OPTION_OFFSET, static::OPTION_OFFSET_SHORT, InputOption::VALUE_REQUIRED, 'Defines from where a import should start.');
@@ -81,21 +86,7 @@ class DataImportConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImporterConfigurationTransfer->setImportType($this->getImporterType());
-
-        if ($this->getName() !== static::DEFAULT_NAME) {
-            $dataImporterReaderConfiguration = new DataImporterReaderConfigurationTransfer();
-            $dataImporterReaderConfiguration->setFileName($input->getOption(static::OPTION_FILE_NAME));
-            $dataImporterReaderConfiguration->setOffset($input->getOption(static::OPTION_OFFSET));
-            $dataImporterReaderConfiguration->setLimit($input->getOption(static::OPTION_LIMIT));
-            $dataImporterReaderConfiguration->setCsvDelimiter($input->getOption(static::OPTION_CSV_DELIMITER));
-            $dataImporterReaderConfiguration->setCsvEnclosure($input->getOption(static::OPTION_CSV_ENCLOSURE));
-            $dataImporterReaderConfiguration->setCsvEscape($input->getOption(static::OPTION_CSV_ESCAPE));
-            $dataImporterReaderConfiguration->setCsvHasHeader($input->getOption(static::OPTION_CSV_HAS_HEADER));
-
-            $dataImporterConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfiguration);
-        }
+        $dataImporterConfigurationTransfer = $this->buildDataImportConfiguration($input);
 
         $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType()));
         $dataImportReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
@@ -174,6 +165,50 @@ class DataImportConsole extends Console
             $dataImporterReport->getImportedDataSetCount(),
             $this->getImportStatus($dataImporterReport)
         ));
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    protected function buildDataImportConfiguration(InputInterface $input)
+    {
+        $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImporterConfigurationTransfer
+            ->setImportType($this->getImporterType())
+            ->setThrowException(false);
+
+        if ($input->hasParameterOption('--' . static::OPTION_THROW_EXCEPTION) || $input->hasParameterOption('-' . static::OPTION_THROW_EXCEPTION_SHORT)) {
+            $dataImporterConfigurationTransfer->setThrowException(true);
+        }
+
+        if ($this->getName() !== static::DEFAULT_NAME) {
+            $dataImporterReaderConfiguration = $this->buildReaderConfiguration($input);
+            $dataImporterConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfiguration);
+        }
+
+        return $dataImporterConfigurationTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer
+     */
+    protected function buildReaderConfiguration(InputInterface $input)
+    {
+        $dataImporterReaderConfiguration = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfiguration
+            ->setFileName($input->getOption(static::OPTION_FILE_NAME))
+            ->setOffset($input->getOption(static::OPTION_OFFSET))
+            ->setLimit($input->getOption(static::OPTION_LIMIT))
+            ->setCsvDelimiter($input->getOption(static::OPTION_CSV_DELIMITER))
+            ->setCsvEnclosure($input->getOption(static::OPTION_CSV_ENCLOSURE))
+            ->setCsvEscape($input->getOption(static::OPTION_CSV_ESCAPE))
+            ->setCsvHasHeader($input->getOption(static::OPTION_CSV_HAS_HEADER));
+
+        return $dataImporterReaderConfiguration;
     }
 
 }
