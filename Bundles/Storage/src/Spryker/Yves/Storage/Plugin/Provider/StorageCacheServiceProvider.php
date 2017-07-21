@@ -9,15 +9,14 @@ namespace Spryker\Yves\Storage\Plugin\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated use StorageCacheServiceProvider instead.
- *
  * @method \Spryker\Client\Storage\StorageClient getClient()
  */
-class StorageRequestCacheServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class StorageCacheServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
@@ -27,8 +26,10 @@ class StorageRequestCacheServiceProvider extends AbstractPlugin implements Servi
      */
     public function register(Application $app)
     {
-        $app->finish(function (Request $request) {
-            $this->getClient()->persistCacheForRequest($request);
+        $app->finish(function (Request $request) use ($app) {
+            if (isset($app[StorageConstants::STORAGE_CACHE_STRATEGY])) {
+                $this->getClient()->persistCacheForRequest($request, $app[StorageConstants::STORAGE_CACHE_STRATEGY]);
+            }
         });
     }
 

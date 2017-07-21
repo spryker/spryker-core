@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage;
 
 use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
@@ -24,7 +25,7 @@ class StorageFactory extends AbstractFactory
     protected static $storageService;
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface
      */
     public function createService()
     {
@@ -61,6 +62,45 @@ class StorageFactory extends AbstractFactory
     protected function getConfig()
     {
         return $this->getConnectionParameters();
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     */
+    public function getStorageClientConfig()
+    {
+        return parent::getConfig();
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    protected function getStorageClient()
+    {
+        return $this->getProvidedDependency(StorageDependencyProvider::STORAGE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyFactory
+     */
+    protected function createStorageClientStrategyFactory()
+    {
+        return new StorageCacheStrategyFactory(
+            $this->getStorageClient(),
+            $this->getStorageClientConfig()
+        );
+    }
+
+    /**
+     * @param string $storageCacheStrategy
+     *
+     * @return Cache\StorageCacheStrategyInterface
+     */
+    public function createStorageCacheStrategy($storageCacheStrategy)
+    {
+        return $this
+            ->createStorageClientStrategyFactory()
+            ->createStorageCacheStrategy($storageCacheStrategy);
     }
 
     /**

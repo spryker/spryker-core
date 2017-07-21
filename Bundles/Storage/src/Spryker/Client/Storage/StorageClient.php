@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
+use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,7 +27,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @var array
      */
-    protected static $cachedKeys;
+    public static $cachedKeys;
 
     /**
      * Pre-loaded values for this URL from Storage
@@ -36,14 +37,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedValues;
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface
      */
-    protected static $service;
+    public static $service;
 
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\StorageClientInterface $service
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface $service
      */
     public function getService()
     {
@@ -52,6 +53,28 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         }
 
         return self::$service;
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getCachedKeys()
+    {
+        return static::$cachedKeys;
+    }
+
+    /**
+     * @api
+     *
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function setCachedKeys($keys)
+    {
+        return static::$cachedKeys = $keys;
     }
 
     /**
@@ -78,6 +101,28 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public function setMulti(array $items)
     {
         $this->getService()->setMulti($items);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return void
+     */
+    public function unsetCachedKey($key)
+    {
+        unset(static::$cachedKeys[$key]);
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function unsetLastCachedKey()
+    {
+        array_pop(static::$cachedKeys);
     }
 
     /**
@@ -260,18 +305,25 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $storageCacheStrategyName
      *
      * @return void
      */
-    public function persistCacheForRequest(Request $request)
+    public function persistCacheForRequest(Request $request, $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE)
     {
-        static::persistCache($request);
+        $cacheKey = static::generateCacheKey($request);
+
+        if ($cacheKey && is_array(self::$cachedKeys)) {
+            $this->getFactory()
+                ->createStorageCacheStrategy($storageCacheStrategyName)
+                ->updateCache($cacheKey);
+        }
     }
 
     /**
      * @api
      *
-     * @deprecated Use persistRequestCache() instead.
+     * @deprecated Use persistCacheForRequest() instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
@@ -280,6 +332,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public static function persistCache(Request $request = null)
     {
         $cacheKey = static::generateCacheKey($request);
+
         if ($cacheKey && is_array(self::$cachedKeys)) {
             $updateCache = false;
             foreach (self::$cachedKeys as $key => $status) {
@@ -293,7 +346,10 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             }
 
             if ($updateCache) {
-                $ttl = 86400; // TTL = 1 day to avoid artifacts in Storage
+                $ttl = self::getFactory()
+                    ->getStorageClientConfig()
+                    ->getStorageCacheTtl();
+
                 self::$service->set($cacheKey, json_encode(array_keys(self::$cachedKeys)), $ttl);
             }
         }
@@ -318,7 +374,9 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             return '';
         }
 
-        return 'StorageClient_' . $serverName . $requestUri;
+        $baseRequestUrI = strtok($requestUri, '?');
+
+        return 'StorageClient_' . $serverName . $baseRequestUrI;
     }
 
     /**

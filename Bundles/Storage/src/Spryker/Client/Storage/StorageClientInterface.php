@@ -119,4 +119,43 @@ interface StorageClientInterface
      */
     public function getCountItems();
 
+    /**
+     * @api
+     *
+     * @return \Spryker\Client\Storage\StorageClientInterface $service
+     */
+    public function getService();
+
+    /**
+     * @api
+     *
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function setCachedKeys($keys);
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getCachedKeys();
+
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return void
+     */
+    public function unsetCachedKey($key);
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function unsetLastCachedKey();
+
 }
