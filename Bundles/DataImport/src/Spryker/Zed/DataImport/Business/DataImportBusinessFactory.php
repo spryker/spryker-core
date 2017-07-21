@@ -54,15 +54,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function createDataImporter($importType, DataReaderInterface $reader)
     {
-        return new DataImporter($importType, $reader, $this->getEventFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventInterface
-     */
-    protected function getEventFacade()
-    {
-        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_EVENT);
+        return new DataImporter($importType, $reader);
     }
 
     /**

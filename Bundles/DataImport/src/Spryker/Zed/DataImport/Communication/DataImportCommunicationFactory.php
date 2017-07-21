@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\DataImport\Communication;
 
-use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -15,21 +14,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class DataImportCommunicationFactory extends AbstractCommunicationFactory
 {
-
-    /**
-     * @return \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerInterface
-     */
-    public function getConsoleMessenger()
-    {
-        return $this->getProvidedDependency(DataImportDependencyProvider::CONSOLE_LOGGER);
-    }
-
-    /**
-     * @return \Spryker\Zed\DataImport\Dependency\Console\DataImportToConsoleLoggerInterface
-     */
-    public function getTimer()
-    {
-        return $this->getProvidedDependency(DataImportDependencyProvider::TIMER);
-    }
-
 }

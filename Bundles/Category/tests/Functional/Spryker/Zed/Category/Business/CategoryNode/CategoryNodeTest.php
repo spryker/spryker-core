@@ -71,19 +71,24 @@ class CategoryNodeTest extends Test
      */
     public function testMovingNodeTouchesFormerParentNode()
     {
+        $touchedIds = [];
+        $expectedTouchedIds = [
+            static::CATEGORY_NODE_ID_CAMERAS_CAMCORDERS,    // parent
+            static::CATEGORY_NODE_ID_ROOT,                  // root
+            static::CATEGORY_NODE_ID_TABLETS,               // self
+            static::CATEGORY_NODE_ID_ROOT,                  // root
+            static::CATEGORY_NODE_ID_COMPUTER,              // parent
+        ];
+
         $toucherMock = $this->createCategoryToucherMock(['touchCategoryNodeActive']);
         $toucherMock
             ->expects($this->exactly(5))
             ->method('touchCategoryNodeActive')
-            ->withConsecutive(
-                // New tree
-                [$this->equalTo(static::CATEGORY_NODE_ID_CAMERAS_CAMCORDERS)],  // Parent
-                [$this->equalTo(static::CATEGORY_NODE_ID_ROOT)],                // Root
-                [$this->equalTo(static::CATEGORY_NODE_ID_TABLETS)],             // Self
-                // Former tree
-                [$this->equalTo(static::CATEGORY_NODE_ID_ROOT)],                // Root
-                [$this->equalTo(static::CATEGORY_NODE_ID_COMPUTER)]             // Parent
-            );
+            ->will($this->returnCallback(
+                function ($idTouched) use (&$touchedIds) {
+                    $touchedIds[] = $idTouched;
+                }
+            ));
 
         $categoryNodeModel = $this->createCategoryNodeModel($toucherMock);
 
@@ -92,6 +97,12 @@ class CategoryNodeTest extends Test
 
         $categoryTransfer->getParentCategoryNode()->setIdCategoryNode(static::CATEGORY_NODE_ID_CAMERAS_CAMCORDERS);
         $categoryNodeModel->update($categoryTransfer);
+
+        $diff = array_diff($touchedIds, $expectedTouchedIds);
+        $this->assertCount(0, $diff, 'More category nodes touched as expected! Additionally touched category nodes: ' . implode(',', $diff));
+
+        $diff = array_diff($expectedTouchedIds, $touchedIds);
+        $this->assertCount(0, $diff, 'The following category nodes were expected to be touched but aren\'t: ' . implode(',', $diff));
     }
 
     /**
