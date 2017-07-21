@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductNew\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
-use Spryker\Shared\ProductNew\ProductNewConfig;
 use Spryker\Zed\ProductNew\Business\Exception\ProductLabelNewNotFoundException;
 use Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainerInterface;
+use Spryker\Zed\ProductNew\ProductNewConfig;
 
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
@@ -22,13 +22,13 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     protected $productNewQueryContainer;
 
     /**
-     * @var \Spryker\Shared\ProductNew\ProductNewConfig
+     * @var \Spryker\Zed\ProductNew\ProductNewConfig
      */
     protected $productNewConfig;
 
     /**
      * @param \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainerInterface $productNewQueryContainer
-     * @param \Spryker\Shared\ProductNew\ProductNewConfig $productNewConfig
+     * @param \Spryker\Zed\ProductNew\ProductNewConfig $productNewConfig
      */
     public function __construct(ProductNewQueryContainerInterface $productNewQueryContainer, ProductNewConfig $productNewConfig)
     {

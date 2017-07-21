@@ -10,9 +10,8 @@ namespace SprykerTest\Zed\ProductNew\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Spryker\Shared\ProductNew\ProductNewConfig;
 use Spryker\Zed\ProductNew\Business\ProductNewBusinessFactory;
-use Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainer;
+use Spryker\Zed\ProductNew\ProductNewConfig;
 
 /**
  * Auto-generated group annotations
@@ -230,15 +229,11 @@ class ProductNewFacadeTest extends Test
         $configMock = $this->getMockBuilder(ProductNewConfig::class)->getMock();
         $configMock->method('getLabelNewName')->willReturn($this->getLabelNewName());
 
-        $factoryMock = $this->getMockBuilder(ProductNewBusinessFactory::class)
-            ->setMethods(['createProductNewConfig'])
-            ->getMock();
-        $factoryMock->method('createProductNewConfig')->willReturn($configMock);
-
-        $factoryMock->setQueryContainer(new ProductNewQueryContainer());
+        $factory = new ProductNewBusinessFactory();
+        $factory->setConfig($configMock);
 
         $facade = $this->tester->getFacade();
-        $facade->setFactory($factoryMock);
+        $facade->setFactory($factory);
 
         return $facade;
     }

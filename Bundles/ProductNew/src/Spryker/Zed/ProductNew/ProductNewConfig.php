@@ -8,7 +8,17 @@
 namespace Spryker\Zed\ProductNew;
 
 use Spryker\Shared\ProductNew\ProductNewConfig as SharedProductNewConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class ProductNewConfig extends SharedProductNewConfig
+class ProductNewConfig extends AbstractBundleConfig
 {
+
+    /**
+     * @return string
+     */
+    public function getLabelNewName()
+    {
+        return SharedProductNewConfig::DEFAULT_LABEL_NAME;
+    }
+
 }
