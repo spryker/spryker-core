@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductNew;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\ProductNew\ProductNewConfig as SharedProductNewConfig;
 
-class ProductNewConfig extends AbstractBundleConfig
+class ProductNewConfig extends SharedProductNewConfig
 {
 }
