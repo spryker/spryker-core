@@ -223,4 +223,27 @@ class UpdateProductGroupTest extends Test
         $this->tester->assertTouchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $productAbstractTransfer4->getIdProductAbstract(), 'Product #4 should have been touched as active.');
     }
 
+    /**
+     * @return void
+     */
+    public function testUpdateProductGroupMultipleTimesIsIdempotent()
+    {
+        // Arrange
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+
+        $productGroupTransfer = new ProductGroupTransfer();
+        $productGroupTransfer->setIdProductAbstracts([
+            $productAbstractTransfer1->getIdProductAbstract(),
+        ]);
+        $productGroupTransfer = $this->tester->getFacade()->createProductGroup($productGroupTransfer);
+
+        // Act
+        $this->tester->getFacade()->updateProductGroup($productGroupTransfer);
+        $this->tester->getFacade()->updateProductGroup($productGroupTransfer);
+
+        // Assert
+        $actualProductGroupTransfer = $this->tester->getFacade()->findProductGroup($productGroupTransfer);
+        $this->assertCount(1, $actualProductGroupTransfer->getIdProductAbstracts(), 'Product group should have expected number of products.');
+    }
+
 }
