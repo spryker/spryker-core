@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\ProductNew\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\ProductNew\Business\ProductNewBusinessFactory;
 use Spryker\Zed\ProductNew\ProductNewConfig;
 
@@ -30,6 +32,16 @@ class ProductNewFacadeTest extends Test
      * @var \SprykerTest\Zed\ProductNew\ProductNewBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->cleanProductNewDates();
+    }
 
     /**
      * @dataProvider validTimeRangeProductsToAssignDataProvider
@@ -286,6 +298,20 @@ class ProductNewFacadeTest extends Test
                 null,
             ],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    protected function cleanProductNewDates()
+    {
+        $newFromFieldName = SpyProductAbstractTableMap::getTableMap()->getColumn(SpyProductAbstractTableMap::COL_NEW_FROM)->getPhpName();
+        $newToFieldName = SpyProductAbstractTableMap::getTableMap()->getColumn(SpyProductAbstractTableMap::COL_NEW_TO)->getPhpName();
+
+        SpyProductAbstractQuery::create()->update([
+            $newFromFieldName => null,
+            $newToFieldName => null,
+        ]);
     }
 
 }
