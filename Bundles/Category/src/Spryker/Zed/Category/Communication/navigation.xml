@@ -19,6 +19,7 @@
                 <action>index</action>
                 <visible>0</visible>
             </view-category>
+
             <edit-category>
                 <label>Edit Category</label>
                 <title>Edit Category</title>
@@ -27,14 +28,33 @@
                 <action>index</action>
                 <visible>0</visible>
             </edit-category>
+
             <create-category>
-                <label>Category</label>
+                <label>Create Category</label>
                 <title>Create Category</title>
                 <bundle>category</bundle>
                 <controller>create</controller>
                 <action>index</action>
                 <visible>0</visible>
             </create-category>
+
+            <assing-products-to-category>
+                <label>Assign Products to Category</label>
+                <title>Assign Products to Category</title>
+                <bundle>product-category</bundle>
+                <controller>assign</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </assing-products-to-category>
+
+            <delete-category>
+                <label>Delete Category</label>
+                <title>Delete Category</title>
+                <bundle>category</bundle>
+                <controller>delete</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </delete-category>
         </pages>
     </category>
 </config>

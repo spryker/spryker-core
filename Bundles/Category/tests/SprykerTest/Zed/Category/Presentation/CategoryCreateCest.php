@@ -30,6 +30,7 @@ class CategoryCreateCest
     public function testICanCreateCategory(PresentationTester $i)
     {
         $i->amOnPage(CategoryCreatePage::URL);
+        $i->seeBreadcrumbNavigation('Dashboard / Category / Create Category');
         $category = CategoryCreatePage::getCategorySelectorsWithValues(CategoryCreatePage::CATEGORY_A);
         $i->fillField(CategoryCreatePage::FORM_FIELD_CATEGORY_KEY, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_KEY]);
         $i->selectOption(CategoryCreatePage::FORM_FIELD_CATEGORY_PARENT, $category[CategoryCreatePage::FORM_FIELD_CATEGORY_PARENT]);
