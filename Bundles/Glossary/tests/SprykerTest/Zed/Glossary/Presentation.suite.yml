@@ -1,0 +1,20 @@
+class_name: PresentationTester
+modules:
+  enabled:
+    - \SprykerTest\Shared\Testify\Helper\Environment
+    - \Config\Module\ConfigInit
+    - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+    - \Propel\Module\PropelInstall
+    - WebDriver:
+        url: ''
+        browser: chrome
+        window_size: 1920x1080
+        host: 0.0.0.0
+        restart: false
+    - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+    - \SprykerTest\Shared\Application\Helper\ZedHelper
+    - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
+
+coverage:
+    enabled: false
+
