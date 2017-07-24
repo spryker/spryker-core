@@ -30,11 +30,12 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @var int
      */
-    private $defaultPriority;
+    protected $defaultPriority;
 
     /**
      * @param \Zend\Config\Reader\Xml $xmlReader
      * @param string $command
+     * @param int $defaultPriority
      */
     public function __construct(Xml $xmlReader, $command, $defaultPriority)
     {
