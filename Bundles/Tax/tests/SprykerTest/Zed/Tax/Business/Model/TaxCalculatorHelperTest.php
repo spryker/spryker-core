@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Tax\Business\Model;
+namespace SprykerTest\Zed\Tax\Business\Model;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Tax
  * @group Business
  * @group Model
  * @group TaxCalculatorHelperTest
+ * Add your own group annotations below this line
  */
 class TaxCalculatorHelperTest extends PHPUnit_Framework_TestCase
 {

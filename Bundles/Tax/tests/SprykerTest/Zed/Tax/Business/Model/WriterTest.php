@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Tax;
+namespace SprykerTest\Zed\Tax\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\TaxRateTransfer;
@@ -16,11 +16,14 @@ use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Tax
+ * @group Business
+ * @group Model
  * @group WriterTest
+ * Add your own group annotations below this line
  */
 class WriterTest extends Unit
 {

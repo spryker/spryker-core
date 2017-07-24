@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Tax;
+namespace SprykerTest\Zed\Tax\Business\Model;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
@@ -13,11 +13,14 @@ use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Tax
+ * @group Business
+ * @group Model
  * @group ReaderTest
+ * Add your own group annotations below this line
  */
 class ReaderTest extends Unit
 {

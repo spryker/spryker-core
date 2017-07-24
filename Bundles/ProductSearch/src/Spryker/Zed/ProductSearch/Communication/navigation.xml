@@ -13,14 +13,65 @@
                 <bundle>product-search</bundle>
                 <controller>search-preferences</controller>
                 <action>index</action>
+                <pages>
+                    <search-add>
+                        <label>Add attribute to search</label>
+                        <title>Add attribute to search</title>
+                        <bundle>product-search</bundle>
+                        <controller>search-preferences</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </search-add>
+
+                    <search-edit>
+                        <label>Edit search preferences</label>
+                        <title>Edit search preferences</title>
+                        <bundle>product-search</bundle>
+                        <controller>search-preferences</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </search-edit>
+                </pages>
             </search-preferences>
+
             <filter-preferences>
                 <label>Filter Preferences</label>
                 <title>Filter Preferences</title>
                 <bundle>product-search</bundle>
                 <controller>filter-preferences</controller>
                 <action>index</action>
+                <pages>
+                    <filter-add>
+                        <label>Create filter</label>
+                        <title>Create filter</title>
+                        <bundle>product-search</bundle>
+                        <controller>filter-preferences</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </filter-add>
+
+                    <filter-edit>
+                        <label>Edit filter</label>
+                        <title>Edit filter</title>
+                        <bundle>product-search</bundle>
+                        <controller>filter-preferences</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </filter-edit>
+
+                    <filter-order>
+                        <label>Edit filter order</label>
+                        <title>Edit filter order</title>
+                        <bundle>product-search</bundle>
+                        <controller>filter-reorder</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </filter-order>
+                </pages>
             </filter-preferences>
+
+
+
         </pages>
     </search-and-filters>
 </config>
