@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -186,6 +187,22 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->getFactory()
             ->createLabelValidityUpdater()
             ->checkAndTouchAllLabels();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface|null $logger
+     *
+     * @return void
+     */
+    public function updateDynamicProductLabelRelations(LoggerInterface $logger = null)
+    {
+        $this->getFactory()
+            ->createProductAbstractRelationUpdater($logger)
+            ->updateProductLabelRelations();
     }
 
 }

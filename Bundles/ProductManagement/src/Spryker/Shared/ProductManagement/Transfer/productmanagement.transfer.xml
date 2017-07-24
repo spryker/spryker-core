@@ -40,5 +40,10 @@
         <property name="abstractLocalizedAttributes" type="array" singular="localizedAttribute" />
     </transfer>
 
+    <transfer name="ProductAbstract">
+        <property name="newFrom" type="string" />
+        <property name="newTo" type="string" />
+    </transfer>
+
 </transfers>
 

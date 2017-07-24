@@ -126,6 +126,7 @@
     "spryker/product-label-discount-connector": "*",
     "spryker/product-label-gui": "*",
     "spryker/product-management": "*",
+    "spryker/product-new": "*",
     "spryker/product-option": "*",
     "spryker/product-option-cart-connector": "*",
     "spryker/product-option-discount-connector": "*",
