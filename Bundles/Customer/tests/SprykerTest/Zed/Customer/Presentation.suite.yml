@@ -13,6 +13,7 @@ modules:
         restart: false
     - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
     - \SprykerTest\Shared\Application\Helper\ZedHelper
+    - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
 
 coverage:
     enabled: false

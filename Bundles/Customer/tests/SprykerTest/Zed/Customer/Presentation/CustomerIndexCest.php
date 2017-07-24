@@ -32,8 +32,7 @@ class CustomerIndexCest
         $i->amLoggedInUser();
         $i->amOnPage(CustomerIndexPage::URL);
 
-        $i->seeElement('//ol[@class="breadcrumb"]');
-        $i->see('Dashboard / Customers / Customers');
+        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customers');
     }
 
 }
