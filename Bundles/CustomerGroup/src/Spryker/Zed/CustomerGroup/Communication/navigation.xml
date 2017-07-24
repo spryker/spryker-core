@@ -10,14 +10,32 @@
                 <action>index</action>
                 <visible>1</visible>
                 <pages>
-                    <group-add>
+                    <customer-group-add>
                         <label>Add a Customer Group</label>
                         <title>Add a Customer Group</title>
                         <bundle>customer-group</bundle>
                         <controller>add</controller>
                         <action>index</action>
                         <visible>0</visible>
-                    </group-add>
+                    </customer-group-add>
+
+                    <customer-group-view>
+                        <label>View Customer Group</label>
+                        <title>View Customer Group</title>
+                        <bundle>customer-group</bundle>
+                        <controller>view</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </customer-group-view>
+
+                    <customer-group-edit>
+                        <label>Edit Customer Group</label>
+                        <title>Edit Customer Group</title>
+                        <bundle>customer-group</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </customer-group-edit>
                 </pages>
             </group>
 

@@ -1,5 +1,9 @@
 namespace: CustomerGroup
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/CustomerGroup
+
 paths:
     tests: tests
     log: tests/_output

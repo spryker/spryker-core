@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\CustomerGroup\CustomerGroup\Zed\Tester;
+namespace SprykerTest\Zed\CustomerGroup\PageObject;
 
-use CustomerGroup\ZedAcceptanceTester;
-
-class CustomerGroupTester extends ZedAcceptanceTester
+class CustomerGroupAddPage
 {
+
+    const URL = '/customer-group/add';
+
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\CustomerGroup\CustomerGroup\Zed\PageObject;
+namespace SprykerTest\Zed\CustomerGroup\PageObject;
 
 class CustomerGroupListPage
 {
