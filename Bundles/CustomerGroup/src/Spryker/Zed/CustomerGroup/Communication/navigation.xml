@@ -1,21 +1,7 @@
 <?xml version="1.0"?>
 <config>
     <customer>
-        <label>Customer Groups</label>
-        <title>Customer Groups</title>
-        <uri>/customer-group</uri>
-        <icon>fa-users</icon>
-
         <pages>
-            <customer>
-                <label>Customers</label>
-                <title>Customers</title>
-                <bundle>customer</bundle>
-                <controller>index</controller>
-                <action>index</action>
-                <visible>1</visible>
-            </customer>
-
             <group>
                 <label>Customer Groups</label>
                 <title>Customer Groups</title>
@@ -23,7 +9,18 @@
                 <controller>index</controller>
                 <action>index</action>
                 <visible>1</visible>
+                <pages>
+                    <group-add>
+                        <label>Add a Customer Group</label>
+                        <title>Add a Customer Group</title>
+                        <bundle>customer-group</bundle>
+                        <controller>add</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </group-add>
+                </pages>
             </group>
+
         </pages>
     </customer>
 </config>
