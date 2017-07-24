@@ -35,11 +35,6 @@
             <unique-column name="placeholder"/>
         </unique>
 
-        <index name="spy_cms_block_glossary_key_mapping-fk_cms_block">
-            <index-column name="fk_cms_block"/>
-            <index-column name="placeholder"/>
-        </index>
-
         <id-method-parameter value="spy_cms_block_glossary_key_mapping_pk_seq"/>
     </table>
 
