@@ -245,15 +245,15 @@ class ProductNewFacadeTest extends Test
     {
         return [
             'simple time range' => [
-                date('Y-m-d H:i:s', strtotime('-1 minute')),
-                date('Y-m-d H:i:s', strtotime('+1 minute')),
+                date('Y-m-d H:i:s', strtotime('-1 day')),
+                date('Y-m-d H:i:s', strtotime('+1 day')),
             ],
             'open from time range' => [
                 null,
-                date('Y-m-d H:i:s', strtotime('+1 minute')),
+                date('Y-m-d H:i:s', strtotime('+1 day')),
             ],
             'open to time range' => [
-                date('Y-m-d H:i:s', strtotime('-1 minute')),
+                date('Y-m-d H:i:s', strtotime('-1 day')),
                 null,
             ],
         ];
@@ -266,19 +266,19 @@ class ProductNewFacadeTest extends Test
     {
         return [
             'time range in the future' => [
-                date('Y-m-d H:i:s', strtotime('+1 minute')),
-                date('Y-m-d H:i:s', strtotime('+2 minute')),
+                date('Y-m-d H:i:s', strtotime('+1 day')),
+                date('Y-m-d H:i:s', strtotime('+2 day')),
             ],
             'time range in the past' => [
-                date('Y-m-d H:i:s', strtotime('-2 minute')),
-                date('Y-m-d H:i:s', strtotime('-1 minute')),
+                date('Y-m-d H:i:s', strtotime('-2 day')),
+                date('Y-m-d H:i:s', strtotime('-1 day')),
             ],
             'open from time range in the past' => [
                 null,
-                date('Y-m-d H:i:s', strtotime('-1 minute')),
+                date('Y-m-d H:i:s', strtotime('-1 day')),
             ],
             'open to time range in the future' => [
-                date('Y-m-d H:i:s', strtotime('+1 minute')),
+                date('Y-m-d H:i:s', strtotime('+1 day')),
                 null,
             ],
             'time range not defined' => [
