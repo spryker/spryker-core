@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Glossary;
+namespace SprykerTest\Zed\Glossary\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\TranslationTransfer;
@@ -16,11 +16,14 @@ use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Glossary
+ * @group Business
+ * @group Model
  * @group GlossaryTest
+ * Add your own group annotations below this line
  */
 class GlossaryTest extends Unit
 {

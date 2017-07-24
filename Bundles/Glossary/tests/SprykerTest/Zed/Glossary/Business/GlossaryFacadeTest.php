@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Glossary\Business;
+namespace SprykerTest\Zed\Glossary\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
@@ -14,27 +14,19 @@ use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Glossary
  * @group Business
+ * @group Facade
  * @group GlossaryFacadeTest
+ * Add your own group annotations below this line
  */
 class GlossaryFacadeTest extends Unit
 {
 
     const GLOSSARY_KEY = 'glossary_key';
-
-    /**
-     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery
-     */
-    private $query;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    private $request;
 
     /**
      * @var array

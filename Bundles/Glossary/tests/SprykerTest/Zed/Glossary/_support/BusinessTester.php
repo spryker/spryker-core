@@ -1,7 +1,5 @@
 <?php
-namespace Glossary;
-
-use Codeception\Actor;
+namespace SprykerTest\Zed\Glossary;
 
 /**
  * Inherited Methods
@@ -14,17 +12,15 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
- */
-class UnitTester extends Actor
+*/
+class BusinessTester extends \Codeception\Actor
 {
-
-    use _generated\UnitTesterActions;
+    use _generated\BusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }
