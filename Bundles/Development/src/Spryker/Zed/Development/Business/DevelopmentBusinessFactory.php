@@ -100,18 +100,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
-     */
-    public function createCodeArchitectureSniffer()
-    {
-        return new CodeStyleSniffer(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory(),
-            $this->getConfig()->getCodingStandard()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Development\Business\CodeTest\CodeTester
      */
     public function createCodeTester()
