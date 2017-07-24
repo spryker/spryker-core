@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Zed\CmsGui\Communication\Form\Constraint;
+namespace SprykerTest\Zed\CmsGui\Communication\Form\Constraint;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Pyz\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrlValidator;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBridge;
@@ -19,14 +19,15 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group CmsGui
  * @group Communication
  * @group Form
  * @group Constraint
  * @group UniqueGlossaryUrlValidatorTest
+ * Add your own group annotations below this line
  */
 class UniqueGlossaryUrlValidatorTest extends Unit
 {
