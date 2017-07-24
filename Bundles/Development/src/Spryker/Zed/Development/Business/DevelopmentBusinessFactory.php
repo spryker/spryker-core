@@ -100,6 +100,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
+     */
+    public function createCodeArchitectureSniffer()
+    {
+        return new CodeStyleSniffer(
+            $this->getConfig()->getPathToRoot(),
+            $this->getConfig()->getBundleDirectory(),
+            $this->getConfig()->getCodingStandard()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\CodeTest\CodeTester
      */
     public function createCodeTester()
@@ -1068,7 +1080,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $xml = $this->getXmlReader();
         $command = $this->getConfig()->getArchitectureSnifferCommand();
-        return new ArchitectureSniffer($xml, $command);
+        $defaultPriority = $this->getConfig()->getArchitectureSnifferDefaultPriority();
+
+        return new ArchitectureSniffer($xml, $command, $defaultPriority);
     }
 
     /**

@@ -299,13 +299,14 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @param string $bundle
+     * @param string $directory
+     * @param array $options
      *
      * @return array
      */
-    public function runArchitectureSniffer($bundle)
+    public function runArchitectureSniffer($directory, array $options = [])
     {
-        return $this->getFactory()->createArchitectureSniffer()->run($bundle);
+        return $this->getFactory()->createArchitectureSniffer()->run($directory, $options);
     }
 
     /**

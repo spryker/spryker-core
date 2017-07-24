@@ -14,6 +14,9 @@ use Zend\Config\Reader\Xml;
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
 
+    const OPTION_PRIORITY = 'priority';
+    const OPTION_STRICT = 'strict';
+
     /**
      * @var string
      */
@@ -25,23 +28,30 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $xmlReader;
 
     /**
+     * @var int
+     */
+    private $defaultPriority;
+
+    /**
      * @param \Zend\Config\Reader\Xml $xmlReader
      * @param string $command
      */
-    public function __construct(Xml $xmlReader, $command)
+    public function __construct(Xml $xmlReader, $command, $defaultPriority)
     {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
+        $this->defaultPriority = $defaultPriority;
     }
 
     /**
      * @param string $directory
+     * @param array $options
      *
      * @return array
      */
-    public function run($directory)
+    public function run($directory, array $options = [])
     {
-        $output = $this->runCommand($directory);
+        $output = $this->runCommand($directory, $options);
         $results = $this->xmlReader->fromString($output);
 
         if (!is_array($results)) {
@@ -60,18 +70,28 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function getProcess($command)
     {
-        return new Process($command);
+        return new Process($command, null, null, null, 0);
     }
 
     /**
      * @param string $directory
+     * @param array $options
      *
      * @return string
      */
-    protected function runCommand($directory)
+    protected function runCommand($directory, array $options = [])
     {
         $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command);
+
+        $priority = !empty($options[static::OPTION_PRIORITY]) ? $options[static::OPTION_PRIORITY] : $this->defaultPriority;
+        $command .= ' --minimumpriority ' . $priority;
+
+        if (!empty($options[static::OPTION_STRICT])) {
+            $command .= ' --strict';
+        }
+
         $p = $this->getProcess($command);
+
         $p->setWorkingDirectory(APPLICATION_ROOT_DIR);
         $p->run();
         $output = $p->getOutput();
