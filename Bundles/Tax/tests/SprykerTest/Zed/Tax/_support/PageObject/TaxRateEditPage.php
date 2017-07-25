@@ -11,4 +11,5 @@ class TaxRateEditPage
 {
 
     const URL = '/tax/rate/edit';
+
 }

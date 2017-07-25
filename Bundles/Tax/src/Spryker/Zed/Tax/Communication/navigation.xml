@@ -49,6 +49,35 @@
                 <bundle>tax</bundle>
                 <controller>set</controller>
                 <action>list</action>
+
+                <pages>
+                    <tax-set-create>
+                        <label>Create New Tax Set</label>
+                        <title>Create New Tax Set</title>
+                        <bundle>tax</bundle>
+                        <controller>set</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </tax-set-create>
+
+                    <tax-set-edit>
+                        <label>Edit Tax Set</label>
+                        <title>Edit Tax Set</title>
+                        <bundle>tax</bundle>
+                        <controller>set</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </tax-set-edit>
+
+                    <tax-set-view>
+                        <label>View Tax Set</label>
+                        <title>View Tax Set</title>
+                        <bundle>tax</bundle>
+                        <controller>set</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </tax-set-view>
+                </pages>
             </tax-sets>
         </pages>
     </tax>

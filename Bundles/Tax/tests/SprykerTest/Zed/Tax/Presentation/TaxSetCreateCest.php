@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Tax\Presentation;
 
-use SprykerTest\Zed\Tax\PageObject\TaxRateListPage;
+use SprykerTest\Zed\Tax\PageObject\TaxSetCreatePage;
 use SprykerTest\Zed\Tax\PresentationTester;
 
 /**
@@ -16,10 +16,10 @@ use SprykerTest\Zed\Tax\PresentationTester;
  * @group Zed
  * @group Tax
  * @group Presentation
- * @group TaxRateViewCest
+ * @group TaxSetCreateCest
  * Add your own group annotations below this line
  */
-class TaxRateViewCest
+class TaxSetCreateCest
 {
 
     /**
@@ -29,11 +29,9 @@ class TaxRateViewCest
      */
     public function breadcrumbIsVisible(PresentationTester $i)
     {
-        $i->amOnPage(TaxRateListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "View")])[1]');
+        $i->amOnPage(TaxSetCreatePage::URL);
 
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Rates / View Tax Rate');
+        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Create New Tax Set');
     }
 
 }
