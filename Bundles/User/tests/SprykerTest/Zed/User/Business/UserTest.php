@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\User\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
+use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Business\Model\User;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
 
@@ -33,18 +33,16 @@ class UserTest extends Unit
     const USERNAME = 'test@test.com';
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @var \SprykerTest\Zed\User\BusinessTester
      */
-    protected $userFacade;
+    public $tester;
 
     /**
-     * @return void
+     * @return \Spryker\Zed\User\Business\UserFacadeInterface
      */
-    public function setUp()
+    protected function getUserFacade()
     {
-        parent::setUp();
-
-        $this->userFacade = new UserFacade();
+        return $this->tester->getLocator()->user()->facade();
     }
 
     /**
@@ -67,7 +65,7 @@ class UserTest extends Unit
      */
     private function mockAddUser($data)
     {
-        return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
+        return $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
 
     /**
@@ -77,9 +75,9 @@ class UserTest extends Unit
     {
         $data = $this->mockUserData();
 
-        $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
+        $user = $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
+        $this->assertInstanceOf(UserTransfer::class, $user);
         $this->assertNotNull($user->getIdUser());
         $this->assertEquals($data['firstName'], $user->getFirstName());
         $this->assertEquals($data['lastName'], $user->getLastName());
@@ -90,17 +88,17 @@ class UserTest extends Unit
     /**
      * @return void
      */
-    public function testAfterCallToRemoveUserGetUserByIdMustThrowAnExcetpion()
+    public function testAfterCallToRemoveUserGetUserByIdMustThrowAnException()
     {
         $data = $this->mockUserData();
-        $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
+        $user = $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
+        $this->assertInstanceOf(UserTransfer::class, $user);
 
-        $this->userFacade->removeUser($user->getIdUser());
+        $this->getUserFacade()->removeUser($user->getIdUser());
 
-        $this->expectException('\Spryker\Zed\User\Business\Exception\UserNotFoundException');
-        $this->userFacade->getActiveUserById($user->getIdUser());
+        $this->expectException(UserNotFoundException::class);
+        $this->getUserFacade()->getActiveUserById($user->getIdUser());
     }
 
     /**
@@ -111,22 +109,22 @@ class UserTest extends Unit
         $data = $this->mockUserData();
         $data2 = $this->mockUserData();
 
-        $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
+        $user = $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
         $user2 = clone $user;
         $user2->setFirstName($data2['firstName']);
         $user2->setLastName($data2['lastName']);
         $user2->setUsername($data2['username']);
         $user2->setPassword($data['password']);
-        $user2 = $this->userFacade->updateUser($user2);
+        $user2 = $this->getUserFacade()->updateUser($user2);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user2);
+        $this->assertInstanceOf(UserTransfer::class, $user2);
         $this->assertEquals($data2['firstName'], $user2->getFirstName());
         $this->assertEquals($data2['lastName'], $user2->getLastName());
         $this->assertEquals($data2['username'], $user2->getUsername());
         $this->assertNotEquals($user->getPassword(), $user2->getPassword());
 
-        $this->assertTrue($this->userFacade->isValidPassword($data['password'], $user2->getPassword()));
+        $this->assertTrue($this->getUserFacade()->isValidPassword($data['password'], $user2->getPassword()));
     }
 
     /**
@@ -137,16 +135,16 @@ class UserTest extends Unit
     public function testUpdateUserWithSamePasswordHash()
     {
         $data = $this->mockUserData();
-        $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
+        $user = $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
         $user2 = clone $user;
-        $user2 = $this->userFacade->updateUser($user2);
+        $user2 = $this->getUserFacade()->updateUser($user2);
 
         $hashedPassword = $user->getPassword();
         $newHashedPassword = $user2->getPassword();
         $this->assertEquals($hashedPassword, $newHashedPassword);
 
-        $user2 = $this->userFacade->updateUser($user2);
+        $user2 = $this->getUserFacade()->updateUser($user2);
         $newHashedPassword = $user2->getPassword();
         $this->assertEquals($hashedPassword, $newHashedPassword);
     }
@@ -159,7 +157,7 @@ class UserTest extends Unit
         $data = $this->mockUserData();
         $data2 = $this->mockUserData();
 
-        $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
+        $user = $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
         $user->setFirstName($data2['firstName']);
         $user->setLastName($data2['lastName']);
@@ -167,15 +165,15 @@ class UserTest extends Unit
         $user->setPassword($data2['password']);
 
         $userTest = clone $user;
-        $finalUser = $this->userFacade->updateUser($userTest);
+        $finalUser = $this->getUserFacade()->updateUser($userTest);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $finalUser);
+        $this->assertInstanceOf(UserTransfer::class, $finalUser);
         $this->assertEquals($user->getFirstName(), $finalUser->getFirstName());
         $this->assertEquals($user->getLastName(), $finalUser->getLastName());
         $this->assertEquals($user->getUsername(), $finalUser->getUsername());
         $this->assertNotEquals($user->getPassword(), $finalUser->getPassword());
 
-        $this->assertTrue($this->userFacade->isValidPassword($data2['password'], $finalUser->getPassword()));
+        $this->assertTrue($this->getUserFacade()->isValidPassword($data2['password'], $finalUser->getPassword()));
     }
 
     /**
@@ -186,18 +184,18 @@ class UserTest extends Unit
         $data = $this->mockUserData();
         $data2 = $this->mockUserData();
 
-        $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
+        $user = $this->getUserFacade()->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
         $user2 = clone $user;
         $user2->setPassword($data2['password']);
-        $user2 = $this->userFacade->updateUser($user2);
+        $user2 = $this->getUserFacade()->updateUser($user2);
 
         $this->assertNotEquals($user->getPassword(), $user2->getPassword());
-        $this->assertTrue($this->userFacade->isValidPassword($data2['password'], $user2->getPassword()));
+        $this->assertTrue($this->getUserFacade()->isValidPassword($data2['password'], $user2->getPassword()));
 
         $user3 = clone $user2;
         $user3->setPassword($user->getPassword());
-        $user3 = $this->userFacade->updateUser($user3);
+        $user3 = $this->getUserFacade()->updateUser($user3);
 
         $this->assertEquals($user3->getPassword(), $user2->getPassword());
         $this->assertNotEquals($user3->getPassword(), $user->getPassword());
@@ -213,9 +211,9 @@ class UserTest extends Unit
         $data = $this->mockUserData();
         $mock = $this->mockAddUser($data);
 
-        $user = $this->userFacade->getUserByUsername($data['username']);
+        $user = $this->getUserFacade()->getUserByUsername($data['username']);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
+        $this->assertInstanceOf(UserTransfer::class, $user);
         $this->assertEquals($user->getIdUser(), $mock->getIdUser());
         $this->assertEquals($user->getFirstName(), $mock->getFirstName());
         $this->assertEquals($user->getLastName(), $mock->getLastName());
@@ -231,9 +229,9 @@ class UserTest extends Unit
         $data = $this->mockUserData();
         $mock = $this->mockAddUser($data);
 
-        $user = $this->userFacade->getUserById($mock->getIdUser());
+        $user = $this->getUserFacade()->getUserById($mock->getIdUser());
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
+        $this->assertInstanceOf(UserTransfer::class, $user);
         $this->assertEquals($user->getIdUser(), $mock->getIdUser());
         $this->assertEquals($user->getFirstName(), $mock->getFirstName());
         $this->assertEquals($user->getLastName(), $mock->getLastName());
@@ -249,7 +247,7 @@ class UserTest extends Unit
         $data = $this->mockUserData();
         $user = $this->mockAddUser($data);
 
-        $this->assertTrue($this->userFacade->isValidPassword($data['password'], $user->getPassword()));
+        $this->assertTrue($this->getUserFacade()->isValidPassword($data['password'], $user->getPassword()));
     }
 
     /**
