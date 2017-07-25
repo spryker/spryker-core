@@ -33,6 +33,8 @@ class AvailabilityViewCest
 
         $i->amOnPage(sprintf(AvailabilityPage::AVAILABILITY_VIEW_URL, AvailabilityPage::AVAILABILITY_ID));
 
+        $i->seeBreadcrumbNavigation('Dashboard / Products / Availability / Product Availability');
+
         $i->wait(1);
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);

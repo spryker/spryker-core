@@ -40,6 +40,8 @@ class AvailabilityEditStockCest
             )
         );
 
+        $i->seeBreadcrumbNavigation('Dashboard / Products / Availability / Edit Stock');
+
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
         $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 50);

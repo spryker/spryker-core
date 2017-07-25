@@ -34,6 +34,8 @@ class AvailabilityListCest
 
         $i->amOnPage(AvailabilityPage::AVAILABILITY_LIST_URL);
 
+        $i->seeBreadcrumbNavigation('Dashboard / Products / Availability');
+
         $i->wait(1);
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_LIST_HEADER);
