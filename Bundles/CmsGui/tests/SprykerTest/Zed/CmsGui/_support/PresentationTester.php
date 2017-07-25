@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\CmsGui;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace SprykerTest\Zed\CmsGui;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class PresentationTester extends \Codeception\Actor
+ */
+class PresentationTester extends Actor
 {
+
     use _generated\PresentationTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

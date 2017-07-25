@@ -8,6 +8,16 @@
                 <bundle>oms</bundle>
                 <controller>index</controller>
                 <action>index</action>
+                <pages>
+                    <statemachine-preview>
+                        <label>Statemachine preview</label>
+                        <title>Statemachine preview</title>
+                        <bundle>oms</bundle>
+                        <controller>index</controller>
+                        <action>draw-preview-version</action>
+                        <visible>0</visible>
+                    </statemachine-preview>
+                </pages>
             </statemachine-index>
         </pages>
     </maintenance>

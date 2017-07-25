@@ -18,12 +18,14 @@ use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery;
 use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group CustomerGroup
  * @group Business
+ * @group Facade
  * @group CustomerGroupFacadeTest
+ * Add your own group annotations below this line
  */
 class CustomerGroupFacadeTest extends Unit
 {

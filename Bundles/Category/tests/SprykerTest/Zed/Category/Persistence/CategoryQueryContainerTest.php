@@ -12,12 +12,14 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
+ * Auto-generated group annotations
  * @group Unit
  * @group Spryker
  * @group Zed
  * @group Category
  * @group Persistence
  * @group CategoryQueryContainerTest
+ * Add your own group annotations below this line
  */
 class CategoryQueryContainerTest extends PHPUnit_Framework_TestCase
 {

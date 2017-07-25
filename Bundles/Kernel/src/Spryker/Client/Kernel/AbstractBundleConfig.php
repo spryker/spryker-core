@@ -12,4 +12,3 @@ use Spryker\Shared\Kernel\AbstractBundleConfig as SharedAbstractBundleConfig;
 abstract class AbstractBundleConfig extends SharedAbstractBundleConfig
 {
 }
-

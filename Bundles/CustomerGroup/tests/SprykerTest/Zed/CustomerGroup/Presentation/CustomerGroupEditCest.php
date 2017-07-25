@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CustomerGroup\Presentation;
 
 use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupEditPage;
-use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupViewPage;
 use SprykerTest\Zed\CustomerGroup\PresentationTester;
 
 /**
@@ -17,7 +16,7 @@ use SprykerTest\Zed\CustomerGroup\PresentationTester;
  * @group Zed
  * @group CustomerGroup
  * @group Presentation
- * @group CustomerGroupViewCest
+ * @group CustomerGroupEditCest
  * Add your own group annotations below this line
  */
 class CustomerGroupEditCest
