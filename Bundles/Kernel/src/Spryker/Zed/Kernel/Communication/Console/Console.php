@@ -261,7 +261,7 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param string $message
+     * @param string|array $message
      * @param bool $wrapInInfoTags
      *
      * @return void

@@ -53,7 +53,9 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
 
             $storageProductLabelTransfer = new StorageProductLabelTransfer();
             $storageProductLabelTransfer->fromArray($productLabelTransfer->toArray(), true);
-            $storageProductLabelTransfer->setName($this->getNameAttributeForCurrentLocale($productLabelTransfer));
+            $storageProductLabelTransfer
+                ->setKey($productLabelTransfer->getName())
+                ->setName($this->getNameAttributeForCurrentLocale($productLabelTransfer));
 
             $dictionary[] = $storageProductLabelTransfer->toArray();
         }

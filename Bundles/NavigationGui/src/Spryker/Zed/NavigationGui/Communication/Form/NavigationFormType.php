@@ -84,7 +84,7 @@ class NavigationFormType extends AbstractType
     {
         $builder
             ->add(self::FIELD_NAME, TextType::class, [
-                'label' => 'Name *',
+                'label' => 'Name',
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -102,7 +102,7 @@ class NavigationFormType extends AbstractType
     {
         $builder
             ->add(self::FIELD_KEY, TextType::class, [
-                'label' => 'Key *',
+                'label' => 'Key',
                 'constraints' => [
                     new NotBlank(),
                     new Callback([

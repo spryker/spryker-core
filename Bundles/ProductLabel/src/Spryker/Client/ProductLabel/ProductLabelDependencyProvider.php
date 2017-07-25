@@ -10,11 +10,13 @@ namespace Spryker\Client\ProductLabel;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageBridge;
+use Spryker\Shared\Kernel\Store;
 
 class ProductLabelDependencyProvider extends AbstractDependencyProvider
 {
 
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,6 +26,7 @@ class ProductLabelDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addStorageClient($container);
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -37,6 +40,20 @@ class ProductLabelDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductLabelToStorageBridge($container->getLocator()->storage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[static::STORE] = function () {
+            return Store::getInstance();
         };
 
         return $container;

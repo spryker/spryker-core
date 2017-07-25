@@ -18,6 +18,8 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    const PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS = 'PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -27,6 +29,8 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
+
+        $container = $this->addProductLabelRelationUpdaterPlugins($container);
 
         return $container;
     }
@@ -57,6 +61,28 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductLabelRelationUpdaterPlugins(Container $container)
+    {
+        $container[static::PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS] = function (Container $container) {
+            return $this->getProductLabelRelationUpdaterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface[]
+     */
+    protected function getProductLabelRelationUpdaterPlugins()
+    {
+        return [];
     }
 
 }

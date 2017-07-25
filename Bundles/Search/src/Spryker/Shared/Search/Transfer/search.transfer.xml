@@ -17,6 +17,7 @@
         <property name="type" type="string" />
         <property name="isMultiValued" type="bool" />
         <property name="size" type="int" />
+        <property name="valueTransformer" type="string" />
     </transfer>
 
     <transfer name="SortConfig">

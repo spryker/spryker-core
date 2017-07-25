@@ -1,0 +1,12 @@
+{% extends "bootstrap_3_layout.html.twig" %}
+
+ {% block form_label %}
+    {% set trim_asterisk = trim_asterisk is defined ? trim_asterisk : true %}
+    {% set label_length = label | length %}
+
+    {% if trim_asterisk and required and label and label_length > 0 %}
+        {% set label = (label | trim | last == '*') ? label[:label_length - 1] : label %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %} 

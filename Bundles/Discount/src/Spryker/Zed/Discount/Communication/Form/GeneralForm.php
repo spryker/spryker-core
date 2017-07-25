@@ -64,7 +64,7 @@ class GeneralForm extends AbstractType
     protected function addDiscountType(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DISCOUNT_TYPE, 'choice', [
-            'label' => 'Discount Type*',
+            'label' => 'Discount Type',
             'choices' => $this->getVoucherChoices(),
             'constraints' => [
                 new NotBlank(),
@@ -93,7 +93,7 @@ class GeneralForm extends AbstractType
     protected function addDisplayNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_DISPLAY_NAME, 'text', [
-            'label' => 'Name* (A unique name that will be displayed to your customers)',
+            'label' => 'Name (A unique name that will be displayed to your customers)',
             'constraints' => [
                 new NotBlank(),
                 new UniqueDiscountName([
