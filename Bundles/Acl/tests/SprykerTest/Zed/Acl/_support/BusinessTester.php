@@ -1,6 +1,5 @@
 <?php
-
-namespace Acl;
+namespace SprykerTest\Zed\Acl;
 
 use Codeception\Actor;
 
@@ -15,14 +14,14 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends Actor
+class BusinessTester extends Actor
 {
 
-    use _generated\FunctionalTesterActions;
+    use _generated\BusinessTesterActions;
 
    /**
     * Define custom actions here

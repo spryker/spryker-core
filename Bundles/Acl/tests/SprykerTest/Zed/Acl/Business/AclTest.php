@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Acl\Business;
+namespace SprykerTest\Zed\Acl\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RolesTransfer;
@@ -16,12 +16,13 @@ use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Acl
  * @group Business
  * @group AclTest
+ * Add your own group annotations below this line
  */
 class AclTest extends Unit
 {
