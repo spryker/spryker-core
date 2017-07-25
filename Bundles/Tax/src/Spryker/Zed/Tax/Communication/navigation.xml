@@ -3,9 +3,9 @@
     <tax>
         <label>Taxes</label>
         <title>Taxes</title>
+        <bundle>tax</bundle>
         <uri>#</uri>
         <icon>fa-fax</icon>
-        <bundle>tax</bundle>
         <pages>
             <tax-rates>
                 <label>Tax Rates</label>
