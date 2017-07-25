@@ -31,6 +31,14 @@ class DevelopmentConfigTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testGetPathToCore()
+    {
+        $this->assertTrue(is_string($this->getConfig()->getPathToCore()));
+    }
+
+    /**
+     * @return void
+     */
     public function testGetPathToRoot()
     {
         $this->assertTrue(is_string($this->getConfig()->getPathToRoot()));
@@ -42,6 +50,14 @@ class DevelopmentConfigTest extends PHPUnit_Framework_TestCase
     public function testGetPathToComposerLockShouldReturnString()
     {
         $this->assertTrue(is_string($this->getConfig()->getPathToComposerLock()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetArchitectureSnifferDefaultPriority()
+    {
+        $this->assertSame(2, $this->getConfig()->getArchitectureSnifferDefaultPriority());
     }
 
 }
