@@ -5,21 +5,32 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\User;
+namespace SprykerTest\Zed\User\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserTransfer;
+use Spryker\Client\Session\SessionClient;
+use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
+use Spryker\Zed\User\UserConfig;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group User
+ * @group Business
  * @group UserTest
+ * Add your own group annotations below this line
  */
 class UserTest extends Unit
 {
+
+    /**
+     * @const string
+     */
+    const USERNAME = 'test@test.com';
 
     /**
      * @var \Spryker\Zed\User\Business\UserFacade
@@ -57,23 +68,6 @@ class UserTest extends Unit
     private function mockAddUser($data)
     {
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    private function mockUserTransfer($data)
-    {
-        $dto = new UserTransfer();
-
-        $dto->setFirstName($data['firstName']);
-        $dto->setLastName($data['lastName']);
-        $dto->setUsername($data['username']);
-        $dto->setPassword($data['password']);
-
-        return $dto;
     }
 
     /**
@@ -256,6 +250,124 @@ class UserTest extends Unit
         $user = $this->mockAddUser($data);
 
         $this->assertTrue($this->userFacade->isValidPassword($data['password'], $user->getPassword()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testUserTransferClonedBeforeStoringInSession()
+    {
+        $sessionClient = $this->createSessionClient();
+
+        $userModel = new User(
+            $this->createQueryContainer(),
+            $sessionClient,
+            new UserConfig()
+        );
+
+        $userTransfer = $this->createUserTransfer(static::USERNAME);
+
+        // Checks that User TO is cloned before being saved into session.
+        $sessionClient->expects($this->once())
+            ->method('set')
+            ->with(
+                $this->stringContains('user'),
+                $this->logicalAnd(
+                    $this->equalTo($userTransfer),
+                    $this->logicalNot($this->identicalTo($userTransfer))
+                )
+            );
+
+        $userModel->setCurrentUser($userTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUserTransferClonedAfterReadingFromSession()
+    {
+        $sessionClient = $this->createSessionClient();
+
+        $userModel = new User(
+            $this->createQueryContainer(),
+            $sessionClient,
+            new UserConfig()
+        );
+
+        $userTransfer = $this->createUserTransfer(static::USERNAME);
+
+        // Checks that User TO is cloned after reading from session and before returning to caller.
+        $sessionClient->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($userTransfer));
+
+        $sessionClient->expects($this->once())
+            ->method('has')
+            ->will($this->returnValue(true));
+
+        $userFromSession = $userModel->getCurrentUser();
+        $this->assertEquals($userTransfer, $userFromSession);
+        $this->assertNotSame($userTransfer, $userFromSession);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasCurrentUserReturnsFalseOnNull()
+    {
+        $sessionClient = $this->createSessionClient();
+
+        $userModel = new User(
+            $this->createQueryContainer(),
+            $sessionClient,
+            new UserConfig()
+        );
+
+        $sessionClient->expects($this->once())
+            ->method('has')
+            ->will($this->returnValue(null));
+
+        $hasCurrentUser = $userModel->hasCurrentUser();
+        $this->assertFalse($hasCurrentUser);
+    }
+
+    /**
+     * @param string $userName
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function createUserTransfer($userName)
+    {
+        $userTransfer = new UserTransfer();
+        $userTransfer
+            ->setPassword('test')
+            ->setIdUser(1)
+            ->setFirstName('test')
+            ->setLastName('test')
+            ->setLastLogin('test')
+            ->setUsername($userName);
+
+        return $userTransfer;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Session\SessionClient
+     */
+    protected function createSessionClient()
+    {
+        $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'has'])->getMock();
+
+        return $sessionClient;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\User\Persistence\UserQueryContainerInterface
+     */
+    protected function createQueryContainer()
+    {
+        $queryContainer = $this->getMockBuilder(UserQueryContainerInterface::class)->getMock();
+
+        return $queryContainer;
     }
 
 }
