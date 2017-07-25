@@ -187,7 +187,9 @@ class Customer implements CustomerInterface
     {
         $customerResponseTransfer = $this->add($customerTransfer);
 
-        $this->sendRegistrationToken($customerTransfer);
+        if ($customerResponseTransfer->getIsSuccess()) {
+            $this->sendRegistrationToken($customerTransfer);
+        }
 
         return $customerResponseTransfer;
     }

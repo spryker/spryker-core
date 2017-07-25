@@ -43,7 +43,7 @@ interface CustomerFacadeInterface
      * Specification:
      * - Hashes password if provided
      * - Saves customer
-     * - Sends registration email if desired
+     * - Sends registration email (on successful registration)
      * - Returns CustomerResponseTransfer with success flag
      *
      * @api
