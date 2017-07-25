@@ -21,7 +21,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class CodeArchitectureSnifferConsole extends Console
 {
 
-    const COMMAND_NAME = 'code:architecture';
+    const COMMAND_NAME = 'code:sniff:architecture';
     const OPTION_MODULE = 'module';
     const OPTION_CORE = 'core';
     const OPTION_STRICT = 'strict';
