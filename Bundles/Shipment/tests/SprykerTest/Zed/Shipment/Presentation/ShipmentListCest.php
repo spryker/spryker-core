@@ -5,39 +5,42 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\Shipment\Zed;
+namespace SprykerTest\Zed\Shipment\Presentation;
 
-use Acceptance\Shipment\Zed\PageObject\ShipmentCarrierAddPage;
-use Acceptance\Shipment\Zed\PageObject\ShipmentListPage;
-use Acceptance\Shipment\Zed\PageObject\ShipmentMethodAddPage;
-use Acceptance\Shipment\Zed\Tester\ShipmentListTester;
+use SprykerTest\Zed\Shipment\PageObject\ShipmentCarrierAddPage;
+use SprykerTest\Zed\Shipment\PageObject\ShipmentListPage;
+use SprykerTest\Zed\Shipment\PageObject\ShipmentMethodAddPage;
+use SprykerTest\Zed\Shipment\PresentationTester;
 
 /**
- * @group Acceptance
- * @group Shipment
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
+ * @group Shipment
+ * @group Presentation
  * @group ShipmentListCest
+ * Add your own group annotations below this line
  */
 class ShipmentListCest
 {
 
     /**
-     * @param \Acceptance\Shipment\Zed\Tester\ShipmentListTester $i
+     * @param \SprykerTest\Zed\Shipment\PresentationTester $i
      *
      * @return void
      */
-    public function testICanOpenShipmentList(ShipmentListTester $i)
+    public function testICanOpenShipmentList(PresentationTester $i)
     {
         $i->amOnPage(ShipmentListPage::URL);
         $i->seeElement(['class' => ShipmentListPage::SELECTOR_TABLE]);
     }
 
     /**
-     * @param \Acceptance\Shipment\Zed\Tester\ShipmentListTester $i
+     * @param \SprykerTest\Zed\Shipment\PresentationTester $i
      *
      * @return void
      */
-    public function testICanOpenAddShipmentMethodPage(ShipmentListTester $i)
+    public function testICanOpenAddShipmentMethodPage(PresentationTester $i)
     {
         $i->amOnPage(ShipmentListPage::URL);
         $i->click(ShipmentListPage::BUTTON_ADD_METHOD);
@@ -45,11 +48,11 @@ class ShipmentListCest
     }
 
     /**
-     * @param \Acceptance\Shipment\Zed\Tester\ShipmentListTester $i
+     * @param \SprykerTest\Zed\Shipment\PresentationTester $i
      *
      * @return void
      */
-    public function testICanOpenAddShipmentCarrierPage(ShipmentListTester $i)
+    public function testICanOpenAddShipmentCarrierPage(PresentationTester $i)
     {
         $i->amOnPage(ShipmentListPage::URL);
         $i->click(ShipmentListPage::BUTTON_ADD_CARRIER);

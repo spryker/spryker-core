@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\Shipment\Zed\Tester;
+namespace SprykerTest\Zed\Shipment\PageObject;
 
-use Shipment\AcceptanceTester;
-
-class ShipmentListTester extends AcceptanceTester
+class ShipmentMethodAddPage
 {
+
+    const URL = '/shipment/method/add';
+
 }
