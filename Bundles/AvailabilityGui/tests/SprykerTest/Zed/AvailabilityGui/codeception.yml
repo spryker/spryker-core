@@ -1,0 +1,8 @@
+namespace: SprykerTest\Zed\AvailabilityGui
+actor: Tester
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+

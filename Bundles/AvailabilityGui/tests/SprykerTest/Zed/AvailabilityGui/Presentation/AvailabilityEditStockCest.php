@@ -4,28 +4,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\AvailabilityGui\Zed;
+namespace SprykerTest\Zed\AvailabilityGui\Presentation;
 
-use Acceptance\AvailabilityGui\Zed\PageObject\AvailabilityPage;
-use Acceptance\AvailabilityGui\Zed\Tester\AvailabilityTester;
+use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
+use SprykerTest\Zed\AvailabilityGui\PresentationTester;
 
 /**
- * @group Acceptance
- * @group AvailabilityGui
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
+ * @group AvailabilityGui
+ * @group Presentation
  * @group AvailabilityEditStockCest
+ * Add your own group annotations below this line
  */
 class AvailabilityEditStockCest
 {
 
     /**
-     * @param \Acceptance\AvailabilityGui\Zed\Tester\AvailabilityTester $i
+     * @param \SprykerTest\Zed\AvailabilityGui\PresentationTester $i
      *
      * @return void
      */
-    public function testEditExistinStock(AvailabilityTester $i)
+    public function testEditExistingStock(PresentationTester $i)
     {
-        $i->wantTo('Edit avalability stock');
+        $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');
 
         $i->amOnPage(

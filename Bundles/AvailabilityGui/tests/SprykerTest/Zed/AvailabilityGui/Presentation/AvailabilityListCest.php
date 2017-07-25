@@ -5,26 +5,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\AvailabilityGui\Zed;
+namespace SprykerTest\Zed\AvailabilityGui\Presentation;
 
-use Acceptance\AvailabilityGui\Zed\PageObject\AvailabilityPage;
-use Acceptance\AvailabilityGui\Zed\Tester\AvailabilityTester;
+use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
+use SprykerTest\Zed\AvailabilityGui\PresentationTester;
 
 /**
- * @group Acceptance
- * @group AvailabilityGui
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
+ * @group AvailabilityGui
+ * @group Presentation
  * @group AvailabilityListCest
+ * Add your own group annotations below this line
  */
 class AvailabilityListCest
 {
 
     /**
-     * @param \Acceptance\AvailabilityGui\Zed\Tester\AvailabilityTester $i
+     * @param \SprykerTest\Zed\AvailabilityGui\PresentationTester $i
      *
      * @return void
      */
-    public function testDisplayListPage(AvailabilityTester $i)
+    public function testDisplayListPage(PresentationTester $i)
     {
         $i->wantTo('Open availability list');
         $i->expect('List of all availability items');
