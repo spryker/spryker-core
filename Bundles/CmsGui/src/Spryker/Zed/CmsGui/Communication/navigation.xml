@@ -55,7 +55,4 @@
             </redirects>
         </pages>
     </cms-gui>
-    <cms>
-        <visible>0</visible>
-    </cms>
 </config>

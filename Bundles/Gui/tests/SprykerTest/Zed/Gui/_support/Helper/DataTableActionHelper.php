@@ -23,6 +23,17 @@ class DataTableActionHelper extends Module
     }
 
     /**
+     * @param string $name
+     * @param int $rowPosition
+     *
+     * @return void
+     */
+    public function clickDataTableButton($name, $rowPosition = 1)
+    {
+        $this->clickButton($name, $rowPosition);
+    }
+
+    /**
      * @param int $rowPosition
      *
      * @return void
