@@ -73,7 +73,7 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testSaveProductGroupOptionAndAssignProductAbstract()
     {
-        $this->markTestSkipped('ProductAbstract not assinged');
+        $this->markTestSkipped('ProductAbstract not assigned');
 
         $productOptionFacade = $this->createProductOptionFacade();
 

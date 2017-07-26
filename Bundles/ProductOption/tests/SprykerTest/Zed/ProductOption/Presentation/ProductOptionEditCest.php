@@ -39,6 +39,8 @@ class ProductOptionEditCest
 
         $i->amOnPage(sprintf(ProductOptionEditPage::URL, (int)$idProductOptionGroup));
 
+        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Options / Edit Product Option');
+
         $idTaxSet = 2;
         $i->selectOption('#product_option_general_fkTaxSet', $idTaxSet);
 
