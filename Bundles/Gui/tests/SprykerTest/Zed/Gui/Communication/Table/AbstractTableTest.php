@@ -5,23 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Gui\Communication\Table;
+namespace SprykerTest\Zed\Gui\Communication\Table;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use SprykerTest\Zed\Gui\Communication\Fixture\FooTable;
 use Symfony\Component\HttpFoundation\Request;
-use Unit\Spryker\Zed\Gui\Communication\Fixture\FooTable;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Gui
  * @group Communication
  * @group Table
  * @group AbstractTableTest
+ * Add your own group annotations below this line
  */
-class AbstractTableTest extends PHPUnit_Framework_TestCase
+class AbstractTableTest extends Unit
 {
 
     const COL_ONE = 'one';

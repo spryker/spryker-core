@@ -30,9 +30,7 @@ class ProductManagementAttributeEditCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(ProductManagementAttributeListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "Edit")])[1]');
-
+        $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes / Edit Product Attribute');
     }
 

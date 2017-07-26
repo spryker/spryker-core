@@ -30,9 +30,7 @@ class ProductManagementProductEditCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(ProductManagementProductListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "Edit")])[1]');
-
+        $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
     }
 

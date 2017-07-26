@@ -30,9 +30,7 @@ class GlossaryEditCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(GlossaryListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "Edit")])[1]');
-
+        $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Glossary / Edit Glossary Translation');
     }
 

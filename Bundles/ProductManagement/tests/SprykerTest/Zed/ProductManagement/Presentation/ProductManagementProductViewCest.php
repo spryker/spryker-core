@@ -30,8 +30,7 @@ class ProductManagementProductViewCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(ProductManagementProductListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "View")])[1]');
+        $i->clickDataTableViewButton();
 
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / View Product');
     }

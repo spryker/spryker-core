@@ -30,8 +30,8 @@ class ProductRelationViewCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(ProductRelationListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "View")])[1]');
+        $i->clickDataTableViewButton();
+
         $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / View Product Relation');
     }
 

@@ -30,9 +30,7 @@ class TaxRateEditCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(TaxRateListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "Edit")])[1]');
-
+        $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Rates / Edit Tax Rate');
     }
 

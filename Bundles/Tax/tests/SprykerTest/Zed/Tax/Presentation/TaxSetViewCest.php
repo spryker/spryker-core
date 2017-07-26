@@ -30,9 +30,7 @@ class TaxSetViewCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(TaxSetListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "View")])[1]');
-
+        $i->clickDataTableViewButton();
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / View Tax Set');
     }
 

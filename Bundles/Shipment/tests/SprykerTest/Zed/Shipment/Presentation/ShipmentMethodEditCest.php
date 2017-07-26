@@ -30,9 +30,7 @@ class ShipmentMethodEditCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(ShipmentListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "Edit")])[1]');
-
+        $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Shipment / Shipment Methods / Edit Shipment Method');
     }
 

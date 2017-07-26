@@ -30,9 +30,7 @@ class UserEditCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(UserListPage::URL);
-        $i->wait(2);
-        $i->click('(//a[contains(., "Edit")])[1]');
-
+        $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / User / Edit User');
     }
 

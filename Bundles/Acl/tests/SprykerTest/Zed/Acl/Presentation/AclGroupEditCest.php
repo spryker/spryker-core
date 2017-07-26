@@ -30,9 +30,7 @@ class AclGroupEditCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(AclGroupListPage::URL);
-        $i->wait(2);
-
-        $i->click('(//a[contains(., "Edit")])[1]');
+        $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups / Edit Group');
     }
 
