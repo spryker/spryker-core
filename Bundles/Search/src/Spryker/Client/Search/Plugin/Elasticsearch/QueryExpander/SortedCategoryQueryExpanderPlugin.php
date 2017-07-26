@@ -120,6 +120,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
                 $sortFieldName => [
                     'order' => 'ASC',
                     'mode' => 'min',
+                    'ignore_unmapped' => true
                 ],
             ]);
     }
