@@ -18,4 +18,9 @@ interface ArchitectureSnifferInterface
      */
     public function run($directory, array $options = []);
 
+    /**
+     * @return array
+     */
+    public function getRules();
+
 }

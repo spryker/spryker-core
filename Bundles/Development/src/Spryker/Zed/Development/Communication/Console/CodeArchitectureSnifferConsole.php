@@ -26,6 +26,7 @@ class CodeArchitectureSnifferConsole extends Console
     const OPTION_CORE = 'core';
     const OPTION_STRICT = 'strict';
     const OPTION_PRIORITY = 'priority';
+    const OPTION_DRY_RUN = 'dry-run';
     const ARGUMENT_SUB_PATH = 'path';
     const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
@@ -45,6 +46,7 @@ class CodeArchitectureSnifferConsole extends Console
         $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Core (instead of Project)');
         $this->addOption(static::OPTION_PRIORITY, 'p', InputOption::VALUE_OPTIONAL, 'Priority [1 (hightest), 2 (medium), 3 (experimental)], defaults to 2.');
         $this->addOption(static::OPTION_STRICT, 's', InputOption::VALUE_NONE, 'Also report those nodes with a @SuppressWarnings annotation');
+        $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
 
         $this->addArgument(static::ARGUMENT_SUB_PATH, InputArgument::OPTIONAL, 'Optional path or sub path element');
     }
@@ -140,15 +142,15 @@ class CodeArchitectureSnifferConsole extends Console
                     $path .= trim($subPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
                 }
                 if (!is_dir($path)) {
+                    $output->writeln('Path not found, skipping: ' . $path, OutputInterface::VERBOSITY_VERY_VERBOSE);
                     continue;
                 }
-                $output->writeln($path, OutputInterface::VERBOSITY_VERBOSE);
+                $output->writeln('Checking path: ' . $path, OutputInterface::VERBOSITY_VERBOSE);
 
                 $violations = $this->getFacade()->runArchitectureSniffer($path, $this->input->getOptions());
                 $count = $this->displayViolations($output, $violations);
                 $result += $count;
             }
-
         }
 
         $output->writeln($result . ' violations found');

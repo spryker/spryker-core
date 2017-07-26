@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CodeStyleSnifferConsole extends Console
 {
 
-    const COMMAND_NAME = 'code:sniff:style';
+    const COMMAND_NAME = 'code:sniff';
     const OPTION_MODULE = 'module';
     const OPTION_SNIFFS = 'sniffs';
     const OPTION_DRY_RUN = 'dry-run';
@@ -83,7 +83,7 @@ class CodeStyleSnifferConsole extends Console
      */
     protected function addAlias()
     {
-        $this->setAliases(['code:sniff']);
+        $this->setAliases(['code:sniff:style']);
     }
 
 }

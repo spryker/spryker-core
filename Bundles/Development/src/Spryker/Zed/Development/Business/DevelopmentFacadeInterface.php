@@ -240,4 +240,13 @@ interface DevelopmentFacadeInterface
      */
     public function listAllBundles();
 
+    /**
+     * Returns all architecture rules
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getArchitectureRules();
+
 }

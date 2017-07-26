@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
+use Exception;
+use PHPMD\RuleSetFactory;
+use PHPMD\TextUI\CommandLineOptions;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Config\Reader\Xml;
@@ -16,6 +19,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     const OPTION_PRIORITY = 'priority';
     const OPTION_STRICT = 'strict';
+    const OPTION_DRY_RUN = 'dry-run';
 
     /**
      * @var string
@@ -42,6 +46,38 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $this->xmlReader = $xmlReader;
         $this->command = $command;
         $this->defaultPriority = $defaultPriority;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRules()
+    {
+        $ruleSetFactory = new RuleSetFactory();
+
+        $args = explode(' ', $this->command);
+        $options = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
+
+        $rules = [];
+        foreach ($ruleSetFactory->createRuleSets($options->getRuleSets()) as $ruleSet) {
+            /** @var \PHPMD\AbstractRule $rule */
+            foreach ($ruleSet->getRules() as $rule) {
+                $rules[$rule->getName()] = [
+                    'name' => $rule->getName(),
+                    'ruleset' => $rule->getRuleSetName(),
+                    'description' => $rule->getDescription(),
+                    'priority' => $rule->getPriority(),
+                    'rule' => $rule,
+                ];
+            }
+        }
+
+        $sort = function ($a, $b) {
+            return $a["priority"] - $b["priority"];
+        };
+        usort($rules, $sort);
+
+        return $rules;
     }
 
     /**
@@ -78,7 +114,9 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      * @param string $directory
      * @param array $options
      *
-     * @return string
+     * @throws \Exception
+     *
+     * @return string|null
      */
     protected function runCommand($directory, array $options = [])
     {
@@ -91,12 +129,30 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             $command .= ' --strict';
         }
 
+        if (!empty($options[static::OPTION_DRY_RUN])) {
+            $this->displayAndExit($command);
+        }
+
         $p = $this->getProcess($command);
 
         $p->setWorkingDirectory(APPLICATION_ROOT_DIR);
         $p->run();
+        if (substr($p->getOutput(), 0, 5) !== '<?xml') {
+            throw new Exception('Sniffer run was not successful: ' . $p->getExitCodeText());
+        }
+
         $output = $p->getOutput();
         return $output;
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return void
+     */
+    protected function displayAndExit($command)
+    {
+        exit($command . PHP_EOL);
     }
 
     /**
