@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductRelation\Business;
+namespace SprykerTest\Zed\ProductRelation\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
@@ -22,12 +22,14 @@ use Spryker\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductRelation
  * @group Business
+ * @group Facade
  * @group ProductRelationFacadeTest
+ * Add your own group annotations below this line
  */
 class ProductRelationFacadeTest extends Unit
 {

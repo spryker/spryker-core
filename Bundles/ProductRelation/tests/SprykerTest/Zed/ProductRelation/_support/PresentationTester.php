@@ -1,5 +1,5 @@
 <?php
-namespace ProductRelation;
+namespace SprykerTest\Zed\ProductRelation;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class AcceptanceTester extends Actor
+class PresentationTester extends Actor
 {
 
-    use _generated\AcceptanceTesterActions;
+    use _generated\PresentationTesterActions;
 
    /**
     * Define custom actions here
