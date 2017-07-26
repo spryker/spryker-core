@@ -1,5 +1,9 @@
 namespace: ProductManagement
 actor: Tester
+
+include:
+  - tests/SprykerTest/Zed/ProductManagement
+
 paths:
     tests: tests
     log: tests/_output
@@ -15,3 +19,10 @@ settings:
 coverage:
     enabled: true
     whitelist: { include: ['src/*.php'] }
+
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+    config:
+        Codeception\Extension\Phantoman:
+            suites: ['Presentation']

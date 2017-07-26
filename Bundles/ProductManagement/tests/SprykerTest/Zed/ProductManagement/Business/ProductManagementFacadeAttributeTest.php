@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductManagement\Business;
+namespace SprykerTest\Zed\ProductManagement\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -28,12 +28,14 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBri
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductManagement
  * @group Business
+ * @group Facade
  * @group ProductManagementFacadeAttributeTest
+ * Add your own group annotations below this line
  */
 class ProductManagementFacadeAttributeTest extends Unit
 {
