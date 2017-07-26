@@ -60,7 +60,7 @@ class CodeStyleSnifferConsole extends Console
 
         $message = 'Check code style in project level';
         if ($bundle) {
-            $message = 'Check code style in all bundles';
+            $message = 'Check code style in all modules';
             if ($bundle !== static::OPTION_BUNDLE_ALL) {
                 $message = 'Check code style in "' . $bundle . '" module';
             }
