@@ -1,5 +1,9 @@
 {% extends '@Application/Layout/layout.twig' %}
 
+{% block action %}
+    {{ viewActionButton('/development/architecture/rules', 'Display all architecture rules' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Architecture sniffer results' } %}

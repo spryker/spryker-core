@@ -1,5 +1,9 @@
 {% extends '@Application/Layout/layout.twig' %}
 
+{% block action %}
+    {{ backActionButton('/development/architecture', 'Back' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Architecture sniffer rules' } %}
