@@ -360,7 +360,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return null
+     * @return string|null
      */
     protected function getTwigRootPath()
     {
