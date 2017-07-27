@@ -80,7 +80,8 @@ class DataTableActionHelper extends Module
     protected function clickButton($name, $rowPosition)
     {
         $webDriver = $this->getWebDriver();
-        $selector = sprintf('(//tr[@role="row"]//button[contains(., "%s")])[%s]', $name, $rowPosition);
+        $selector = sprintf('(//tr[@role="row"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition);
+//        $selector = sprintf('(//tr[@role="row"]//button[contains(., "%s")])[%s]', $name, $rowPosition);
 
         $webDriver->waitForElementVisible($selector);
         $webDriver->click($selector);
