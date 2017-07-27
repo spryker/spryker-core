@@ -60,6 +60,25 @@
                 <bundle>cms</bundle>
                 <controller>redirect</controller>
                 <action>index</action>
+                <pages>
+                    <redirect-edit>
+                        <label>Edit CMS Redirect</label>
+                        <title>Edit CMS Redirect</title>
+                        <bundle>cms</bundle>
+                        <controller>redirect</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </redirect-edit>
+
+                    <redirect-create>
+                        <label>Create new CMS Redirect</label>
+                        <title>Create new CMS Redirect</title>
+                        <bundle>cms</bundle>
+                        <controller>redirect</controller>
+                        <action>add</action>
+                        <visible>0</visible>
+                    </redirect-create>
+                </pages>
             </redirects>
         </pages>
     </cms-gui>
