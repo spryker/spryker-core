@@ -119,9 +119,14 @@ class CmsBlockDataProvider
      */
     protected function assertCmsBlockTemplate(SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector)
     {
-        $categoryTemplateName = $spyCmsBlockCategoryConnector->getCategory()
-            ->getCategoryTemplate()
-            ->getName();
+        $spyCategoryTemplate = $spyCmsBlockCategoryConnector
+            ->getCategory()
+            ->getCategoryTemplate();
+
+        $categoryTemplateName = null;
+        if ($spyCategoryTemplate) {
+            $categoryTemplateName = $spyCategoryTemplate->getName();
+        }
 
         if (!in_array($categoryTemplateName, CmsBlockType::SUPPORTED_CATEGORY_TEMPLATE_LIST)) {
             $this->idCategoriesWithWrongTemplate[$spyCmsBlockCategoryConnector->getFkCmsBlockCategoryPosition()][] =
@@ -144,9 +149,15 @@ class CmsBlockDataProvider
         /** @var \Orm\Zed\Category\Persistence\SpyCategory $spyCategory */
         foreach ($categoryCollection as $spyCategory) {
             $categoryName = $spyCategory->getLocalisedAttributes($idLocale)->getFirst()->getName();
-            $categoryTemplate = $spyCategory->getCategoryTemplate()->getName();
 
-            $categoryList[$spyCategory->getIdCategory()] = $categoryName . ' (' . $categoryTemplate . ')';
+            $spyCategoryTemplate = $spyCategory->getCategoryTemplate();
+            if ($spyCategoryTemplate) {
+                $categoryTemplateName = $spyCategory->getCategoryTemplate()->getName();
+            } else {
+                $categoryTemplateName = 'Undefined';
+            }
+
+            $categoryList[$spyCategory->getIdCategory()] = $categoryName . ' (' . $categoryTemplateName . ')';
         }
 
         return $categoryList;
