@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\StateMachine\Mocks;
 
-class TestStateMachineHandlerException extends TestStateMachineHandler
+class TestStateMachineHandlerException extends UnitStateMachineHandler
 {
 
     /**

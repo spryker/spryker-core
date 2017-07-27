@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Client\Queue\Proxy;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Spryker\Client\Queue\Model\Adapter\AdapterInterface;
@@ -22,7 +22,7 @@ use Spryker\Shared\Queue\QueueConfig;
  * @group Proxy
  * @group QueueProxyTest
  */
-class QueueProxyTest extends Test
+class QueueProxyTest extends Unit
 {
 
     const TEST_QUEUE_NAME = 'testQueueName';

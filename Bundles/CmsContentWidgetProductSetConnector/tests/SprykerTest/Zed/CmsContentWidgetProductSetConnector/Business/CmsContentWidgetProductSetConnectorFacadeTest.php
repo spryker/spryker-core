@@ -6,7 +6,7 @@
 
 namespace SprykerTest\Zed\CmsProductSetConnector\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Spryker\Zed\CmsContentWidgetProductSetConnector\Business\CmsContentWidgetProductSetConnectorFacade;
 
@@ -20,7 +20,7 @@ use Spryker\Zed\CmsContentWidgetProductSetConnector\Business\CmsContentWidgetPro
  * @group CmsContentWidgetProductSetConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class CmsContentWidgetProductSetConnectorFacadeTest extends Test
+class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
 {
 
     /**

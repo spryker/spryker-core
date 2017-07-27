@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
@@ -28,7 +28,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeade
  * @group Header
  * @group PaginationByHeaderFilterPostProcessorTest
  */
-class PaginationByHeaderFilterPostProcessorTest extends Test
+class PaginationByHeaderFilterPostProcessorTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 namespace Customer\Module;
 
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 use Propel\Runtime\Propel;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
@@ -85,11 +85,11 @@ class Functional extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         parent::_before($test);
 
@@ -97,11 +97,11 @@ class Functional extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _after(TestCase $test)
+    public function _after(TestInterface $test)
     {
         parent::_after($test);
 
@@ -113,12 +113,12 @@ class Functional extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      * @param bool $fail
      *
      * @return void
      */
-    public function _failed(TestCase $test, $fail)
+    public function _failed(TestInterface $test, $fail)
     {
         parent::_failed($test, $fail);
 

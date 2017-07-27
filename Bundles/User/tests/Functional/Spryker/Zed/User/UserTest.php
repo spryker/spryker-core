@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\User;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\User\Business\UserFacade;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group User
  * @group UserTest
  */
-class UserTest extends Test
+class UserTest extends Unit
 {
 
     /**

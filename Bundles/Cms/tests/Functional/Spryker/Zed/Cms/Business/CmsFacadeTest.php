@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Cms\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
@@ -32,7 +32,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @group Business
  * @group CmsFacadeTest
  */
-class CmsFacadeTest extends Test
+class CmsFacadeTest extends Unit
 {
 
     /**

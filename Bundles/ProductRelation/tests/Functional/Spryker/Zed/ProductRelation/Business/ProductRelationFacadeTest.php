@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductRelation\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -29,7 +29,7 @@ use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
  * @group Business
  * @group ProductRelationFacadeTest
  */
-class ProductRelationFacadeTest extends Test
+class ProductRelationFacadeTest extends Unit
 {
 
     const ID_TEST_LOCALE = 66;

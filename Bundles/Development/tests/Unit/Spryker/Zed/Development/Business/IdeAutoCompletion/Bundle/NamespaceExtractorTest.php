@@ -6,7 +6,7 @@
 
 namespace Unit\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -20,7 +20,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * @group Bundle
  * @group NamespaceExtractorTest
  */
-class NamespaceExtractorTest extends Test
+class NamespaceExtractorTest extends Unit
 {
 
     /**

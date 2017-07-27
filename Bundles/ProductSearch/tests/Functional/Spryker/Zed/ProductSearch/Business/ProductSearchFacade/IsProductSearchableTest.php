@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -26,7 +26,7 @@ use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
  * @group ProductSearchFacade
  * @group IsProductSearchableTest
  */
-class IsProductSearchableTest extends Test
+class IsProductSearchableTest extends Unit
 {
 
     /**

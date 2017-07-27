@@ -6,7 +6,7 @@
 
 namespace SprykerTest\Zed\Sales\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -24,7 +24,7 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
  * @group SalesFacadeTest
  * Add your own group annotations below this line
  */
-class SalesFacadeTest extends Test
+class SalesFacadeTest extends Unit
 {
 
     const DEFAULT_OMS_PROCESS_NAME = 'test';

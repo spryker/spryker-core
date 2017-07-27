@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\SequenceNumber\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Propel\Runtime\Propel;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
@@ -23,7 +23,7 @@ use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
  * @group Business
  * @group SequenceNumberTest
  */
-class SequenceNumberTest extends Test
+class SequenceNumberTest extends Unit
 {
 
     /**

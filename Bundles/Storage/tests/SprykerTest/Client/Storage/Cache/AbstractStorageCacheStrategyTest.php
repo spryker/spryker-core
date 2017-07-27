@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Client\Storage\Cache;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Predis\Client as PredisClient;
 use Spryker\Client\Storage\Cache\StorageCacheStrategyHelper;
 use Spryker\Client\Storage\Redis\Service;
@@ -24,7 +24,7 @@ use SprykerTest\Client\Storage\Helper\CacheDataProvider;
  * @group AbstractStorageCacheStrategyTest
  * Add your own group annotations below this line
  */
-abstract class AbstractStorageCacheStrategyTest extends Test
+abstract class AbstractStorageCacheStrategyTest extends Unit
 {
 
     const TEST_CACHE_KEY = 'StorageClient_testKey';

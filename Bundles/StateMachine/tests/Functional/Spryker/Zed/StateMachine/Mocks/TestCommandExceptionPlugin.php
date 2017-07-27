@@ -9,7 +9,7 @@ namespace Functional\Spryker\Zed\StateMachine\Mocks;
 use Exception;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 
-class TestCommandExceptionPlugin extends TestCommandPlugin
+class TestCommandExceptionPlugin extends UnitCommandPlugin
 {
 
     /**

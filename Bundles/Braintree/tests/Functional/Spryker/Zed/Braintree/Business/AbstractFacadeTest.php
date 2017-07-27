@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\Braintree\Business;
 
 use Braintree\Result\Error;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -35,7 +35,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Business
  * @group AbstractFacadeTest
  */
-class AbstractFacadeTest extends Test
+class AbstractFacadeTest extends Unit
 {
 
     /**

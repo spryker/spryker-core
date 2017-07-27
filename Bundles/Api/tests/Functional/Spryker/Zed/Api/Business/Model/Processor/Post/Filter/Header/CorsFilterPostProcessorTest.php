@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
@@ -26,7 +26,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\CorsFilterPostPr
  * @group Header
  * @group CorsFilterPostProcessorTest
  */
-class CorsFilterPostProcessorTest extends Test
+class CorsFilterPostProcessorTest extends Unit
 {
 
     /**

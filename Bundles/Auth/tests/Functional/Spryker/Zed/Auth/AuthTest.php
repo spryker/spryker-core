@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Auth;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
@@ -24,7 +24,7 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group Auth
  * @group AuthTest
  */
-class AuthTest extends Test
+class AuthTest extends Unit
 {
 
     /**

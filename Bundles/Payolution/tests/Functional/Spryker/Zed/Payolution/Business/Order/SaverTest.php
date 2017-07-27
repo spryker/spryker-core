@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Payolution\Business\Order;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -40,7 +40,7 @@ use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
  * @group Order
  * @group SaverTest
  */
-class SaverTest extends Test
+class SaverTest extends Unit
 {
 
     /**

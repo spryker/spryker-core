@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Checkout\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -58,7 +58,7 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
  * @group Business
  * @group CheckoutFacadeTest
  */
-class CheckoutFacadeTest extends Test
+class CheckoutFacadeTest extends Unit
 {
 
     /**

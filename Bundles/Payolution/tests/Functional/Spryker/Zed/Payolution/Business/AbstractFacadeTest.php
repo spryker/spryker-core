@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Payolution\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -35,7 +35,7 @@ use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
  * @group Business
  * @group AbstractFacadeTest
  */
-class AbstractFacadeTest extends Test
+class AbstractFacadeTest extends Unit
 {
 
     /**

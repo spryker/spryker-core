@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\DataImport\Business\Model\DataImportStep;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\TouchAwareStep;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface;
@@ -24,7 +24,7 @@ use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface;
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
-class TouchAwareStepTest extends Test
+class TouchAwareStepTest extends Unit
 {
 
     const MAIN_TOUCHABLE_KEY = 'main touchable key';

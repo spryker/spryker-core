@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Acl\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Zed\Acl\Business\AclFacade;
@@ -23,7 +23,7 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group Business
  * @group AclTest
  */
-class AclTest extends Test
+class AclTest extends Unit
 {
 
     /**

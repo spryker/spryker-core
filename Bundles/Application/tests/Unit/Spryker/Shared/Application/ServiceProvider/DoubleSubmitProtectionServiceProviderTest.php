@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Application\ServiceProvider;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Shared\Application\ServiceProvider\DoubleSubmitProtectionServiceProvider;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  * @group ServiceProvider
  * @group DoubleSubmitProtectionServiceProviderTest
  */
-class DoubleSubmitProtectionServiceProviderTest extends Test
+class DoubleSubmitProtectionServiceProviderTest extends Unit
 {
 
     /**

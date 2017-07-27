@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Wishlist;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
@@ -34,7 +34,7 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
  * @group Wishlist
  * @group WishlistFacadeTest
  */
-class WishlistFacadeTest extends Test
+class WishlistFacadeTest extends Unit
 {
 
     const DEFAULT_NAME = 'default';

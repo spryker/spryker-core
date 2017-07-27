@@ -8,7 +8,7 @@ namespace Category\Module;
 
 use Acceptance\Category\Category\Zed\PageObject\CategoryCreatePage;
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -33,11 +33,11 @@ class Category extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         parent::_before($test);
 
@@ -55,12 +55,12 @@ class Category extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      * @param bool $fail
      *
      * @return void
      */
-    public function _failed(TestCase $test, $fail)
+    public function _failed(TestInterface $test, $fail)
     {
         parent::_failed($test, $fail);
 

@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Symfony\Form\RequestTokenProvider;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  * @group RequestTokenProvider
  * @group SessionStorageTest
  */
-class SessionStorageTest extends Test
+class SessionStorageTest extends Unit
 {
 
     /**

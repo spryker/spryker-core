@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\StateMachine\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Functional\Spryker\Zed\StateMachine\Mocks\StateMachineConfig;
 use Functional\Spryker\Zed\StateMachine\Mocks\TestStateMachineHandlerException;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
@@ -27,7 +27,7 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
  * @group Business
  * @group StateMachineFacadeExceptionTest
  */
-class StateMachineFacadeExceptionTest extends Test
+class StateMachineFacadeExceptionTest extends Unit
 {
 
     const TESTING_SM = 'TestingSm';

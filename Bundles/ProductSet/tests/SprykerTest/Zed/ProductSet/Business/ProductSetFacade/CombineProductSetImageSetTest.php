@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductSet\Business\ProductSetFacade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -25,7 +25,7 @@ use Generated\Shared\Transfer\ProductSetTransfer;
  *
  * @property \SprykerTest\Zed\ProductSet\ProductSetBusinessTester $tester
  */
-class CombineProductSetImageSetTest extends Test
+class CombineProductSetImageSetTest extends Unit
 {
 
     /**

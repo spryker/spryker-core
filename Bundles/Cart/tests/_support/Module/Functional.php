@@ -7,7 +7,8 @@
 namespace Cart\Module;
 
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
+use Codeception\TestInterface;
 use Propel\Runtime\Propel;
 use Silex\Application;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -26,12 +27,18 @@ class Functional extends Module
         $propelServiceProvider->boot(new Application());
     }
 
+//    use Codeception\TestInterface;
+//    use Codeception\TestInterface;
+
+//    public function _before(TestInterface
+//    public function _before(TestInterface
+
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         parent::_before($test);
 
@@ -39,11 +46,11 @@ class Functional extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _after(TestCase $test)
+    public function _after(TestInterface $test)
     {
         parent::_after($test);
 
@@ -55,12 +62,12 @@ class Functional extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      * @param bool $fail
      *
      * @return void
      */
-    public function _failed(TestCase $test, $fail)
+    public function _failed(TestInterface $test, $fail)
     {
         parent::_failed($test, $fail);
 

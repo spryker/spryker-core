@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductCartConnector\Business\Plugin;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -28,7 +28,7 @@ use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
  * @group Plugin
  * @group ProductCartPluginTest
  */
-class ProductCartPluginTest extends Test
+class ProductCartPluginTest extends Unit
 {
 
     const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';

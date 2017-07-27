@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\BeginsWith;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\Contains;
@@ -33,7 +33,7 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\NotIn;
  * @group QueryBuilder
  * @group OperatorValueTest
  */
-class OperatorValueTest extends Test
+class OperatorValueTest extends Unit
 {
 
     /**

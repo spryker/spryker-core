@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\DataImport\Business;
 
 use Codeception\Configuration;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
@@ -23,7 +23,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
-class DataImportBusinessFactoryTest extends Test
+class DataImportBusinessFactoryTest extends Unit
 {
 
     /**

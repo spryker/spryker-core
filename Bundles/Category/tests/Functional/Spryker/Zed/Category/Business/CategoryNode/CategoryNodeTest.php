@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Category\Business\CategoryNode;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use ReflectionMethod;
 use Spryker\Zed\Category\Business\CategoryBusinessFactory;
@@ -26,7 +26,7 @@ use Spryker\Zed\Kernel\Container;
  * @group CategoryNode
  * @group CategoryNodeTest
  */
-class CategoryNodeTest extends Test
+class CategoryNodeTest extends Unit
 {
 
     const CATEGORY_ID_COMPUTER = 5;

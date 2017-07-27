@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Discount\Business\Distributor;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -25,7 +25,7 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
  * @group DistributorTest
  * Add your own group annotations below this line
  */
-class DistributorTest extends Test
+class DistributorTest extends Unit
 {
 
     const ITEM_GROSS_PRICE_ZERO = 0;

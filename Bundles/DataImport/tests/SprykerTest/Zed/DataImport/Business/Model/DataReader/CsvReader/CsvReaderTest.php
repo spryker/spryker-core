@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\DataImport\Business\Model\DataReader\CsvReader;
 
 use Codeception\Configuration;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Countable;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataReaderException;
@@ -29,7 +29,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
  * @group CsvReaderTest
  * Add your own group annotations below this line
  */
-class CsvReaderTest extends Test
+class CsvReaderTest extends Unit
 {
 
     const EXPECTED_NUMBER_OF_DATA_SETS_IN_CSV = 3;

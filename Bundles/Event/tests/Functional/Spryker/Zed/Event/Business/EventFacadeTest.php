@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Event\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
@@ -33,7 +33,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Business
  * @group EventFacadeTest
  */
-class EventFacadeTest extends Test
+class EventFacadeTest extends Unit
 {
 
     const TEST_EVENT_NAME = 'test.event';

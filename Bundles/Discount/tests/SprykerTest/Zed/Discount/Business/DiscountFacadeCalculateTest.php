@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Discount\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -38,7 +38,7 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
  * @group DiscountFacadeCalculateTest
  * Add your own group annotations below this line
  */
-class DiscountFacadeCalculateTest extends Test
+class DiscountFacadeCalculateTest extends Unit
 {
 
     use LocatorHelperTrait;
