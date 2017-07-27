@@ -21,24 +21,32 @@
                         <visible>0</visible>
                     </version>
                     <view-page>
-                        <label>View Page</label>
-                        <title>View Page</title>
+                        <label>View CMS Page</label>
+                        <title>View CMS Page</title>
                         <bundle>cms-gui</bundle>
                         <controller>view-page</controller>
                         <action>index</action>
                         <visible>0</visible>
                     </view-page>
                     <edit-page>
-                        <label>Edit Page</label>
-                        <title>Edit Page</title>
+                        <label>Edit CMS Page</label>
+                        <title>Edit CMS Page</title>
                         <bundle>cms-gui</bundle>
                         <controller>edit-page</controller>
                         <action>index</action>
                         <visible>0</visible>
                     </edit-page>
+                    <create-page>
+                        <label>Create new CMS Page</label>
+                        <title>Create new CMS Page</title>
+                        <bundle>cms-gui</bundle>
+                        <controller>create-page</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create-page>
                     <edit-placeholder>
-                        <label>Edit Placeholders</label>
-                        <title>Edit Page</title>
+                        <label>Edit CMS Placeholders</label>
+                        <title>Edit CMS Placeholders</title>
                         <bundle>cms-gui</bundle>
                         <controller>create-glossary</controller>
                         <action>index</action>

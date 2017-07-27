@@ -23,17 +23,6 @@ class DataTableActionHelper extends Module
     }
 
     /**
-     * @param string $name
-     * @param int $rowPosition
-     *
-     * @return void
-     */
-    public function clickDataTableButton($name, $rowPosition = 1)
-    {
-        $this->clickButton($name, $rowPosition);
-    }
-
-    /**
      * @param int $rowPosition
      *
      * @return void
@@ -54,6 +43,35 @@ class DataTableActionHelper extends Module
     }
 
     /**
+     * @param string $buttonName
+     * @param string $linkName
+     * @param int $rowPosition
+     *
+     * @return void
+     */
+    public function clickDataTableLinkInDropDownOfButton($buttonName, $linkName, $rowPosition = 1)
+    {
+        $this->clickButton($buttonName, $rowPosition);
+        $this->getWebDriver()->click(sprintf(
+            '(//tr[@role="row"]//button[contains(., "%s")])[%s]/following::ul[1]//a[contains(., "%s")]',
+            $buttonName,
+            $rowPosition,
+            $linkName
+        ));
+    }
+
+    /**
+     * @param string $name
+     * @param int $rowPosition
+     *
+     * @return void
+     */
+    public function clickDataTableButton($name, $rowPosition = 1)
+    {
+        $this->clickButton($name, $rowPosition);
+    }
+
+    /**
      * @param string $name
      * @param int $rowPosition
      *
@@ -62,9 +80,9 @@ class DataTableActionHelper extends Module
     protected function clickButton($name, $rowPosition)
     {
         $webDriver = $this->getWebDriver();
-        $selector = sprintf('(//a[contains(., "%s")])[%s]', $name, $rowPosition);
+        $selector = sprintf('(//tr[@role="row"]//button[contains(., "%s")])[%s]', $name, $rowPosition);
 
-        $webDriver->waitForElement($selector);
+        $webDriver->waitForElementVisible($selector);
         $webDriver->click($selector);
     }
 
