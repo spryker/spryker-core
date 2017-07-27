@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Cms\Business\Page;
+namespace SprykerTest\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
 use Spryker\Zed\Cms\CmsConfig;
-use Unit\Spryker\Zed\Cms\Business\CmsMocks;
+use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Cms
  * @group Business
  * @group Page
  * @group CmsPageUrlBuilderTest
+ * Add your own group annotations below this line
  */
 class CmsPageUrlBuilderTest extends CmsMocks
 {

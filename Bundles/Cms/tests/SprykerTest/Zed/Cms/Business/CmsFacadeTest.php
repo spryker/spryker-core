@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Cms\Business;
+namespace SprykerTest\Zed\Cms\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
@@ -25,12 +25,14 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Cms
  * @group Business
+ * @group Facade
  * @group CmsFacadeTest
+ * Add your own group annotations below this line
  */
 class CmsFacadeTest extends Unit
 {

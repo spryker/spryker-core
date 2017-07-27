@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Cms\Business;
+namespace SprykerTest\Zed\Cms\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
@@ -13,12 +13,14 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\Cms\Business\CmsFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Cms
  * @group Business
+ * @group Facade
  * @group CmsFacadePageTest
+ * Add your own group annotations below this line
  */
 class CmsFacadePageTest extends Unit
 {

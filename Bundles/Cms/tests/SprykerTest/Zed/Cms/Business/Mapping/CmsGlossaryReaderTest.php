@@ -5,23 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Cms\Business\Mapping;
+namespace SprykerTest\Zed\Cms\Business\Mapping;
 
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Unit\Spryker\Zed\Cms\Business\CmsMocks;
+use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Cms
  * @group Business
  * @group Mapping
  * @group CmsGlossaryReaderTest
+ * Add your own group annotations below this line
  */
 class CmsGlossaryReaderTest extends CmsMocks
 {

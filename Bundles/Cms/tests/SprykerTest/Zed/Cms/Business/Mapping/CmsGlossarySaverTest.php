@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Cms\Business\Mapping;
+namespace SprykerTest\Zed\Cms\Business\Mapping;
 
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
@@ -14,16 +14,17 @@ use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Unit\Spryker\Zed\Cms\Business\CmsMocks;
+use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Cms
  * @group Business
  * @group Mapping
  * @group CmsGlossarySaverTest
+ * Add your own group annotations below this line
  */
 class CmsGlossarySaverTest extends CmsMocks
 {

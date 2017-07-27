@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Cms\Business\Page;
+namespace SprykerTest\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
@@ -19,16 +19,17 @@ use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\Url\Business\UrlFacadeInterface;
-use Unit\Spryker\Zed\Cms\Business\CmsMocks;
+use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Cms
  * @group Business
  * @group Page
  * @group CmsPageSaverTest
+ * Add your own group annotations below this line
  */
 class CmsPageSaverTest extends CmsMocks
 {

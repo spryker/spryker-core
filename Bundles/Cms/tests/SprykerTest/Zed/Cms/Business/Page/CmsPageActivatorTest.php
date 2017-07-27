@@ -4,22 +4,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Cms\Business\Page;
+namespace SprykerTest\Zed\Cms\Business\Page;
 
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Unit\Spryker\Zed\Cms\Business\CmsMocks;
+use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Cms
  * @group Business
  * @group Page
  * @group CmsPageActivatorTest
+ * Add your own group annotations below this line
  */
 class CmsPageActivatorTest extends CmsMocks
 {
