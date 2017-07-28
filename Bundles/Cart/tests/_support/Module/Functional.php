@@ -8,7 +8,6 @@ namespace Cart\Module;
 
 use Codeception\Module;
 use Codeception\TestInterface;
-use Codeception\TestInterface;
 use Propel\Runtime\Propel;
 use Silex\Application;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
@@ -26,12 +25,6 @@ class Functional extends Module
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
     }
-
-//    use Codeception\TestInterface;
-//    use Codeception\TestInterface;
-
-//    public function _before(TestInterface
-//    public function _before(TestInterface
 
     /**
      * @param \Codeception\TestInterface $test

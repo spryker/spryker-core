@@ -6,7 +6,6 @@
 
 namespace Functional\Spryker\Zed\Ratepay\Business\Request\Service;
 
-use Codeception\Test\Unit;
 use Functional\Spryker\Zed\Ratepay\Business\Api\Adapter\Http\ProfileAdapterMock;
 use Functional\Spryker\Zed\Ratepay\Business\Request\AbstractFacadeTest;
 use Spryker\Zed\Money\Business\MoneyFacade;
