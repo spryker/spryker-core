@@ -14,32 +14,35 @@ class DataTableActionHelper extends Module
 
     /**
      * @param int $rowPosition
+     * @param null|string $gridId
      *
      * @return void
      */
-    public function clickDataTableEditButton($rowPosition = 1)
+    public function clickDataTableEditButton($rowPosition = 1, $gridId = null)
     {
-        $this->clickButton('Edit', $rowPosition);
+        $this->clickButton('Edit', $rowPosition, $gridId);
     }
 
     /**
      * @param int $rowPosition
+     * @param null|string $gridId
      *
      * @return void
      */
-    public function clickDataTableViewButton($rowPosition = 1)
+    public function clickDataTableViewButton($rowPosition = 1, $gridId = null)
     {
-        $this->clickButton('View', $rowPosition);
+        $this->clickButton('View', $rowPosition, $gridId);
     }
 
     /**
      * @param int $rowPosition
+     * @param null|string $gridId
      *
      * @return void
      */
-    public function clickDataTableDeleteButton($rowPosition = 1)
+    public function clickDataTableDeleteButton($rowPosition = 1, $gridId = null)
     {
-        $this->clickButton('Delete', $rowPosition);
+        $this->clickButton('Delete', $rowPosition, $gridId);
     }
 
     /**
@@ -63,25 +66,31 @@ class DataTableActionHelper extends Module
     /**
      * @param string $name
      * @param int $rowPosition
+     * @param null|string $gridId
      *
      * @return void
      */
-    public function clickDataTableButton($name, $rowPosition = 1)
+    public function clickDataTableButton($name, $rowPosition = 1, $gridId = null)
     {
-        $this->clickButton($name, $rowPosition);
+        $this->clickButton($name, $rowPosition, $gridId);
     }
 
     /**
      * @param string $name
      * @param int $rowPosition
+     * @param null|string $gridId
      *
      * @return void
      */
-    protected function clickButton($name, $rowPosition)
+    protected function clickButton($name, $rowPosition, $gridId = null)
     {
         $webDriver = $this->getWebDriver();
+
         $selector = sprintf('(//tr[@role="row"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition);
-//        $selector = sprintf('(//tr[@role="row"]//button[contains(., "%s")])[%s]', $name, $rowPosition);
+
+        if ($gridId) {
+            $selector = sprintf('(//div[@id="%3$s"]//tr[@role="row"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition, $gridId);
+        }
 
         $webDriver->waitForElementVisible($selector);
         $webDriver->click($selector);

@@ -35,6 +35,24 @@
                         <action>index</action>
                         <visible>0</visible>
                     </product-edit>
+
+                    <product-concrete-view>
+                        <label>View Concrete Product</label>
+                        <title>View Concrete Product</title>
+                        <bundle>product-management</bundle>
+                        <controller>view</controller>
+                        <action>variant</action>
+                        <visible>0</visible>
+                    </product-concrete-view>
+
+                    <product-concrete-edit>
+                        <label>Edit Concrete Product</label>
+                        <title>Edit Concrete Product</title>
+                        <bundle>product-management</bundle>
+                        <controller>edit</controller>
+                        <action>variant</action>
+                        <visible>0</visible>
+                    </product-concrete-edit>
                 </pages>
             </products>
             <attributes>
