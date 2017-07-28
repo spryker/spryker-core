@@ -144,8 +144,9 @@ class CmsBlockDataProvider
         foreach ($categoryCollection as $categoryEntity) {
             $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
             $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity);
+            $categoryTemplateName = $categoryTemplateName ? ' [' . $categoryTemplateName . ']' : '';
 
-            $categoryList[$categoryEntity->getIdCategory()] = $categoryName . ' (' . $categoryTemplateName . ')';
+            $categoryList[$categoryEntity->getIdCategory()] = $categoryName . $categoryTemplateName;
         }
 
         return $categoryList;
