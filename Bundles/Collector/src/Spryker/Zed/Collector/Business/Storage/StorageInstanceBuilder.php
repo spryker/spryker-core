@@ -43,17 +43,7 @@ class StorageInstanceBuilder
         $adapterName = self::SEARCH_ELASTICA_ADAPTER;
 
         if (array_key_exists($adapterName, self::$searchInstances) === false) {
-            $config = [
-                'transport' => ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT)),
-                'port' => Config::get(SearchConstants::ELASTICA_PARAMETER__PORT),
-                'host' => Config::get(SearchConstants::ELASTICA_PARAMETER__HOST),
-            ];
-
-            if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
-                $config['headers'] = [
-                    'Authorization' => 'Basic ' . Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER),
-                ];
-            }
+            $config = self::getElasticsearchClientConfig();
 
             self::$searchInstances[$adapterName] = new Client($config);
         }
@@ -131,17 +121,7 @@ class StorageInstanceBuilder
                 break;
 
             case static::SEARCH_ELASTICA_ADAPTER:
-                $config = [
-                    'transport' => ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT)),
-                    'port' => Config::get(SearchConstants::ELASTICA_PARAMETER__PORT),
-                    'host' => Config::get(SearchConstants::ELASTICA_PARAMETER__HOST),
-                ];
-
-                if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
-                    $config['headers'] = [
-                        'Authorization' => 'Basic ' . Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER),
-                    ];
-                }
+                $config = self::getElasticsearchClientConfig();
                 break;
         }
 
@@ -163,6 +143,28 @@ class StorageInstanceBuilder
         $storageAdapter = self::KV_NAMESPACE . ucfirst(strtolower($kvAdapter)) . $type;
 
         return $storageAdapter;
+    }
+
+    /**
+     * @return array
+     */
+    protected static function getElasticsearchClientConfig()
+    {
+        if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__EXTRA)) {
+            $config = Config::get(SearchConstants::ELASTICA_PARAMETER__EXTRA);
+        }
+
+        $config['protocol'] = ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
+        $config['port'] = Config::get(SearchConstants::ELASTICA_PARAMETER__PORT);
+        $config['host'] = Config::get(SearchConstants::ELASTICA_PARAMETER__HOST);
+
+        if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
+            $config['headers'] = [
+                'Authorization' => 'Basic ' . Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER),
+            ];
+        }
+
+        return $config;
     }
 
 }
