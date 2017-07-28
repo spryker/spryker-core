@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockType;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleInterface;
@@ -113,19 +114,17 @@ class CmsBlockDataProvider
     }
 
     /**
-     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector
+     * @param \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnector $cmsBlockCategoryConnectorEntity
      *
      * @return void
      */
-    protected function assertCmsBlockTemplate(SpyCmsBlockCategoryConnector $spyCmsBlockCategoryConnector)
+    protected function assertCmsBlockTemplate(SpyCmsBlockCategoryConnector $cmsBlockCategoryConnectorEntity)
     {
-        $categoryTemplateName = $spyCmsBlockCategoryConnector->getCategory()
-            ->getCategoryTemplate()
-            ->getName();
+        $categoryTemplateName = $this->getCategoryTemplateName($cmsBlockCategoryConnectorEntity->getCategory());
 
         if (!in_array($categoryTemplateName, CmsBlockType::SUPPORTED_CATEGORY_TEMPLATE_LIST)) {
-            $this->idCategoriesWithWrongTemplate[$spyCmsBlockCategoryConnector->getFkCmsBlockCategoryPosition()][] =
-                $spyCmsBlockCategoryConnector->getFkCategory();
+            $this->idCategoriesWithWrongTemplate[$cmsBlockCategoryConnectorEntity->getFkCmsBlockCategoryPosition()][] =
+                $cmsBlockCategoryConnectorEntity->getFkCategory();
         }
     }
 
@@ -141,15 +140,33 @@ class CmsBlockDataProvider
 
         $categoryList = [];
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory $spyCategory */
-        foreach ($categoryCollection as $spyCategory) {
-            $categoryName = $spyCategory->getLocalisedAttributes($idLocale)->getFirst()->getName();
-            $categoryTemplate = $spyCategory->getCategoryTemplate()->getName();
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
+        foreach ($categoryCollection as $categoryEntity) {
+            $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
+            $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity);
+            $categoryTemplateName = $categoryTemplateName ? ' [' . $categoryTemplateName . ']' : '';
 
-            $categoryList[$spyCategory->getIdCategory()] = $categoryName . ' (' . $categoryTemplate . ')';
+            $categoryList[$categoryEntity->getIdCategory()] = $categoryName . $categoryTemplateName;
         }
 
         return $categoryList;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     *
+     * @return string
+     */
+    protected function getCategoryTemplateName(SpyCategory $categoryEntity)
+    {
+        $categoryTemplateName = '';
+        $categoryTemplateEntity = $categoryEntity->getCategoryTemplate();
+
+        if ($categoryTemplateEntity) {
+            $categoryTemplateName = $categoryEntity->getCategoryTemplate()->getName();
+        }
+
+        return $categoryTemplateName;
     }
 
     /**
