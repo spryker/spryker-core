@@ -4,7 +4,8 @@
         <label>Shipment</label>
         <title>Shipment</title>
         <bundle>shipment</bundle>
-        <uri>#</uri>
+        <controller>index</controller>
+        <action>index</action>
         <icon>fa-truck</icon>
         <pages>
             <shipment-carrier>
