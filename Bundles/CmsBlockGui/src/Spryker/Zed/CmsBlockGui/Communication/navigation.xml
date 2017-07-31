@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <config>
     <cms-gui>
-        <label>CMS</label>
-        <title>CMS</title>
+        <label>Content Management</label>
+        <title>Content Management</title>
         <bundle>cms-block-gui</bundle>
         <controller>list-block</controller>
         <action>index</action>

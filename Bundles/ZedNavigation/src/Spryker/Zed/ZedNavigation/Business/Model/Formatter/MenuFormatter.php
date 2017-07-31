@@ -112,9 +112,9 @@ class MenuFormatter implements MenuFormatterInterface
             }
 
             if ($includeInvisible) {
-                $formattedPages[$formattedPage[self::URI]] = $formattedPage;
+                $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
             } elseif (!isset($page[self::VISIBLE]) || (isset($page[self::VISIBLE]) && $page[self::VISIBLE])) {
-                $formattedPages[$formattedPage[self::URI]] = $formattedPage;
+                $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
             }
         }
 
