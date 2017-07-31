@@ -43,7 +43,7 @@
                 <pages>
                     <filter-view>
                         <label>View Filter</label>
-                        <title>Create Filter</title>
+                        <title>View Filter</title>
                         <bundle>product-search</bundle>
                         <controller>filter-preferences</controller>
                         <action>view</action>
