@@ -61,12 +61,17 @@ interface SearchConstants
     const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
 
     /**
-     * An array of extra Elasticsearch connection parameters (i.e. ['foo' => 'bar', ...]). (Optional)
+     * Specification:
+     * - Defines an array of extra Elasticsearch connection parameters (i.e. ['foo' => 'bar', ...]). (Optional)
      *
      * @api
      */
     const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
 
+    /**
+     * Specification:
+     * - Defines a suffix string for the index name to be installed. (Optional)
+     */
     const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
 
 }

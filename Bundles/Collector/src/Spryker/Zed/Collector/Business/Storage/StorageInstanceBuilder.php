@@ -40,15 +40,15 @@ class StorageInstanceBuilder
      */
     public static function getElasticsearchInstance()
     {
-        $adapterName = self::SEARCH_ELASTICA_ADAPTER;
+        $adapterName = static::SEARCH_ELASTICA_ADAPTER;
 
-        if (array_key_exists($adapterName, self::$searchInstances) === false) {
-            $config = self::getElasticsearchClientConfig();
+        if (array_key_exists($adapterName, static::$searchInstances) === false) {
+            $config = static::getElasticsearchClientConfig();
 
-            self::$searchInstances[$adapterName] = new Client($config);
+            static::$searchInstances[$adapterName] = new Client($config);
         }
 
-        return self::$searchInstances[$adapterName];
+        return static::$searchInstances[$adapterName];
     }
 
     /**
@@ -58,7 +58,7 @@ class StorageInstanceBuilder
      */
     public static function getStorageReadWriteInstance($debug = false)
     {
-        return self::getStorageInstance(self::ADAPTER_READ_WRITE, $debug);
+        return static::getStorageInstance(static::ADAPTER_READ_WRITE, $debug);
     }
 
     /**
@@ -68,7 +68,7 @@ class StorageInstanceBuilder
      */
     public static function getStorageReadInstance($debug = false)
     {
-        return self::getStorageInstance(self::ADAPTER_READ, $debug);
+        return static::getStorageInstance(static::ADAPTER_READ, $debug);
     }
 
     /**
@@ -81,13 +81,13 @@ class StorageInstanceBuilder
     {
         $kvAdapter = Config::get(StorageConstants::STORAGE_KV_SOURCE);
 
-        $storageAdapter = self::createStorageAdapterName($type, $kvAdapter);
-        $configArray = self::createAdapterConfig($kvAdapter);
+        $storageAdapter = static::createStorageAdapterName($type, $kvAdapter);
+        $configArray = static::createAdapterConfig($kvAdapter);
 
         $storage = new $storageAdapter($configArray, $debug);
-        self::$storageInstances[$storageAdapter] = $storage;
+        static::$storageInstances[$storageAdapter] = $storage;
 
-        return self::$storageInstances[$storageAdapter];
+        return static::$storageInstances[$storageAdapter];
     }
 
     /**
@@ -121,7 +121,7 @@ class StorageInstanceBuilder
                 break;
 
             case static::SEARCH_ELASTICA_ADAPTER:
-                $config = self::getElasticsearchClientConfig();
+                $config = static::getElasticsearchClientConfig();
                 break;
         }
 
@@ -140,7 +140,7 @@ class StorageInstanceBuilder
      */
     protected static function createStorageAdapterName($type, $kvAdapter)
     {
-        $storageAdapter = self::KV_NAMESPACE . ucfirst(strtolower($kvAdapter)) . $type;
+        $storageAdapter = static::KV_NAMESPACE . ucfirst(strtolower($kvAdapter)) . $type;
 
         return $storageAdapter;
     }
