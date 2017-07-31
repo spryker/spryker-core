@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\Auth
+namespace: SprykerTest\Zed\AvailabilityDataFeed
 
 paths:
     tests: .
@@ -12,42 +12,10 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: AuthBusinessTester
+    Persistence:
+        path: Persistence
+        class_name: AvailabilityDataFeedPersistenceTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-
-    Communication:
-        path: Communication
-        class_name: AuthCommunicationTester
-        modules:
-            enabled:
-                - Asserts
-                - \SprykerTest\Shared\Testify\Helper\Environment
-
-    Presentation:
-        path: Presentation
-        class_name: AuthPresentationTester
-        modules:
-            enabled:
-                - Asserts
-                - \SprykerTest\Shared\Testify\Helper\Environment
-                - \Config\Module\ConfigInit
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \Propel\Module\PropelInstall
-                - WebDriver:
-                    url: ''
-                    browser: chrome
-                    window_size: 1920x1080
-                    host: 0.0.0.0
-                    restart: false
-                - \SprykerTest\Shared\Discount\Helper\DiscountDataHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper

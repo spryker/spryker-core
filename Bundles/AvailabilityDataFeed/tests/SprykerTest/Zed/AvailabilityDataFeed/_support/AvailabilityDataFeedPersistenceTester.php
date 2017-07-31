@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\Auth;
+namespace SprykerTest\Zed\AvailabilityDataFeed;
 
 use Codeception\Actor;
 
