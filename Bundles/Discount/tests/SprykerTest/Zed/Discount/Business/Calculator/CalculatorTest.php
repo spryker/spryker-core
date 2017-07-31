@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\Business\Calculator;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -47,7 +47,7 @@ use Spryker\Zed\Messenger\Business\MessengerFacade;
  * @group CalculatorTest
  * Add your own group annotations below this line
  */
-class CalculatorTest extends Test
+class CalculatorTest extends Unit
 {
 
     const ITEM_GROSS_PRICE_500 = 500;

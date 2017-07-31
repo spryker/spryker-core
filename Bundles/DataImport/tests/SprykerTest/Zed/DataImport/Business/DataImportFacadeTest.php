@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\DataImport\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
@@ -23,7 +23,7 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
-class DataImportFacadeTest extends Test
+class DataImportFacadeTest extends Unit
 {
 
     const IMPORT_TYPE_FULL_IMPORT = 'full';

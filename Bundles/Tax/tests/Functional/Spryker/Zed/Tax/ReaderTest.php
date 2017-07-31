@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Tax;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Tax\Business\TaxFacade;
@@ -19,7 +19,7 @@ use Spryker\Zed\Tax\Business\TaxFacade;
  * @group Tax
  * @group ReaderTest
  */
-class ReaderTest extends Test
+class ReaderTest extends Unit
 {
 
     const DUMMY_TAX_SET_NAME = 'SalesTax';

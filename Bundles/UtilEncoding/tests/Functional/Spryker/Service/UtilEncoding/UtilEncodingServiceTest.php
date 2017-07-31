@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Service\UtilEncoding;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 
@@ -18,7 +18,7 @@ use Spryker\Service\UtilEncoding\UtilEncodingService;
  * @group UtilEncoding
  * @group UtilEncodingServiceTest
  */
-class UtilEncodingServiceTest extends Test
+class UtilEncodingServiceTest extends Unit
 {
 
     const JSON_ENCODED_VALUE = '{"1":"one","2":"two"}';

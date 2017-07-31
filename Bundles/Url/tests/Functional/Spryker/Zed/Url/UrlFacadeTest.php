@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Url;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group Url
  * @group UrlFacadeTest
  */
-class UrlFacadeTest extends Test
+class UrlFacadeTest extends Unit
 {
 
     /**

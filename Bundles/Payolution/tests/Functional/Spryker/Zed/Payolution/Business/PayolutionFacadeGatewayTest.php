@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Payolution\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -39,7 +39,7 @@ use Spryker\Zed\Payolution\Business\PayolutionFacade;
  * @group Business
  * @group PayolutionFacadeGatewayTest
  */
-class PayolutionFacadeGatewayTest extends Test
+class PayolutionFacadeGatewayTest extends Unit
 {
 
     /**

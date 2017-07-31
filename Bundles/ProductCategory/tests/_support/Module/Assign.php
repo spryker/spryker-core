@@ -8,19 +8,19 @@ namespace ProductCategory\Module;
 
 use Acceptance\ProductCategory\ProductCategory\Zed\PageObject\ProductCategoryAssignPage;
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 class Assign extends Module
 {
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      * @param bool $fail
      *
      * @return void
      */
-    public function _failed(TestCase $test, $fail)
+    public function _failed(TestInterface $test, $fail)
     {
         parent::_failed($test, $fail);
 

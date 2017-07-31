@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Session\Communication\Plugin\ServiceProvider;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  * @group SessionServiceProviderTest
  * Add your own group annotations below this line
  */
-class SessionServiceProviderTest extends Test
+class SessionServiceProviderTest extends Unit
 {
 
     use ConfigHelperTrait;

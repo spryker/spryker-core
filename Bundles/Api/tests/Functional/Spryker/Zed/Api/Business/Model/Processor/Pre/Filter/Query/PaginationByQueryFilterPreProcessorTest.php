@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\ApiConfig;
@@ -26,7 +26,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryF
  * @group Query
  * @group PaginationByQueryFilterPreProcessorTest
  */
-class PaginationByQueryFilterPreProcessorTest extends Test
+class PaginationByQueryFilterPreProcessorTest extends Unit
 {
 
     /**

@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Cms\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
@@ -20,7 +20,7 @@ use Spryker\Zed\Cms\Business\CmsFacade;
  * @group Business
  * @group CmsFacadePageTest
  */
-class CmsFacadePageTest extends Test
+class CmsFacadePageTest extends Unit
 {
 
     const CMS_PAGE_NEW_TITLE = 'new title';

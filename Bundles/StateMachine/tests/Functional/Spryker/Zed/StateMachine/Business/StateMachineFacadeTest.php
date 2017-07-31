@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\StateMachine\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Functional\Spryker\Zed\StateMachine\Mocks\StateMachineConfig;
 use Functional\Spryker\Zed\StateMachine\Mocks\TestStateMachineHandler;
@@ -34,7 +34,7 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
  * @group Business
  * @group StateMachineFacadeTest
  */
-class StateMachineFacadeTest extends Test
+class StateMachineFacadeTest extends Unit
 {
 
     const TESTING_SM = 'TestingSm';

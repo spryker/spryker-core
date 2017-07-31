@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\CustomerGroup\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -25,7 +25,7 @@ use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
  * @group Business
  * @group CustomerGroupFacadeTest
  */
-class CustomerGroupFacadeTest extends Test
+class CustomerGroupFacadeTest extends Unit
 {
 
     /**

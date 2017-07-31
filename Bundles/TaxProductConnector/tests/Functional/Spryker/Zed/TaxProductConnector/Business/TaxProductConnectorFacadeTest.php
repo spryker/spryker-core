@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\TaxProductConnector\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -25,7 +25,7 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
  * @group Business
  * @group TaxProductConnectorFacadeTest
  */
-class TaxProductConnectorFacadeTest extends Test
+class TaxProductConnectorFacadeTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Glossary;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
@@ -22,7 +22,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
  * @group Glossary
  * @group GlossaryTest
  */
-class GlossaryTest extends Test
+class GlossaryTest extends Unit
 {
 
     /**

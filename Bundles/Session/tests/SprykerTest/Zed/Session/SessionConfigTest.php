@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Session;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Session\SessionConfig;
 
@@ -20,7 +20,7 @@ use Spryker\Zed\Session\SessionConfig;
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\Session\SessionTester $tester
  */
-class SessionConfigTest extends Test
+class SessionConfigTest extends Unit
 {
 
     const EXPECTED_DSN_TCP_WITHOUT_PASSWORD = 'tcp://10.10.0.1:6435?database=0';

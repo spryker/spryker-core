@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductLabel\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
@@ -28,7 +28,7 @@ use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
  * @group ProductLabelFacadeTest
  * Add your own group annotations below this line
  */
-class ProductLabelFacadeTest extends Test
+class ProductLabelFacadeTest extends Unit
 {
 
     /**

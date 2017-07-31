@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
  * @group Pre
  * @group PathPreProcessorTest
  */
-class PathPreProcessorTest extends Test
+class PathPreProcessorTest extends Unit
 {
 
     /**

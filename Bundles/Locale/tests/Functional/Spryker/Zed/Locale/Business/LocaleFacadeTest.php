@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Locale\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
@@ -20,7 +20,7 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
  * @group Business
  * @group LocaleFacadeTest
  */
-class LocaleFacadeTest extends Test
+class LocaleFacadeTest extends Unit
 {
 
     /**

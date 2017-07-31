@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Client\Storage\Redis;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Predis\ClientInterface;
 use Spryker\Client\Storage\Redis\Service;
 
@@ -20,7 +20,7 @@ use Spryker\Client\Storage\Redis\Service;
  * @group ServiceTest
  * Add your own group annotations below this line
  */
-class ServiceTest extends Test
+class ServiceTest extends Unit
 {
 
     /**

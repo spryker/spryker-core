@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Tax;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
@@ -22,7 +22,7 @@ use Spryker\Zed\Tax\Business\TaxFacade;
  * @group Tax
  * @group WriterTest
  */
-class WriterTest extends Test
+class WriterTest extends Unit
 {
 
     const DUMMY_TAX_SET_NAME = 'SalesTax';

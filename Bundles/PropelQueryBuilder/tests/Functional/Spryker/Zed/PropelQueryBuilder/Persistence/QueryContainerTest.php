@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\PropelQueryBuilder\Persistence;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer;
@@ -32,7 +32,7 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer;
  * @group Persistence
  * @group QueryContainerTest
  */
-class QueryContainerTest extends Test
+class QueryContainerTest extends Unit
 {
 
     const LIMIT = 10;

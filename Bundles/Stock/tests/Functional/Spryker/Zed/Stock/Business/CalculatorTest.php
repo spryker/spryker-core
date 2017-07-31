@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Stock\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
@@ -23,7 +23,7 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
  * @group Business
  * @group CalculatorTest
  */
-class CalculatorTest extends Test
+class CalculatorTest extends Unit
 {
 
     /**

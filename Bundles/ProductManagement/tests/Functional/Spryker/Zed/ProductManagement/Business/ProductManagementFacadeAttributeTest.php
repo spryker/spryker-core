@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\ProductManagement\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
@@ -35,7 +35,7 @@ use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer;
  * @group Business
  * @group ProductManagementFacadeAttributeTest
  */
-class ProductManagementFacadeAttributeTest extends Test
+class ProductManagementFacadeAttributeTest extends Unit
 {
 
     /**

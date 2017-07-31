@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\CmsContentWidget\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetBusinessFactory;
 use Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacade;
@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Business
  * @group CmsContentWidgetFacadeTest
  */
-class CmsContentWidgetFacadeTest extends Test
+class CmsContentWidgetFacadeTest extends Unit
 {
 
     /**

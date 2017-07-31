@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Service\UtilText\Model\Url;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
  * @group Url
  * @group UrlTest
  */
-class UrlTest extends Test
+class UrlTest extends Unit
 {
 
     /**

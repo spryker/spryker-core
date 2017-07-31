@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Product\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
@@ -23,7 +23,7 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
  * @group Business
  * @group ProductAbstractAssertionTest
  */
-class ProductAbstractAssertionTest extends Test
+class ProductAbstractAssertionTest extends Unit
 {
 
     const SKU = 'sku';

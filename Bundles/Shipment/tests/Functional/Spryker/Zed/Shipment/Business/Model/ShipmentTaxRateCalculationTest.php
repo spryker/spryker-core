@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Shipment\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -30,7 +30,7 @@ use Spryker\Zed\Shipment\Business\ShipmentFacade;
  * @group Model
  * @group ShipmentTaxRateCalculationTest
  */
-class ShipmentTaxRateCalculationTest extends Test
+class ShipmentTaxRateCalculationTest extends Unit
 {
 
     /**

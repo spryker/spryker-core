@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Touch\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
@@ -22,7 +22,7 @@ use Spryker\Zed\Touch\Business\TouchFacade;
  * @group Business
  * @group TouchFacadeTest
  */
-class TouchFacadeTest extends Test
+class TouchFacadeTest extends Unit
 {
 
     const ITEM_TYPE = 'test.item';

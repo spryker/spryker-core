@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Glossary\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
@@ -21,7 +21,7 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
  * @group Business
  * @group GlossaryFacadeTest
  */
-class GlossaryFacadeTest extends Test
+class GlossaryFacadeTest extends Unit
 {
 
     const GLOSSARY_KEY = 'glossary_key';

@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductOption\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -33,7 +33,7 @@ use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
  * @group Business
  * @group ProductOptionFacadeTest
  */
-class ProductOptionFacadeTest extends Test
+class ProductOptionFacadeTest extends Unit
 {
 
     const DEFAULT_LOCALE_ISO_CODE = 'en_US';

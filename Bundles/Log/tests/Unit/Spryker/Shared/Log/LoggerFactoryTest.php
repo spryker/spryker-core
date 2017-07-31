@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Log;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
@@ -22,7 +22,7 @@ use Spryker\Shared\Log\LoggerFactory;
  * @group Log
  * @group LoggerFactoryTest
  */
-class LoggerFactoryTest extends Test
+class LoggerFactoryTest extends Unit
 {
 
     /**

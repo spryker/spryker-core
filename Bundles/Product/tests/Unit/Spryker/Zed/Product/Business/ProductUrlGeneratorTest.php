@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Zed\Product\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
@@ -27,7 +27,7 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
  * @group Business
  * @group ProductUrlGeneratorTest
  */
-class ProductUrlGeneratorTest extends Test
+class ProductUrlGeneratorTest extends Unit
 {
 
     const PRODUCT_NAME = [

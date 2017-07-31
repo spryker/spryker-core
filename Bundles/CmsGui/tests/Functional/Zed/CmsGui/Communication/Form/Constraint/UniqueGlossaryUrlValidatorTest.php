@@ -6,7 +6,7 @@
 
 namespace Functional\Zed\CmsGui\Communication\Form\Constraint;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Pyz\Zed\Cms\Business\CmsFacade;
@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
  * @group Constraint
  * @group UniqueGlossaryUrlValidatorTest
  */
-class UniqueGlossaryUrlValidatorTest extends Test
+class UniqueGlossaryUrlValidatorTest extends Unit
 {
 
     /**

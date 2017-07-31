@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductDiscountConnector\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -36,7 +36,7 @@ use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvi
  * @group Business
  * @group ProductDiscountConnectorFacadeTest
  */
-class ProductDiscountConnectorFacadeTest extends Test
+class ProductDiscountConnectorFacadeTest extends Unit
 {
 
     /**

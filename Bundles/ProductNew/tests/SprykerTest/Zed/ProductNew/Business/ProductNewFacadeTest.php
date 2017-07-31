@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductNew\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -25,7 +25,7 @@ use Spryker\Zed\ProductNew\ProductNewConfig;
  * @group ProductNewFacadeTest
  * Add your own group annotations below this line
  */
-class ProductNewFacadeTest extends Test
+class ProductNewFacadeTest extends Unit
 {
 
     /**
