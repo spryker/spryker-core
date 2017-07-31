@@ -212,19 +212,19 @@ class Method
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return int|null
      */
     protected function getDeliveryTime(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
-        $timeString = '';
+        $deliveryTime = null;
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
 
         if (isset($deliveryTimePlugins[$method->getDeliveryTimePlugin()])) {
             $deliveryTimePlugin = $this->getDeliveryTimePlugin($method, $deliveryTimePlugins);
-            $timeString = $deliveryTimePlugin->getTime($quoteTransfer);
+            $deliveryTime = $deliveryTimePlugin->getTime($quoteTransfer);
         }
 
-        return $timeString;
+        return $deliveryTime;
     }
 
     /**
