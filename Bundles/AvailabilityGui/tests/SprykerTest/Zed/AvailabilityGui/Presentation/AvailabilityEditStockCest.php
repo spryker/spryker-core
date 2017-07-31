@@ -6,8 +6,8 @@
 
 namespace SprykerTest\Zed\AvailabilityGui\Presentation;
 
+use SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester;
 use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
-use SprykerTest\Zed\AvailabilityGui\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -22,11 +22,11 @@ class AvailabilityEditStockCest
 {
 
     /**
-     * @param \SprykerTest\Zed\AvailabilityGui\PresentationTester $i
+     * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester $i
      *
      * @return void
      */
-    public function testEditExistingStock(PresentationTester $i)
+    public function testEditExistingStock(AvailabilityGuiPresentationTester $i)
     {
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');

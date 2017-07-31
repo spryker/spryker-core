@@ -1,5 +1,0 @@
-class_name: UnitTester
-modules:
-    enabled:
-        - \Testify\Module\Environment
-        - \ApiQueryBuilder\Module\Unit
