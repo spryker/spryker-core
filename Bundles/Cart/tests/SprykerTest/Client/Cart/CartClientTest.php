@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\Cart\Client;
+namespace SprykerTest\Client\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -21,7 +21,6 @@ use Spryker\Client\Kernel\AbstractFactory;
  * @group SprykerTest
  * @group Client
  * @group Cart
- * @group Client
  * @group CartClientTest
  * Add your own group annotations below this line
  */

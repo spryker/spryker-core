@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\Cart\Client\Dependency\Plugin;
+namespace SprykerTest\Client\Cart\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,8 +17,6 @@ use Spryker\Client\Cart\Plugin\ItemCountPlugin;
  * @group SprykerTest
  * @group Client
  * @group Cart
- * @group Client
- * @group Dependency
  * @group Plugin
  * @group ItemCountPluginTest
  * Add your own group annotations below this line
