@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Calculation\Business;
+namespace SprykerTest\Zed\Calculation\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
@@ -35,12 +35,14 @@ use Spryker\Zed\Calculation\Communication\Plugin\Calculator\TaxTotalCalculatorPl
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Calculation
  * @group Business
+ * @group Facade
  * @group CalculationFacadeTest
+ * Add your own group annotations below this line
  */
 class CalculationFacadeTest extends Unit
 {
