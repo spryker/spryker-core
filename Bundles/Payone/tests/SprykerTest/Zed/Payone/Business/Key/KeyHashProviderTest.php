@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Payone\Business\Key;
+namespace SprykerTest\Zed\Payone\Business\Key;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payone\Business\Key\HashProvider;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Payone
  * @group Business
  * @group Key
  * @group KeyHashProviderTest
+ * Add your own group annotations below this line
  */
 class KeyHashProviderTest extends PHPUnit_Framework_TestCase
 {

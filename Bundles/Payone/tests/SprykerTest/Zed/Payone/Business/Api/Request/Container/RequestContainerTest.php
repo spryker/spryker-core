@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Payone\Business\Api\Request\Container;
+namespace SprykerTest\Zed\Payone\Business\Api\Request\Container;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Payone\PayoneApiConstants;
@@ -36,8 +36,8 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankA
 use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Payone
  * @group Business
@@ -45,6 +45,7 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
  * @group Request
  * @group Container
  * @group RequestContainerTest
+ * Add your own group annotations below this line
  */
 class RequestContainerTest extends PHPUnit_Framework_TestCase
 {

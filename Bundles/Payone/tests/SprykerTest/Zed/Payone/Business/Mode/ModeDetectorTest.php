@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Payone\Business\Mode;
+namespace SprykerTest\Zed\Payone\Business\Mode;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
@@ -13,13 +13,14 @@ use Spryker\Zed\Payone\Business\Mode\ModeDetector;
 use Spryker\Zed\Payone\PayoneConfig;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Payone
  * @group Business
  * @group Mode
  * @group ModeDetectorTest
+ * Add your own group annotations below this line
  */
 class ModeDetectorTest extends PHPUnit_Framework_TestCase
 {
