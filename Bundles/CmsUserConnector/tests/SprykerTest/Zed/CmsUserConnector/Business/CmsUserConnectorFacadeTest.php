@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\CmsUserConnector\Business;
+namespace SprykerTest\Zed\CmsUserConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
@@ -23,12 +23,14 @@ use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCms
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group CmsUserConnector
  * @group Business
+ * @group Facade
  * @group CmsUserConnectorFacadeTest
+ * Add your own group annotations below this line
  */
 class CmsUserConnectorFacadeTest extends Unit
 {
