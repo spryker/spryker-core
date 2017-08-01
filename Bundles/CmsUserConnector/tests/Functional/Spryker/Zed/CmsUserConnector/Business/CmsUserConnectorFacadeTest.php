@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\CmsUserConnector\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
@@ -30,7 +30,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Business
  * @group CmsUserConnectorFacadeTest
  */
-class CmsUserConnectorFacadeTest extends Test
+class CmsUserConnectorFacadeTest extends Unit
 {
 
     /**

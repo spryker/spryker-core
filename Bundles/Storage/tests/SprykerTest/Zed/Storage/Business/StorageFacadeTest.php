@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Storage\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Storage\Business\StorageFacade;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\Storage\Business\StorageFacade;
  * @group StorageFacadeTest
  * Add your own group annotations below this line
  */
-class StorageFacadeTest extends Test
+class StorageFacadeTest extends Unit
 {
 
     /**

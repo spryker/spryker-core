@@ -9,6 +9,7 @@
         <property name="idProductLabel" type="int"/>
         <property name="name" type="string"/>
         <property name="isActive" type="bool"/>
+        <property name="isDynamic" type="bool"/>
         <property name="isExclusive" type="bool"/>
         <property name="isPublished" type="bool"/>
         <property name="frontEndReference" type="string"/>
@@ -31,9 +32,16 @@
     <transfer name="StorageProductLabel">
         <property name="idProductLabel" type="int"/>
         <property name="name" type="string"/>
+        <property name="key" type="string"/>
         <property name="isExclusive" type="bool"/>
         <property name="position" type="int"/>
         <property name="frontEndReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductLabelProductAbstractRelations">
+        <property name="idProductLabel" type="int"/>
+        <property name="idsProductAbstractToAssign" type="array"/>
+        <property name="idsProductAbstractToDeAssign" type="array"/>
     </transfer>
 
 </transfers>

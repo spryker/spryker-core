@@ -57,6 +57,7 @@
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
         <property name="restorePasswordKey" type="string" />
+        <property name="restorePasswordLink" type="string" />
         <property name="restorePasswordDate" type="string" />
         <property name="registrationKey" type="string" />
         <property name="confirmationLink" type="string" />

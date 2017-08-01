@@ -30,10 +30,11 @@ class Environment extends Module
         }
 
         $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());
-        $vendorDirectoryPosition = array_search('vendor', $pathParts);
+        $srcDirectoryPosition = array_search('current', $pathParts);
 
-        $rootDirPathParts = array_slice($pathParts, 0, $vendorDirectoryPosition);
-        $rootDir = implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
+        $rootDirPathParts = array_slice($pathParts, 1, $srcDirectoryPosition);
+
+        $rootDir = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
 
         defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'devtest');
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', (isset($_SERVER['APPLICATION_STORE'])) ? $_SERVER['APPLICATION_STORE'] : 'DE');

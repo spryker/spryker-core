@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Newsletter\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
@@ -29,7 +29,7 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
  * @group Business
  * @group NewsletterFacadeTest
  */
-class NewsletterFacadeTest extends Test
+class NewsletterFacadeTest extends Unit
 {
 
     const TEST_TYPE1 = 'TEST_TYPE1';

@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFilterPreProcessor;
@@ -25,7 +25,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFil
  * @group Query
  * @group CriteriaByQueryFilterPreProcessorTest
  */
-class CriteriaByQueryFilterPreProcessorTest extends Test
+class CriteriaByQueryFilterPreProcessorTest extends Unit
 {
 
     /**

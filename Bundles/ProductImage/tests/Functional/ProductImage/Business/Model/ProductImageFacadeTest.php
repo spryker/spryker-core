@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\ProductImage\Business\Model;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
@@ -32,7 +32,7 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
  * @group Model
  * @group ProductImageFacadeTest
  */
-class ProductImageFacadeTest extends Test
+class ProductImageFacadeTest extends Unit
 {
 
     /**

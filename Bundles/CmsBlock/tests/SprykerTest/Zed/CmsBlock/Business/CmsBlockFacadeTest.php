@@ -2,7 +2,7 @@
 
 namespace SprykerTest\Zed\CmsBlock\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
@@ -18,7 +18,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
  * @group CmsBlockFacadeTest
  * Add your own group annotations below this line
  */
-class CmsBlockFacadeTest extends Test
+class CmsBlockFacadeTest extends Unit
 {
 
     /**

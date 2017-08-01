@@ -1,7 +1,7 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Update tax rate' | trans %}
+{% block section_title 'Edit tax rate' | trans %}
 
 {% block action %}
     {{ removeActionButton(url('/tax/rate/delete', {'id-tax-rate': taxRate.idTaxRate}), 'Delete' | trans) }}
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Update tax rate' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit tax rate' | trans } %}
 
         {% block widget_content %}
             {{ form_start(form) }}

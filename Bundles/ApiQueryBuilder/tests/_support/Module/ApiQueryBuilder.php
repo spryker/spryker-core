@@ -7,7 +7,7 @@
 namespace ApiQueryBuilder\Module;
 
 use Codeception\Module;
-use Codeception\TestCase;
+use Codeception\TestInterface;
 use Silex\Application;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
@@ -26,11 +26,11 @@ class ApiQueryBuilder extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _before(TestCase $test)
+    public function _before(TestInterface $test)
     {
         parent::_before($test);
 
@@ -48,12 +48,12 @@ class ApiQueryBuilder extends Module
     }
 
     /**
-     * @param \Codeception\TestCase $test
+     * @param \Codeception\TestInterface $test
      * @param bool $fail
      *
      * @return void
      */
-    public function _failed(TestCase $test, $fail)
+    public function _failed(TestInterface $test, $fail)
     {
         parent::_failed($test, $fail);
 

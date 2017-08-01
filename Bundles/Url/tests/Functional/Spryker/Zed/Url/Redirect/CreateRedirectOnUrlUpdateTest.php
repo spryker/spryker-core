@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Url\Redirect;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Url\Persistence\Base\SpyUrlQuery;
@@ -23,7 +23,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @group Redirect
  * @group CreateRedirectOnUrlUpdateTest
  */
-class CreateRedirectOnUrlUpdateTest extends Test
+class CreateRedirectOnUrlUpdateTest extends Unit
 {
 
     /**

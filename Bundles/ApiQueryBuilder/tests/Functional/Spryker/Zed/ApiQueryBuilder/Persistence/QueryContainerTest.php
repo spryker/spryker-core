@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ApiQueryBuilder\Persistence;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
@@ -28,7 +28,7 @@ use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
  * @group Persistence
  * @group QueryContainerTest
  */
-class QueryContainerTest extends Test
+class QueryContainerTest extends Unit
 {
 
     /**

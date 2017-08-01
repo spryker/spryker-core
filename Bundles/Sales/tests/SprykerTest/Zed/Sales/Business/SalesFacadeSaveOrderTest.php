@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -51,7 +51,7 @@ use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
  * @group SalesFacadeSaveOrderTest
  * Add your own group annotations below this line
  */
-class SalesFacadeSaveOrderTest extends Test
+class SalesFacadeSaveOrderTest extends Unit
 {
 
     /**

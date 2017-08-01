@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\DataImport\Business\Model\DataImportStep;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 
 /**
@@ -22,7 +22,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
-class ReNameDataSetKeysStepTest extends Test
+class ReNameDataSetKeysStepTest extends Unit
 {
 
     const ORIGINAL_KEY_A = 'key-a';

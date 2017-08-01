@@ -139,9 +139,16 @@ class StabilityCalculator implements StabilityCalculatorInterface
             $callback = function ($bundle) use ($incomingBundles) {
                 return !in_array($bundle, $incomingBundles);
             };
+
             $indirectIncomingDependencies = array_filter($indirectIncomingDependencies, $callback);
+
             $this->bundles[$bundle]['indirectIn'] = $indirectIncomingDependencies;
-            $indirectStability = count($this->bundles[$bundle]['indirectOut']) / (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']));
+
+            $indirectStability = 0;
+
+            if (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']) !== 0) {
+                $indirectStability = count($this->bundles[$bundle]['indirectOut']) / (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']));
+            }
 
             $this->bundles[$bundle]['indirectStability'] = number_format($indirectStability, 3);
         }

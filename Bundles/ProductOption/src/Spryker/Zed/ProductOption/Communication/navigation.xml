@@ -9,6 +9,34 @@
                 <controller>list</controller>
                 <action>index</action>
                 <visible>2</visible>
+                <pages>
+                    <product-option-create>
+                        <label>Create new Product Option</label>
+                        <title>Create new Product Option</title>
+                        <bundle>product-option</bundle>
+                        <controller>create</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-option-create>
+
+                    <product-option-edit>
+                        <label>Edit Product Option</label>
+                        <title>Edit Product Option</title>
+                        <bundle>product-option</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-option-edit>
+
+                    <product-option-view>
+                        <label>View Product Option</label>
+                        <title>View Product Option</title>
+                        <bundle>product-option</bundle>
+                        <controller>view</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-option-view>
+                </pages>
             </product_options>
         </pages>
     </product>

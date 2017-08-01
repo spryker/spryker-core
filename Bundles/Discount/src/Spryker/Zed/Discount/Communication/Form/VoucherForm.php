@@ -43,7 +43,7 @@ class VoucherForm extends AbstractType
     protected function addQuantityField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_QUANTITY, 'text', [
-            'label' => 'Quantity*',
+            'label' => 'Quantity',
             'constraints' => [
                 new NotBlank(),
             ],

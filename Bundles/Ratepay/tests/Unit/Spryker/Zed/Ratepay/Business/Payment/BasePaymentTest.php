@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Ratepay\Business\Payment;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -53,7 +53,7 @@ use Unit\Spryker\Zed\Ratepay\Business\Api\Response\Response;
  * @group Payment
  * @group BasePaymentTest
  */
-class BasePaymentTest extends Test
+class BasePaymentTest extends Unit
 {
 
     /**

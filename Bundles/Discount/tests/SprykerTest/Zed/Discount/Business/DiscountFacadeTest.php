@@ -7,7 +7,7 @@
 namespace SprykerTest\Zed\Discount\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
@@ -40,7 +40,7 @@ use Spryker\Zed\Kernel\Container;
  * @group DiscountFacadeTest
  * Add your own group annotations below this line
  */
-class DiscountFacadeTest extends Test
+class DiscountFacadeTest extends Unit
 {
 
     /**

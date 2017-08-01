@@ -122,7 +122,7 @@ class CmsPageFormType extends AbstractType
     protected function addFkTemplateField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
-            'label' => 'Template * ',
+            'label' => 'Template',
             'choices' => $choices,
 
         ]);

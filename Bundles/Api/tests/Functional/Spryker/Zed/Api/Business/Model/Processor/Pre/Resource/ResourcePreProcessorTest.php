@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Pre\Resource;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 
@@ -23,7 +23,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
  * @group Resource
  * @group ResourcePreProcessorTest
  */
-class ResourcePreProcessorTest extends Test
+class ResourcePreProcessorTest extends Unit
 {
 
     /**

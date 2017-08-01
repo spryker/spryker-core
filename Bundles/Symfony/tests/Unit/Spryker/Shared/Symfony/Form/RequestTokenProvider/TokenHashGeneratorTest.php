@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Symfony\Form\RequestTokenProvider;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
  * @group RequestTokenProvider
  * @group TokenHashGeneratorTest
  */
-class TokenHashGeneratorTest extends Test
+class TokenHashGeneratorTest extends Unit
 {
 
     /**

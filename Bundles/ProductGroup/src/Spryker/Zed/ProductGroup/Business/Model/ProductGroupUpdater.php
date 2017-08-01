@@ -100,6 +100,7 @@ class ProductGroupUpdater implements ProductGroupUpdaterInterface
     {
         $this->touchProductAbstractGroupsDeleted($productGroupEntity);
         $productGroupEntity->getSpyProductAbstractGroups()->delete();
+        $productGroupEntity->clearSpyProductAbstractGroups();
     }
 
     /**

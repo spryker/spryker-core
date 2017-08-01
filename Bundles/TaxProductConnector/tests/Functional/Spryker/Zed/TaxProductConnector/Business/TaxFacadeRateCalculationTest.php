@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\TaxProductConnector\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
@@ -26,7 +26,7 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
  * @group Business
  * @group TaxFacadeRateCalculationTest
  */
-class TaxFacadeRateCalculationTest extends Test
+class TaxFacadeRateCalculationTest extends Unit
 {
 
     /**
