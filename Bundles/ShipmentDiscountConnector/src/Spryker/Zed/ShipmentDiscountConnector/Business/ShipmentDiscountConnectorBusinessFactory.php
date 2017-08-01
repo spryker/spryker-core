@@ -8,13 +8,11 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Money\Business\MoneyFacadeInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\PriceDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReader;
-use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface;
 use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyProvider;
 
 /**
@@ -112,7 +110,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ShipmentDiscountConnectorToMoneyInterface
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface
      */
     protected function getMoneyFacade()
     {

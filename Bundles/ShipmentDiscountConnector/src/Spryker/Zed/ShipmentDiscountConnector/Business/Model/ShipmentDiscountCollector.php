@@ -40,12 +40,14 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
         $discountableItems = [];
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
-                $isSatisfied = $this->shipmentDiscountDecisionRule->isExpenseSatisfiedBy($quoteTransfer, $expenseTransfer, $clauseTransfer);
+            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+                continue;
+            }
 
-                if ($isSatisfied) {
-                    $discountableItems[] = $this->createDiscountableItemTransfer($expenseTransfer, $quoteTransfer->getPriceMode());
-                }
+            $isSatisfied = $this->shipmentDiscountDecisionRule->isExpenseSatisfiedBy($quoteTransfer, $expenseTransfer, $clauseTransfer);
+
+            if ($isSatisfied) {
+                $discountableItems[] = $this->createDiscountableItemTransfer($expenseTransfer, $quoteTransfer->getPriceMode());
             }
         }
 

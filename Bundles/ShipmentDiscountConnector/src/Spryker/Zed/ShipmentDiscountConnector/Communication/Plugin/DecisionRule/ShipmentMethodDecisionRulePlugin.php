@@ -22,11 +22,7 @@ class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements Decisio
 {
 
     /**
-     * Specification:
-     *
-     * - Make decision on given Quote or Item transfer.
-     * - Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
-     * - Returns false when not matching.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -46,7 +42,7 @@ class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements Decisio
     }
 
     /**
-     * Name of field as used in query string
+     * {@inheritdoc}
      *
      * @api
      *
@@ -58,6 +54,10 @@ class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements Decisio
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return array
      */
     public function acceptedDataTypes()
@@ -68,6 +68,10 @@ class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements Decisio
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return array
      */
     public function getQueryStringValueOptions()

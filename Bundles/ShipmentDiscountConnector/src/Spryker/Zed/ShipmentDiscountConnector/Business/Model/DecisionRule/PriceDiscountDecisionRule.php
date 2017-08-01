@@ -24,7 +24,7 @@ class PriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
     protected $discountFacade;
 
     /**
-     * @var ShipmentDiscountConnectorToMoneyInterface
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface
      */
     protected $moneyFacade;
 

@@ -64,9 +64,9 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addMoneyFacade(Container $container)
     {

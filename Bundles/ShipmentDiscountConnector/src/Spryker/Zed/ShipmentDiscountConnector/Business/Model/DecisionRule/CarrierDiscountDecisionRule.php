@@ -82,7 +82,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int|null
      */
