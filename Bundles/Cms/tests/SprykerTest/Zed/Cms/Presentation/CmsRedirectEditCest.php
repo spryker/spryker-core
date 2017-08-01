@@ -31,6 +31,7 @@ class CmsRedirectEditCest
     {
         $i->amOnPage(CmsRedirectListPage::URL);
         $i->haveUrlRedirect();
+        $i->wait(2);
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects / Edit CMS Redirect');
     }
