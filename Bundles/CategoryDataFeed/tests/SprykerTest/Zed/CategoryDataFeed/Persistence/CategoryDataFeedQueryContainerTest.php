@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\CategoryDataFeed\Persistence;
+namespace SprykerTest\Zed\CategoryDataFeed\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
@@ -15,12 +15,13 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group CategoryDataFeed
  * @group Persistence
  * @group CategoryDataFeedQueryContainerTest
+ * Add your own group annotations below this line
  */
 class CategoryDataFeedQueryContainerTest extends Unit
 {

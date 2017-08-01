@@ -1,5 +1,5 @@
 <?php
-namespace CategoryDataFeed;
+namespace SprykerTest\Zed\CategoryDataFeed;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends Actor
+class CategoryDataFeedPersistenceTester extends Actor
 {
 
-    use _generated\UnitTesterActions;
+    use _generated\CategoryDataFeedPersistenceTesterActions;
 
    /**
     * Define custom actions here
