@@ -1,6 +1,0 @@
-class_name: FunctionalTester
-modules:
-    enabled:
-        - Filesystem
-        - \Product\Module\Functional
-        - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

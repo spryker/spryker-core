@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Product;
+namespace SprykerTest\Zed\Product\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;

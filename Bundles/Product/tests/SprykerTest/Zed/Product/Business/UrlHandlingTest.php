@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Product;
+namespace SprykerTest\Zed\Product\Business;
 
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
@@ -15,11 +15,13 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Product
+ * @group Business
  * @group UrlHandlingTest
+ * Add your own group annotations below this line
  */
 class UrlHandlingTest extends FacadeTestAbstract
 {

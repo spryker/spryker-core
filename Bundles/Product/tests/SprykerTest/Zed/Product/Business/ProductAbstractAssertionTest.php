@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Product\Business;
+namespace SprykerTest\Zed\Product\Business;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -16,12 +16,13 @@ use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Product
  * @group Business
  * @group ProductAbstractAssertionTest
+ * Add your own group annotations below this line
  */
 class ProductAbstractAssertionTest extends Unit
 {

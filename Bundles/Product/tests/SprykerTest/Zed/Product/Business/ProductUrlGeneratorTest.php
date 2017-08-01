@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Product\Business;
+namespace SprykerTest\Zed\Product\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -20,12 +20,13 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Product
  * @group Business
  * @group ProductUrlGeneratorTest
+ * Add your own group annotations below this line
  */
 class ProductUrlGeneratorTest extends Unit
 {

@@ -5,17 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Product;
+namespace SprykerTest\Zed\Product\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Product
+ * @group Business
  * @group ActivationTest
+ * Add your own group annotations below this line
  */
 class ActivationTest extends FacadeTestAbstract
 {

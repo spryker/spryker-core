@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Product;
+namespace SprykerTest\Zed\Product\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
@@ -13,11 +13,13 @@ use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Spryker\Zed\Product\Business\ProductFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Product
+ * @group Business
  * @group AttributeKeyManagementTest
+ * Add your own group annotations below this line
  */
 class AttributeKeyManagementTest extends Unit
 {

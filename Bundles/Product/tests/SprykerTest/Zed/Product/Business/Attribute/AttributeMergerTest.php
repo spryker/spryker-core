@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Product\Business\Attribute;
+namespace SprykerTest\Zed\Product\Business\Attribute;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Product
  * @group Business
  * @group Attribute
  * @group AttributeMergerTest
+ * Add your own group annotations below this line
  */
 class AttributeMergerTest extends Unit
 {
