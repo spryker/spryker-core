@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Newsletter\Business;
+namespace SprykerTest\Zed\Newsletter\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
@@ -22,12 +22,14 @@ use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Newsletter
  * @group Business
+ * @group Facade
  * @group NewsletterFacadeTest
+ * Add your own group annotations below this line
  */
 class NewsletterFacadeTest extends Unit
 {
