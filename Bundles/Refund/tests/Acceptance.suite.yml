@@ -8,7 +8,7 @@ modules:
 
         - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
         - \SprykerTest\Shared\Testify\Helper\Environment
-        - \Config\Module\ConfigInit
+        - \SprykerTest\Shared\Config\Helper\ConfigInit
         - \Transfer\Module\TransferGenerate
         - \Propel\Module\PropelInstall
         - \Application\Module\Yves

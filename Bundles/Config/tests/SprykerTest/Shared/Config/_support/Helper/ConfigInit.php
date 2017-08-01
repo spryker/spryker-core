@@ -4,11 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Config\Module;
+namespace SprykerTest\Shared\Config\Helper;
 
-use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
-use Spryker\Shared\Config\Config;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -16,13 +14,10 @@ class ConfigInit extends Module
 {
 
     /**
-     * @param \Codeception\Lib\ModuleContainer $moduleContainer
-     * @param array|null $config
+     * @return void
      */
-    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    public function _initialize()
     {
-        parent::__construct($moduleContainer, $config);
-
         if (isset($this->config['enabled']) && $this->config['enabled']) {
             $this->copyBundleConfigurationFiles();
             $this->generateConfigDefaultFile();

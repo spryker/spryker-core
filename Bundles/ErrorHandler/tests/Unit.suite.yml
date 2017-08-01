@@ -3,5 +3,5 @@ modules:
   enabled:
     - Asserts
     - \SprykerTest\Shared\Testify\Helper\Environment
-    - \Config\Module\ConfigInit
+    - \SprykerTest\Shared\Config\Helper\ConfigInit
     - \ErrorHandler\Module\Unit

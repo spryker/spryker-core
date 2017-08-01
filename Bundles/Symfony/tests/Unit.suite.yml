@@ -2,5 +2,5 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-        - \Config\Module\ConfigInit
+        - \SprykerTest\Shared\Config\Helper\ConfigInit
         - \Symfony\Module\Unit

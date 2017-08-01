@@ -1,9 +1,10 @@
 class_name: FunctionalTester
 modules:
     enabled:
-        - \Testify\Module\Environment
-        - \ProductApi\Module\Functional
+        - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Config\Helper\ConfigInit
         - \Propel\Module\PropelInstall
         - \Propel\Module\Database
         - \Transfer\Module\TransferGenerate
+        - \CustomerGroup\Module\Functional
+

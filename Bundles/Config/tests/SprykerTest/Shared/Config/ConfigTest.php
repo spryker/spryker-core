@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Config;
+namespace SprykerTest\Shared\Config;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Config\Config;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group Config
  * @group ConfigTest
+ * Add your own group annotations below this line
  */
 class ConfigTest extends PHPUnit_Framework_TestCase
 {

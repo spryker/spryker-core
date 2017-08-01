@@ -2,5 +2,5 @@ class_name: FunctionalTester
 modules:
     enabled:
         - \Testify\Module\Environment
-        - \Config\Module\ConfigInit
+        - \SprykerTest\Shared\Config\Helper\ConfigInit
         - \Kernel\Module\Functional
