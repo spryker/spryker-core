@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Cms\Presentation;
 
+use SprykerTest\Zed\Cms\CmsPresentationTester;
 use SprykerTest\Zed\Cms\PageObject\CmsRedirectListPage;
-use SprykerTest\Zed\Cms\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CmsRedirectEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Cms\PresentationTester $i
+     * @param \SprykerTest\Zed\Cms\CmsPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(CmsPresentationTester $i)
     {
         $i->amOnPage(CmsRedirectListPage::URL);
         $i->haveUrlRedirect();
