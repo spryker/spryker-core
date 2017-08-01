@@ -8,11 +8,13 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Money\Business\MoneyFacadeInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\PriceDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReader;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface;
 use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyProvider;
 
 /**
@@ -88,7 +90,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createPriceDiscountDecisionRule()
     {
         return new PriceDiscountDecisionRule(
-            $this->getDiscountFacade()
+            $this->getDiscountFacade(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -106,6 +109,14 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function getShipmentFacade()
     {
         return $this->getProvidedDependency(ShipmentDiscountConnectorDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    /**
+     * @return ShipmentDiscountConnectorToMoneyInterface
+     */
+    protected function getMoneyFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDiscountConnectorDependencyProvider::FACADE_MONEY);
     }
 
 }

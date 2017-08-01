@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountBridge;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyBridge;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentBridge;
 
 class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
@@ -17,6 +18,7 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
 
     const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    const FACADE_MONEY = 'FACADE_MONEY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +30,7 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addShipmentFacade($container);
         $container = $this->addDiscountFacade($container);
+        $container = $this->addMoneyFacade($container);
 
         return $container;
     }
@@ -55,6 +58,20 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
     {
         $container[static::FACADE_DISCOUNT] = function (Container $container) {
             return new ShipmentDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addMoneyFacade(Container $container)
+    {
+        $container[static::FACADE_MONEY] = function (Container $container) {
+            return new ShipmentDiscountConnectorToMoneyBridge($container->getLocator()->money()->facade());
         };
 
         return $container;

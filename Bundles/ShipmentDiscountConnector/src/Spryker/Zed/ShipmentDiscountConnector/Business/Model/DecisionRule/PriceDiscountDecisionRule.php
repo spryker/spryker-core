@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface;
 
 class PriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {
@@ -23,11 +24,20 @@ class PriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
     protected $discountFacade;
 
     /**
-     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface $discountFacade
+     * @var ShipmentDiscountConnectorToMoneyInterface
      */
-    public function __construct(ShipmentDiscountConnectorToDiscountInterface $discountFacade)
-    {
+    protected $moneyFacade;
+
+    /**
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface $discountFacade
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface $moneyFacade
+     */
+    public function __construct(
+        ShipmentDiscountConnectorToDiscountInterface $discountFacade,
+        ShipmentDiscountConnectorToMoneyInterface $moneyFacade
+    ) {
         $this->discountFacade = $discountFacade;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -68,11 +78,7 @@ class PriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
      */
     protected function isSatisfiedPrice(ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer)
     {
-        $moneyAmount = $expenseTransfer->getUnitGrossPrice();
-
-        if ($moneyAmount > 0) {
-            $moneyAmount /= 100;
-        }
+        $moneyAmount = $this->moneyFacade->convertIntegerToDecimal($expenseTransfer->getUnitGrossPrice());
 
         return $this->discountFacade->queryStringCompare($clauseTransfer, $moneyAmount);
     }
