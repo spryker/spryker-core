@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Mail\Business\Model\Provider;
+namespace SprykerTest\Zed\Mail\Business\Model\Provider;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Mail
  * @group Business
  * @group Model
  * @group Provider
  * @group MailProviderCollectionTest
+ * Add your own group annotations below this line
  */
 class MailProviderCollectionTest extends PHPUnit_Framework_TestCase
 {

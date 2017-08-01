@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Mail\Business\Model\Mail\Builder;
+namespace SprykerTest\Zed\Mail\Business\Model\Mail\Builder;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
@@ -19,8 +19,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Mail
  * @group Business
@@ -28,6 +28,7 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
  * @group Mail
  * @group Builder
  * @group MailBuilderTest
+ * Add your own group annotations below this line
  */
 class MailBuilderTest extends PHPUnit_Framework_TestCase
 {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Mail\Business\Model\Mailer;
+namespace SprykerTest\Zed\Mail\Business\Model\Mailer;
 
 use Generated\Shared\Transfer\MailTransfer;
 use PHPUnit_Framework_TestCase;
@@ -17,14 +17,15 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Mail
  * @group Business
  * @group Model
  * @group Mailer
  * @group MailerTest
+ * Add your own group annotations below this line
  */
 class MailerTest extends PHPUnit_Framework_TestCase
 {

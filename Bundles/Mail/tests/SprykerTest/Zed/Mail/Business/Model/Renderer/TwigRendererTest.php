@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Mail\Business\Model\Renderer;
+namespace SprykerTest\Zed\Mail\Business\Model\Renderer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTemplateTransfer;
@@ -17,14 +17,15 @@ use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
 use Twig_Environment;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Mail
  * @group Business
  * @group Model
  * @group Renderer
  * @group TwigRendererTest
+ * Add your own group annotations below this line
  */
 class TwigRendererTest extends PHPUnit_Framework_TestCase
 {
