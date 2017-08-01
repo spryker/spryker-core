@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\ProductAbstractDataFeed\Persistence;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
@@ -22,7 +22,7 @@ use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQuery
  * @group Persistence
  * @group ProductAbstractDataFeedQueryContainerTest
  */
-class ProductAbstractDataFeedQueryContainerTest extends Test
+class ProductAbstractDataFeedQueryContainerTest extends Unit
 {
 
     /**

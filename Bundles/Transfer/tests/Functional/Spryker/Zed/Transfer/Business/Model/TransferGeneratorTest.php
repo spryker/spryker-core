@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Transfer\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
@@ -29,7 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @group Model
  * @group TransferGeneratorTest
  */
-class TransferGeneratorTest extends Test
+class TransferGeneratorTest extends Unit
 {
 
     /**

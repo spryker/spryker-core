@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Navigation\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
@@ -29,7 +29,7 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
  * @group Facade
  * @group NavigationNodeCRUDTest
  */
-class NavigationNodeCRUDTest extends Test
+class NavigationNodeCRUDTest extends Unit
 {
 
     /**

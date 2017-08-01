@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\CategoryDataFeed\Persistence;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryDataFeedTransfer;
 use Orm\Zed\Category\Persistence\Base\SpyCategoryQuery;
 use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
@@ -22,7 +22,7 @@ use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
  * @group Persistence
  * @group CategoryDataFeedQueryContainerTest
  */
-class CategoryDataFeedQueryContainerTest extends Test
+class CategoryDataFeedQueryContainerTest extends Unit
 {
 
     /**

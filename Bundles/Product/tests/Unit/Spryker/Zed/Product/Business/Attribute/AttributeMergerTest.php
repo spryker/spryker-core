@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Product\Business\Attribute;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
 
@@ -20,7 +20,7 @@ use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
  * @group Attribute
  * @group AttributeMergerTest
  */
-class AttributeMergerTest extends Test
+class AttributeMergerTest extends Unit
 {
 
     const ID_LOCALE = 1;

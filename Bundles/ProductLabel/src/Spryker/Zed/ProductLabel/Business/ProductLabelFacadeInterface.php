@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Psr\Log\LoggerInterface;
 
 interface ProductLabelFacadeInterface
 {
@@ -145,5 +146,18 @@ interface ProductLabelFacadeInterface
      * @return void
      */
     public function checkLabelValidityDateRangeAndTouch();
+
+    /**
+     * Specification:
+     * - Calls a stack of `ProductLabelRelationUpdaterPluginInterface` to collect necessary information to update product label relations.
+     * - The results of the plugins are used to persist product label relation changes into database.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface|null $logger
+     *
+     * @return void
+     */
+    public function updateDynamicProductLabelRelations(LoggerInterface $logger = null);
 
 }

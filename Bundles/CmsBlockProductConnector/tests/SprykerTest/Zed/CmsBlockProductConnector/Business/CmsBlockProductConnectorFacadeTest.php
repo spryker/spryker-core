@@ -2,7 +2,7 @@
 
 namespace SprykerTest\Zed\CmsBlockProductConnector\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
@@ -14,7 +14,7 @@ use Codeception\TestCase\Test;
  * @group CmsBlockProductConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class CmsBlockProductConnectorFacadeTest extends Test
+class CmsBlockProductConnectorFacadeTest extends Unit
 {
 
     /**

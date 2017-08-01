@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
@@ -24,7 +24,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * @group MethodBuilder
  * @group FacadeMethodBuilderTest
  */
-class FacadeMethodBuilderTest extends Test
+class FacadeMethodBuilderTest extends Unit
 {
 
     const BASE_DIRECTORY = '/foo/bar/baz/*/src/';

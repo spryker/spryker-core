@@ -126,7 +126,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     {
         $builder
             ->add(self::FIELD_TITLE, TextType::class, [
-                'label' => 'Title *',
+                'label' => 'Title',
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
@@ -144,7 +144,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     protected function addCmsPageUrlField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CMS_PAGE_URL, new AutosuggestType(), [
-            'label' => 'CMS page URL *',
+            'label' => 'CMS page URL',
             'attr' => [
                 'placeholder' => 'Type 3 letters to search by CMS page name.',
             ],
@@ -169,7 +169,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     protected function addCategoryUrlField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CATEGORY_URL, new AutosuggestType(), [
-            'label' => 'Category URL *',
+            'label' => 'Category URL',
             'attr' => [
                 'placeholder' => 'Type 3 letters to search by category name.',
             ],
@@ -195,7 +195,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     {
         $builder
             ->add(self::FIELD_LINK, TextType::class, [
-                'label' => 'Link *',
+                'label' => 'Link',
                 'attr' => [
                     'placeholder' => '/',
                 ],
@@ -223,7 +223,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     {
         $builder
             ->add(self::FIELD_EXTERNAL_URL, TextType::class, [
-                'label' => 'External URL *',
+                'label' => 'External URL',
                 'attr' => [
                     'placeholder' => 'http://',
                 ],

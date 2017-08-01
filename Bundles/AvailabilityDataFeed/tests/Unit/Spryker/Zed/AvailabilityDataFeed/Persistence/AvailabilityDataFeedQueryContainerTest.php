@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\AvailabilityDataFeed\Persistence;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AvailabilityDataFeedTransfer;
 use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -22,7 +22,7 @@ use Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContai
  * @group Persistence
  * @group AvailabilityDataFeedQueryContainerTest
  */
-class AvailabilityDataFeedQueryContainerTest extends Test
+class AvailabilityDataFeedQueryContainerTest extends Unit
 {
 
     /**

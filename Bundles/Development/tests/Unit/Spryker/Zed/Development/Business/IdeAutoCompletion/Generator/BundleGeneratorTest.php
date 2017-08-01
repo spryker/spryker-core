@@ -6,7 +6,7 @@
 
 namespace Unit\Spryker\Zed\Development\Business\IdeAutoCompletion\Generator;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
@@ -22,7 +22,7 @@ use Twig_Environment;
  * @group Generator
  * @group BundleGeneratorTest
  */
-class BundleGeneratorTest extends Test
+class BundleGeneratorTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Calculation\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -42,7 +42,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Business
  * @group CalculationFacadeTest
  */
-class CalculationFacadeTest extends Test
+class CalculationFacadeTest extends Unit
 {
 
     /**

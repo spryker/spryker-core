@@ -6,7 +6,7 @@
 
 namespace SprykerTest\Zed\Discount\Communication\Plugin\Calculator;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
 
@@ -21,7 +21,7 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
  * @group FixedPluginTest
  * Add your own group annotations below this line
  */
-class FixedPluginTest extends Test
+class FixedPluginTest extends Unit
 {
 
     /**

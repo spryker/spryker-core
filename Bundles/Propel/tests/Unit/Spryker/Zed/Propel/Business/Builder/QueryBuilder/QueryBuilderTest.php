@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Propel\Business\Builder\QueryBuilder;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Propel\Generator\Builder\Om\AbstractOMBuilder;
 use Propel\Generator\Builder\Om\ObjectBuilder;
 use Propel\Generator\Builder\Om\TableMapBuilder;
@@ -30,7 +30,7 @@ use Spryker\Zed\Propel\Business\Builder\QueryBuilder;
  * @group QueryBuilder
  * @group QueryBuilderTest
  */
-class QueryBuilderTest extends Test
+class QueryBuilderTest extends Unit
 {
 
     /**

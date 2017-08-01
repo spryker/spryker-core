@@ -7,3 +7,4 @@
 
 require('./modules/main');
 require('./modules/bundled-products');
+require('./modules/new-date-range');

@@ -3,24 +3,82 @@
     <tax>
         <label>Taxes</label>
         <title>Taxes</title>
+        <bundle>tax</bundle>
         <uri>#</uri>
         <icon>fa-fax</icon>
-        <bundle>tax</bundle>
         <pages>
-            <pool>
+            <tax-rates>
                 <label>Tax Rates</label>
                 <title>Tax Rates</title>
                 <bundle>tax</bundle>
                 <controller>rate</controller>
                 <action>list</action>
-            </pool>
-            <cart-rules>
+                <pages>
+                    <tax-rate-create>
+                        <label>Create New Tax Rate</label>
+                        <title>Create New Tax Rate</title>
+                        <bundle>tax</bundle>
+                        <controller>rate</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </tax-rate-create>
+
+                    <tax-rate-edit>
+                        <label>Edit Tax Rate</label>
+                        <title>Edit Tax Rate</title>
+                        <bundle>tax</bundle>
+                        <controller>rate</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </tax-rate-edit>
+
+                    <tax-rate-view>
+                        <label>View Tax Rate</label>
+                        <title>View Tax Rate</title>
+                        <bundle>tax</bundle>
+                        <controller>rate</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </tax-rate-view>
+                </pages>
+            </tax-rates>
+
+            <tax-sets>
                 <label>Tax Sets</label>
                 <title>Tax Sets</title>
                 <bundle>tax</bundle>
                 <controller>set</controller>
                 <action>list</action>
-            </cart-rules>
+
+                <pages>
+                    <tax-set-create>
+                        <label>Create New Tax Set</label>
+                        <title>Create New Tax Set</title>
+                        <bundle>tax</bundle>
+                        <controller>set</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </tax-set-create>
+
+                    <tax-set-edit>
+                        <label>Edit Tax Set</label>
+                        <title>Edit Tax Set</title>
+                        <bundle>tax</bundle>
+                        <controller>set</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </tax-set-edit>
+
+                    <tax-set-view>
+                        <label>View Tax Set</label>
+                        <title>View Tax Set</title>
+                        <bundle>tax</bundle>
+                        <controller>set</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </tax-set-view>
+                </pages>
+            </tax-sets>
         </pages>
     </tax>
 </config>

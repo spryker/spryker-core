@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\ProductImage\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
@@ -23,7 +23,7 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
  * @group Model
  * @group ProductImageReaderTest
  */
-class ProductImageReaderTest extends Test
+class ProductImageReaderTest extends Unit
 {
 
     /**

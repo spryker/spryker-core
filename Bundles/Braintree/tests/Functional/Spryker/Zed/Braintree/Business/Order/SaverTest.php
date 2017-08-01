@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Braintree\Business\Order;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\BraintreePaymentTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -39,7 +39,7 @@ use Spryker\Zed\Braintree\Business\Order\Saver;
  * @group Order
  * @group SaverTest
  */
-class SaverTest extends Test
+class SaverTest extends Unit
 {
 
     /**

@@ -5,5 +5,24 @@
         <title>Glossary</title>
         <uri>/glossary</uri>
         <icon>fa-globe</icon>
+        <pages>
+            <glossary-create>
+                <label>Add Glossary Translation</label>
+                <title>Add Glossary Translation</title>
+                <bundle>glossary</bundle>
+                <controller>add</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </glossary-create>
+
+            <glossary-edit>
+                <label>Edit Glossary Translation</label>
+                <title>Edit Glossary Translation</title>
+                <bundle>glossary</bundle>
+                <controller>edit</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </glossary-edit>
+        </pages>
     </glossary>
 </config>

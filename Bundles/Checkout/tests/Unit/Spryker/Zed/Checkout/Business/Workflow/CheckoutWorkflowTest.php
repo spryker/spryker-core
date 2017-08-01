@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Checkout\Business\Workflow;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -29,7 +29,7 @@ use Unit\Spryker\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
  * @group Workflow
  * @group CheckoutWorkflowTest
  */
-class CheckoutWorkflowTest extends Test
+class CheckoutWorkflowTest extends Unit
 {
 
     /**

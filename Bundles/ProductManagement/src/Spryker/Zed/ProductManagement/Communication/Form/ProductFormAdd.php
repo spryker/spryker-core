@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -24,6 +25,8 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInte
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -45,6 +48,8 @@ class ProductFormAdd extends AbstractType
     const FORM_PRICE_AND_STOCK = 'price_and_stock';
     const FORM_TAX_SET = 'tax_set';
     const FORM_SEO = 'seo';
+    const FIELD_NEW_FROM = 'new_from';
+    const FIELD_NEW_TO = 'new_to';
 
     const FORM_IMAGE_SET = 'image_set';
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
@@ -179,6 +184,8 @@ class ProductFormAdd extends AbstractType
     {
         $this
             ->addSkuField($builder)
+            ->addNewFromDateField($builder)
+            ->addNewToDateField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
             ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
@@ -320,6 +327,54 @@ class ProductFormAdd extends AbstractType
                     ]),
                 ],
             ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNewFromDateField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_NEW_FROM, DateType::class, [
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker js-from-date',
+            ],
+            'constraints' => [
+                $this->createNewFromRangeConstraint(),
+            ],
+        ]);
+
+        $builder->get(static::FIELD_NEW_FROM)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNewToDateField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_NEW_TO, DateType::class, [
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker js-to-date',
+            ],
+            'constraints' => [
+                $this->createNewToFieldRangeConstraint(),
+            ],
+        ]);
+
+        $builder->get(static::FIELD_NEW_TO)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
 
         return $this;
     }
@@ -630,6 +685,74 @@ class ProductFormAdd extends AbstractType
     protected function createGeneralForm()
     {
         return new GeneralForm();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createNewFromRangeConstraint()
+    {
+        return new Callback([
+            'callback' => function ($newFrom, ExecutionContextInterface $context) {
+                $formData = $context->getRoot()->getData();
+                if (!$newFrom) {
+                    return;
+                }
+
+                if ($formData[static::FIELD_NEW_TO]) {
+                    if ($newFrom > $formData[static::FIELD_NEW_TO]) {
+                        $context->addViolation('Date "New from" cannot be later than "New to".');
+                    }
+
+                    if ($newFrom == $formData[static::FIELD_NEW_TO]) {
+                        $context->addViolation('Date "New from" is the same as "New to".');
+                    }
+                }
+
+            },
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createNewToFieldRangeConstraint()
+    {
+        return new Callback([
+            'callback' => function ($newTo, ExecutionContextInterface $context) {
+                $formData = $context->getRoot()->getData();
+                if (!$newTo) {
+                    return;
+                }
+
+                if ($formData[static::FIELD_NEW_FROM]) {
+                    if ($newTo < $formData[static::FIELD_NEW_FROM]) {
+                        $context->addViolation('Date "New to" cannot be earlier than "New from".');
+                    }
+                }
+            },
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createDateTimeModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    $value = new DateTime($value);
+                }
+                return $value;
+            },
+            function ($value) {
+                if ($value instanceof DateTime) {
+                    $value = $value->format('Y-m-d H:i:s');
+                }
+                return $value;
+            }
+        );
     }
 
 }

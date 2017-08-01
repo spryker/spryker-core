@@ -77,7 +77,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
     protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_KEY, new AutosuggestType(), [
-            'label' => 'Attribute key *',
+            'label' => 'Attribute key',
             'url' => '/product-search/filter-preferences/keys',
             'constraints' => $this->createAttributeKeyFieldConstraints(),
             'disabled' => $options[self::OPTION_IS_UPDATE],
@@ -114,7 +114,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
     protected function addInputTypeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_FILTER_TYPE, 'choice', [
-            'label' => 'Filter type *',
+            'label' => 'Filter type',
             'choices' => $options[self::OPTION_FILTER_TYPE_CHOICES],
             'constraints' => [
                 new NotBlank(),

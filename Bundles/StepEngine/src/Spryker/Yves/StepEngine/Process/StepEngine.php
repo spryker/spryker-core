@@ -88,6 +88,9 @@ class StepEngine implements StepEngineInterface
 
             return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $dataTransfer));
         }
+        if (!$this->isRequestedStep($request, $currentStep)) {
+            return $this->createRedirectResponse($this->stepCollection->getCurrentUrl($currentStep));
+        }
 
         if (!$formCollection) {
             $this->executeWithoutInput($currentStep, $request, $dataTransfer);
@@ -107,6 +110,17 @@ class StepEngine implements StepEngineInterface
         }
 
         return $this->getTemplateVariables($currentStep, $dataTransfer, $formCollection);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
+     *
+     * @return bool
+     */
+    protected function isRequestedStep(Request $request, StepInterface $currentStep)
+    {
+        return $request->get('_route') === $currentStep->getStepRoute();
     }
 
     /**

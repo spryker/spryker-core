@@ -119,8 +119,8 @@ class ProductOptionGroupForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_NAME, 'text', [
-            'label' => 'Group name translation key*',
-            'required' => false,
+            'label' => 'Group name translation key',
+            'required' => true,
             'constraints' => [
                 new NotBlank(),
                 new UniqueGroupName([
@@ -218,7 +218,7 @@ class ProductOptionGroupForm extends AbstractType
             self::FIELD_TAX_SET_FIELD,
             'choice',
             [
-                'label' => 'Tax set *',
+                'label' => 'Tax set',
                 'choices' => $options[self::OPTION_TAX_SETS],
             ]
         );

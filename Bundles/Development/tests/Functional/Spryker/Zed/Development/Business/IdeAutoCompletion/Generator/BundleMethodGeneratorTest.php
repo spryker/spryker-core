@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Development\Business\IdeAutoCompletion\Generator;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
@@ -25,7 +25,7 @@ use Twig_Loader_Filesystem;
  * @group Generator
  * @group BundleMethodGeneratorTest
  */
-class BundleMethodGeneratorTest extends Test
+class BundleMethodGeneratorTest extends Unit
 {
 
     /**

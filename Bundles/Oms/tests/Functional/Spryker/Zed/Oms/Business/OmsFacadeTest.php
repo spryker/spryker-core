@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Oms\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
@@ -23,7 +23,7 @@ use Spryker\Zed\Oms\OmsConfig;
  * @group Business
  * @group OmsFacadeTest
  */
-class OmsFacadeTest extends Test
+class OmsFacadeTest extends Unit
 {
 
     /**

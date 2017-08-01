@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Url;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group Url
  * @group LegacyUrlFacadeTest
  */
-class LegacyUrlFacadeTest extends Test
+class LegacyUrlFacadeTest extends Unit
 {
 
     /**

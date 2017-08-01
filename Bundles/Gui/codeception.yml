@@ -1,5 +1,9 @@
 namespace: Gui
 actor: Tester
+
+include:
+  - tests/SprykerTest/Zed/Gui
+
 paths:
     tests: tests
     log: tests/_output

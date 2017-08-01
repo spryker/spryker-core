@@ -73,7 +73,7 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
      */
     protected function createFacetExtractor(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new FacetExtractor($facetConfigTransfer);
+        return new FacetExtractor($facetConfigTransfer, $this->createFacetValueTransformerFactory());
     }
 
     /**
@@ -92,6 +92,14 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     protected function createMoneyPlugin()
     {
         return new MoneyPlugin();
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactory
+     */
+    protected function createFacetValueTransformerFactory()
+    {
+        return new FacetValueTransformerFactory();
     }
 
 }

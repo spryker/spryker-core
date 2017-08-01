@@ -16,16 +16,15 @@
                         <bundle>search</bundle>
                         <controller>maintenance</controller>
                         <action>list</action>
-                        <icon>fa-search</icon>
                         <visible>0</visible>
                     </search-list>
+
                     <search-key>
                         <label>Key</label>
                         <title>Search key</title>
                         <bundle>search</bundle>
                         <controller>maintenance</controller>
                         <action>key</action>
-                        <icon>fa-search</icon>
                         <visible>0</visible>
                     </search-key>
                 </pages>

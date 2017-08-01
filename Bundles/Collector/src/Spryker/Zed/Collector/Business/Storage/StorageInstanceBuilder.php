@@ -120,8 +120,9 @@ class StorageInstanceBuilder
                     'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
                 ];
 
-                if (Config::hasKey(StorageConstants::STORAGE_REDIS_PASSWORD)) {
-                    $config['password'] = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD);
+                $password = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD, false);
+                if ($password !== false) {
+                    $config['password'] = $password;
                 }
 
                 $config['persistent'] = false;

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Session\Model\SessionStorage;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use SessionHandlerInterface;
 use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolException;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
@@ -22,7 +22,7 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
  * @group SessionStorageHandlerPoolTest
  * Add your own group annotations below this line
  */
-class SessionStorageHandlerPoolTest extends Test
+class SessionStorageHandlerPoolTest extends Unit
 {
 
     const CONFIGURED_HANDLER_NAME = 'handler name';

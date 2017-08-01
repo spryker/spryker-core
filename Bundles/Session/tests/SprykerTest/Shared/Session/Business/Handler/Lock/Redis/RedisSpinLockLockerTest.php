@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Session\Business\Handler\Lock\Redis;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Predis\Client;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
@@ -25,7 +25,7 @@ use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
  * @group RedisSpinLockLockerTest
  * Add your own group annotations below this line
  */
-class RedisSpinLockLockerTest extends Test
+class RedisSpinLockLockerTest extends Unit
 {
 
     /**

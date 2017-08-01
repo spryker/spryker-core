@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Url\Redirect;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -24,7 +24,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @group Redirect
  * @group RedirectLoopTest
  */
-class RedirectLoopTest extends Test
+class RedirectLoopTest extends Unit
 {
 
     /**

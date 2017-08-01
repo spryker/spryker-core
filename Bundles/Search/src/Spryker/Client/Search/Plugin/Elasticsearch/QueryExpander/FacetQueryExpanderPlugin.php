@@ -114,6 +114,14 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             return null;
         }
 
+        $valueTransformerPlugin = $this->getFactory()
+            ->createFacetValueTransformerFactory()
+            ->createTransformer($facetConfigTransfer);
+
+        if ($valueTransformerPlugin) {
+            $filterValue = $valueTransformerPlugin->transformFromDisplay($filterValue);
+        }
+
         $query = $this
             ->getFactory()
             ->createQueryFactory()
