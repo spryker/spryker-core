@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\Spryker\Shared\Log\Fixtures;
+namespace SprykerTest\Shared\Log\Fixtures;
 
 use Monolog\Handler\HandlerInterface;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
-class TestLoggerConfig implements LoggerConfigInterface
+class TestLoggerConfig2 implements LoggerConfigInterface
 {
 
     /**
@@ -17,7 +17,7 @@ class TestLoggerConfig implements LoggerConfigInterface
      */
     public function getChannelName()
     {
-        return 'test';
+        return 'test2';
     }
 
     /**

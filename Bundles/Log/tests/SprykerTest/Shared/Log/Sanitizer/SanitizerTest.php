@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Log\Sanitizer;
+namespace SprykerTest\Shared\Log\Sanitizer;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group Log
  * @group Sanitizer
  * @group SanitizerTest
+ * Add your own group annotations below this line
  */
 class SanitizerTest extends PHPUnit_Framework_TestCase
 {

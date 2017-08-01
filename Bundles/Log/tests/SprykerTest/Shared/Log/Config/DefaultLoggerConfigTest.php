@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Log\Config;
+namespace SprykerTest\Shared\Log\Config;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group Log
  * @group Config
  * @group DefaultLoggerConfigTest
+ * Add your own group annotations below this line
  */
 class DefaultLoggerConfigTest extends PHPUnit_Framework_TestCase
 {

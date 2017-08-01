@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Log;
+namespace SprykerTest\Shared\Log;
 
 use Codeception\Test\Unit;
 use Psr\Log\LoggerInterface;
 use Spryker\Shared\Log\LoggerTrait;
-use Unit\Spryker\Shared\Log\Fixtures\TestLoggerConfig;
-use Unit\Spryker\Shared\Log\Fixtures\TestLoggerConfig2;
+use SprykerTest\Shared\Log\Fixtures\TestLoggerConfig;
+use SprykerTest\Shared\Log\Fixtures\TestLoggerConfig2;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group Log
  * @group LoggerTest
+ * Add your own group annotations below this line
  */
 class LoggerTest extends Unit
 {
