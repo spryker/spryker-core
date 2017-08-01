@@ -5,25 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Collector\Business\Exporter\Writer;
+namespace SprykerTest\Zed\Collector\Business\Exporter\Writer;
 
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\CollectorConfig;
-use Unit\Spryker\Zed\Collector\Business\Fixture\CollectorConfigWithNotDefinedDbEngineFake;
-use Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub;
+use SprykerTest\Zed\Collector\Business\Fixture\CollectorConfigWithNotDefinedDbEngineFake;
+use SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Collector
  * @group Business
  * @group Exporter
  * @group Writer
  * @group AbstractTouchUpdaterTest
+ * Add your own group annotations below this line
  */
 class AbstractTouchUpdaterTest extends PHPUnit_Framework_TestCase
 {
@@ -123,7 +124,7 @@ class AbstractTouchUpdaterTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Unit\Spryker\Zed\Collector\Business\Fixture\TouchUpdaterStub
+     * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub
      */
     protected function createTouchUpdater()
     {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Collector\Business\Exporter\Writer\Search;
+namespace SprykerTest\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
 use Elastica\Index;
@@ -16,8 +16,8 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Collector
  * @group Business
@@ -25,6 +25,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
  * @group Writer
  * @group Search
  * @group ElasticsearchWriterTest
+ * Add your own group annotations below this line
  */
 class ElasticsearchWriterTest extends PHPUnit_Framework_TestCase
 {
