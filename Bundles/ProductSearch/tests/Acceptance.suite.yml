@@ -7,7 +7,7 @@ modules:
             window_size: 1920x1080
 
         - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-        - \Application\Module\Zed
+        - \SprykerTest\Shared\Application\Helper\ZedHelper
 
 coverage:
   enabled: false

@@ -5,17 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\CartVariant\Mapper;
+namespace SprykerTest\Yves\CartVariant\Model\Mapper;
 
 use Spryker\Yves\CartVariant\Mapper\CartItemsAvailabilityMapper;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Yves
  * @group CartVariant
+ * @group Model
  * @group Mapper
  * @group AvailabilityMapperTest
+ * Add your own group annotations below this line
  */
 class AvailabilityMapperTest extends CartItemsMapperBaseTest
 {

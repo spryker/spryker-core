@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\AvailabilityDataFeed
+namespace: SprykerTest\Yves\CartVariant\Model
 
 paths:
     tests: .
@@ -12,11 +12,11 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Persistence:
-        path: Persistence
-        class_name: AvailabilityDataFeedPersistenceTester
+    Model:
+        path: Model
+        class_name: CartVariantModelTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper

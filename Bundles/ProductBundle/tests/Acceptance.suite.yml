@@ -7,8 +7,8 @@ modules:
             window_size: 1920x1080
 
         - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-        - \Application\Module\Yves
-        - \Application\Module\Zed
+        - \SprykerTest\Shared\Application\Helper\YvesHelper
+        - \SprykerTest\Shared\Application\Helper\ZedHelper
         - Asserts
 
 coverage:

@@ -11,8 +11,8 @@ modules:
         - \SprykerTest\Shared\Config\Helper\ConfigInit
         - \Transfer\Module\TransferGenerate
         - \Propel\Module\PropelInstall
-        - \Application\Module\Yves
-        - \Application\Module\Zed
+        - \SprykerTest\Shared\Application\Helper\YvesHelper
+        - \SprykerTest\Shared\Application\Helper\ZedHelper
         - \SprykerTest\Shared\Sales\Helper\SalesHelper
         - \Oms\Module\Oms
 

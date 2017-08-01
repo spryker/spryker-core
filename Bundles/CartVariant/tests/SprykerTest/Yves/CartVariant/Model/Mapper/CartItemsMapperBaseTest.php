@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Yves\CartVariant\Mapper;
+namespace SprykerTest\Yves\CartVariant\Model\Mapper;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -17,12 +17,14 @@ use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBr
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Yves
  * @group CartVariant
+ * @group Model
  * @group Mapper
  * @group CartItemsMapperBaseTest
+ * Add your own group annotations below this line
  */
 class CartItemsMapperBaseTest extends Unit
 {

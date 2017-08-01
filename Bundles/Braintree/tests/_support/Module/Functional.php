@@ -16,12 +16,10 @@ class Functional extends Module
 {
 
     /**
-     * @param array|null $config
+     * @return void
      */
-    public function __construct($config = null)
+    public function _initialize()
     {
-        parent::__construct($config);
-
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
     }
