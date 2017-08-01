@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Cache\Business\Model;
+namespace SprykerTest\Zed\Cache\Business\Model;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Cache\Business\Model\CacheClearer;
@@ -14,13 +14,14 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Cache
  * @group Business
  * @group Model
  * @group CacheClearerTest
+ * Add your own group annotations below this line
  */
 class CacheClearerTest extends Unit
 {

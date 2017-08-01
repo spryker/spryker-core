@@ -1,5 +1,5 @@
 <?php
-namespace Cache;
+namespace SprykerTest\Zed\Cache;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends Actor
+class CacheBusinessTester extends Actor
 {
 
-    use _generated\UnitTesterActions;
+    use _generated\CacheBusinessTesterActions;
 
    /**
     * Define custom actions here
