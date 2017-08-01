@@ -5,25 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\NewRelic\Communication\Plugin;
+namespace SprykerTest\Yves\NewRelic\Plugin;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\NewRelicApi\NewRelicApi;
-use Spryker\Zed\NewRelic\Communication\Plugin\ControllerListener;
+use Spryker\Yves\NewRelic\Plugin\ControllerListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * @group Unit
- * @group Spryker
- * @group Zed
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Yves
  * @group NewRelic
- * @group Communication
  * @group Plugin
  * @group ControllerListenerTest
+ * Add your own group annotations below this line
  */
 class ControllerListenerTest extends PHPUnit_Framework_TestCase
 {
@@ -36,11 +35,9 @@ class ControllerListenerTest extends PHPUnit_Framework_TestCase
         $newRelicApiMock = $this->getNewRelicApiMock();
         $newRelicApiMock->expects($this->once())->method('markIgnoreTransaction');
 
-        $controllerListener = new ControllerListener($newRelicApiMock, Store::getInstance(), new UtilNetworkService(), ['bar/baz']);
+        $controllerListener = new ControllerListener($newRelicApiMock, new UtilNetworkService(), ['bar/baz']);
         $request = new Request();
-        $request->attributes->set('module', 'foo');
-        $request->attributes->set('controller', 'bar');
-        $request->attributes->set('action', 'baz');
+        $request->attributes->set('_route', 'foo/bar/baz');
 
         $controller = function () {};
         $filterControllerEvent = new FilterControllerEvent(
