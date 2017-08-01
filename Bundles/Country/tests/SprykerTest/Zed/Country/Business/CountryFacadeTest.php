@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Country;
+namespace SprykerTest\Zed\Country\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CountryTransfer;
@@ -16,11 +16,14 @@ use Spryker\Zed\Country\Business\Exception\MissingCountryException;
 use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Country
+ * @group Business
+ * @group Facade
  * @group CountryFacadeTest
+ * Add your own group annotations below this line
  */
 class CountryFacadeTest extends Unit
 {
