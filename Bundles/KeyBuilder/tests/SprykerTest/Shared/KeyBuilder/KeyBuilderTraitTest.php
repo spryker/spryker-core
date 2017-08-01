@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\KeyBuilder;
+namespace SprykerTest\Shared\KeyBuilder;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Store;
-use Unit\Spryker\Shared\KeyBuilder\Fixtures\KeyBuilder;
+use SprykerTest\Shared\KeyBuilder\Fixtures\KeyBuilder;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group KeyBuilder
  * @group KeyBuilderTraitTest
+ * Add your own group annotations below this line
  */
 class KeyBuilderTraitTest extends PHPUnit_Framework_TestCase
 {
