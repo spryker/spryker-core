@@ -1,5 +1,5 @@
 <?php
-namespace Graph;
+namespace SprykerTest\Shared\Graph;
 
 use Codeception\Actor;
 
@@ -14,14 +14,14 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends Actor
+class GraphSharedTester extends Actor
 {
 
-    use _generated\UnitTesterActions;
+    use _generated\GraphSharedTesterActions;
 
    /**
     * Define custom actions here

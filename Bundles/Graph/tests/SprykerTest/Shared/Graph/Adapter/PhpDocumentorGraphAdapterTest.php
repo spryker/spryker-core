@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Graph\Adapter;
+namespace SprykerTest\Shared\Graph\Adapter;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group Graph
  * @group Adapter
  * @group PhpDocumentorGraphAdapterTest
+ * Add your own group annotations below this line
  */
 class PhpDocumentorGraphAdapterTest extends PHPUnit_Framework_TestCase
 {

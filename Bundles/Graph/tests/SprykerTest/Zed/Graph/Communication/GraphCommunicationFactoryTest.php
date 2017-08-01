@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Graph\Communication;
+namespace SprykerTest\Zed\Graph\Communication;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Graph\GraphInterface;
@@ -16,12 +16,13 @@ use Spryker\Zed\Graph\Communication\GraphCommunicationFactory;
 use Spryker\Zed\Graph\GraphConfig;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Graph
  * @group Communication
  * @group GraphCommunicationFactoryTest
+ * Add your own group annotations below this line
  */
 class GraphCommunicationFactoryTest extends PHPUnit_Framework_TestCase
 {
