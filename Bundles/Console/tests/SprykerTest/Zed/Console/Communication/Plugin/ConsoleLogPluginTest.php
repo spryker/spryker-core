@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Console\Communication\Plugin;
+namespace SprykerTest\Zed\Console\Communication\Plugin;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
@@ -19,13 +19,14 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Console
  * @group Communication
  * @group Plugin
  * @group ConsoleLogPluginTest
+ * Add your own group annotations below this line
  */
 class ConsoleLogPluginTest extends PHPUnit_Framework_TestCase
 {

@@ -5,22 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Console\Business\Model;
+namespace SprykerTest\Zed\Console\Business\Model;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock;
+use SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Console
  * @group Business
  * @group Model
  * @group ConsoleTest
+ * Add your own group annotations below this line
  */
 class ConsoleTest extends PHPUnit_Framework_TestCase
 {
@@ -37,17 +38,6 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
             'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
             $console->getFactory()
         );
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetFacade()
-    {
-        $console = $this->getConsole();
-        $console->setFacade($this->getFacadeMock());
-
-        $this->assertInstanceOf('Spryker\Zed\Kernel\Business\AbstractFacade', $console->getFacade());
     }
 
     /**
