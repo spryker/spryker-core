@@ -9,6 +9,25 @@
                 <controller>index</controller>
                 <action>index</action>
                 <icon>fa-user</icon>
+                <pages>
+                    <user-create>
+                        <label>Create new User</label>
+                        <title>Create new User</title>
+                        <bundle>user</bundle>
+                        <controller>edit</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </user-create>
+
+                    <user-edit>
+                        <label>Edit User</label>
+                        <title>Edit User</title>
+                        <bundle>user</bundle>
+                        <controller>edit</controller>
+                        <action>update</action>
+                        <visible>0</visible>
+                    </user-edit>
+                </pages>
             </user>
         </pages>
     </acl>

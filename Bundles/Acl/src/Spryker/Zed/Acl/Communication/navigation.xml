@@ -17,14 +17,22 @@
                 <action>index</action>
                 <icon>fa-user-secret</icon>
                 <pages>
-                    <roles>
-                        <label>Create</label>
-                        <title>Create</title>
+                    <role-create>
+                        <label>Create new Role</label>
+                        <title>Create new Role</title>
                         <bundle>acl</bundle>
                         <controller>role</controller>
                         <action>create</action>
                         <visible>0</visible>
-                    </roles>
+                    </role-create>
+                    <role-edit>
+                        <label>Edit Role</label>
+                        <title>Edit Role</title>
+                        <bundle>acl</bundle>
+                        <controller>role</controller>
+                        <action>update</action>
+                        <visible>0</visible>
+                    </role-edit>
                 </pages>
             </roles>
             <groups>
@@ -34,6 +42,24 @@
                 <controller>group</controller>
                 <action>index</action>
                 <icon>fa-users</icon>
+                <pages>
+                    <group-create>
+                        <label>Create new Group</label>
+                        <title>Create new Group</title>
+                        <bundle>acl</bundle>
+                        <controller>group</controller>
+                        <action>add</action>
+                        <visible>0</visible>
+                    </group-create>
+                    <group-edit>
+                        <label>Edit Group</label>
+                        <title>Edit Group</title>
+                        <bundle>acl</bundle>
+                        <controller>group</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </group-edit>
+                </pages>
             </groups>
         </pages>
     </acl>

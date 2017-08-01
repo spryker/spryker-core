@@ -4,9 +4,7 @@
         <label>Customers</label>
         <title>Customers</title>
         <icon>fa-users</icon>
-        <bundle>customer</bundle>
-        <controller>index</controller>
-        <action>index</action>
+        <uri>#</uri>
         <visible>1</visible>
         <pages>
 
@@ -19,6 +17,16 @@
                 <visible>1</visible>
 
                 <pages>
+
+                    <customer-add>
+                        <label>Add a customer</label>
+                        <title>Add a customer</title>
+                        <bundle>customer</bundle>
+                        <controller>add</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </customer-add>
+
                     <customer-view>
                         <label>View</label>
                         <title>View</title>
