@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\CustomerGroupDiscountConnector\Business\DecisionRule;
+namespace SprykerTest\Zed\CustomerGroupDiscountConnector\Business\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
@@ -17,13 +17,14 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
 use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToDiscountFacadeInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group CustomerGroupDiscountConnector
  * @group Business
  * @group DecisionRule
  * @group CustomerGroupDecisionRuleTest
+ * Add your own group annotations below this line
  */
 class CustomerGroupDecisionRuleTest extends PHPUnit_Framework_TestCase
 {
