@@ -32,7 +32,7 @@ class CmsRedirectEditCest
         $i->amOnPage(CmsRedirectListPage::URL);
         $i->haveUrlRedirect();
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / CMS / Redirects / Edit CMS Redirect');
+        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects / Edit CMS Redirect');
     }
 
 }

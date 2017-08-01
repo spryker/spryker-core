@@ -30,7 +30,7 @@ class CmsRedirectListCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(CmsRedirectListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / CMS / Redirects');
+        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects');
     }
 
 }
