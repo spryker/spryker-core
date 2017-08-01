@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Payolution\Business\Payment\MethodMapper;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -34,7 +34,7 @@ use Spryker\Zed\Payolution\PayolutionConfig;
  * @group MethodMapper
  * @group InvoiceTest
  */
-class InvoiceTest extends Test
+class InvoiceTest extends Unit
 {
 
     /**

@@ -80,6 +80,12 @@ class Repeater implements RepeaterInterface
     {
         $filePath = $this->getFilePath($fileName);
         $string = serialize($repeatData);
+
+        $directory = dirname($filePath);
+        if (!is_dir($directory)) {
+            mkdir($directory);
+        }
+
         file_put_contents($filePath, $string);
     }
 

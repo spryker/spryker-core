@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Symfony\Form\Extension;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
@@ -23,7 +23,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * @group Extension
  * @group DoubleSubmitProtectionExtensionTest
  */
-class DoubleSubmitProtectionExtensionTest extends Test
+class DoubleSubmitProtectionExtensionTest extends Unit
 {
 
     /**

@@ -1,0 +1,11 @@
+namespace: SprykerTest\Zed\Gui
+actor: Tester
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    whitelist: { include: ['../../../../src/*'] }

@@ -121,7 +121,7 @@ class AddressForm extends AbstractType
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_FIRST_NAME, 'text', [
-            'label' => 'First name*',
+            'label' => 'First name',
             'constraints' => [
                 new NotBlank(),
             ],
@@ -152,7 +152,7 @@ class AddressForm extends AbstractType
     protected function addLastNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_LAST_NAME, 'text', [
-            'label' => 'Last name*',
+            'label' => 'Last name',
             'constraints' => [
                 new NotBlank(),
             ],
@@ -206,7 +206,7 @@ class AddressForm extends AbstractType
     protected function addAddress1Field(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ADDRESS_1, 'text', [
-            'label' => 'Address1*',
+            'label' => 'Address1',
         ]);
 
         return $this;
@@ -250,7 +250,7 @@ class AddressForm extends AbstractType
     protected function addCityField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CITY, 'text', [
-            'label' => 'City*',
+            'label' => 'City',
         ]);
 
         return $this;
@@ -264,7 +264,7 @@ class AddressForm extends AbstractType
     protected function addZipCodeField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_ZIP_CODE, 'text', [
-            'label' => 'Zip code*',
+            'label' => 'Zip code',
         ]);
 
         return $this;

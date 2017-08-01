@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Yves\CartVariant\Mapper;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\Availability\AvailabilityClient;
@@ -24,7 +24,7 @@ use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
  * @group Mapper
  * @group CartItemsMapperBaseTest
  */
-class CartItemsMapperBaseTest extends Test
+class CartItemsMapperBaseTest extends Unit
 {
 
     /**

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\DataImport\Dependency\Propel;
 
-use Propel\Runtime\Connection\ConnectionInterface;
-
 class DataImportToPropelConnectionBridge implements DataImportToPropelConnectionInterface
 {
 
@@ -20,7 +18,7 @@ class DataImportToPropelConnectionBridge implements DataImportToPropelConnection
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface $propelConnection
      */
-    public function __construct(ConnectionInterface $propelConnection)
+    public function __construct($propelConnection)
     {
         $this->propelConnection = $propelConnection;
     }

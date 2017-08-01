@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Availability\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -29,7 +29,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Business
  * @group SellableTest
  */
-class SellableTest extends Test
+class SellableTest extends Unit
 {
 
     /**

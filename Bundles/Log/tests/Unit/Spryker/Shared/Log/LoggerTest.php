@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Log;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Psr\Log\LoggerInterface;
 use Spryker\Shared\Log\LoggerTrait;
 use Unit\Spryker\Shared\Log\Fixtures\TestLoggerConfig;
@@ -20,7 +20,7 @@ use Unit\Spryker\Shared\Log\Fixtures\TestLoggerConfig2;
  * @group Log
  * @group LoggerTest
  */
-class LoggerTest extends Test
+class LoggerTest extends Unit
 {
 
     use LoggerTrait;

@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\CustomerApi\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
@@ -26,7 +26,7 @@ use Spryker\Zed\CustomerApi\Business\CustomerApiFacade;
  * @group Business
  * @group CustomerApiFacadeTest
  */
-class CustomerApiFacadeTest extends Test
+class CustomerApiFacadeTest extends Unit
 {
 
     /**

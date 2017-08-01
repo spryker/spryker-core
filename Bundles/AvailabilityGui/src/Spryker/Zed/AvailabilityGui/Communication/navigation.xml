@@ -8,6 +8,25 @@
                 <bundle>availability-gui</bundle>
                 <controller>index</controller>
                 <action>index</action>
+                <pages>
+                    <product-availability>
+                        <label>Product Availability</label>
+                        <title>Product Availability</title>
+                        <bundle>availability-gui</bundle>
+                        <controller>index</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </product-availability>
+
+                    <stock-edit>
+                        <label>Edit Stock</label>
+                        <title>Edit Stock</title>
+                        <bundle>availability-gui</bundle>
+                        <controller>index</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </stock-edit>
+                </pages>
             </AvailabilityGui>
         </pages>
     </product>

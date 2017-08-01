@@ -6,7 +6,7 @@
 
 namespace SprykerTest\Shared\Session\Business\Handler\KeyGenerator\Redis;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
 
 /**
@@ -21,7 +21,7 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
  * @group RedisSessionKeyGeneratorTest
  * Add your own group annotations below this line
  */
-class RedisSessionKeyGeneratorTest extends Test
+class RedisSessionKeyGeneratorTest extends Unit
 {
 
     /**

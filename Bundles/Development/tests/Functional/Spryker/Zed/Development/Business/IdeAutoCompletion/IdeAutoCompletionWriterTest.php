@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Development\Business\IdeAutoCompletion;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Development\Module\IdeAutoCompletion;
 use Spryker\Zed\Development\Business\DevelopmentBusinessFactory;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
@@ -24,7 +24,7 @@ use Spryker\Zed\Kernel\Container;
  * @group IdeAutoCompletion
  * @group IdeAutoCompletionWriterTest
  */
-class IdeAutoCompletionWriterTest extends Test
+class IdeAutoCompletionWriterTest extends Unit
 {
 
     /**

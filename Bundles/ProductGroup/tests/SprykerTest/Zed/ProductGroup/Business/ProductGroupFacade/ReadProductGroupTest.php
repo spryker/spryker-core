@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductGroup\Business\ProductGroupFacade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductGroupBuilder;
 use Generated\Shared\Transfer\ProductGroupTransfer;
 
@@ -23,7 +23,7 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
  *
  * @property \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester $tester
  */
-class ReadProductGroupTest extends Test
+class ReadProductGroupTest extends Unit
 {
 
     /**

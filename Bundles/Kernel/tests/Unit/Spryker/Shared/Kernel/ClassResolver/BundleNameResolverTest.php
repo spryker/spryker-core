@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Shared\Kernel\ClassResolver;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
  * @group ClassResolver
  * @group BundleNameResolverTest
  */
-class BundleNameResolverTest extends Test
+class BundleNameResolverTest extends Unit
 {
 
     /**

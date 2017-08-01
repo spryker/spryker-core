@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Cart\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -27,7 +27,7 @@ use Spryker\Zed\Kernel\Container;
  * @group Business
  * @group CartFacadeTest
  */
-class CartFacadeTest extends Test
+class CartFacadeTest extends Unit
 {
 
     const PRICE_TYPE_DEFAULT = 'DEFAULT';

@@ -39,4 +39,11 @@ class NullMessenger implements ZedRequestToMessengerInterface
     {
     }
 
+    /**
+     * @return void
+     */
+    public function getStoredMessages()
+    {
+    }
+
 }

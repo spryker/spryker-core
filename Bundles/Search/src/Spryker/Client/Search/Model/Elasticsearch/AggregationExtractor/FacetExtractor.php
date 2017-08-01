@@ -22,11 +22,24 @@ class FacetExtractor implements AggregationExtractorInterface
     protected $facetConfigTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @var \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer)
+    protected $facetValueTransformerFactory;
+
+    /**
+     * @var \Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface|null
+     */
+    protected $valueTransformerPlugin;
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface $facetValueTransformerFactory
+     */
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, FacetValueTransformerFactoryInterface $facetValueTransformerFactory)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
+        $this->facetValueTransformerFactory = $facetValueTransformerFactory;
+        $this->valueTransformerPlugin = $facetValueTransformerFactory->createTransformer($facetConfigTransfer);
     }
 
     /**
@@ -73,8 +86,10 @@ class FacetExtractor implements AggregationExtractorInterface
 
             foreach ($nameBucket[$fieldName . StringFacetAggregation::VALUE_SUFFIX]['buckets'] as $valueBucket) {
                 $facetResultValueTransfer = new FacetSearchResultValueTransfer();
+                $value = $this->getFacetValue($valueBucket);
+
                 $facetResultValueTransfer
-                    ->setValue($valueBucket['key'])
+                    ->setValue($value)
                     ->setDocCount($valueBucket['doc_count']);
 
                 $facetResultValues->append($facetResultValueTransfer);
@@ -84,6 +99,22 @@ class FacetExtractor implements AggregationExtractorInterface
         }
 
         return $facetResultValues;
+    }
+
+    /**
+     * @param array $valueBucket
+     *
+     * @return mixed
+     */
+    protected function getFacetValue(array $valueBucket)
+    {
+        $value = $valueBucket['key'];
+
+        if ($this->valueTransformerPlugin) {
+            $value = $this->valueTransformerPlugin->transformForDisplay($value);
+        }
+
+        return $value;
     }
 
 }

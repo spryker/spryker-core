@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Service\UtilSanitize;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
 
 /**
@@ -17,7 +17,7 @@ use Spryker\Service\UtilSanitize\UtilSanitizeService;
  * @group UtilSanitize
  * @group UtilSanitizeServiceTest
  */
-class UtilSanitizeServiceTest extends Test
+class UtilSanitizeServiceTest extends Unit
 {
 
     /**

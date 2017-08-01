@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Service\UtilText;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Service\UtilText\UtilTextService;
  * @group Business
  * @group UtilTextFacadeTest
  */
-class UtilTextFacadeTest extends Test
+class UtilTextFacadeTest extends Unit
 {
 
     /**

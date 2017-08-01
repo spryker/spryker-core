@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Api\Business\Model\Processor\Post\Action;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
@@ -25,7 +25,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\OptionsActionPostProces
  * @group Action
  * @group OptionsActionPostProcessorTest
  */
-class OptionsActionPostProcessorTest extends Test
+class OptionsActionPostProcessorTest extends Unit
 {
 
     /**

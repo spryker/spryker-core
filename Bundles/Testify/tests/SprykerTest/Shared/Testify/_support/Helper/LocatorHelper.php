@@ -9,6 +9,8 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
 use Codeception\Step;
+use ReflectionClass;
+use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
@@ -32,7 +34,19 @@ class LocatorHelper extends ConfigHelper
      */
     public function _beforeSuite($settings = [])
     {
+        $this->clearLocators();
         $this->configureNamespacesForClassResolver();
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearLocators()
+    {
+        $reflection = new ReflectionClass(AbstractLocatorLocator::class);
+        $instanceProperty = $reflection->getProperty('instance');
+        $instanceProperty->setAccessible(true);
+        $instanceProperty->setValue(null);
     }
 
     /**
