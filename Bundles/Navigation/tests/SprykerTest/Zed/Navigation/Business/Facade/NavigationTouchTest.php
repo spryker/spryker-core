@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Navigation\Business\Facade;
+namespace SprykerTest\Zed\Navigation\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
@@ -20,13 +20,14 @@ use Spryker\Zed\Navigation\Business\NavigationFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Navigation
  * @group Business
  * @group Facade
  * @group NavigationTouchTest
+ * Add your own group annotations below this line
  */
 class NavigationTouchTest extends Unit
 {
