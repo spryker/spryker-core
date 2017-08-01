@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\PriceCartConnector\Business\Manager;
+namespace SprykerTest\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -14,16 +14,17 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
-use Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
+use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group PriceCartConnector
  * @group Business
  * @group Manager
  * @group PriceManagerTest
+ * Add your own group annotations below this line
  */
 class PriceManagerTest extends PHPUnit_Framework_TestCase
 {
@@ -81,7 +82,7 @@ class PriceManagerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Unit\Spryker\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub|\Spryker\Zed\Price\Business\PriceFacade
+     * @return \SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub|\Spryker\Zed\Price\Business\PriceFacade
      */
     private function createPriceFacadeStub()
     {

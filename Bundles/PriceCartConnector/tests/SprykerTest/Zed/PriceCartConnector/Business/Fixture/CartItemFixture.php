@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\PriceCartConnector\Business\Fixture;
+namespace SprykerTest\Zed\PriceCartConnector\Business\Fixture;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
