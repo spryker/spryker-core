@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Locale\Business;
+namespace SprykerTest\Zed\Locale\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Store;
@@ -13,12 +13,14 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Locale
  * @group Business
+ * @group Facade
  * @group LocaleFacadeTest
+ * Add your own group annotations below this line
  */
 class LocaleFacadeTest extends Unit
 {
