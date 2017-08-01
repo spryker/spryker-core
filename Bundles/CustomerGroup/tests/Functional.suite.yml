@@ -3,8 +3,6 @@ modules:
     enabled:
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Config\Helper\ConfigInit
-        - \Propel\Module\PropelInstall
-        - \Propel\Module\Database
         - \Transfer\Module\TransferGenerate
         - \CustomerGroup\Module\Functional
 

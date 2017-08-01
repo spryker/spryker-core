@@ -4,6 +4,4 @@ modules:
     - \SprykerTest\Shared\Testify\Helper\Environment
     - \SprykerTest\Shared\Config\Helper\ConfigInit
     - \Transfer\Module\TransferGenerate
-    - \Propel\Module\PropelInstall
-    - \Propel\Module\Database
     - \DummyPayment\Module\Unit

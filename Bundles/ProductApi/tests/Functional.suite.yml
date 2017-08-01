@@ -4,6 +4,4 @@ modules:
         - \Testify\Module\Environment
         - \ProductApi\Module\Functional
         - \SprykerTest\Shared\Config\Helper\ConfigInit
-        - \Propel\Module\PropelInstall
-        - \Propel\Module\Database
         - \Transfer\Module\TransferGenerate

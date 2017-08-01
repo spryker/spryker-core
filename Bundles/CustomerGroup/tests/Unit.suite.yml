@@ -4,9 +4,7 @@ modules:
         - Asserts
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Config\Helper\ConfigInit
-        - \Propel\Module\PropelInstall
         - \Transfer\Module\TransferGenerate
-        - \Propel\Module\Database
 
     config:
         \Propel\Module\Database:

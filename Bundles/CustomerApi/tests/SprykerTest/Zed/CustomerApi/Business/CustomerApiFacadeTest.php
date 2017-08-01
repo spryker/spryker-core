@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\CustomerApi\Business;
+namespace SprykerTest\Zed\CustomerApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
@@ -19,12 +19,14 @@ use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\CustomerApi\Business\CustomerApiFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group CustomerApi
  * @group Business
+ * @group Facade
  * @group CustomerApiFacadeTest
+ * Add your own group annotations below this line
  */
 class CustomerApiFacadeTest extends Unit
 {
