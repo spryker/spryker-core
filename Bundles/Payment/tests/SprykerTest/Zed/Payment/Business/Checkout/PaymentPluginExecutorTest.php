@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Payment\Business\Checkout;
+namespace SprykerTest\Zed\Payment\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -20,13 +20,14 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterf
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Payment
  * @group Business
  * @group Checkout
  * @group PaymentPluginExecutorTest
+ * Add your own group annotations below this line
  */
 class PaymentPluginExecutorTest extends PHPUnit_Framework_TestCase
 {
