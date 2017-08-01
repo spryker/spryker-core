@@ -48,8 +48,37 @@ class ProductReviewFacade extends AbstractFacade implements ProductReviewFacadeI
             ->findProductReview($productReviewTransfer);
     }
 
-    // TODO: update + touch
-    // TODO: delete + touch
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewTransfer
+     */
+    public function updateProductReview(ProductReviewTransfer $productReviewTransfer)
+    {
+        return $this->getFactory()
+            ->createProductReviewUpdater()
+            ->updateProductReview($productReviewTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return void
+     */
+    public function deleteProductReview(ProductReviewTransfer $productReviewTransfer)
+    {
+        $this->getFactory()
+            ->createProductReviewDeleter()
+            ->deleteProductReview($productReviewTransfer);
+    }
 
     // TODO: product review search collector collects reviews to separated index type (in "ProductReviewCollector" module)
 

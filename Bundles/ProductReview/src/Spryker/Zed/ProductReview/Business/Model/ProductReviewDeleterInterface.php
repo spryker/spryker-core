@@ -9,16 +9,14 @@ namespace Spryker\Zed\ProductReview\Business\Model;
 
 use Generated\Shared\Transfer\ProductReviewTransfer;
 
-interface ProductReviewEntityReaderInterface
+interface ProductReviewDeleterInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
-     * @throws \Exception
-     *
-     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReview
+     * @return void
      */
-    public function getProductReviewEntity(ProductReviewTransfer $productReviewTransfer);
+    public function deleteProductReview(ProductReviewTransfer $productReviewTransfer);
 
 }

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductReview\Business\Facade;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
 use Generated\Shared\Transfer\ProductReviewTransfer;
+use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
@@ -57,9 +58,14 @@ class UpdateProductReviewTest extends Test
     }
 
     /**
+     * @dataProvider statusDataProvider
+     *
+     * @param string $inputStatus
+     * @param bool $isTouchActive
+     *
      * @return void
      */
-    public function testUpdateProductReviewTouchesProductReviewSearchResource()
+    public function testUpdateProductReviewTouchesProductReviewSearchResource($inputStatus, $isTouchActive)
     {
         // Arrange
         $productAbstractTransfer = $this->tester->haveProductAbstract();
@@ -72,13 +78,30 @@ class UpdateProductReviewTest extends Test
 
         $productReviewTransferToUpdate = (new ProductReviewBuilder([
             ProductReviewTransfer::ID_PRODUCT_REVIEW => $productReviewTransfer->getIdProductReview(),
+            ProductReviewTransfer::STATUS => $inputStatus,
         ]))->build();
 
         // Act
         $this->tester->getFacade()->updateProductReview($productReviewTransferToUpdate);
 
         // Assert
-        $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_Review, $productReviewTransferToUpdate->getIdProductReview(), 'Product review should have been touched as active.');
+        if ($isTouchActive) {
+            $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransferToUpdate->getIdProductReview(), 'Product review should have been touched as active.');
+        } else {
+            $this->tester->assertTouchDeleted(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransferToUpdate->getIdProductReview(), 'Product review should have been touched as deleted.');
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function statusDataProvider()
+    {
+        return [
+            'pending status' => [SpyProductReviewTableMap::COL_STATUS_PENDING, false],
+            'approved status' => [SpyProductReviewTableMap::COL_STATUS_APPROVED, true],
+            'rejected status' => [SpyProductReviewTableMap::COL_STATUS_REJECTED, false],
+        ];
     }
 
 }

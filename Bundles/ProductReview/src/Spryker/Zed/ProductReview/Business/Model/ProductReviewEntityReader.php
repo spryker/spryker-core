@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductReview\Business\Model;
 
 use Exception;
+use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface;
 
 class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
@@ -27,16 +28,18 @@ class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
     }
 
     /**
-     * @param int $idProductReview
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
      * @throws \Exception
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReview
      */
-    public function getProductReviewEntityById($idProductReview)
+    public function getProductReviewEntity(ProductReviewTransfer $productReviewTransfer)
     {
+        $this->assertProductReviewForRead($productReviewTransfer);
+
         $productReviewEntity = $this->productReviewQueryContainer
-            ->queryProductReviewById($idProductReview)
+            ->queryProductReviewById($productReviewTransfer->getIdProductReview())
             ->findOne();
 
         if (!$productReviewEntity) {
@@ -44,6 +47,16 @@ class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
         }
 
         return $productReviewEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return void
+     */
+    protected function assertProductReviewForRead(ProductReviewTransfer $productReviewTransfer)
+    {
+        $productReviewTransfer->requireIdProductReview();
     }
 
 }

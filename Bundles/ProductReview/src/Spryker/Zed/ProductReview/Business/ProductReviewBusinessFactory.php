@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductReview\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewCreator;
+use Spryker\Zed\ProductReview\Business\Model\ProductReviewDeleter;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewEntityReader;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewReader;
+use Spryker\Zed\ProductReview\Business\Model\ProductReviewUpdater;
 use Spryker\Zed\ProductReview\Business\Model\Touch\ProductReviewTouch;
 use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
@@ -35,6 +37,22 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
     public function createProductReviewReader()
     {
         return new ProductReviewReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReview\Business\Model\ProductReviewUpdaterInterface
+     */
+    public function createProductReviewUpdater()
+    {
+        return new ProductReviewUpdater($this->createProductReviewEntityReader(), $this->createProductReviewTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReview\Business\Model\ProductReviewDeleterInterface
+     */
+    public function createProductReviewDeleter()
+    {
+        return new ProductReviewDeleter($this->createProductReviewEntityReader(), $this->createProductReviewTouch());
     }
 
     /**

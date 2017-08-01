@@ -54,7 +54,7 @@ class CreateProductReviewTest extends Test
     /**
      * @dataProvider statusDataProvider
      *
-     * @param mixed $inputStatus
+     * @param string $inputStatus
      *
      * @return void
      */

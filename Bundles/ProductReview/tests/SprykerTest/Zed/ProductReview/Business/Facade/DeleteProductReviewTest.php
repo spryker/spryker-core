@@ -48,7 +48,7 @@ class DeleteProductReviewTest extends Test
         $this->tester->getFacade()->deleteProductReview($productReviewTransfer);
 
         // Assert
-        $this->tester->getFacade()->findProductReview($productReviewTransfer);
+        $productReviewTransfer = $this->tester->getFacade()->findProductReview($productReviewTransfer);
         $this->assertNull($productReviewTransfer, 'Product review should have been deleted.');
     }
 
