@@ -14,7 +14,7 @@ modules:
         - \SprykerTest\Shared\Application\Helper\YvesHelper
         - \SprykerTest\Shared\Application\Helper\ZedHelper
         - \SprykerTest\Shared\Sales\Helper\SalesHelper
-        - \Oms\Module\Oms
+        - \SprykerTest\Zed\Oms\Helper\OmsHelper
 
 coverage:
   enabled: false

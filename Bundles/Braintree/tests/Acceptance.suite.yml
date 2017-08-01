@@ -15,7 +15,7 @@ modules:
         - \Transfer\Module\TransferGenerate
         - \Braintree\Module\Braintree
         - \SprykerTest\Shared\Sales\Helper\SalesHelper
-        - \Oms\Module\Oms
+        - \SprykerTest\Zed\Oms\Helper\OmsHelper
         - Asserts
 
 coverage:
