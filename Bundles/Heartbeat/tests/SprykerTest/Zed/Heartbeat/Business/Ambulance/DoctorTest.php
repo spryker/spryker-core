@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Heartbeat\Business\Ambulance;
+namespace SprykerTest\Zed\Heartbeat\Business\Ambulance;
 
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Heartbeat
  * @group Business
  * @group Ambulance
  * @group DoctorTest
+ * Add your own group annotations below this line
  */
 class DoctorTest extends PHPUnit_Framework_TestCase
 {
