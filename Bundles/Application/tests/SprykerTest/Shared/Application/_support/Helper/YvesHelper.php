@@ -19,7 +19,7 @@ class YvesHelper extends Module
      */
     public function amYves()
     {
-        $url = Config::get(ApplicationConstants::HOST_YVES);
+        $url = Config::get(ApplicationConstants::BASE_URL_YVES);
 
         $this->getModule('WebDriver')->_reconfigure(['url' => $url]);
 
