@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem;
+namespace SprykerTest\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem;
 
 use Codeception\Configuration;
 use Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer;
@@ -16,13 +16,14 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group FlysystemAws3v3FileSystem
  * @group Plugin
  * @group Flysystem
  * @group FlysystemAws3v3FileSystemTest
+ * Add your own group annotations below this line
  */
 class FlysystemAws3v3FileSystemTest extends PHPUnit_Framework_TestCase
 {
