@@ -5,11 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\FileSystem;
+namespace SprykerTest\Service\FileSystem;
 
 use Codeception\Configuration;
-use FileSystem\Stub\FileSystemConfigStub;
-use FileSystem\Stub\FlysystemConfigStub;
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
 use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
@@ -34,13 +32,16 @@ use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemStreamPlugin;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Service\Kernel\Container;
+use SprykerTest\Service\FileSystem\Stub\FileSystemConfigStub;
+use SprykerTest\Service\FileSystem\Stub\FlysystemConfigStub;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group FileSystem
  * @group FileSystemServiceTest
+ * Add your own group annotations below this line
  */
 class FileSystemServiceTest extends PHPUnit_Framework_TestCase
 {

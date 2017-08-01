@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace FileSystem\Stub;
+namespace SprykerTest\Service\FileSystem\Stub;
 
 use Codeception\Configuration;
-use Functional\Spryker\Service\FileSystem\FileSystemServiceTest;
-use Spryker\Service\Flysystem\FlysystemConfig as SprykerFlysystemConfig;
+use Spryker\Service\FileSystem\FileSystemConfig as SprykerFileSystemConfig;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use SprykerTest\Service\FileSystem\FileSystemServiceTest;
 
-class FlysystemConfigStub extends SprykerFlysystemConfig
+class FileSystemConfigStub extends SprykerFileSystemConfig
 {
 
     /**
