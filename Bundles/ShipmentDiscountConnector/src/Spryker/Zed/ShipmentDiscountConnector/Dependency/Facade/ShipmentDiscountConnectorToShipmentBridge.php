@@ -26,17 +26,17 @@ class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConne
     /**
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
-    public function findCarriers()
+    public function getCarriers()
     {
-        return $this->shipmentFacade->findCarriers();
+        return $this->shipmentFacade->getCarriers();
     }
 
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function findMethods()
+    public function getMethods()
     {
-        return $this->shipmentFacade->findMethods();
+        return $this->shipmentFacade->getMethods();
     }
 
     /**

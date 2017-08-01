@@ -14,7 +14,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
-class Method
+class Method implements MethodInterface
 {
 
     /**
@@ -134,7 +134,7 @@ class Method
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function findShipmentMethodTransfers()
+    public function getShipmentMethodTransfers()
     {
         $shipmentMethodTransfers = [];
 

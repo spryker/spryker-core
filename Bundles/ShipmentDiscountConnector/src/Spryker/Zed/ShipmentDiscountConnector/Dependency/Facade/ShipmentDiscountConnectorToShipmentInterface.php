@@ -13,12 +13,12 @@ interface ShipmentDiscountConnectorToShipmentInterface
     /**
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
-    public function findCarriers();
+    public function getCarriers();
 
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function findMethods();
+    public function getMethods();
 
     /**
      * @param int $idShipmentMethod

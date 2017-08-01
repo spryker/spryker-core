@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
-class ShipmentCarrierReader
+class ShipmentCarrierReader implements ShipmentCarrierReaderInterface
 {
 
     /**
@@ -30,7 +30,7 @@ class ShipmentCarrierReader
     /**
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
-    public function findCarriers()
+    public function getCarriers()
     {
         $query = $this->shipmentQueryContainer
             ->queryCarriers();

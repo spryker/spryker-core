@@ -13,6 +13,6 @@ interface ShipmentCarrierReaderInterface
     /**
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
-    public function findCarriers();
+    public function getCarriers();
 
 }

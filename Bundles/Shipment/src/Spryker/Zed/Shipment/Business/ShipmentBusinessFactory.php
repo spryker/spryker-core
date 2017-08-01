@@ -42,7 +42,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\Method
+     * @return \Spryker\Zed\Shipment\Business\Model\MethodInterface
      */
     public function createMethod()
     {

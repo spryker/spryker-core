@@ -30,7 +30,7 @@ class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
      */
     public function getCarrierList()
     {
-        $shipmentCarrierTransfers = $this->shipmentFacade->findCarriers();
+        $shipmentCarrierTransfers = $this->shipmentFacade->getCarriers();
 
         $list = [];
         foreach ($shipmentCarrierTransfers as $shipmentCarrierTransfer) {
@@ -45,7 +45,7 @@ class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
      */
     public function getMethodList()
     {
-        $shipmentMethodTransfers = $this->shipmentFacade->findMethods();
+        $shipmentMethodTransfers = $this->shipmentFacade->getMethods();
 
         $list = [];
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {

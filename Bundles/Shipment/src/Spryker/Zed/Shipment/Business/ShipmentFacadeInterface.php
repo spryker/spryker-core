@@ -33,7 +33,7 @@ interface ShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
-    public function findCarriers();
+    public function getCarriers();
 
     /**
      * Specification:
@@ -43,7 +43,7 @@ interface ShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function findMethods();
+    public function getMethods();
 
     /**
      * @api
