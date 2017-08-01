@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\PriceDataFeed\Persistence;
+namespace SprykerTest\Zed\PriceDataFeed\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
@@ -14,12 +14,13 @@ use Spryker\Zed\Price\Persistence\PriceQueryContainer;
 use Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group PriceDataFeed
  * @group Persistence
  * @group PriceDataFeedQueryContainerTest
+ * Add your own group annotations below this line
  */
 class PriceDataFeedQueryContainerTest extends Unit
 {
