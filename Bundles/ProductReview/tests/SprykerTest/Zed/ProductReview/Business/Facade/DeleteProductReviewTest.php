@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductReview\Business\Facade;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
 use Generated\Shared\Transfer\ProductReviewTransfer;
+use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * Auto-generated group annotations
@@ -18,7 +19,7 @@ use Generated\Shared\Transfer\ProductReviewTransfer;
  * @group ProductReview
  * @group Business
  * @group Facade
- * @group UpdateProductReviewTest
+ * @group DeleteProductReviewTest
  * Add your own group annotations below this line
  */
 class DeleteProductReviewTest extends Test
@@ -35,8 +36,10 @@ class DeleteProductReviewTest extends Test
     public function testDeleteProductReviewRemovesEntityFromDatabase()
     {
         // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
         $productReviewTransfer = (new ProductReviewBuilder([
+            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
@@ -55,8 +58,10 @@ class DeleteProductReviewTest extends Test
     public function testDeleteProductReviewTouchesProductReviewSearchResource()
     {
         // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
         $productReviewTransfer = (new ProductReviewBuilder([
+            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);

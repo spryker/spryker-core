@@ -51,8 +51,10 @@ class ReadProductReviewTest extends Test
     public function testFindProductReviewFindsExistingEntities()
     {
         // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
         $productReviewTransfer = (new ProductReviewBuilder([
+            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);

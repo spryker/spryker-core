@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ProductReview\Business\Facade;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
 use Generated\Shared\Transfer\ProductReviewTransfer;
-use SprykerTest\Zed\ProductReview\Business\ProductReviewConfig;
+use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 
 /**
  * Auto-generated group annotations
@@ -18,7 +18,8 @@ use SprykerTest\Zed\ProductReview\Business\ProductReviewConfig;
  * @group Zed
  * @group ProductReview
  * @group Business
- * @group ProductReviewTest
+ * @group Facade
+ * @group CreateProductReviewTest
  * Add your own group annotations below this line
  */
 class CreateProductReviewTest extends Test
@@ -35,8 +36,10 @@ class CreateProductReviewTest extends Test
     public function testCreateProductReviewPersistsToDatabase()
     {
         // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
         $productReviewTransfer = (new ProductReviewBuilder([
+            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
         ]))->build();
 
@@ -58,8 +61,10 @@ class CreateProductReviewTest extends Test
     public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus($inputStatus)
     {
         // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
         $productReviewTransfer = (new ProductReviewBuilder([
+            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
             ProductReviewTransfer::STATUS => $inputStatus,
         ]))->build();
@@ -69,26 +74,7 @@ class CreateProductReviewTest extends Test
 
         // Assert
         $actualProductReviewTransfer = $this->tester->getFacade()->findProductReview($productReviewTransfer);
-        // TODO: this must come from propel enum
-        $this->assertSame(0, $actualProductReviewTransfer->getStatus(), 'Product review should have been created with expected status.');
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateProductReviewTouchesProductReviewSearchResource()
-    {
-        // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
-        $productReviewTransfer = (new ProductReviewBuilder([
-            ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
-        ]))->build();
-
-        // Act
-        $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
-
-        // Assert
-        $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_Review, $productReviewTransfer->getIdProductReview(), 'Product review should have been touched as active.');
+        $this->assertSame(SpyProductReviewTableMap::COL_STATUS_PENDING, $actualProductReviewTransfer->getStatus(), 'Product review should have been created with expected status.');
     }
 
     /**
@@ -98,9 +84,9 @@ class CreateProductReviewTest extends Test
     {
         return [
             'status not defined' => [null],
-            'pending status' => [0],  // TODO: this must come from propel enum
-            'approved status' => [1],  // TODO: this must come from propel enum
-            'rejected status' => [2],  // TODO: this must come from propel enum
+            'pending status' => [SpyProductReviewTableMap::COL_STATUS_PENDING],
+            'approved status' => [SpyProductReviewTableMap::COL_STATUS_APPROVED],
+            'rejected status' => [SpyProductReviewTableMap::COL_STATUS_REJECTED],
         ];
     }
 

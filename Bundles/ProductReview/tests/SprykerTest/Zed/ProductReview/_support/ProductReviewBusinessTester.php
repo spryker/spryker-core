@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\ProductReview;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -13,14 +15,17 @@ namespace SprykerTest\Zed\ProductReview;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\ProductReview\Business\ProductReviewFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ProductReviewBusinessTester extends \Codeception\Actor
+ */
+class ProductReviewBusinessTester extends Actor
 {
+
     use _generated\ProductReviewBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

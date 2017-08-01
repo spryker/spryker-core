@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductReview\Business\Facade;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
 use Generated\Shared\Transfer\ProductReviewTransfer;
+use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * Auto-generated group annotations
@@ -35,8 +36,10 @@ class UpdateProductReviewTest extends Test
     public function testUpdateProductReviewPersistsChangesToDatabase()
     {
         // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
         $productReviewTransfer = (new ProductReviewBuilder([
+            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
@@ -59,8 +62,10 @@ class UpdateProductReviewTest extends Test
     public function testUpdateProductReviewTouchesProductReviewSearchResource()
     {
         // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
         $productReviewTransfer = (new ProductReviewBuilder([
+            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);

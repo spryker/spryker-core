@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\ProductReview\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-
 /**
  * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewPersistenceFactory getFactory()
  */
-class ProductReviewQueryContainer extends AbstractQueryContainer implements ProductReviewQueryContainerInterface
+interface ProductReviewQueryContainerInterface
 {
 
     /**
@@ -22,11 +20,6 @@ class ProductReviewQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
-    public function queryProductReviewById($idProductReview)
-    {
-        return $this->getFactory()
-            ->createProductReviewQuery()
-            ->filterByIdProductReview($idProductReview);
-    }
+    public function queryProductReviewById($idProductReview);
 
 }
