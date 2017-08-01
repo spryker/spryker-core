@@ -1,7 +1,0 @@
-class_name: FunctionalTester
-modules:
-    enabled:
-        - \Testify\Module\Environment
-        - \ProductApi\Module\Functional
-        - \SprykerTest\Shared\Config\Helper\ConfigInit
-        - \Transfer\Module\TransferGenerate

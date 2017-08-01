@@ -1,5 +1,5 @@
 <?php
-namespace ProductApi;
+namespace SprykerTest\Zed\ProductApi;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends Actor
+class ProductApiBusinessTester extends Actor
 {
 
-    use _generated\FunctionalTesterActions;
+    use _generated\ProductApiBusinessTesterActions;
 
    /**
     * Define custom actions here

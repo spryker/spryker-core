@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductApi\Business;
+namespace SprykerTest\Zed\ProductApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
@@ -16,12 +16,14 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\ProductApi\Business\ProductApiFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductApi
  * @group Business
+ * @group Facade
  * @group ProductApiFacadeTest
+ * Add your own group annotations below this line
  */
 class ProductApiFacadeTest extends Unit
 {
