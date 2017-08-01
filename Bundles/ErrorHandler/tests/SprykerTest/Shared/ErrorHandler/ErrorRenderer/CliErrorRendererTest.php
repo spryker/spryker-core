@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\ErrorHandler\ErrorRenderer;
+namespace SprykerTest\Shared\ErrorHandler\ErrorRenderer;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
-use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group ErrorHandler
  * @group ErrorRenderer
- * @group WebErrorRendererTest
+ * @group CliErrorRendererTest
+ * Add your own group annotations below this line
  */
-class WebErrorRendererTest extends PHPUnit_Framework_TestCase
+class CliErrorRendererTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -27,7 +28,7 @@ class WebErrorRendererTest extends PHPUnit_Framework_TestCase
      */
     public function testRenderExceptionShouldReturnString()
     {
-        $errorRenderer = new WebExceptionErrorRenderer();
+        $errorRenderer = new CliErrorRenderer();
         $exception = new Exception('ExceptionMessage');
         $exceptionString = $errorRenderer->render($exception);
 

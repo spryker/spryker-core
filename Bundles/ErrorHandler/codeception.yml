@@ -1,17 +1,30 @@
-namespace: ErrorHandler
-actor: Tester
+namespace: SprykerTest
+
+include:
+    - tests/SprykerTest/Shared/ErrorHandler
+
 paths:
     tests: tests
+    support: .
     log: tests/_output
     data: tests/_data
-    support: tests/_support
     envs: tests/_envs
+
 settings:
     bootstrap: _bootstrap.php
     suite_class: \PHPUnit_Framework_TestSuite
     colors: true
     memory_limit: 1024M
     log: true
+
 coverage:
     enabled: true
     whitelist: { include: ['src/*'] }
+
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+
+    config:
+        Codeception\Extension\Phantoman:
+            suites: ['Presentation']

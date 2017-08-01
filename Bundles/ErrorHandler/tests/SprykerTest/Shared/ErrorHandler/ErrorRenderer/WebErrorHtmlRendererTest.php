@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\ErrorHandler\ErrorRenderer;
+namespace SprykerTest\Shared\ErrorHandler\ErrorRenderer;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
@@ -15,12 +15,13 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group ErrorHandler
  * @group ErrorRenderer
  * @group WebErrorHtmlRendererTest
+ * Add your own group annotations below this line
  */
 class WebErrorHtmlRendererTest extends PHPUnit_Framework_TestCase
 {

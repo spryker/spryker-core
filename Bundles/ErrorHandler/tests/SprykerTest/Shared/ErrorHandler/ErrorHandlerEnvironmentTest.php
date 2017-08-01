@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\ErrorHandler;
+namespace SprykerTest\Shared\ErrorHandler;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group ErrorHandler
  * @group ErrorHandlerEnvironmentTest
+ * Add your own group annotations below this line
  */
 class ErrorHandlerEnvironmentTest extends PHPUnit_Framework_TestCase
 {

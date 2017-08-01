@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\ErrorHandler;
+namespace SprykerTest\Shared\ErrorHandler;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
@@ -14,11 +14,12 @@ use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group ErrorHandler
  * @group ErrorLoggerTest
+ * Add your own group annotations below this line
  */
 class ErrorLoggerTest extends PHPUnit_Framework_TestCase
 {
