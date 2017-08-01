@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ProductCartConnector\Business\Manager;
+namespace SprykerTest\Zed\ProductCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -17,13 +17,14 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLoc
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductCartConnector
  * @group Business
  * @group Manager
  * @group ProductManagerTest
+ * Add your own group annotations below this line
  */
 class ProductManagerTest extends PHPUnit_Framework_TestCase
 {
