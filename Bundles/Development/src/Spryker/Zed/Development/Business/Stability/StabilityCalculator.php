@@ -139,16 +139,10 @@ class StabilityCalculator implements StabilityCalculatorInterface
             $callback = function ($bundle) use ($incomingBundles) {
                 return !in_array($bundle, $incomingBundles);
             };
-
             $indirectIncomingDependencies = array_filter($indirectIncomingDependencies, $callback);
-
             $this->bundles[$bundle]['indirectIn'] = $indirectIncomingDependencies;
-
-            $indirectStability = 0;
-
-            if (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']) !== 0) {
-                $indirectStability = count($this->bundles[$bundle]['indirectOut']) / (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']));
-            }
+            $divisor = (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']));
+            $indirectStability = ($divisor > 0) ? count($this->bundles[$bundle]['indirectOut']) / $divisor : 0;
 
             $this->bundles[$bundle]['indirectStability'] = number_format($indirectStability, 3);
         }
@@ -159,24 +153,6 @@ class StabilityCalculator implements StabilityCalculatorInterface
      */
     protected function calculateSprykerStability()
     {
-//        $max = 0;
-//        $min = 10000;
-//        $numberOfIndirectDependencies = [];
-//        foreach ($this->bundles as $bundle => $info) {
-//            $number = count($info['indirectIn']) + count($info['indirectOut']);
-//
-//            $max = $number > $max ? $number : $max;
-//            $min = $number < $min ? $number : $min;
-//            $numberOfIndirectDependencies[$bundle] = $number;
-//        }
-//
-//        foreach ($this->bundles as $bundle => $info) {
-//            $normalizedNumberOfAllDependencies = ($numberOfIndirectDependencies[$bundle] - $min) / ($max - $min);
-//
-//            $sprykerStability = ($info['stability'] + $info['indirectStability'] + $normalizedNumberOfAllDependencies) / 3;
-//            $this->bundles[$bundle]['sprykerStability'] = number_format($sprykerStability, 3);
-//        }
-
         foreach ($this->bundles as $bundle => $info) {
             $sprykerStability = (count($info['indirectIn']) * count($info['indirectOut'])) * (1 - abs(0.5 - $info['indirectStability']));
             $this->bundles[$bundle]['sprykerStability'] = number_format($sprykerStability, 3);

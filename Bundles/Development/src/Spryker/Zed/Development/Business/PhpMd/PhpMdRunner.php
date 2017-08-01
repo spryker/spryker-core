@@ -142,7 +142,7 @@ class PhpMdRunner
 
         $command = 'vendor/bin/phpmd ' . $pathToFiles . ' ' . $format . ' ' . $config;
         if (!empty($options[static::OPTION_DRY_RUN])) {
-            echo $command;
+            echo $command . PHP_EOL;
 
             return static::CODE_SUCCESS;
         }

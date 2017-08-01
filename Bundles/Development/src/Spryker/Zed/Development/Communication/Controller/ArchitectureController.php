@@ -33,6 +33,27 @@ class ArchitectureController extends AbstractController
     }
 
     /**
+     * @return array
+     */
+    public function rulesAction()
+    {
+        $rules = $this->getFacade()->getArchitectureRules();
+
+        $groupedRules = [];
+        foreach ($rules as $rule) {
+            $groupedRules[$rule['ruleset']][] = $rule;
+        }
+        foreach ($groupedRules as &$collection) {
+            ksort($collection);
+        }
+        ksort($groupedRules);
+
+        return $this->viewResponse([
+            'groupedRules' => $groupedRules,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array

@@ -35,10 +35,10 @@ class CodeStyleSnifferConsole extends Console
     {
         parent::configure();
 
-        $this
-            ->setName(static::COMMAND_NAME)
+        $this->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Sniff and fix code style for project or core');
+        $this->addAlias();
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to fix code style for (or "all")');
         $this->addOption(static::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
@@ -60,7 +60,7 @@ class CodeStyleSnifferConsole extends Console
 
         $message = 'Check code style in project level';
         if ($bundle) {
-            $message = 'Check code style in all bundles';
+            $message = 'Check code style in all modules';
             if ($bundle !== static::OPTION_BUNDLE_ALL) {
                 $message = 'Check code style in "' . $bundle . '" module';
             }
@@ -74,6 +74,16 @@ class CodeStyleSnifferConsole extends Console
         $this->info($message);
 
         return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
+    }
+
+    /**
+     * @deprecated Remove this in next major. Only for BC reasons. Please use new command name `code:sniff:style` (short `c:s:s`) instead.
+     *
+     * @return void
+     */
+    protected function addAlias()
+    {
+        $this->setAliases(['code:sniff:style']);
     }
 
 }
