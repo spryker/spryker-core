@@ -167,7 +167,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return int
+     * @return int|bool
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {

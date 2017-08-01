@@ -24,7 +24,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\Carrier
+     * @return \Spryker\Zed\Shipment\Business\Model\CarrierInterface
      */
     public function createCarrier()
     {

@@ -170,7 +170,7 @@ class Method implements MethodInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return int
+     * @return int|bool
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
