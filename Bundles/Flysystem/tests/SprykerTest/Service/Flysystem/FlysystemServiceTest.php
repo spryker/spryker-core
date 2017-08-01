@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\Flysystem;
+namespace SprykerTest\Service\Flysystem;
 
 use Codeception\Configuration;
-use Flysystem\Stub\FlysystemConfigStub;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
@@ -17,13 +16,15 @@ use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use Spryker\Service\Kernel\Container;
+use SprykerTest\Service\Flysystem\Stub\FlysystemConfigStub;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group Flysystem
  * @group FlysystemServiceTest
+ * Add your own group annotations below this line
  */
 class FlysystemServiceTest extends PHPUnit_Framework_TestCase
 {

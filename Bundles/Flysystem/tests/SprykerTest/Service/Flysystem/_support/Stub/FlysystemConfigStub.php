@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Flysystem\Stub;
+namespace SprykerTest\Service\Flysystem\Stub;
 
 use Codeception\Configuration;
-use Functional\Spryker\Service\Flysystem\FlysystemServiceTest;
 use Spryker\Service\Flysystem\FlysystemConfig as SprykerFlysystemConfig;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use SprykerTest\Service\Flysystem\FlysystemServiceTest;
 
 class FlysystemConfigStub extends SprykerFlysystemConfig
 {
