@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem;
+namespace SprykerTest\Service\FlysystemLocalFileSystem\Plugin\Flysystem;
 
 use Codeception\Configuration;
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
@@ -15,13 +15,14 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group FlysystemLocalFileSystem
  * @group Plugin
  * @group Flysystem
  * @group FlysystemLocalFileSystemTest
+ * Add your own group annotations below this line
  */
 class FlysystemLocalFileSystemTest extends PHPUnit_Framework_TestCase
 {

@@ -1,5 +1,5 @@
 <?php
-namespace FlysystemLocalFileSystem;
+namespace SprykerTest\Service\FlysystemLocalFileSystem;
 
 use Codeception\Actor;
 
@@ -14,14 +14,14 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends Actor
+class FlysystemLocalFileSystemServiceTester extends Actor
 {
 
-    use _generated\UnitTesterActions;
+    use _generated\FlysystemLocalFileSystemServiceTesterActions;
 
    /**
     * Define custom actions here
