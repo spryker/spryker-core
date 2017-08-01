@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem;
+namespace SprykerTest\Service\FlysystemFtpFileSystem\Plugin\Flysystem;
 
 use Generated\Shared\Transfer\FlysystemConfigFtpTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
@@ -14,13 +14,14 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group FlysystemFtpFileSystem
  * @group Plugin
  * @group Flysystem
  * @group FlysystemFtpFileSystemTest
+ * Add your own group annotations below this line
  */
 class FlysystemFtpFileSystemTest extends PHPUnit_Framework_TestCase
 {
