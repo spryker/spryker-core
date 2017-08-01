@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\CmsContentWidget\Business;
+namespace SprykerTest\Zed\CmsContentWidget\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
@@ -18,12 +18,14 @@ use Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapp
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group CmsContentWidget
  * @group Business
+ * @group Facade
  * @group CmsContentWidgetFacadeTest
+ * Add your own group annotations below this line
  */
 class CmsContentWidgetFacadeTest extends Unit
 {
