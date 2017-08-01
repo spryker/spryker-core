@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Event\Business\Dispatcher;
+namespace SprykerTest\Zed\Event\Business\Dispatcher;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
@@ -18,13 +18,14 @@ use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Event
  * @group Business
  * @group Dispatcher
  * @group EventDispatcherTest
+ * Add your own group annotations below this line
  */
 class EventDispatcherTest extends PHPUnit_Framework_TestCase
 {

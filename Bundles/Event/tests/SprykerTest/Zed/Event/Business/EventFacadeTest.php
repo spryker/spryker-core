@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Event\Business;
+namespace SprykerTest\Zed\Event\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
@@ -26,12 +26,14 @@ use Spryker\Zed\Event\EventDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Event
  * @group Business
+ * @group Facade
  * @group EventFacadeTest
+ * Add your own group annotations below this line
  */
 class EventFacadeTest extends Unit
 {
