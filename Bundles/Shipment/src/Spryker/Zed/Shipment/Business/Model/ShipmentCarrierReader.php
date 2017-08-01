@@ -37,9 +37,9 @@ class ShipmentCarrierReader implements ShipmentCarrierReaderInterface
 
         $shipmentCarrierTransfers = [];
 
-        foreach ($query->find() as $spyShipmentCarrier) {
+        foreach ($query->find() as $shipmentCarrierEntity) {
             $shipmentCarrierTransfer = new ShipmentCarrierTransfer();
-            $shipmentCarrierTransfer = $this->mapEntityToTransfer($spyShipmentCarrier, $shipmentCarrierTransfer);
+            $shipmentCarrierTransfer = $this->mapEntityToTransfer($shipmentCarrierEntity, $shipmentCarrierTransfer);
             $shipmentCarrierTransfers[] = $shipmentCarrierTransfer;
         }
 
@@ -47,14 +47,14 @@ class ShipmentCarrierReader implements ShipmentCarrierReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrier $spyShipmentCarrier
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrier $shipmentCarrierEntity
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
-    protected function mapEntityToTransfer(SpyShipmentCarrier $spyShipmentCarrier, ShipmentCarrierTransfer $shipmentCarrierTransfer)
+    protected function mapEntityToTransfer(SpyShipmentCarrier $shipmentCarrierEntity, ShipmentCarrierTransfer $shipmentCarrierTransfer)
     {
-        $shipmentCarrierTransfer->fromArray($spyShipmentCarrier->toArray(), true);
+        $shipmentCarrierTransfer->fromArray($shipmentCarrierEntity->toArray(), true);
 
         return $shipmentCarrierTransfer;
     }

@@ -117,16 +117,16 @@ class Method implements MethodInterface
      */
     public function findShipmentMethodTransferById($idShipmentMethod)
     {
-        $spyShipmentMethod = $this->queryContainer
+        $shipmentMethodEntity = $this->queryContainer
             ->queryMethodByIdMethod($idShipmentMethod)
             ->findOne();
 
-        if (!$spyShipmentMethod) {
+        if (!$shipmentMethodEntity) {
             return null;
         }
 
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $shipmentMethodTransfer = $this->mapEntityToTransfer($spyShipmentMethod, $shipmentMethodTransfer);
+        $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
 
         return $shipmentMethodTransfer;
     }
@@ -141,9 +141,9 @@ class Method implements MethodInterface
         $query = $this->queryContainer
             ->queryActiveMethods();
 
-        foreach ($query->find() as $spyShipmentMethod) {
+        foreach ($query->find() as $shipmentMethodEntity) {
             $shipmentMethodTransfer = new ShipmentMethodTransfer();
-            $shipmentMethodTransfer = $this->mapEntityToTransfer($spyShipmentMethod, $shipmentMethodTransfer);
+            $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
             $shipmentMethodTransfers[] = $shipmentMethodTransfer;
         }
 
@@ -312,15 +312,15 @@ class Method implements MethodInterface
     }
 
     /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $spyShipmentMethod
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    protected function mapEntityToTransfer(SpyShipmentMethod $spyShipmentMethod, ShipmentMethodTransfer $shipmentMethodTransfer)
+    protected function mapEntityToTransfer(SpyShipmentMethod $shipmentMethodEntity, ShipmentMethodTransfer $shipmentMethodTransfer)
     {
-        $shipmentMethodTransfer->fromArray($spyShipmentMethod->toArray(), true);
-        $shipmentMethodTransfer->setCarrierName($spyShipmentMethod->getShipmentCarrier()->getName());
+        $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
+        $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier()->getName());
 
         return $shipmentMethodTransfer;
     }

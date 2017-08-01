@@ -72,10 +72,26 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
      */
     protected function isSatisfiedCarrier(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
+        $idShipmentCarrier = $this->getIdShipmentCarrierByQuote($quoteTransfer);
+
+        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     *
+     * @return int|null
+     */
+    protected function getIdShipmentCarrierByQuote(QuoteTransfer $quoteTransfer)
+    {
         $shipment = $quoteTransfer->getShipment();
 
         if (!$shipment) {
-            return false;
+            return null;
         }
 
         $idShipmentCarrier = null;
@@ -87,11 +103,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
             $idShipmentCarrier = $shipmentMethodTransfer->getFkShipmentCarrier();
         }
 
-        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
-            return true;
-        }
-
-        return false;
+        return $idShipmentCarrier;
     }
 
 }
