@@ -31,7 +31,7 @@ class CmsGuiEditCest
     {
         $i->amOnPage(CmsGuiListPage::URL);
         $i->clickDataTableLinkInDropDownOfButton('Edit', 'Page');
-        $i->seeBreadcrumbNavigation('Dashboard / CMS / Pages / Edit CMS Page');
+        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / Edit CMS Page');
     }
 
 }

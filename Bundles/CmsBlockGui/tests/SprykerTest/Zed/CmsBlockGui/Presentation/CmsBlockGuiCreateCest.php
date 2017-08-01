@@ -30,7 +30,7 @@ class CmsBlockGuiCreateCest
     public function breadcrumbIsVisible(PresentationTester $i)
     {
         $i->amOnPage(CmsBlockGuiCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / CMS / Blocks / Create new CMS Block');
+        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / Create new CMS Block');
     }
 
 }

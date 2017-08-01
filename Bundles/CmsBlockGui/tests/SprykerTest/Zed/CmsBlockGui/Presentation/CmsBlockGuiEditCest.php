@@ -31,7 +31,7 @@ class CmsBlockGuiEditCest
     {
         $i->amOnPage(CmsBlockGuiListPage::URL);
         $i->clickDataTableButton('Edit Block');
-        $i->seeBreadcrumbNavigation('Dashboard / CMS / Blocks / Edit CMS Block');
+        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / Edit CMS Block');
     }
 
 }

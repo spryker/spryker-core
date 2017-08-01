@@ -31,7 +31,7 @@ class CmsGuiViewCest
     {
         $i->amOnPage(CmsGuiListPage::URL);
         $i->clickDataTableLinkInDropDownOfButton('View', 'In Zed');
-        $i->seeBreadcrumbNavigation('Dashboard / CMS / Pages / View CMS Page');
+        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / View CMS Page');
     }
 
 }
