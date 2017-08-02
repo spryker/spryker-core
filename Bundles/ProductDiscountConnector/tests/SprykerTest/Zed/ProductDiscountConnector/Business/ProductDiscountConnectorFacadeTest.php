@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductDiscountConnector\Business;
+namespace SprykerTest\Zed\ProductDiscountConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
@@ -29,12 +29,14 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
 use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvider;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductDiscountConnector
  * @group Business
+ * @group Facade
  * @group ProductDiscountConnectorFacadeTest
+ * Add your own group annotations below this line
  */
 class ProductDiscountConnectorFacadeTest extends Unit
 {
