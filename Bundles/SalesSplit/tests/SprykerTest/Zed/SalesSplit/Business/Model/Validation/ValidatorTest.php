@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\SalesSplit\Business\Model\Validation;
+namespace SprykerTest\Zed\SalesSplit\Business\Model\Validation;
 
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -16,14 +16,15 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group SalesSplit
  * @group Business
  * @group Model
  * @group Validation
  * @group ValidatorTest
+ * Add your own group annotations below this line
  */
 class ValidatorTest extends PHPUnit_Framework_TestCase
 {

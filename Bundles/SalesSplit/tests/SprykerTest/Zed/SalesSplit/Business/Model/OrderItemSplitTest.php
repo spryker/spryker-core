@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\SalesSplit\Business\Model;
+namespace SprykerTest\Zed\SalesSplit\Business\Model;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use PHPUnit_Framework_TestCase;
@@ -14,16 +14,17 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface;
 use Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
-use Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
+use SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group SalesSplit
  * @group Business
  * @group Model
  * @group OrderItemSplitTest
+ * Add your own group annotations below this line
  */
 class OrderItemSplitTest extends PHPUnit_Framework_TestCase
 {
@@ -76,7 +77,7 @@ class OrderItemSplitTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param \Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock $orderItem
+     * @param \SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock $orderItem
      * @param int $quantityForOld
      *
      * @return \Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit
@@ -195,7 +196,7 @@ class OrderItemSplitTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock
+     * @return \SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock
      */
     protected function createOrderItem()
     {

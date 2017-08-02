@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\SalesSplit\Business\Model;
+namespace SprykerTest\Zed\SalesSplit\Business\Model;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\SalesSplit\Business\Model\Calculator;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group SalesSplit
  * @group Business
  * @group Model
  * @group CalculatorTest
+ * Add your own group annotations below this line
  */
 class CalculatorTest extends PHPUnit_Framework_TestCase
 {

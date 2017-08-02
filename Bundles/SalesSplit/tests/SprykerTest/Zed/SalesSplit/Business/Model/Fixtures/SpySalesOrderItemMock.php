@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\SalesSplit\Business\Model\Fixtures;
+namespace SprykerTest\Zed\SalesSplit\Business\Model\Fixtures;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem as OriginalSpySalesOrderItem;
 
