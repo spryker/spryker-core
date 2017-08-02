@@ -5,17 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Setup;
+namespace SprykerTest\Zed\Setup\Business;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Setup
+ * @group Business
  * @group SetupConfigTest
+ * Add your own group annotations below this line
  */
 class SetupConfigTest extends PHPUnit_Framework_TestCase
 {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Setup\Business\Model;
+namespace SprykerTest\Zed\Setup\Business\Model;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Setup\Business\Model\GeneratedDirectory;
@@ -13,13 +13,14 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Setup
  * @group Business
  * @group Model
  * @group GeneratedDirectoryTest
+ * Add your own group annotations below this line
  */
 class GeneratedDirectoryTest extends Unit
 {

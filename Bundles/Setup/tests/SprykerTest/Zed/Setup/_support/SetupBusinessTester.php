@@ -1,5 +1,5 @@
 <?php
-namespace Setup;
+namespace SprykerTest\Zed\Setup;
 
 use Codeception\Actor;
 
@@ -14,14 +14,14 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
  */
-class UnitTester extends Actor
+class SetupBusinessTester extends Actor
 {
 
-    use _generated\UnitTesterActions;
+    use _generated\SetupBusinessTesterActions;
 
    /**
     * Define custom actions here

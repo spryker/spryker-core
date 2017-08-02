@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Setup\Communication;
+namespace SprykerTest\Zed\Setup\Communication;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Setup
  * @group Communication
  * @group SetupCommunicationFactoryTest
+ * Add your own group annotations below this line
  */
 class SetupCommunicationFactoryTest extends PHPUnit_Framework_TestCase
 {
