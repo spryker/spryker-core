@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductImage\Business\Model;
+namespace SprykerTest\Zed\ProductImage\Business\Model;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -24,13 +24,15 @@ use Spryker\Zed\ProductImage\Business\ProductImageFacade;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductImage
  * @group Business
  * @group Model
+ * @group Facade
  * @group ProductImageFacadeTest
+ * Add your own group annotations below this line
  */
 class ProductImageFacadeTest extends Unit
 {

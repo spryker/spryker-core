@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ProductImage\Business\Model;
+namespace SprykerTest\Zed\ProductImage\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
@@ -16,13 +16,14 @@ use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductImage
  * @group Business
  * @group Model
  * @group ProductImageTransferMapperTest
+ * Add your own group annotations below this line
  */
 class ProductImageTransferMapperTest extends Unit
 {
