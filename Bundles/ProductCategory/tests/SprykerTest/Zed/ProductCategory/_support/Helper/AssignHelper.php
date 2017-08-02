@@ -4,14 +4,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace ProductCategory\Module;
+namespace SprykerTest\Zed\ProductCategory\Helper;
 
 use Acceptance\ProductCategory\ProductCategory\Zed\PageObject\ProductCategoryAssignPage;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
-class Assign extends Module
+class AssignHelper extends Module
 {
 
     /**

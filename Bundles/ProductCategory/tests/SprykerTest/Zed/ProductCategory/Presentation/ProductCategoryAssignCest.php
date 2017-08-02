@@ -4,27 +4,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\ProductCategory\ProductCategory\Zed;
+namespace SprykerTest\Zed\ProductCategory\Presentation;
 
-use Acceptance\ProductCategory\ProductCategory\Zed\PageObject\ProductCategoryAssignPage;
-use Acceptance\ProductCategory\ProductCategory\Zed\Tester\ProductCategoryAssignTester;
+use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
+use SprykerTest\Zed\ProductCategory\ProductCategoryPresentationTester;
 
 /**
- * @group Acceptance
- * @group ProductCategory
- * @group ProductCategory
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
+ * @group ProductCategory
+ * @group Presentation
  * @group ProductCategoryAssignCest
+ * Add your own group annotations below this line
  */
 class ProductCategoryAssignCest
 {
 
     /**
-     * @param \Acceptance\ProductCategory\ProductCategory\Zed\Tester\ProductCategoryAssignTester $i
+     * @param \SprykerTest\Zed\ProductCategory\ProductCategoryPresentationTester $i
      *
      * @return void
      */
-    public function testThatICanAssignProducts(ProductCategoryAssignTester $i)
+    public function testThatICanAssignProducts(ProductCategoryPresentationTester $i)
     {
         $name = 'my_unique_product_name_' . rand(0, 1000);
 
@@ -55,11 +57,11 @@ class ProductCategoryAssignCest
     }
 
     /**
-     * @param \Acceptance\ProductCategory\ProductCategory\Zed\Tester\ProductCategoryAssignTester $i
+     * @param \SprykerTest\Zed\ProductCategory\ProductCategoryPresentationTester $i
      *
      * @return void
      */
-    public function testThatICanDeassignProducts(ProductCategoryAssignTester $i)
+    public function testThatICanDeassignProducts(ProductCategoryPresentationTester $i)
     {
         $name = 'my_unique_product_name_' . rand(0, 1000);
         $idAbstractProduct = $i->createProductEntity($name)->getIdProductAbstract();

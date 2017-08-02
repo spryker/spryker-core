@@ -1,20 +1,45 @@
 <?php
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
 
-namespace Acceptance\ProductCategory\ProductCategory\Zed\Tester;
+namespace SprykerTest\Zed\ProductCategory;
 
-use Acceptance\ProductCategory\ProductCategory\Zed\PageObject\ProductCategoryAssignPage;
+use Codeception\Actor;
+use Codeception\Scenario;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use ProductCategory\ZedAcceptanceTester;
+use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
 
-class ProductCategoryAssignTester extends ZedAcceptanceTester
+/**
+ * Inherited Methods
+ * @method void wantToTest($text)
+ * @method void wantTo($text)
+ * @method void execute($callable)
+ * @method void expectTo($prediction)
+ * @method void expect($prediction)
+ * @method void amGoingTo($argumentation)
+ * @method void am($role)
+ * @method void lookForwardTo($achieveValue)
+ * @method void comment($description)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ *
+ * @SuppressWarnings(PHPMD)
+ */
+class ProductCategoryPresentationTester extends Actor
 {
+
+    use _generated\ProductCategoryPresentationTesterActions;
+
+    /**
+     * @param \Codeception\Scenario $scenario
+     */
+    public function __construct(Scenario $scenario)
+    {
+        parent::__construct($scenario);
+
+        $this->amZed();
+        $this->amLoggedInUser();
+    }
 
     /**
      * @param string $name
