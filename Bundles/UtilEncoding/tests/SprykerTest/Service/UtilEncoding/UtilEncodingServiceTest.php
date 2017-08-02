@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\UtilEncoding;
+namespace SprykerTest\Service\UtilEncoding;
 
 use Codeception\Test\Unit;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilEncoding
  * @group UtilEncodingServiceTest
+ * Add your own group annotations below this line
  */
 class UtilEncodingServiceTest extends Unit
 {
