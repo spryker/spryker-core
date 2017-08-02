@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductRelation\Presentation;
 
 use SprykerTest\Zed\ProductRelation\PageObject\ProductRelationCreatePage;
-use SprykerTest\Zed\ProductRelation\PresentationTester;
+use SprykerTest\Zed\ProductRelation\ProductRelationPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class ProductRelationCreateCest
 {
 
     /**
-     * @param \SprykerTest\Zed\ProductRelation\PresentationTester $i
+     * @param \SprykerTest\Zed\ProductRelation\ProductRelationPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(ProductRelationPresentationTester $i)
     {
         $i->amOnPage(ProductRelationCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / Create new Product Relation');
