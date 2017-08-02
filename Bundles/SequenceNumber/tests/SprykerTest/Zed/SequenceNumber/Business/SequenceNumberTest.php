@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\SequenceNumber\Business;
+namespace SprykerTest\Zed\SequenceNumber\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
@@ -16,12 +16,13 @@ use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group SequenceNumber
  * @group Business
  * @group SequenceNumberTest
+ * Add your own group annotations below this line
  */
 class SequenceNumberTest extends Unit
 {
