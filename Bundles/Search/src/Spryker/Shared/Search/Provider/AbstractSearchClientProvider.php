@@ -23,11 +23,13 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
      */
     protected function createZedClient()
     {
-        $config = [
-            'transport' => ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT)),
-            'port' => Config::get(SearchConstants::ELASTICA_PARAMETER__PORT),
-            'host' => Config::get(SearchConstants::ELASTICA_PARAMETER__HOST),
-        ];
+        if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__EXTRA)) {
+            $config = Config::get(SearchConstants::ELASTICA_PARAMETER__EXTRA);
+        }
+
+        $config['protocol'] = ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
+        $config['port'] = Config::get(SearchConstants::ELASTICA_PARAMETER__PORT);
+        $config['host'] = Config::get(SearchConstants::ELASTICA_PARAMETER__HOST);
 
         if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
             $config['headers'] = [

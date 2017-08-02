@@ -242,7 +242,7 @@ class CodeStyleSniffer
         $command = 'vendor/bin/' . $command . ' ' . $pathToFiles . $config;
 
         if (!empty($options[static::OPTION_DRY_RUN])) {
-            echo $command;
+            echo $command . PHP_EOL;
 
             return static::CODE_SUCCESS;
         }

@@ -299,13 +299,14 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @param string $bundle
+     * @param string $directory
+     * @param array $options
      *
      * @return array
      */
-    public function runArchitectureSniffer($bundle)
+    public function runArchitectureSniffer($directory, array $options = [])
     {
-        return $this->getFactory()->createArchitectureSniffer()->run($bundle);
+        return $this->getFactory()->createArchitectureSniffer()->run($directory, $options);
     }
 
     /**
@@ -318,6 +319,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function listAllBundles()
     {
         return $this->getFactory()->createArchitectureBundleFinder()->find();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getArchitectureRules()
+    {
+        return $this->getFactory()->createArchitectureSniffer()->getRules();
     }
 
 }
