@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\TaxProductConnector\Business\Model;
+namespace SprykerTest\Zed\TaxProductConnector\Business\Model;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -16,13 +16,14 @@ use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxIn
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group TaxProductConnector
  * @group Business
  * @group Model
  * @group TaxRateCalculationTest
+ * Add your own group annotations below this line
  */
 class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
 {

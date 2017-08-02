@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\TaxProductConnector\Business;
+namespace SprykerTest\Zed\TaxProductConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -19,12 +19,14 @@ use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group TaxProductConnector
  * @group Business
+ * @group Facade
  * @group TaxFacadeRateCalculationTest
+ * Add your own group annotations below this line
  */
 class TaxFacadeRateCalculationTest extends Unit
 {
