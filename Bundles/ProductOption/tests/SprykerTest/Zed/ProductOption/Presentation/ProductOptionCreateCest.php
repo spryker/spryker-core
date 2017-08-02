@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductOption\Presentation;
 
 use SprykerTest\Zed\ProductOption\PageObject\ProductOptionCreatePage;
-use SprykerTest\Zed\ProductOption\PresentationTester;
+use SprykerTest\Zed\ProductOption\ProductOptionPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class ProductOptionCreateCest
 {
 
     /**
-     * @param \SprykerTest\Zed\ProductOption\PresentationTester $i
+     * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i
      *
      * @return void
      */
-    public function testCreateProductOptionGroupWithOptionValues(PresentationTester $i)
+    public function testCreateProductOptionGroupWithOptionValues(ProductOptionPresentationTester $i)
     {
         $i->wantTo('Create single option group with one option');
         $i->expect('Option group with options created');
