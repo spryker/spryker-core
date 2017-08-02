@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Client\Quote;
+namespace SprykerTest\Client\Quote;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -15,11 +15,12 @@ use Spryker\Client\Session\SessionClient;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Client
  * @group Quote
  * @group QuoteClientTest
+ * Add your own group annotations below this line
  */
 class QuoteClientTest extends PHPUnit_Framework_TestCase
 {
