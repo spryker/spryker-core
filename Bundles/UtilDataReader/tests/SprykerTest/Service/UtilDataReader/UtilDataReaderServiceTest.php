@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\UtilDataReader;
+namespace SprykerTest\Service\UtilDataReader;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Service\UtilDataReader\UtilDataReaderService;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilDataReader
  * @group UtilDataReaderServiceTest
+ * Add your own group annotations below this line
  */
 class UtilDataReaderServiceTest extends PHPUnit_Framework_TestCase
 {

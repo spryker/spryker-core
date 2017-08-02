@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Service\UtilDataReader\Model\BatchIterator;
+namespace SprykerTest\Service\UtilDataReader\Model\BatchIterator;
 
 use Codeception\Configuration;
 use PHPUnit_Framework_TestCase;
@@ -15,13 +15,14 @@ use Spryker\Service\UtilDataReader\Model\BatchIterator\YamlBatchIterator;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilDataReader
  * @group Model
  * @group BatchIterator
  * @group YamlBatchIteratorTest
+ * Add your own group annotations below this line
  */
 class YamlBatchIteratorTest extends PHPUnit_Framework_TestCase
 {
