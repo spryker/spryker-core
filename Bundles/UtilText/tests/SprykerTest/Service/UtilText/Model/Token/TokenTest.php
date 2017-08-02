@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Service\UtilText\Model\Token;
+namespace SprykerTest\Service\UtilText\Model\Token;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilText\Model\Token\Token;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilText
  * @group Model
  * @group Token
  * @group TokenTest
+ * Add your own group annotations below this line
  */
 class TokenTest extends PHPUnit_Framework_TestCase
 {

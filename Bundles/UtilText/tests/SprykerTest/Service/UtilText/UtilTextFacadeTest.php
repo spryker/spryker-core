@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\UtilText;
+namespace SprykerTest\Service\UtilText;
 
 use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 
 /**
- * @group Functional
- * @group Spryker
- * @group Zed
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Service
  * @group UtilText
- * @group Business
+ * @group Facade
  * @group UtilTextFacadeTest
+ * Add your own group annotations below this line
  */
 class UtilTextFacadeTest extends Unit
 {

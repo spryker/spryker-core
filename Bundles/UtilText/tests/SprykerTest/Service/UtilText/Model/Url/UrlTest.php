@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Service\UtilText\Model\Url;
+namespace SprykerTest\Service\UtilText\Model\Url;
 
 use Codeception\Test\Unit;
 use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilText
  * @group Model
  * @group Url
  * @group UrlTest
+ * Add your own group annotations below this line
  */
 class UrlTest extends Unit
 {
