@@ -177,7 +177,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     protected function createCmsAttributeTransfer()
     {
         $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
-        $cmsPageAttributeTransfer->setUrl('test-431-validator');
+        $cmsPageAttributeTransfer->setUrl('test-' . rand() . '-validator-' . rand());
         $cmsPageAttributeTransfer->setFkLocale(66);
         $cmsPageAttributeTransfer->setName('test-url-validator');
         $cmsPageAttributeTransfer->setLocaleName('en_US');

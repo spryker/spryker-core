@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CommunicationTester extends Actor
+class CmsGuiCommunicationTester extends Actor
 {
 
-    use _generated\CommunicationTesterActions;
+    use _generated\CmsGuiCommunicationTesterActions;
 
    /**
     * Define custom actions here
