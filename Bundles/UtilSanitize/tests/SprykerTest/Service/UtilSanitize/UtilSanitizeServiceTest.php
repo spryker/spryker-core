@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\UtilSanitize;
+namespace SprykerTest\Service\UtilSanitize;
 
 use Codeception\Test\Unit;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilSanitize
  * @group UtilSanitizeServiceTest
+ * Add your own group annotations below this line
  */
 class UtilSanitizeServiceTest extends Unit
 {
