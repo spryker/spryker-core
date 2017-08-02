@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\PropelOrm\Business\Transaction;
+namespace SprykerTest\Zed\PropelOrm\Business\Transaction;
 
 use Exception;
 use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
-use PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
+use SprykerTest\Zed\PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group PropelOrm
  * @group Business
  * @group Transaction
  * @group DatabaseTransactionHandlerTraitTest
+ * Add your own group annotations below this line
  */
 class DatabaseTransactionHandlerTraitTest extends PHPUnit_Framework_TestCase
 {

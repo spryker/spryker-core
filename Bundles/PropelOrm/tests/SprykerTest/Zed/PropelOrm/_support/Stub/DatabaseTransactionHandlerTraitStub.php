@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace PropelOrm\Stub;
+namespace SprykerTest\Zed\PropelOrm\Stub;
 
 use Closure;
 use Propel\Runtime\Connection\ConnectionInterface;
