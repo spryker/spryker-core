@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Symfony\Form\RequestTokenProvider;
+namespace SprykerTest\Shared\Symfony\Form\RequestTokenProvider;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group Symfony
  * @group Form
  * @group RequestTokenProvider
  * @group TokenHashGeneratorTest
+ * Add your own group annotations below this line
  */
 class TokenHashGeneratorTest extends Unit
 {

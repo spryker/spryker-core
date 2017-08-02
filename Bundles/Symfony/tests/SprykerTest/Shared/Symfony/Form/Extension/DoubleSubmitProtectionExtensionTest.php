@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Shared\Symfony\Form\Extension;
+namespace SprykerTest\Shared\Symfony\Form\Extension;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
@@ -15,13 +15,14 @@ use Symfony\Component\Form\Forms;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Shared
  * @group Symfony
  * @group Form
  * @group Extension
  * @group DoubleSubmitProtectionExtensionTest
+ * Add your own group annotations below this line
  */
 class DoubleSubmitProtectionExtensionTest extends Unit
 {
