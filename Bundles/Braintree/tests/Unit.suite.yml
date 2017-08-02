@@ -4,6 +4,6 @@ modules:
         - Asserts
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Config\Helper\ConfigInit
-        - \Propel\Module\PropelInstall
+        - \SprykerTest\Shared\Propel\Helper\PropelInstallHelper
         - \Transfer\Module\TransferGenerate
         - \Braintree\Module\Unit

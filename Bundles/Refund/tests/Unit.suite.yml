@@ -4,5 +4,5 @@ modules:
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Config\Helper\ConfigInit
         - \Transfer\Module\TransferGenerate
-        - \Propel\Module\PropelInstall
+        - \SprykerTest\Shared\Propel\Helper\PropelInstallHelper
         - \Refund\Module\Unit

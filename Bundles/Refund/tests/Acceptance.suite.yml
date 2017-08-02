@@ -10,7 +10,7 @@ modules:
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Config\Helper\ConfigInit
         - \Transfer\Module\TransferGenerate
-        - \Propel\Module\PropelInstall
+        - \SprykerTest\Shared\Propel\Helper\PropelInstallHelper
         - \SprykerTest\Shared\Application\Helper\YvesHelper
         - \SprykerTest\Shared\Application\Helper\ZedHelper
         - \SprykerTest\Shared\Sales\Helper\SalesHelper

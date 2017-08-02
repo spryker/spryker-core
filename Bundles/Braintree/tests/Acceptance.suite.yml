@@ -11,7 +11,7 @@ modules:
         - \SprykerTest\Shared\Application\Helper\ZedHelper
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Config\Helper\ConfigInit
-        - \Propel\Module\PropelInstall
+        - \SprykerTest\Shared\Propel\Helper\PropelInstallHelper
         - \Transfer\Module\TransferGenerate
         - \Braintree\Module\Braintree
         - \SprykerTest\Shared\Sales\Helper\SalesHelper

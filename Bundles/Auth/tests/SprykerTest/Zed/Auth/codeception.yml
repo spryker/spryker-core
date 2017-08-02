@@ -41,7 +41,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Config\Helper\ConfigInit
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \Propel\Module\PropelInstall
+                - \SprykerTest\Shared\Propel\Helper\PropelInstallHelper
                 - WebDriver:
                     url: ''
                     browser: chrome
