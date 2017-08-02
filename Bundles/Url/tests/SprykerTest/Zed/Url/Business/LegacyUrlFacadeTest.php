@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Url;
+namespace SprykerTest\Zed\Url\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RedirectTransfer;
@@ -17,11 +17,14 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainer;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Url
+ * @group Business
+ * @group Facade
  * @group LegacyUrlFacadeTest
+ * Add your own group annotations below this line
  */
 class LegacyUrlFacadeTest extends Unit
 {

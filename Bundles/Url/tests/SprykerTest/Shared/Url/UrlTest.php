@@ -11,10 +11,14 @@ use Codeception\Test\Unit;
 use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
+ * Auto-generated group annotations
+ * @group Functional
  * @group Spryker
- * @group Zed
+ * @group Shared
+ * @group Url
  * @group Url
  * @group UrlTest
+ * Add your own group annotations below this line
  */
 class UrlTest extends Unit
 {

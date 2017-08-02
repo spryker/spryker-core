@@ -5,25 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Url\Redirect;
+namespace SprykerTest\Zed\Url\Business\Redirect;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
+use Orm\Zed\Url\Persistence\Base\SpyUrlQuery;
 use Orm\Zed\Url\Persistence\SpyUrl;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Url
+ * @group Business
  * @group Redirect
- * @group RedirectChainTest
+ * @group CreateRedirectOnUrlUpdateTest
+ * Add your own group annotations below this line
  */
-class RedirectChainTest extends Unit
+class CreateRedirectOnUrlUpdateTest extends Unit
 {
 
     /**
@@ -44,29 +46,26 @@ class RedirectChainTest extends Unit
     /**
      * @return void
      */
-    public function testAvoidRedirectChainByUpdatingExistingRedirectTargets()
+    public function testModifyingUrlCreatesRedirectToOldUrl()
     {
-        list($urlTransfer, $modifiedUrlTransfer) = $this->prepareTestData();
+        $urlTransfer = $this->prepareTestData();
 
-        $newestUrlTransfer = $this->changeUrl(clone $modifiedUrlTransfer, '/test-baz');
+        $updatedUrlTransfer = $this->changeUrl(clone $urlTransfer, '/test-bar');
 
-        $this->assertUrlRedirectCreated($urlTransfer, $newestUrlTransfer);
-        $this->assertUrlRedirectCreated($modifiedUrlTransfer, $newestUrlTransfer);
+        $this->assertUrlUpdated($urlTransfer, $updatedUrlTransfer);
+        $this->assertUrlRedirectCreated($urlTransfer, $updatedUrlTransfer);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
     protected function prepareTestData()
     {
         $localeEntity = $this->createLocaleEntity();
         $urlEntity = $this->createUrlEntity($localeEntity, '/test-foo');
-
         $urlTransfer = $this->mapEntityToTransfer($urlEntity);
 
-        $modifiedUrlTransfer = $this->changeUrl(clone $urlTransfer, '/test-bar');
-
-        return [$urlTransfer, $modifiedUrlTransfer];
+        return $urlTransfer;
     }
 
     /**
@@ -123,6 +122,18 @@ class RedirectChainTest extends Unit
         $urlTransfer->setUrl($url);
 
         return $this->urlFacade->updateUrl($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $updatedUrlTransfer
+     *
+     * @return void
+     */
+    protected function assertUrlUpdated(UrlTransfer $urlTransfer, UrlTransfer $updatedUrlTransfer)
+    {
+        $this->assertEquals($urlTransfer->getIdUrl(), $updatedUrlTransfer->getIdUrl(), 'Ids of url should match after update.');
+        $this->assertNotEquals($urlTransfer->getUrl(), $updatedUrlTransfer->getUrl(), 'Url should change after update.');
     }
 
     /**

@@ -19,10 +19,14 @@ use Spryker\Zed\Url\Persistence\UrlPersistenceFactory;
 use Spryker\Zed\Url\Persistence\UrlQueryContainer;
 
 /**
+ * Auto-generated group annotations
+ * @group Unit
  * @group Spryker
  * @group Zed
  * @group Url
  * @group Business
+ * @group RedirectManagerTest
+ * Add your own group annotations below this line
  */
 class RedirectManagerTest extends PHPUnit_Framework_TestCase
 {

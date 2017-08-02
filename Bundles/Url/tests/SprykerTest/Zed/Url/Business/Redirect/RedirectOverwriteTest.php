@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Url\Redirect;
+namespace SprykerTest\Zed\Url\Business\Redirect;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -19,12 +19,14 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Url
+ * @group Business
  * @group Redirect
  * @group RedirectOverwriteTest
+ * Add your own group annotations below this line
  */
 class RedirectOverwriteTest extends Unit
 {

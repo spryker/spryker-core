@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Url\Redirect;
+namespace SprykerTest\Zed\Url\Business\Redirect;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -19,14 +19,16 @@ use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Url
+ * @group Business
  * @group Redirect
- * @group RedirectChainInjectionTest
+ * @group RedirectChainAppendTest
+ * Add your own group annotations below this line
  */
-class RedirectChainInjectionTest extends Unit
+class RedirectChainAppendTest extends Unit
 {
 
     /**
@@ -50,16 +52,19 @@ class RedirectChainInjectionTest extends Unit
     public function testAvoidRedirectChainByCreatingRedirectToAlreadyRedirectedUrlOnRedirectCreate()
     {
         $localeTransfer = $this->prepareTestData();
-        $bazUrlRedirectTransfer = $this->createUrlRedirectTransfer('/test-baz', '/test-bar', $localeTransfer->getIdLocale());
 
-        $bazUrlRedirectTransfer = $this->urlFacade->createUrlRedirect($bazUrlRedirectTransfer);
+        $fooUrlRedirectTransfer = $this->createUrlRedirectTransfer('/test-foo', '/test-bar', $localeTransfer->getIdLocale());
+        $fooUrlRedirectTransfer = $this->urlFacade->createUrlRedirect($fooUrlRedirectTransfer);
 
-        $actualRedirectEntity = SpyUrlRedirectQuery::create()->findOneByIdUrlRedirect($bazUrlRedirectTransfer->getIdUrlRedirect());
+        $barUrlRedirectTransfer = $this->createUrlRedirectTransfer('/test-bar', '/test-baz', $localeTransfer->getIdLocale());
+        $barUrlRedirectTransfer = $this->urlFacade->createUrlRedirect($barUrlRedirectTransfer);
+
+        $actualRedirectEntity = SpyUrlRedirectQuery::create()->findOneByIdUrlRedirect($fooUrlRedirectTransfer->getIdUrlRedirect());
 
         $this->assertEquals(
-            '/test-foo',
+            $barUrlRedirectTransfer->getToUrl(),
             $actualRedirectEntity->getToUrl(),
-            'Redirect to already redirected target should resolve in target\'s target.'
+            'Redirects that has the same target as a newly created source of a redirect should point to the new target.'
         );
     }
 
@@ -73,16 +78,16 @@ class RedirectChainInjectionTest extends Unit
         $this->createUrlRedirectEntity('/test/url-1', '/test/url-2', $localeTransfer->getIdLocale());
         $urlEntity = $this->createUrlRedirectEntity('/test/url-3', '/test/url-4', $localeTransfer->getIdLocale());
 
-        $urlRedirectTransfer = $this->createUrlRedirectTransfer('/test/url-4', '/test/url-1', $localeTransfer->getIdLocale());
+        $urlRedirectTransfer = $this->createUrlRedirectTransfer('/test/url-2', '/test/url-5', $localeTransfer->getIdLocale());
         $urlRedirectTransfer
             ->setIdUrlRedirect($urlEntity->getSpyUrlRedirect()->getIdUrlRedirect())
             ->getSource()->setIdUrl($urlEntity->getIdUrl());
 
         $this->urlFacade->updateUrlRedirect($urlRedirectTransfer);
 
-        $this->assertTrue($this->hasUrlRedirect('/test/url-1', '/test/url-2'), 'Original redirect should have been persisted and unmodified.');
-        $this->assertTrue($this->hasUrlRedirect('/test/url-4', '/test/url-2'), 'Manually updated redirect should point to the final redirect target.');
-        $this->assertTrue($this->hasUrlRedirect('/test/url-3', '/test/url-2'), 'Manually updated redirect should have created new redirect from its original url.');
+        $this->assertTrue($this->hasUrlRedirect('/test/url-2', '/test/url-5'), 'Manually updated redirect should have been created.');
+        $this->assertTrue($this->hasUrlRedirect('/test/url-3', '/test/url-5'), 'Manually updated redirect should have created new redirect from its original url.');
+        $this->assertTrue($this->hasUrlRedirect('/test/url-1', '/test/url-5'), '"/test/url-2" should have been updated to "/test/url-5" to avoid redirect chain.');
     }
 
     /**
@@ -91,11 +96,9 @@ class RedirectChainInjectionTest extends Unit
     protected function prepareTestData()
     {
         $localeEntity = $this->createLocaleEntity();
+
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->fromArray($localeEntity->toArray(), true);
-
-        $urlEntity = $this->createUrlEntity($localeEntity, '/test-foo');
-        $this->createUrlRedirectEntity('/test-bar', $urlEntity->getUrl(), $localeEntity->getIdLocale());
 
         return $localeTransfer;
     }
@@ -144,6 +147,19 @@ class RedirectChainInjectionTest extends Unit
     }
 
     /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param string $url
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function changeUrl(UrlTransfer $urlTransfer, $url)
+    {
+        $urlTransfer->setUrl($url);
+
+        return $this->urlFacade->updateUrl($urlTransfer);
+    }
+
+    /**
      * @param string $source
      * @param string $target
      * @param int $idLocale
@@ -180,7 +196,6 @@ class RedirectChainInjectionTest extends Unit
         $sourceUrlTransfer
             ->setUrl($sourceUrl)
             ->setFkLocale($idLocale);
-
         $urlRedirectTransfer = new UrlRedirectTransfer();
         $urlRedirectTransfer
             ->setSource($sourceUrlTransfer)
