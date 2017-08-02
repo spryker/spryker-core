@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
+namespace SprykerTest\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
@@ -25,13 +25,14 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\NotEqual;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\NotIn;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group PropelQueryBuilder
  * @group Persistence
  * @group QueryBuilder
  * @group OperatorValueTest
+ * Add your own group annotations below this line
  */
 class OperatorValueTest extends Unit
 {

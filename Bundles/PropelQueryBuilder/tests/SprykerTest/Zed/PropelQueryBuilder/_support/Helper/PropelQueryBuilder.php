@@ -4,15 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace PropelQueryBuilder\Module;
+namespace SprykerTest\Zed\PropelQueryBuilder\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
-use Propel\Runtime\Propel;
 use Silex\Application;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
-class Functional extends Module
+class PropelQueryBuilder extends Module
 {
 
     /**
@@ -35,23 +34,17 @@ class Functional extends Module
     {
         parent::_before($test);
 
-        Propel::getWriteConnection('zed')->beginTransaction();
+        $this->cleanUpDatabase();
     }
 
     /**
-     * @param \Codeception\TestInterface $test
-     *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _afterSuite()
     {
-        parent::_after($test);
+        parent::_afterSuite();
 
-        Propel::getWriteConnection('zed')->rollBack();
-
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            session_destroy();
-        }
+        $this->cleanUpDatabase();
     }
 
     /**
@@ -64,11 +57,14 @@ class Functional extends Module
     {
         parent::_failed($test, $fail);
 
-        Propel::getWriteConnection('zed')->rollBack();
+        $this->cleanUpDatabase();
+    }
 
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            session_destroy();
-        }
+    /**
+     * @return void
+     */
+    private function cleanUpDatabase()
+    {
     }
 
 }

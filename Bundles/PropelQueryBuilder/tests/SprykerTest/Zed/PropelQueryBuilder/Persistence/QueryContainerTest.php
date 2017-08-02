@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\PropelQueryBuilder\Persistence;
+namespace SprykerTest\Zed\PropelQueryBuilder\Persistence;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -25,12 +25,13 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group PropelQueryBuilder
  * @group Persistence
  * @group QueryContainerTest
+ * Add your own group annotations below this line
  */
 class QueryContainerTest extends Unit
 {
