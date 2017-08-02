@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Session;
+namespace SprykerTest\Zed\Session\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\Session\SessionConstants;
@@ -16,9 +16,9 @@ use Spryker\Zed\Session\SessionConfig;
  * @group SprykerTest
  * @group Zed
  * @group Session
+ * @group Business
  * @group SessionConfigTest
  * Add your own group annotations below this line
- * @property \SprykerTest\Zed\Session\SessionTester $tester
  */
 class SessionConfigTest extends Unit
 {

@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\Session;
+namespace SprykerTest\Yves\Session;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class SharedTester extends Actor
+class SessionYvesTester extends Actor
 {
 
-    use _generated\SharedTesterActions;
+    use _generated\SessionYvesTesterActions;
 
    /**
     * Define custom actions here

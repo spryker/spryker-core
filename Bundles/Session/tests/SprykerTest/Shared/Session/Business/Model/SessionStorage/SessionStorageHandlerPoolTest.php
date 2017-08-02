@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\Session\Model\SessionStorage;
+namespace SprykerTest\Shared\Session\Business\Model\SessionStorage;
 
 use Codeception\Test\Unit;
 use SessionHandlerInterface;
@@ -17,6 +17,7 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
  * @group SprykerTest
  * @group Shared
  * @group Session
+ * @group Business
  * @group Model
  * @group SessionStorage
  * @group SessionStorageHandlerPoolTest

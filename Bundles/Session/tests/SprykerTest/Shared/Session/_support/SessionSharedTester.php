@@ -1,5 +1,5 @@
 <?php
-namespace Session;
+namespace SprykerTest\Shared\Session;
 
 use Codeception\Actor;
 
@@ -14,14 +14,14 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
  */
-class ClientTester extends Actor
+class SessionSharedTester extends Actor
 {
 
-    use _generated\ClientTesterActions;
+    use _generated\SessionSharedTesterActions;
 
    /**
     * Define custom actions here
