@@ -12,7 +12,7 @@ modules:
         - \SprykerTest\Shared\Testify\Helper\Environment
         - \SprykerTest\Shared\Config\Helper\ConfigInit
         - \SprykerTest\Shared\Propel\Helper\PropelInstallHelper
-        - \Transfer\Module\TransferGenerate
+        - \SprykerTest\Shared\Transfer\Helper\TransferGenerateHelper
         - \Braintree\Module\Braintree
         - \SprykerTest\Shared\Sales\Helper\SalesHelper
         - \SprykerTest\Zed\Oms\Helper\OmsHelper
