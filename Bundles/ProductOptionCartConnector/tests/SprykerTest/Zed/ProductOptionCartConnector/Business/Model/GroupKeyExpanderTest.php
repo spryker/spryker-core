@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ProductOptionCartConnector\Business\Model;
+namespace SprykerTest\Zed\ProductOptionCartConnector\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -14,13 +14,14 @@ use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductOptionCartConnector
  * @group Business
  * @group Model
  * @group GroupKeyExpanderTest
+ * Add your own group annotations below this line
  */
 class GroupKeyExpanderTest extends PHPUnit_Framework_TestCase
 {
