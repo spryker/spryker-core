@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Stock\Business;
+namespace SprykerTest\Zed\Stock\Business;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -16,12 +16,13 @@ use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Stock
  * @group Business
  * @group CalculatorTest
+ * Add your own group annotations below this line
  */
 class CalculatorTest extends Unit
 {

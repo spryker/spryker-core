@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Stock\Business;
+namespace SprykerTest\Zed\Stock\Business;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -18,14 +18,15 @@ use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Stock
  * @group Business
- * @group WriterTest
+ * @group ReaderTest
+ * Add your own group annotations below this line
  */
-class WriterTest extends Unit
+class ReaderTest extends Unit
 {
 
     /**
@@ -52,49 +53,21 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testDecrementStock()
+    public function testIsNeverOutOfStock()
     {
-        $this->setData();
-        $stockProductEntity = SpyStockProductQuery::create()->findOne();
-        $stockProductEntity->reload();
-        $oldQuantity = $stockProductEntity->getQuantity();
-        $product = SpyProductQuery::create()
-            ->findOneByIdProduct($stockProductEntity->getFkProduct());
-        $stockType = SpyStockQuery::create()
-            ->findOneByIdStock($stockProductEntity->getFkStock());
+        $this->setTestData();
+        $stockProductEntity = $this->stockQueryContainer->queryAllStockProducts()->findOne();
+        $stockProductEntity->setIsNeverOutOfStock(true)->save();
+        $productSku = SpyProductQuery::create()->findOneByIdProduct($stockProductEntity->getFkProduct());
+        $isNeverOutOfStock = $this->stockFacade->isNeverOutOfStock($productSku->getSku());
 
-        $this->stockFacade->decrementStockProduct($product->getSku(), $stockType->getName());
-
-        $stockEntity = SpyStockProductQuery::create()->findOneByIdStockProduct($stockProductEntity->getIdStockProduct());
-        $newQuantity = $stockEntity->getQuantity();
-
-        $this->assertEquals($oldQuantity - 1, $newQuantity);
+        $this->assertTrue($isNeverOutOfStock);
     }
 
     /**
      * @return void
      */
-    public function testIncrementStock()
-    {
-        $this->setData();
-        $stockProductEntity = SpyStockProductQuery::create()->findOne();
-        $stockProductEntity->reload();
-        $oldQuantity = $stockProductEntity->getQuantity();
-        $product = SpyProductQuery::create()->findOneByIdProduct($stockProductEntity->getFkProduct());
-        $stockType = SpyStockQuery::create()->findOneByIdStock($stockProductEntity->getFkStock());
-
-        $this->stockFacade->incrementStockProduct($product->getSku(), $stockType->getName());
-
-        $stockEntity = SpyStockProductQuery::create()->findOneByIdStockProduct($stockProductEntity->getIdStockProduct());
-        $newQuantity = $stockEntity->getQuantity();
-
-        $this->assertEquals($oldQuantity + 1, $newQuantity);
-    }
-
-    /**
-     * @return void
-     */
-    protected function setData()
+    protected function setTestData()
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test')
@@ -121,19 +94,6 @@ class WriterTest extends Unit
             ->setAttributes('{}')
             ->save();
 
-        $product = SpyProductQuery::create()
-            ->filterBySku('test2')
-            ->findOne();
-
-        if ($product === null) {
-            $product = new SpyProduct();
-            $product->setSku('test2');
-        }
-
-        $product->setFkProductAbstract($productAbstract->getIdProductAbstract())
-            ->setAttributes('{}')
-            ->save();
-
         $stockType1 = SpyStockQuery::create()
             ->filterByName('warehouse1')
             ->findOneOrCreate();
@@ -143,7 +103,9 @@ class WriterTest extends Unit
         $stockType2 = SpyStockQuery::create()
             ->filterByName('warehouse2')
             ->findOneOrCreate();
-        $stockType2->setName('warehouse2')->save();
+
+        $stockType2->setName('warehouse2')
+            ->save();
 
         $stockProduct1 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType1->getIdStock())
