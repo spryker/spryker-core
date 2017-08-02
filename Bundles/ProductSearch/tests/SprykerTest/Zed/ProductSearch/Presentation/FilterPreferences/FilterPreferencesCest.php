@@ -5,38 +5,41 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\ProductSearch\Zed\FilterPreferences;
+namespace SprykerTest\Zed\ProductSearch\Presentation\FilterPreferences;
 
-use Acceptance\ProductSearch\Zed\FilterPreferences\PageObject\FilterPreferencesPage;
-use Acceptance\ProductSearch\Zed\FilterPreferences\Tester\FilterPreferencesTester;
+use SprykerTest\Zed\ProductSearch\PageObject\FilterPreferencesPage;
+use SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester;
 
 /**
- * @group Acceptance
- * @group ProductSearch
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
+ * @group ProductSearch
+ * @group Presentation
  * @group FilterPreferences
  * @group FilterPreferencesCest
+ * Add your own group annotations below this line
  */
 class FilterPreferencesCest
 {
 
     /**
-     * @param \Acceptance\ProductSearch\Zed\FilterPreferences\Tester\FilterPreferencesTester $i
+     * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
      */
-    public function showListOfFilters(FilterPreferencesTester $i)
+    public function showListOfFilters(ProductSearchPresentationTester $i)
     {
         $i->amOnPage(FilterPreferencesPage::URL_LIST);
         $i->seeElement(FilterPreferencesPage::SELECTOR_FILTER_LIST);
     }
 
     /**
-     * @param \Acceptance\ProductSearch\Zed\FilterPreferences\Tester\FilterPreferencesTester $i
+     * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
      */
-    public function createEditAndRemoveFilter(FilterPreferencesTester $i)
+    public function createEditAndRemoveFilter(ProductSearchPresentationTester $i)
     {
         $id = $i->createFilter('foooooo_' . rand(1, 1000));
         $i->updateFilter($id);
@@ -46,11 +49,11 @@ class FilterPreferencesCest
     /**
      * @skip Drag & drop functionality is not working, need to recheck later with upcoming codeception related fixes
      *
-     * @param \Acceptance\ProductSearch\Zed\FilterPreferences\Tester\FilterPreferencesTester $i
+     * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
      */
-    public function updateFilterOrder(FilterPreferencesTester $i)
+    public function updateFilterOrder(ProductSearchPresentationTester $i)
     {
         $idFoo = $i->createFilter('foooooo_' . rand(1, 1000));
         $idBar = $i->createFilter('baaaaar_' . rand(1, 1000));
@@ -77,11 +80,11 @@ class FilterPreferencesCest
     }
 
     /**
-     * @param \Acceptance\ProductSearch\Zed\FilterPreferences\Tester\FilterPreferencesTester $i
+     * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
      */
-    public function synchronizeFilterPreferences(FilterPreferencesTester $i)
+    public function synchronizeFilterPreferences(ProductSearchPresentationTester $i)
     {
         $i->createFilter('foooooo_' . rand(1, 1000));
 

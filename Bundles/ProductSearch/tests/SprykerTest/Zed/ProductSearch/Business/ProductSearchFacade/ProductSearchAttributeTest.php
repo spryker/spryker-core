@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
+namespace SprykerTest\Zed\ProductSearch\Business\ProductSearchFacade;
 
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
@@ -13,13 +13,14 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductSearch
  * @group Business
  * @group ProductSearchFacade
  * @group ProductSearchAttributeTest
+ * Add your own group annotations below this line
  */
 class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
 {

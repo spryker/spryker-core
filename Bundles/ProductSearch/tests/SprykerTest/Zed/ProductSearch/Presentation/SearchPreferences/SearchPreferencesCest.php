@@ -5,38 +5,41 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\ProductSearch\Zed\SearchPreferences;
+namespace SprykerTest\Zed\ProductSearch\Presentation\SearchPreferences;
 
-use Acceptance\ProductSearch\Zed\SearchPreferences\PageObject\SearchPreferencesPage;
-use Acceptance\ProductSearch\Zed\SearchPreferences\Tester\SearchPreferencesTester;
+use SprykerTest\Zed\ProductSearch\PageObject\SearchPreferencesPage;
+use SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester;
 
 /**
- * @group Acceptance
- * @group ProductSearch
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
+ * @group ProductSearch
+ * @group Presentation
  * @group SearchPreferences
  * @group SearchPreferencesCest
+ * Add your own group annotations below this line
  */
 class SearchPreferencesCest
 {
 
     /**
-     * @param \Acceptance\ProductSearch\Zed\SearchPreferences\Tester\SearchPreferencesTester $i
+     * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
      */
-    public function showListOfFilters(SearchPreferencesTester $i)
+    public function showListOfFilters(ProductSearchPresentationTester $i)
     {
         $i->amOnPage(SearchPreferencesPage::URL_LIST);
         $i->seeElement(SearchPreferencesPage::SELECTOR_SEARCH_PREFERENCES_LIST);
     }
 
     /**
-     * @param \Acceptance\ProductSearch\Zed\SearchPreferences\Tester\SearchPreferencesTester $i
+     * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
      */
-    public function addAndEditAndDeactivateAttributeToSearch(SearchPreferencesTester $i)
+    public function addAndEditAndDeactivateAttributeToSearch(ProductSearchPresentationTester $i)
     {
         $attributeKey = 'foooooo';
         $i->addAttributeToSearch($attributeKey);
@@ -45,11 +48,11 @@ class SearchPreferencesCest
     }
 
     /**
-     * @param \Acceptance\ProductSearch\Zed\SearchPreferences\Tester\SearchPreferencesTester $i
+     * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
      */
-    public function synchronizeFilterPreferences(SearchPreferencesTester $i)
+    public function synchronizeFilterPreferences(ProductSearchPresentationTester $i)
     {
         $attributeKey = 'foooooo';
         $i->addAttributeToSearch($attributeKey);

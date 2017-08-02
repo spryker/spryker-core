@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Acceptance\ProductSearch\Zed\SearchPreferences\PageObject;
+namespace SprykerTest\Zed\ProductSearch\PageObject;
 
 class SearchPreferencesPage
 {

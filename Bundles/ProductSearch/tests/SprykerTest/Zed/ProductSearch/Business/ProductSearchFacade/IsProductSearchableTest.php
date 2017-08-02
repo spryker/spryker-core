@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
+namespace SprykerTest\Zed\ProductSearch\Business\ProductSearchFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -18,13 +18,14 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearch;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductSearch
  * @group Business
  * @group ProductSearchFacade
  * @group IsProductSearchableTest
+ * Add your own group annotations below this line
  */
 class IsProductSearchableTest extends Unit
 {
