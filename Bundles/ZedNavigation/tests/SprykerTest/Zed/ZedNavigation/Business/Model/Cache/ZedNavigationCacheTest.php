@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ZedNavigation\Business\Model\Cache;
+namespace SprykerTest\Zed\ZedNavigation\Business\Model\Cache;
 
 use Application\Module\Zed;
 use PHPUnit_Framework_TestCase;
@@ -16,14 +16,15 @@ use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache;
 use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ZedNavigation
  * @group Business
  * @group Model
  * @group Cache
  * @group ZedNavigationCacheTest
+ * Add your own group annotations below this line
  */
 class ZedNavigationCacheTest extends PHPUnit_Framework_TestCase
 {

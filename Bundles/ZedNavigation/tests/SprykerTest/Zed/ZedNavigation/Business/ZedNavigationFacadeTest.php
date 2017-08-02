@@ -5,18 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ZedNavigation\Business;
+namespace SprykerTest\Zed\ZedNavigation\Business;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ZedNavigation
  * @group Business
+ * @group Facade
  * @group ZedNavigationFacadeTest
+ * Add your own group annotations below this line
  */
 class ZedNavigationFacadeTest extends PHPUnit_Framework_TestCase
 {

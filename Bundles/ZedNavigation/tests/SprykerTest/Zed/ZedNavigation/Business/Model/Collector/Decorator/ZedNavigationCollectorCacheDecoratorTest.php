@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator;
+namespace SprykerTest\Zed\ZedNavigation\Business\Model\Collector\Decorator;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface;
@@ -13,8 +13,8 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCo
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ZedNavigation
  * @group Business
@@ -22,6 +22,7 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInt
  * @group Collector
  * @group Decorator
  * @group ZedNavigationCollectorCacheDecoratorTest
+ * Add your own group annotations below this line
  */
 class ZedNavigationCollectorCacheDecoratorTest extends PHPUnit_Framework_TestCase
 {
