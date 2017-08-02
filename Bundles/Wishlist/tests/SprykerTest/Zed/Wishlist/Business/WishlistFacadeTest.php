@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Wishlist;
+namespace SprykerTest\Zed\Wishlist\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -28,11 +28,14 @@ use Spryker\Zed\Wishlist\Business\WishlistFacade;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Wishlist
+ * @group Business
+ * @group Facade
  * @group WishlistFacadeTest
+ * Add your own group annotations below this line
  */
 class WishlistFacadeTest extends Unit
 {
