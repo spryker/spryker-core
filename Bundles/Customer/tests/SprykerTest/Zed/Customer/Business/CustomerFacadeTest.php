@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Customer\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
@@ -29,7 +29,7 @@ use Spryker\Zed\Kernel\Container;
  * @group CustomerFacadeTest
  * Add your own group annotations below this line
  */
-class CustomerFacadeTest extends Test
+class CustomerFacadeTest extends Unit
 {
 
     const TESTER_EMAIL = 'tester@spryker.com';

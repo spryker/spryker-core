@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Navigation\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
@@ -28,7 +28,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
  * @group Facade
  * @group NavigationTouchTest
  */
-class NavigationTouchTest extends Test
+class NavigationTouchTest extends Unit
 {
 
     /**

@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Availability\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -28,7 +28,7 @@ use Spryker\Zed\Availability\Business\AvailabilityFacade;
  * @group Business
  * @group AvailabilityFacadeTest
  */
-class AvailabilityFacadeTest extends Test
+class AvailabilityFacadeTest extends Unit
 {
 
     const ABSTRACT_SKU = '123_availability_test';

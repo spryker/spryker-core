@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\DataImport\Business\Model\DataSet;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use SprykerTest\Zed\DataImport\_support\Helper\DataImportStepBeforeAndAfter;
 
 /**
@@ -22,7 +22,7 @@ use SprykerTest\Zed\DataImport\_support\Helper\DataImportStepBeforeAndAfter;
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
-class DataSetStepBrokerTest extends Test
+class DataSetStepBrokerTest extends Unit
 {
 
     /**

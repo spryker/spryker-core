@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Touch\Persistence;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
@@ -22,7 +22,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
  * @group Persistence
  * @group TouchQueryContainerTest
  */
-class TouchQueryContainerTest extends Test
+class TouchQueryContainerTest extends Unit
 {
 
     const ITEM_TYPE = 'test.item';

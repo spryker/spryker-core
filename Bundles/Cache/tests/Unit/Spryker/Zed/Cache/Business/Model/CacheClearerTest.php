@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Cache\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Cache\Business\Model\CacheClearer;
 use Spryker\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
@@ -22,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  * @group Model
  * @group CacheClearerTest
  */
-class CacheClearerTest extends Test
+class CacheClearerTest extends Unit
 {
 
     /**

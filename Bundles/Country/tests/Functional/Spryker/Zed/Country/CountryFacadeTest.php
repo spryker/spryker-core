@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Country;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Psr\Log\LoggerInterface;
@@ -22,7 +22,7 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainer;
  * @group Country
  * @group CountryFacadeTest
  */
-class CountryFacadeTest extends Test
+class CountryFacadeTest extends Unit
 {
 
     const ISO2_CODE = 'qx';

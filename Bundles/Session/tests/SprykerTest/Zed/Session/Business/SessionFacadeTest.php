@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Session\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException;
@@ -24,7 +24,7 @@ use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvi
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\Session\SessionBusinessTester $tester
  */
-class SessionFacadeTest extends Test
+class SessionFacadeTest extends Unit
 {
 
     /**

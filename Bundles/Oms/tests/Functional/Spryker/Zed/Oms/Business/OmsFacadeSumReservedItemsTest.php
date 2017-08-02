@@ -6,7 +6,7 @@
 
 namespace Functional\Spryker\Zed\Oms\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -23,7 +23,7 @@ use Spryker\Zed\Oms\Business\OmsFacade;
  * @group Business
  * @group OmsFacadeSumReservedItemsTest
  */
-class OmsFacadeSumReservedItemsTest extends Test
+class OmsFacadeSumReservedItemsTest extends Unit
 {
 
     const ORDER_REFERENCE = '123';

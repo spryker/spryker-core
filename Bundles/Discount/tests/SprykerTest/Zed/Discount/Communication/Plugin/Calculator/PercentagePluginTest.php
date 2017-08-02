@@ -6,7 +6,7 @@
 
 namespace SprykerTest\Zed\Discount\Communication\Plugin\Calculator;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
  * @group PercentagePluginTest
  * Add your own group annotations below this line
  */
-class PercentagePluginTest extends Test
+class PercentagePluginTest extends Unit
 {
 
     /**

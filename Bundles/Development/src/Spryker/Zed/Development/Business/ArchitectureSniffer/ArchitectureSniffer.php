@@ -7,12 +7,19 @@
 
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
+use Exception;
+use PHPMD\RuleSetFactory;
+use PHPMD\TextUI\CommandLineOptions;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Config\Reader\Xml;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
+
+    const OPTION_PRIORITY = 'priority';
+    const OPTION_STRICT = 'strict';
+    const OPTION_DRY_RUN = 'dry-run';
 
     /**
      * @var string
@@ -25,23 +32,63 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $xmlReader;
 
     /**
+     * @var int
+     */
+    protected $defaultPriority;
+
+    /**
      * @param \Zend\Config\Reader\Xml $xmlReader
      * @param string $command
+     * @param int $defaultPriority
      */
-    public function __construct(Xml $xmlReader, $command)
+    public function __construct(Xml $xmlReader, $command, $defaultPriority)
     {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
+        $this->defaultPriority = $defaultPriority;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRules()
+    {
+        $ruleSetFactory = new RuleSetFactory();
+
+        $args = explode(' ', $this->command);
+        $options = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
+
+        $rules = [];
+        foreach ($ruleSetFactory->createRuleSets($options->getRuleSets()) as $ruleSet) {
+            /** @var \PHPMD\AbstractRule $rule */
+            foreach ($ruleSet->getRules() as $rule) {
+                $rules[$rule->getName()] = [
+                    'name' => $rule->getName(),
+                    'ruleset' => $rule->getRuleSetName(),
+                    'description' => $rule->getDescription(),
+                    'priority' => $rule->getPriority(),
+                    'rule' => $rule,
+                ];
+            }
+        }
+
+        $sort = function ($a, $b) {
+            return $a["priority"] - $b["priority"];
+        };
+        usort($rules, $sort);
+
+        return $rules;
     }
 
     /**
      * @param string $directory
+     * @param array $options
      *
      * @return array
      */
-    public function run($directory)
+    public function run($directory, array $options = [])
     {
-        $output = $this->runCommand($directory);
+        $output = $this->runCommand($directory, $options);
         $results = $this->xmlReader->fromString($output);
 
         if (!is_array($results)) {
@@ -60,22 +107,52 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function getProcess($command)
     {
-        return new Process($command);
+        return new Process($command, null, null, null, 0);
     }
 
     /**
      * @param string $directory
+     * @param array $options
      *
-     * @return string
+     * @throws \Exception
+     *
+     * @return string|null
      */
-    protected function runCommand($directory)
+    protected function runCommand($directory, array $options = [])
     {
         $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command);
+
+        $priority = !empty($options[static::OPTION_PRIORITY]) ? $options[static::OPTION_PRIORITY] : $this->defaultPriority;
+        $command .= ' --minimumpriority ' . $priority;
+
+        if (!empty($options[static::OPTION_STRICT])) {
+            $command .= ' --strict';
+        }
+
+        if (!empty($options[static::OPTION_DRY_RUN])) {
+            $this->displayAndExit($command);
+        }
+
         $p = $this->getProcess($command);
+
         $p->setWorkingDirectory(APPLICATION_ROOT_DIR);
         $p->run();
+        if (substr($p->getOutput(), 0, 5) !== '<?xml') {
+            throw new Exception('Sniffer run was not successful: ' . $p->getExitCodeText());
+        }
+
         $output = $p->getOutput();
         return $output;
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return void
+     */
+    protected function displayAndExit($command)
+    {
+        exit($command . PHP_EOL);
     }
 
     /**

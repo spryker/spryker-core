@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Price\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
@@ -27,7 +27,7 @@ use Spryker\Zed\Price\Business\PriceFacade;
  * @group Model
  * @group ReaderTest
  */
-class ReaderTest extends Test
+class ReaderTest extends Unit
 {
 
     const DUMMY_PRICE_TYPE_1 = 'TYPE1';

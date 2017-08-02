@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -26,7 +26,7 @@ use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
  * @group ProductSearchFacade
  * @group AbstractProductSearchFacadeTest
  */
-abstract class AbstractProductSearchFacadeTest extends Test
+abstract class AbstractProductSearchFacadeTest extends Unit
 {
 
     /**

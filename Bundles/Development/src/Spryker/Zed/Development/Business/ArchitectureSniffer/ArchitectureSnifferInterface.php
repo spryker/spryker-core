@@ -12,9 +12,15 @@ interface ArchitectureSnifferInterface
 
     /**
      * @param string $directory
+     * @param array $options
      *
      * @return array
      */
-    public function run($directory);
+    public function run($directory, array $options = []);
+
+    /**
+     * @return array
+     */
+    public function getRules();
 
 }

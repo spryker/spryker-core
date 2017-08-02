@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductImageCartConnector\Business\Plugin;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -23,7 +23,7 @@ use Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFaca
  * @group Plugin
  * @group ProductImageCartPluginTest
  */
-class ProductImageCartPluginTest extends Test
+class ProductImageCartPluginTest extends Unit
 {
 
     /**

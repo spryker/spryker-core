@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\DataImport\Business\Model\DataSet;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\DataImport\Business\Exception\TransactionException;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface;
@@ -24,7 +24,7 @@ use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterfa
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
-class DataSetStepBrokerTransactionAwareTest extends Test
+class DataSetStepBrokerTransactionAwareTest extends Unit
 {
 
     /**

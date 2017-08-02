@@ -21,27 +21,37 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getBundleDirectory()
-    {
-        return $this->getConfig()->get(KernelConstants::SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @return string
-     */
     public function getPathToRoot()
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR;
     }
 
     /**
-     * @deprecated use getBundleDirectory() to get the path to bundles
+     * @return string
+     */
+    public function getPathToCore()
+    {
+        return $this->getConfig()->get(KernelConstants::SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @deprecated use getBundleDirectory() to get the path to core modules
+     *
+     * @return string
+     */
+    public function getBundleDirectory()
+    {
+        return $this->getConfig()->get(KernelConstants::SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @deprecated use getBundleDirectory() to get the path to core modules
      *
      * @return string
      */
     public function getPathToSpryker()
     {
-        return $this->getBundleDirectory();
+        return $this->getPathToCore();
     }
 
     /**
@@ -290,6 +300,16 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getCoreNamespaces()
     {
         return $this->get(DevelopmentConstants::CORE_NAMESPACES);
+    }
+
+    /**
+     * Gets default priority for architecture sniffer.
+     *
+     * @return int
+     */
+    public function getArchitectureSnifferDefaultPriority()
+    {
+        return 2;
     }
 
 }

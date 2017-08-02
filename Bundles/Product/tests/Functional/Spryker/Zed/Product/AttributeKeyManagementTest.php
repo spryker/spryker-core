@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Product;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -19,7 +19,7 @@ use Spryker\Zed\Product\Business\ProductFacade;
  * @group Product
  * @group AttributeKeyManagementTest
  */
-class AttributeKeyManagementTest extends Test
+class AttributeKeyManagementTest extends Unit
 {
 
     const UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB = 'unique_attribute_key_not_existing_in_db';

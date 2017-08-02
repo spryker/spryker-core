@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Stability of all core bundles' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Stability of all core modules' } %}
         {% block widget_content %}
             {% set sum = 0 %}
             <div class="spy-layout sparse">
@@ -11,7 +11,7 @@
                 </p>
                 <table class="table table-striped spy-grid">
                     <tr>
-                        <th style="width: 50%;">Bundle</th>
+                        <th style="width: 50%;">Module</th>
                         <th style="text-align:right">Incoming</th>
                         <th style="text-align:right">Outgoing</th>
                         <th style="text-align:right">Stability</th>

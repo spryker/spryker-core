@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Product;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -35,7 +35,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @group Product
  * @group ProductManagerTest
  */
-class FacadeTestAbstract extends Test
+class FacadeTestAbstract extends Unit
 {
 
     const PRODUCT_ABSTRACT_NAME = [

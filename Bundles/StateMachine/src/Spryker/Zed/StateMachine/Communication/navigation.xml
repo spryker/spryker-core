@@ -8,6 +8,25 @@
                 <bundle>state-machine</bundle>
                 <controller>list</controller>
                 <action>index</action>
+                <pages>
+                    <statemachines-index>
+                        <label>State machine Processes</label>
+                        <title>State machine Processes</title>
+                        <bundle>state-machine</bundle>
+                        <controller>list</controller>
+                        <action>process</action>
+                        <visible>0</visible>
+                    </statemachines-index>
+
+                    <statemachine-preview>
+                        <label>Statemachine preview</label>
+                        <title>Statemachine preview</title>
+                        <bundle>state-machine</bundle>
+                        <controller>graph</controller>
+                        <action>draw-preview-version</action>
+                        <visible>0</visible>
+                    </statemachine-preview>
+                </pages>
             </statemachines-index>
         </pages>
     </maintenance>

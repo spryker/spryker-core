@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Ratepay\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -41,7 +41,7 @@ use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;
  * @group Business
  * @group AbstractBusinessTest
  */
-abstract class AbstractBusinessTest extends Test
+abstract class AbstractBusinessTest extends Unit
 {
 
     const PAYMENT_METHOD = '';

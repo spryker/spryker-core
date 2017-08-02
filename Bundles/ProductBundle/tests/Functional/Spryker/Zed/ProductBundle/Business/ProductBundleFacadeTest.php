@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\ProductBundle\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -33,7 +33,7 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
  * @group Business
  * @group ProductBundleFacadeTest
  */
-class ProductBundleFacadeTest extends Test
+class ProductBundleFacadeTest extends Unit
 {
 
     const SKU_BUNDLED_1 = 'sku-1-test-tester';

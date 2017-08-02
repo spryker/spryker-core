@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductLabelDiscountConnector\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
 /**
@@ -20,7 +20,7 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
  * @group ProductLabelDiscountConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class ProductLabelDiscountConnectorFacadeTest extends Test
+class ProductLabelDiscountConnectorFacadeTest extends Unit
 {
 
     /**

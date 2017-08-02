@@ -52,4 +52,21 @@ class SalesListCest
         $i->canSeeCurrentUrlEquals($url);
     }
 
+    /**
+     * @param \SprykerTest\Zed\Sales\PresentationTester $i
+     * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
+     *
+     * @return void
+     */
+    public function breadcrumbIsVisible(PresentationTester $i, SalesListPage $salesListPage)
+    {
+        $i->createOrderWithOneItem();
+
+        $latestOrderId = $salesListPage->grabLatestOrderId();
+        $url = SalesDetailPage::getOrderDetailsPageUrl($latestOrderId);
+
+        $i->amOnPage($url);
+        $i->seeBreadcrumbNavigation('Dashboard / Sales / Order Overview');
+    }
+
 }

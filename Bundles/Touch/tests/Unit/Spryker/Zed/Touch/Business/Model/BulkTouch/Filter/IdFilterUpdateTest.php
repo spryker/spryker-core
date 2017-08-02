@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Touch\Business\Model\BulkTouch\Filter;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
  * @group Filter
  * @group IdFilterUpdateTest
  */
-class IdFilterUpdateTest extends Test
+class IdFilterUpdateTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\DataImport\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
@@ -23,7 +23,7 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
  * Add your own group annotations below this line
  * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
-class DataImporterTest extends Test
+class DataImporterTest extends Unit
 {
 
     const IMPORTER_TYPE = 'specific-importer';

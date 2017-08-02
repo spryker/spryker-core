@@ -8,7 +8,7 @@
 namespace Unit\Spryker\Zed\ProductImage\Business\Model;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -24,7 +24,7 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
  * @group Model
  * @group ProductImageWriterTest
  */
-class ProductImageWriterTest extends Test
+class ProductImageWriterTest extends Unit
 {
 
     /**

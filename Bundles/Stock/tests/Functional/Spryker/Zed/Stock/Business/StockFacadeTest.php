@@ -8,7 +8,7 @@
 namespace Functional\Spryker\Zed\Stock\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
@@ -30,7 +30,7 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
  * @group Business
  * @group StockFacadeTest
  */
-class StockFacadeTest extends Test
+class StockFacadeTest extends Unit
 {
 
     /**

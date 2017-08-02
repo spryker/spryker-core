@@ -25,6 +25,15 @@
                 </pages>
             </order-list>
 
+            <order-view>
+                <label>Order Overview</label>
+                <title>Order Overview</title>
+                <bundle>sales</bundle>
+                <controller>detail</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </order-view>
+
             <order-matrix>
                 <label>Order Matrix</label>
                 <title>Order Matrix</title>

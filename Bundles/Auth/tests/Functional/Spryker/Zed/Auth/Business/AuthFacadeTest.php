@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Auth\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
@@ -22,7 +22,7 @@ use Spryker\Zed\Auth\Business\AuthFacade;
  * @group Business
  * @group AuthFacadeTest
  */
-class AuthFacadeTest extends Test
+class AuthFacadeTest extends Unit
 {
 
     const TEST_MAIL = 'username@example.com';

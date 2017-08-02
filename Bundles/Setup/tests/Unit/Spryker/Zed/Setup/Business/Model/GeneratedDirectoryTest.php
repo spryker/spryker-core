@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Setup\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Setup\Business\Model\GeneratedDirectory;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -21,7 +21,7 @@ use Symfony\Component\Finder\Finder;
  * @group Model
  * @group GeneratedDirectoryTest
  */
-class GeneratedDirectoryTest extends Test
+class GeneratedDirectoryTest extends Unit
 {
 
     /**

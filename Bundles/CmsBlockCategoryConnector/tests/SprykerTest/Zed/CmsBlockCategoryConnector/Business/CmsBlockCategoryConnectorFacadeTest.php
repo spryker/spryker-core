@@ -2,7 +2,7 @@
 
 namespace SprykerTest\Zed\CmsBlockCategoryConnector\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 
 /**
@@ -15,7 +15,7 @@ use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
  * @group CmsBlockCategoryConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class CmsBlockCategoryConnectorFacadeTest extends Test
+class CmsBlockCategoryConnectorFacadeTest extends Unit
 {
 
     /**

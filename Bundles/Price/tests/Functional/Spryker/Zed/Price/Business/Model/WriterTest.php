@@ -7,7 +7,7 @@
 
 namespace Functional\Spryker\Zed\Price\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -29,7 +29,7 @@ use Spryker\Zed\Price\Business\PriceFacade;
  * @group Model
  * @group WriterTest
  */
-class WriterTest extends Test
+class WriterTest extends Unit
 {
 
     const PRICE_TYPE_1 = 'TYPE1';
