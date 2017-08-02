@@ -1,5 +1,5 @@
 <?php
-namespace UtilDateTime;
+namespace SprykerTest\Service\UtilDateTime;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FunctionalTester extends Actor
+class UtilDateTimeServiceTester extends Actor
 {
 
-    use _generated\FunctionalTesterActions;
+    use _generated\UtilDateTimeServiceTesterActions;
 
    /**
     * Define custom actions here

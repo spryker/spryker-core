@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\UtilDateTime\Model;
+namespace SprykerTest\Service\UtilDateTime\Model;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
@@ -13,12 +13,13 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Shared\Twig\TwigFilter;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilDateTime
  * @group Model
  * @group DateTimeFormatterTwigExtensionTest
+ * Add your own group annotations below this line
  */
 class DateTimeFormatterTwigExtensionTest extends PHPUnit_Framework_TestCase
 {

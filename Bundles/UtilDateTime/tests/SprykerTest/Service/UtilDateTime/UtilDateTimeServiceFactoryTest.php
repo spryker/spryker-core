@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Service\UtilDateTime;
+namespace SprykerTest\Service\UtilDateTime;
 
 use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterInterface;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceFactory;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilDateTime
  * @group UtilDateTimeServiceFactoryTest
+ * Add your own group annotations below this line
  */
 class UtilDateTimeServiceFactoryTest extends PHPUnit_Framework_TestCase
 {

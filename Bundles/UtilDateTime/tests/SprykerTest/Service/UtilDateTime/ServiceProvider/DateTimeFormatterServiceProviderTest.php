@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\UtilDateTime\ServiceProvider;
+namespace SprykerTest\Service\UtilDateTime\ServiceProvider;
 
 use PHPUnit_Framework_TestCase;
 use Silex\Application;
@@ -15,12 +15,13 @@ use Twig_Environment;
 use Twig_Loader_Filesystem;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilDateTime
  * @group ServiceProvider
  * @group DateTimeFormatterServiceProviderTest
+ * Add your own group annotations below this line
  */
 class DateTimeFormatterServiceProviderTest extends PHPUnit_Framework_TestCase
 {

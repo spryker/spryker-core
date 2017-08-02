@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Service\UtilDateTime;
+namespace SprykerTest\Service\UtilDateTime;
 
 use DateTime;
 use DateTimeZone;
@@ -16,11 +16,12 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilDateTime
  * @group UtilDateTimeServiceTest
+ * Add your own group annotations below this line
  */
 class UtilDateTimeServiceTest extends PHPUnit_Framework_TestCase
 {
