@@ -125,7 +125,7 @@ class QueryContainerTest extends Unit
     protected $queryContainer;
 
     /**
-     * @var \PropelQueryBuilder\FunctionalTester
+     * @var \SprykerTest\Zed\PropelQueryBuilder\PropelQueryBuilderPersistenceTester
      */
     protected $tester;
 

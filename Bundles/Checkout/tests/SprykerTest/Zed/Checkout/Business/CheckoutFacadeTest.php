@@ -69,7 +69,7 @@ class CheckoutFacadeTest extends Unit
     protected $checkoutFacade;
 
     /**
-     * @var \Checkout\FunctionalTester
+     * @var \SprykerTest\Zed\Checkout\CheckoutBusinessTester
      */
     protected $tester;
 
