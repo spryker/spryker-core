@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\ProductImageCartConnector\Business\Plugin;
+namespace SprykerTest\Zed\ProductImageCartConnector\Business\Plugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
@@ -15,13 +15,14 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group ProductImageCartConnector
  * @group Business
  * @group Plugin
  * @group ProductImageCartPluginTest
+ * Add your own group annotations below this line
  */
 class ProductImageCartPluginTest extends Unit
 {
