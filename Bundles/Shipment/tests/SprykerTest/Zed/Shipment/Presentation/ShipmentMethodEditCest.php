@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Shipment\Presentation;
 
 use SprykerTest\Zed\Shipment\PageObject\ShipmentListPage;
-use SprykerTest\Zed\Shipment\PresentationTester;
+use SprykerTest\Zed\Shipment\ShipmentPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class ShipmentMethodEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Shipment\PresentationTester $i
+     * @param \SprykerTest\Zed\Shipment\ShipmentPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(ShipmentPresentationTester $i)
     {
         $i->amOnPage(ShipmentListPage::URL);
         $i->clickDataTableEditButton();

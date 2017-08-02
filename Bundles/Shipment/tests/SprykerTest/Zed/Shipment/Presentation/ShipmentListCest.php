@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\Shipment\Presentation;
 use SprykerTest\Zed\Shipment\PageObject\ShipmentCarrierAddPage;
 use SprykerTest\Zed\Shipment\PageObject\ShipmentListPage;
 use SprykerTest\Zed\Shipment\PageObject\ShipmentMethodAddPage;
-use SprykerTest\Zed\Shipment\PresentationTester;
+use SprykerTest\Zed\Shipment\ShipmentPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -25,22 +25,22 @@ class ShipmentListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Shipment\PresentationTester $i
+     * @param \SprykerTest\Zed\Shipment\ShipmentPresentationTester $i
      *
      * @return void
      */
-    public function testICanOpenShipmentList(PresentationTester $i)
+    public function testICanOpenShipmentList(ShipmentPresentationTester $i)
     {
         $i->amOnPage(ShipmentListPage::URL);
         $i->seeElement(['class' => ShipmentListPage::SELECTOR_TABLE]);
     }
 
     /**
-     * @param \SprykerTest\Zed\Shipment\PresentationTester $i
+     * @param \SprykerTest\Zed\Shipment\ShipmentPresentationTester $i
      *
      * @return void
      */
-    public function testICanOpenAddShipmentMethodPage(PresentationTester $i)
+    public function testICanOpenAddShipmentMethodPage(ShipmentPresentationTester $i)
     {
         $i->amOnPage(ShipmentListPage::URL);
         $i->click(ShipmentListPage::BUTTON_ADD_METHOD);
@@ -48,11 +48,11 @@ class ShipmentListCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Shipment\PresentationTester $i
+     * @param \SprykerTest\Zed\Shipment\ShipmentPresentationTester $i
      *
      * @return void
      */
-    public function testICanOpenAddShipmentCarrierPage(PresentationTester $i)
+    public function testICanOpenAddShipmentCarrierPage(ShipmentPresentationTester $i)
     {
         $i->amOnPage(ShipmentListPage::URL);
         $i->click(ShipmentListPage::BUTTON_ADD_CARRIER);
