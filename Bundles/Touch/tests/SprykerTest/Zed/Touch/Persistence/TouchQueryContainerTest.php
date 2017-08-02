@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Touch\Persistence;
+namespace SprykerTest\Zed\Touch\Persistence;
 
 use Codeception\Test\Unit;
 use DateTime;
@@ -15,12 +15,13 @@ use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Touch
  * @group Persistence
  * @group TouchQueryContainerTest
+ * Add your own group annotations below this line
  */
 class TouchQueryContainerTest extends Unit
 {

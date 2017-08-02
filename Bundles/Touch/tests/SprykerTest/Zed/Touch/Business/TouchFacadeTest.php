@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Touch\Business;
+namespace SprykerTest\Zed\Touch\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
@@ -15,12 +15,14 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Touch\Business\TouchFacade;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Touch
  * @group Business
+ * @group Facade
  * @group TouchFacadeTest
+ * Add your own group annotations below this line
  */
 class TouchFacadeTest extends Unit
 {

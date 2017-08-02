@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Touch\Business\Model\BulkTouch\Filter;
+namespace SprykerTest\Zed\Touch\Business\Model\BulkTouch\Filter;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Touch
  * @group Business
@@ -20,6 +20,7 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
  * @group BulkTouch
  * @group Filter
  * @group IdFilterInsertTest
+ * Add your own group annotations below this line
  */
 class IdFilterInsertTest extends Unit
 {

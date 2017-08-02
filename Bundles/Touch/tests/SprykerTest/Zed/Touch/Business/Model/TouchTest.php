@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Zed\Touch;
+namespace SprykerTest\Zed\Touch\Business\Model;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\Container;
@@ -15,11 +15,14 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Touch
+ * @group Business
+ * @group Model
  * @group TouchTest
+ * Add your own group annotations below this line
  */
 class TouchTest extends Unit
 {
@@ -90,16 +93,6 @@ class TouchTest extends Unit
         $touchCountAfterTouch = $touchEntityQuery->count();
 
         $this->assertTrue($touchCountAfterTouch > $touchCountBeforeTouch);
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeleteDeleted()
-    {
-        $this->touchFacade->touchDeleted('ProductTranslationWhatever', 3);
-        $number = $this->touchFacade->removeTouchEntriesMarkedAsDeleted();
-        $this->assertGreaterThan(0, $number);
     }
 
 }
