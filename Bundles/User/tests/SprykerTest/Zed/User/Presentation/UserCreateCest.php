@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\User\Presentation;
 
 use SprykerTest\Zed\User\PageObject\UserCreatePage;
-use SprykerTest\Zed\User\PresentationTester;
+use SprykerTest\Zed\User\UserPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class UserCreateCest
 {
 
     /**
-     * @param \SprykerTest\Zed\User\PresentationTester $i
+     * @param \SprykerTest\Zed\User\UserPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(UserPresentationTester $i)
     {
         $i->amOnPage(UserCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / User / Create new User');
