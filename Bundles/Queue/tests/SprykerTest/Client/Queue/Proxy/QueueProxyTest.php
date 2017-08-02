@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Client\Queue\Proxy;
+namespace SprykerTest\Client\Queue\Proxy;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
@@ -15,12 +15,13 @@ use Spryker\Client\Queue\Model\Proxy\QueueProxy;
 use Spryker\Shared\Queue\QueueConfig;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Client
  * @group Queue
  * @group Proxy
  * @group QueueProxyTest
+ * Add your own group annotations below this line
  */
 class QueueProxyTest extends Unit
 {
