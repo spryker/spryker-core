@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Service\UtilNetwork\Model\Request;
+namespace SprykerTest\Service\UtilNetwork\Model\Request;
 
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Spryker\Service\UtilNetwork\Model\Request\RequestId;
 
 /**
- * @group Unit
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Service
  * @group UtilNetwork
  * @group Model
  * @group Request
  * @group RequestIdTest
+ * Add your own group annotations below this line
  */
 class RequestIdTest extends PHPUnit_Framework_TestCase
 {
