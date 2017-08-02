@@ -111,7 +111,7 @@ class VoucherCodeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testUseVoucherShouldUpdateForUnlimited()
+    public function testUseVoucherShouldUpdateCounterForUnlimited()
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
