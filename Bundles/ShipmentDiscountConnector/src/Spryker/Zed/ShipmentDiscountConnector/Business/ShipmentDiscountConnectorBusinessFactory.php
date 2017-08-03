@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDiscountDecisionRule;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\PriceDiscountDecisionRule;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\ShipmentPriceDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReader;
 use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyProvider;
@@ -24,7 +24,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReaderInterface
      */
-    public function createShipmentDiscountConnectorReader()
+    public function createShipmentDiscountReader()
     {
         return new ShipmentDiscountReader(
             $this->getShipmentFacade()
@@ -75,19 +75,19 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollectorInterface
      */
-    public function createPriceDiscountCollector()
+    public function createShipmentPriceDiscountCollector()
     {
         return new ShipmentDiscountCollector(
-            $this->createPriceDiscountDecisionRule()
+            $this->createShipmentPriceDiscountDecisionRule()
         );
     }
 
     /**
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */
-    public function createPriceDiscountDecisionRule()
+    public function createShipmentPriceDiscountDecisionRule()
     {
-        return new PriceDiscountDecisionRule(
+        return new ShipmentPriceDiscountDecisionRule(
             $this->getDiscountFacade(),
             $this->getMoneyFacade()
         );

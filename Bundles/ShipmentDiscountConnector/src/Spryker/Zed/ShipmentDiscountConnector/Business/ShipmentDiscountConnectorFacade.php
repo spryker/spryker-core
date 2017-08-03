@@ -28,7 +28,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function getCarrierList()
     {
         return $this->getFactory()
-            ->createShipmentDiscountConnectorReader()
+            ->createShipmentDiscountReader()
             ->getCarrierList();
     }
 
@@ -42,7 +42,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function getMethodList()
     {
         return $this->getFactory()
-            ->createShipmentDiscountConnectorReader()
+            ->createShipmentDiscountReader()
             ->getMethodList();
     }
 
@@ -93,7 +93,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function collectDiscountByShipmentPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createPriceDiscountCollector()
+            ->createShipmentPriceDiscountCollector()
             ->collect($quoteTransfer, $clauseTransfer);
     }
 
@@ -147,7 +147,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function isPriceSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createPriceDiscountDecisionRule()
+            ->createShipmentPriceDiscountDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
