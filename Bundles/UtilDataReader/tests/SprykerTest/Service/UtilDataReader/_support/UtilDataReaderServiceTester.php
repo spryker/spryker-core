@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Service\UtilDataReader;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace SprykerTest\Service\UtilDataReader;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class UtilDataReaderServiceTester extends \Codeception\Actor
+ */
+class UtilDataReaderServiceTester extends Actor
 {
+
     use _generated\UtilDataReaderServiceTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }
