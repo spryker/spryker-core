@@ -28,10 +28,12 @@ class SetupHelper extends Module
     {
         parent::_before($test);
 
+        $this->debug('Restore test database');
+
         $process = $this->runTestSetup('--restore');
 
         if (!$process->isSuccessful()) {
-            throw new Exception('An error in data restore occured: ' . $process->getErrorOutput());
+            throw new Exception('An error in data restore occurred: ' . $process->getErrorOutput());
         }
     }
 
