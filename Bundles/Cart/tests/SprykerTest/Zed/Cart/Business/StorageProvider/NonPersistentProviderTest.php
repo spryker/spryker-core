@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\Cart\Business\StorageProvider;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
  * @group NonPersistentProviderTest
  * Add your own group annotations below this line
  */
-class NonPersistentProviderTest extends PHPUnit_Framework_TestCase
+class NonPersistentProviderTest extends Unit
 {
 
     const COUPON_CODE_1 = 'coupon code 1';

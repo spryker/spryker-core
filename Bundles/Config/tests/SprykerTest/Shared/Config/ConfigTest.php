@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Config;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Config\Config;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Shared\Config\Config;
  * @group ConfigTest
  * Add your own group annotations below this line
  */
-class ConfigTest extends PHPUnit_Framework_TestCase
+class ConfigTest extends Unit
 {
 
     /**

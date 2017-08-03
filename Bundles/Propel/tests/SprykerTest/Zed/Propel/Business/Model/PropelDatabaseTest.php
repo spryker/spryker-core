@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Propel\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\Exception\DatabaseCreatorNotFoundException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface;
@@ -23,7 +23,7 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
  * @group PropelDatabaseTest
  * Add your own group annotations below this line
  */
-class PropelDatabaseTest extends PHPUnit_Framework_TestCase
+class PropelDatabaseTest extends Unit
 {
 
     /**

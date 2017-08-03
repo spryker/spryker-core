@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\DummyPayment\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\DummyPayment\Business\DummyPaymentBusinessFactory;
 use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
 
@@ -20,7 +20,7 @@ use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
  * @group DummyPaymentBusinessFactoryTest
  * Add your own group annotations below this line
  */
-class DummyPaymentBusinessFactoryTest extends PHPUnit_Framework_TestCase
+class DummyPaymentBusinessFactoryTest extends Unit
 {
 
     /**

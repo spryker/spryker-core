@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Kernel\ClassResolver;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
  * @group AbstractClassResolverTest
  * Add your own group annotations below this line
  */
-class AbstractClassResolverTest extends PHPUnit_Framework_TestCase
+class AbstractClassResolverTest extends Unit
 {
 
     /**

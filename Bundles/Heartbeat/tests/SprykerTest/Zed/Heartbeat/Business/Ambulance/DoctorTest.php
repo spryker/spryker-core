@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Heartbeat\Business\Ambulance;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 
 /**
@@ -21,7 +21,7 @@ use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
  * @group DoctorTest
  * Add your own group annotations below this line
  */
-class DoctorTest extends PHPUnit_Framework_TestCase
+class DoctorTest extends Unit
 {
 
     /**

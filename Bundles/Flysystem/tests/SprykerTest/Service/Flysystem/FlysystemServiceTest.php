@@ -8,8 +8,8 @@
 namespace SprykerTest\Service\Flysystem;
 
 use Codeception\Configuration;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
@@ -26,7 +26,7 @@ use SprykerTest\Service\Flysystem\Stub\FlysystemConfigStub;
  * @group FlysystemServiceTest
  * Add your own group annotations below this line
  */
-class FlysystemServiceTest extends PHPUnit_Framework_TestCase
+class FlysystemServiceTest extends Unit
 {
 
     const RESOURCE_FILE_NAME = 'fileName.jpg';

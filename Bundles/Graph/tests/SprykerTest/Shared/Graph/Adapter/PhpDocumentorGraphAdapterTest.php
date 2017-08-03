@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Graph\Adapter;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
  * @group PhpDocumentorGraphAdapterTest
  * Add your own group annotations below this line
  */
-class PhpDocumentorGraphAdapterTest extends PHPUnit_Framework_TestCase
+class PhpDocumentorGraphAdapterTest extends Unit
 {
 
     const GRAPH_NAME = 'graph name';

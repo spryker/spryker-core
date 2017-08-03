@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Search\Communication\Console;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Search\Communication\Console\GenerateIndexMapConsole;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -22,7 +22,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @group GenerateIndexMapConsoleTest
  * Add your own group annotations below this line
  */
-class GenerateIndexMapConsoleTest extends PHPUnit_Framework_TestCase
+class GenerateIndexMapConsoleTest extends Unit
 {
 
     /**

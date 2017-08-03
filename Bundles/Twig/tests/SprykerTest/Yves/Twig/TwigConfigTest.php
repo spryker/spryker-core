@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Twig;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Twig\TwigConfig;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Yves\Twig\TwigConfig;
  * @group TwigConfigTest
  * Add your own group annotations below this line
  */
-class TwigConfigTest extends PHPUnit_Framework_TestCase
+class TwigConfigTest extends Unit
 {
 
     /**

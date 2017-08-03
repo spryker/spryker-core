@@ -7,8 +7,8 @@
 
 namespace Unit\Spryker\Zed\Category\Persistence;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
@@ -21,7 +21,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
  * @group CategoryQueryContainerTest
  * Add your own group annotations below this line
  */
-class CategoryQueryContainerTest extends PHPUnit_Framework_TestCase
+class CategoryQueryContainerTest extends Unit
 {
 
     const ID_CATEGORY_NODE = 23;

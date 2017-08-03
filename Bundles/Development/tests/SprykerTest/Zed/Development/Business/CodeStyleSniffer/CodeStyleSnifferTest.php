@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Development\Business\CodeStyleSniffer;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException;
 
@@ -21,7 +21,7 @@ use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExist
  * @group CodeStyleSnifferTest
  * Add your own group annotations below this line
  */
-class CodeStyleSnifferTest extends PHPUnit_Framework_TestCase
+class CodeStyleSnifferTest extends Unit
 {
 
     /**

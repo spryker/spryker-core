@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Zed\Mail\Business\Model\Provider;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailSenderTransfer;
 use Generated\Shared\Transfer\MailTemplateTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer;
 use Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface;
@@ -28,7 +28,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  * @group SwiftMailerTest
  * Add your own group annotations below this line
  */
-class SwiftMailerTest extends PHPUnit_Framework_TestCase
+class SwiftMailerTest extends Unit
 {
 
     const SUBJECT = 'subject';

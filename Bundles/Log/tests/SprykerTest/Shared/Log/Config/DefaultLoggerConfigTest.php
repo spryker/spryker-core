@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Log\Config;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 
@@ -20,7 +20,7 @@ use Spryker\Shared\Log\Config\DefaultLoggerConfig;
  * @group DefaultLoggerConfigTest
  * Add your own group annotations below this line
  */
-class DefaultLoggerConfigTest extends PHPUnit_Framework_TestCase
+class DefaultLoggerConfigTest extends Unit
 {
 
     /**

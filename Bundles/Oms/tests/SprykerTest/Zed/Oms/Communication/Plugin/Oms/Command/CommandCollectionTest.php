@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
@@ -25,7 +25,7 @@ use Spryker\Zed\Oms\Exception\CommandNotFoundException;
  * @group CommandCollectionTest
  * Add your own group annotations below this line
  */
-class CommandCollectionTest extends PHPUnit_Framework_TestCase
+class CommandCollectionTest extends Unit
 {
 
     const COMMAND_NAME = 'commandName';

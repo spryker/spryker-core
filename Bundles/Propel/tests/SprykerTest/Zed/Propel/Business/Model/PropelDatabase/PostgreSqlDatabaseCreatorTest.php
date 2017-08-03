@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Propel\Business\Model\PropelDatabase;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\Propel\PropelConfig;
  * @group PostgreSqlDatabaseCreatorTest
  * Add your own group annotations below this line
  */
-class PostgreSqlDatabaseCreatorTest extends PHPUnit_Framework_TestCase
+class PostgreSqlDatabaseCreatorTest extends Unit
 {
 
     /**

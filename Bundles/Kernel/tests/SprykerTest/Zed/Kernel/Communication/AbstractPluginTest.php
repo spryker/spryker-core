@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\Communication;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
@@ -27,7 +27,7 @@ use SprykerTest\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugi
  * @group AbstractPluginTest
  * Add your own group annotations below this line
  */
-class AbstractPluginTest extends PHPUnit_Framework_TestCase
+class AbstractPluginTest extends Unit
 {
 
     /**

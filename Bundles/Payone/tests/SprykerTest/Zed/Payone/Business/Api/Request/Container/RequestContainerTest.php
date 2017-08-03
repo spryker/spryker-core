@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Payone\Business\Api\Request\Container;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Payone\PayoneApiConstants;
 use Spryker\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use Spryker\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer as AuthorizationBusinessContainer;
@@ -47,7 +47,7 @@ use Spryker\Zed\Payone\Business\Api\Request\Container\RefundContainer;
  * @group RequestContainerTest
  * Add your own group annotations below this line
  */
-class RequestContainerTest extends PHPUnit_Framework_TestCase
+class RequestContainerTest extends Unit
 {
 
     /**

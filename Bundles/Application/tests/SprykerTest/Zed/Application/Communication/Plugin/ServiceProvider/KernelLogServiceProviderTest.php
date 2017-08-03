@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\KernelLogServiceProvider;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -24,7 +24,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * @group KernelLogServiceProviderTest
  * Add your own group annotations below this line
  */
-class KernelLogServiceProviderTest extends PHPUnit_Framework_TestCase
+class KernelLogServiceProviderTest extends Unit
 {
 
     /**

@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
@@ -26,7 +26,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group ProductBundleReaderTest
  * Add your own group annotations below this line
  */
-class ProductBundleReaderTest extends PHPUnit_Framework_TestCase
+class ProductBundleReaderTest extends Unit
 {
 
     /**

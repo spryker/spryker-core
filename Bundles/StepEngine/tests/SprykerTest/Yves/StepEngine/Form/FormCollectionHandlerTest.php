@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\StepEngine\Form;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group FormCollectionHandlerTest
  * Add your own group annotations below this line
  */
-class FormCollectionHandlerTest extends PHPUnit_Framework_TestCase
+class FormCollectionHandlerTest extends Unit
 {
 
     /**

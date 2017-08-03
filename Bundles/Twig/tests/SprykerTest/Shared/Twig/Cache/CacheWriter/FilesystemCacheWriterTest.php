@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Twig\Cache\CacheWriter;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
 use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 
@@ -21,7 +21,7 @@ use Spryker\Shared\Twig\Cache\CacheWriterInterface;
  * @group FilesystemCacheWriterTest
  * Add your own group annotations below this line
  */
-class FilesystemCacheWriterTest extends PHPUnit_Framework_TestCase
+class FilesystemCacheWriterTest extends Unit
 {
 
     /**

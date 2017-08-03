@@ -6,7 +6,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Application\Communication\ZedBootstrap;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Application\Communication\ZedBootstrap;
  * @group ZedBootstrapTest
  * Add your own group annotations below this line
  */
-class ZedBootstrapTest extends PHPUnit_Framework_TestCase
+class ZedBootstrapTest extends Unit
 {
 
     const HTTP_X_INTERNAL_REQUEST = 'HTTP_X_INTERNAL_REQUEST';

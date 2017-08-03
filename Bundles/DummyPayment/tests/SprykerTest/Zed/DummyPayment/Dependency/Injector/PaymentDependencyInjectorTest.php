@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\DummyPayment\Dependency\Injector;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\DummyPayment\Dependency\Injector\PaymentDependencyInjector;
 use Spryker\Zed\Kernel\Container;
@@ -23,7 +23,7 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
  * @group PaymentDependencyInjectorTest
  * Add your own group annotations below this line
  */
-class PaymentDependencyInjectorTest extends PHPUnit_Framework_TestCase
+class PaymentDependencyInjectorTest extends Unit
 {
 
     /**

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Refund\Business\Model;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -16,7 +17,6 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Refund\Business\Model\RefundSaver;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface;
@@ -33,7 +33,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
  * @group RefundSaverTest
  * Add your own group annotations below this line
  */
-class RefundSaverTest extends PHPUnit_Framework_TestCase
+class RefundSaverTest extends Unit
 {
 
     /**

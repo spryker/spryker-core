@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\PriceCartConnector\Business\Manager;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
@@ -26,7 +26,7 @@ use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
  * @group PriceManagerTest
  * Add your own group annotations below this line
  */
-class PriceManagerTest extends PHPUnit_Framework_TestCase
+class PriceManagerTest extends Unit
 {
 
     /**

@@ -7,12 +7,12 @@
 
 namespace SprykerTest\Zed\Payolution\Communication\Plugin\Checkout;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPostCheckPlugin;
 use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
@@ -28,7 +28,7 @@ use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
  * @group PayolutionPostCheckPluginTest
  * Add your own group annotations below this line
  */
-class PayolutionPostCheckPluginTest extends PHPUnit_Framework_TestCase
+class PayolutionPostCheckPluginTest extends Unit
 {
 
     const PROCESSING_SUCCESS_CODE = 'VA.PA.90.00';

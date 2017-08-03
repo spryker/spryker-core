@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString\Specification\CollectorSpecification;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface;
 
@@ -25,7 +25,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
  * @group CollectorAndSpecificationTest
  * Add your own group annotations below this line
  */
-class CollectorAndSpecificationTest extends PHPUnit_Framework_TestCase
+class CollectorAndSpecificationTest extends Unit
 {
 
     /**

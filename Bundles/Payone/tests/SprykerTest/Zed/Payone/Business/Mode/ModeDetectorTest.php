@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Payone\Business\Mode;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Payone\Dependency\ModeDetectorInterface;
 use Spryker\Zed\Payone\Business\Mode\ModeDetector;
 use Spryker\Zed\Payone\PayoneConfig;
@@ -22,7 +22,7 @@ use Spryker\Zed\Payone\PayoneConfig;
  * @group ModeDetectorTest
  * Add your own group annotations below this line
  */
-class ModeDetectorTest extends PHPUnit_Framework_TestCase
+class ModeDetectorTest extends Unit
 {
 
     /**

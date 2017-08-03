@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\Persistence;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocatorMatcher;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainerLocatorMatcher;
  * @group QueryContainerLocatorMatcherTest
  * Add your own group annotations below this line
  */
-class QueryContainerLocatorMatcherTest extends PHPUnit_Framework_TestCase
+class QueryContainerLocatorMatcherTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Propel\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\PropelFacade;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -21,7 +21,7 @@ use Spryker\Zed\Propel\PropelConfig;
  * @group PropelFacadeTest
  * Add your own group annotations below this line
  */
-class PropelFacadeTest extends PHPUnit_Framework_TestCase
+class PropelFacadeTest extends Unit
 {
 
     /**

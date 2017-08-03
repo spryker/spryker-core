@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\StepEngine\Dependency\Step;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
@@ -22,7 +22,7 @@ use SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
  * @group BaseStepTest
  * Add your own group annotations below this line
  */
-class BaseStepTest extends PHPUnit_Framework_TestCase
+class BaseStepTest extends Unit
 {
 
     const STEP_ROUTE = 'stepRoute';

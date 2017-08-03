@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Shared\ZedRequest\Client;
 
+use Codeception\Test\Unit;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit_Framework_TestCase;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
@@ -25,7 +25,7 @@ use SprykerTest\Shared\ZedRequest\Client\Fixture\Transfer;
  * @group AbstractHttpClientTest
  * Add your own group annotations below this line
  */
-class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
+class AbstractHttpClientTest extends Unit
 {
 
     const TRANSFER_VALUE = 'catface';

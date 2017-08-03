@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\UtilText\Model\Filter;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilText\Model\Filter\CamelCaseToSeparator;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Service\UtilText\Model\Filter\CamelCaseToSeparator;
  * @group CamelCaseToSeparatorTest
  * Add your own group annotations below this line
  */
-class CamelCaseToSeparatorTest extends PHPUnit_Framework_TestCase
+class CamelCaseToSeparatorTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Payone\Business\Key;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Payone\Business\Key\HashProvider;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\Payone\Business\Key\HashProvider;
  * @group KeyHashProviderTest
  * Add your own group annotations below this line
  */
-class KeyHashProviderTest extends PHPUnit_Framework_TestCase
+class KeyHashProviderTest extends Unit
 {
 
     /**

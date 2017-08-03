@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\NewRelic\Communication\Plugin;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Zed\Kernel\AbstractFactory;
@@ -27,7 +27,7 @@ use Symfony\Component\Console\Output\Output;
  * @group NewRelicConsolePluginTest
  * Add your own group annotations below this line
  */
-class NewRelicConsolePluginTest extends PHPUnit_Framework_TestCase
+class NewRelicConsolePluginTest extends Unit
 {
 
     /**

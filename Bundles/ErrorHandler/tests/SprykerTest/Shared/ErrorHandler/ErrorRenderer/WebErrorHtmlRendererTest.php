@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Shared\ErrorHandler\ErrorRenderer;
 
+use Codeception\Test\Unit;
 use Exception;
-use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
@@ -23,7 +23,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
  * @group WebErrorHtmlRendererTest
  * Add your own group annotations below this line
  */
-class WebErrorHtmlRendererTest extends PHPUnit_Framework_TestCase
+class WebErrorHtmlRendererTest extends Unit
 {
 
     /**

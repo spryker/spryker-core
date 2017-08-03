@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\Communication;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerTest\Zed\Kernel\Communication\Fixture\FixtureGatewayController;
@@ -21,7 +21,7 @@ use SprykerTest\Zed\Kernel\Communication\Fixture\FixtureGatewayController;
  * @group AbstractGatewayControllerTest
  * Add your own group annotations below this line
  */
-class AbstractGatewayControllerTest extends PHPUnit_Framework_TestCase
+class AbstractGatewayControllerTest extends Unit
 {
 
     /**

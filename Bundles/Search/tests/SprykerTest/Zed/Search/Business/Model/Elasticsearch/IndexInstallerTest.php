@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch;
 
+use Codeception\Test\Unit;
 use Elastica\Client;
 use Elastica\Index;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
-use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
@@ -26,7 +26,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
  * @group IndexInstallerTest
  * Add your own group annotations below this line
  */
-class IndexInstallerTest extends PHPUnit_Framework_TestCase
+class IndexInstallerTest extends Unit
 {
 
     /**

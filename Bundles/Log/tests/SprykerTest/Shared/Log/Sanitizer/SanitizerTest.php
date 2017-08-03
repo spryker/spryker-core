@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Log\Sanitizer;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
@@ -20,7 +20,7 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
  * @group SanitizerTest
  * Add your own group annotations below this line
  */
-class SanitizerTest extends PHPUnit_Framework_TestCase
+class SanitizerTest extends Unit
 {
 
     const SANITIZED_VALUE = '***';

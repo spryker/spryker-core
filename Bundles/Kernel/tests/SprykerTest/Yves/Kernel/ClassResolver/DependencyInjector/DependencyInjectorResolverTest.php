@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Kernel\ClassResolver\DependencyInjector;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
@@ -24,7 +24,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group DependencyInjectorResolverTest
  * Add your own group annotations below this line
  */
-class DependencyInjectorResolverTest extends PHPUnit_Framework_TestCase
+class DependencyInjectorResolverTest extends Unit
 {
 
     /**

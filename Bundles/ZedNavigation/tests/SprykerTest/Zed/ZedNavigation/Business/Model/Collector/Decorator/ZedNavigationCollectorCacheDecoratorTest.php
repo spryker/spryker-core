@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business\Model\Collector\Decorator;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCollectorCacheDecorator;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
@@ -24,7 +24,7 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInt
  * @group ZedNavigationCollectorCacheDecoratorTest
  * Add your own group annotations below this line
  */
-class ZedNavigationCollectorCacheDecoratorTest extends PHPUnit_Framework_TestCase
+class ZedNavigationCollectorCacheDecoratorTest extends Unit
 {
 
     /**

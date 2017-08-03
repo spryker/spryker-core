@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\ErrorHandler;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
@@ -25,7 +25,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
  * @group ErrorHandlerFactoryTest
  * Add your own group annotations below this line
  */
-class ErrorHandlerFactoryTest extends PHPUnit_Framework_TestCase
+class ErrorHandlerFactoryTest extends Unit
 {
 
     /**

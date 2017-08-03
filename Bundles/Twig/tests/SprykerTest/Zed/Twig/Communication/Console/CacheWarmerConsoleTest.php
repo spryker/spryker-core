@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Twig\Communication\Console;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Twig\Business\TwigFacadeInterface;
 use Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole;
 use Symfony\Component\Console\Application;
@@ -23,7 +23,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @group CacheWarmerConsoleTest
  * Add your own group annotations below this line
  */
-class CacheWarmerConsoleTest extends PHPUnit_Framework_TestCase
+class CacheWarmerConsoleTest extends Unit
 {
 
     /**

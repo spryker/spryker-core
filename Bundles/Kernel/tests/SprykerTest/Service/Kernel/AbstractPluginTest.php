@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use SprykerTest\Service\Kernel\Fixtures\Plugin\FooPlugin;
@@ -20,7 +20,7 @@ use SprykerTest\Service\Kernel\Fixtures\Plugin\FooPlugin;
  * @group AbstractPluginTest
  * Add your own group annotations below this line
  */
-class AbstractPluginTest extends PHPUnit_Framework_TestCase
+class AbstractPluginTest extends Unit
 {
 
     /**

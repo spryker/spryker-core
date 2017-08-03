@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Money\Converter;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
 use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
 
@@ -20,7 +20,7 @@ use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
  * @group DecimalToIntegerConverterTest
  * Add your own group annotations below this line
  */
-class DecimalToIntegerConverterTest extends PHPUnit_Framework_TestCase
+class DecimalToIntegerConverterTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Assertion\Communication\Plugin\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Zed\Assertion\Business\AssertionFacade;
 use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceProvider;
@@ -23,7 +23,7 @@ use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceP
  * @group AssertionServiceProviderTest
  * Add your own group annotations below this line
  */
-class AssertionServiceProviderTest extends PHPUnit_Framework_TestCase
+class AssertionServiceProviderTest extends Unit
 {
 
     /**

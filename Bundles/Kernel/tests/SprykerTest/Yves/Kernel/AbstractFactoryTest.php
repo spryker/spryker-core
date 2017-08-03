@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
 use Spryker\Yves\Kernel\Container;
@@ -22,7 +22,7 @@ use SprykerTest\Yves\Kernel\Fixtures\ConcreteFactory;
  * @group AbstractFactoryTest
  * Add your own group annotations below this line
  */
-class AbstractFactoryTest extends PHPUnit_Framework_TestCase
+class AbstractFactoryTest extends Unit
 {
 
     const TEST_KEY = 'test';

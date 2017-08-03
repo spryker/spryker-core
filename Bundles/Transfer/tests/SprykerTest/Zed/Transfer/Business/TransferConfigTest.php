@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Transfer\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -20,7 +20,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group TransferConfigTest
  * Add your own group annotations below this line
  */
-class TransferConfigTest extends PHPUnit_Framework_TestCase
+class TransferConfigTest extends Unit
 {
 
     /**

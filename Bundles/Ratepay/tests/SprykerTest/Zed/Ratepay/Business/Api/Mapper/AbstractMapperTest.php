@@ -6,6 +6,7 @@
 
 namespace SprykerTest\Zed\Ratepay\Business\Api\Mapper;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -17,7 +18,6 @@ use Generated\Shared\Transfer\RatepayPaymentInstallmentTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory;
 use Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper;
 
@@ -32,7 +32,7 @@ use Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper;
  * @group AbstractMapperTest
  * Add your own group annotations below this line
  */
-abstract class AbstractMapperTest extends PHPUnit_Framework_TestCase
+abstract class AbstractMapperTest extends Unit
 {
 
     /**

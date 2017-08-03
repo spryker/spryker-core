@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Yves\Ratepay\Form\DataProvider;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Auto-generated group annotations
@@ -21,7 +21,7 @@ use PHPUnit_Framework_TestCase;
  * @group AbstractDataProviderTest
  * Add your own group annotations below this line
  */
-class AbstractDataProviderTest extends PHPUnit_Framework_TestCase
+class AbstractDataProviderTest extends Unit
 {
 
     const PHONE_NUMBER = 1234567890;

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Kernel\Dependency\Injector;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
@@ -19,6 +19,6 @@ use PHPUnit_Framework_TestCase;
  * @group DependencyInjectorTest
  * Add your own group annotations below this line
  */
-class DependencyInjectorTest extends PHPUnit_Framework_TestCase
+class DependencyInjectorTest extends Unit
 {
 }

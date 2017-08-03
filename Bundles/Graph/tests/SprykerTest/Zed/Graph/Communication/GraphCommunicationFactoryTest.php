@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Graph\Communication;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Graph\Communication\Exception\GraphAdapterNameIsAnObjectException;
 use Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterException;
@@ -24,7 +24,7 @@ use Spryker\Zed\Graph\GraphConfig;
  * @group GraphCommunicationFactoryTest
  * Add your own group annotations below this line
  */
-class GraphCommunicationFactoryTest extends PHPUnit_Framework_TestCase
+class GraphCommunicationFactoryTest extends Unit
 {
 
     const GRAPH_NAME = 'graph name';

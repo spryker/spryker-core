@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\Business\FacadeLocatorMatcher;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\FacadeLocatorMatcher;
  * @group FacadeLocatorMatcherTest
  * Add your own group annotations below this line
  */
-class FacadeLocatorMatcherTest extends PHPUnit_Framework_TestCase
+class FacadeLocatorMatcherTest extends Unit
 {
 
     /**

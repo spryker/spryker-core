@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\DummyPayment\Communication\Plugin\Oms\Condition;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsPayedPlugin;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsPayedPlugin;
  * @group IsPayedPluginTest
  * Add your own group annotations below this line
  */
-class IsPayedPluginTest extends PHPUnit_Framework_TestCase
+class IsPayedPluginTest extends Unit
 {
 
     /**

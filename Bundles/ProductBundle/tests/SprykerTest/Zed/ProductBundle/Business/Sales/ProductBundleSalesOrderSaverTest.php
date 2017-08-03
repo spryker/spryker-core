@@ -7,13 +7,13 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Sales;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
@@ -29,7 +29,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group ProductBundleSalesOrderSaverTest
  * Add your own group annotations below this line
  */
-class ProductBundleSalesOrderSaverTest extends PHPUnit_Framework_TestCase
+class ProductBundleSalesOrderSaverTest extends Unit
 {
 
     /**

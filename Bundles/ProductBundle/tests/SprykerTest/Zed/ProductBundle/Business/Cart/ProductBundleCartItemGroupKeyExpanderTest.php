@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Cart;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 
 /**
@@ -22,7 +22,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemG
  * @group ProductBundleCartItemGroupKeyExpanderTest
  * Add your own group annotations below this line
  */
-class ProductBundleCartItemGroupKeyExpanderTest extends PHPUnit_Framework_TestCase
+class ProductBundleCartItemGroupKeyExpanderTest extends Unit
 {
 
     /**

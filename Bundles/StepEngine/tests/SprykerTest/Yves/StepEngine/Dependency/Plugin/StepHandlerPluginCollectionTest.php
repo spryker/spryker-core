@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\StepEngine\Dependency\Plugin;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
 
@@ -21,7 +21,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
  * @group StepHandlerPluginCollectionTest
  * Add your own group annotations below this line
  */
-class StepHandlerPluginCollectionTest extends PHPUnit_Framework_TestCase
+class StepHandlerPluginCollectionTest extends Unit
 {
 
     const TEST_PLUGIN_NAME = 'test';

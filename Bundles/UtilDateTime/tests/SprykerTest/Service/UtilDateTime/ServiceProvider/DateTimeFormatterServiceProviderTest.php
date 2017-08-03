@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\UtilDateTime\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
 use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvider;
@@ -23,7 +23,7 @@ use Twig_Loader_Filesystem;
  * @group DateTimeFormatterServiceProviderTest
  * Add your own group annotations below this line
  */
-class DateTimeFormatterServiceProviderTest extends PHPUnit_Framework_TestCase
+class DateTimeFormatterServiceProviderTest extends Unit
 {
 
     /**

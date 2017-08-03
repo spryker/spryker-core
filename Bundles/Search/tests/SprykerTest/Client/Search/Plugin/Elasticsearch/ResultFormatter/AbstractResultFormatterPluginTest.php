@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
@@ -27,7 +27,7 @@ use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
  * @group AbstractResultFormatterPluginTest
  * Add your own group annotations below this line
  */
-abstract class AbstractResultFormatterPluginTest extends PHPUnit_Framework_TestCase
+abstract class AbstractResultFormatterPluginTest extends Unit
 {
 
     /**

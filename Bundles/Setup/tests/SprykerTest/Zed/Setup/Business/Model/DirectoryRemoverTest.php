@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Setup\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Setup\Business\Model\DirectoryRemover;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -21,7 +21,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group DirectoryRemoverTest
  * Add your own group annotations below this line
  */
-class DirectoryRemoverTest extends PHPUnit_Framework_TestCase
+class DirectoryRemoverTest extends Unit
 {
 
     /**

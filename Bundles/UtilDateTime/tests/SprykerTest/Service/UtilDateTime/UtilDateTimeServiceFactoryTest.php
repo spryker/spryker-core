@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\UtilDateTime;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterInterface;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceFactory;
 
@@ -19,7 +19,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceFactory;
  * @group UtilDateTimeServiceFactoryTest
  * Add your own group annotations below this line
  */
-class UtilDateTimeServiceFactoryTest extends PHPUnit_Framework_TestCase
+class UtilDateTimeServiceFactoryTest extends Unit
 {
 
     /**

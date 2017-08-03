@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\Refund\Business\Model;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
@@ -25,7 +25,7 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
  * @group RefundCalculatorTest
  * Add your own group annotations below this line
  */
-class RefundCalculatorTest extends PHPUnit_Framework_TestCase
+class RefundCalculatorTest extends Unit
 {
 
     /**

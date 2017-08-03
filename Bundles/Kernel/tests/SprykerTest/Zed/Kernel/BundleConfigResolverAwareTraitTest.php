@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 
@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
  * @group BundleConfigResolverAwareTraitTest
  * Add your own group annotations below this line
  */
-class BundleConfigResolverAwareTraitTest extends PHPUnit_Framework_TestCase
+class BundleConfigResolverAwareTraitTest extends Unit
 {
 
     /**

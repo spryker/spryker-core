@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Twig\Business\Model\CacheWarmer;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 use Spryker\Zed\Twig\Business\Model\CacheWarmer\CacheWarmer;
 use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
@@ -24,7 +24,7 @@ use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
  * @group CacheWarmerTest
  * Add your own group annotations below this line
  */
-class CacheWarmerTest extends PHPUnit_Framework_TestCase
+class CacheWarmerTest extends Unit
 {
 
     /**

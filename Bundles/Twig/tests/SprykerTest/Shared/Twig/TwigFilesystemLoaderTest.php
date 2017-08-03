@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Twig;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
@@ -25,7 +25,7 @@ use Twig_LoaderInterface;
  * @group TwigFilesystemLoaderTest
  * Add your own group annotations below this line
  */
-class TwigFilesystemLoaderTest extends PHPUnit_Framework_TestCase
+class TwigFilesystemLoaderTest extends Unit
 {
 
     const PATH_TO_ZED_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Zed/Bundle/Presentation';

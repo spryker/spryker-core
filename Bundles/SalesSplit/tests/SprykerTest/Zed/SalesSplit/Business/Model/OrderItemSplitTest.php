@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\SalesSplit\Business\Model;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface;
@@ -26,7 +26,7 @@ use SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
  * @group OrderItemSplitTest
  * Add your own group annotations below this line
  */
-class OrderItemSplitTest extends PHPUnit_Framework_TestCase
+class OrderItemSplitTest extends Unit
 {
 
     /**

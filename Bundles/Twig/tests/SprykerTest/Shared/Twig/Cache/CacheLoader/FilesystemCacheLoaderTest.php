@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Twig\Cache\CacheLoader;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
 
@@ -21,7 +21,7 @@ use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
  * @group FilesystemCacheLoaderTest
  * Add your own group annotations below this line
  */
-class FilesystemCacheLoaderTest extends PHPUnit_Framework_TestCase
+class FilesystemCacheLoaderTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Session\Business\Handler;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Shared\Session\Business\Handler\SessionHandlerFile;
 use Symfony\Component\Filesystem\Filesystem;
@@ -23,7 +23,7 @@ use Symfony\Component\Finder\Finder;
  * @group SessionHandlerFileTest
  * Add your own group annotations below this line
  */
-class SessionHandlerFileTest extends PHPUnit_Framework_TestCase
+class SessionHandlerFileTest extends Unit
 {
 
     const LIFETIME = 20;

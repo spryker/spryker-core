@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Assertion\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 use Spryker\Zed\Assertion\Business\Model\Assertion;
 use stdClass;
@@ -22,7 +22,7 @@ use stdClass;
  * @group AssertionTest
  * Add your own group annotations below this line
  */
-class AssertionTest extends PHPUnit_Framework_TestCase
+class AssertionTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\Communication\Form;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
@@ -28,7 +28,7 @@ use SprykerTest\Zed\Kernel\Communication\Form\Fixtures\FooType;
  * @group AbstractTypeTest
  * Add your own group annotations below this line
  */
-class AbstractTypeTest extends PHPUnit_Framework_TestCase
+class AbstractTypeTest extends Unit
 {
 
     /**

@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Yves\Money\Plugin\ServiceProvider;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
-use PHPUnit_Framework_TestCase;
 use Silex\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Money\Plugin\ServiceProvider\TwigMoneyServiceProvider;
@@ -25,7 +25,7 @@ use Twig_Environment;
  * @group TwigMoneyServiceProviderTest
  * Add your own group annotations below this line
  */
-class TwigMoneyServiceProviderTest extends PHPUnit_Framework_TestCase
+class TwigMoneyServiceProviderTest extends Unit
 {
 
     /**

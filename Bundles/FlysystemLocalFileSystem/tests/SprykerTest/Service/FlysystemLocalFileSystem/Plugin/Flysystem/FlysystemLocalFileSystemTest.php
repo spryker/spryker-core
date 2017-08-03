@@ -8,10 +8,10 @@
 namespace SprykerTest\Service\FlysystemLocalFileSystem\Plugin\Flysystem;
 
 use Codeception\Configuration;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\FilesystemInterface;
-use PHPUnit_Framework_TestCase;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 
 /**
@@ -24,7 +24,7 @@ use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBui
  * @group FlysystemLocalFileSystemTest
  * Add your own group annotations below this line
  */
-class FlysystemLocalFileSystemTest extends PHPUnit_Framework_TestCase
+class FlysystemLocalFileSystemTest extends Unit
 {
 
     const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';

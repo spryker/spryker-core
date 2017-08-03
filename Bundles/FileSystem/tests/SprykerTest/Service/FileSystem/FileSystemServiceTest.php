@@ -8,6 +8,7 @@
 namespace SprykerTest\Service\FileSystem;
 
 use Codeception\Configuration;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
 use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
@@ -19,7 +20,6 @@ use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
@@ -43,7 +43,7 @@ use SprykerTest\Service\FileSystem\Stub\FlysystemConfigStub;
  * @group FileSystemServiceTest
  * Add your own group annotations below this line
  */
-class FileSystemServiceTest extends PHPUnit_Framework_TestCase
+class FileSystemServiceTest extends Unit
 {
 
     const RESOURCE_FILE_NAME = 'fileName.jpg';

@@ -6,17 +6,17 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 
-class PreCheckMocks extends PHPUnit_Framework_TestCase
+class PreCheckMocks extends Unit
 {
 
     /**

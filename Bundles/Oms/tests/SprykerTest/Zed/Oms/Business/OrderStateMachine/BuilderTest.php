@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
@@ -27,7 +27,7 @@ use Spryker\Zed\Oms\Business\Util\DrawerInterface;
  * @group BuilderTest
  * Add your own group annotations below this line
  */
-class BuilderTest extends PHPUnit_Framework_TestCase
+class BuilderTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Twig\Business\Model\TemplatePathMapBuilder;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderInterface;
 use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplatePathMapBuilder;
 use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
@@ -24,7 +24,7 @@ use Symfony\Component\Finder\Finder;
  * @group TemplatePathMapBuilderTest
  * Add your own group annotations below this line
  */
-class TemplatePathMapBuilderTest extends PHPUnit_Framework_TestCase
+class TemplatePathMapBuilderTest extends Unit
 {
 
     /**

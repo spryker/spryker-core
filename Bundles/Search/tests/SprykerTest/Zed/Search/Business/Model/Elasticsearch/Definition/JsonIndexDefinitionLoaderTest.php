@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch\Definition;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
@@ -18,7 +19,7 @@ use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
  * @group Elasticsearch
  * @group JsonIndexDefinitionLoader
  */
-class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
+class JsonIndexDefinitionLoaderTest extends Unit
 {
 
     /**
@@ -332,7 +333,7 @@ class JsonIndexDefinitionLoaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger
      */
     protected function createJsonIndexDefinitionMerger()
     {

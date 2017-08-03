@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Container;
@@ -24,7 +24,7 @@ use SprykerTest\Zed\Kernel\Fixtures\Factory;
  * @group AbstractFactoryTest
  * Add your own group annotations below this line
  */
-class AbstractFactoryTest extends PHPUnit_Framework_TestCase
+class AbstractFactoryTest extends Unit
 {
 
     const CONTAINER_KEY = 'key';

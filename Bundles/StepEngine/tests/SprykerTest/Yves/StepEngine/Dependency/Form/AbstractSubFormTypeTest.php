@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\StepEngine\Dependency\Form;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -22,7 +22,7 @@ use Symfony\Component\Form\FormView;
  * @group AbstractSubFormTypeTest
  * Add your own group annotations below this line
  */
-class AbstractSubFormTypeTest extends PHPUnit_Framework_TestCase
+class AbstractSubFormTypeTest extends Unit
 {
 
     const TEMPLATE_PATH = 'abstract/sub/form/type';

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Oms\Business\Util;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Oms\Business\Util\Drawer;
@@ -29,7 +29,7 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
  * @group DrawerTest
  * Add your own group annotations below this line
  */
-class DrawerTest extends PHPUnit_Framework_TestCase
+class DrawerTest extends Unit
 {
 
     const CONDITION_NAME = 'conditionName';

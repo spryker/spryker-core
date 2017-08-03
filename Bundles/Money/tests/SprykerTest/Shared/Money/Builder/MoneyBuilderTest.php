@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Shared\Money\Builder;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Builder\MoneyBuilderInterface;
 use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
@@ -26,7 +26,7 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
  * @group MoneyBuilderTest
  * Add your own group annotations below this line
  */
-class MoneyBuilderTest extends PHPUnit_Framework_TestCase
+class MoneyBuilderTest extends Unit
 {
 
     const DEFAULT_CURRENCY = 'EUR';

@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Yves\Checkout\Model\DataContainer;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Yves\Checkout\DataContainer\DataContainer;
 use Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface;
 
@@ -22,7 +22,7 @@ use Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface;
  * @group DataContainerTest
  * Add your own group annotations below this line
  */
-class DataContainerTest extends PHPUnit_Framework_TestCase
+class DataContainerTest extends Unit
 {
 
     /**

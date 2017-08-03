@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Twig;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
@@ -23,7 +23,7 @@ use SprykerTest\Shared\Twig\Stub\CacheStub;
  * @group TwigFilesystemLoaderYvesTest
  * Add your own group annotations below this line
  */
-class TwigFilesystemLoaderYvesTest extends PHPUnit_Framework_TestCase
+class TwigFilesystemLoaderYvesTest extends Unit
 {
 
     const PATH_TO_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Yves/Bundle/Theme/default';

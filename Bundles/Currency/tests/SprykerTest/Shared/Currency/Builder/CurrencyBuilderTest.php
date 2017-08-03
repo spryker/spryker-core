@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Currency\Builder;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Shared\Currency\Builder\CurrencyBuilderInterface;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
@@ -23,7 +23,7 @@ use Symfony\Component\Intl\Intl;
  * @group CurrencyBuilderTest
  * Add your own group annotations below this line
  */
-class CurrencyBuilderTest extends PHPUnit_Framework_TestCase
+class CurrencyBuilderTest extends Unit
 {
 
     const DEFAULT_CURRENCY = 'EUR';

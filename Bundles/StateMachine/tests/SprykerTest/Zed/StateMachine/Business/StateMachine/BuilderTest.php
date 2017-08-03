@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\StateMachine\Business\StateMachine;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Spryker\Zed\StateMachine\Business\Process\Process;
@@ -27,7 +27,7 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
  * @group BuilderTest
  * Add your own group annotations below this line
  */
-class BuilderTest extends PHPUnit_Framework_TestCase
+class BuilderTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Storage\Provider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Storage\Provider\AbstractKvProvider;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Shared\Storage\Provider\AbstractKvProvider;
  * @group AbstractKvProviderTest
  * Add your own group annotations below this line
  */
-class AbstractKvProviderTest extends PHPUnit_Framework_TestCase
+class AbstractKvProviderTest extends Unit
 {
 
     /**

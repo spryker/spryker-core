@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductOption\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
@@ -17,7 +17,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class MockProvider extends PHPUnit_Framework_TestCase
+class MockProvider extends Unit
 {
 
     /**

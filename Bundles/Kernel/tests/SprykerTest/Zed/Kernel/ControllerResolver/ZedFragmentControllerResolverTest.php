@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\ControllerResolver;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group ZedFragmentControllerResolverTest
  * Add your own group annotations below this line
  */
-class ZedFragmentControllerResolverTest extends PHPUnit_Framework_TestCase
+class ZedFragmentControllerResolverTest extends Unit
 {
 
     /**

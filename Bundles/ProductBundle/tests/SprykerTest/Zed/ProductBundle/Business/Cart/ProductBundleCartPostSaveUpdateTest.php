@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Cart;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
 
 /**
@@ -22,7 +22,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostS
  * @group ProductBundleCartPostSaveUpdateTest
  * Add your own group annotations below this line
  */
-class ProductBundleCartPostSaveUpdateTest extends PHPUnit_Framework_TestCase
+class ProductBundleCartPostSaveUpdateTest extends Unit
 {
 
     /**

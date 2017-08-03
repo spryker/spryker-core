@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Shared\Money\Formatter\IntlMoneyFormatter;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Currency;
 use Money\Money;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
  * @group AbstractIntlMoneyFormatterTest
  * Add your own group annotations below this line
  */
-abstract class AbstractIntlMoneyFormatterTest extends PHPUnit_Framework_TestCase
+abstract class AbstractIntlMoneyFormatterTest extends Unit
 {
 
     /**

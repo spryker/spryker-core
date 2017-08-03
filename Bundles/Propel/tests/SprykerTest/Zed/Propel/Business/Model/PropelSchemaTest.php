@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Propel\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
@@ -25,7 +25,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group PropelSchemaTest
  * Add your own group annotations below this line
  */
-class PropelSchemaTest extends PHPUnit_Framework_TestCase
+class PropelSchemaTest extends Unit
 {
 
     /**

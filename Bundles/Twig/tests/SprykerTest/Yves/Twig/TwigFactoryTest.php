@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Twig;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Twig\TwigFactory;
 use Twig_LoaderInterface;
 
@@ -19,7 +19,7 @@ use Twig_LoaderInterface;
  * @group TwigFactoryTest
  * Add your own group annotations below this line
  */
-class TwigFactoryTest extends PHPUnit_Framework_TestCase
+class TwigFactoryTest extends Unit
 {
 
     /**

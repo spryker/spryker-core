@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\PropelOrm\Business\Transaction;
 
+use Codeception\Test\Unit;
 use Exception;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerTest\Zed\PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
 
@@ -22,7 +22,7 @@ use SprykerTest\Zed\PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
  * @group DatabaseTransactionHandlerTraitTest
  * Add your own group annotations below this line
  */
-class DatabaseTransactionHandlerTraitTest extends PHPUnit_Framework_TestCase
+class DatabaseTransactionHandlerTraitTest extends Unit
 {
 
     /**

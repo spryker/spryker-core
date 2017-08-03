@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Setup\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Setup\SetupConfig;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Setup\SetupConfig;
  * @group SetupConfigTest
  * Add your own group annotations below this line
  */
-class SetupConfigTest extends PHPUnit_Framework_TestCase
+class SetupConfigTest extends Unit
 {
 
     /**

@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\TaxProductConnector\Business\Model;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
@@ -25,7 +25,7 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContaine
  * @group TaxRateCalculationTest
  * Add your own group annotations below this line
  */
-class TaxRateCalculationTest extends PHPUnit_Framework_TestCase
+class TaxRateCalculationTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group RequestServiceProviderTest
  * Add your own group annotations below this line
  */
-class RequestServiceProviderTest extends PHPUnit_Framework_TestCase
+class RequestServiceProviderTest extends Unit
 {
 
     /**

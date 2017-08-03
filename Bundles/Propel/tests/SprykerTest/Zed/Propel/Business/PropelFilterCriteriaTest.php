@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Propel\Business;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
@@ -21,7 +21,7 @@ use Spryker\Zed\Propel\PropelFilterCriteria;
  * @group PropelFilterCriteriaTest
  * Add your own group annotations below this line
  */
-class PropelFilterCriteriaTest extends PHPUnit_Framework_TestCase
+class PropelFilterCriteriaTest extends Unit
 {
 
     /**

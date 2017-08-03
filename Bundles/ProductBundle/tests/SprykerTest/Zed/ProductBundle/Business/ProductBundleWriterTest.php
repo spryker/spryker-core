@@ -8,11 +8,11 @@
 namespace SprykerTest\Zed\ProductBundle\Business;
 
 use ArrayObject;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
@@ -28,7 +28,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group ProductBundleWriterTest
  * Add your own group annotations below this line
  */
-class ProductBundleWriterTest extends PHPUnit_Framework_TestCase
+class ProductBundleWriterTest extends Unit
 {
 
     /**

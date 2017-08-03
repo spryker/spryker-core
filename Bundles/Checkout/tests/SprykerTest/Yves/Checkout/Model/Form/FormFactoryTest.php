@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Checkout\Model\Form;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\Form\FormFactory;
 use Spryker\Yves\Kernel\Container;
@@ -22,7 +22,7 @@ use Spryker\Yves\Kernel\Container;
  * @group FormFactoryTest
  * Add your own group annotations below this line
  */
-class FormFactoryTest extends PHPUnit_Framework_TestCase
+class FormFactoryTest extends Unit
 {
 
     const SUB_FORMS = 'forms';

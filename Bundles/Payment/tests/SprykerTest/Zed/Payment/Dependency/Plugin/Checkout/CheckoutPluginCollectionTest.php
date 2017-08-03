@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Payment\Dependency\Plugin\Checkout;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
@@ -24,7 +24,7 @@ use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
  * @group CheckoutPluginCollectionTest
  * Add your own group annotations below this line
  */
-class CheckoutPluginCollectionTest extends PHPUnit_Framework_TestCase
+class CheckoutPluginCollectionTest extends Unit
 {
 
     const PROVIDER = 'provider';

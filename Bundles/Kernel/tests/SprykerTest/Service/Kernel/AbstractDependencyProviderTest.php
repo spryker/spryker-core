@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
@@ -19,7 +19,7 @@ use Spryker\Service\Kernel\Container;
  * @group AbstractDependencyProviderTest
  * Add your own group annotations below this line
  */
-class AbstractDependencyProviderTest extends PHPUnit_Framework_TestCase
+class AbstractDependencyProviderTest extends Unit
 {
 
     /**

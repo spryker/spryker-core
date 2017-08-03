@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ZedNavigation\Business\Model\Cache;
 
 use Application\Module\Zed;
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationCacheEmptyException;
 use Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationCacheFileDoesNotExistException;
@@ -26,7 +26,7 @@ use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge;
  * @group ZedNavigationCacheTest
  * Add your own group annotations below this line
  */
-class ZedNavigationCacheTest extends PHPUnit_Framework_TestCase
+class ZedNavigationCacheTest extends Unit
 {
 
     /**

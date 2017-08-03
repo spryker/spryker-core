@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Development\Business\Composer\Updater;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -22,7 +22,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * @group AutoloadUpdaterTest
  * Add your own group annotations below this line
  */
-class AutoloadUpdaterTest extends PHPUnit_Framework_TestCase
+class AutoloadUpdaterTest extends Unit
 {
 
     /**

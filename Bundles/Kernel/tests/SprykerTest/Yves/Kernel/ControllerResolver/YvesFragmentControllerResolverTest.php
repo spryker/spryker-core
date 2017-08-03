@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Kernel\ControllerResolver;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group YvesFragmentControllerResolverTest
  * Add your own group annotations below this line
  */
-class YvesFragmentControllerResolverTest extends PHPUnit_Framework_TestCase
+class YvesFragmentControllerResolverTest extends Unit
 {
 
     /**

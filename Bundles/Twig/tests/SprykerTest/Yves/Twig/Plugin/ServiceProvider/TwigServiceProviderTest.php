@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Twig\Plugin\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Yves\Twig\Plugin\ServiceProvider\TwigServiceProvider;
 
@@ -21,7 +21,7 @@ use Spryker\Yves\Twig\Plugin\ServiceProvider\TwigServiceProvider;
  * @group TwigServiceProviderTest
  * Add your own group annotations below this line
  */
-class TwigServiceProviderTest extends PHPUnit_Framework_TestCase
+class TwigServiceProviderTest extends Unit
 {
 
     /**

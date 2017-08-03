@@ -6,12 +6,12 @@
 
 namespace SprykerTest\Zed\CustomerGroupDiscountConnector\Business\DecisionRule;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\CustomerGroupDiscountConnector\Business\DecisionRule\CustomerGroupDecisionRule;
 use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface;
 use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToDiscountFacadeInterface;
@@ -26,7 +26,7 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
  * @group CustomerGroupDecisionRuleTest
  * Add your own group annotations below this line
  */
-class CustomerGroupDecisionRuleTest extends PHPUnit_Framework_TestCase
+class CustomerGroupDecisionRuleTest extends Unit
 {
 
     /**

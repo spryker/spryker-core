@@ -8,13 +8,13 @@
 namespace SprykerTest\Zed\ProductBundle\Business\Calculation;
 
 use ArrayObject;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
 
@@ -28,7 +28,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePr
  * @group ProductBundlePriceCalculationTest
  * Add your own group annotations below this line
  */
-class ProductBundlePriceCalculationTest extends PHPUnit_Framework_TestCase
+class ProductBundlePriceCalculationTest extends Unit
 {
 
     /**

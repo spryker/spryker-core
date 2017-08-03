@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Propel\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -21,7 +21,7 @@ use Symfony\Component\Finder\SplFileInfo;
  * @group PropelSchemaMergerTest
  * Add your own group annotations below this line
  */
-class PropelSchemaMergerTest extends PHPUnit_Framework_TestCase
+class PropelSchemaMergerTest extends Unit
 {
 
     /**

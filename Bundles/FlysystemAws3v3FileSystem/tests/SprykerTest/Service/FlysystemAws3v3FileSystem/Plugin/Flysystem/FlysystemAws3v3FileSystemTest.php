@@ -8,11 +8,11 @@
 namespace SprykerTest\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem;
 
 use Codeception\Configuration;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer;
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\FilesystemInterface;
-use PHPUnit_Framework_TestCase;
 use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 
 /**
@@ -25,7 +25,7 @@ use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemB
  * @group FlysystemAws3v3FileSystemTest
  * Add your own group annotations below this line
  */
-class FlysystemAws3v3FileSystemTest extends PHPUnit_Framework_TestCase
+class FlysystemAws3v3FileSystemTest extends Unit
 {
 
     const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';

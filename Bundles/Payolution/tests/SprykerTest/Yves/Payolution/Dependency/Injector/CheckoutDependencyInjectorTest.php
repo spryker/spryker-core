@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Payolution\Dependency\Injector;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Payolution\Dependency\Injector\CheckoutDependencyInjector;
@@ -25,7 +25,7 @@ use Spryker\Zed\Payolution\PayolutionConfig;
  * @group CheckoutDependencyInjectorTest
  * Add your own group annotations below this line
  */
-class CheckoutDependencyInjectorTest extends PHPUnit_Framework_TestCase
+class CheckoutDependencyInjectorTest extends Unit
 {
 
     /**

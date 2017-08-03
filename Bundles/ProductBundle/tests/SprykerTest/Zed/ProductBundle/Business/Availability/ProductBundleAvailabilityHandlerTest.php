@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Availability;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
@@ -27,7 +27,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group ProductBundleAvailabilityHandlerTest
  * Add your own group annotations below this line
  */
-class ProductBundleAvailabilityHandlerTest extends PHPUnit_Framework_TestCase
+class ProductBundleAvailabilityHandlerTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\Kernel\Locator;
 
@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Locator;
  * @group LocatorTest
  * Add your own group annotations below this line
  */
-class LocatorTest extends PHPUnit_Framework_TestCase
+class LocatorTest extends Unit
 {
 
     /**

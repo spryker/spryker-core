@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Development\Business\PhpMd\Rules\Design;
 
+use Codeception\Test\Unit;
 use PHPMD\AbstractNode;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects;
  * @group CouplingBetweenObjectsTest
  * Add your own group annotations below this line
  */
-class CouplingBetweenObjectsTest extends PHPUnit_Framework_TestCase
+class CouplingBetweenObjectsTest extends Unit
 {
 
     const NUMBER_OF_COUPLING_BETWEEN_OBJECTS = 2;

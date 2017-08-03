@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Shared\Money\Parser;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\IntlMoneyParser;
 use NumberFormatter;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
 use Spryker\Shared\Money\Parser\Parser;
@@ -25,7 +25,7 @@ use Spryker\Shared\Money\Parser\Parser;
  * @group ParserTest
  * Add your own group annotations below this line
  */
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends Unit
 {
 
     /**

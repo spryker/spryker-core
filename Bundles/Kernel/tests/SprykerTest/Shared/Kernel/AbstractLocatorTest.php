@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use SprykerTest\Shared\Kernel\Fixtures\MissingPropertyLocator;
 
 /**
@@ -18,7 +18,7 @@ use SprykerTest\Shared\Kernel\Fixtures\MissingPropertyLocator;
  * @group AbstractLocatorTest
  * Add your own group annotations below this line
  */
-class AbstractLocatorTest extends PHPUnit_Framework_TestCase
+class AbstractLocatorTest extends Unit
 {
 
     /**

@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\DummyPayment\Communication\Plugin\Checkout;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheckPlugin;
 
@@ -25,7 +25,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheck
  * @group DummyPaymentPostCheckPluginTest
  * Add your own group annotations below this line
  */
-class DummyPaymentPostCheckPluginTest extends PHPUnit_Framework_TestCase
+class DummyPaymentPostCheckPluginTest extends Unit
 {
 
     /**

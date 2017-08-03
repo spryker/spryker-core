@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\Ratepay\Business\Payment\Transaction;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Status\TransactionStatus;
 use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
@@ -26,7 +26,7 @@ use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
  * @group StatusTest
  * Add your own group annotations below this line
  */
-class StatusTest extends PHPUnit_Framework_TestCase
+class StatusTest extends Unit
 {
 
     /**

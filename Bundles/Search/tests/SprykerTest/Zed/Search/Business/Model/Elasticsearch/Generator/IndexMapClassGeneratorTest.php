@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch\Generator;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 
@@ -24,7 +24,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
  * @group IndexMapClassGeneratorTest
  * Add your own group annotations below this line
  */
-class IndexMapClassGeneratorTest extends PHPUnit_Framework_TestCase
+class IndexMapClassGeneratorTest extends Unit
 {
 
     const TARGET_DIRECTORY = __DIR__ . '/Generated/';

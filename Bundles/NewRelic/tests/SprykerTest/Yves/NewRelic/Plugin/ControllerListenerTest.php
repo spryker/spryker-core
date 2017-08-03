@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\NewRelic\Plugin;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\NewRelicApi\NewRelicApi;
 use Spryker\Yves\NewRelic\Plugin\ControllerListener;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @group ControllerListenerTest
  * Add your own group annotations below this line
  */
-class ControllerListenerTest extends PHPUnit_Framework_TestCase
+class ControllerListenerTest extends Unit
 {
 
     /**

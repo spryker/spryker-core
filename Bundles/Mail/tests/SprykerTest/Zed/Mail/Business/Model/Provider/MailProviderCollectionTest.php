@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Mail\Business\Model\Provider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  * @group MailProviderCollectionTest
  * Add your own group annotations below this line
  */
-class MailProviderCollectionTest extends PHPUnit_Framework_TestCase
+class MailProviderCollectionTest extends Unit
 {
 
     const TYPE_A = 'type a';

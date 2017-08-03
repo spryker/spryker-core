@@ -7,12 +7,12 @@
 
 namespace SprykerTest\Zed\Mail\Business\Model\Mail\Builder;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailSenderTransfer;
 use Generated\Shared\Transfer\MailTemplateTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Mail\Business\Exception\MissingMailTransferException;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
@@ -30,7 +30,7 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
  * @group MailBuilderTest
  * Add your own group annotations below this line
  */
-class MailBuilderTest extends PHPUnit_Framework_TestCase
+class MailBuilderTest extends Unit
 {
 
     const SUBJECT = 'subject';

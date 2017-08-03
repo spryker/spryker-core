@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Twig\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
 use Spryker\Zed\Twig\Business\TwigBusinessFactory;
 use Spryker\Zed\Twig\Business\TwigFacade;
@@ -22,7 +22,7 @@ use Spryker\Zed\Twig\Business\TwigFacade;
  * @group TwigFacadeTest
  * Add your own group annotations below this line
  */
-class TwigFacadeTest extends PHPUnit_Framework_TestCase
+class TwigFacadeTest extends Unit
 {
 
     /**

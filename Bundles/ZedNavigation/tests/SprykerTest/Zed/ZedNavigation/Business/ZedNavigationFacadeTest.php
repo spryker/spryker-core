@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade;
  * @group ZedNavigationFacadeTest
  * Add your own group annotations below this line
  */
-class ZedNavigationFacadeTest extends PHPUnit_Framework_TestCase
+class ZedNavigationFacadeTest extends Unit
 {
 
     /**

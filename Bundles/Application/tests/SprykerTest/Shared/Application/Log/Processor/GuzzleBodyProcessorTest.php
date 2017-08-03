@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Application\Log\Processor;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Application\Log\Processor\GuzzleBodyProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 
@@ -21,7 +21,7 @@ use Spryker\Shared\Log\Sanitizer\Sanitizer;
  * @group GuzzleBodyProcessorTest
  * Add your own group annotations below this line
  */
-class GuzzleBodyProcessorTest extends PHPUnit_Framework_TestCase
+class GuzzleBodyProcessorTest extends Unit
 {
 
     /**

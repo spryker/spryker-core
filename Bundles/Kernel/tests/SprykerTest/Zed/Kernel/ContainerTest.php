@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Zed\Kernel\Container;
@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Container;
  * @group ContainerTest
  * Add your own group annotations below this line
  */
-class ContainerTest extends PHPUnit_Framework_TestCase
+class ContainerTest extends Unit
 {
 
     const TEST_VALUE = 'foo';

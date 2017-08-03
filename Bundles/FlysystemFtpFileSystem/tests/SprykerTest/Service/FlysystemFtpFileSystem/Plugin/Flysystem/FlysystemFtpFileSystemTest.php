@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Service\FlysystemFtpFileSystem\Plugin\Flysystem;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FlysystemConfigFtpTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
 use League\Flysystem\FilesystemInterface;
-use PHPUnit_Framework_TestCase;
 use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilder
  * @group FlysystemFtpFileSystemTest
  * Add your own group annotations below this line
  */
-class FlysystemFtpFileSystemTest extends PHPUnit_Framework_TestCase
+class FlysystemFtpFileSystemTest extends Unit
 {
 
     /**

@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Auth\Business\Model;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserTransfer;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @group AuthTest
  * Add your own group annotations below this line
  */
-class AuthTest extends PHPUnit_Framework_TestCase
+class AuthTest extends Unit
 {
 
     /**

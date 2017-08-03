@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Cart;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -15,7 +16,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
@@ -33,7 +33,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group ProductBundleCartExpanderTest
  * Add your own group annotations below this line
  */
-class ProductBundleCartExpanderTest extends PHPUnit_Framework_TestCase
+class ProductBundleCartExpanderTest extends Unit
 {
 
     /**

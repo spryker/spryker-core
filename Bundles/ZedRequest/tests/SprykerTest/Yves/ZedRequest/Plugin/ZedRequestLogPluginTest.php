@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Yves\ZedRequest\Plugin;
 
+use Codeception\Test\Unit;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
-use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 use Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin;
@@ -23,7 +23,7 @@ use Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin;
  * @group ZedRequestLogPluginTest
  * Add your own group annotations below this line
  */
-class ZedRequestLogPluginTest extends PHPUnit_Framework_TestCase
+class ZedRequestLogPluginTest extends Unit
 {
 
     /**

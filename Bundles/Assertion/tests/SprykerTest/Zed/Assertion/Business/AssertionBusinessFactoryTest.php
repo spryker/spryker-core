@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Assertion\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Assertion\Business\AssertionBusinessFactory;
 use Spryker\Zed\Assertion\Business\Model\Assertion;
 
@@ -20,7 +20,7 @@ use Spryker\Zed\Assertion\Business\Model\Assertion;
  * @group AssertionBusinessFactoryTest
  * Add your own group annotations below this line
  */
-class AssertionBusinessFactoryTest extends PHPUnit_Framework_TestCase
+class AssertionBusinessFactoryTest extends Unit
 {
 
     /**

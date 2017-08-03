@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Category\Business;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Category\Business\CategoryFacade;
 
 /**
@@ -22,7 +22,7 @@ use Spryker\Zed\Category\Business\CategoryFacade;
  * @group CategoryFacadeTest
  * Add your own group annotations below this line
  */
-class CategoryFacadeTest extends PHPUnit_Framework_TestCase
+class CategoryFacadeTest extends Unit
 {
 
     /**

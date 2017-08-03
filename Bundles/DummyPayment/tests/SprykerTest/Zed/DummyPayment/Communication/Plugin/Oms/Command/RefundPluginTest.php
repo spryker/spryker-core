@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\DummyPayment\Communication\Plugin\Oms\Command;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Business\DummyPaymentFacade;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Command\RefundPlugin;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -25,7 +25,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
  * @group RefundPluginTest
  * Add your own group annotations below this line
  */
-class RefundPluginTest extends PHPUnit_Framework_TestCase
+class RefundPluginTest extends Unit
 {
 
     /**

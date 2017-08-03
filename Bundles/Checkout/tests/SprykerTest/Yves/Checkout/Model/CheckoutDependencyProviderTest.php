@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Checkout\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
@@ -22,7 +22,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
  * @group CheckoutDependencyProviderTest
  * Add your own group annotations below this line
  */
-class CheckoutDependencyProviderTest extends PHPUnit_Framework_TestCase
+class CheckoutDependencyProviderTest extends Unit
 {
 
     /**

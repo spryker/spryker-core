@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilder;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilder\TemplateNameBuilderYves;
 
 /**
@@ -22,7 +22,7 @@ use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilder\T
  * @group TemplateNameBuilderYvesTest
  * Add your own group annotations below this line
  */
-class TemplateNameBuilderYvesTest extends PHPUnit_Framework_TestCase
+class TemplateNameBuilderYvesTest extends Unit
 {
 
     /**

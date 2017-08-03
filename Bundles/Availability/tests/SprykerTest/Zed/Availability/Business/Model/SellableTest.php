@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Availability\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
@@ -22,7 +22,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
  * @group SellableTest
  * Add your own group annotations below this line
  */
-class SellableTest extends PHPUnit_Framework_TestCase
+class SellableTest extends Unit
 {
 
     const SKU_PRODUCT = 'sku-123-321';

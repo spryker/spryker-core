@@ -8,8 +8,8 @@
 namespace SprykerTest\Shared\Kernel\Transfer;
 
 use ArrayObject;
+use Codeception\Test\Unit;
 use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
@@ -22,7 +22,7 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
  * @group AbstractTransferTest
  * Add your own group annotations below this line
  */
-class AbstractTransferTest extends PHPUnit_Framework_TestCase
+class AbstractTransferTest extends Unit
 {
 
     /**

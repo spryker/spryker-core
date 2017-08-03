@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Kernel\Communication\Controller;
 
+use Codeception\Test\Unit;
 use Exception;
-use PHPUnit_Framework_TestCase;
 use SprykerTest\Zed\Kernel\Communication\Controller\Fixtures\MockController;
 
 /**
@@ -21,7 +21,7 @@ use SprykerTest\Zed\Kernel\Communication\Controller\Fixtures\MockController;
  * @group AbstractControllerTest
  * Add your own group annotations below this line
  */
-class AbstractControllerTest extends PHPUnit_Framework_TestCase
+class AbstractControllerTest extends Unit
 {
 
     const EXPECTED_INTERNAL_TYPE = 'int';

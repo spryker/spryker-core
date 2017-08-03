@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Twig\Dependency\Service;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 
@@ -21,7 +21,7 @@ use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
  * @group TwigToUtilTextServiceBridgeTest
  * Add your own group annotations below this line
  */
-class TwigToUtilTextServiceBridgeTest extends PHPUnit_Framework_TestCase
+class TwigToUtilTextServiceBridgeTest extends Unit
 {
 
     const STRING_TO_CONVERT = 'StringToConvert';

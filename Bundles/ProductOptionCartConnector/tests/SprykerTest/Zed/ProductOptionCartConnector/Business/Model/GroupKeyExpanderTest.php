@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\ProductOptionCartConnector\Business\Model;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
  * @group GroupKeyExpanderTest
  * Add your own group annotations below this line
  */
-class GroupKeyExpanderTest extends PHPUnit_Framework_TestCase
+class GroupKeyExpanderTest extends Unit
 {
 
     /**

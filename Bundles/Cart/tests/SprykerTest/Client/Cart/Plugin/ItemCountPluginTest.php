@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Client\Cart\Plugin;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 
 /**
@@ -21,7 +21,7 @@ use Spryker\Client\Cart\Plugin\ItemCountPlugin;
  * @group ItemCountPluginTest
  * Add your own group annotations below this line
  */
-class ItemCountPluginTest extends PHPUnit_Framework_TestCase
+class ItemCountPluginTest extends Unit
 {
 
     /**

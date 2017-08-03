@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\StepEngine\Dependency\Plugin;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 
@@ -21,7 +21,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
  * @group SubFormPluginCollectionTest
  * Add your own group annotations below this line
  */
-class SubFormPluginCollectionTest extends PHPUnit_Framework_TestCase
+class SubFormPluginCollectionTest extends Unit
 {
 
     /**

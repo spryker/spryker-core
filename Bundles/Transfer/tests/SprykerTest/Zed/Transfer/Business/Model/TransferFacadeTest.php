@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Transfer\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\TransferFacade;
 use Spryker\Zed\Transfer\TransferConfig;
@@ -24,7 +24,7 @@ use Symfony\Component\Finder\Finder;
  * @group TransferFacadeTest
  * Add your own group annotations below this line
  */
-class TransferFacadeTest extends PHPUnit_Framework_TestCase
+class TransferFacadeTest extends Unit
 {
 
     /**

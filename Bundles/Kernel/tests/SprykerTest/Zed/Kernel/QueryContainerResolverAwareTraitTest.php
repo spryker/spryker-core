@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Kernel\QueryContainerResolverAwareTrait;
 
@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\QueryContainerResolverAwareTrait;
  * @group QueryContainerResolverAwareTraitTest
  * Add your own group annotations below this line
  */
-class QueryContainerResolverAwareTraitTest extends PHPUnit_Framework_TestCase
+class QueryContainerResolverAwareTraitTest extends Unit
 {
 
     /**

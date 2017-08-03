@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Zed\Collector\Business\Exporter\Writer\Search;
 
+use Codeception\Test\Unit;
 use Elastica\Client;
 use Elastica\Index;
 use Elastica\Response;
 use Elastica\Type;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
 
@@ -27,7 +27,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
  * @group ElasticsearchWriterTest
  * Add your own group annotations below this line
  */
-class ElasticsearchWriterTest extends PHPUnit_Framework_TestCase
+class ElasticsearchWriterTest extends Unit
 {
 
     /**

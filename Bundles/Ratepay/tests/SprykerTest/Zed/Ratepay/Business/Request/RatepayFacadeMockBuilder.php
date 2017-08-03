@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Ratepay\Business\Request;
 
 use Generated\Shared\Transfer\RatepayRequestTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;

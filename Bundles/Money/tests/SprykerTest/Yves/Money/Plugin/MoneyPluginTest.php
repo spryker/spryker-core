@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Yves\Money\Plugin;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Money;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Money\Plugin\MoneyPlugin;
 
@@ -23,7 +23,7 @@ use Spryker\Yves\Money\Plugin\MoneyPlugin;
  * @group MoneyPluginTest
  * Add your own group annotations below this line
  */
-class MoneyPluginTest extends PHPUnit_Framework_TestCase
+class MoneyPluginTest extends Unit
 {
 
     const AMOUNT_INTEGER = 1000;

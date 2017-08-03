@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\ErrorHandler;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
  * @group ErrorHandlerEnvironmentTest
  * Add your own group annotations below this line
  */
-class ErrorHandlerEnvironmentTest extends PHPUnit_Framework_TestCase
+class ErrorHandlerEnvironmentTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\KeyBuilder;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Store;
 use SprykerTest\Shared\KeyBuilder\Fixtures\KeyBuilder;
 
@@ -19,7 +19,7 @@ use SprykerTest\Shared\KeyBuilder\Fixtures\KeyBuilder;
  * @group KeyBuilderTraitTest
  * Add your own group annotations below this line
  */
-class KeyBuilderTraitTest extends PHPUnit_Framework_TestCase
+class KeyBuilderTraitTest extends Unit
 {
 
     /**

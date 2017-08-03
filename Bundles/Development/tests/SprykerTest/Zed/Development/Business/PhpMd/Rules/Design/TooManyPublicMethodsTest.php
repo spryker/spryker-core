@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Development\Business\PhpMd\Rules\Design;
 
+use Codeception\Test\Unit;
 use PHPMD\Node\AbstractTypeNode;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods;
  * @group TooManyPublicMethodsTest
  * Add your own group annotations below this line
  */
-class TooManyPublicMethodsTest extends PHPUnit_Framework_TestCase
+class TooManyPublicMethodsTest extends Unit
 {
 
     const THRESHOLD_LOW = 1;

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Payone\Business\Api\Response\Container;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AbstractResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use Spryker\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
@@ -26,7 +26,7 @@ use Spryker\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
  * @group ResponseContainerTest
  * Add your own group annotations below this line
  */
-class ResponseContainerTest extends PHPUnit_Framework_TestCase
+class ResponseContainerTest extends Unit
 {
 
     /**

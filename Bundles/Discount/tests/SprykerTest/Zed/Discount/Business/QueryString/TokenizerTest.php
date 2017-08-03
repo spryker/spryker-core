@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
  * @group TokenizerTest
  * Add your own group annotations below this line
  */
-class TokenizerTest extends PHPUnit_Framework_TestCase
+class TokenizerTest extends Unit
 {
 
     /**

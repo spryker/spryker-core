@@ -7,9 +7,10 @@
 
 namespace SprykerTest\Zed\Ratepay\Business\XmlElement;
 
+use Codeception\Test\Unit;
 use Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement;
 
-class SpecialCharactersTest extends \PHPUnit_Framework_TestCase
+class SpecialCharactersTest extends Unit
 {
 
     /**

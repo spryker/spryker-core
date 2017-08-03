@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Propel\Business\Model\PropelDatabase;
 
+use Codeception\Test\Unit;
 use PDO;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -23,7 +23,7 @@ use Spryker\Zed\Propel\PropelConfig;
  * @group MySqlDatabaseCreatorTest
  * Add your own group annotations below this line
  */
-class MySqlDatabaseCreatorTest extends PHPUnit_Framework_TestCase
+class MySqlDatabaseCreatorTest extends Unit
 {
 
     /**

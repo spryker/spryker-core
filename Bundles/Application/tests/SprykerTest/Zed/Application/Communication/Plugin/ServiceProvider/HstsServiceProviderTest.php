@@ -7,7 +7,7 @@
 
 namespace Unit\Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\ZedHstsServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
  * @group HstsServiceProviderTest
  * Add your own group annotations below this line
  */
-class HstsServiceProviderTest extends PHPUnit_Framework_TestCase
+class HstsServiceProviderTest extends Unit
 {
 
     /**

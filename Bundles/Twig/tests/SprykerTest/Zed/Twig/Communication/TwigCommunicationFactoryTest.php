@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Twig\Communication;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Twig\Communication\TwigCommunicationFactory;
 use Twig_LoaderInterface;
 
@@ -20,7 +20,7 @@ use Twig_LoaderInterface;
  * @group TwigCommunicationFactoryTest
  * Add your own group annotations below this line
  */
-class TwigCommunicationFactoryTest extends PHPUnit_Framework_TestCase
+class TwigCommunicationFactoryTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Event\Business\Dispatcher;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Business\Dispatcher\EventDispatcher;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
@@ -27,7 +27,7 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
  * @group EventDispatcherTest
  * Add your own group annotations below this line
  */
-class EventDispatcherTest extends PHPUnit_Framework_TestCase
+class EventDispatcherTest extends Unit
 {
 
     const TEST_EVENT_NAME = 'trigger.before.save';

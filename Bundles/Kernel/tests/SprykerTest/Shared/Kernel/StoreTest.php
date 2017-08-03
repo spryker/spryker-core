@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Shared\Kernel\Store;
  * @group StoreTest
  * Add your own group annotations below this line
  */
-class StoreTest extends PHPUnit_Framework_TestCase
+class StoreTest extends Unit
 {
 
     /**

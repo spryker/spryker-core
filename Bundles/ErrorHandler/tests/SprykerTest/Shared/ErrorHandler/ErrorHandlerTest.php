@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Shared\ErrorHandler;
 
+use Codeception\Test\Unit;
 use Exception;
-use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
@@ -24,7 +24,7 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
  * @group ErrorHandlerTest
  * Add your own group annotations below this line
  */
-class ErrorHandlerTest extends PHPUnit_Framework_TestCase
+class ErrorHandlerTest extends Unit
 {
 
     /**

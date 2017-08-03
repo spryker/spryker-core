@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition;
 use Symfony\Component\Filesystem\Filesystem;
@@ -23,7 +23,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group ClassGeneratorTest
  * Add your own group annotations below this line
  */
-class ClassGeneratorTest extends PHPUnit_Framework_TestCase
+class ClassGeneratorTest extends Unit
 {
 
     /**

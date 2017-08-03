@@ -6,7 +6,7 @@
 
 namespace SprykerTest\Yves\Application\Plugin\Provider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Silex\Controller;
 use SprykerTest\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock;
@@ -21,7 +21,7 @@ use SprykerTest\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
  * @group YvesControllerProviderTest
  * Add your own group annotations below this line
  */
-class YvesControllerProviderTest extends PHPUnit_Framework_TestCase
+class YvesControllerProviderTest extends Unit
 {
 
     const METHOD_REQUIRE_HTTP = 'requireHttp';

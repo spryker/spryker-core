@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\Kernel\Container;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
@@ -19,7 +19,7 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
  * @group ContainerTest
  * Add your own group annotations below this line
  */
-class ContainerTest extends PHPUnit_Framework_TestCase
+class ContainerTest extends Unit
 {
 
     const TEST_VALUE = 'foo';

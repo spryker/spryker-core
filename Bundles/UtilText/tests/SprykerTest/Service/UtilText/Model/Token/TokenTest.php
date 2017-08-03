@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\UtilText\Model\Token;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilText\Model\Token\Token;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Service\UtilText\Model\Token\Token;
  * @group TokenTest
  * Add your own group annotations below this line
  */
-class TokenTest extends PHPUnit_Framework_TestCase
+class TokenTest extends Unit
 {
 
     /**

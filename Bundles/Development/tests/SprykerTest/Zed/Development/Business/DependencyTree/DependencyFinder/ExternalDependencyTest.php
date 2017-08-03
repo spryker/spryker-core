@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Development\Business\DependencyTree\DependencyFinder;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDependency;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
@@ -25,7 +25,7 @@ use Symfony\Component\Finder\Finder;
  * @group ExternalDependencyTest
  * Add your own group annotations below this line
  */
-class ExternalDependencyTest extends PHPUnit_Framework_TestCase
+class ExternalDependencyTest extends Unit
 {
 
     /**

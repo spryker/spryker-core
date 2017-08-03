@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Console\Communication\Plugin;
 
+use Codeception\Test\Unit;
 use Exception;
-use PHPUnit_Framework_TestCase;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin;
 use Symfony\Component\Console\Command\Command;
@@ -28,7 +28,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  * @group ConsoleLogPluginTest
  * Add your own group annotations below this line
  */
-class ConsoleLogPluginTest extends PHPUnit_Framework_TestCase
+class ConsoleLogPluginTest extends Unit
 {
 
     /**

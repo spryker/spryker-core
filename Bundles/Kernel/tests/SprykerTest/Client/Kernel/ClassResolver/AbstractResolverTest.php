@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Client\Kernel\ClassResolver;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -19,7 +19,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @group AbstractResolverTest
  * Add your own group annotations below this line
  */
-abstract class AbstractResolverTest extends PHPUnit_Framework_TestCase
+abstract class AbstractResolverTest extends Unit
 {
 
     /**

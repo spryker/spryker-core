@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Yves\Checkout\Model\Process\Steps;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Client\Checkout\CheckoutClientInterface;
 use Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group AbstractPlaceOrderStepTest
  * Add your own group annotations below this line
  */
-class AbstractPlaceOrderStepTest extends PHPUnit_Framework_TestCase
+class AbstractPlaceOrderStepTest extends Unit
 {
 
     const ORDER_REFERENCE = 'order reference';

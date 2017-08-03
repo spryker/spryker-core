@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Cart\Communication\Plugin;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
 
 /**
@@ -22,7 +22,7 @@ use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
  * @group SkuGroupKeyPluginTest
  * Add your own group annotations below this line
  */
-class SkuGroupKeyPluginTest extends PHPUnit_Framework_TestCase
+class SkuGroupKeyPluginTest extends Unit
 {
 
     const SKU = 'sku';

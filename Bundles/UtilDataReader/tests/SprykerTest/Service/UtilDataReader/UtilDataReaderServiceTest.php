@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\UtilDataReader;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Service\UtilDataReader\UtilDataReaderService;
 
@@ -19,7 +19,7 @@ use Spryker\Service\UtilDataReader\UtilDataReaderService;
  * @group UtilDataReaderServiceTest
  * Add your own group annotations below this line
  */
-class UtilDataReaderServiceTest extends PHPUnit_Framework_TestCase
+class UtilDataReaderServiceTest extends Unit
 {
 
     /**

@@ -6,8 +6,8 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString\Comparator;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Less;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Less;
  * @group LessTest
  * Add your own group annotations below this line
  */
-class LessTest extends PHPUnit_Framework_TestCase
+class LessTest extends Unit
 {
 
     /**

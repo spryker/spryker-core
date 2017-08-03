@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Container;
  * @group AbstractBundleDependencyProviderTest
  * Add your own group annotations below this line
  */
-class AbstractBundleDependencyProviderTest extends PHPUnit_Framework_TestCase
+class AbstractBundleDependencyProviderTest extends Unit
 {
 
     /**

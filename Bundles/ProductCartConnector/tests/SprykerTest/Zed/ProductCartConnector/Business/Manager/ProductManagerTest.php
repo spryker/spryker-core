@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Zed\ProductCartConnector\Business\Manager;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
@@ -26,7 +26,7 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPro
  * @group ProductManagerTest
  * Add your own group annotations below this line
  */
-class ProductManagerTest extends PHPUnit_Framework_TestCase
+class ProductManagerTest extends Unit
 {
 
     const CONCRETE_SKU = 'concrete sku';

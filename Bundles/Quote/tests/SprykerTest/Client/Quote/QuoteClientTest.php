@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Client\Quote;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Client\Quote\QuoteClient;
 use Spryker\Client\Session\SessionClient;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @group QuoteClientTest
  * Add your own group annotations below this line
  */
-class QuoteClientTest extends PHPUnit_Framework_TestCase
+class QuoteClientTest extends Unit
 {
 
     /**

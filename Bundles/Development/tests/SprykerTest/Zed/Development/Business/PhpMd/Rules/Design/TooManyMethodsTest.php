@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Development\Business\PhpMd\Rules\Design;
 
+use Codeception\Test\Unit;
 use PHPMD\Node\AbstractTypeNode;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods;
  * @group TooManyMethodsTest
  * Add your own group annotations below this line
  */
-class TooManyMethodsTest extends PHPUnit_Framework_TestCase
+class TooManyMethodsTest extends Unit
 {
 
     const THRESHOLD_LOW = 1;

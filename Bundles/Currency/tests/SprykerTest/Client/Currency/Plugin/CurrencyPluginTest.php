@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Client\Currency\Plugin;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Client\Currency\Plugin\CurrencyPlugin;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Client\Currency\Plugin\CurrencyPlugin;
  * @group CurrencyPluginTest
  * Add your own group annotations below this line
  */
-class CurrencyPluginTest extends PHPUnit_Framework_TestCase
+class CurrencyPluginTest extends Unit
 {
 
     /**

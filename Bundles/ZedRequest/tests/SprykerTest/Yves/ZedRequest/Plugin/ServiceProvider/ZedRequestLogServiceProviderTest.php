@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\ZedRequest\Plugin\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Yves\ZedRequest\Plugin\ServiceProvider\ZedRequestLogServiceProvider;
@@ -22,7 +22,7 @@ use Spryker\Yves\ZedRequest\Plugin\ServiceProvider\ZedRequestLogServiceProvider;
  * @group ZedRequestLogServiceProviderTest
  * Add your own group annotations below this line
  */
-class ZedRequestLogServiceProviderTest extends PHPUnit_Framework_TestCase
+class ZedRequestLogServiceProviderTest extends Unit
 {
 
     /**

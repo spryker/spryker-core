@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Twig\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Twig\Business\Model\RouteResolver;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\Twig\Business\Model\RouteResolver;
  * @group RouteResolverTest
  * Add your own group annotations below this line
  */
-class RouteResolverTest extends PHPUnit_Framework_TestCase
+class RouteResolverTest extends Unit
 {
 
     /**

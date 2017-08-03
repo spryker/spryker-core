@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Development\Business\PhpMd\Rules\Design;
 
+use Codeception\Test\Unit;
 use PHPMD\AbstractNode;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren;
  * @group NumberOfChildrenTest
  * Add your own group annotations below this line
  */
-class NumberOfChildrenTest extends PHPUnit_Framework_TestCase
+class NumberOfChildrenTest extends Unit
 {
 
     const NUMBER_OF_CHILDREN = 2;

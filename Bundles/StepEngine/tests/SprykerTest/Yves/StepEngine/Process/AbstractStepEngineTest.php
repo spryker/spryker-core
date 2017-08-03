@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\StepEngine\Process;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepWithExternalRedirectInterface;
 use Spryker\Yves\StepEngine\Process\StepCollection;
@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @group AbstractStepEngineTest
  * Add your own group annotations below this line
  */
-abstract class AbstractStepEngineTest extends PHPUnit_Framework_TestCase
+abstract class AbstractStepEngineTest extends Unit
 {
 
     const ERROR_ROUTE = 'error-route';

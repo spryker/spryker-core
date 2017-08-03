@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Payolution\Business\Api\Response;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Payolution\Business\Api\Converter\Converter;
 use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
@@ -23,7 +23,7 @@ use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
  * @group ConverterTest
  * Add your own group annotations below this line
  */
-class ConverterTest extends PHPUnit_Framework_TestCase
+class ConverterTest extends Unit
 {
 
     /**

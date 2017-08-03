@@ -6,11 +6,11 @@
 
 namespace SprykerTest\Zed\Ratepay\Business\Api\Converter;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer;
 use Generated\Shared\Transfer\RatepayInstallmentConfigurationResponseTransfer;
 use Generated\Shared\Transfer\RatepayRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Ratepay\Business\Api\Builder\Head;
 use Spryker\Zed\Ratepay\Business\Api\Builder\InstallmentCalculation;
@@ -34,7 +34,7 @@ use SprykerTest\Zed\Ratepay\Business\Api\Response\Response;
  * @group ConverterTest
  * Add your own group annotations below this line
  */
-class ConverterTest extends PHPUnit_Framework_TestCase
+class ConverterTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Transfer\Business\Model\Cleaner;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 
 /**
@@ -21,7 +21,7 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
  * @group TransferCleanerTest
  * Add your own group annotations below this line
  */
-class TransferCleanerTest extends PHPUnit_Framework_TestCase
+class TransferCleanerTest extends Unit
 {
 
     const TEST_FILE_NAME = 'TestTransfer.php';

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Application\Plugin\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use ReflectionClass;
 use Silex\Application;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
@@ -26,7 +26,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * @group KernelLogServiceProviderTest
  * Add your own group annotations below this line
  */
-class KernelLogServiceProviderTest extends PHPUnit_Framework_TestCase
+class KernelLogServiceProviderTest extends Unit
 {
 
     /**

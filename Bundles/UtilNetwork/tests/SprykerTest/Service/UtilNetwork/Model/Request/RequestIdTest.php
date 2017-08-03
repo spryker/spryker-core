@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\UtilNetwork\Model\Request;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Service\UtilNetwork\Model\Request\RequestId;
 
@@ -21,7 +21,7 @@ use Spryker\Service\UtilNetwork\Model\Request\RequestId;
  * @group RequestIdTest
  * Add your own group annotations below this line
  */
-class RequestIdTest extends PHPUnit_Framework_TestCase
+class RequestIdTest extends Unit
 {
 
     /**

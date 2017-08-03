@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\Mail\Business\Model\Renderer;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTemplateTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Mail\Business\Model\Renderer\TwigRenderer;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
@@ -27,7 +27,7 @@ use Twig_Environment;
  * @group TwigRendererTest
  * Add your own group annotations below this line
  */
-class TwigRendererTest extends PHPUnit_Framework_TestCase
+class TwigRendererTest extends Unit
 {
 
     const INDEX_OF_TEMPLATE_TEXT = 0;

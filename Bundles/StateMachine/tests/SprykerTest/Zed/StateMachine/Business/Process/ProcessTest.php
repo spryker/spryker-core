@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\StateMachine\Business\Process;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\StateMachine\Business\Process\Event;
 use Spryker\Zed\StateMachine\Business\Process\Process;
 use Spryker\Zed\StateMachine\Business\Process\Transition;
@@ -22,7 +22,7 @@ use Spryker\Zed\StateMachine\Business\Process\Transition;
  * @group ProcessTest
  * Add your own group annotations below this line
  */
-class ProcessTest extends PHPUnit_Framework_TestCase
+class ProcessTest extends Unit
 {
 
     /**

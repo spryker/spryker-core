@@ -8,7 +8,7 @@
 namespace SprykerTest\Service\UtilDataReader\Model\BatchIterator;
 
 use Codeception\Configuration;
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilDataReader\Dependency\YamlReaderBridge;
 use Spryker\Service\UtilDataReader\Exception\ResourceNotFoundException;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\YamlBatchIterator;
@@ -24,7 +24,7 @@ use Symfony\Component\Yaml\Yaml;
  * @group YamlBatchIteratorTest
  * Add your own group annotations below this line
  */
-class YamlBatchIteratorTest extends PHPUnit_Framework_TestCase
+class YamlBatchIteratorTest extends Unit
 {
 
     /**

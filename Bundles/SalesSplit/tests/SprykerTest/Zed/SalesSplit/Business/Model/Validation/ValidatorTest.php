@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\SalesSplit\Business\Model\Validation;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Messages;
 use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
@@ -26,7 +26,7 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
  * @group ValidatorTest
  * Add your own group annotations below this line
  */
-class ValidatorTest extends PHPUnit_Framework_TestCase
+class ValidatorTest extends Unit
 {
 
     /**

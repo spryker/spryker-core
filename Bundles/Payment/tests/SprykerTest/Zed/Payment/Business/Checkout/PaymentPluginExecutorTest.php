@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\Payment\Business\Checkout;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
@@ -29,7 +29,7 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
  * @group PaymentPluginExecutorTest
  * Add your own group annotations below this line
  */
-class PaymentPluginExecutorTest extends PHPUnit_Framework_TestCase
+class PaymentPluginExecutorTest extends Unit
 {
 
     const TEST_PROVIDER = 'Test';

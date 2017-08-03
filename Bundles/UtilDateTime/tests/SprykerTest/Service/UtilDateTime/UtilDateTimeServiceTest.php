@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Service\UtilDateTime;
 
+use Codeception\Test\Unit;
 use DateTime;
 use DateTimeZone;
-use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use Spryker\Service\UtilDateTime\UtilDateTimeService;
 use Spryker\Shared\Config\Config;
@@ -23,7 +23,7 @@ use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
  * @group UtilDateTimeServiceTest
  * Add your own group annotations below this line
  */
-class UtilDateTimeServiceTest extends PHPUnit_Framework_TestCase
+class UtilDateTimeServiceTest extends Unit
 {
 
     /**

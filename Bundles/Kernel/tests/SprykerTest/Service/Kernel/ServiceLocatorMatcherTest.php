@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\Kernel\ServiceLocatorMatcher;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Service\Kernel\ServiceLocatorMatcher;
  * @group ServiceLocatorMatcherTest
  * Add your own group annotations below this line
  */
-class ServiceLocatorMatcherTest extends PHPUnit_Framework_TestCase
+class ServiceLocatorMatcherTest extends Unit
 {
 
     /**

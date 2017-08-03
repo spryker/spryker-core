@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 use Spryker\Yves\Kernel\BundleControllerAction;
 
@@ -19,7 +19,7 @@ use Spryker\Yves\Kernel\BundleControllerAction;
  * @group BundleControllerActionTest
  * Add your own group annotations below this line
  */
-class BundleControllerActionTest extends PHPUnit_Framework_TestCase
+class BundleControllerActionTest extends Unit
 {
 
     /**

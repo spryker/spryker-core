@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Transfer\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
@@ -24,7 +24,7 @@ use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
  * @group TransferBusinessFactoryTest
  * Add your own group annotations below this line
  */
-class TransferBusinessFactoryTest extends PHPUnit_Framework_TestCase
+class TransferBusinessFactoryTest extends Unit
 {
 
     /**

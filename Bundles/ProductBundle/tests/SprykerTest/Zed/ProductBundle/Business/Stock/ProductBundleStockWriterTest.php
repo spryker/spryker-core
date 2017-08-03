@@ -7,13 +7,13 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Stock;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
@@ -31,7 +31,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  * @group ProductBundleStockWriterTest
  * Add your own group annotations below this line
  */
-class ProductBundleStockWriterTest extends PHPUnit_Framework_TestCase
+class ProductBundleStockWriterTest extends Unit
 {
 
     /**

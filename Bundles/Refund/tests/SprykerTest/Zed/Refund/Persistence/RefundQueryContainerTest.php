@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Refund\Persistence;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\Refund\Persistence\RefundQueryContainer;
  * @group RefundQueryContainerTest
  * Add your own group annotations below this line
  */
-class RefundQueryContainerTest extends PHPUnit_Framework_TestCase
+class RefundQueryContainerTest extends Unit
 {
 
     /**

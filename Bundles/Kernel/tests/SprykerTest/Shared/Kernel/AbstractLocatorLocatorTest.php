@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use SprykerTest\Shared\Kernel\Fixtures\LocatorLocator;
 
 /**
@@ -18,7 +18,7 @@ use SprykerTest\Shared\Kernel\Fixtures\LocatorLocator;
  * @group AbstractLocatorLocatorTest
  * Add your own group annotations below this line
  */
-class AbstractLocatorLocatorTest extends PHPUnit_Framework_TestCase
+class AbstractLocatorLocatorTest extends Unit
 {
 
     /**

@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Shared\Money\DataMapper;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Money\Currency;
 use Money\Money;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapper;
  * @group MoneyToTransferConverterTest
  * Add your own group annotations below this line
  */
-class MoneyToTransferConverterTest extends PHPUnit_Framework_TestCase
+class MoneyToTransferConverterTest extends Unit
 {
 
     const AMOUNT = 1000;

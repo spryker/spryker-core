@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Zed\Refund\Business\Model\RefundCalculator;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Auto-generated group annotations
@@ -24,7 +24,7 @@ use PHPUnit_Framework_TestCase;
  * @group AbstractRefundCalculatorTest
  * Add your own group annotations below this line
  */
-class AbstractRefundCalculatorTest extends PHPUnit_Framework_TestCase
+class AbstractRefundCalculatorTest extends Unit
 {
 
     /**

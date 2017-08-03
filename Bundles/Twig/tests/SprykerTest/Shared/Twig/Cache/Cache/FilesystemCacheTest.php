@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Twig\Cache\Cache;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
@@ -23,7 +23,7 @@ use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
  * @group FilesystemCacheTest
  * Add your own group annotations below this line
  */
-class FilesystemCacheTest extends PHPUnit_Framework_TestCase
+class FilesystemCacheTest extends Unit
 {
 
     const EXISTING_CACHE_KEY = 'key';

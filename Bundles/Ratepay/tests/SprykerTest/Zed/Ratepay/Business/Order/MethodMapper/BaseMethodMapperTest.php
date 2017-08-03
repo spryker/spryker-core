@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\Ratepay\Business\Order\MethodMapper;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
-use PHPUnit_Framework_TestCase;
 
 /**
  * Auto-generated group annotations
@@ -23,7 +23,7 @@ use PHPUnit_Framework_TestCase;
  * @group BaseMethodMapperTest
  * Add your own group annotations below this line
  */
-class BaseMethodMapperTest extends PHPUnit_Framework_TestCase
+class BaseMethodMapperTest extends Unit
 {
 
     /**

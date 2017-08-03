@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Setup\Communication;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
  * @group SetupCommunicationFactoryTest
  * Add your own group annotations below this line
  */
-class SetupCommunicationFactoryTest extends PHPUnit_Framework_TestCase
+class SetupCommunicationFactoryTest extends Unit
 {
 
     /**

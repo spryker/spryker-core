@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Client\ZedRequest\Client;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use SprykerTest\Client\ZedRequest\Client\Fixture\TestTransfer;
@@ -21,7 +21,7 @@ use SprykerTest\Client\ZedRequest\Client\Fixture\TestTransfer;
  * @group RequestTest
  * Add your own group annotations below this line
  */
-class RequestTest extends PHPUnit_Framework_TestCase
+class RequestTest extends Unit
 {
 
     /**

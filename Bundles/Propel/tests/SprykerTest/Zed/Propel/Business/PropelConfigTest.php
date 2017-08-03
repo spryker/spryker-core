@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Propel\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -20,7 +20,7 @@ use Spryker\Zed\Propel\PropelConfig;
  * @group PropelConfigTest
  * Add your own group annotations below this line
  */
-class PropelConfigTest extends PHPUnit_Framework_TestCase
+class PropelConfigTest extends Unit
 {
 
     /**

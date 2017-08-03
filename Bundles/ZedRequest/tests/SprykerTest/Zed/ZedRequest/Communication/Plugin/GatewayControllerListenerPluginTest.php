@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\ZedRequest\Communication\Plugin;
 
+use Codeception\Test\Unit;
 use LogicException;
-use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use ReflectionObject;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * @group GatewayControllerListenerPluginTest
  * Add your own group annotations below this line
  */
-class GatewayControllerListenerPluginTest extends PHPUnit_Framework_TestCase
+class GatewayControllerListenerPluginTest extends Unit
 {
 
     /**

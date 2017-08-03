@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\SalesSplit\Business\Model;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\SalesSplit\Business\Model\Calculator;
 
 /**
@@ -21,7 +21,7 @@ use Spryker\Zed\SalesSplit\Business\Model\Calculator;
  * @group CalculatorTest
  * Add your own group annotations below this line
  */
-class CalculatorTest extends PHPUnit_Framework_TestCase
+class CalculatorTest extends Unit
 {
 
     /**

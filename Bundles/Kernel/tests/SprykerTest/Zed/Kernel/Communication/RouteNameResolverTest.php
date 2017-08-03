@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\Communication;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\Communication\Controller\RouteNameResolver;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group RouteNameResolverTest
  * Add your own group annotations below this line
  */
-class RouteNameResolverTest extends PHPUnit_Framework_TestCase
+class RouteNameResolverTest extends Unit
 {
 
     /**

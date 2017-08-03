@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\UtilDateTime\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Shared\Twig\TwigFilter;
@@ -21,7 +21,7 @@ use Spryker\Shared\Twig\TwigFilter;
  * @group DateTimeFormatterTwigExtensionTest
  * Add your own group annotations below this line
  */
-class DateTimeFormatterTwigExtensionTest extends PHPUnit_Framework_TestCase
+class DateTimeFormatterTwigExtensionTest extends Unit
 {
 
     const DATE_TO_FORMAT = '1980-12-06 08:00:00';

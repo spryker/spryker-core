@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 /**
@@ -21,7 +21,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
  * @group TransferDefinitionMergerTest
  * Add your own group annotations below this line
  */
-class TransferDefinitionMergerTest extends PHPUnit_Framework_TestCase
+class TransferDefinitionMergerTest extends Unit
 {
 
     /**

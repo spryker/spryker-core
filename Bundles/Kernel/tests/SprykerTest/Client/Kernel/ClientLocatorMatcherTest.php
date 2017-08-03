@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Client\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Client\Kernel\ClientLocatorMatcher;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\ClientLocatorMatcher;
  * @group ClientLocatorMatcherTest
  * Add your own group annotations below this line
  */
-class ClientLocatorMatcherTest extends PHPUnit_Framework_TestCase
+class ClientLocatorMatcherTest extends Unit
 {
 
     /**

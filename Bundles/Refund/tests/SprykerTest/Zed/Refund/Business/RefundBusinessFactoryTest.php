@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Refund\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Refund\Business\Model\RefundCalculator\RefundCalculatorInterface as ConcreteCalculatorInterface;
 use Spryker\Zed\Refund\Business\Model\RefundCalculatorInterface;
 use Spryker\Zed\Refund\Business\Model\RefundSaverInterface;
@@ -22,7 +22,7 @@ use Spryker\Zed\Refund\Business\RefundBusinessFactory;
  * @group RefundBusinessFactoryTest
  * Add your own group annotations below this line
  */
-class RefundBusinessFactoryTest extends PHPUnit_Framework_TestCase
+class RefundBusinessFactoryTest extends Unit
 {
 
     /**

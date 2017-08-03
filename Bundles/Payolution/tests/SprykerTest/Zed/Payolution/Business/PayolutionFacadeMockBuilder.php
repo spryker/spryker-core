@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Payolution\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
@@ -21,11 +21,11 @@ class PayolutionFacadeMockBuilder
 
     /**
      * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $adapter
-     * @param \PHPUnit_Framework_TestCase $testCase
+     * @param \Codeception\Test\Unit $testCase
      *
      * @return \Spryker\Zed\Payolution\Business\PayolutionFacade|\PHPUnit_Framework_MockObject_MockObject
      */
-    public static function build(AdapterInterface $adapter, PHPUnit_Framework_TestCase $testCase)
+    public static function build(AdapterInterface $adapter, Unit $testCase)
     {
         // Mock business factory to override return value of createExecutionAdapter to
         // place a mocked adapter that doesn't establish an actual connection.
@@ -54,11 +54,11 @@ class PayolutionFacadeMockBuilder
     }
 
     /**
-     * @param \PHPUnit_Framework_TestCase $testCase
+     * @param \Codeception\Test\Unit $testCase
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payolution\Business\PayolutionBusinessFactory
      */
-    protected static function getBusinessFactoryMock(PHPUnit_Framework_TestCase $testCase)
+    protected static function getBusinessFactoryMock(Unit $testCase)
     {
         $businessFactoryMock = $testCase->getMockBuilder(PayolutionBusinessFactory::class)
             ->setMethods(

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Propel\Business\Model;
 
+use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\Exception\ConfigDirectoryNotCreatedException;
 use Spryker\Zed\Propel\Business\Exception\ConfigFileNotCreatedException;
 use Spryker\Zed\Propel\Business\Exception\ConfigMissingPropertyException;
@@ -19,7 +20,7 @@ use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
  * @group Business
  * @group PropelConfigConverterJson
  */
-class PropelConfigConverterJsonTest extends \PHPUnit_Framework_TestCase
+class PropelConfigConverterJsonTest extends Unit
 {
 
     const FILE_NAME = 'propel.json';

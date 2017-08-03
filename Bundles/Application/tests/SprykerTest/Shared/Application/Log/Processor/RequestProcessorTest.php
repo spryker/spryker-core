@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Shared\Application\Log\Processor;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Application\Log\Processor\RequestProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @group RequestProcessorTest
  * Add your own group annotations below this line
  */
-class RequestProcessorTest extends PHPUnit_Framework_TestCase
+class RequestProcessorTest extends Unit
 {
 
     /**

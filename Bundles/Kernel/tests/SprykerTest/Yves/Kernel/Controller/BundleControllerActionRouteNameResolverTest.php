@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Yves\Kernel\Controller;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 
@@ -20,7 +20,7 @@ use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
  * @group BundleControllerActionRouteNameResolverTest
  * Add your own group annotations below this line
  */
-class BundleControllerActionRouteNameResolverTest extends PHPUnit_Framework_TestCase
+class BundleControllerActionRouteNameResolverTest extends Unit
 {
 
     /**

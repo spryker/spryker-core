@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\Business\Persistence;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -14,7 +15,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 
@@ -28,7 +28,7 @@ use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
  * @group DiscountOrderSaverTest
  * Add your own group annotations below this line
  */
-class DiscountOrderSaverTest extends PHPUnit_Framework_TestCase
+class DiscountOrderSaverTest extends Unit
 {
 
     const DISCOUNT_DISPLAY_NAME = 'discount';

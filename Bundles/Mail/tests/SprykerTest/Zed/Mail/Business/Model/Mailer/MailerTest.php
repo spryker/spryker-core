@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Mail\Business\Model\Mailer;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MailTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface;
 use Spryker\Zed\Mail\Business\Model\Mailer\MailHandler;
@@ -27,7 +27,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  * @group MailerTest
  * Add your own group annotations below this line
  */
-class MailerTest extends PHPUnit_Framework_TestCase
+class MailerTest extends Unit
 {
 
     const MAIL_TYPE_A = 'mail type a';

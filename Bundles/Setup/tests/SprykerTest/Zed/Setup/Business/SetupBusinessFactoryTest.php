@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Setup\Business;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Setup\Business\SetupBusinessFactory;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Setup\Business\SetupBusinessFactory;
  * @group SetupBusinessFactoryTest
  * Add your own group annotations below this line
  */
-class SetupBusinessFactoryTest extends PHPUnit_Framework_TestCase
+class SetupBusinessFactoryTest extends Unit
 {
 
     /**

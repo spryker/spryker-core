@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\DummyPayment\Communication\Plugin\Checkout;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPreCheckPlugin;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPreCheckP
  * @group DummyPaymentPreCheckPluginTest
  * Add your own group annotations below this line
  */
-class DummyPaymentPreCheckPluginTest extends PHPUnit_Framework_TestCase
+class DummyPaymentPreCheckPluginTest extends Unit
 {
 
     /**

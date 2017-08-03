@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch\DataMapper;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\PageMapTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 
 /**
@@ -24,7 +24,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
  * @group PageMapBuilderTest
  * Add your own group annotations below this line
  */
-class PageMapBuilderTest extends PHPUnit_Framework_TestCase
+class PageMapBuilderTest extends Unit
 {
 
     /**

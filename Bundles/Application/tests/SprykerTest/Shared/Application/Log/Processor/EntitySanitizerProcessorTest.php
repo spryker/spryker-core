@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Application\Log\Processor;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Application\Log\Processor\EntitySanitizerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use SprykerTest\Shared\Application\Log\Processor\Fixtures\Entity;
@@ -22,7 +22,7 @@ use SprykerTest\Shared\Application\Log\Processor\Fixtures\Entity;
  * @group EntitySanitizerProcessorTest
  * Add your own group annotations below this line
  */
-class EntitySanitizerProcessorTest extends PHPUnit_Framework_TestCase
+class EntitySanitizerProcessorTest extends Unit
 {
 
     /**

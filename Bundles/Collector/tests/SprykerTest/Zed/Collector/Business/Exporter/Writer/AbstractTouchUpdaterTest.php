@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Collector\Business\Exporter\Writer;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
@@ -26,7 +26,7 @@ use SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub;
  * @group AbstractTouchUpdaterTest
  * Add your own group annotations below this line
  */
-class AbstractTouchUpdaterTest extends PHPUnit_Framework_TestCase
+class AbstractTouchUpdaterTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\ClassResolver;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
  * @group ClassInfoTest
  * Add your own group annotations below this line
  */
-class ClassInfoTest extends PHPUnit_Framework_TestCase
+class ClassInfoTest extends Unit
 {
 
     /**

@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\DummyPayment\Business\Model\Payment;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\DummyPayment\Business\Model\Payment\Refund;
 use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
 
@@ -24,7 +24,7 @@ use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
  * @group RefundTest
  * Add your own group annotations below this line
  */
-class RefundTest extends PHPUnit_Framework_TestCase
+class RefundTest extends Unit
 {
 
     /**

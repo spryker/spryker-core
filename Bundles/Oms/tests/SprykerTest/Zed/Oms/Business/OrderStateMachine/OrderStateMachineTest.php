@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
@@ -33,7 +33,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
  * @group OrderStateMachineTest
  * Add your own group annotations below this line
  */
-class OrderStateMachineTest extends PHPUnit_Framework_TestCase
+class OrderStateMachineTest extends Unit
 {
 
     const CONDITION_NAME = 'conditionName';

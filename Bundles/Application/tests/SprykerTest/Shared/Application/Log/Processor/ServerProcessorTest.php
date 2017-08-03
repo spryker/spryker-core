@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Application\Log\Processor;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Application\Log\Processor\ServerProcessor;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Shared\Application\Log\Processor\ServerProcessor;
  * @group ServerProcessorTest
  * Add your own group annotations below this line
  */
-class ServerProcessorTest extends PHPUnit_Framework_TestCase
+class ServerProcessorTest extends Unit
 {
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Oms\Communication\Plugin\Oms\Condition;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
@@ -25,7 +25,7 @@ use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
  * @group ConditionCollectionTest
  * Add your own group annotations below this line
  */
-class ConditionCollectionTest extends PHPUnit_Framework_TestCase
+class ConditionCollectionTest extends Unit
 {
 
     const CONDITION_NAME = 'conditionName';

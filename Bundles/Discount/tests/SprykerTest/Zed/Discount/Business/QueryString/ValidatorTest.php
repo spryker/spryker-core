@@ -6,7 +6,7 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryBuilderException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
@@ -25,7 +25,7 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
  * @group ValidatorTest
  * Add your own group annotations below this line
  */
-class ValidatorTest extends PHPUnit_Framework_TestCase
+class ValidatorTest extends Unit
 {
 
     /**

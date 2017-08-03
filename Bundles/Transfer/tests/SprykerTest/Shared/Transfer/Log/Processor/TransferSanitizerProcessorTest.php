@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Transfer\Log\Processor;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Shared\Transfer\Log\Processor\TransferSanitizerProcessor;
 use SprykerTest\Shared\Transfer\Log\Processor\Fixtures\ComplexTransfer;
@@ -22,7 +22,7 @@ use SprykerTest\Shared\Transfer\Log\Processor\Fixtures\ComplexTransfer;
  * @group TransferSanitizerProcessorTest
  * Add your own group annotations below this line
  */
-class TransferSanitizerProcessorTest extends PHPUnit_Framework_TestCase
+class TransferSanitizerProcessorTest extends Unit
 {
 
     /**

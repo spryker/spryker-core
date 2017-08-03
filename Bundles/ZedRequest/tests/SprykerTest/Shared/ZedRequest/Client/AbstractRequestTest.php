@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\ZedRequest\Client;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractRequest;
 
 /**
@@ -19,7 +19,7 @@ use SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractRequest;
  * @group AbstractRequestTest
  * Add your own group annotations below this line
  */
-class AbstractRequestTest extends PHPUnit_Framework_TestCase
+class AbstractRequestTest extends Unit
 {
 
     /**

@@ -7,12 +7,12 @@
 
 namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 
+use Codeception\Test\Unit;
 use DateTime;
 use Exception;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Exception\PropelException;
 use ReflectionMethod;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
@@ -31,7 +31,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
  * @group LockedOrderStateMachineTest
  * Add your own group annotations below this line
  */
-class LockedOrderStateMachineTest extends PHPUnit_Framework_TestCase
+class LockedOrderStateMachineTest extends Unit
 {
 
     /**

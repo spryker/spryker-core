@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\BundleProxy;
 use SprykerTest\Shared\Kernel\Fixtures\LocatorWithMatcher;
 use SprykerTest\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
@@ -20,7 +20,7 @@ use SprykerTest\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
  * @group BundleProxyTest
  * Add your own group annotations below this line
  */
-class BundleProxyTest extends PHPUnit_Framework_TestCase
+class BundleProxyTest extends Unit
 {
 
     /**

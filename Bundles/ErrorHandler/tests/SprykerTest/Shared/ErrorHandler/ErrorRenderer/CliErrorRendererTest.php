@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Shared\ErrorHandler\ErrorRenderer;
 
+use Codeception\Test\Unit;
 use Exception;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
  * @group CliErrorRendererTest
  * Add your own group annotations below this line
  */
-class CliErrorRendererTest extends PHPUnit_Framework_TestCase
+class CliErrorRendererTest extends Unit
 {
 
     /**

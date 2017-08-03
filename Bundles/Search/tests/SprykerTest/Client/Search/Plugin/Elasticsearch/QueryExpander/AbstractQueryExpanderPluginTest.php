@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
+use Codeception\Test\Unit;
 use Elastica\Aggregation\Nested;
 use Elastica\Aggregation\Stats;
 use Elastica\Aggregation\Terms;
@@ -14,7 +15,6 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
@@ -37,7 +37,7 @@ use SprykerTest\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
  * @group AbstractQueryExpanderPluginTest
  * Add your own group annotations below this line
  */
-abstract class AbstractQueryExpanderPluginTest extends PHPUnit_Framework_TestCase
+abstract class AbstractQueryExpanderPluginTest extends Unit
 {
 
     /**

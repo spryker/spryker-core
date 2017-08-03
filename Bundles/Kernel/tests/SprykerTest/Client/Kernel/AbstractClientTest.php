@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Client\Kernel;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use SprykerTest\Client\Kernel\Fixtures\KernelClient;
 
 /**
@@ -18,7 +18,7 @@ use SprykerTest\Client\Kernel\Fixtures\KernelClient;
  * @group AbstractClientTest
  * Add your own group annotations below this line
  */
-class AbstractClientTest extends PHPUnit_Framework_TestCase
+class AbstractClientTest extends Unit
 {
 
     /**

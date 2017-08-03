@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Kernel\Dependency\Injector;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
@@ -24,7 +24,7 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface;
  * @group DependencyInjectorTest
  * Add your own group annotations below this line
  */
-class DependencyInjectorTest extends PHPUnit_Framework_TestCase
+class DependencyInjectorTest extends Unit
 {
 
     /**

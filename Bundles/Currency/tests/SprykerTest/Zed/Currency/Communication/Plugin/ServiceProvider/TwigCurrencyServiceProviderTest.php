@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Currency\Communication\Plugin\ServiceProvider;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Currency\Communication\Plugin\ServiceProvider\TwigCurrencyServiceProvider;
@@ -25,7 +25,7 @@ use Twig_Loader_Filesystem;
  * @group TwigCurrencyServiceProviderTest
  * Add your own group annotations below this line
  */
-class TwigCurrencyServiceProviderTest extends PHPUnit_Framework_TestCase
+class TwigCurrencyServiceProviderTest extends Unit
 {
 
     /**

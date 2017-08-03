@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Client\ZedRequest\Client;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MessageTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Client\ZedRequest\Client\Response;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException;
@@ -23,7 +23,7 @@ use SprykerTest\Client\ZedRequest\Client\Fixture\TestTransfer;
  * @group ResponseTest
  * Add your own group annotations below this line
  */
-class ResponseTest extends PHPUnit_Framework_TestCase
+class ResponseTest extends Unit
 {
 
     const MESSAGE_SUCCESS = 'success';

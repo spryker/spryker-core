@@ -6,11 +6,11 @@
 
 namespace SprykerTest\Zed\Availability\Business\Model;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
@@ -29,7 +29,7 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
  * @group AvailabilityHandlerTest
  * Add your own group annotations below this line
  */
-class AvailabilityHandlerTest extends PHPUnit_Framework_TestCase
+class AvailabilityHandlerTest extends Unit
 {
 
     const PRODUCT_SKU = 'sku-123-321';

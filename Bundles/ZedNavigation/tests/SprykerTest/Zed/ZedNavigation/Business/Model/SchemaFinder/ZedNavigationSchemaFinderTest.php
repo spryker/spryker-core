@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business\Model\SchemaFinder;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -23,7 +23,7 @@ use Symfony\Component\Finder\Finder;
  * @group ZedNavigationSchemaFinderTest
  * Add your own group annotations below this line
  */
-class ZedNavigationSchemaFinderTest extends PHPUnit_Framework_TestCase
+class ZedNavigationSchemaFinderTest extends Unit
 {
 
     /**

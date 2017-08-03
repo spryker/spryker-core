@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Shared\Twig\TemplateNameExtractor;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
@@ -21,7 +21,7 @@ use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
  * @group TemplateNameExtractorTest
  * Add your own group annotations below this line
  */
-class TemplateNameExtractorTest extends PHPUnit_Framework_TestCase
+class TemplateNameExtractorTest extends Unit
 {
 
     /**
