@@ -56,6 +56,14 @@
                         <icon>fa-code</icon>
                         <visible>0</visible>
                     </check-bundle>
+                    <rules>
+                        <label>Rules</label>
+                        <title>Rules</title>
+                        <bundle>development</bundle>
+                        <controller>architecture</controller>
+                        <action>rules</action>
+                        <visible>0</visible>
+                    </rules>
                 </pages>
             </architecture-sniffer>
         </pages>
