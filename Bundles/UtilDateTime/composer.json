@@ -7,6 +7,12 @@
       "Spryker": "src/"
     }
   },
+  "require-dev": {
+    "spryker/config": "*",
+    "spryker/kernel": "*",
+    "spryker/silex": "*",
+    "spryker/twig": "*"
+  },
   "autoload-dev": {
     "psr-0": {
       "Unit": "tests/",
