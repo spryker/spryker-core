@@ -28,8 +28,6 @@ class SetupHelper extends Module
     {
         parent::_before($test);
 
-        $this->debug('Restore test database');
-
         $process = $this->runTestSetup('--restore');
 
         if (!$process->isSuccessful()) {
