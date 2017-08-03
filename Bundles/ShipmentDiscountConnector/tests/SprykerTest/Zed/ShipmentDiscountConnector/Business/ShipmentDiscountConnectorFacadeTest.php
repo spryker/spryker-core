@@ -29,7 +29,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 {
 
     /**
-     * @var \SprykerTest\Zed\ShipmentDiscountConnector\BusinessTester
+     * @var \SprykerTest\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorBusinessTester
      */
     protected $tester;
 

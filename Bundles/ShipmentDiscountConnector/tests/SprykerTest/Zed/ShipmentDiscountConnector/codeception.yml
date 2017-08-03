@@ -10,3 +10,14 @@ coverage:
     enabled: true
     remote: false
     whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    business:
+        path: .
+        class_name: ShipmentDiscountConnectorBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
