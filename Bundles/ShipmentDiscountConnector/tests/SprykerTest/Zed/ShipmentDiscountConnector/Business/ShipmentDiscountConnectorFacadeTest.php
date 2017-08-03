@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\ShipmentCarrierDecisionRulePlugin;
+use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\ShipmentMethodDecisionRulePlugin;
 
 /**
  * Auto-generated group annotations
@@ -43,7 +46,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => 'SHIPMENT_EXPENSE_TYPE',
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]);
 
         $itemTransfer = new ItemTransfer();
@@ -54,7 +57,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-carrier',
+            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
             'operator' => '=',
             'value' => $shipmentTransfer->getCarrier()->getIdShipmentCarrier(),
             'acceptedTypes' => [
@@ -79,7 +82,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
-                'type' => 'SHIPMENT_EXPENSE_TYPE',
+                'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             ]);
 
         $itemTransfer = new ItemTransfer();
@@ -90,7 +93,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-method',
+            'field' => (new ShipmentMethodDecisionRulePlugin())->getFieldName(),
             'operator' => '=',
             'value' => $shipmentMethodTransfer->getIdShipmentMethod(),
             'acceptedTypes' => [
@@ -110,7 +113,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => 'SHIPMENT_EXPENSE_TYPE',
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
             'taxRate' => 19,
             'quantity' => 1,
@@ -122,7 +125,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-carrier',
+            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
             'operator' => '>=',
             'value' => 20,
             'acceptedTypes' => [
@@ -147,7 +150,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => 'SHIPMENT_EXPENSE_TYPE',
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]);
 
         $quoteTransfer = (new QuoteTransfer())
@@ -157,7 +160,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-carrier',
+            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
             'operator' => '=',
             'value' => $shipmentTransfer->getCarrier()->getIdShipmentCarrier(),
             'acceptedTypes' => [
@@ -183,7 +186,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
-                'type' => 'SHIPMENT_EXPENSE_TYPE',
+                'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             ]);
 
         $quoteTransfer = (new QuoteTransfer())
@@ -193,7 +196,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-method',
+            'field' => (new ShipmentMethodDecisionRulePlugin())->getFieldName(),
             'operator' => '=',
             'value' => $shipmentMethodTransfer->getIdShipmentMethod(),
             'acceptedTypes' => [
@@ -213,7 +216,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => 'SHIPMENT_EXPENSE_TYPE',
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
         ]);
 
@@ -223,7 +226,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-carrier',
+            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
             'operator' => '>=',
             'value' => 20,
             'acceptedTypes' => [
@@ -248,7 +251,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => 'SHIPMENT_EXPENSE_TYPE',
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]);
 
         $quoteTransfer = (new QuoteTransfer())
@@ -258,7 +261,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-carrier',
+            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
             'operator' => '=',
             'value' => 2,
             'acceptedTypes' => [
@@ -284,7 +287,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
-                'type' => 'SHIPMENT_EXPENSE_TYPE',
+                'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             ]);
 
         $quoteTransfer = (new QuoteTransfer())
@@ -294,7 +297,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-method',
+            'field' => (new ShipmentMethodDecisionRulePlugin())->getFieldName(),
             'operator' => '=',
             'value' => 2,
             'acceptedTypes' => [
@@ -314,7 +317,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => 'SHIPMENT_EXPENSE_TYPE',
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
         ]);
 
@@ -324,7 +327,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => 'shipment-carrier',
+            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
             'operator' => '>=',
             'value' => 40,
             'acceptedTypes' => [
