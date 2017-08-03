@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
 
+    const DECISION_RULE_FIELD_NAME = 'shipment-method';
+
     /**
      * {@inheritdoc}
      *
@@ -50,7 +52,7 @@ class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements Decisio
      */
     public function getFieldName()
     {
-        return 'shipment-method';
+        return static::DECISION_RULE_FIELD_NAME;
     }
 
     /**

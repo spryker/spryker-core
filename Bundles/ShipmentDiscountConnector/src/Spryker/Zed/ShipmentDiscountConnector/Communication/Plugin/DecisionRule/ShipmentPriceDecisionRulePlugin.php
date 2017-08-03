@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ShipmentPriceDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
 
+    const DECISION_RULE_FIELD_NAME = 'shipment-price';
+
     /**
      * {@inheritdoc}
      *
@@ -48,7 +50,7 @@ class ShipmentPriceDecisionRulePlugin extends AbstractPlugin implements Decision
      */
     public function getFieldName()
     {
-        return 'shipment-price';
+        return static::DECISION_RULE_FIELD_NAME;
     }
 
     /**

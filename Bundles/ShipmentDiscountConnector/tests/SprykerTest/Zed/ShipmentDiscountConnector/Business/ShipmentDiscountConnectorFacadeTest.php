@@ -57,7 +57,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentCarrierDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '=',
             'value' => $shipmentTransfer->getCarrier()->getIdShipmentCarrier(),
             'acceptedTypes' => [
@@ -93,7 +93,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentMethodDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentMethodDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '=',
             'value' => $shipmentMethodTransfer->getIdShipmentMethod(),
             'acceptedTypes' => [
@@ -125,7 +125,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentCarrierDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '>=',
             'value' => 20,
             'acceptedTypes' => [
@@ -160,7 +160,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentCarrierDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '=',
             'value' => $shipmentTransfer->getCarrier()->getIdShipmentCarrier(),
             'acceptedTypes' => [
@@ -196,7 +196,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentMethodDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentMethodDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '=',
             'value' => $shipmentMethodTransfer->getIdShipmentMethod(),
             'acceptedTypes' => [
@@ -226,7 +226,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentCarrierDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '>=',
             'value' => 20,
             'acceptedTypes' => [
@@ -261,7 +261,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentCarrierDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '=',
             'value' => 2,
             'acceptedTypes' => [
@@ -297,7 +297,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentMethodDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentMethodDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '=',
             'value' => 2,
             'acceptedTypes' => [
@@ -327,7 +327,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->fromArray([
-            'field' => (new ShipmentCarrierDecisionRulePlugin())->getFieldName(),
+            'field' => ShipmentCarrierDecisionRulePlugin::DECISION_RULE_FIELD_NAME,
             'operator' => '>=',
             'value' => 40,
             'acceptedTypes' => [
