@@ -18,4 +18,5 @@
 /node_modules/
 /tests/_output/*
 !/tests/_output/.gitkeep
-vendor
+/vendor
+!/tests/SprykerTest/Zed/Propel/Business/Model/Fixtures/PropelSchemaMerger/Vendor/*
