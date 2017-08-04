@@ -1,5 +1,10 @@
 # Payone Module
 
+**This module is not continued at this point.**
+
+Please use the new [Eco Payone](https://github.com/spryker-eco/payone) module from here on.
+
+
 ## Installation
 
 ```
