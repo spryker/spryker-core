@@ -41,7 +41,7 @@ class VoucherCodeTest extends PHPUnit_Framework_TestCase
             ->method('save')
             ->willReturn(true);
 
-        $discountVoucherEntity->expects($this->once())
+        $discountVoucherEntity->expects($this->never())
             ->method('getMaxNumberOfUses')
             ->willReturn(10);
 
@@ -111,7 +111,7 @@ class VoucherCodeTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testUseVoucherWhenHaveNoCounterShouldNotUpdate()
+    public function testUseVoucherShouldUpdateCounterForUnlimited()
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -120,8 +120,16 @@ class VoucherCodeTest extends PHPUnit_Framework_TestCase
             ->willReturn(true);
 
         $discountVoucherEntity->expects($this->once())
-            ->method('getMaxNumberOfUses')
-            ->willReturn(0);
+            ->method('save')
+            ->willReturn(true);
+
+        $discountVoucherEntity->expects($this->once())
+            ->method('getNumberOfUses')
+            ->willReturn(1);
+
+        $discountVoucherEntity->expects($this->once())
+            ->method('setNumberOfUses')
+            ->with(2);
 
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->method('find')->willReturn([$discountVoucherEntity]);
@@ -133,7 +141,7 @@ class VoucherCodeTest extends PHPUnit_Framework_TestCase
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(0,  $updated);
+        $this->assertEquals(1,  $updated);
     }
 
     /**
@@ -147,7 +155,7 @@ class VoucherCodeTest extends PHPUnit_Framework_TestCase
             ->method('save')
             ->willReturn(true);
 
-        $discountVoucherEntity->expects($this->once())
+        $discountVoucherEntity->expects($this->never())
             ->method('getMaxNumberOfUses')
             ->willReturn(10);
 
@@ -197,7 +205,7 @@ class VoucherCodeTest extends PHPUnit_Framework_TestCase
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
-        $discountVoucherEntity->expects($this->once())
+        $discountVoucherEntity->expects($this->never())
             ->method('getMaxNumberOfUses')
             ->willReturn(0);
 
