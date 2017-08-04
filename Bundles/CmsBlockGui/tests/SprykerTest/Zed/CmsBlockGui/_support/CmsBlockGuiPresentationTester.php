@@ -1,5 +1,4 @@
 <?php
-
 namespace SprykerTest\Zed\CmsBlockGui;
 
 use Codeception\Actor;
@@ -20,10 +19,10 @@ use Codeception\Scenario;
  *
  * @SuppressWarnings(PHPMD)
  */
-class PresentationTester extends Actor
+class CmsBlockGuiPresentationTester extends Actor
 {
 
-    use _generated\PresentationTesterActions;
+    use _generated\CmsBlockGuiPresentationTesterActions;
 
     /**
      * @param \Codeception\Scenario $scenario
