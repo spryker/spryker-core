@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Category\Communication\Controller;
 
-use SprykerTest\Zed\Category\CommunicationTester;
+use SprykerTest\Zed\Category\CategoryCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class IndexControllerCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Category\CommunicationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryCommunicationTester $i
      *
      * @return void
      */
-    public function listCategories(CommunicationTester $i)
+    public function listCategories(CategoryCommunicationTester $i)
     {
         $i->amOnPage('/category');
         $i->seeResponseCodeIs(200);

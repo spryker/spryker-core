@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Category\Presentation;
 
+use SprykerTest\Zed\Category\CategoryPresentationTester;
 use SprykerTest\Zed\Category\PageObject\CategoryEditPage;
-use SprykerTest\Zed\Category\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CategoryEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testICanOpenEditCategoryPage(PresentationTester $i)
+    public function testICanOpenEditCategoryPage(CategoryPresentationTester $i)
     {
         $categoryTransfer = $i->createCategory(CategoryEditPage::CATEGORY_A);
         $i->amOnPage(CategoryEditPage::getUrl($categoryTransfer->getIdCategory()));
@@ -37,11 +37,11 @@ class CategoryEditCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testICanEditCategoryCheckboxes(PresentationTester $i)
+    public function testICanEditCategoryCheckboxes(CategoryPresentationTester $i)
     {
         $categoryTransfer = $i->createCategory(CategoryEditPage::CATEGORY_A);
         $i->amOnPage(CategoryEditPage::getUrl($categoryTransfer->getIdCategory()));

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\PageObject;
 
-use SprykerTest\Zed\Sales\PresentationTester;
+use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 class SalesListPage
 {
@@ -17,16 +17,16 @@ class SalesListPage
     const SELECTOR_ID_SALES_ORDER_ROWS = '//tbody/tr/td[1]';
 
     /**
-     * @var \SprykerTest\Zed\Sales\PresentationTester
+     * @var \SprykerTest\Zed\Sales\SalesPresentationTester
      */
     protected $tester;
 
     /**
-     * @param \SprykerTest\Zed\Sales\PresentationTester $i
+     * @param \SprykerTest\Zed\Sales\SalesPresentationTester $tester
      */
-    public function __construct(PresentationTester $i)
+    public function __construct(SalesPresentationTester $tester)
     {
-        $this->tester = $i;
+        $this->tester = $tester;
     }
 
     /**
@@ -34,11 +34,10 @@ class SalesListPage
      */
     public function grabOrderIdsFromGrid()
     {
-        $i = $this->tester;
-        $i->amOnPage(SalesListPage::URL);
-        $i->wait(2);
+        $this->tester->amOnPage(SalesListPage::URL);
+        $this->tester->wait(2);
 
-        return $i->grabMultiple(SalesListPage::SELECTOR_ID_SALES_ORDER_ROWS);
+        return $this->tester->grabMultiple(SalesListPage::SELECTOR_ID_SALES_ORDER_ROWS);
     }
 
     /**
@@ -46,8 +45,7 @@ class SalesListPage
      */
     public function seeListOfOrders()
     {
-        $i = $this->tester;
-        $i->assertTrue(count($this->grabOrderIdsFromGrid()) > 0);
+        $this->tester->assertTrue(count($this->grabOrderIdsFromGrid()) > 0);
     }
 
     /**

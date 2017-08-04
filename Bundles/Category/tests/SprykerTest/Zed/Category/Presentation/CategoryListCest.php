@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Category\Presentation;
 
+use SprykerTest\Zed\Category\CategoryPresentationTester;
 use SprykerTest\Zed\Category\PageObject\CategoryCreatePage;
 use SprykerTest\Zed\Category\PageObject\CategoryListPage;
-use SprykerTest\Zed\Category\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -24,22 +24,22 @@ class CategoryListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testICanSeeRootNodesList(PresentationTester $i)
+    public function testICanSeeRootNodesList(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->seeElement(['class' => CategoryListPage::SELECTOR_TABLE]);
     }
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testICanGoToCreateCategoryPage(PresentationTester $i)
+    public function testICanGoToCreateCategoryPage(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->click(CategoryListPage::BUTTON_CREATE_CATEGORY);
@@ -47,11 +47,11 @@ class CategoryListCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testThatICanSeeCategoryTreeForFirstRootNode(PresentationTester $i)
+    public function testThatICanSeeCategoryTreeForFirstRootNode(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::SELECTOR_TREE_LIST);

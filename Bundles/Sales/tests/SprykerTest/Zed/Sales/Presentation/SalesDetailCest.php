@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Sales\Presentation;
 
 use SprykerTest\Zed\Sales\PageObject\SalesDetailPage;
 use SprykerTest\Zed\Sales\PageObject\SalesListPage;
-use SprykerTest\Zed\Sales\PresentationTester;
+use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -24,12 +24,12 @@ class SalesDetailCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Sales\PresentationTester $i
+     * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */
-    public function testThatOrderDetailPageIsVisibleWhenOrderExists(PresentationTester $i, SalesListPage $salesListPage)
+    public function testThatOrderDetailPageIsVisibleWhenOrderExists(SalesPresentationTester $i, SalesListPage $salesListPage)
     {
         $i->createOrderWithOneItem();
 
