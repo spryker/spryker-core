@@ -1,5 +1,4 @@
 <?php
-
 namespace SprykerTest\Zed\CustomerGroup;
 
 use Codeception\Actor;
@@ -20,10 +19,10 @@ use Codeception\Scenario;
  *
  * @SuppressWarnings(PHPMD)
  */
-class PresentationTester extends Actor
+class CustomerGroupPresentationTester extends Actor
 {
 
-    use _generated\PresentationTesterActions;
+    use _generated\CustomerGroupPresentationTesterActions;
 
     /**
      * @param \Codeception\Scenario $scenario

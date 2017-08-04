@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\CustomerGroup\Presentation;
 
+use SprykerTest\Zed\CustomerGroup\CustomerGroupPresentationTester;
 use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupViewPage;
-use SprykerTest\Zed\CustomerGroup\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CustomerGroupViewCest
 {
 
     /**
-     * @param \SprykerTest\Zed\CustomerGroup\PresentationTester $i
+     * @param \SprykerTest\Zed\CustomerGroup\CustomerGroupPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(CustomerGroupPresentationTester $i)
     {
         $customerGroupTransfer = $i->haveCustomerGroup();
         $i->amOnPage(CustomerGroupViewPage::buildUrl($customerGroupTransfer->getIdCustomerGroup()));

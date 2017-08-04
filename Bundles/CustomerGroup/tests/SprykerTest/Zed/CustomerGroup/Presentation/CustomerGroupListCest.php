@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\CustomerGroup\Presentation;
 
+use SprykerTest\Zed\CustomerGroup\CustomerGroupPresentationTester;
 use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupListPage;
-use SprykerTest\Zed\CustomerGroup\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CustomerGroupListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\CustomerGroup\PresentationTester $i
+     * @param \SprykerTest\Zed\CustomerGroup\CustomerGroupPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(CustomerGroupPresentationTester $i)
     {
         $i->amOnPage(CustomerGroupListPage::URL);
 
@@ -35,11 +35,11 @@ class CustomerGroupListCest
     }
 
     /**
-     * @param \SprykerTest\Zed\CustomerGroup\PresentationTester $i
+     * @param \SprykerTest\Zed\CustomerGroup\CustomerGroupPresentationTester $i
      *
      * @return void
      */
-    public function showListOfCustomerGroup(PresentationTester $i)
+    public function showListOfCustomerGroup(CustomerGroupPresentationTester $i)
     {
         $i->amOnPage(CustomerGroupListPage::URL);
         $i->seeElement(CustomerGroupListPage::SELECTOR_TABLE);
