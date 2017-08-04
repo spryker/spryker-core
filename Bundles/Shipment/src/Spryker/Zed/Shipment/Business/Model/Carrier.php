@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
 
-class Carrier
+class Carrier implements CarrierInterface
 {
 
     /**

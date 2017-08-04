@@ -26,6 +26,26 @@ interface ShipmentFacadeInterface
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer);
 
     /**
+     * Specification:
+     * - Finds list of carrier transfers from database
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getCarriers();
+
+    /**
+     * Specification:
+     * - Finds list of shipment method transfers from database
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getMethods();
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
@@ -33,6 +53,19 @@ interface ShipmentFacadeInterface
      * @return int
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer);
+
+    /**
+     * Specification:
+     * - Finds a shipment method by ID
+     * - Returns NULL if the method does not exist
+     *
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod);
 
     /**
      * @api
@@ -75,7 +108,7 @@ interface ShipmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return int
+     * @return int|bool
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer);
 
