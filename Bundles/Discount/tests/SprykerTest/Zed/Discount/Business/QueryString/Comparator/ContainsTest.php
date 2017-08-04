@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString\Comparator;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 
@@ -23,7 +23,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
  * @group ContainsTest
  * Add your own group annotations below this line
  */
-class ContainsTest extends PHPUnit_Framework_TestCase
+class ContainsTest extends Unit
 {
 
     /**

@@ -1,5 +1,5 @@
 namespace: SprykerTest\Zed\Sales
-actor: Tester
+
 paths:
     tests: .
     data: ../../../_data
@@ -10,3 +10,59 @@ coverage:
     enabled: true
     remote: false
     whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        class_name: SalesBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                - \SprykerTest\Zed\Sales\Business\Helper\BusinessHelper
+
+    Communication:
+        path: Communication
+        class_name: SalesCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper:
+                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
+                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
+                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
+                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+                - \SprykerTest\Zed\Sales\Communication\Helper\CommunicationHelper
+
+    Presentation:
+        path: Presentation
+        class_name: SalesPresentationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Config\Helper\ConfigInit
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - WebDriver:
+                    url: ''
+                    browser: chrome
+                    window_size: 1920x1080
+                    host: 0.0.0.0
+                    restart: false
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper
+                - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
+                - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper
+                - \SprykerTest\Zed\Sales\Presentation\Helper\PresentationHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper

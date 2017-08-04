@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Discount\Business\Calculator\Type;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
  * @group FixedTest
  * Add your own group annotations below this line
  */
-class FixedTest extends PHPUnit_Framework_TestCase
+class FixedTest extends Unit
 {
 
     const ITEM_GROSS_PRICE_1000 = 1000;

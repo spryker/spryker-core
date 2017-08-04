@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductManagement\Presentation;
 
 use SprykerTest\Zed\ProductManagement\PageObject\ProductManagementAttributeListPage;
-use SprykerTest\Zed\ProductManagement\PresentationTester;
+use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class ProductManagementAttributeListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\ProductManagement\PresentationTester $i
+     * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
     {
         $i->amOnPage(ProductManagementAttributeListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes');

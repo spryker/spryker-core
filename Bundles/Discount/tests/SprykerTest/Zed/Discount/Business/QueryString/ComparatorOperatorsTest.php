@@ -6,8 +6,8 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
@@ -22,7 +22,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
  * @group ComparatorOperatorsTest
  * Add your own group annotations below this line
  */
-class ComparatorOperatorsTest extends PHPUnit_Framework_TestCase
+class ComparatorOperatorsTest extends Unit
 {
 
     /**

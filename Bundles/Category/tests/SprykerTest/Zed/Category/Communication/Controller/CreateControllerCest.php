@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Category\Communication\Controller;
 
-use SprykerTest\Zed\Category\CommunicationTester;
+use SprykerTest\Zed\Category\CategoryCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CreateControllerCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Category\CommunicationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryCommunicationTester $i
      *
      * @return void
      */
-    public function openCreatePage(CommunicationTester $i)
+    public function openCreatePage(CategoryCommunicationTester $i)
     {
         $i->amOnPage('/category/create');
         $i->seeResponseCodeIs(200);
@@ -35,11 +35,11 @@ class CreateControllerCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Category\CommunicationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryCommunicationTester $i
      *
      * @return void
      */
-    public function createCategoryWithAlreadyExistingKeyShowsValidationMessage(CommunicationTester $i)
+    public function createCategoryWithAlreadyExistingKeyShowsValidationMessage(CategoryCommunicationTester $i)
     {
         $categoryTransfer = $i->haveCategory();
 

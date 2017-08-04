@@ -7,12 +7,12 @@
 
 namespace SprykerTest\Zed\Cms\Business;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
@@ -25,7 +25,7 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
-abstract class CmsMocks extends PHPUnit_Framework_TestCase
+abstract class CmsMocks extends Unit
 {
 
     /**

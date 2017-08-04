@@ -1,7 +1,0 @@
-class_name: UnitTester
-modules:
-  enabled:
-    - Asserts
-    - \SprykerTest\Shared\Testify\Helper\Environment
-    - \Config\Module\ConfigInit
-    - \ErrorHandler\Module\Unit

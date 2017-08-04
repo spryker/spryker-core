@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\CmsBlockGui\Presentation;
 
+use SprykerTest\Zed\CmsBlockGui\CmsBlockGuiPresentationTester;
 use SprykerTest\Zed\CmsBlockGui\PageObject\CmsBlockGuiCreatePage;
-use SprykerTest\Zed\CmsBlockGui\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CmsBlockGuiCreateCest
 {
 
     /**
-     * @param \SprykerTest\Zed\CmsBlockGui\PresentationTester $i
+     * @param \SprykerTest\Zed\CmsBlockGui\CmsBlockGuiPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(CmsBlockGuiPresentationTester $i)
     {
         $i->amOnPage(CmsBlockGuiCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / Create new CMS Block');

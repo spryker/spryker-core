@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Discount\Business\Voucher;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -23,7 +23,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group VoucherCodeTest
  * Add your own group annotations below this line
  */
-class VoucherCodeTest extends PHPUnit_Framework_TestCase
+class VoucherCodeTest extends Unit
 {
 
     /**

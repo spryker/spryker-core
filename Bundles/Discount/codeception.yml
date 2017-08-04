@@ -2,8 +2,8 @@ namespace: Discount
 actor: Tester
 
 include:
-    - tests/SprykerTest/Shared/Discount
-    - tests/SprykerTest/Zed/Discount
+  - tests/SprykerTest/Shared/Discount
+  - tests/SprykerTest/Zed/Discount
 
 paths:
     tests: tests
@@ -11,15 +11,19 @@ paths:
     data: tests/_data
     support: tests/_support
     envs: tests/_envs
-
 settings:
     bootstrap: _bootstrap.php
     suite_class: \PHPUnit_Framework_TestSuite
     colors: true
     memory_limit: 1024M
     log: true
-
 coverage:
     enabled: true
-    remote: false
     whitelist: { include: ['src/*'] }
+
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+    config:
+        Codeception\Extension\Phantoman:
+            suites: ['Presentation']

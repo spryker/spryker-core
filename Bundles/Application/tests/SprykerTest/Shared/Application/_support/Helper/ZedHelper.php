@@ -11,6 +11,7 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Testify\TestifyConstants;
 
 class ZedHelper extends Module
 {
@@ -40,7 +41,9 @@ class ZedHelper extends Module
             // @deprecated This is just for backward compatibility
             : Config::get(ApplicationConstants::HOST_ZED_GUI);
 
-        $this->getWebDriver()->_reconfigure(['url' => $url]);
+        $host = Config::get(TestifyConstants::WEB_DRIVER_HOST, '0.0.0.0');
+
+        $this->getWebDriver()->_reconfigure(['url' => $url, 'host' => $host]);
 
         return $this;
     }
@@ -53,17 +56,17 @@ class ZedHelper extends Module
      */
     public function amLoggedInUser($username = 'admin@spryker.com', $password = 'change123')
     {
-        $i = $this->getWebDriver();
+        $tester = $this->getWebDriver();
 
         if (static::$alreadyLoggedIn) {
             return;
         }
 
-        $i->amOnPage('/auth/login');
+        $tester->amOnPage('/auth/login');
 
-        $i->fillField('#auth_username', $username);
-        $i->fillField('#auth_password', $password);
-        $i->click('Login');
+        $tester->fillField('#auth_username', $username);
+        $tester->fillField('#auth_password', $password);
+        $tester->click('Login');
 
         static::$alreadyLoggedIn = true;
     }

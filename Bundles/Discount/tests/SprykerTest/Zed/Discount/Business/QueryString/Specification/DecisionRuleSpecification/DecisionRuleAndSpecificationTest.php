@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface;
 
@@ -25,7 +25,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
  * @group DecisionRuleAndSpecificationTest
  * Add your own group annotations below this line
  */
-class DecisionRuleAndSpecificationTest extends PHPUnit_Framework_TestCase
+class DecisionRuleAndSpecificationTest extends Unit
 {
 
     /**

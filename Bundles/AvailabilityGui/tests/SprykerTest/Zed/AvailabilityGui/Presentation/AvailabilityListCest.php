@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\AvailabilityGui\Presentation;
 
+use SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester;
 use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
-use SprykerTest\Zed\AvailabilityGui\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class AvailabilityListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\AvailabilityGui\PresentationTester $i
+     * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester $i
      *
      * @return void
      */
-    public function testDisplayListPage(PresentationTester $i)
+    public function testDisplayListPage(AvailabilityGuiPresentationTester $i)
     {
         $i->wantTo('Open availability list');
         $i->expect('List of all availability items');

@@ -6,10 +6,10 @@
 
 namespace SprykerTest\Zed\Discount\Business\Voucher;
 
+use Codeception\Test\Unit;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -24,7 +24,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group VoucherValidatorTest
  * Add your own group annotations below this line
  */
-class VoucherValidatorTest extends PHPUnit_Framework_TestCase
+class VoucherValidatorTest extends Unit
 {
 
     /**

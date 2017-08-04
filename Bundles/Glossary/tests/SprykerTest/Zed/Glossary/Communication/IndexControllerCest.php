@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Glossary\Communication\Controller;
 
-use SprykerTest\Zed\Glossary\CommunicationTester;
+use SprykerTest\Zed\Glossary\GlossaryCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class IndexControllerCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Glossary\CommunicationTester $i
+     * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
      * @return void
      */
-    public function listTranslations(CommunicationTester $i)
+    public function listTranslations(GlossaryCommunicationTester $i)
     {
         $i->amOnPage('/glossary');
         $i->seeResponseCodeIs(200);

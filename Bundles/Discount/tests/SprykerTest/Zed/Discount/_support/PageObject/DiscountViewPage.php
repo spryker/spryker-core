@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\PageObject;
 
-use SprykerTest\Zed\Discount\PresentationTester;
+use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountViewPage
 {
@@ -15,7 +15,7 @@ class DiscountViewPage
     const URL = '/discount/index/view';
 
     /**
-     * @var \ZedAcceptanceTester
+     * @var \SprykerTest\Zed\Discount\DiscountPresentationTester|\SprykerTest\Zed\Discount\PageObject\DiscountPresentationTester
      */
     protected $tester;
 
@@ -25,9 +25,9 @@ class DiscountViewPage
     protected $createPage;
 
     /**
-     * @param \SprykerTest\Zed\Discount\PresentationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      */
-    public function __construct(PresentationTester $i)
+    public function __construct(DiscountPresentationTester $i)
     {
         $this->tester = $i;
     }

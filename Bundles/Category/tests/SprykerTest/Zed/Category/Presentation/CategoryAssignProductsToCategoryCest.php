@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Category\Presentation;
 
+use SprykerTest\Zed\Category\CategoryPresentationTester;
 use SprykerTest\Zed\Category\PageObject\CategoryListPage;
-use SprykerTest\Zed\Category\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CategoryAssignProductsToCategoryCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->wait(2);

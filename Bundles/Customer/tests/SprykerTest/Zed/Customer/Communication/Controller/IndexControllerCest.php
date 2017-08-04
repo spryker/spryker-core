@@ -12,7 +12,7 @@ use Codeception\Util\Stub;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
-use SprykerTest\Zed\Customer\CommunicationTester;
+use SprykerTest\Zed\Customer\CustomerCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -28,11 +28,11 @@ class IndexControllerCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i
      *
      * @return void
      */
-    public function _before(CommunicationTester $i)
+    public function _before(CustomerCommunicationTester $i)
     {
         $i->setDependency(CustomerDependencyProvider::FACADE_MAIL, $this->getMailFacadeMock());
     }
@@ -46,11 +46,11 @@ class IndexControllerCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i
      *
      * @return void
      */
-    public function listCustomers(CommunicationTester $i)
+    public function listCustomers(CustomerCommunicationTester $i)
     {
         $i->amOnPage('/customer');
         $i->seeResponseCodeIs(200);
@@ -58,11 +58,11 @@ class IndexControllerCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i
      *
      * @return void
      */
-    public function addCustomer(CommunicationTester $i)
+    public function addCustomer(CustomerCommunicationTester $i)
     {
         $customerTransfer = $this->getCustomerTransfer();
 
@@ -85,11 +85,11 @@ class IndexControllerCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Customer\CommunicationTester $i
+     * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i
      *
      * @return void
      */
-    public function addCustomerWithoutNameAndFail(CommunicationTester $i)
+    public function addCustomerWithoutNameAndFail(CustomerCommunicationTester $i)
     {
         $customerTransfer = $this->getCustomerTransfer();
         $email = $customerTransfer->getEmail();

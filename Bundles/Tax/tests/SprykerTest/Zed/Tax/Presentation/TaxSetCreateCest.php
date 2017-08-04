@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Tax\Presentation;
 
 use SprykerTest\Zed\Tax\PageObject\TaxSetCreatePage;
-use SprykerTest\Zed\Tax\PresentationTester;
+use SprykerTest\Zed\Tax\TaxPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class TaxSetCreateCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Tax\PresentationTester $i
+     * @param \SprykerTest\Zed\Tax\TaxPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(TaxPresentationTester $i)
     {
         $i->amOnPage(TaxSetCreatePage::URL);
 

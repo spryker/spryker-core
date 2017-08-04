@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Customer\Presentation;
 
+use SprykerTest\Zed\Customer\CustomerPresentationTester;
 use SprykerTest\Zed\Customer\PageObject\CustomerIndexPage;
-use SprykerTest\Zed\Customer\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CustomerIndexCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Customer\PresentationTester $i
+     * @param \SprykerTest\Zed\Customer\CustomerPresentationTester $i
      *
      * @return void
      */
-    public function breadCrumbIsVisible(PresentationTester $i)
+    public function breadCrumbIsVisible(CustomerPresentationTester $i)
     {
         $i->amLoggedInUser();
         $i->amOnPage(CustomerIndexPage::URL);

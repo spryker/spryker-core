@@ -1,6 +1,0 @@
-class_name: UnitTester
-modules:
-    enabled:
-        - Asserts
-        - \Product\Module\Unit
-        - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

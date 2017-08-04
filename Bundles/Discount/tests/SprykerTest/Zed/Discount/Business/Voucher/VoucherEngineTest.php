@@ -6,10 +6,10 @@
 
 namespace SprykerTest\Zed\Discount\Business\Voucher;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
-use PHPUnit_Framework_TestCase;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
@@ -27,7 +27,7 @@ use stdClass;
  * @group VoucherEngineTest
  * Add your own group annotations below this line
  */
-class VoucherEngineTest extends PHPUnit_Framework_TestCase
+class VoucherEngineTest extends Unit
 {
 
     /**

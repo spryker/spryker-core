@@ -6,9 +6,9 @@
 
 namespace SprykerTest\Zed\Category\Presentation;
 
+use SprykerTest\Zed\Category\CategoryPresentationTester;
 use SprykerTest\Zed\Category\PageObject\Category;
 use SprykerTest\Zed\Category\PageObject\CategoryReSortPage;
-use SprykerTest\Zed\Category\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CategoryReSortCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testThatICanSeeSubCategories(PresentationTester $i)
+    public function testThatICanSeeSubCategories(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryReSortPage::URL);
         $i->waitForElement(CategoryReSortPage::SELECTOR_CATEGORY_LIST);
@@ -35,11 +35,11 @@ class CategoryReSortCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testThatICanMoveCategories(PresentationTester $i)
+    public function testThatICanMoveCategories(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryReSortPage::URL);
         $i->waitForElement(CategoryReSortPage::SELECTOR_CATEGORY_LIST);
@@ -54,11 +54,11 @@ class CategoryReSortCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testThatICanSaveReSortedSubCategories(PresentationTester $i)
+    public function testThatICanSaveReSortedSubCategories(CategoryPresentationTester $i)
     {
         $i->createCategory(Category::CATEGORY_A);
 

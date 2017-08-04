@@ -1,13 +1,11 @@
 namespace: SprykerTest
-actor: Tester
 
 include:
     - tests/SprykerTest/Shared/Session
-    - tests/SprykerTest/Yves
-    - tests/SprykerTest/Zed
+    - tests/SprykerTest/Yves/Session
+    - tests/SprykerTest/Zed/Session
 
 paths:
-    tests: tests
     support: .
     log: tests/_output
     data: tests/_data

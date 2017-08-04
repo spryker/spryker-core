@@ -1,6 +1,0 @@
-class_name: UnitTester
-modules:
-    enabled:
-        - Asserts
-        - \Config\Module\ConfigInit
-        - \Symfony\Module\Unit

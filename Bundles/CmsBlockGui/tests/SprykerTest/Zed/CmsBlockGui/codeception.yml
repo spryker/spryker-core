@@ -1,5 +1,5 @@
 namespace: SprykerTest\Zed\CmsBlockGui
-actor: Tester
+
 paths:
     tests: .
     data: ../../../_data
@@ -10,3 +10,24 @@ coverage:
     enabled: true
     remote: false
     whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Presentation:
+        path: Presentation
+        class_name: CmsBlockGuiPresentationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Config\Helper\ConfigInit
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - WebDriver:
+                    url: ''
+                    browser: chrome
+                    window_size: 1920x1080
+                    host: 0.0.0.0
+                    restart: false
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper
+                - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
+                - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper

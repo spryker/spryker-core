@@ -6,8 +6,8 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
@@ -23,7 +23,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
  * @group ClauseValidatorTest
  * Add your own group annotations below this line
  */
-class ClauseValidatorTest extends PHPUnit_Framework_TestCase
+class ClauseValidatorTest extends Unit
 {
 
     /**

@@ -8,7 +8,7 @@ namespace SprykerTest\Zed\ProductOption\Presentation;
 
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 use SprykerTest\Zed\ProductOption\PageObject\ProductOptionEditPage;
-use SprykerTest\Zed\ProductOption\PresentationTester;
+use SprykerTest\Zed\ProductOption\ProductOptionPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class ProductOptionEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\ProductOption\PresentationTester $i
+     * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i
      *
      * @return void
      */
-    public function testEditOptionWithMultipleValues(PresentationTester $i)
+    public function testEditOptionWithMultipleValues(ProductOptionPresentationTester $i)
     {
         $i->wantTo('Edit existing option group');
         $i->expect('Option group with options created');

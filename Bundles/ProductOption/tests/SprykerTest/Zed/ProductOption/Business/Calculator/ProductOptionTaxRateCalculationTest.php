@@ -6,11 +6,11 @@
 
 namespace SprykerTest\Zed\ProductOption\Business\Calculator;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
@@ -25,7 +25,7 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  * @group ProductOptionTaxRateCalculationTest
  * Add your own group annotations below this line
  */
-class ProductOptionTaxRateCalculationTest extends PHPUnit_Framework_TestCase
+class ProductOptionTaxRateCalculationTest extends Unit
 {
 
     /**

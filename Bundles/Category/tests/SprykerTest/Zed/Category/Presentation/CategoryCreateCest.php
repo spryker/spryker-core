@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Category\Presentation;
 
+use SprykerTest\Zed\Category\CategoryPresentationTester;
 use SprykerTest\Zed\Category\PageObject\CategoryCreatePage;
-use SprykerTest\Zed\Category\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CategoryCreateCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Category\PresentationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
      */
-    public function testICanCreateCategory(PresentationTester $i)
+    public function testICanCreateCategory(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Category / Create Category');

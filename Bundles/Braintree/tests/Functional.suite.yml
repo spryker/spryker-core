@@ -1,9 +1,0 @@
-class_name: FunctionalTester
-modules:
-    enabled:
-    - \SprykerTest\Shared\Testify\Helper\Environment
-    - \Config\Module\ConfigInit
-    - \Propel\Module\PropelInstall
-    - \Propel\Module\Database
-    - \Transfer\Module\TransferGenerate
-    - \Braintree\Module\Functional

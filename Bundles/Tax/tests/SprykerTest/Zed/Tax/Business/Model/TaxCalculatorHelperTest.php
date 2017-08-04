@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Tax\Business\Model;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
  * @group TaxCalculatorHelperTest
  * Add your own group annotations below this line
  */
-class TaxCalculatorHelperTest extends PHPUnit_Framework_TestCase
+class TaxCalculatorHelperTest extends Unit
 {
 
     /**

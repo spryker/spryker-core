@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Category\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use SprykerTest\Zed\Category\CommunicationTester;
+use SprykerTest\Zed\Category\CategoryCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -24,11 +24,11 @@ class EditControllerCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Category\CommunicationTester $i
+     * @param \SprykerTest\Zed\Category\CategoryCommunicationTester $i
      *
      * @return void
      */
-    public function updateCategoryWithAlreadyExistingKeyShowsValidationMessage(CommunicationTester $i)
+    public function updateCategoryWithAlreadyExistingKeyShowsValidationMessage(CategoryCommunicationTester $i)
     {
         $categoryTransferA = $i->haveCategory();
         $categoryTransferB = $i->haveCategory();

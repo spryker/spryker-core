@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\PageObject;
 
-use SprykerTest\Zed\Discount\PresentationTester;
+use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountEditPage
 {
@@ -15,7 +15,7 @@ class DiscountEditPage
     const URL = '/discount/index/edit';
 
     /**
-     * @var \ZedAcceptanceTester
+     * @var \SprykerTest\Zed\Discount\DiscountPresentationTester
      */
     protected $tester;
 
@@ -25,10 +25,10 @@ class DiscountEditPage
     protected $createPage;
 
     /**
-     * @param \SprykerTest\Zed\Discount\PresentationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      */
-    public function __construct(PresentationTester $i, DiscountCreatePage $createPage)
+    public function __construct(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
         $this->tester = $i;
         $this->createPage = $createPage;

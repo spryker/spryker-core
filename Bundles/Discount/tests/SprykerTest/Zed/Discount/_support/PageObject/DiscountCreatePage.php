@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Discount\PageObject;
 
 use Codeception\Util\Locator;
-use SprykerTest\Zed\Discount\PresentationTester;
+use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountCreatePage
 {
@@ -64,14 +64,14 @@ class DiscountCreatePage
     ];
 
     /**
-     * @var \SprykerTest\Zed\Discount\PresentationTester
+     * @var \SprykerTest\Zed\Discount\DiscountPresentationTester
      */
     protected $tester;
 
     /**
-     * @param \SprykerTest\Zed\Discount\PresentationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      */
-    public function __construct(PresentationTester $i)
+    public function __construct(DiscountPresentationTester $i)
     {
         $this->tester = $i;
     }

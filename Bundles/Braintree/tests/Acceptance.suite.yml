@@ -7,16 +7,15 @@ modules:
             window_size: 1920x1080
 
         - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-        - \Application\Module\Yves
-        - \Application\Module\Zed
+        - \SprykerTest\Shared\Application\Helper\YvesHelper
+        - \SprykerTest\Shared\Application\Helper\ZedHelper
         - \SprykerTest\Shared\Testify\Helper\Environment
-        - \Config\Module\ConfigInit
-        - \Propel\Module\PropelInstall
-        - \Propel\Module\Database
-        - \Transfer\Module\TransferGenerate
+        - \SprykerTest\Shared\Config\Helper\ConfigInit
+        - \SprykerTest\Shared\Propel\Helper\PropelInstallHelper
+        - \SprykerTest\Shared\Transfer\Helper\TransferGenerateHelper
         - \Braintree\Module\Braintree
         - \SprykerTest\Shared\Sales\Helper\SalesHelper
-        - \Oms\Module\Oms
+        - \SprykerTest\Zed\Oms\Helper\OmsHelper
         - Asserts
 
 coverage:

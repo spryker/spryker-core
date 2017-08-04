@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Glossary\Presentation;
 
+use SprykerTest\Zed\Glossary\GlossaryPresentationTester;
 use SprykerTest\Zed\Glossary\PageObject\GlossaryListPage;
-use SprykerTest\Zed\Glossary\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class GlossaryEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Glossary\PresentationTester $i
+     * @param \SprykerTest\Zed\Glossary\GlossaryPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(GlossaryPresentationTester $i)
     {
         $i->amOnPage(GlossaryListPage::URL);
         $i->clickDataTableEditButton();

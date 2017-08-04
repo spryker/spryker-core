@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\CmsGui\Presentation;
 
+use SprykerTest\Zed\CmsGui\CmsGuiPresentationTester;
 use SprykerTest\Zed\CmsGui\PageObject\CmsGuiListPage;
-use SprykerTest\Zed\CmsGui\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CmsGuiEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\CmsGui\PresentationTester $i
+     * @param \SprykerTest\Zed\CmsGui\CmsGuiPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(CmsGuiPresentationTester $i)
     {
         $i->amOnPage(CmsGuiListPage::URL);
         $i->clickDataTableLinkInDropDownOfButton('Edit', 'Page');

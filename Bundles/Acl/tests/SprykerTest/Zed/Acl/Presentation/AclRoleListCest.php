@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Acl\Presentation;
 
+use SprykerTest\Zed\Acl\AclPresentationTester;
 use SprykerTest\Zed\Acl\PageObject\AclRoleListPage;
-use SprykerTest\Zed\Acl\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class AclRoleListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Acl\PresentationTester $i
+     * @param \SprykerTest\Zed\Acl\AclPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(AclPresentationTester $i)
     {
         $i->amOnPage(AclRoleListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Roles');

@@ -167,10 +167,7 @@ class Store
         $this->allStoreNames = array_keys($stores);
         $this->allStores = $stores;
 
-        if (APPLICATION === self::APPLICATION_ZED) {
-            $this->setCurrentLocale(current($this->locales));
-        }
-
+        $this->setCurrentLocale(current($this->locales));
         $this->setCurrentCountry(current($this->countries));
     }
 

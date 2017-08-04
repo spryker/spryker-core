@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CmsProductSetConnector\Business;
+namespace SprykerTest\Zed\CmsContentWidgetProductSetConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductSetTransfer;
@@ -14,7 +14,7 @@ use Spryker\Zed\CmsContentWidgetProductSetConnector\Business\CmsContentWidgetPro
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group CmsProductSetConnector
+ * @group CmsContentWidgetProductSetConnector
  * @group Business
  * @group Facade
  * @group CmsContentWidgetProductSetConnectorFacadeTest

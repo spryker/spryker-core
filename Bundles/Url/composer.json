@@ -13,6 +13,7 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
+    "spryker/util-text": "*",
     "spryker/testify": "*"
   },
   "autoload": {

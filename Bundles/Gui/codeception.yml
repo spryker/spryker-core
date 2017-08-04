@@ -2,7 +2,7 @@ namespace: Gui
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/Gui
+    - tests/SprykerTest/Zed/Gui
 
 paths:
     tests: tests
@@ -19,3 +19,10 @@ settings:
 coverage:
     enabled: true
     whitelist: { include: ['src/*'] }
+
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+    config:
+        Codeception\Extension\Phantoman:
+            suites: ['Presentation']

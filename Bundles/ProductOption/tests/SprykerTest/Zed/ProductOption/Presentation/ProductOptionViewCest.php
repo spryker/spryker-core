@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductOption\Presentation;
 
 use SprykerTest\Zed\ProductOption\PageObject\ProductOptionListPage;
-use SprykerTest\Zed\ProductOption\PresentationTester;
+use SprykerTest\Zed\ProductOption\ProductOptionPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class ProductOptionViewCest
 {
 
     /**
-     * @param \SprykerTest\Zed\ProductOption\PresentationTester $i
+     * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(ProductOptionPresentationTester $i)
     {
         $i->amOnPage(ProductOptionListPage::URL);
         $i->clickDataTableViewButton();

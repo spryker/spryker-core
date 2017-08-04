@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Cms\Presentation;
 
+use SprykerTest\Zed\Cms\CmsPresentationTester;
 use SprykerTest\Zed\Cms\PageObject\CmsRedirectCreatePage;
-use SprykerTest\Zed\Cms\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,11 +23,11 @@ class CmsRedirectCreateCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Cms\PresentationTester $i
+     * @param \SprykerTest\Zed\Cms\CmsPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(PresentationTester $i)
+    public function breadcrumbIsVisible(CmsPresentationTester $i)
     {
         $i->amOnPage(CmsRedirectCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects / Create new CMS Redirect');

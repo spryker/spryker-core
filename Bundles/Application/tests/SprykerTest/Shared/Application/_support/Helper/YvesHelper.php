@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Application\Helper;
 use Codeception\Module;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Testify\TestifyConstants;
 
 class YvesHelper extends Module
 {
@@ -19,11 +20,20 @@ class YvesHelper extends Module
      */
     public function amYves()
     {
-        $url = Config::get(ApplicationConstants::HOST_YVES);
+        $url = Config::get(ApplicationConstants::BASE_URL_YVES);
+        $host = Config::get(TestifyConstants::WEB_DRIVER_HOST, '0.0.0.0');
 
-        $this->getModule('WebDriver')->_reconfigure(['url' => $url]);
+        $this->getWebDriver()->_reconfigure(['url' => $url, 'host' => $host]);
 
         return $this;
+    }
+
+    /**
+     * @return \Codeception\Module\WebDriver|\Codeception\Module
+     */
+    protected function getWebDriver()
+    {
+        return $this->getModule('WebDriver');
     }
 
 }
