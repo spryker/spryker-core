@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Glossary\Communication\Controller;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
-use SprykerTest\Zed\Glossary\CommunicationTester;
+use SprykerTest\Zed\Glossary\GlossaryCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -24,11 +24,11 @@ class EditControllerCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Glossary\CommunicationTester $i
+     * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
      * @return void
      */
-    public function editTranslation(CommunicationTester $i)
+    public function editTranslation(GlossaryCommunicationTester $i)
     {
         $formData = [
             KeyTranslationTransfer::GLOSSARY_KEY => 'test.translation.key',

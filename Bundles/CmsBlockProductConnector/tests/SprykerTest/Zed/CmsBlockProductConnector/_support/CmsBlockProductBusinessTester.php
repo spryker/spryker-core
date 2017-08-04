@@ -1,8 +1,7 @@
 <?php
-namespace SprykerTest\Zed\DataImport;
+namespace SprykerTest\Zed\CmsBlockProductConnector;
 
 use Codeception\Actor;
-use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 
 /**
  * Inherited Methods
@@ -19,17 +18,13 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
  *
  * @SuppressWarnings(PHPMD)
  */
-class BusinessTester extends Actor
+class CmsBlockProductBusinessTester extends Actor
 {
 
-    use _generated\BusinessTesterActions;
+    use _generated\CmsBlockProductBusinessTesterActions;
 
-    /**
-     * @return \Spryker\Zed\DataImport\Business\DataImportBusinessFactory
-     */
-    public function getFactory()
-    {
-        return new DataImportBusinessFactory();
-    }
+   /**
+    * Define custom actions here
+    */
 
 }

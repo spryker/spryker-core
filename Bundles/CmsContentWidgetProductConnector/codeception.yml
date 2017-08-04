@@ -20,3 +20,10 @@ settings:
 coverage:
     enabled: true
     whitelist: { include: ['src/*'] }
+
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+    config:
+        Codeception\Extension\Phantoman:
+            suites: ['Presentation']

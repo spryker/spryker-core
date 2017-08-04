@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\CmsBlock;
+namespace SprykerTest\Zed\CmsBlockCategoryConnector;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class BusinessTester extends Actor
+class CmsBlockCategoryConnectorBusinessTester extends Actor
 {
 
-    use _generated\BusinessTesterActions;
+    use _generated\CmsBlockCategoryConnectorBusinessTesterActions;
 
    /**
     * Define custom actions here

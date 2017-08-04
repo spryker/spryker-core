@@ -1,6 +1,5 @@
 <?php
-
-namespace SprykerTest\Zed\Glossary;
+namespace SprykerTest\Zed\Discount;
 
 use Codeception\Actor;
 
@@ -19,9 +18,13 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CommunicationTester extends Actor
+class DiscountBusinessTester extends Actor
 {
 
-    use _generated\CommunicationTesterActions;
+    use _generated\DiscountBusinessTesterActions;
+
+   /**
+    * Define custom actions here
+    */
 
 }

@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\Glossary;
+namespace SprykerTest\Zed\Gui;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class BusinessTester extends Actor
+class GuiCommunicationTester extends Actor
 {
 
-    use _generated\BusinessTesterActions;
+    use _generated\GuiCommunicationTesterActions;
 
    /**
     * Define custom actions here

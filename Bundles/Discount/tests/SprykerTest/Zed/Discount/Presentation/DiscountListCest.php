@@ -8,10 +8,10 @@
 namespace SprykerTest\Zed\Discount\Presentation;
 
 use Codeception\Util\Locator;
+use SprykerTest\Zed\Discount\DiscountPresentationTester;
 use SprykerTest\Zed\Discount\PageObject\DiscountEditPage;
 use SprykerTest\Zed\Discount\PageObject\DiscountListPage;
 use SprykerTest\Zed\Discount\PageObject\DiscountViewPage;
-use SprykerTest\Zed\Discount\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -26,13 +26,13 @@ class DiscountListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Discount\PresentationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountEditPage $editPage
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountViewPage $viewPage
      *
      * @return void
      */
-    public function showADiscountInList(PresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage)
+    public function showADiscountInList(DiscountPresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage)
     {
         $name = 'Works as test discount';
         $discount = $i->haveDiscount(['displayName' => $name]);
@@ -58,11 +58,11 @@ class DiscountListCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Discount\PresentationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      *
      * @return void
      */
-    public function testPageShouldShowList(PresentationTester $i)
+    public function testPageShouldShowList(DiscountPresentationTester $i)
     {
         $i->amOnPage(DiscountListPage::URL);
         $i->seeElement(DiscountListPage::SELECTOR_DATA_TABLE);

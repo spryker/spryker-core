@@ -22,3 +22,10 @@ coverage:
     enabled: true
     remote: false
     whitelist: { include: ['src/*'] }
+
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+    config:
+        Codeception\Extension\Phantoman:
+            suites: ['Presentation']

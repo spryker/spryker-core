@@ -1,9 +1,7 @@
 <?php
-
-namespace SprykerTest\Zed\Glossary;
+namespace SprykerTest\Zed\CmsBlock;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 
 /**
  * Inherited Methods
@@ -20,20 +18,13 @@ use Codeception\Scenario;
  *
  * @SuppressWarnings(PHPMD)
  */
-class PresentationTester extends Actor
+class CmsBlockBusinessTester extends Actor
 {
 
-    use _generated\PresentationTesterActions;
+    use _generated\CmsBlockBusinessTesterActions;
 
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
+   /**
+    * Define custom actions here
+    */
 
 }

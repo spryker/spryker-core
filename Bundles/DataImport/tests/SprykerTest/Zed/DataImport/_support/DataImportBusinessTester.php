@@ -1,7 +1,8 @@
 <?php
-namespace SprykerTest\Zed\Gui;
+namespace SprykerTest\Zed\DataImport;
 
 use Codeception\Actor;
+use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 
 /**
  * Inherited Methods
@@ -18,13 +19,17 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CommunicationTester extends Actor
+class DataImportBusinessTester extends Actor
 {
 
-    use _generated\CommunicationTesterActions;
+    use _generated\DataImportBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Spryker\Zed\DataImport\Business\DataImportBusinessFactory
+     */
+    public function getFactory()
+    {
+        return new DataImportBusinessFactory();
+    }
 
 }

@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\DataImport;
+namespace SprykerTest\Zed\Glossary;
 
 use Codeception\Actor;
 
@@ -18,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CommunicationTester extends Actor
+class GlossaryBusinessTester extends Actor
 {
 
-    use _generated\CommunicationTesterActions;
+    use _generated\GlossaryBusinessTesterActions;
 
    /**
     * Define custom actions here

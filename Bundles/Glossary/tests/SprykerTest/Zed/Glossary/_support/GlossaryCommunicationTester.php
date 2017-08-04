@@ -1,11 +1,5 @@
 <?php
-
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
-namespace SprykerTest\Zed\Discount;
+namespace SprykerTest\Zed\Glossary;
 
 use Codeception\Actor;
 
@@ -24,10 +18,10 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class BusinessTester extends Actor
+class GlossaryCommunicationTester extends Actor
 {
 
-    use _generated\BusinessTesterActions;
+    use _generated\GlossaryCommunicationTesterActions;
 
    /**
     * Define custom actions here
