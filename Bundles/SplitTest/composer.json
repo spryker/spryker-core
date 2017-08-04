@@ -1,6 +1,6 @@
 {
   "name": "spryker/split-test",
-  "description": "Split Test",
+  "description": "SplitTest module",
   "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -13,8 +13,8 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/util-text": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/util-text": "*"
   },
   "autoload": {
     "psr-0": {
