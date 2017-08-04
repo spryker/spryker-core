@@ -108,7 +108,6 @@
     "spryker/oms-discount-connector": "*",
     "spryker/payment": "*",
     "spryker/payolution": "*",
-    "spryker/payone": "*",
     "spryker/pimple": "*",
     "spryker/price": "*",
     "spryker/price-cart-connector": "*",
