@@ -83,7 +83,7 @@ class StorageInstanceBuilder
 
         $storageAdapter = static::createStorageAdapterName($type, $kvAdapter);
         $configArray = static::createAdapterConfig($kvAdapter);
-        $options = Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS);
+        $options = static::getAdapterOptions();
 
         $storage = new $storageAdapter($configArray, $options, $debug);
         static::$storageInstances[$storageAdapter] = $storage;
@@ -185,6 +185,18 @@ class StorageInstanceBuilder
         }
 
         return $config;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    protected static function getAdapterOptions()
+    {
+        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS)) {
+            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS);
+        }
+
+        return null;
     }
 
 }
