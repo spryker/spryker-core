@@ -34,12 +34,4 @@ class ProductApiPersistenceFactory extends AbstractPersistenceFactory
         return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_API);
     }
 
-    /**
-     * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToPropelQueryBuilderInterface
-     */
-    public function getPropelQueryBuilderQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_PROPEL_QUERY_BUILDER);
-    }
-
 }

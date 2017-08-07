@@ -13,6 +13,8 @@ namespace Spryker\Shared\EventJournal\Model\Filter;
 abstract class AbstractFilter implements FilterInterface
 {
 
+    const TYPE = 'undefined';
+
     /**
      * @var array
      */

@@ -28,7 +28,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
 
     /**
-     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\ProviderInterface $tokenProvider
+     * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenProvider
      */
     protected $tokenGenerator;
 

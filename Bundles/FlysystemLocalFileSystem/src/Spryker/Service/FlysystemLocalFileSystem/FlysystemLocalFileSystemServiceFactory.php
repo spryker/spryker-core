@@ -25,7 +25,7 @@ class FlysystemLocalFileSystemServiceFactory extends AbstractServiceFactory
      */
     public function createFlysystemLocalFileSystemBuilder(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
     {
-        return new LocalFilesystemBuilder($configTransfer, $flysystemPluginCollection);
+        return new LocalFilesystemBuilder($configTransfer);
     }
 
 }

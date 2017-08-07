@@ -67,7 +67,7 @@ class AddController extends AbstractController
                     $productAbstractTransfer->getSku()
                 ));
 
-                return $this->createRedirectResponseAfterAdd($idProductAbstract, $type);
+                return $this->createRedirectResponseAfterAdd($idProductAbstract);
 
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());

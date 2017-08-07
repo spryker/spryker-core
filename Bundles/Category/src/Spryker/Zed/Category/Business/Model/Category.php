@@ -36,6 +36,11 @@ class Category
     protected $categoryAttribute;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface
+     */
+    protected $categoryExtraParents;
+
+    /**
      * @var \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface
      */
     protected $categoryUrl;

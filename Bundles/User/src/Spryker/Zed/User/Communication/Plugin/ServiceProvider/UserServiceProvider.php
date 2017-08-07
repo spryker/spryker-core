@@ -40,7 +40,7 @@ class UserServiceProvider extends AbstractPlugin implements ServiceProviderInter
     public function register(Application $app)
     {
         $app['twig.global.variables'] = $app->share(
-            $app->extend('twig.global.variables', function (array $variables) use ($app) {
+            $app->extend('twig.global.variables', function (array $variables) {
                 $variables['username'] = $this->getUsername();
 
                 return $variables;

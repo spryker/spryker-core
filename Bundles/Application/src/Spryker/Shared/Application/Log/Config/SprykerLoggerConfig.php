@@ -46,7 +46,7 @@ class SprykerLoggerConfig implements LoggerConfigInterface
     }
 
     /**
-     * @return \callable[]
+     * @return callable[]
      */
     public function getProcessors()
     {

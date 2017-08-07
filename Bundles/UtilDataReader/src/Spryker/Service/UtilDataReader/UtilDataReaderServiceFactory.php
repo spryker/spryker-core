@@ -76,7 +76,7 @@ class UtilDataReaderServiceFactory extends AbstractServiceFactory
      */
     public function createPropelBatchIterator(ModelCriteria $query, $chunkSize, $orderBy = null, $orderByDirection = null)
     {
-        return new PropelBatchIterator($query, $chunkSize, $orderBy, $orderByDirection, $orderBy, $orderByDirection);
+        return new PropelBatchIterator($query, $chunkSize, $orderBy, $orderByDirection);
     }
 
     /**

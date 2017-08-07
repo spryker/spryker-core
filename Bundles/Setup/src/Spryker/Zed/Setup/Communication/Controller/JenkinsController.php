@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
-use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Setup\SetupConstants;
@@ -176,8 +175,6 @@ $command</command>";
     }
 
     /**
-     * @throws \ErrorException
-     *
      * @return void
      */
     public function generateAction()
@@ -192,77 +189,6 @@ $command</command>";
                 'jobs.php',
             ]
         );
-
-        $jobs_dir = APPLICATION_ROOT_DIR . '/data/common/jenkins/jobs/';
-
-        $roles = $this->getRoles();
-
-        if ($roles === false) {
-            $roles = [self::DEFAULT_ROLE];
-        }
-
-        foreach ($roles as $role) {
-            if (!in_array($role, $this->allowedRoles)) {
-                throw new ErrorException($role . ' is not in the list of allowed roles! Cannot continue configuration of jenkins!');
-            }
-        }
-
-        $job_by_name = [];
-
-        foreach ($jobs as $v) {
-            if (array_key_exists('role', $v) && in_array($v['role'], $this->allowedRoles)) {
-                $jobRole = $v['role'];
-            } else {
-                $jobRole = self::DEFAULT_ROLE;
-            }
-
-            // Enable jobs only for roles matching those specified via command line argument
-            if (array_search($jobRole, $roles) === false) {
-                continue;
-            }
-
-            foreach ($v['stores'] as $store) {
-                $name = $store . '__' . $v['name'];
-                $job_by_name[$name] = $v;
-                $job_by_name[$name]['name'] = $name;
-                $job_by_name[$name]['store'] = $store;
-                $job_by_name[$name]['role'] = $jobRole;
-                unset($job_by_name[$name]['stores']);
-            }
-        }
-
-        // Loop thru existing jobs - either update them or delete them.
-        $existing_jobs = glob($jobs_dir . '*/config.xml');
-        if (!empty($existing_jobs)) {
-            foreach ($existing_jobs as $v) {
-                $name = basename(dirname($v));
-
-                if (array_search($name, array_keys($job_by_name)) === false) {
-                    // Job does not exist anymore - we have to delete it.
-                    $url = 'job/' . $name . '/doDelete';
-                    $code = $this->callJenkins($url);
-                    echo "Delete job: $url returned code $code\n";
-                } else {
-                    // Job exists - let's update config.xml and remove it from array of jobs
-                    $xml = $this->prepareJobXml($job_by_name[$name]);
-                    $url = 'job/' . $name . '/config.xml';
-                    $code = $this->callJenkins($url, $xml);
-                    unset($job_by_name[$name]);
-
-                    if ($code !== '200') {
-                        echo "Update: $url returned code $code\n";
-                    }
-                }
-            }
-        }
-
-        // Create new job definitions
-        foreach ($job_by_name as $k => $v) {
-            $xml = $this->prepareJobXml($v);
-            $url = 'createItem?name=' . $v['name'];
-            $code = $this->callJenkins($url, $xml);
-            echo "Jenkins API $url returned response: $code\n";
-        }
     }
 
     /**

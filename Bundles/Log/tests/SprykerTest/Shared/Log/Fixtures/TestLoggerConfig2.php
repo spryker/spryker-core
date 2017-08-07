@@ -29,7 +29,7 @@ class TestLoggerConfig2 implements LoggerConfigInterface
     }
 
     /**
-     * @return \callable[]
+     * @return callable[]
      */
     public function getProcessors()
     {

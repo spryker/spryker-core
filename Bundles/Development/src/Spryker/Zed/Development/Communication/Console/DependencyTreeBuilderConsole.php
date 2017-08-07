@@ -63,12 +63,7 @@ class DependencyTreeBuilderConsole extends Console
             $layer = $this->input->getOption(static::OPTION_LAYER);
         }
 
-        $this->info(sprintf(
-            'Build dependency tree.',
-            $application,
-            $bundle,
-            $layer
-        ));
+        $this->info('Build dependency tree.');
 
         $this->getFacade()->buildDependencyTree($application, $bundle, $layer);
     }

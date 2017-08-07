@@ -69,8 +69,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     public function createSalesPaymentReader()
     {
         return new SalesPaymentReader(
-            $this->getQueryContainer(),
-            $this->createPaymentHydrator()
+            $this->getQueryContainer()
         );
     }
 

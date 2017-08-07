@@ -165,8 +165,8 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     {
         $dataSet = $this->fileObject->current();
         if ($this->dataSetKeys) {
+            $dataSetBeforeCombine = $dataSet;
             try {
-                $dataSetBeforeCombine = $dataSet;
                 $dataSet = array_combine($this->dataSetKeys, $dataSet);
             } catch (Exception $e) {
                 throw new DataSetWithHeaderCombineFailedException(sprintf(

@@ -232,7 +232,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = twig_escape_filter(new Twig_Environment(), $value);
+                $value = \twig_escape_filter(new Twig_Environment(), $value);
             }
 
             return $value;

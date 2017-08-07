@@ -25,7 +25,7 @@ class FlysystemAws3v3FileSystemServiceFactory extends AbstractServiceFactory
      */
     public function createFlysystemAws3v3FileSystemBuilder(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
     {
-        return new Aws3v3FilesystemBuilder($configTransfer, $flysystemPluginCollection);
+        return new Aws3v3FilesystemBuilder($configTransfer);
     }
 
 }

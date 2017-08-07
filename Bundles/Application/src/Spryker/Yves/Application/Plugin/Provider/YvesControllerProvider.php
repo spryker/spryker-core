@@ -224,7 +224,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     protected function getService($bundle, $controllerName, $actionName)
     {
         $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
-        $controllerResolver = new ControllerResolver($bundleControllerAction);
+        $controllerResolver = new ControllerResolver();
         $routeResolver = new BundleControllerActionRouteNameResolver($bundleControllerAction);
 
         $service = (new ControllerServiceBuilder())->createServiceForController($this->app, $bundleControllerAction, $controllerResolver, $routeResolver);

@@ -38,7 +38,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     public function boot(Application $app)
     {
-        $app->before(function (Request $request) use ($app) {
+        $app->before(function (Request $request) {
             if ($this->shouldBeSsl($request)) {
                 $url = 'https://' . $request->getHttpHost() . $request->getRequestUri();
 
