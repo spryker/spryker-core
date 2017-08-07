@@ -51,7 +51,7 @@ class StorageFactory extends AbstractFactory
      */
     protected function createClient()
     {
-        return new Client($this->getConfig());
+        return new Client($this->getConfig(), $this->getPredisClientOptions());
     }
 
     /**
@@ -108,6 +108,10 @@ class StorageFactory extends AbstractFactory
      */
     protected function getConnectionParameters()
     {
+        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION)) {
+            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION);
+        }
+
         $config = [
             'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
             'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
@@ -126,6 +130,18 @@ class StorageFactory extends AbstractFactory
         }
 
         return $config;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    protected function getPredisClientOptions()
+    {
+        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS)) {
+            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS);
+        }
+
+        return null;
     }
 
 }

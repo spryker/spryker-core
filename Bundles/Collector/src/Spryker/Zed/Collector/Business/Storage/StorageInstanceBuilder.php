@@ -83,8 +83,9 @@ class StorageInstanceBuilder
 
         $storageAdapter = static::createStorageAdapterName($type, $kvAdapter);
         $configArray = static::createAdapterConfig($kvAdapter);
+        $options = Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS);
 
-        $storage = new $storageAdapter($configArray, $debug);
+        $storage = new $storageAdapter($configArray, $options, $debug);
         static::$storageInstances[$storageAdapter] = $storage;
 
         return static::$storageInstances[$storageAdapter];
@@ -103,22 +104,7 @@ class StorageInstanceBuilder
 
         switch ($kvAdapter) {
             case static::KV_ADAPTER_REDIS:
-                $config = [
-                    'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
-                    'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
-                    'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST),
-                    'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
-                ];
-
-                $password = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD, false);
-                if ($password !== false) {
-                    $config['password'] = $password;
-                }
-
-                $config['persistent'] = false;
-                if (Config::hasKey(StorageConstants::STORAGE_PERSISTENT_CONNECTION)) {
-                    $config['persistent'] = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION);
-                }
+                $config = static::getRedisClientConfig();
                 break;
 
             case static::SEARCH_ELASTICA_ADAPTER:
@@ -149,8 +135,41 @@ class StorageInstanceBuilder
     /**
      * @return array
      */
+    protected static function getRedisClientConfig()
+    {
+        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION)) {
+            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION);
+        }
+
+        $config = [
+            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
+            'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
+            'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST),
+            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
+        ];
+
+        $password = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD, false);
+        if ($password !== false) {
+            $config['password'] = $password;
+        }
+
+        $config['persistent'] = false;
+        if (Config::hasKey(StorageConstants::STORAGE_PERSISTENT_CONNECTION)) {
+            $config['persistent'] = (bool)Config::get(StorageConstants::STORAGE_PERSISTENT_CONNECTION);
+        }
+
+        return $config;
+    }
+
+    /**
+     * @return array
+     */
     protected static function getElasticsearchClientConfig()
     {
+        if (Config::hasValue(SearchConstants::ELASTICA_CLIENT_CONFIG)) {
+            return Config::get(SearchConstants::ELASTICA_CLIENT_CONFIG);
+        }
+
         if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__EXTRA)) {
             $config = Config::get(SearchConstants::ELASTICA_PARAMETER__EXTRA);
         }

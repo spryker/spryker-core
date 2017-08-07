@@ -71,7 +71,19 @@ interface SearchConstants
     /**
      * Specification:
      * - Defines a suffix string for the index name to be installed. (Optional)
+     *
+     * @api
      */
     const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
+
+    /**
+     * Specification:
+     * - Defines a custom configuration for \Elastica\Client.
+     * - This configuration is used exclusively when set, e.g. no other Elastica configuration will be used for the client.
+     * - @see http://elastica.io/ for details.
+     *
+     * @api
+     */
+    const ELASTICA_CLIENT_CONFIG = 'ELASTICA_CLIENT_CONFIG';
 
 }
