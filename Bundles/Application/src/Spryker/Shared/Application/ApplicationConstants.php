@@ -67,7 +67,7 @@ interface ApplicationConstants
      *
      * @api
      */
-    const ELASTICA_CLIENT_CONFIG = 'ELASTICA_CLIENT_CONFIG';
+    const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
      * SSL

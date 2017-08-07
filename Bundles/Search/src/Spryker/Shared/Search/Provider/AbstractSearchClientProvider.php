@@ -33,8 +33,8 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
      */
     protected function getClientConfig()
     {
-        if (Config::hasValue(SearchConstants::ELASTICA_CLIENT_CONFIG)) {
-            return Config::get(SearchConstants::ELASTICA_CLIENT_CONFIG);
+        if (Config::hasValue(SearchConstants::ELASTICA_CLIENT_CONFIGURATION)) {
+            return Config::get(SearchConstants::ELASTICA_CLIENT_CONFIGURATION);
         }
 
         if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__EXTRA)) {

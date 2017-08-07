@@ -60,8 +60,8 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
      */
     protected function createElasticaClient()
     {
-        if (Config::hasValue(ApplicationConstants::ELASTICA_CLIENT_CONFIG)) {
-            return Config::get(ApplicationConstants::ELASTICA_CLIENT_CONFIG);
+        if (Config::hasValue(ApplicationConstants::ELASTICA_CLIENT_CONFIGURATION)) {
+            return Config::get(ApplicationConstants::ELASTICA_CLIENT_CONFIGURATION);
         }
 
         if (Config::hasValue(ApplicationConstants::ELASTICA_PARAMETER__EXTRA)) {
