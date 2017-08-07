@@ -29,4 +29,15 @@ class ProductReviewQueryContainer extends AbstractQueryContainer implements Prod
             ->filterByIdProductReview($idProductReview);
     }
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     */
+    public function queryProductReview()
+    {
+        return $this->getFactory()
+            ->createProductReviewQuery();
+    }
+
 }

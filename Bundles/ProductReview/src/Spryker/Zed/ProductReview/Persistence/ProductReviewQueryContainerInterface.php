@@ -22,4 +22,11 @@ interface ProductReviewQueryContainerInterface
      */
     public function queryProductReviewById($idProductReview);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     */
+    public function queryProductReview();
+
 }

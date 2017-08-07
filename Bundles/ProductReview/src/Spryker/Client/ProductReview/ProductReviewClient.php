@@ -7,12 +7,31 @@
 
 namespace Spryker\Client\ProductReview;
 
+use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
-class ProductReviewClient extends AbstractClient
+/**
+ * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
+ */
+class ProductReviewClient extends AbstractClient implements ProductReviewClientInterface
 {
 
-    // TODO: submit customer review (zed request)
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewTransfer
+     */
+    public function submitCustomerReview(ProductReviewTransfer $productReviewTransfer)
+    {
+        return $this->getFactory()
+            ->createProductReviewStub()
+            ->submitCustomerReview($productReviewTransfer);
+    }
+
     // TODO: list customer reviews for given product (from Elasticsearch)
 
 }

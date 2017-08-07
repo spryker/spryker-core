@@ -8,7 +8,25 @@
 namespace Spryker\Client\ProductReview;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductReview\Zed\ProductReviewStub;
 
 class ProductReviewFactory extends AbstractFactory
 {
+
+    /**
+     * @return \Spryker\Client\ProductReview\Zed\ProductReviewStub
+     */
+    public function createProductReviewStub()
+    {
+        return new ProductReviewStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
 }
