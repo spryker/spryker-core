@@ -14,11 +14,11 @@ interface RepeaterInterface
 {
 
     /**
-     * @param string|null $bundleControllerAction
+     * @param string|null $moduleControllerAction
      *
      * @return string
      */
-    public function getRepeatData($bundleControllerAction = null);
+    public function getRepeatData($moduleControllerAction = null);
 
     /**
      * @param \Spryker\Shared\ZedRequest\Client\RequestInterface $transferObject

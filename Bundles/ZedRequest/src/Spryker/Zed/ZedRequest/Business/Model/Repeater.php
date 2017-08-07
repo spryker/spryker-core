@@ -33,18 +33,18 @@ class Repeater implements RepeaterInterface
     protected $isRepeatInProgress = false;
 
     /**
-     * @param string|null $bundleControllerAction
+     * @param string|null $moduleControllerAction
      *
      * @return array
      */
-    public function getRepeatData($bundleControllerAction = null)
+    public function getRepeatData($moduleControllerAction = null)
     {
         $this->isRepeatInProgress = true;
-        if ($bundleControllerAction !== null) {
-            return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName($bundleControllerAction));
-        } else {
-            return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName());
+        if ($moduleControllerAction !== null) {
+            return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName($moduleControllerAction));
         }
+
+        return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName());
     }
 
     /**
@@ -70,14 +70,14 @@ class Repeater implements RepeaterInterface
             'params' => $transferObject->toArray(false),
         ];
 
-        $bundleControllerAction = sprintf(
+        $moduleControllerAction = sprintf(
             '%s_%s_%s',
             $httpRequest->attributes->get('module'),
             $httpRequest->attributes->get('controller'),
             $httpRequest->attributes->get('action')
         );
 
-        $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName($bundleControllerAction));
+        $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName($moduleControllerAction));
         $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName());
     }
 
