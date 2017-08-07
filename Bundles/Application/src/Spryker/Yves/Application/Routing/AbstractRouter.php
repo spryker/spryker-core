@@ -192,7 +192,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
         BundleControllerActionInterface $bundleControllerAction,
         RouteNameResolver $routeResolver
     ) {
-        $controllerResolver = new ControllerResolver($bundleControllerAction);
+        $controllerResolver = new ControllerResolver();
         $service = (new ControllerServiceBuilder())->createServiceForController(
             $application,
             $bundleControllerAction,

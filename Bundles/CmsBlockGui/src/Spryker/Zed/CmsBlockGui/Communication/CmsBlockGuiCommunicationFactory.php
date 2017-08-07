@@ -180,9 +180,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createCmsBlockGlossaryFormType()
     {
-        return new CmsBlockGlossaryForm(
-            $this->createCmsBlockGlossaryPlaceholderFormType()
-        );
+        return new CmsBlockGlossaryForm();
     }
 
     /**

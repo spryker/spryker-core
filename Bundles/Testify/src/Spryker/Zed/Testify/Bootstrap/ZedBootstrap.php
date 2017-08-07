@@ -169,7 +169,7 @@ class ZedBootstrap
     {
         $application = $this->application;
         $application['twig.global.variables'] = $application->share(
-            $application->extend('twig.global.variables', function (array $variables) use ($application) {
+            $application->extend('twig.global.variables', function (array $variables) {
                 $variables += [
                     'environment' => APPLICATION_ENV,
                     'store' => Store::getInstance()->getStoreName(),

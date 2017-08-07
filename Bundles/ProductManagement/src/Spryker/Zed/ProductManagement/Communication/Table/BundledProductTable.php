@@ -63,7 +63,7 @@ class BundledProductTable extends AbstractTable
     protected $idProductConcrete;
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer|\Spryker\Zed\ProductManagement\Communication\Table\LocaleTransfer
+     * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $localeTransfer;
 

@@ -324,7 +324,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param string $identifier
      * @param \DateTime $expirationDate
      *
-     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
     public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate)
     {
@@ -339,7 +339,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @param \DateTime $expirationDate
      *
-     * @return $this|\Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
     public function queryLockedItemsByExpirationDate(DateTime $expirationDate)
     {
@@ -353,7 +353,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @param string $identifier
      *
-     * @return \Orm\Zed\StateMachine\Persistence\SpyOmsStateMachineLockQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
     public function queryLockItemsByIdentifier($identifier)
     {
