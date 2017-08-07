@@ -208,6 +208,7 @@ abstract class AbstractTable
 
         $isArray = is_array($headers);
         foreach ($data as $row) {
+            $originalRow = $row;
             if ($isArray) {
                 $row = array_intersect_key($row, $headers);
 
@@ -216,7 +217,11 @@ abstract class AbstractTable
 
             $row = $this->escapeColumns($row, $safeColumns);
 
-            $tableData[] = array_values($row);
+            $extra = array_diff($originalRow, $row);
+            $row = array_values($row);
+            $row = array_merge($row, $extra);
+
+            $tableData[] = $row;
         }
 
         $this->setData($tableData);
