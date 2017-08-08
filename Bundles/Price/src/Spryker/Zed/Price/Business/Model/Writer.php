@@ -225,8 +225,8 @@ class Writer implements WriterInterface
      */
     protected function getPriceProductById($idPriceProduct)
     {
-        $priceProductEntity = $this->queryContainer->queryPriceProductEntity($idPriceProduct)->find();
-        if (!count($priceProductEntity) > 0) {
+        $priceProductCollection = $this->queryContainer->queryPriceProductEntity($idPriceProduct)->find();
+        if ($priceProductCollection->count() === 0) {
             throw new Exception(self::ENTITY_NOT_FOUND);
         }
 
