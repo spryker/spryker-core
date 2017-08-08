@@ -45,7 +45,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
             })
         );
 
-        $this->addBC($application);
+        $this->addBackwardCompatibility($application);
     }
 
     /**
@@ -133,7 +133,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
      *
      * @return void
      */
-    private function addBC(Application $application)
+    private function addBackwardCompatibility(Application $application)
     {
         $application['twig.global.variables'] = $application->share(
             $application->extend('twig.global.variables', function (array $variables) {
