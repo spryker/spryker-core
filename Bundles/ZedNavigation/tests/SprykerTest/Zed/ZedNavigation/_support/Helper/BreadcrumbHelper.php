@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ZedNavigation\Helper;
 
 use Codeception\Module;
-use Symfony\Component\VarDumper\VarDumper;
+use SprykerTest\Shared\Testify\Helper\ZedBootstrap;
 
 class BreadcrumbHelper extends Module
 {
@@ -38,36 +38,57 @@ class BreadcrumbHelper extends Module
      */
     public function seeBreadcrumbNavigation($breadcrumb)
     {
-        $breadcrumbParts = explode('/', $breadcrumb);
-        $breadcrumbParts = array_map('trim', $breadcrumbParts);
-
-        $driver = $this->getWebdriver();
-//        $driver->see($breadcrumb, '//ol[@class="breadcrumb"]');
-
-        echo '<pre>' . PHP_EOL . VarDumper::dump($this) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-        $position = 0;
-
-        foreach ($breadcrumbParts as $breadcrumbPart) {
-            $driver->see($breadcrumb, sprintf('//ol[@class="breadcrumb"]/li[%s]/a[contains(., "%s")]', $position + 1, $breadcrumbPart));
-            $position++;
+        if ($this->isPresentationSuite) {
+            $this->checkWithWebdriver($breadcrumb);
         }
 
-//        $breadcrumb = str_replace('/', ' ', $breadcrumb);
-//
-//        $driver = $this->getWebdriver();
-//        $driver->see($breadcrumb, '//ol[@class="breadcrumb"]');
+        if (!$this->isPresentationSuite) {
+            $this->checkWithFramework($breadcrumb);
+        }
     }
 
     /**
-     * @return \Codeception\Module|\Codeception\Module\WebDriver
+     * @return \Codeception\Module|\Codeception\Module\WebDriver|\SprykerTest\Shared\Testify\Helper\ZedBootstrap
      */
-    private function getWebdriver()
+    private function getDriver()
     {
         if ($this->isPresentationSuite) {
             return $this->getModule('WebDriver');
         }
 
-        return $this->getModule('\SprykerTest\Shared\Testify\Helper\ZedBootstrap');
+        return $this->getModule('\\' . ZedBootstrap::class);
+    }
+
+    /**
+     * @param string $breadcrumb
+     *
+     * @return void
+     */
+    private function checkWithWebdriver($breadcrumb)
+    {
+        $breadcrumb = str_replace('/', ' ', $breadcrumb);
+
+        $driver = $this->getDriver();
+        $driver->see($breadcrumb, '//ol[@class="breadcrumb"]');
+    }
+
+    /**
+     * @param string $breadcrumb
+     *
+     * @return void
+     */
+    private function checkWithFramework($breadcrumb)
+    {
+        $breadcrumbParts = explode('/', $breadcrumb);
+        $breadcrumbParts = array_map('trim', $breadcrumbParts);
+
+        $driver = $this->getDriver();
+        $position = 0;
+
+        foreach ($breadcrumbParts as $breadcrumbPart) {
+            $driver->see($breadcrumbPart, sprintf('//ol[@class="breadcrumb"]/li[%s]', $position + 1));
+            $position++;
+        }
     }
 
 }

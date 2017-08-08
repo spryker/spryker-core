@@ -11,7 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation;
-use Symfony\Component\HttpFoundation\Request;
+use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade getFacade()
@@ -24,43 +24,92 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     const URI_SUFFIX_SLASH = '\/$';
 
     /**
-     * @param \Silex\Application $app
+     * @var array|null
+     */
+    protected $navigation;
+
+    /**
+     * @param \Silex\Application $application
      *
      * @return void
      */
-    public function register(Application $app)
+    public function register(Application $application)
     {
-        $app['twig.global.variables'] = $app->share(
-            $app->extend('twig.global.variables', function (array $variables) {
-                $navigation = $this->getNavigation();
-                $breadcrumbs = $navigation['path'];
+        $application['twig'] = $application->share(
+            $application->extend('twig', function (\Twig_Environment $twig) use ($application) {
+                $twig->addFunction($this->getNavigation($application));
+                $twig->addFunction($this->getBreadcrumb($application));
 
-                $variables['navigation'] = $navigation;
-                $variables['breadcrumbs'] = $breadcrumbs;
-
-                return $variables;
+                return $twig;
             })
         );
     }
 
     /**
-     * @return string
+     * @param \Silex\Application $application
+     *
+     * @return \Twig_SimpleFunction
      */
-    protected function getNavigation()
+    protected function getNavigation(Application $application)
     {
-        $request = Request::createFromGlobals();
-        $uri = $this->removeUriSuffix($request->getPathInfo());
+        $navigation = new Twig_SimpleFunction('navigation', function () use ($application) {
+            $navigation = $this->buildNavigation($application);
 
-        return (new ZedNavigation())
-            ->buildNavigation($uri);
+            return $navigation;
+        });
+
+        return $navigation;
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Silex\Application $application
+     *
+     * @return \Twig_SimpleFunction
+     */
+    protected function getBreadcrumb(Application $application)
+    {
+        $navigation = new Twig_SimpleFunction('breadcrumb', function () use ($application) {
+            $navigation = $this->buildNavigation($application);
+
+            return $navigation['path'];
+        });
+
+        return $navigation;
+    }
+
+    /**
+     * @param \Silex\Application $application
+     *
+     * @return array
+     */
+    protected function buildNavigation(Application $application)
+    {
+        if (!$this->navigation) {
+            $request = $this->getRequest($application);
+            $uri = $this->removeUriSuffix($request->getPathInfo());
+            $this->navigation = (new ZedNavigation())
+                ->buildNavigation($uri);
+        }
+
+        return $this->navigation;
+    }
+
+    /**
+     * @param \Silex\Application $application
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function getRequest(Application $application)
+    {
+        return $application['request_stack']->getCurrentRequest();
+    }
+
+    /**
+     * @param \Silex\Application $application
      *
      * @return void
      */
-    public function boot(Application $app)
+    public function boot(Application $application)
     {
     }
 

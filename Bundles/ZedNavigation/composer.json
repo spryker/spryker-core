@@ -14,7 +14,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider."
+    "spryker/silex": "If you want to use ServiceProvider.",
+    "spryker/twig": "If you want to use ZedNavigationServiceProvider."
   },
   "autoload": {
     "psr-0": {
