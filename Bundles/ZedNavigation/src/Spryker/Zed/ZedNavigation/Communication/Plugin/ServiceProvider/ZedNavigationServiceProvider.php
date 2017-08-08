@@ -11,6 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation;
+use Symfony\Component\HttpFoundation\Request;
 use Twig_SimpleFunction;
 
 /**
@@ -37,12 +38,14 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     {
         $application['twig'] = $application->share(
             $application->extend('twig', function (\Twig_Environment $twig) use ($application) {
-                $twig->addFunction($this->getNavigation($application));
-                $twig->addFunction($this->getBreadcrumb($application));
+                $twig->addFunction($this->getNavigationFunction($application));
+                $twig->addFunction($this->getBreadcrumbFunction($application));
 
                 return $twig;
             })
         );
+
+        $this->addBC($application);
     }
 
     /**
@@ -50,7 +53,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
      *
      * @return \Twig_SimpleFunction
      */
-    protected function getNavigation(Application $application)
+    protected function getNavigationFunction(Application $application)
     {
         $navigation = new Twig_SimpleFunction('navigation', function () use ($application) {
             $navigation = $this->buildNavigation($application);
@@ -66,7 +69,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
      *
      * @return \Twig_SimpleFunction
      */
-    protected function getBreadcrumb(Application $application)
+    protected function getBreadcrumbFunction(Application $application)
     {
         $navigation = new Twig_SimpleFunction('breadcrumb', function () use ($application) {
             $navigation = $this->buildNavigation($application);
@@ -121,6 +124,40 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     protected function removeUriSuffix($path)
     {
         return preg_replace('/' . self::URI_SUFFIX_INDEX . '|' . self::URI_SUFFIX_SLASH . '/m', '', $path);
+    }
+
+    /**
+     * Method to keep ZedNavigation module BC. This and `getNavigation()` can be removed in next major.
+     *
+     * @param \Silex\Application $application
+     *
+     * @return void
+     */
+    private function addBC(Application $application)
+    {
+        $application['twig.global.variables'] = $application->share(
+            $application->extend('twig.global.variables', function (array $variables) {
+                $navigation = $this->getNavigation();
+                $breadcrumbs = $navigation['path'];
+
+                $variables['navigation'] = $navigation;
+                $variables['breadcrumbs'] = $breadcrumbs;
+
+                return $variables;
+            })
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getNavigation()
+    {
+        $request = Request::createFromGlobals();
+        $uri = $this->removeUriSuffix($request->getPathInfo());
+
+        return (new ZedNavigation())
+            ->buildNavigation($uri);
     }
 
 }
