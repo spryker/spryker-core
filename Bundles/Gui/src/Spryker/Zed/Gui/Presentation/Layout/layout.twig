@@ -18,6 +18,8 @@
 
     {% block body_menu %}
         {% if app.twig.getFunction('navigation') != false %}
+            {% include '@Gui/Partials/navigation.twig' %}
+        {% else %}
             {% include '@Gui/Partials/menu.twig' %}
         {% endif %}
     {% endblock %}
@@ -60,27 +62,9 @@
             <div class="col-xs-12 col-md-6">
                 <h2>{% block section_title %}{{ title|trans }}{% endblock %}</h2>
                 {% if app.twig.getFunction('breadcrumb') != false %}
-                    {% set breadcrumbItems = breadcrumb() %}
-                    {% if breadcrumbItems|length > 0 %}
-                        <ol class="breadcrumb">
-                            <li>
-                                <a href="/">{{ 'Dashboard' | trans }}</a>
-                            </li>
-                            {% for breadcrumbItem in breadcrumbItems %}
-                            <li>
-                                {% if loop.last == true %}
-                                    <strong>{{ breadcrumbItem.label }}</strong>
-                                {% else %}
-                                    {%  if breadcrumbItem.uri is not empty %}
-                                        <a href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title }}">{{ breadcrumbItem.label }}</a>
-                                    {% else %}
-                                        {{ breadcrumbItem.label }}
-                                    {% endif %}
-                                {% endif %}
-                            </li>
-                            {% endfor %}
-                        </ol>
-                    {% endif %}
+                    {% include '@Gui/Partials/breadcrumb.twig' %}
+                {% else %}
+                    {% include '@Gui/Partials/backward-compatible-breadcrumb.twig' %}
                 {% endif %}
             </div>
             <div class="col-xs-12 col-md-6">
