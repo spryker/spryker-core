@@ -109,7 +109,9 @@ By default it ignores methods starting with 'get' or 'set'.
         </properties>
     </rule>
 
-    <rule ref="rulesets/controversial.xml" />
+    <rule ref="rulesets/controversial.xml">
+        <exclude name="CamelCaseMethodName" />
+    </rule>
 
     <rule ref="rulesets/naming.xml">
         <exclude name="LongVariable" />
@@ -146,10 +148,6 @@ class Something {
 }
             ]]>
         </example>
-    </rule>
-
-    <rule ref="rulesets/controversial.xml">
-        <exclude name="CamelCaseMethodName" />
     </rule>
 
     <rule name="CamelCaseMethodName"
