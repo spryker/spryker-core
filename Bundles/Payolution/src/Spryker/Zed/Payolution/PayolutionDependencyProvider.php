@@ -19,7 +19,6 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_MAIL = 'mail facade';
     const FACADE_GLOSSARY = 'glossary facade';
-
     const FACADE_MONEY = 'money facade';
     const FACADE_SALES = 'sales facade';
 
