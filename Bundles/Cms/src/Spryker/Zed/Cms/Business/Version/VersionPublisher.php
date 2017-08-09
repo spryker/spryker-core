@@ -95,7 +95,7 @@ class VersionPublisher implements VersionPublisherInterface
             ->queryCmsPageWithAllRelationsByIdPage($idCmsPage)
             ->find();
 
-        if (empty($cmsPageCollection)) {
+        if ($cmsPageCollection->count() === 0) {
             throw new MissingPageException(
                 sprintf(
                     'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
