@@ -36,11 +36,14 @@ class CreateProductReviewTest extends Test
     public function testCreateProductReviewPersistsToDatabase()
     {
         // Arrange
+        // TODO: create ProductReviewDataHelper with having product, customer and locale assigned to it (when not seeded) if possible
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
+        $localeTransfer = $this->tester->haveLocale();
         $productReviewTransfer = (new ProductReviewBuilder([
             ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
         ]))->build();
 
         // Act
@@ -63,9 +66,11 @@ class CreateProductReviewTest extends Test
         // Arrange
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
+        $localeTransfer = $this->tester->haveLocale();
         $productReviewTransfer = (new ProductReviewBuilder([
             ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
             ProductReviewTransfer::STATUS => $inputStatus,
         ]))->build();
 

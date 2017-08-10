@@ -34,6 +34,7 @@ class ProductReviewTouch implements ProductReviewTouchInterface
      */
     public function touchProductReviewActive(ProductReviewTransfer $productReviewTransfer)
     {
+        // TODO: use ProductFacade::touchProductAbstract() here.
         $this->assertProductReviewForTouch($productReviewTransfer);
 
         return $this->touchFacade->touchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview());
@@ -46,6 +47,7 @@ class ProductReviewTouch implements ProductReviewTouchInterface
      */
     public function touchProductReviewDeleted(ProductReviewTransfer $productReviewTransfer)
     {
+        // TODO: use ProductFacade::touchProductAbstract() here.
         $this->assertProductReviewForTouch($productReviewTransfer);
 
         return $this->touchFacade->touchDeleted(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview());

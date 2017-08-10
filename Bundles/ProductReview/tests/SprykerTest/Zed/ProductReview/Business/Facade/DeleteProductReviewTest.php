@@ -38,9 +38,11 @@ class DeleteProductReviewTest extends Test
         // Arrange
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
+        $localeTransfer = $this->tester->haveLocale();
         $productReviewTransfer = (new ProductReviewBuilder([
             ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
 
@@ -60,9 +62,11 @@ class DeleteProductReviewTest extends Test
         // Arrange
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
+        $localeTransfer = $this->tester->haveLocale();
         $productReviewTransfer = (new ProductReviewBuilder([
             ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
 

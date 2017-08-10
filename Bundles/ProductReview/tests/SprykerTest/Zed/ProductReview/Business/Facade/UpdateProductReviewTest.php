@@ -39,9 +39,11 @@ class UpdateProductReviewTest extends Test
         // Arrange
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
+        $localeTransfer = $this->tester->haveLocale();
         $productReviewTransfer = (new ProductReviewBuilder([
             ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
 
@@ -70,9 +72,11 @@ class UpdateProductReviewTest extends Test
         // Arrange
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $customerTransfer = $this->tester->haveCustomer();
+        $localeTransfer = $this->tester->haveLocale();
         $productReviewTransfer = (new ProductReviewBuilder([
             ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
         ]))->build();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
 
@@ -87,9 +91,10 @@ class UpdateProductReviewTest extends Test
         // Assert
         if ($isTouchActive) {
             $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransferToUpdate->getIdProductReview(), 'Product review should have been touched as active.');
-        } else {
-            $this->tester->assertTouchDeleted(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransferToUpdate->getIdProductReview(), 'Product review should have been touched as deleted.');
+            return;
         }
+
+        $this->tester->assertTouchDeleted(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransferToUpdate->getIdProductReview(), 'Product review should have been touched as deleted.');
     }
 
     /**
