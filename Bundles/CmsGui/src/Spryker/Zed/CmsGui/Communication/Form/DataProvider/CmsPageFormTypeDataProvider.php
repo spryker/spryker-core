@@ -71,14 +71,9 @@ class CmsPageFormTypeDataProvider
     public function getData($idCmsPage = null)
     {
         if (!$idCmsPage) {
-            $cmsPageTransfer = $this->createInitialCmsPageTransfer();
-        } else {
-            $cmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+            return $this->createInitialCmsPageTransfer();
         }
-
-        $cmsPageTransfer->setIsSearchable(true);
-
-        return $cmsPageTransfer;
+        return $this->cmsFacade->findCmsPageById($idCmsPage);
     }
 
     /**
