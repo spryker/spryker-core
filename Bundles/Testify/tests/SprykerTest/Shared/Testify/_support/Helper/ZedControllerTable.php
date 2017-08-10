@@ -69,6 +69,16 @@ class ZedControllerTable extends Module implements DependsOnModule
     }
 
     /**
+     * @return void
+     */
+    public function seeDataTable()
+    {
+        if (!isset($this->currentData['recordsTotal'])) {
+            $this->fail("recordsTotal value not set; Run successful ->listDataTable before");
+        }
+    }
+
+    /**
      * @param int $num
      *
      * @return void
