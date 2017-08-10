@@ -23,6 +23,20 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
      */
     protected function createZedClient()
     {
+        $config = $this->getClientConfig();
+
+        return (new Client($config));
+    }
+
+    /**
+     * @return array
+     */
+    protected function getClientConfig()
+    {
+        if (Config::hasValue(SearchConstants::ELASTICA_CLIENT_CONFIGURATION)) {
+            return Config::get(SearchConstants::ELASTICA_CLIENT_CONFIGURATION);
+        }
+
         if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__EXTRA)) {
             $config = Config::get(SearchConstants::ELASTICA_PARAMETER__EXTRA);
         }
@@ -37,7 +51,7 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
             ];
         }
 
-        return (new Client($config));
+        return $config;
     }
 
 }
