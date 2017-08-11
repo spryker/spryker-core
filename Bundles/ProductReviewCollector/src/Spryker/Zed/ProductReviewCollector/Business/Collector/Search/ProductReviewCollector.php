@@ -65,7 +65,7 @@ class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
     {
         $result = [
             ProductReviewIndexMap::STORE => $this->store->getStoreName(),
-            ProductReviewIndexMap::LOCALE => $this->locale->getIdLocale(),
+            ProductReviewIndexMap::LOCALE => $this->locale->getLocaleName(),
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $collectItemData[ProductReviewCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT],
             ProductReviewIndexMap::RATING => $collectItemData[ProductReviewCollectorQuery::FIELD_RATING],
             ProductReviewIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($collectItemData),

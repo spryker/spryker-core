@@ -18,6 +18,7 @@ class ProductReviewCollectorQuery extends AbstractPropelCollectorQuery
     const FIELD_ID_PRODUCT_REVIEW = 'id_product_review';
     const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
     const FIELD_FK_LOCALE = 'fk_locale';
+    const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
     const FIELD_CREATED_AT = 'created_at';
     const FIELD_RATING = 'rating';
     const FIELD_NICKNAME = 'nickname';
@@ -40,6 +41,7 @@ class ProductReviewCollectorQuery extends AbstractPropelCollectorQuery
             ->withColumn(SpyProductReviewTableMap::COL_ID_PRODUCT_REVIEW, static::FIELD_ID_PRODUCT_REVIEW)
             ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductReviewTableMap::COL_FK_LOCALE, static::FIELD_FK_LOCALE)
+            ->withColumn(SpyProductReviewTableMap::COL_CUSTOMER_REFERENCE, static::FIELD_CUSTOMER_REFERENCE)
             ->withColumn(SpyProductReviewTableMap::COL_CREATED_AT, static::FIELD_CREATED_AT)
             ->withColumn(SpyProductReviewTableMap::COL_RATING, static::FIELD_RATING)
             ->withColumn(SpyProductReviewTableMap::COL_NICKNAME, static::FIELD_NICKNAME)

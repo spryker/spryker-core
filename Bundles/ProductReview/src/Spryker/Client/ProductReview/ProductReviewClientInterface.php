@@ -7,13 +7,15 @@
 
 namespace Spryker\Client\ProductReview;
 
+use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewClientInterface
 {
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - TODO: add spec
      *
      * @api
      *
@@ -22,5 +24,18 @@ interface ProductReviewClientInterface
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
     public function submitCustomerReview(ProductReviewTransfer $productReviewTransfer);
+
+    /**
+     * Specification:
+     * - TODO: add spec
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+     * @param array $requestParameters
+     *
+     * @return array
+     */
+    public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer, array $requestParameters = []);
 
 }

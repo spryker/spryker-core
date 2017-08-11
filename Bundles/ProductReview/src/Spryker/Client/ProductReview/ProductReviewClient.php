@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductReview;
 
+use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -32,6 +33,24 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
             ->submitCustomerReview($productReviewTransfer);
     }
 
-    // TODO: list customer reviews for given product (from Elasticsearch)
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+     * @param array $requestParameters
+     *
+     * @return array
+     */
+    public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer, array $requestParameters = [])
+    {
+        $searchQuery = $this->getFactory()->getProductReviewsQueryPlugin($productReviewSearchRequestTransfer, $requestParameters);
+        $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
+
+        return $this->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, $resultFormatters, $requestParameters);
+    }
 
 }
