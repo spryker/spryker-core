@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 
 use DateTime;
 use Generated\Shared\Transfer\CmsVersionTransfer;
+use Spryker\Zed\CmsGui\Communication\Exception\CmsPageNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
@@ -34,7 +35,9 @@ class CmsVersionDataProvider
      * @param int|null $idCmsPage
      * @param int|null $version
      *
-     * @return array|\Generated\Shared\Transfer\CmsVersionTransfer
+     * @throws \Spryker\Zed\CmsGui\Communication\Exception\CmsPageNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function getData($idCmsPage = null, $version = null)
     {
@@ -42,7 +45,16 @@ class CmsVersionDataProvider
             return new CmsVersionTransfer();
         }
 
-        return $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+        $cmsVersionTransfer = $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+
+        if (!$cmsVersionTransfer) {
+            throw new CmsPageNotFoundException(sprintf(
+                'Cms page with id "%d" not found',
+                $idCmsPage
+            ));
+        }
+
+        return $cmsVersionTransfer;
     }
 
     /**
