@@ -60,6 +60,10 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
      */
     protected function createElasticaClient()
     {
+        if (Config::hasValue(ApplicationConstants::ELASTICA_CLIENT_CONFIGURATION)) {
+            return Config::get(ApplicationConstants::ELASTICA_CLIENT_CONFIGURATION);
+        }
+
         if (Config::hasValue(ApplicationConstants::ELASTICA_PARAMETER__EXTRA)) {
             $config = Config::get(ApplicationConstants::ELASTICA_PARAMETER__EXTRA);
         }
@@ -103,8 +107,9 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     protected function createPredisClient()
     {
         $config = $this->getConnectionParameters();
+        $options = $this->getPredisClientOptions();
 
-        return new PredisClient($config);
+        return new PredisClient($config, $options);
     }
 
     /**
@@ -112,6 +117,10 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
      */
     protected function getConnectionParameters()
     {
+        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION)) {
+            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION);
+        }
+
         $config = [
             'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL)),
             'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(SessionConstants::ZED_SESSION_REDIS_PORT)),
@@ -124,6 +133,18 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
         }
 
         return $config;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    protected function getPredisClientOptions()
+    {
+        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS)) {
+            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS);
+        }
+
+        return null;
     }
 
 }

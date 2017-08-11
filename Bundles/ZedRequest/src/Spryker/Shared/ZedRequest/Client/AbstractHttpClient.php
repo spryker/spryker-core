@@ -229,6 +229,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
         $options = [
             'json' => $requestTransfer->toArray(),
+            'allow_redirects' => [
+                'strict' => true,
+            ],
         ];
         $response = $client->send($request, $options);
 

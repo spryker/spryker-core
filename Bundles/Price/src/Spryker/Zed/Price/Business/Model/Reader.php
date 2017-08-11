@@ -57,7 +57,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getPriceTypes()
     {
