@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
 
 class PriceForm extends AbstractType
 {
@@ -28,6 +29,7 @@ class PriceForm extends AbstractType
     const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
     const DEFAULT_SCALE = 2;
+    const MAX_PRICE_SIZE = 2147483647;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
@@ -108,6 +110,12 @@ class PriceForm extends AbstractType
             'scale' => $this->getFractionDigits($currencyTransfer),
             'constraints' => [
                 new NotBlank(),
+                new Range(
+                    [
+                        'min' => 0,
+                        'max' => static::MAX_PRICE_SIZE,
+                    ]
+                ),
             ],
         ];
 
@@ -134,6 +142,14 @@ class PriceForm extends AbstractType
             'label_format' => 'Price (%name%)',
             'divisor' => $this->getDivisor($currencyTransfer),
             'scale' => $this->getFractionDigits($currencyTransfer),
+            'constraints' => [
+                new Range(
+                    [
+                        'min' => 0,
+                        'max' => static::MAX_PRICE_SIZE,
+                    ]
+                )
+            ],
         ];
 
         if ($options[static::OPTION_CURRENCY_ISO_CODE] !== null) {
