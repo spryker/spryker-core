@@ -152,7 +152,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function clickDataTableButton($name, $rowPosition)
+    public function clickDataTableButton($name, $rowPosition = 0)
     {
         if (!isset($this->currentData['data'])) {
             $this->fail('Data for table not set; Run successful ->listDataTable before');
