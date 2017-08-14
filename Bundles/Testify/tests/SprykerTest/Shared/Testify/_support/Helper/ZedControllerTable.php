@@ -192,13 +192,6 @@ class ZedControllerTable extends Module implements DependsOnModule
             }
         }
 
-        if (isset($link)) {
-            $this->zedBootstrap->amOnPage($link);
-            $this->zedBootstrap->seeResponseCodeIs(200);
-
-            return;
-        }
-
         $this->fail(sprintf('Couldn\'t find "%s" link in row "%d"', $name, $rowPosition));
     }
 

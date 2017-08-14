@@ -11,5 +11,6 @@ class TaxSetListPage
 {
 
     const URL = '/tax/set/list';
+    const DATA_TABLE_URL = '/tax/set/listTable';
 
 }
