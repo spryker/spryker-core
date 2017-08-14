@@ -88,9 +88,7 @@ class DiscountPersist implements DiscountPersistInterface
         }
 
         $this->hydrateDiscountEntity($discountConfiguratorTransfer, $discountEntity);
-        if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
-            $this->saveVoucherPool($discountEntity);
-        }
+        $this->updateVoucherPool($discountConfiguratorTransfer, $discountEntity);
 
         $affectedRows = $discountEntity->save();
 
@@ -173,6 +171,36 @@ class DiscountPersist implements DiscountPersistInterface
         $discountEntity->setVoucherPool($discountVoucherPoolEntity);
 
         return $discountVoucherPoolEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
+     */
+    protected function cleanVoucherPool(SpyDiscount $discountEntity)
+    {
+        $discountEntity->setFkDiscountVoucherPool(null);
+        return $discountEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return void
+     */
+    protected function updateVoucherPool(
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer,
+        SpyDiscount $discountEntity
+    ) {
+        if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_CART_RULE) {
+            $this->cleanVoucherPool($discountEntity);
+        }
+
+        if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
+            $this->saveVoucherPool($discountEntity);
+        }
     }
 
     /**
