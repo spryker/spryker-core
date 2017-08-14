@@ -8,17 +8,25 @@
 namespace Spryker\Zed\Shipment\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ */
 class CarrierForm extends AbstractType
 {
 
     const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
     const FIELD_NAME_FIELD = 'name';
     const FIELD_IS_ACTIVE_FIELD = 'isActive';
-    const CARRIER_ID = 'carrier_id';
+    const FIELD_ID_CARRIER = 'id_carrier';
 
     /**
      * @return string
@@ -36,22 +44,108 @@ class CarrierForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_NAME_FIELD, 'text', [
-                'label' => 'Name',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add(self::FIELD_NAME_GLOSSARY_FIELD, new AutosuggestType(), [
-                'label' => 'Name glossary key',
-                'url' => '/glossary/ajax/keys',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
-            ->add(self::FIELD_IS_ACTIVE_FIELD, 'checkbox', [
-                'label' => 'Enabled?',
-            ]);
+        $this->addNameField($builder)
+            ->addGlossaryKeyField($builder)
+            ->addIsActiveField($builder)
+            ->addIdCarrierField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_NAME_FIELD, TextType::class, [
+            'label' => 'Name',
+            'constraints' => [
+                new NotBlank(),
+                new Callback([
+                    'methods' => [
+                        [$this, 'uniqueCarrierNameCheck'],
+                    ],
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_NAME_GLOSSARY_FIELD, AutosuggestType::class, [
+            'label' => 'Name glossary key',
+            'url' => '/glossary/ajax/keys',
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_IS_ACTIVE_FIELD, CheckboxType::class, [
+            'label' => 'Enabled?',
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdCarrierField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ID_CARRIER, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param string $carrierName
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     *
+     * @return void
+     */
+    public function uniqueCarrierNameCheck($carrierName, ExecutionContextInterface $context)
+    {
+        $formData = $context->getRoot()->getData();
+        $idCarrier = isset($formData[static::FIELD_ID_CARRIER]) ? $formData[static::FIELD_ID_CARRIER] : null;
+
+        if ($this->hasExistingCarrierName($carrierName, $idCarrier)) {
+            $context->addViolation('Carrier with the same name already exists.');
+        }
+    }
+
+    /**
+     * @param string $carrierName
+     * @param int|null $idCarrier
+     *
+     * @return bool
+     */
+    protected function hasExistingCarrierName($carrierName, $idCarrier = null)
+    {
+        $count = $this->getQueryContainer()
+            ->queryUniqueCarrierName($carrierName, $idCarrier)
+            ->count();
+
+        return $count > 0;
     }
 
 }
