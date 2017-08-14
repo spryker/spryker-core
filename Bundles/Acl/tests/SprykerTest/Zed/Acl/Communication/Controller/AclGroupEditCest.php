@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Acl\Presentation;
+namespace SprykerTest\Zed\Acl\Communication\Controller;
 
-use SprykerTest\Zed\Acl\AclPresentationTester;
+use SprykerTest\Zed\Acl\AclCommunicationTester;
 use SprykerTest\Zed\Acl\PageObject\AclGroupListPage;
 
 /**
@@ -15,7 +15,8 @@ use SprykerTest\Zed\Acl\PageObject\AclGroupListPage;
  * @group SprykerTest
  * @group Zed
  * @group Acl
- * @group Presentation
+ * @group Communication
+ * @group Controller
  * @group AclGroupEditCest
  * Add your own group annotations below this line
  */
@@ -23,13 +24,13 @@ class AclGroupEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Acl\AclPresentationTester $i
+     * @param \SprykerTest\Zed\Acl\AclCommunicationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(AclPresentationTester $i)
+    public function breadcrumbIsVisible(AclCommunicationTester $i)
     {
-        $i->amOnPage(AclGroupListPage::URL);
+        $i->listDataTable(AclGroupListPage::URL . '/table');
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups / Edit Group');
     }

@@ -15,7 +15,7 @@ class ZedControllerTable extends Module implements DependsOnModule
 {
 
     /**
-     * @var \Testify\Helper\ZedBootstrap
+     * @var \SprykerTest\Shared\Testify\Helper\ZedBootstrap
      */
     protected $zedBootstrap;
 
@@ -114,6 +114,82 @@ class ZedControllerTable extends Module implements DependsOnModule
             . "- <info>" . var_export($expectedRow, true) . "</info>\n"
             . "+ " . var_export($actualRow, true)
         );
+    }
+
+    /**
+     * @param int $rowPosition
+     *
+     * @return void
+     */
+    public function clickDataTableEditButton($rowPosition = 0)
+    {
+        $this->clickButton('Edit', $rowPosition);
+    }
+
+    /**
+     * @param int $rowPosition
+     *
+     * @return void
+     */
+    public function clickDataTableViewButton($rowPosition = 0)
+    {
+        $this->clickButton('View', $rowPosition);
+    }
+
+    /**
+     * @param string $name
+     * @param int $rowPosition
+     *
+     * @return void
+     */
+    protected function clickButton($name, $rowPosition)
+    {
+        if (!isset($this->currentData['data'])) {
+            $this->fail('Data for table not set; Run successful ->listDataTable before');
+        }
+
+        if (count($this->currentData['data']) < $rowPosition) {
+            $this->fail(sprintf(
+                'Current data set has only "%d" number of entries. The requested row "%d" doesn\'t exists.',
+                count($this->currentData['data']),
+                $rowPosition
+            ));
+        }
+
+        $rowData = $this->currentData['data'][$rowPosition];
+
+        $rowData = array_reverse($rowData);
+
+        foreach ($rowData as $rowContent) {
+            $xhtml = sprintf('<html>%s</html>', $rowContent);
+            $xhtml = simplexml_load_string($xhtml);
+            $xpath = sprintf('//a[contains(., "%1$s")] | //button[contains(., "%1$s")]', $name);
+
+            $elements = $xhtml->xpath($xpath);
+            if ($elements) {
+                $element = current($xhtml->xpath($xpath));
+                /** @var \SimpleXMLElement $attributes */
+                $attributes = (array)$element->attributes();
+
+                $link = $attributes['@attributes']['href'];
+            }
+
+            if (isset($link)) {
+                $this->zedBootstrap->amOnPage($link);
+                $this->zedBootstrap->seeResponseCodeIs(200);
+
+                return;
+            }
+        }
+
+        if (isset($link)) {
+            $this->zedBootstrap->amOnPage($link);
+            $this->zedBootstrap->seeResponseCodeIs(200);
+
+            return;
+        }
+
+        $this->fail(sprintf('Couldn\'t find "%s" link in row "%d"', $name, $rowPosition));
     }
 
     /**

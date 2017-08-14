@@ -4,9 +4,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\AvailabilityGui\Presentation;
+namespace SprykerTest\Zed\AvailabilityGui\Communication\Controller;
 
-use SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester;
+use SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester;
 use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 
 /**
@@ -14,7 +14,8 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
  * @group SprykerTest
  * @group Zed
  * @group AvailabilityGui
- * @group Presentation
+ * @group Communication
+ * @group Controller
  * @group AvailabilityEditStockCest
  * Add your own group annotations below this line
  */
@@ -22,11 +23,11 @@ class AvailabilityEditStockCest
 {
 
     /**
-     * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester $i
+     * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester $i
      *
      * @return void
      */
-    public function testEditExistingStock(AvailabilityGuiPresentationTester $i)
+    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i)
     {
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');
@@ -45,8 +46,8 @@ class AvailabilityEditStockCest
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
         $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 50);
-        $i->click('input[type=submit]');
-        $i->see(AvailabilityPage::SUCCESS_MESSAGE);
+        $i->click('Save');
+        $i->seeResponseCodeIs(200);
 
         $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 'string');
         $i->click('input[type=submit]');
