@@ -147,6 +147,32 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @api
      *
      * @param string $term
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductsAbstractBySearchTermForAssignment($term, $idCategory, LocaleTransfer $localeTransfer)
+    {
+        $query = $this->queryProductsAbstractBySearchTerm($term, $localeTransfer);
+        $query->addJoin(
+            [SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $idCategory],
+            [SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductCategoryTableMap::COL_FK_CATEGORY],
+            'LEFT OUTER JOIN'
+        )
+            ->addAnd(
+                SpyProductCategoryTableMap::COL_FK_CATEGORY,
+                null,
+                Criteria::ISNULL
+            );
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
