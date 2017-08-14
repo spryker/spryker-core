@@ -76,10 +76,10 @@ class DateTimeFormatter implements DateTimeFormatterInterface
         $configuredFormat = $this->config->get($formatConfigConstant, $defaultFormat);
 
         if (!($dateTime instanceof DateTime)) {
-            $dateTime = new DateTime($dateTime, $dateTimeZone);
-        } else {
-            $dateTime->setTimezone($dateTimeZone);
+            $dateTime = new DateTime($dateTime);
         }
+
+        $dateTime->setTimezone($dateTimeZone);
 
         return $dateTime->format($configuredFormat);
     }
