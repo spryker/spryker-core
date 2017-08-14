@@ -46,7 +46,7 @@ class SetController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             }
 
-            $this->addErrorMessage('Tax set is not created.');
+            $this->addErrorMessage('Tax set is not created. Please fill-in all required fields.');
         }
 
         return [
@@ -79,7 +79,7 @@ class SetController extends AbstractController
                     $this->addSuccessMessage('Tax set successfully updated.');
                 }
             } else {
-                $this->addErrorMessage('Tax set is not updated.');
+                $this->addErrorMessage('Tax set is not updated. Please fill-in all required fields.');
             }
         }
 
