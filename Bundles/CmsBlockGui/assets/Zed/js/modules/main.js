@@ -32,5 +32,22 @@ $(document).ready( function () {
         onClose: function(selectedDate) {
             validFrom.datepicker('option', 'maxDate', selectedDate);
         }
-    }); 
+    });
+
+    $('[name=cms_block_glossary]').on('submit', function() {
+        var self = $(this);
+
+        self.find('.html-editor').each(function (index, element) {
+
+            var editor = $(element);
+
+            if (editor.summernote('codeview.isActivated')) {
+                editor.summernote('codeview.deactivate');
+            }
+
+            if (editor.summernote('isEmpty')) {
+                editor.val(null);
+            }
+        });
+    });
 });
