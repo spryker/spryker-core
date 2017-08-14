@@ -21,6 +21,7 @@ class TransactionHelper extends Module
      */
     public function _initialize()
     {
+        Propel::disableInstancePooling();
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
     }
