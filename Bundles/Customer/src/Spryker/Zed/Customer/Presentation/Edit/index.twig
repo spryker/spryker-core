@@ -7,7 +7,8 @@
 
 {% block action %}
     {{ removeActionButton(url('/customer/delete', {'id-customer': idCustomer}), 'Delete' | trans) }}
-    {{ backActionButton(url('/customer/view', {'id-customer': idCustomer}), 'Back to Customer View' | trans) }}
+    {{ viewActionButton(url('/customer/view', {'id-customer': idCustomer}), 'View' | trans) }}
+    {{ backActionButton(url('/customer'), 'Back to Customers' | trans) }}
 {% endblock %}
 
 {% block content %}
