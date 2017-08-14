@@ -123,7 +123,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      */
     public function clickDataTableEditButton($rowPosition = 0)
     {
-        $this->clickButton('Edit', $rowPosition);
+        $this->clickDataTableButton('Edit', $rowPosition);
     }
 
     /**
@@ -133,7 +133,17 @@ class ZedControllerTable extends Module implements DependsOnModule
      */
     public function clickDataTableViewButton($rowPosition = 0)
     {
-        $this->clickButton('View', $rowPosition);
+        $this->clickDataTableButton('View', $rowPosition);
+    }
+
+    /**
+     * @param int $rowPosition
+     *
+     * @return void
+     */
+    public function clickDataTableDeleteButton($rowPosition = 0)
+    {
+        $this->clickDataTableButton('Delete', $rowPosition);
     }
 
     /**
@@ -142,7 +152,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    protected function clickButton($name, $rowPosition)
+    public function clickDataTableButton($name, $rowPosition)
     {
         if (!isset($this->currentData['data'])) {
             $this->fail('Data for table not set; Run successful ->listDataTable before');
