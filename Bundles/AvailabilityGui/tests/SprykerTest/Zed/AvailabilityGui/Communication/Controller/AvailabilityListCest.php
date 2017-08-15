@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\AvailabilityGui\Presentation;
+namespace SprykerTest\Zed\AvailabilityGui\Communication\Controller;
 
-use SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester;
+use SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester;
 use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 
 /**
@@ -15,7 +15,8 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
  * @group SprykerTest
  * @group Zed
  * @group AvailabilityGui
- * @group Presentation
+ * @group Communication
+ * @group Controller
  * @group AvailabilityListCest
  * Add your own group annotations below this line
  */
@@ -23,25 +24,21 @@ class AvailabilityListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester $i
+     * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester $i
      *
      * @return void
      */
-    public function testDisplayListPage(AvailabilityGuiPresentationTester $i)
+    public function testDisplayListPage(AvailabilityGuiCommunicationTester $i)
     {
         $i->wantTo('Open availability list');
         $i->expect('List of all availability items');
 
         $i->amOnPage(AvailabilityPage::AVAILABILITY_LIST_URL);
+        $i->listDataTable(AvailabilityPage::AVAILABILITY_LIST_URL . '/index/availability-abstract-table');
 
         $i->seeBreadcrumbNavigation('Dashboard / Products / Availability');
 
-        $i->wait(1);
-
-        $i->see(AvailabilityPage::PAGE_AVAILABILITY_LIST_HEADER);
-        $i->assertTableWithDataExists();
-
-        $i->clickViewButton();
+        $i->clickDataTableViewButton();
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
     }
 

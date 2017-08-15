@@ -1,9 +1,7 @@
 <?php
-
 namespace SprykerTest\Zed\AvailabilityGui;
 
 use Codeception\Actor;
-use Codeception\Scenario;
 
 /**
  * Inherited Methods
@@ -20,21 +18,10 @@ use Codeception\Scenario;
  *
  * @SuppressWarnings(PHPMD)
  */
-class PresentationTester extends Actor
+class AvailabilityGuiCommunicationTester extends Actor
 {
 
-    use _generated\PresentationTesterActions;
-
-    /**
-     * @param \Codeception\Scenario $scenario
-     */
-    public function __construct(Scenario $scenario)
-    {
-        parent::__construct($scenario);
-
-        $this->amZed();
-        $this->amLoggedInUser();
-    }
+    use _generated\AvailabilityGuiCommunicationTesterActions;
 
     /**
      * @return void
@@ -49,14 +36,6 @@ class PresentationTester extends Actor
         $itemListItems = count(explode("\n", $td));
 
         $this->assertGreaterThan(0, $itemListItems);
-    }
-
-    /**
-     * @return void
-     */
-    public function clickViewButton()
-    {
-        $this->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[8]/a");
     }
 
 }
