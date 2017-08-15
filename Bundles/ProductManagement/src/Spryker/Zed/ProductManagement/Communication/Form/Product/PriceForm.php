@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PriceForm extends AbstractType
@@ -28,6 +30,7 @@ class PriceForm extends AbstractType
     const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
     const DEFAULT_SCALE = 2;
+    const MAX_PRICE_SIZE = 2147483647; //32 bit integer
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
@@ -108,6 +111,8 @@ class PriceForm extends AbstractType
             'scale' => $this->getFractionDigits($currencyTransfer),
             'constraints' => [
                 new NotBlank(),
+                $this->createLessThanOrEqualConstraint($currencyTransfer),
+                new GreaterThanOrEqual(0),
             ],
         ];
 
@@ -134,6 +139,10 @@ class PriceForm extends AbstractType
             'label_format' => 'Price (%name%)',
             'divisor' => $this->getDivisor($currencyTransfer),
             'scale' => $this->getFractionDigits($currencyTransfer),
+            'constraints' => [
+                $this->createLessThanOrEqualConstraint($currencyTransfer),
+                new GreaterThanOrEqual(0),
+            ],
         ];
 
         if ($options[static::OPTION_CURRENCY_ISO_CODE] !== null) {
@@ -201,6 +210,37 @@ class PriceForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Symfony\Component\Validator\Constraints\LessThanOrEqual
+     */
+    protected function createLessThanOrEqualConstraint(CurrencyTransfer $currencyTransfer)
+    {
+        return new LessThanOrEqual([
+            'value' => static::MAX_PRICE_SIZE,
+            'message' => sprintf(
+                'This value should be less than or equal to "%s".',
+                $this->getMaxPriceValue($currencyTransfer)
+            ),
+        ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return string
+     */
+    protected function getMaxPriceValue(CurrencyTransfer $currencyTransfer)
+    {
+        return number_format(
+            static::MAX_PRICE_SIZE / $this->getDivisor($currencyTransfer),
+            $this->getDivisor($currencyTransfer),
+            '.',
+            ''
+        );
     }
 
 }
