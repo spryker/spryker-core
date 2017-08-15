@@ -176,12 +176,11 @@ class DiscountPersist implements DiscountPersistInterface
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
+     * @return void
      */
     protected function cleanVoucherPool(SpyDiscount $discountEntity)
     {
         $discountEntity->setFkDiscountVoucherPool(null);
-        return $discountEntity;
     }
 
     /**
