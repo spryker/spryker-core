@@ -126,21 +126,6 @@ class PriceForm extends AbstractType
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     *
-     * @return string
-     */
-    protected function createMaxPriceRange(CurrencyTransfer $currencyTransfer)
-    {
-        return number_format(
-            static::MAX_PRICE_SIZE / $this->getDivisor($currencyTransfer),
-            $this->getDivisor($currencyTransfer),
-            '.',
-            ''
-        );
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -237,10 +222,25 @@ class PriceForm extends AbstractType
         return new LessThanOrEqual([
             'value' => static::MAX_PRICE_SIZE,
             'message' => sprintf(
-                'This value should be less than or equal to %d.',
-                $this->createMaxPriceRange($currencyTransfer)
+                'This value should be less than or equal to "%s".',
+                $this->getMaxPriceValue($currencyTransfer)
             ),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return string
+     */
+    protected function getMaxPriceValue(CurrencyTransfer $currencyTransfer)
+    {
+        return number_format(
+            static::MAX_PRICE_SIZE / $this->getDivisor($currencyTransfer),
+            $this->getDivisor($currencyTransfer),
+            '.',
+            ''
+        );
     }
 
 }
