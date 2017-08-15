@@ -12,7 +12,7 @@
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/money": "^1.0.0",
-    "spryker/propel": "^3.0.0",
+    "spryker/propel": "^3.0.4",
     "spryker/propel-orm": "^1.0.0",
     "spryker/session": "^3.0.0",
     "spryker/silex": "^2.0.0",
