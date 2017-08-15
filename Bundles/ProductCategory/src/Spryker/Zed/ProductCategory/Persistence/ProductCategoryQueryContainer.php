@@ -158,7 +158,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $query->addJoin(
             [SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $idCategory],
             [SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductCategoryTableMap::COL_FK_CATEGORY],
-            'LEFT OUTER JOIN'
+            Criteria::LEFT_JOIN
         )
             ->addAnd(
                 SpyProductCategoryTableMap::COL_FK_CATEGORY,
