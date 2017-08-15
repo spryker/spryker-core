@@ -30,7 +30,7 @@ class PriceForm extends AbstractType
     const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
     const DEFAULT_SCALE = 2;
-    const MAX_PRICE_SIZE = 2147483647; //32 bit integer
+    const MAX_PRICE_SIZE = 2147483647; // 32 bit integer
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
