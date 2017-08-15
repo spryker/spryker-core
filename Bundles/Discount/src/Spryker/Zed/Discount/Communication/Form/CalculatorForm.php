@@ -185,7 +185,7 @@ class CalculatorForm extends AbstractType
                 ]),
             ],
             'attr' => [
-                'data-label' => $label,
+                'data-label' => $label . ' *',
                 'data-url' => Url::generate(
                     '/discount/query-string/rule-fields',
                     [

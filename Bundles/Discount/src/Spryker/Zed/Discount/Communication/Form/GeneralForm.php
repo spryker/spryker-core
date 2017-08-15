@@ -112,7 +112,13 @@ class GeneralForm extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DESCRIPTION, 'textarea');
+        $builder->add(
+            self::FIELD_DESCRIPTION,
+            'textarea',
+            [
+                'required' => false,
+            ]
+        );
 
         return $this;
     }
