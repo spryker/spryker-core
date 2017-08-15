@@ -39,18 +39,17 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
-     * @param array $requestParameters
      *
      * @return array
      */
-    public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer, array $requestParameters = [])
+    public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
     {
-        $searchQuery = $this->getFactory()->getProductReviewsQueryPlugin($productReviewSearchRequestTransfer, $requestParameters);
+        $searchQuery = $this->getFactory()->getProductReviewsQueryPlugin($productReviewSearchRequestTransfer);
         $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
 
         return $this->getFactory()
             ->getSearchClient()
-            ->search($searchQuery, $resultFormatters, $requestParameters);
+            ->search($searchQuery, $resultFormatters, $productReviewSearchRequestTransfer->getRequestParams());
     }
 
 }

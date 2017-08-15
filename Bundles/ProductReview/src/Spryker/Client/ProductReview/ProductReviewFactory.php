@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\ProductReviewsQueryPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\PaginatedProductReviewsQueryExpanderPlugin;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\RatingAggregationQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatter;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatter;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin;
@@ -30,40 +32,19 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
-     */
-    protected function getZedRequestClient()
-    {
-        return $this->getProvidedDependency(ProductReviewDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
-     * @param array $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function getProductReviewsQueryPlugin(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer, array $requestParameters = [])
+    public function getProductReviewsQueryPlugin(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
     {
         $productReviewsQueryPlugin = new ProductReviewsQueryPlugin($productReviewSearchRequestTransfer);
 
         return $this->getSearchClient()->expandQuery(
             $productReviewsQueryPlugin,
             $this->getProductReviewsQueryExpanderPlugins(),
-            $requestParameters
+            $productReviewSearchRequestTransfer->getRequestParams()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
-     */
-    public function getProductReviewsSearchResultFormatterPlugins()
-    {
-        // TODO: get from dependency provider
-        return [
-            new ProductReviewsResultFormatterPlugin(),
-            new PaginatedProductReviewsResultFormatter(),
-        ];
     }
 
     /**
@@ -84,15 +65,21 @@ class ProductReviewFactory extends AbstractFactory
         return [
             new LocalizedQueryExpanderPlugin(),
             new PaginatedProductReviewsQueryExpanderPlugin(),
+            new RatingAggregationQueryExpanderPlugin(),
         ];
     }
 
     /**
-     * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
-    public function getConfig()
+    public function getProductReviewsSearchResultFormatterPlugins()
     {
-        return parent::getConfig();
+        // TODO: get from dependency provider
+        return [
+            new ProductReviewsResultFormatterPlugin(),
+            new PaginatedProductReviewsResultFormatter(),
+            new RatingAggregationResultFormatter(),
+        ];
     }
 
     /**
@@ -105,6 +92,22 @@ class ProductReviewFactory extends AbstractFactory
         $paginationConfigBuilder->setPagination($this->getConfig()->getPaginationConfig());
 
         return $paginationConfigBuilder;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     */
+    public function getConfig()
+    {
+        return parent::getConfig();
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
 }

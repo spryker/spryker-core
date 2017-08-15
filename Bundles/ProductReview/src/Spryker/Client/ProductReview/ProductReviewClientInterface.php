@@ -32,10 +32,9 @@ interface ProductReviewClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
-     * @param array $requestParameters
      *
      * @return array
      */
-    public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer, array $requestParameters = []);
+    public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer);
 
 }
