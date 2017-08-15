@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.4.0",
     "spryker/money": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^6.0.0 || ^7.0.0",

@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Shipment\Presentation;
+namespace SprykerTest\Zed\Shipment\Communication\Controller;
 
 use SprykerTest\Zed\Shipment\PageObject\ShipmentListPage;
-use SprykerTest\Zed\Shipment\ShipmentPresentationTester;
+use SprykerTest\Zed\Shipment\ShipmentCommunicationTester;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
  * @group Shipment
- * @group Presentation
+ * @group Communication
+ * @group Controller
  * @group ShipmentMethodEditCest
  * Add your own group annotations below this line
  */
@@ -23,13 +24,13 @@ class ShipmentMethodEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Shipment\ShipmentPresentationTester $i
+     * @param \SprykerTest\Zed\Shipment\ShipmentCommunicationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ShipmentPresentationTester $i)
+    public function breadcrumbIsVisible(ShipmentCommunicationTester $i)
     {
-        $i->amOnPage(ShipmentListPage::URL);
+        $i->listDataTable(ShipmentListPage::URL . '/index/table');
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Shipment / Shipment Methods / Edit Shipment Method');
     }

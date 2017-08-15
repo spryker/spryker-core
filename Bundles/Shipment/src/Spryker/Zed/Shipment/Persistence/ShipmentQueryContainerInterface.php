@@ -68,4 +68,14 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      */
     public function querySalesShipmentByIdSalesOrder($idSalesOrder);
 
+    /**
+     * @api
+     *
+     * @param string $carrierName
+     * @param int|null $idCarrier
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
+     */
+    public function queryUniqueCarrierName($carrierName, $idCarrier = null);
+
 }
