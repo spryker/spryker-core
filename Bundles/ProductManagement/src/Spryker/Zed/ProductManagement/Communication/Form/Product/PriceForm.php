@@ -16,8 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Range;
 
 class PriceForm extends AbstractType
 {
@@ -29,7 +30,7 @@ class PriceForm extends AbstractType
     const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
     const DEFAULT_SCALE = 2;
-    const MAX_PRICE_SIZE = 2147483647;
+    const MAX_PRICE_SIZE = 2147483647; //32 bit integer
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
@@ -110,12 +111,8 @@ class PriceForm extends AbstractType
             'scale' => $this->getFractionDigits($currencyTransfer),
             'constraints' => [
                 new NotBlank(),
-                new Range(
-                    [
-                        'min' => 0,
-                        'max' => static::MAX_PRICE_SIZE,
-                    ]
-                ),
+                $this->createLessThanOrEqualConstraint($currencyTransfer),
+                new GreaterThanOrEqual(0),
             ],
         ];
 
@@ -126,6 +123,21 @@ class PriceForm extends AbstractType
         $builder->add(static::FIELD_PRICE, 'money', $fieldOptions);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    protected function createMaxPriceRange(CurrencyTransfer $currencyTransfer)
+    {
+        return number_format(
+            static::MAX_PRICE_SIZE / $this->getDivisor($currencyTransfer),
+            $this->getDivisor($currencyTransfer),
+            '.',
+            ''
+        );
     }
 
     /**
@@ -143,12 +155,8 @@ class PriceForm extends AbstractType
             'divisor' => $this->getDivisor($currencyTransfer),
             'scale' => $this->getFractionDigits($currencyTransfer),
             'constraints' => [
-                new Range(
-                    [
-                        'min' => 0,
-                        'max' => static::MAX_PRICE_SIZE,
-                    ]
-                )
+                $this->createLessThanOrEqualConstraint($currencyTransfer),
+                new GreaterThanOrEqual(0),
             ],
         ];
 
@@ -217,6 +225,22 @@ class PriceForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Symfony\Component\Validator\Constraints\LessThanOrEqual
+     */
+    protected function createLessThanOrEqualConstraint(CurrencyTransfer $currencyTransfer)
+    {
+        return new LessThanOrEqual([
+            'value' => static::MAX_PRICE_SIZE,
+            'message' => sprintf(
+                'This value should be less than or equal to %d.',
+                $this->createMaxPriceRange($currencyTransfer)
+            ),
+        ]);
     }
 
 }
