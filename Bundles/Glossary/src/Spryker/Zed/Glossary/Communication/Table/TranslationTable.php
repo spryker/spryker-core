@@ -82,7 +82,6 @@ class TranslationTable extends AbstractTable
         $config->setUrl('table');
 
         $config->setSortable([
-            SpyGlossaryKeyTableMap::COL_KEY,
             SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY,
         ]);
 
