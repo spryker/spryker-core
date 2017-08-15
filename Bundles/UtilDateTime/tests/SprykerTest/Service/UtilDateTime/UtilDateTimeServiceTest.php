@@ -10,9 +10,7 @@ namespace SprykerTest\Service\UtilDateTime;
 use Codeception\Test\Unit;
 use DateTime;
 use DateTimeZone;
-use ReflectionClass;
 use Spryker\Service\UtilDateTime\UtilDateTimeService;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 
 /**
@@ -27,6 +25,11 @@ class UtilDateTimeServiceTest extends Unit
 {
 
     /**
+     * @var \SprykerTest\Service\UtilDateTime\UtilDateTimeServiceTester
+     */
+    protected $tester;
+
+    /**
      * @dataProvider dateFormatDataProvider
      *
      * @param string $date
@@ -37,7 +40,10 @@ class UtilDateTimeServiceTest extends Unit
      */
     public function testFormatDateReturnsFormattedDate($date, $format, $expectedFormattedDate)
     {
-        $utilDateTimeService = $this->getService([UtilDateTimeConstants::DATE_TIME_FORMAT_DATE => $format]);
+        $utilDateTimeService = $this->getService([
+            UtilDateTimeConstants::DATE_TIME_FORMAT_DATE => $format,
+            UtilDateTimeConstants::DATE_TIME_ZONE => 'UTC',
+        ]);
 
         $this->assertSame($expectedFormattedDate, $utilDateTimeService->formatDate($date));
     }
@@ -51,7 +57,7 @@ class UtilDateTimeServiceTest extends Unit
             ['1980-12-06 08:00:00', 'M. d, Y', 'Dec. 06, 1980'],
             ['1980-12-06 08:00:00', 'Y/m/d', '1980/12/06'],
             ['1980-12-06 08:00:00', 'd.m.Y', '06.12.1980'],
-            [new DateTime('1980-12-06 08:00:00', new DateTimeZone('Europe/Berlin')), 'd.m.Y', '06.12.1980'],
+            [new DateTime('1980-12-06 08:00:00', new DateTimeZone('UTC')), 'd.m.Y', '06.12.1980'],
         ];
     }
 
@@ -66,7 +72,10 @@ class UtilDateTimeServiceTest extends Unit
      */
     public function testFormatDateTimeReturnsFormattedDateTime($date, $format, $expectedFormattedDateTime)
     {
-        $utilDateTimeService = $this->getService([UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME => $format]);
+        $utilDateTimeService = $this->getService([
+            UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME => $format,
+            UtilDateTimeConstants::DATE_TIME_ZONE => 'UTC',
+        ]);
 
         $this->assertSame($expectedFormattedDateTime, $utilDateTimeService->formatDateTime($date));
     }
@@ -80,7 +89,7 @@ class UtilDateTimeServiceTest extends Unit
             ['1980-12-06 08:00:00', 'M. d, Y H:i', 'Dec. 06, 1980 08:00'],
             ['1980-12-06 08:00:00', 'Y/m/d H:i', '1980/12/06 08:00'],
             ['1980-12-06 08:00:00', 'd.m.Y H:i', '06.12.1980 08:00'],
-            [new DateTime('1980-12-06 08:00:00', new DateTimeZone('Europe/Berlin')), 'd.m.Y H:i', '06.12.1980 08:00'],
+            [new DateTime('1980-12-06 08:00:00', new DateTimeZone('UTC')), 'd.m.Y H:i', '06.12.1980 08:00'],
         ];
     }
 
@@ -95,7 +104,10 @@ class UtilDateTimeServiceTest extends Unit
      */
     public function testFormatTimeReturnsFormattedTime($date, $format, $expectedFormattedTime)
     {
-        $utilDateTimeService = $this->getService([UtilDateTimeConstants::DATE_TIME_FORMAT_TIME => $format]);
+        $utilDateTimeService = $this->getService([
+            UtilDateTimeConstants::DATE_TIME_FORMAT_TIME => $format,
+            UtilDateTimeConstants::DATE_TIME_ZONE => 'UTC',
+        ]);
 
         $this->assertSame($expectedFormattedTime, $utilDateTimeService->formatTime($date));
     }
@@ -108,7 +120,7 @@ class UtilDateTimeServiceTest extends Unit
         return [
             ['1980-12-06 23:00:00', 'H:i', '23:00'],
             ['1980-12-06 23:00:00', 'h:i', '11:00'],
-            [new DateTime('1980-12-06 23:00:00', new DateTimeZone('Europe/Berlin')), 'h:i', '11:00'],
+            [new DateTime('1980-12-06 23:00:00', new DateTimeZone('UTC')), 'h:i', '11:00'],
         ];
     }
 
@@ -132,17 +144,9 @@ class UtilDateTimeServiceTest extends Unit
      */
     protected function prepareConfig(array $config)
     {
-        Config::init();
-        $reflectionClass = new ReflectionClass(Config::class);
-        $reflectionProperty = $reflectionClass->getProperty('config');
-        $reflectionProperty->setAccessible(true);
-        $configuration = $reflectionProperty->getValue();
-
         foreach ($config as $key => $value) {
-            $configuration[$key] = $value;
+            $this->tester->setConfig($key, $value);
         }
-
-        $reflectionProperty->setValue($configuration);
     }
 
 }

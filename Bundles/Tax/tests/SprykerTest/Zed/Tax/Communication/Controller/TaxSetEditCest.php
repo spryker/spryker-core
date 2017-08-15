@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Tax\Presentation;
+namespace SprykerTest\Zed\Tax\Communication\Controller;
 
 use SprykerTest\Zed\Tax\PageObject\TaxSetListPage;
-use SprykerTest\Zed\Tax\TaxPresentationTester;
+use SprykerTest\Zed\Tax\TaxCommunicationTester;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
  * @group Tax
- * @group Presentation
+ * @group Communication
+ * @group Controller
  * @group TaxSetEditCest
  * Add your own group annotations below this line
  */
@@ -23,13 +24,13 @@ class TaxSetEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Tax\TaxPresentationTester $i
+     * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxPresentationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i)
     {
-        $i->amOnPage(TaxSetListPage::URL);
+        $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Edit Tax Set');
     }

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Acl\Presentation;
+namespace SprykerTest\Zed\Acl\Communication\Controller;
 
-use SprykerTest\Zed\Acl\AclPresentationTester;
+use SprykerTest\Zed\Acl\AclCommunicationTester;
 use SprykerTest\Zed\Acl\PageObject\AclRoleListPage;
 
 /**
@@ -15,7 +15,8 @@ use SprykerTest\Zed\Acl\PageObject\AclRoleListPage;
  * @group SprykerTest
  * @group Zed
  * @group Acl
- * @group Presentation
+ * @group Communication
+ * @group Controller
  * @group AclRoleEditCest
  * Add your own group annotations below this line
  */
@@ -23,13 +24,13 @@ class AclRoleEditCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Acl\AclPresentationTester $i
+     * @param \SprykerTest\Zed\Acl\AclCommunicationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(AclPresentationTester $i)
+    public function breadcrumbIsVisible(AclCommunicationTester $i)
     {
-        $i->amOnPage(AclRoleListPage::URL);
+        $i->listDataTable(AclRoleListPage::URL . '/table');
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Roles / Edit Role');
     }

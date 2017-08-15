@@ -8,9 +8,28 @@
 namespace SprykerTest\Zed\Gui\Helper;
 
 use Codeception\Module;
+use SprykerTest\Shared\Testify\Helper\ZedBootstrap;
 
 class DataTableActionHelper extends Module
 {
+
+    /**
+     * @var bool
+     */
+    protected $isPresentationSuite = true;
+
+    /**
+     * @param array $settings
+     *
+     * @return void
+     */
+    public function _beforeSuite($settings = [])
+    {
+        $className = $settings['class_name'];
+        if (preg_match('/CommunicationTester/', $className)) {
+            $this->isPresentationSuite = false;
+        }
+    }
 
     /**
      * @param int $rowPosition
@@ -55,7 +74,7 @@ class DataTableActionHelper extends Module
     public function clickDataTableLinkInDropDownOfButton($buttonName, $linkName, $rowPosition = 1)
     {
         $this->clickButton($buttonName, $rowPosition);
-        $this->getWebDriver()->click(sprintf(
+        $this->getDriver()->click(sprintf(
             '(//tr[@role="row"]//button[contains(., "%s")])[%s]/following::ul[1]//a[contains(., "%s")]',
             $buttonName,
             $rowPosition,
@@ -84,7 +103,7 @@ class DataTableActionHelper extends Module
      */
     protected function clickButton($name, $rowPosition, $gridId = null)
     {
-        $webDriver = $this->getWebDriver();
+        $driver = $this->getDriver();
 
         $selector = sprintf('(//tr[@role="row"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition);
 
@@ -92,16 +111,23 @@ class DataTableActionHelper extends Module
             $selector = sprintf('(//div[@id="%3$s"]//tr[@role="row"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition, $gridId);
         }
 
-        $webDriver->waitForElementVisible($selector);
-        $webDriver->click($selector);
+        if (method_exists($driver, 'waitForElementVisible')) {
+            $driver->waitForElementVisible($selector);
+        }
+
+        $driver->click($selector);
     }
 
     /**
-     * @return \Codeception\Module|\Codeception\Module\WebDriver
+     * @return \Codeception\Module|\Codeception\Module\WebDriver|\Codeception\Lib\Framework
      */
-    protected function getWebDriver()
+    protected function getDriver()
     {
-        return $this->getModule('WebDriver');
+        if ($this->isPresentationSuite) {
+            return $this->getModule('WebDriver');
+        }
+
+        return $this->getModule('\\' . ZedBootstrap::class);
     }
 
 }
