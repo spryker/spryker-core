@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductReview\Business\Model\Touch;
 
 use Generated\Shared\Transfer\ProductReviewTransfer;
+use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
+use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToProductInterface;
 use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToTouchInterface;
 
 class ProductReviewTouch implements ProductReviewTouchInterface
@@ -20,37 +22,76 @@ class ProductReviewTouch implements ProductReviewTouchInterface
     protected $touchFacade;
 
     /**
-     * @param \Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToTouchInterface $touchFacade
+     * @var \Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToProductInterface
      */
-    public function __construct(ProductReviewToTouchInterface $touchFacade)
+    protected $productFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToTouchInterface $touchFacade
+     * @param \Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToProductInterface $productFacade
+     */
+    public function __construct(ProductReviewToTouchInterface $touchFacade, ProductReviewToProductInterface $productFacade)
     {
         $this->touchFacade = $touchFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
-     * @return bool
+     * @return void
+     */
+    public function touchProductReviewByStatus(ProductReviewTransfer $productReviewTransfer)
+    {
+        $this->assertProductReviewForTouchByStatus($productReviewTransfer);
+
+        switch ($productReviewTransfer->getStatus()) {
+            case SpyProductReviewTableMap::COL_STATUS_PENDING:
+            case SpyProductReviewTableMap::COL_STATUS_REJECTED:
+                $this->touchProductReviewDeleted($productReviewTransfer);
+                break;
+            case SpyProductReviewTableMap::COL_STATUS_APPROVED:
+                $this->touchProductReviewActive($productReviewTransfer);
+                break;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return void
      */
     public function touchProductReviewActive(ProductReviewTransfer $productReviewTransfer)
     {
-        // TODO: use ProductFacade::touchProductAbstract() here.
         $this->assertProductReviewForTouch($productReviewTransfer);
 
-        return $this->touchFacade->touchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview());
+        $this->touchFacade->touchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview());
+        $this->productFacade->touchProductAbstract($productReviewTransfer->getFkProductAbstract());
+        // TODO: touch "product_abstract_review" for separated storage entries
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
-     * @return bool
+     * @return void
      */
     public function touchProductReviewDeleted(ProductReviewTransfer $productReviewTransfer)
     {
-        // TODO: use ProductFacade::touchProductAbstract() here.
         $this->assertProductReviewForTouch($productReviewTransfer);
 
-        return $this->touchFacade->touchDeleted(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview());
+        $this->touchFacade->touchDeleted(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview());
+        $this->productFacade->touchProductAbstract($productReviewTransfer->getFkProductAbstract());
+        // TODO: touch "product_abstract_review" for separated storage entries
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return void
+     */
+    protected function assertProductReviewForTouchByStatus(ProductReviewTransfer $productReviewTransfer)
+    {
+        $productReviewTransfer->requireStatus();
     }
 
     /**
@@ -60,7 +101,9 @@ class ProductReviewTouch implements ProductReviewTouchInterface
      */
     protected function assertProductReviewForTouch(ProductReviewTransfer $productReviewTransfer)
     {
-        $productReviewTransfer->requireIdProductReview();
+        $productReviewTransfer
+            ->requireIdProductReview()
+            ->requireFkProductAbstract();
     }
 
 }

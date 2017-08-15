@@ -15,14 +15,21 @@ interface ProductReviewTouchInterface
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
-     * @return bool
+     * @return void
+     */
+    public function touchProductReviewByStatus(ProductReviewTransfer $productReviewTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return void
      */
     public function touchProductReviewActive(ProductReviewTransfer $productReviewTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
-     * @return bool
+     * @return void
      */
     public function touchProductReviewDeleted(ProductReviewTransfer $productReviewTransfer);
 

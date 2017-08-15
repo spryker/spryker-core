@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReview\Business\Model;
 
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Base\SpyProductReview;
-use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Spryker\Zed\ProductReview\Business\Model\Touch\ProductReviewTouchInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -75,15 +74,7 @@ class ProductReviewUpdater implements ProductReviewUpdaterInterface
      */
     protected function touchProductReviewEntity(ProductReviewTransfer $productReviewTransfer)
     {
-        switch ($productReviewTransfer->getStatus()) {
-            case SpyProductReviewTableMap::COL_STATUS_PENDING:
-            case SpyProductReviewTableMap::COL_STATUS_REJECTED:
-                $this->productReviewTouch->touchProductReviewDeleted($productReviewTransfer);
-                break;
-            case SpyProductReviewTableMap::COL_STATUS_APPROVED:
-                $this->productReviewTouch->touchProductReviewActive($productReviewTransfer);
-                break;
-        }
+        $this->productReviewTouch->touchProductReviewByStatus($productReviewTransfer);
     }
 
     /**

@@ -60,7 +60,7 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductReviewTouch()
     {
-        return new ProductReviewTouch($this->getTouchFacade());
+        return new ProductReviewTouch($this->getTouchFacade(), $this->getProductFacade());
     }
 
     /**
@@ -77,6 +77,14 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
     protected function getTouchFacade()
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::FACADE_PRODUCT);
     }
 
 }
