@@ -128,7 +128,7 @@ class PriceForm extends AbstractType
     /**
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return int
+     * @return string
      */
     protected function createMaxPriceRange(CurrencyTransfer $currencyTransfer)
     {
