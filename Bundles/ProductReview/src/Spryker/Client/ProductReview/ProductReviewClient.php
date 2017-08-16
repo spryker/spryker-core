@@ -52,4 +52,21 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
             ->search($searchQuery, $resultFormatters, $productReviewSearchRequestTransfer->getRequestParams());
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractReviewTransfer|null
+     */
+    public function findProductAbstractReview($idProductAbstract, $localeName)
+    {
+        return $this->getFactory()
+            ->createProductAbstractReviewStorageReader()
+            ->findProductAbstractReview($idProductAbstract, $localeName);
+    }
+
 }

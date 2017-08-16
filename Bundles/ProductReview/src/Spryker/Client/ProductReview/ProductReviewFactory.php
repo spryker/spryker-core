@@ -15,10 +15,12 @@ use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\RatingAggreg
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatter;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatter;
+use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin;
 use Spryker\Client\Search\SearchClient;
+use Spryker\Shared\ProductReview\KeyBuilder\ProductAbstractReviewResourceKeyBuilder;
 
 class ProductReviewFactory extends AbstractFactory
 {
@@ -95,6 +97,17 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReaderInterface
+     */
+    public function createProductAbstractReviewStorageReader()
+    {
+        return new ProductAbstractReviewStorageReader(
+            $this->getStorageClient(),
+            $this->createProductAbstractReviewResourceKeyBuilder()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
      */
     public function getConfig()
@@ -108,6 +121,22 @@ class ProductReviewFactory extends AbstractFactory
     protected function getZedRequestClient()
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageInterface
+     */
+    protected function getStorageClient()
+    {
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     */
+    protected function createProductAbstractReviewResourceKeyBuilder()
+    {
+        return new ProductAbstractReviewResourceKeyBuilder();
     }
 
 }

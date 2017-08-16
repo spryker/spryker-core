@@ -12,7 +12,7 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
-class ProductReviewCollectorQuery extends AbstractPropelCollectorQuery
+class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
 {
 
     const FIELD_ID_PRODUCT_REVIEW = 'id_product_review';

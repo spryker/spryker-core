@@ -15,7 +15,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 use Spryker\Zed\Collector\Business\Collector\Search\AbstractConfigurableSearchPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewCollectorQuery;
+use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewSearchCollectorQuery;
 
 class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
 {
@@ -66,8 +66,8 @@ class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
         $result = [
             ProductReviewIndexMap::STORE => $this->store->getStoreName(),
             ProductReviewIndexMap::LOCALE => $this->locale->getLocaleName(),
-            ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $collectItemData[ProductReviewCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT],
-            ProductReviewIndexMap::RATING => $collectItemData[ProductReviewCollectorQuery::FIELD_RATING],
+            ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $collectItemData[ProductReviewSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT],
+            ProductReviewIndexMap::RATING => $collectItemData[ProductReviewSearchCollectorQuery::FIELD_RATING],
             ProductReviewIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($collectItemData),
         ];
 

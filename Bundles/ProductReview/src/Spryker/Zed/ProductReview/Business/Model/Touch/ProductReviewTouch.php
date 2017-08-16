@@ -66,8 +66,8 @@ class ProductReviewTouch implements ProductReviewTouchInterface
         $this->assertProductReviewForTouch($productReviewTransfer);
 
         $this->touchFacade->touchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview());
+        $this->touchFacade->touchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_REVIEW, $productReviewTransfer->getFkProductAbstract());
         $this->productFacade->touchProductAbstract($productReviewTransfer->getFkProductAbstract());
-        // TODO: touch "product_abstract_review" for separated storage entries
     }
 
     /**
@@ -80,8 +80,8 @@ class ProductReviewTouch implements ProductReviewTouchInterface
         $this->assertProductReviewForTouch($productReviewTransfer);
 
         $this->touchFacade->touchDeleted(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview());
+        $this->touchFacade->touchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_REVIEW, $productReviewTransfer->getFkProductAbstract());
         $this->productFacade->touchProductAbstract($productReviewTransfer->getFkProductAbstract());
-        // TODO: touch "product_abstract_review" for separated storage entries
     }
 
     /**

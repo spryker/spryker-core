@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductReviewCollector\Business;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductReviewCollector\Business\Collector\Search\ProductReviewCollector as ProductReviewSearchCollector;
-use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewCollectorQuery;
+use Spryker\Zed\ProductReviewCollector\Business\Collector\Storage\ProductAbstractReviewCollector as ProductAbstractReviewStorageCollector;
+use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewSearchCollectorQuery;
+use Spryker\Zed\ProductReviewCollector\Persistence\Storage\Propel\ProductAbstractReviewStorageCollectorQuery;
 use Spryker\Zed\ProductReviewCollector\ProductReviewCollectorDependencyProvider;
 
 /**
@@ -30,17 +32,40 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
         );
 
         $storageProductReviewCollector->setTouchQueryContainer($this->getTouchQueryContainer());
-        $storageProductReviewCollector->setQueryBuilder($this->createProductReviewCollectorQuery());
+        $storageProductReviewCollector->setQueryBuilder($this->createProductReviewSearchCollectorQuery());
 
         return $storageProductReviewCollector;
     }
 
     /**
-     * @return \Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewCollectorQuery
+     * @return \Spryker\Zed\ProductReviewCollector\Business\Collector\Storage\ProductAbstractReviewCollector
      */
-    protected function createProductReviewCollectorQuery()
+    public function createStorageProductAbstractReviewCollector()
     {
-        return new ProductReviewCollectorQuery();
+        $storageProductReviewCollector = new ProductAbstractReviewStorageCollector(
+            $this->getUtilDataReaderService()
+        );
+
+        $storageProductReviewCollector->setTouchQueryContainer($this->getTouchQueryContainer());
+        $storageProductReviewCollector->setQueryBuilder($this->createProductReviewStorageCollectorQuery());
+
+        return $storageProductReviewCollector;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewSearchCollectorQuery
+     */
+    protected function createProductReviewSearchCollectorQuery()
+    {
+        return new ProductReviewSearchCollectorQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReviewCollector\Persistence\Storage\Propel\ProductAbstractReviewStorageCollectorQuery
+     */
+    protected function createProductReviewStorageCollectorQuery()
+    {
+        return new ProductAbstractReviewStorageCollectorQuery();
     }
 
     /**

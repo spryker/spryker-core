@@ -37,4 +37,17 @@ interface ProductReviewClientInterface
      */
     public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer);
 
+    /**
+     * Specification:
+     * - TODO: add spec
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractReviewTransfer|null
+     */
+    public function findProductAbstractReview($idProductAbstract, $localeName);
+
 }

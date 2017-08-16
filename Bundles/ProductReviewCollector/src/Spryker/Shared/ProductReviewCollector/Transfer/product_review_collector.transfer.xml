@@ -17,15 +17,6 @@
         <property name="updatedAt" type="string" />
     </transfer>
 
-    <transfer name="ProductReviewSearchConfig">
-        <property name="paginationConfig" type="PaginationConfig" />
-    </transfer>
-
-    <transfer name="ProductReviewSearchRequest">
-        <property name="idProductAbstract" type="int" />
-        <property name="requestParams" type="array" />
-    </transfer>
-
     <transfer name="ProductAbstractReview">
         <property name="idProductAbstract" type="int" />
         <property name="averageRating" type="float" />
