@@ -97,8 +97,9 @@ class ProductTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->productOptionQueryContainer->queryProductsAbstractBySearchTerm(null, $this->localeTransfer);
-        $query->setModelAlias('spy_product_abstract');
+        $query = $this->productOptionQueryContainer
+            ->queryProductsAbstractBySearchTermForAssignment(null, $this->idProductOptionGroup, $this->localeTransfer)
+            ->setModelAlias('spy_product_abstract');
 
         $queryResults = $this->runQuery($query, $config);
 
