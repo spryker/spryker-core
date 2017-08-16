@@ -21,7 +21,7 @@ class CategoryNode implements CategoryNodeInterface
 {
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
+     * @var \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
      */
     protected $closureTableWriter;
 

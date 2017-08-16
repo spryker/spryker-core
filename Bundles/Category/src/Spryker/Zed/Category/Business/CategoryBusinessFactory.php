@@ -159,7 +159,11 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryTree()
     {
-        return new CategoryTree($this->getQueryContainer(), $this->createFacade());
+        return new CategoryTree(
+            $this->getQueryContainer(),
+            $this->createFacade(),
+            $this->createClosureTableWriter()
+        );
     }
 
     /**

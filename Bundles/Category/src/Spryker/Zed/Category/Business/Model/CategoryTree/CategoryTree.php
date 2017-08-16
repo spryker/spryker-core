@@ -10,10 +10,16 @@ use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
+use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTree implements CategoryTreeInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
+     */
+    protected $closureTableWriter;
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -28,11 +34,16 @@ class CategoryTree implements CategoryTreeInterface
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer, CategoryFacadeInterface $categoryFacade)
-    {
+    public function __construct(
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryFacadeInterface $categoryFacade,
+        ClosureTableWriterInterface $closureTableWriter
+    ) {
         $this->queryContainer = $queryContainer;
         $this->categoryFacade = $categoryFacade;
+        $this->closureTableWriter = $closureTableWriter;
     }
 
     /**
@@ -48,7 +59,17 @@ class CategoryTree implements CategoryTreeInterface
             ->queryFirstLevelChildren($idSourceCategoryNode)
             ->find();
 
+        $destinationCategoryNodeEntity = $this->queryContainer
+            ->queryNodeById($idDestinationCategoryNode)
+            ->findOne();
+
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
+            if ($childNodeEntity->getFkCategory() === $destinationCategoryNodeEntity->getFkCategory()) {
+                $this->closureTableWriter->delete($childNodeEntity->getIdCategoryNode());
+                $childNodeEntity->delete();
+                continue;
+            }
+
             $categoryTransfer = $this->categoryFacade->read($childNodeEntity->getFkCategory());
 
             if ($childNodeEntity->getIsMain()) {
