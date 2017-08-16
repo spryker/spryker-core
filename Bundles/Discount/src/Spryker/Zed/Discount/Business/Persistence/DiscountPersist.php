@@ -178,7 +178,7 @@ class DiscountPersist implements DiscountPersistInterface
      *
      * @return void
      */
-    protected function cleanVoucherPool(SpyDiscount $discountEntity)
+    protected function detachVoucherPool(SpyDiscount $discountEntity)
     {
         $discountEntity->setFkDiscountVoucherPool(null);
     }
@@ -194,7 +194,7 @@ class DiscountPersist implements DiscountPersistInterface
         SpyDiscount $discountEntity
     ) {
         if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_CART_RULE) {
-            $this->cleanVoucherPool($discountEntity);
+            $this->detachVoucherPool($discountEntity);
         }
 
         if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
