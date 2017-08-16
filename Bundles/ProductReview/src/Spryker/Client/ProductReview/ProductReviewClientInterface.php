@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ProductReview;
 
+use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
-use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewClientInterface
 {
@@ -19,11 +19,11 @@ interface ProductReviewClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function submitCustomerReview(ProductReviewTransfer $productReviewTransfer);
+    public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer);
 
     /**
      * Specification:

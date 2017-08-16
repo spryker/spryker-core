@@ -7,22 +7,27 @@
 
 namespace Spryker\Zed\ProductReview\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductReviewTransfer;
+use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\ProductReview\Business\ProductReviewFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductReview\Communication\ProductReviewCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function submitCustomerReviewAction(ProductReviewTransfer $productReviewTransfer)
+    public function submitCustomerReviewAction(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {
+        $productReviewTransfer = $this->getFactory()
+            ->createCustomerReviewSubmitMapper()
+            ->mapRequestTransfer($productReviewRequestTransfer);
+
         $productReviewTransfer = $this->getFacade()
             ->createProductReview($productReviewTransfer);
 

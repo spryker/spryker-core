@@ -17,6 +17,16 @@
         <property name="updatedAt" type="string" />
     </transfer>
 
+    <transfer name="ProductReviewRequest">
+        <property name="idProductAbstract" type="int" />
+        <property name="localeName" type="string" />
+        <property name="customerReference" type="string" />
+        <property name="rating" type="int" />
+        <property name="summary" type="string" />
+        <property name="description" type="string" />
+        <property name="nickname" type="string" />
+    </transfer>
+
     <transfer name="ProductReviewSearchConfig">
         <property name="paginationConfig" type="PaginationConfig" />
     </transfer>

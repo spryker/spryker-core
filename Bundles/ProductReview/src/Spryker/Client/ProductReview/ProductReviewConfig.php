@@ -39,8 +39,8 @@ class ProductReviewConfig extends AbstractBundleConfig
         $paginationConfigTransfer
             ->setParameterName('page')
             ->setItemsPerPageParameterName('ipp')
-            ->setDefaultItemsPerPage(self::PAGINATION_DEFAULT_ITEMS_PER_PAGE)
-            ->setValidItemsPerPageOptions(self::PAGINATION_VALID_ITEMS_PER_PAGE);
+            ->setDefaultItemsPerPage(static::PAGINATION_DEFAULT_ITEMS_PER_PAGE)
+            ->setValidItemsPerPageOptions(static::PAGINATION_VALID_ITEMS_PER_PAGE);
 
         return $paginationConfigTransfer;
     }

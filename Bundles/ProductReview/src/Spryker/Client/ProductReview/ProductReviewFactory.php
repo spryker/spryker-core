@@ -26,7 +26,7 @@ class ProductReviewFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\ProductReview\Zed\ProductReviewStub
+     * @return \Spryker\Client\ProductReview\Zed\ProductReviewStubInterface
      */
     public function createProductReviewStub()
     {

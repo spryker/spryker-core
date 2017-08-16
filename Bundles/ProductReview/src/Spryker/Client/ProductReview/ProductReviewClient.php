@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ProductReview;
 
+use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
-use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -22,15 +22,15 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function submitCustomerReview(ProductReviewTransfer $productReviewTransfer)
+    public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {
         return $this->getFactory()
             ->createProductReviewStub()
-            ->submitCustomerReview($productReviewTransfer);
+            ->submitCustomerReview($productReviewRequestTransfer);
     }
 
     /**
