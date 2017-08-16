@@ -45,7 +45,9 @@ class ProductAbstractReviewCollector extends AbstractStoragePropelCollector
     protected function mapDataToTransfer(array $collectItemData)
     {
         $productAbstractReviewTransfer = new ProductAbstractReviewTransfer();
-        $productAbstractReviewTransfer->fromArray($collectItemData, true);
+        $productAbstractReviewTransfer
+            ->fromArray($collectItemData, true)
+            ->setAverageRating(round($collectItemData[ProductAbstractReviewTransfer::AVERAGE_RATING], 1));
 
         return $productAbstractReviewTransfer;
     }
