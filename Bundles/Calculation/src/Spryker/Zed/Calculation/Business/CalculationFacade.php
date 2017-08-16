@@ -285,6 +285,22 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @return void
      */
+    public function calculateInitialGrandTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createInitialGrandTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
     public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $this->getFactory()

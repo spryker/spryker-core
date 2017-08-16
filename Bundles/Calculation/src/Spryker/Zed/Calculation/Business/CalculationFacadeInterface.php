@@ -246,6 +246,18 @@ interface CalculationFacadeInterface
 
     /**
      * Specification:
+     *  - Calculate initial grandTotal amount (before discounts)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateInitialGrandTotal(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
      *  - Calculate total already canceled amount
      *
      * @api
