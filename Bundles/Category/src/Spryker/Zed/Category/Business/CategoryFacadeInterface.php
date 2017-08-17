@@ -240,6 +240,19 @@ interface CategoryFacadeInterface
     public function delete($idCategory);
 
     /**
+     * Specification:
+     *  - Finds sub-trees for the category node to be deleted and moves them to the next higher node in the tree
+     *  - Touches deleted category-node deleted (via TouchFacade)
+     *
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function deleteNodeById($idCategoryNode);
+
+    /**
      * @api
      *
      * @deprecated Will be removed with next major release

@@ -255,13 +255,37 @@ class CategoryNode implements CategoryNodeInterface
             ->find();
 
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
-            $this->moveSubTreeToParent($categoryNodeEntity);
-
-            $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
-            $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
-
-            $categoryNodeEntity->delete();
+            $this->deleteNode($categoryNodeEntity);
         }
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function deleteNodeById($idCategoryNode)
+    {
+        $categoryNodeEntity = $this->queryContainer
+            ->queryNodeById($idCategoryNode)
+            ->findOne();
+
+        $this->deleteNode($categoryNodeEntity);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     *
+     * @return void
+     */
+    protected function deleteNode(SpyCategoryNode $categoryNodeEntity)
+    {
+        $this->moveSubTreeToParent($categoryNodeEntity);
+
+        $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
+        $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
+
+        $categoryNodeEntity->delete();
     }
 
     /**

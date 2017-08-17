@@ -42,4 +42,11 @@ interface CategoryNodeInterface
      */
     public function delete($idCategory);
 
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return void
+     */
+    public function deleteNodeById($idCategoryNode);
+
 }

@@ -10,16 +10,10 @@ use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
-use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTree implements CategoryTreeInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
-     */
-    protected $closureTableWriter;
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -34,16 +28,13 @@ class CategoryTree implements CategoryTreeInterface
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
-     * @param \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface $closureTableWriter
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
-        CategoryFacadeInterface $categoryFacade,
-        ClosureTableWriterInterface $closureTableWriter
+        CategoryFacadeInterface $categoryFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->categoryFacade = $categoryFacade;
-        $this->closureTableWriter = $closureTableWriter;
     }
 
     /**
@@ -65,8 +56,7 @@ class CategoryTree implements CategoryTreeInterface
 
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
             if ($childNodeEntity->getFkCategory() === $destinationCategoryNodeEntity->getFkCategory()) {
-                $this->closureTableWriter->delete($childNodeEntity->getIdCategoryNode());
-                $childNodeEntity->delete();
+                $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode());
                 continue;
             }
 
@@ -74,13 +64,14 @@ class CategoryTree implements CategoryTreeInterface
 
             if ($childNodeEntity->getIsMain()) {
                 $this->moveMainCategoryNodeSubTree($categoryTransfer, $idDestinationCategoryNode);
-            } else {
-                $this->moveExtraParentCategoryNodeSubTree(
-                    $categoryTransfer,
-                    $idDestinationCategoryNode,
-                    $idSourceCategoryNode
-                );
+                continue;
             }
+
+            $this->moveExtraParentCategoryNodeSubTree(
+                $categoryTransfer,
+                $idDestinationCategoryNode,
+                $idSourceCategoryNode
+            );
         }
     }
 
