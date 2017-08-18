@@ -112,7 +112,7 @@ class ExternalDependency extends AbstractDependencyFinder
     protected function getFile(SplFileInfo $fileInfo)
     {
         if (!class_exists(Runner::class)) {
-            // phpcs 2.x for BC
+            // Deprecated - phpcs 2.x for BC
             $phpcs = new PHP_CodeSniffer();
             $phpcs->process([], null, []);
             $fileObject = new PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], $phpcs);
