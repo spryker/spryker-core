@@ -12,7 +12,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
-use Spryker\Zed\Category\Business\CategoryFacade;
 
 /**
  * Auto-generated group annotations
@@ -23,6 +22,8 @@ use Spryker\Zed\Category\Business\CategoryFacade;
  * @group Facade
  * @group CategoryFacadeTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\Category\CategoryBusinessTester $tester
  */
 class CategoryFacadeTest extends Unit
 {
@@ -130,7 +131,7 @@ class CategoryFacadeTest extends Unit
      */
     protected function createCategoryFacade()
     {
-        return new CategoryFacade();
+        return $this->tester->getLocator()->category()->facade();
     }
 
 }
