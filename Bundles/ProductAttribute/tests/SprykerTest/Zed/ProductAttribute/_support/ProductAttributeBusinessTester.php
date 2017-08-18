@@ -104,10 +104,10 @@ class ProductAttributeBusinessTester extends Actor
                 'foo' => 'Foo Value',
                 'bar' => '20 units',
             ],
-            $localeTransfer->getIdLocale() => [
+            $localeTransfer->getLocaleName() => [
                 'foo' => 'Foo Value DE',
             ],
-            $localeTransfer2->getIdLocale() => [
+            $localeTransfer2->getLocaleName() => [
                 'foo' => 'Foo Value US',
             ],
         ];
@@ -194,9 +194,8 @@ class ProductAttributeBusinessTester extends Actor
         $data = $this->getSampleLocalizedProductAttributeValues();
         unset($data[ProductAttributeConfig::DEFAULT_LOCALE]);
 
-        foreach ($data as $idLocale => $localizedData) {
-            $localeTransfer = new LocaleTransfer();
-            $localeTransfer->setIdLocale($idLocale);
+        foreach ($data as $localeCode => $localizedData) {
+            $localeTransfer = $this->getLocale($localeCode);
 
             $localizedAttributeTransfer = new LocalizedAttributesTransfer();
             $localizedAttributeTransfer->setAttributes($localizedData);

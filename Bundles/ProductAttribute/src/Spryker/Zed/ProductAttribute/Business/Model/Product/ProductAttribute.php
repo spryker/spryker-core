@@ -106,7 +106,7 @@ class ProductAttribute implements ProductAttributeInterface
     {
         $result = [];
         foreach ($localizedAttributes as $localizedAttributeTransfer) {
-            $result[$localizedAttributeTransfer->getLocale()->getIdLocale()] = $localizedAttributeTransfer->getAttributes();
+            $result[$localizedAttributeTransfer->getLocale()->getLocaleName()] = $localizedAttributeTransfer->getAttributes();
         }
 
         $result = [ProductAttributeConfig::DEFAULT_LOCALE => $attributes] + $result;

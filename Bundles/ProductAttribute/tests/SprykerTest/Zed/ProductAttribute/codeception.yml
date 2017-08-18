@@ -12,7 +12,7 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    business:
+    Business:
         path: .
         class_name: ProductAttributeBusinessTester
         modules:

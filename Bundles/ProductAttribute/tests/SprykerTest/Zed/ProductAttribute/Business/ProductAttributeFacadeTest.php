@@ -302,7 +302,7 @@ class ProductAttributeFacadeTest extends Test
             [
                 'key' => 'undefined__key',
                 'id' => null,
-                'locale_code' => $this->tester->getLocaleOne()->getIdLocale(),
+                'locale_code' => $this->tester->getLocaleOne()->getLocaleName(),
                 'value' => 'xxx',
             ],
         ];
@@ -320,10 +320,10 @@ class ProductAttributeFacadeTest extends Test
             '_' => [
                 'foo' => 'New Foo Value',
             ],
-            $this->tester->getLocaleOne()->getIdLocale() => [
+            $this->tester->getLocaleOne()->getLocaleName() => [
                 'undefined__key' => 'xxx',
             ],
-            $this->tester->getLocaleTwo()->getIdLocale() => [],
+            $this->tester->getLocaleTwo()->getLocaleName() => [],
         ];
 
         ksort($expectedResult);
@@ -350,19 +350,19 @@ class ProductAttributeFacadeTest extends Test
             [
                 'key' => $fooMetaAttributeTransfer->getKey(),
                 'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
-                'locale_code' => $this->tester->getLocaleOne()->getIdLocale(),
+                'locale_code' => $this->tester->getLocaleOne()->getLocaleName(),
                 'value' => '',
             ],
             [
                 'key' => $fooMetaAttributeTransfer->getKey(),
                 'id' => $fooMetaAttributeTransfer->getIdProductManagementAttribute(),
-                'locale_code' => $this->tester->getLocaleTwo()->getIdLocale(),
+                'locale_code' => $this->tester->getLocaleTwo()->getLocaleName(),
                 'value' => '',
             ],
             [
                 'key' => 'undefined__key',
                 'id' => null,
-                'locale_code' => $this->tester->getLocaleOne()->getIdLocale(),
+                'locale_code' => $this->tester->getLocaleOne()->getLocaleName(),
                 'value' => 'xxx',
             ],
         ];
@@ -380,10 +380,10 @@ class ProductAttributeFacadeTest extends Test
             '_' => [
                 'foo' => 'New Foo Value',
             ],
-            $this->tester->getLocaleOne()->getIdLocale() => [
+            $this->tester->getLocaleOne()->getLocaleName() => [
                 'undefined__key' => 'xxx',
             ],
-            $this->tester->getLocaleTwo()->getIdLocale() => [],
+            $this->tester->getLocaleTwo()->getLocaleName() => [],
         ];
 
         ksort($expectedResult);
