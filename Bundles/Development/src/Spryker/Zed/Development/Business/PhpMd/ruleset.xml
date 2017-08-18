@@ -84,7 +84,7 @@ The default was changed from 10 to 25 in PHPMD 2.3.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maxmethods" description="The method count reporting threshold" value="25"/>
+            <property name="maxmethods" description="The method count reporting threshold" value="50"/>
             <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get))i"/>
         </properties>
     </rule>
@@ -109,7 +109,9 @@ By default it ignores methods starting with 'get' or 'set'.
         </properties>
     </rule>
 
-    <rule ref="rulesets/controversial.xml" />
+    <rule ref="rulesets/controversial.xml">
+        <exclude name="CamelCaseMethodName" />
+    </rule>
 
     <rule ref="rulesets/naming.xml">
         <exclude name="LongVariable" />
@@ -142,6 +144,35 @@ class Something {
         for (int $i = 0; $i < 10; $i++) { // Not a Violation (inside FOR)
             $r += $this->q;
         }
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="CamelCaseMethodName"
+          since="0.2"
+          message = "The method {0} is not named in camelCase."
+          class="Spryker\Zed\Development\Business\PhpMd\Rules\Controversial\CamelCaseMethodName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+It is considered best practice to use the camelCase notation to name methods.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="allow-underscore"
+                      description="Allow an optional, single underscore at the beginning."
+                      value="false" />
+            <property name="allow-underscore-test"
+                      description="Is it allowed to have underscores in test method names."
+                      value="false" />
+        </properties>
+        <example>
+            <![CDATA[
+class ClassName {
+    public function get_name() {
     }
 }
             ]]>

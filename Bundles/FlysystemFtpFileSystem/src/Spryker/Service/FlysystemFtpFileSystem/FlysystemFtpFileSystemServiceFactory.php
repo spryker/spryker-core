@@ -25,7 +25,7 @@ class FlysystemFtpFileSystemServiceFactory extends AbstractServiceFactory
      */
     public function createFlysystemFtpFileSystemBuilder(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
     {
-        return new FtpFilesystemBuilder($configTransfer, $flysystemPluginCollection);
+        return new FtpFilesystemBuilder($configTransfer);
     }
 
 }

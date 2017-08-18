@@ -15,7 +15,7 @@ class ProductAbstractTaxWriter
 {
 
     /**
-     * @var \Spryker\Zed\TaxProductConnector\Business\Product\TaxProductConnectorQueryContainerInterface
+     * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
     protected $queryContainer;
 

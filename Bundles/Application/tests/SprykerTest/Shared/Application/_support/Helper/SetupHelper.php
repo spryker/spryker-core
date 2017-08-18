@@ -31,7 +31,7 @@ class SetupHelper extends Module
         $process = $this->runTestSetup('--restore');
 
         if (!$process->isSuccessful()) {
-            throw new Exception('An error in data restore occured: ' . $process->getErrorOutput());
+            throw new Exception('An error in data restore occurred: ' . $process->getErrorOutput());
         }
     }
 

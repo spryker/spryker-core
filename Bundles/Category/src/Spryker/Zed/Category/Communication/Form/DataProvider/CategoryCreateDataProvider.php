@@ -83,6 +83,7 @@ class CategoryCreateDataProvider
             static::DATA_CLASS => CategoryTransfer::class,
             CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $parentCategories,
             CategoryType::OPTION_CATEGORY_QUERY_CONTAINER => $this->queryContainer,
+            CategoryType::OPTION_CATEGORY_TEMPLATE_CHOICES => $this->getCategoryTemplateChoices(),
         ];
     }
 
@@ -135,6 +136,17 @@ class CategoryCreateDataProvider
     protected function getIdLocale()
     {
         return $this->localeFacade->getCurrentLocale()->getIdLocale();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCategoryTemplateChoices()
+    {
+        return $this->queryContainer
+            ->queryCategoryTemplate()
+            ->find()
+            ->toKeyValue('idCategoryTemplate', 'name');
     }
 
 }

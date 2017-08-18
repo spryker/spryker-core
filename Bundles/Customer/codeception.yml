@@ -1,15 +1,14 @@
-namespace: SprykerTest
+namespace: Customer
 actor: Tester
 
 include:
-    - tests/SprykerTest/Shared/Customer
-    - tests/SprykerTest/Zed/Customer
+  - tests/SprykerTest/Zed/Customer
 
 paths:
     tests: tests
-    support: .
     log: tests/_output
     data: tests/_data
+    support: tests/_support
     envs: tests/_envs
 
 settings:
@@ -21,4 +20,11 @@ settings:
 
 coverage:
     enabled: true
-    whitelist: { include: ['src/*'] }
+    whitelist: { include: ['src/*.php'] }
+
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman
+    config:
+        Codeception\Extension\Phantoman:
+            suites: ['Presentation']

@@ -19,6 +19,7 @@
         <property name="metaTitle" dataBuilderRule="unique()->sentence(2)" />
         <property name="metaDescription" dataBuilderRule="unique()->sentence(2)" />
         <property name="metaKeywords" dataBuilderRule="unique()->sentence(2)" />
+        <property name="fkCategoryTemplate" dataBuilderRule="=" />
     </transfer>
 
     <transfer name="Node">

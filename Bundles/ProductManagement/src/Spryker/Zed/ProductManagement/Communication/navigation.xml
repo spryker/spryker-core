@@ -8,6 +8,52 @@
                 <bundle>product-management</bundle>
                 <controller>index</controller>
                 <action>index</action>
+                <pages>
+                    <product-create>
+                        <label>Create a Product</label>
+                        <title>Create a Product</title>
+                        <bundle>product-management</bundle>
+                        <controller>add</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-create>
+
+                    <product-view>
+                        <label>View Product</label>
+                        <title>View Product</title>
+                        <bundle>product-management</bundle>
+                        <controller>view</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-view>
+
+                    <product-edit>
+                        <label>Edit Product</label>
+                        <title>Edit Product</title>
+                        <bundle>product-management</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-edit>
+
+                    <product-concrete-view>
+                        <label>View Concrete Product</label>
+                        <title>View Concrete Product</title>
+                        <bundle>product-management</bundle>
+                        <controller>view</controller>
+                        <action>variant</action>
+                        <visible>0</visible>
+                    </product-concrete-view>
+
+                    <product-concrete-edit>
+                        <label>Edit Concrete Product</label>
+                        <title>Edit Concrete Product</title>
+                        <bundle>product-management</bundle>
+                        <controller>edit</controller>
+                        <action>variant</action>
+                        <visible>0</visible>
+                    </product-concrete-edit>
+                </pages>
             </products>
             <attributes>
                 <label>Attributes</label>
@@ -15,6 +61,34 @@
                 <bundle>product-management</bundle>
                 <controller>attribute</controller>
                 <action>index</action>
+                <pages>
+                    <attribute-create>
+                        <label>Create a Product Attribute</label>
+                        <title>Create a ProductAttribute</title>
+                        <bundle>product-management</bundle>
+                        <controller>attribute</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </attribute-create>
+
+                    <attribute-view>
+                        <label>View Product Attribute</label>
+                        <title>View Product Attribute</title>
+                        <bundle>product-management</bundle>
+                        <controller>attribute</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </attribute-view>
+
+                    <attribute-edit>
+                        <label>Edit Product Attribute</label>
+                        <title>Edit Product Attribute</title>
+                        <bundle>product-management</bundle>
+                        <controller>attribute</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </attribute-edit>
+                </pages>
             </attributes>
         </pages>
     </product>

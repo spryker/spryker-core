@@ -83,17 +83,17 @@ class CodeStyleSniffer
      */
     protected function resolvePath($bundle, $path = null)
     {
+        $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : null;
+
         if ($bundle) {
             if (strtolower($bundle) === static::BUNDLE_ALL) {
-                return $this->pathToBundles;
+                return rtrim($this->pathToBundles, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
             return $this->getPathToBundle($bundle, $path);
         }
 
-        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-
-        return rtrim($this->applicationRoot, DIRECTORY_SEPARATOR) . $path;
+        return rtrim($this->applicationRoot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $path;
     }
 
     /**
@@ -107,6 +107,7 @@ class CodeStyleSniffer
     protected function getPathToBundle($bundle, $pathSuffix = null)
     {
         $lookupPaths = $this->buildPaths($bundle, $pathSuffix);
+
         foreach ($lookupPaths as $path) {
             if ($this->isPathValid($path)) {
                 return $path;
@@ -114,7 +115,7 @@ class CodeStyleSniffer
         }
 
         $message = sprintf(
-            'Could not find valid paths to your bundle "%s". Lookup paths "%s". Maybe there is a typo in the bundle name?',
+            'Could not find valid paths to your module "%s". Lookup paths "%s". Maybe there is a typo in the module name?',
             $bundle,
             implode(', ', $lookupPaths)
         );
@@ -175,9 +176,9 @@ class CodeStyleSniffer
      */
     protected function getPathToSprykerBundle($bundle, $pathSuffix = null)
     {
-        return implode(DIRECTORY_SEPARATOR, [
-            rtrim($this->pathToBundles, DIRECTORY_SEPARATOR),
-            $bundle,
+        return implode('', [
+            rtrim($this->pathToBundles, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+            $bundle . DIRECTORY_SEPARATOR,
             $pathSuffix,
         ]);
     }
@@ -190,9 +191,9 @@ class CodeStyleSniffer
      */
     protected function getPathToSprykerPackageNonSplit($bundle, $pathSuffix = null)
     {
-        return implode(DIRECTORY_SEPARATOR, [
-            rtrim(dirname(dirname($this->pathToBundles)), DIRECTORY_SEPARATOR),
-            $bundle,
+        return implode('', [
+            rtrim(dirname(dirname($this->pathToBundles)), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+            $bundle . DIRECTORY_SEPARATOR,
             $pathSuffix,
         ]);
     }
@@ -241,7 +242,7 @@ class CodeStyleSniffer
         $command = 'vendor/bin/' . $command . ' ' . $pathToFiles . $config;
 
         if (!empty($options[static::OPTION_DRY_RUN])) {
-            echo $command;
+            echo $command . PHP_EOL;
 
             return static::CODE_SUCCESS;
         }

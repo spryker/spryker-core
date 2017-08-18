@@ -8,13 +8,24 @@
 namespace Spryker\Zed\ZedRequest\Business\Model;
 
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
+/**
+ * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
+ */
 class Repeater implements RepeaterInterface
 {
+
+    /**
+     * This is a hack to get around a bad design which uses the singleton pattern.
+     *
+     * We need the configuration in this class to let customers control the path
+     * and file name for last yves request log data.
+     */
+    use BundleConfigResolverAwareTrait;
 
     /**
      * @var bool
@@ -22,18 +33,18 @@ class Repeater implements RepeaterInterface
     protected $isRepeatInProgress = false;
 
     /**
-     * @param string|null $mvc
+     * @param string|null $moduleControllerAction
      *
-     * @return string
+     * @return array
      */
-    public function getRepeatData($mvc = null)
+    public function getRepeatData($moduleControllerAction = null)
     {
         $this->isRepeatInProgress = true;
-        if ($mvc !== null) {
-            return $this->getFlashInFile('last_yves_request_' . $mvc . '.log');
-        } else {
-            return $this->getFlashInFile('last_yves_request.log');
+        if ($moduleControllerAction !== null) {
+            return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName($moduleControllerAction));
         }
+
+        return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName());
     }
 
     /**
@@ -59,15 +70,15 @@ class Repeater implements RepeaterInterface
             'params' => $transferObject->toArray(false),
         ];
 
-        $mvc = sprintf(
+        $moduleControllerAction = sprintf(
             '%s_%s_%s',
             $httpRequest->attributes->get('module'),
             $httpRequest->attributes->get('controller'),
             $httpRequest->attributes->get('action')
         );
 
-        $this->setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
-        $this->setFlashInFile($repeatData, 'last_yves_request.log');
+        $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName($moduleControllerAction));
+        $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName());
     }
 
     /**
@@ -80,6 +91,12 @@ class Repeater implements RepeaterInterface
     {
         $filePath = $this->getFilePath($fileName);
         $string = serialize($repeatData);
+
+        $directory = dirname($filePath);
+        if (!is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
         file_put_contents($filePath, $string);
     }
 
@@ -94,6 +111,7 @@ class Repeater implements RepeaterInterface
         if (!file_exists($filePath)) {
             return [];
         }
+
         $content = file_get_contents($filePath);
         if (empty($content)) {
             return [];
@@ -109,7 +127,7 @@ class Repeater implements RepeaterInterface
      */
     protected function getFilePath($fileName)
     {
-        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/' . $fileName;
+        return $this->getConfig()->getPathToYvesRequestRepeatData($fileName);
     }
 
 }

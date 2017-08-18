@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
@@ -38,7 +38,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
  * @group SpecificationBuilderTest
  * Add your own group annotations below this line
  */
-class SpecificationBuilderTest extends Test
+class SpecificationBuilderTest extends Unit
 {
 
     /**

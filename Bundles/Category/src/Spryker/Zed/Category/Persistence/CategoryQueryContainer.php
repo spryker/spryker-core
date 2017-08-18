@@ -542,7 +542,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @api
      *
-     * @param int $categoryKey
+     * @param string $categoryKey
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
@@ -1070,6 +1070,43 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $query->filterByFkResourceCategorynode($idCategoryNode);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplate()
+    {
+        return $this->getFactory()
+            ->createCategoryTemplateQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategoryTemplate
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplateById($idCategoryTemplate)
+    {
+        return $this->queryCategoryTemplate()
+            ->filterByIdCategoryTemplate($idCategoryTemplate);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $nameCategoryTemplate
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplateByName($nameCategoryTemplate)
+    {
+        return $this->queryCategoryTemplate()
+            ->filterByName($nameCategoryTemplate);
     }
 
 }

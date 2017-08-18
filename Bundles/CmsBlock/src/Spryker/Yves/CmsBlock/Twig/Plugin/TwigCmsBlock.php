@@ -22,6 +22,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
 {
 
     const OPTION_NAME = 'name';
+    const OPTION_POSITION = 'position';
 
     /**
      * @var string
@@ -83,21 +84,55 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      */
     protected function getBlockDataByOptions(array &$blockOptions)
     {
-        $blockNameKey = $this->extractBlockNameKey($blockOptions);
+        $blockName = $this->extractBlockNameOption($blockOptions);
+        $positionName = $this->extractPositionOption($blockOptions);
+
         $availableBlockNames = $this->getClient()->findBlockNamesByOptions($blockOptions, $this->localeName);
-        $availableBlockNames = $this->filterAvailableBlockNames($blockNameKey, $availableBlockNames);
+        $availableBlockNames = $this->filterPosition($positionName, $availableBlockNames);
+        $availableBlockNames = $this->filterAvailableBlockNames($blockName, $availableBlockNames);
 
         return $this->getClient()->findBlocksByNames($availableBlockNames, $this->localeName);
     }
 
     /**
-     * @param string $blockNameKey
+     * @param array $blockOptions
+     *
+     * @return string
+     */
+    protected function extractPositionOption(array &$blockOptions)
+    {
+        $positionName = isset($blockOptions[static::OPTION_POSITION]) ? $blockOptions[static::OPTION_POSITION] : '';
+        $positionName = strtolower($positionName);
+        unset($blockOptions[static::OPTION_POSITION]);
+
+        return $positionName;
+    }
+
+    /**
+     * @param string $positionName
      * @param array $availableBlockNames
      *
      * @return array
      */
-    protected function filterAvailableBlockNames($blockNameKey, array $availableBlockNames)
+    protected function filterPosition($positionName, array $availableBlockNames)
     {
+        if (is_array(current($availableBlockNames))) {
+            return isset($availableBlockNames[$positionName]) ? $availableBlockNames[$positionName] : [];
+        }
+
+        return $availableBlockNames;
+    }
+
+    /**
+     * @param string $blockName
+     * @param array $availableBlockNames
+     *
+     * @return array
+     */
+    protected function filterAvailableBlockNames($blockName, array $availableBlockNames)
+    {
+        $blockNameKey = $this->generateBlockNameKey($blockName);
+
         if ($blockNameKey) {
             if (!$availableBlockNames || in_array($blockNameKey, $availableBlockNames)) {
                 $availableBlockNames = [$blockNameKey];
@@ -124,12 +159,12 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
      *
      * @return string
      */
-    protected function extractBlockNameKey(array &$blockOptions)
+    protected function extractBlockNameOption(array &$blockOptions)
     {
         $blockName = isset($blockOptions[static::OPTION_NAME]) ? $blockOptions[static::OPTION_NAME] : null;
         unset($blockOptions[static::OPTION_NAME]);
 
-        return $this->getClient()->generateBlockNameKey($blockName, $this->localeName);
+        return $blockName;
     }
 
     /**
@@ -140,6 +175,16 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     protected function validateBlock($cmsBlockData)
     {
         return !($cmsBlockData === null);
+    }
+
+    /**
+     * @param string $blockName
+     *
+     * @return string
+     */
+    protected function generateBlockNameKey($blockName)
+    {
+        return $this->getClient()->generateBlockNameKey($blockName, $this->localeName);
     }
 
     /**

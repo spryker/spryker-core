@@ -52,6 +52,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         $formData[ProductFormAdd::FIELD_SKU] = $productAbstractTransfer->getSku();
         $formData[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
+        $formData[ProductFormAdd::FIELD_NEW_FROM] = $productAbstractTransfer->getNewFrom();
+        $formData[ProductFormAdd::FIELD_NEW_TO] = $productAbstractTransfer->getNewTo();
 
         foreach ($localizedData as $localizedAttributesTransfer) {
             $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();

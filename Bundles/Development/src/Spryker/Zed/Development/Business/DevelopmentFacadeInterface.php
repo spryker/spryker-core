@@ -225,11 +225,11 @@ interface DevelopmentFacadeInterface
      *
      * @api
      *
-     * @param string $bundle
+     * @param string $directory
      *
      * @return array
      */
-    public function runArchitectureSniffer($bundle);
+    public function runArchitectureSniffer($directory);
 
     /**
      * Returns a list of all bundles in project and core namespaces
@@ -239,5 +239,14 @@ interface DevelopmentFacadeInterface
      * @return array
      */
     public function listAllBundles();
+
+    /**
+     * Returns all architecture rules
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getArchitectureRules();
 
 }

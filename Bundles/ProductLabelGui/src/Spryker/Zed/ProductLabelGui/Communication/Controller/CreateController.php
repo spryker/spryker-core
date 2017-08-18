@@ -81,10 +81,12 @@ class CreateController extends AbstractController
         $aggregateFormTransfer = $aggregateForm->getData();
 
         $productLabelTransfer = $this->storeProductLabel($aggregateFormTransfer->getProductLabel());
-        $this->storeRelatedProduct(
-            $aggregateFormTransfer->getProductAbstractRelations(),
-            $productLabelTransfer->getIdProductLabel()
-        );
+        if (!$productLabelTransfer->getIsDynamic()) {
+            $this->storeRelatedProduct(
+                $aggregateFormTransfer->getProductAbstractRelations(),
+                $productLabelTransfer->getIdProductLabel()
+            );
+        }
 
         $this->addSuccessMessage(sprintf(
             'Product label #%d successfully created.',

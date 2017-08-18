@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +25,7 @@ class CategoryType extends AbstractType
 
     const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
     const OPTION_CATEGORY_QUERY_CONTAINER = 'category query container';
+    const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
 
     const FIELD_CATEGORY_KEY = 'category_key';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -30,11 +33,16 @@ class CategoryType extends AbstractType
     const FIELD_IS_CLICKABLE = 'is_clickable';
     const FIELD_IS_SEARCHABLE = 'is_searchable';
     const FIELD_IS_MAIN = 'is_main';
-
     const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
     const FIELD_EXTRA_PARENTS = 'extra_parents';
+    const FIELD_TEMPLATE = 'fk_category_template';
 
     const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
+
+    /**
+     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
+     */
+    protected $formPlugins = [];
 
     /**
      * @return string
@@ -55,7 +63,8 @@ class CategoryType extends AbstractType
 
         $resolver
             ->setRequired(static::OPTION_PARENT_CATEGORY_NODE_CHOICES)
-            ->setRequired(static::OPTION_CATEGORY_QUERY_CONTAINER);
+            ->setRequired(static::OPTION_CATEGORY_QUERY_CONTAINER)
+            ->setRequired(static::OPTION_CATEGORY_TEMPLATE_CHOICES);
     }
 
     /**
@@ -70,11 +79,22 @@ class CategoryType extends AbstractType
             ->addCategoryKeyField($builder, $options[static::OPTION_CATEGORY_QUERY_CONTAINER])
             ->addIsActiveField($builder)
             ->addIsInMenuField($builder)
-            ->addIsClickableField($builder)
             ->addIsSearchableField($builder)
             ->addParentNodeField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addExtraParentsField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
+            ->addTemplateField($builder, $options[static::OPTION_CATEGORY_TEMPLATE_CHOICES])
+            ->addPluginForms($builder)
             ->addLocalizedAttributesForm($builder);
+    }
+
+    /**
+     * @param array $formPlugins
+     *
+     * @return void
+     */
+    public function setFormPlugins(array $formPlugins)
+    {
+        $this->formPlugins = $formPlugins;
     }
 
     /**
@@ -90,9 +110,19 @@ class CategoryType extends AbstractType
                 new NotBlank(),
                 new Callback([
                     'methods' => [
-                        function ($key, ExecutionContextInterface $contextInterface) use ($categoryQueryContainer) {
-                            if ($categoryQueryContainer->queryCategoryByKey($key)->count() > 0) {
-                                $contextInterface->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
+                        function ($key, ExecutionContextInterface $context) use ($categoryQueryContainer) {
+                            $data = $context->getRoot()->getData();
+
+                            $exists = false;
+                            if ($data instanceof CategoryTransfer) {
+                                $exists = $categoryQueryContainer
+                                        ->queryCategoryByKey($key)
+                                        ->filterByIdCategory($data->getIdCategory(), Criteria::NOT_EQUAL)
+                                        ->count() > 0;
+                            }
+
+                            if ($exists) {
+                                $context->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
                             }
                         },
                     ],
@@ -126,22 +156,7 @@ class CategoryType extends AbstractType
     protected function addIsInMenuField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_IN_MENU, 'checkbox', [
-            'label' => 'Show in Menu',
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIsClickableField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_IS_CLICKABLE, 'checkbox', [
-            'label' => 'Clickable',
+            'label' => 'Visible in the category tree',
             'required' => false,
         ]);
 
@@ -156,7 +171,7 @@ class CategoryType extends AbstractType
     protected function addIsSearchableField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_SEARCHABLE, 'checkbox', [
-            'label' => 'Searchable',
+            'label' => 'Allow to search for this category',
             'required' => false,
         ]);
 
@@ -218,6 +233,26 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return $this
+     */
+    protected function addTemplateField(FormBuilderInterface $builder, array $choices)
+    {
+        $builder->add(static::FIELD_TEMPLATE, Select2ComboBoxType::class, [
+            'label' => 'Template',
+            'choices' => $choices,
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -226,6 +261,20 @@ class CategoryType extends AbstractType
         $builder->add(static::FIELD_LOCALIZED_ATTRIBUTES, 'collection', [
             'type' => new CategoryLocalizedAttributeType(),
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPluginForms(FormBuilderInterface $builder)
+    {
+        foreach ($this->formPlugins as $formPlugin) {
+            $formPlugin->buildForm($builder);
+        }
 
         return $this;
     }

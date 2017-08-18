@@ -11,6 +11,7 @@ use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConn
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToLocaleBridge;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToTouchBridge;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCategoryQueryContainerBridge;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer\CmsBlockCategoryConnectorToCmsBlockQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -21,10 +22,12 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     const FACADE_TOUCH = 'CMS_BLOCK_CATEGORY_CONNECTOR:FACADE_TOUCH';
     const FACADE_COLLECTOR = 'CMS_BLOCK_CATEGORY_CONNECTOR:FACADE_COLLECTOR';
 
+    const QUERY_CONTAINER_CMS_BLOCK = 'CMS_BLOCK_CATEGORY_CONNECTOR:QUERY_CONTAINER_CMS_BLOCK';
     const QUERY_CONTAINER_CATEGORY = 'CMS_BLOCK_CATEGORY_CONNECTOR:QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_CATEGORY_CONNECTOR:QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_DATA_READER';
+    const SERVICE_UTIL_ENCODING = 'CMS_BLOCK_CATEGORY_CONNECTOR:SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,6 +39,8 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addCategoryQueryContainer($container);
+        $container = $this->addCmsBlockQueryContainer($container);
+        $container = $this->addEncodeService($container);
 
         return $container;
     }
@@ -52,6 +57,7 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
         $container = $this->addDataReaderService($container);
         $container = $this->addTouchQueryContainer($container);
         $container = $this->addTouchFacade($container);
+        $container = $this->addCategoryQueryContainer($container);
 
         return $container;
     }
@@ -135,6 +141,34 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
     {
         $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsBlockQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_CMS_BLOCK] = function (Container $container) {
+            return new CmsBlockCategoryConnectorToCmsBlockQueryContainerBridge($container->getLocator()->cmsBlock()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEncodeService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return $container->getLocator()->utilEncoding()->service();
         };
 
         return $container;

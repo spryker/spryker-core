@@ -14,7 +14,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
-class Method
+class Method implements MethodInterface
 {
 
     /**
@@ -64,7 +64,7 @@ class Method
         foreach ($methods as $shipmentMethodEntity) {
             $shipmentMethodTransfer = new ShipmentMethodTransfer();
             $shipmentMethodTransfer->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity));
-            $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray());
+            $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
 
             if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
                 $shipmentMethodTransfer->setDefaultPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
@@ -105,9 +105,49 @@ class Method
         $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
         $shipmentMethodTransferEntity = $methodQuery->findOne();
 
-        $shipmentMethodTransfer->fromArray($shipmentMethodTransferEntity->toArray());
+        $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodTransferEntity, $shipmentMethodTransfer);
 
         return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodTransferById($idShipmentMethod)
+    {
+        $shipmentMethodEntity = $this->queryContainer
+            ->queryMethodByIdMethod($idShipmentMethod)
+            ->findOne();
+
+        if (!$shipmentMethodEntity) {
+            return null;
+        }
+
+        $shipmentMethodTransfer = new ShipmentMethodTransfer();
+        $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
+
+        return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getShipmentMethodTransfers()
+    {
+        $shipmentMethodTransfers = [];
+
+        $query = $this->queryContainer
+            ->queryActiveMethods();
+
+        foreach ($query->find() as $shipmentMethodEntity) {
+            $shipmentMethodTransfer = new ShipmentMethodTransfer();
+            $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
+            $shipmentMethodTransfers[] = $shipmentMethodTransfer;
+        }
+
+        return $shipmentMethodTransfers;
     }
 
     /**
@@ -130,7 +170,7 @@ class Method
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return int
+     * @return int|bool
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
@@ -212,19 +252,19 @@ class Method
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return int|null
      */
     protected function getDeliveryTime(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
-        $timeString = '';
+        $deliveryTime = null;
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
 
         if (isset($deliveryTimePlugins[$method->getDeliveryTimePlugin()])) {
             $deliveryTimePlugin = $this->getDeliveryTimePlugin($method, $deliveryTimePlugins);
-            $timeString = $deliveryTimePlugin->getTime($quoteTransfer);
+            $deliveryTime = $deliveryTimePlugin->getTime($quoteTransfer);
         }
 
-        return $timeString;
+        return $deliveryTime;
     }
 
     /**
@@ -269,6 +309,20 @@ class Method
         }
 
         return $shipmentMethodEntity->getShipmentCarrier()->getName();
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    protected function mapEntityToTransfer(SpyShipmentMethod $shipmentMethodEntity, ShipmentMethodTransfer $shipmentMethodTransfer)
+    {
+        $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
+        $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier()->getName());
+
+        return $shipmentMethodTransfer;
     }
 
 }

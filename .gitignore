@@ -32,3 +32,5 @@ Bundles/*/tests/**/_support/_generated
 node_modules/
 /static/public/
 yarn.lock
+/vendor/*
+composer.phar

@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerTest\Zed\ProductLabelDiscountConnector;
 
 use Codeception\Actor;

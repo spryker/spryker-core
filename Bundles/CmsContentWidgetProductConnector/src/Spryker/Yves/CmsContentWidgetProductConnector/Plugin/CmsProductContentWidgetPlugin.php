@@ -34,7 +34,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
     }
 
     /**
-     * @return \Callable
+     * @return callable
      */
     public function getContentWidgetFunction()
     {

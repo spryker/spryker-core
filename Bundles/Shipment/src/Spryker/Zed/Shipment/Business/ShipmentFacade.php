@@ -21,6 +21,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
@@ -35,6 +37,36 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getCarriers()
+    {
+        return $this->getFactory()
+            ->createShipmentCarrierReader()
+            ->getCarriers();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getMethods()
+    {
+        return $this->getFactory()
+            ->createMethod()
+            ->getShipmentMethodTransfers();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
@@ -49,6 +81,24 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findMethodById($idShipmentMethod)
+    {
+        return $this->getFactory()
+            ->createMethod()
+            ->findShipmentMethodTransferById($idShipmentMethod);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -63,6 +113,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idMethod
@@ -77,6 +129,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idMethod
@@ -91,6 +145,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idMethod
@@ -105,11 +161,13 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
-     * @return int
+     * @return int|bool
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
@@ -119,6 +177,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -131,6 +191,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

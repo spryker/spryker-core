@@ -8,9 +8,9 @@
 namespace SprykerTest\Zed\Discount\Business\Calculator\Type;
 
 use ArrayObject;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
@@ -25,7 +25,7 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
  * @group PercentageTest
  * Add your own group annotations below this line
  */
-class PercentageTest extends PHPUnit_Framework_TestCase
+class PercentageTest extends Unit
 {
 
     const ITEM_GROSS_PRICE_1000 = 1000;

@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Discount\Presentation;
 
+use SprykerTest\Zed\Discount\DiscountPresentationTester;
 use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
-use SprykerTest\Zed\Discount\PresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,36 +23,36 @@ class DiscountCreateCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Discount\PresentationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
-    public function createExclusiveDiscount(PresentationTester $i, DiscountCreatePage $createPage)
+    public function createExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
 
     /**
-     * @param \SprykerTest\Zed\Discount\PresentationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
-    public function createNotExclusiveDiscount(PresentationTester $i, DiscountCreatePage $createPage)
+    public function createNotExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_NOT_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
 
     /**
-     * @param \SprykerTest\Zed\Discount\PresentationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
-    public function createInvalidDiscount(PresentationTester $i, DiscountCreatePage $createPage)
+    public function createInvalidDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
         $createPage->createDiscount(DiscountCreatePage::EMPTY_DISCOUNT, ['name' => null]);
         $i->dontSee($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);

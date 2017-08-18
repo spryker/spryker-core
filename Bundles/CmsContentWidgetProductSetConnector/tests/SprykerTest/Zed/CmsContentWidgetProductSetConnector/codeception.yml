@@ -1,5 +1,5 @@
 namespace: SprykerTest\Zed\CmsContentWidgetProductSetConnector
-actor: Tester
+
 paths:
     tests: .
     data: ../../../_data
@@ -10,3 +10,20 @@ coverage:
     enabled: true
     remote: false
     whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        class_name: CmsContentWidgetProductSetConnectorBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Zed\ProductSet\Helper\ProductSetDataHelper
+

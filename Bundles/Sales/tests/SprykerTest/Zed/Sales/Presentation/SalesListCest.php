@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Sales\Presentation;
 
 use SprykerTest\Zed\Sales\PageObject\SalesDetailPage;
 use SprykerTest\Zed\Sales\PageObject\SalesListPage;
-use SprykerTest\Zed\Sales\PresentationTester;
+use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -24,24 +24,24 @@ class SalesListCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Sales\PresentationTester $i
+     * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */
-    public function testOrderListShouldContainOrders(PresentationTester $i, SalesListPage $salesListPage)
+    public function testOrderListShouldContainOrders(SalesPresentationTester $i, SalesListPage $salesListPage)
     {
         $i->createOrderWithOneItem();
         $salesListPage->seeListOfOrders();
     }
 
     /**
-     * @param \SprykerTest\Zed\Sales\PresentationTester $i
+     * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
      * @return void
      */
-    public function testICanGoToLatestOrderDetailsPage(PresentationTester $i, SalesListPage $salesListPage)
+    public function testICanGoToLatestOrderDetailsPage(SalesPresentationTester $i, SalesListPage $salesListPage)
     {
         $i->createOrderWithOneItem();
 
@@ -50,6 +50,23 @@ class SalesListCest
 
         $i->amOnPage($url);
         $i->canSeeCurrentUrlEquals($url);
+    }
+
+    /**
+     * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
+     * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
+     *
+     * @return void
+     */
+    public function breadcrumbIsVisible(SalesPresentationTester $i, SalesListPage $salesListPage)
+    {
+        $i->createOrderWithOneItem();
+
+        $latestOrderId = $salesListPage->grabLatestOrderId();
+        $url = SalesDetailPage::getOrderDetailsPageUrl($latestOrderId);
+
+        $i->amOnPage($url);
+        $i->seeBreadcrumbNavigation('Dashboard / Sales / Order Overview');
     }
 
 }

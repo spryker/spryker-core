@@ -25,22 +25,28 @@ class SetController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider();
 
         $taxSetForm = $this->getFactory()->createTaxSetForm($taxSetFormDataProvider);
-        $taxSetForm->handleRequest($request);
 
-        if ($taxSetForm->isValid()) {
-            $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
-            if ($taxSetTransfer->getIdTaxSet()) {
+        if ($request->request->count() > 0) {
+            $taxSetForm->handleRequest($request);
+
+            if ($taxSetForm->isValid()) {
+                $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
                 $this->addSuccessMessage('Tax set successfully created.');
-                $redirectUrl = Url::generate('/tax/set/edit', [static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet()])->build();
+                $redirectUrl = Url::generate('/tax/set/edit', [
+                    static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet(),
+                ])->build();
+
                 return $this->redirectResponse($redirectUrl);
             }
+
+            $this->addErrorMessage('Tax set is not created. Please fill-in all required fields.');
         }
 
         return [
@@ -58,19 +64,22 @@ class SetController extends AbstractController
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
         $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
-
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
-
         $taxSetForm = $this->getFactory()->createTaxSetForm($taxSetFormDataProvider);
-        $taxSetForm->handleRequest($request);
 
-        if ($taxSetForm->isValid()) {
-            $taxSetTransfer = $taxSetForm->getData();
-            $taxSetTransfer->setIdTaxSet($idTaxSet);
+        if ($request->request->count() > 0) {
+            $taxSetForm->handleRequest($request);
 
-            $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
-            if ($rowsAffected > 0) {
-                $this->addSuccessMessage('Tax set successfully updated.');
+            if ($taxSetForm->isValid()) {
+                $taxSetTransfer = $taxSetForm->getData();
+                $taxSetTransfer->setIdTaxSet($idTaxSet);
+                $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
+
+                if ($rowsAffected > 0) {
+                    $this->addSuccessMessage('Tax set successfully updated.');
+                }
+            } else {
+                $this->addErrorMessage('Tax set is not updated. Please fill-in all required fields.');
             }
         }
 

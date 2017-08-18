@@ -21,7 +21,7 @@ class DependencyTreeBuilderConsole extends Console
     const COMMAND_NAME = 'dev:dependency:build-tree';
 
     const OPTION_APPLICATION = 'application';
-    const OPTION_BUNDLE = 'bundle';
+    const OPTION_BUNDLE = 'module';
     const OPTION_LAYER = 'layer';
 
     /**
@@ -36,9 +36,9 @@ class DependencyTreeBuilderConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Build dependency tree (Spryker core dev only).');
 
-        $this->addOption(static::OPTION_APPLICATION, 'a', InputOption::VALUE_OPTIONAL, 'Name of application to build the dependency tree (Client, Shared, Yves, Zed)');
-        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of bundle to build the dependency tree');
-        $this->addOption(static::OPTION_LAYER, 'l', InputOption::VALUE_OPTIONAL, 'Name of layer to build the dependency tree (only for Zed)');
+        $this->addOption(static::OPTION_APPLICATION, 'a', InputOption::VALUE_OPTIONAL, 'Name of application (Client, Shared, Yves, Zed, Service)');
+        $this->addOption(static::OPTION_BUNDLE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module');
+        $this->addOption(static::OPTION_LAYER, 'l', InputOption::VALUE_OPTIONAL, 'Name of layer (only for Zed)');
     }
 
     /**
@@ -63,12 +63,7 @@ class DependencyTreeBuilderConsole extends Console
             $layer = $this->input->getOption(static::OPTION_LAYER);
         }
 
-        $this->info(sprintf(
-            'Build dependency tree.',
-            $application,
-            $bundle,
-            $layer
-        ));
+        $this->info('Build dependency tree.');
 
         $this->getFacade()->buildDependencyTree($application, $bundle, $layer);
     }

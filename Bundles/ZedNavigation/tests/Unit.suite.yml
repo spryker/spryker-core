@@ -1,5 +1,0 @@
-class_name: UnitTester
-modules:
-    enabled:
-        - \SprykerTest\Shared\Testify\Helper\Environment
-        - \ZedNavigation\Module\Unit

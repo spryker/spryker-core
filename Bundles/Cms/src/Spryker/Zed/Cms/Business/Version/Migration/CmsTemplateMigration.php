@@ -46,7 +46,7 @@ class CmsTemplateMigration implements MigrationInterface
      */
     public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
     {
-        $this->handleDatabaseTransaction(function () use ($originVersionDataTransfer, $targetVersionDataTransfer) {
+        $this->handleDatabaseTransaction(function () use ($targetVersionDataTransfer) {
             $this->executeMigrateTransaction($targetVersionDataTransfer);
         });
     }

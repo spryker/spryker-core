@@ -16,8 +16,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
 
     /**
-     * Specification
-     * - Returns an array of console commands
+     * {@inheritdoc}
      *
      * @api
      *
@@ -29,8 +28,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * Specification
-     * - Returns an array of event subscribers
+     * {@inheritdoc}
      *
      * @api
      *
@@ -39,6 +37,18 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     public function getEventSubscriber()
     {
         return $this->getFactory()->getEventSubscriber();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    public function getServiceProviders()
+    {
+        return $this->getFactory()->getServiceProviders();
     }
 
 }

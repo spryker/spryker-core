@@ -1,6 +1,0 @@
-class_name: UnitTester
-modules:
-    enabled:
-        - \SprykerTest\Shared\Testify\Helper\Environment
-        - \Config\Module\ConfigInit
-        - \NewRelic\Module\Unit

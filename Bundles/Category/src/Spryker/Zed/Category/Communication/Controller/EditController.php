@@ -29,6 +29,8 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $this->getFacade()->syncCategoryTemplate();
+
         $form = $this->getFactory()->createCategoryEditForm();
         $form->handleRequest($request);
 

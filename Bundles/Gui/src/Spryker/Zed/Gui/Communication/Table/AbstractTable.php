@@ -232,7 +232,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = twig_escape_filter(new Twig_Environment(), $value);
+                $value = \twig_escape_filter(new Twig_Environment(), $value);
             }
 
             return $value;
@@ -341,9 +341,30 @@ abstract class AbstractTable
 
         /** @var \Twig_Loader_Chain $loaderChain */
         $loaderChain = $twig->getLoader();
-        $loaderChain->addLoader(new Twig_Loader_Filesystem(__DIR__ . '/../../Presentation/Table/'));
+        $loaderChain->addLoader(new Twig_Loader_Filesystem(
+            $this->getTwigPaths(),
+            $this->getTwigRootPath()
+        ));
 
         return $twig;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getTwigPaths()
+    {
+        return [
+            __DIR__ . '/../../Presentation/Table/'
+        ];
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getTwigRootPath()
+    {
+        return null;
     }
 
     /**

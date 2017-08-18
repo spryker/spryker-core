@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Dependency graphs of all core bundles' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Dependency graphs of all core modules' } %}
         {% block widget_content %}
             <div class="spy-layout sparse">
                 <p><a href="/development/dependency/simple?build-tree=true">Simple Dependency Graph</a> | <a href="/development/dependency/adjacency-matrix?build-tree=true">Adjacency Matrix</a></p>

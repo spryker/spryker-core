@@ -18,4 +18,28 @@ interface LabelDictionaryReaderInterface
      */
     public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName);
 
+    /**
+     * @param int $idProductLabel
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findLabelByIdProductLabel($idProductLabel, $localeName);
+
+    /**
+     * @param string $labelName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findLabelByLocalizedName($labelName, $localeName);
+
+    /**
+     * @param int $labelName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findLabelByName($labelName, $localeName);
+
 }

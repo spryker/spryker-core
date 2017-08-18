@@ -11,7 +11,9 @@ use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TaxSetForm extends AbstractType
 {
@@ -56,8 +58,8 @@ class TaxSetForm extends AbstractType
             self::FIELD_NAME,
             'text',
             [
-                'label' => 'Name*',
-                'required' => false,
+                'label' => 'Name',
+                'required' => true,
                 'constraints' => [
                     new NotBlank()
                 ],
@@ -80,7 +82,15 @@ class TaxSetForm extends AbstractType
             'label' => 'Tax rates',
             'choice_list' => $this->taxSetFormDataProvider->getOptions()[self::FIELD_TAX_RATES],
             'constraints' => [
-                new NotBlank()
+                new Callback([
+                    'methods' => [
+                        function (ArrayObject $taxRates, ExecutionContextInterface $context) {
+                            if ($taxRates->count() <= 0) {
+                                $context->addViolation('You should choose one or more tax rates');
+                            }
+                        },
+                    ],
+                ]),
             ],
         ]);
 

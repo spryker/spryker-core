@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -21,6 +22,7 @@ interface CmsBlockCategoryConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Perform actions based on CMS Block transfer
      * - Delete all relations categories to cms blocks
      * - Add new relations defined in the transfer object
      *
@@ -28,9 +30,27 @@ interface CmsBlockCategoryConnectorFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
+     * @throws \Spryker\Zed\CmsBlockCategoryConnector\Business\Exception\CmsBlockCategoryPositionNotFound
+     *
      * @return void
      */
     public function updateCmsBlockCategoryRelations(CmsBlockTransfer $cmsBlockTransfer);
+
+    /**
+     * Specification:
+     * - Perform actions based on Category transfer
+     * - Delete all relations categories to cms blocks
+     * - Add new relations defined in the transfer object
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @throws \Spryker\Zed\CmsBlockCategoryConnector\Business\Exception\CmsBlockCategoryPositionNotFound
+     *
+     * @return void
+     */
+    public function updateCategoryCmsBlockRelations(CategoryTransfer $categoryTransfer);
 
     /**
      * Specification:
@@ -56,6 +76,45 @@ interface CmsBlockCategoryConnectorFacadeInterface
      * @return string[]
      */
     public function getRenderedCategoryList($idCmsBlock, $idLocale);
+
+    /**
+     * Specification:
+     * - Get collection of related CMS Blocks
+     *
+     * @api
+     *
+     * @param int $idCategory
+     * @param int $idCategoryTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     */
+    public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
+
+    /**
+     * Specification:
+     * - Takes positions from configuration
+     * - Creates new CMS Block category position records
+     * - Does not remove/update existing records
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncCmsBlockCategoryPosition();
+
+    /**
+     * Specification:
+     * - Finds a position by name
+     * - Hydrates transfer object
+     * - Returns NULL if position does not exist
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCategoryPositionTransfer|null
+     */
+    public function findCmsBlockCategoryPositionByName($name);
 
     /**
      * Specification:

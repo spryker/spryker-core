@@ -1,5 +1,5 @@
 namespace: SprykerTest\Zed\Glossary
-actor: Tester
+
 paths:
     tests: .
     data: ../../../_data
@@ -8,4 +8,37 @@ paths:
 
 coverage:
     enabled: true
+    remote: false
     whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        class_name: GlossaryBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+
+    Communication:
+        path: Communication
+        class_name: GlossaryCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper:
+                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
+                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
+                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
+                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+                - \SprykerTest\Shared\Glossary\Helper\TranslationHelper

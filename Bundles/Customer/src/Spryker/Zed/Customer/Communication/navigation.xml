@@ -4,12 +4,9 @@
         <label>Customers</label>
         <title>Customers</title>
         <icon>fa-users</icon>
-        <bundle>customer</bundle>
-        <controller>index</controller>
-        <action>index</action>
+        <uri>#</uri>
         <visible>1</visible>
         <pages>
-
             <customer>
                 <label>Customers</label>
                 <title>Customers</title>
@@ -17,8 +14,23 @@
                 <controller>index</controller>
                 <action>index</action>
                 <visible>1</visible>
-
                 <pages>
+                    <customer-add>
+                        <label>Add a customer</label>
+                        <title>Add a customer</title>
+                        <bundle>customer</bundle>
+                        <controller>add</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </customer-add>
+                    <customer-edit>
+                        <label>Edit customer</label>
+                        <title>Edit customer</title>
+                        <bundle>customer</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </customer-edit>
                     <customer-view>
                         <label>View</label>
                         <title>View</title>
@@ -27,33 +39,26 @@
                         <action>index</action>
                         <visible>0</visible>
                         <pages>
-
-                            <customer-edit>
-                                <label>Edit customer</label>
-                                <title>Edit customer</title>
-                                <bundle>customer</bundle>
-                                <controller>edit</controller>
-                                <action>index</action>
-                                <visible>0</visible>
-                            </customer-edit>
-
                             <customer-address-edit>
-                                <label>Edit address</label>
-                                <title>Edit address</title>
-                                <bundle>customer</bundle>
-                                <controller>address</controller>
-                                <action>edit</action>
-                                <visible>0</visible>
-                            </customer-address-edit>
-
+                            <label>Edit address</label>
+                            <title>Edit address</title>
+                            <bundle>customer</bundle>
+                            <controller>address</controller>
+                            <action>edit</action>
+                            <visible>0</visible>
+                        </customer-address-edit>
+                        <customer-address-add>
+                            <label>Add address</label>
+                            <title>Add address</title>
+                            <bundle>customer</bundle>
+                            <controller>address</controller>
+                            <action>add</action>
+                            <visible>0</visible>
+                        </customer-address-add>
                         </pages>
                     </customer-view>
-
                 </pages>
-
             </customer>
-
-
         </pages>
     </customer>
 </config>

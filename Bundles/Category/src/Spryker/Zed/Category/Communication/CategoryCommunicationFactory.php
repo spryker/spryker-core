@@ -70,6 +70,10 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryCreateForm($idParentNode)
     {
         $categoryCreateForm = new CategoryType();
+        $categoryCreateForm->setFormPlugins(
+            $this->getCategoryFormPlugins()
+        );
+
         $categoryCreateDataFormProvider = $this->createCategoryCreateFormDataProvider();
         $formFactory = $this->getFormFactory();
 
@@ -97,6 +101,10 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryEditForm()
     {
         $categoryCreateForm = new CategoryType();
+        $categoryCreateForm->setFormPlugins(
+            $this->getCategoryFormPlugins()
+        );
+
         $categoryCreateDataFormProvider = $this->createCategoryEditFormDataProvider();
         $formFactory = $this->getFormFactory();
 
@@ -194,6 +202,14 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getRelationReadPluginStack()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_READ);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
+     */
+    protected function getCategoryFormPlugins()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_PLUGINS);
     }
 
 }

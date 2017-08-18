@@ -6,8 +6,8 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString\Comparator;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
  * @group DoesNotContainTest
  * Add your own group annotations below this line
  */
-class DoesNotContainTest extends PHPUnit_Framework_TestCase
+class DoesNotContainTest extends Unit
 {
 
     /**

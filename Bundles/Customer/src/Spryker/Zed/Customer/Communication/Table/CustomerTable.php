@@ -172,10 +172,15 @@ class CustomerTable extends AbstractTable
     protected function getCountryNameByCustomer(SpyCustomer $customer)
     {
         $countryName = '';
+        if ($customer->getAddresses()->count() === 0) {
+            return $countryName;
+        }
 
-        if ($customer->getAddresses()->count() > 0) {
-            $address = $customer->getAddresses()->get(0);
-            $countryName = $address->getCountry()->getName();
+        $addresses = $customer->getAddresses();
+        foreach ($addresses as $address) {
+            if ($address->getFkCountry() === $customer->getCountry()) {
+                return $address->getCountry()->getName();
+            }
         }
 
         return $countryName;

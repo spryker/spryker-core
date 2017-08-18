@@ -2,6 +2,9 @@
   "name": "spryker/util-data-reader",
   "description": "UtilDataReader module",
   "license": "proprietary",
+  "require-dev": {
+    "spryker/symfony": "*"
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"

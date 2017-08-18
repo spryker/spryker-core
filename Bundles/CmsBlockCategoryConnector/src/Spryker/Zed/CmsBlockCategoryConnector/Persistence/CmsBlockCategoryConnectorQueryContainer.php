@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -36,7 +40,27 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     public function queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
     {
         return $this->queryCmsBlockCategoryConnector()
-            ->filterByFkCmsBlock($idCmsBlock);
+            ->filterByFkCmsBlock($idCmsBlock)
+            ->addJoin(
+                [SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY_TEMPLATE],
+                [SpyCategoryTableMap::COL_ID_CATEGORY, SpyCategoryTableMap::COL_FK_CATEGORY_TEMPLATE],
+                Criteria::JOIN
+            );
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     * @param int $idCategoryTemplate
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryConnectorByIdCategory($idCategory, $idCategoryTemplate)
+    {
+        return $this->queryCmsBlockCategoryConnector()
+            ->filterByFkCategoryTemplate($idCategoryTemplate)
+            ->filterByFkCategory($idCategory);
     }
 
     /**
@@ -50,11 +74,69 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
     public function queryCmsBlockCategoryWithNamesByIdBlock($idCmsBlock, $idLocale)
     {
         return $this->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
-            ->useCategoryQuery()
-                ->useAttributeQuery()
-                    ->filterByFkLocale($idLocale)
-                ->endUse()
-            ->endUse();
+            ->addJoin(
+                [
+                    SpyCategoryTableMap::COL_ID_CATEGORY,
+                    SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                ],
+                [
+                    SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
+                    $idLocale,
+                ],
+                Criteria::INNER_JOIN
+            );
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     * @param int $idCategoryTemplate
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryWithBlocksByIdCategoryIdTemplate($idCategory, $idCategoryTemplate)
+    {
+        return $this->queryCmsBlockCategoryConnectorByIdCategory($idCategory, $idCategoryTemplate)
+            ->joinCmsBlock();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
+    {
+        return $this->queryCmsBlockCategoryConnector()
+            ->filterByFkCategory($idCategory)
+            ->joinCmsBlock();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
+     */
+    public function queryCmsBlockCategoryPosition()
+    {
+        return $this->getFactory()
+            ->createCmsBlockCategoryPosition();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $positionName
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
+     */
+    public function queryCmsBlockCategoryPositionByName($positionName)
+    {
+        return $this->queryCmsBlockCategoryPosition()
+            ->filterByName($positionName);
     }
 
 }

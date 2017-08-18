@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductGroup\Business\ProductGroupFacade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductGroupBuilder;
 use Generated\Shared\Transfer\ProductGroupTransfer;
 use Spryker\Shared\ProductGroup\ProductGroupConfig;
@@ -24,7 +24,7 @@ use Spryker\Shared\ProductGroup\ProductGroupConfig;
  *
  * @property \SprykerTest\Zed\ProductGroup\ProductGroupBusinessTester $tester
  */
-class UpdateProductGroupTest extends Test
+class UpdateProductGroupTest extends Unit
 {
 
     /**
@@ -221,6 +221,29 @@ class UpdateProductGroupTest extends Test
         $this->tester->assertTouchDeleted(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $productAbstractTransfer2->getIdProductAbstract(), 'Product #2 should have been touched as deleted.');
         $this->tester->assertTouchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $productAbstractTransfer3->getIdProductAbstract(), 'Product #3 should have been touched as active.');
         $this->tester->assertTouchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $productAbstractTransfer4->getIdProductAbstract(), 'Product #4 should have been touched as active.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductGroupMultipleTimesIsIdempotent()
+    {
+        // Arrange
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+
+        $productGroupTransfer = new ProductGroupTransfer();
+        $productGroupTransfer->setIdProductAbstracts([
+            $productAbstractTransfer1->getIdProductAbstract(),
+        ]);
+        $productGroupTransfer = $this->tester->getFacade()->createProductGroup($productGroupTransfer);
+
+        // Act
+        $this->tester->getFacade()->updateProductGroup($productGroupTransfer);
+        $this->tester->getFacade()->updateProductGroup($productGroupTransfer);
+
+        // Assert
+        $actualProductGroupTransfer = $this->tester->getFacade()->findProductGroup($productGroupTransfer);
+        $this->assertCount(1, $actualProductGroupTransfer->getIdProductAbstracts(), 'Product group should have expected number of products.');
     }
 
 }

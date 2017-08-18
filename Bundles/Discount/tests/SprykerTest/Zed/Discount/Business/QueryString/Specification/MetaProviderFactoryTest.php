@@ -6,7 +6,7 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString\Specification;
 
-use PHPUnit_Framework_TestCase;
+use Codeception\Test\Unit;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
@@ -24,7 +24,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
  * @group MetaProviderFactoryTest
  * Add your own group annotations below this line
  */
-class MetaProviderFactoryTest extends PHPUnit_Framework_TestCase
+class MetaProviderFactoryTest extends Unit
 {
 
     /**

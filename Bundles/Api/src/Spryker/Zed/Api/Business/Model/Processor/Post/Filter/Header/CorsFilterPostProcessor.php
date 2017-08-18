@@ -16,8 +16,8 @@ class CorsFilterPostProcessor implements PostProcessorInterface
 {
 
     const HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
-    const HEADER_ACCESS_CONTROL_REQUEST_HEADERS = 'Access-Control-Request-Headers';
-    const HEADER_ACCESS_CONTROL_REQUEST_METHODS = 'Access-Control-Request-Methods';
+    const HEADER_ACCESS_CONTROL_ALLOW_HEADERS = 'Access-Control-Allow-Headers';
+    const HEADER_ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods';
     const HEADER_ORIGIN = 'origin';
 
     /**
@@ -49,10 +49,10 @@ class CorsFilterPostProcessor implements PostProcessorInterface
             $apiResponseTransfer->setOptions($options);
         }
 
-        $headers[static::HEADER_ACCESS_CONTROL_REQUEST_HEADERS] = $this->apiConfig->getAllowedRequestHeaders();
+        $headers[static::HEADER_ACCESS_CONTROL_ALLOW_HEADERS] = $this->apiConfig->getAllowedRequestHeaders();
         $defaultOptions = array_merge($this->apiConfig->getAllowedRequestMethods(), [ApiConfig::HTTP_METHOD_OPTIONS]);
         $options = $apiResponseTransfer->getOptions() ?: $defaultOptions;
-        $headers[static::HEADER_ACCESS_CONTROL_REQUEST_METHODS] = implode(', ', $options);
+        $headers[static::HEADER_ACCESS_CONTROL_ALLOW_METHODS] = implode(', ', $options);
 
         if (!empty($headers[static::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN])) {
             return $apiResponseTransfer;

@@ -17,7 +17,7 @@ interface CmsContentWidgetPluginInterface
      *
      * @api
      *
-     * @return \Callable
+     * @return callable
      */
     public function getContentWidgetFunction();
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\CartVariant\Mapper;
 
-use \ArrayObject;
+use ArrayObject;
 
 interface CartItemsMapperInterface
 {

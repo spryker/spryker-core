@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\PageObject;
 
-use SprykerTest\Zed\Sales\PresentationTester;
+use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 class SalesDetailPage
 {
@@ -25,16 +25,16 @@ class SalesDetailPage
     const ATTRIBUTE_GRAND_TOTAL_RAW = 'data-qa-grand-total-raw';
 
     /**
-     * @var \SprykerTest\Zed\Sales\PresentationTester
+     * @var \SprykerTest\Zed\Sales\SalesPresentationTester
      */
     protected $tester;
 
     /**
-     * @param \SprykerTest\Zed\Sales\PresentationTester $i
+     * @param \SprykerTest\Zed\Sales\SalesPresentationTester $tester
      */
-    public function __construct(PresentationTester $i)
+    public function __construct(SalesPresentationTester $tester)
     {
-        $this->tester = $i;
+        $this->tester = $tester;
     }
 
     /**
@@ -94,8 +94,7 @@ class SalesDetailPage
      */
     public function openDetailPageForOrder($idSalesOrder)
     {
-        $i = $this->tester;
-        $i->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
+        $this->tester->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
     }
 
     /**
@@ -107,8 +106,7 @@ class SalesDetailPage
      */
     public function grabIdSalesOrderItemFromRow($rowPosition)
     {
-        $i = $this->tester;
-        $idSalesOrderItem = $i->grabValueFrom(SalesDetailPage::getIdSalesOrderItemSelector($rowPosition));
+        $idSalesOrderItem = $this->tester->grabValueFrom(SalesDetailPage::getIdSalesOrderItemSelector($rowPosition));
 
         return $idSalesOrderItem;
     }

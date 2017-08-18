@@ -57,6 +57,17 @@ interface ApplicationConstants
     const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
     const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
     const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
+    const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
+
+    /**
+     * Specification:
+     * - Defines a custom configuration for \Elastica\Client.
+     * - This configuration is used exclusively when set, e.g. no other Elastica configuration will be used for the client.
+     * - @see http://elastica.io/ for details.
+     *
+     * @api
+     */
+    const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
      * SSL

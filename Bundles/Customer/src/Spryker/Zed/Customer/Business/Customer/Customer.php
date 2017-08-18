@@ -187,7 +187,15 @@ class Customer implements CustomerInterface
     {
         $customerResponseTransfer = $this->add($customerTransfer);
 
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return $customerResponseTransfer;
+        }
+
         $this->sendRegistrationToken($customerTransfer);
+
+        if ($customerTransfer->getSendPasswordToken()) {
+            $this->sendPasswordRestoreMail($customerTransfer);
+        }
 
         return $customerResponseTransfer;
     }
@@ -229,10 +237,10 @@ class Customer implements CustomerInterface
     protected function sendPasswordRestoreToken(CustomerTransfer $customerTransfer)
     {
         $customerTransfer = $this->get($customerTransfer);
-        $confirmationLink = $this->customerConfig
+        $restorePasswordLink = $this->customerConfig
             ->getCustomerPasswordRestoreTokenUrl($customerTransfer->getRestorePasswordKey());
 
-        $customerTransfer->setConfirmationLink($confirmationLink);
+        $customerTransfer->setRestorePasswordLink($restorePasswordLink);
 
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(CustomerRestorePasswordMailTypePlugin::MAIL_TYPE);

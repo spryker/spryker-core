@@ -21,7 +21,7 @@ interface LoggerConfigInterface
     public function getHandlers();
 
     /**
-     * @return \callable[]
+     * @return callable[]
      */
     public function getProcessors();
 

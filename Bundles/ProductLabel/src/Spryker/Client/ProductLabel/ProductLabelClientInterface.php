@@ -37,4 +37,30 @@ interface ProductLabelClientInterface
      */
     public function findLabels(array $idProductLabels, $localeName);
 
+    /**
+     * Specification:
+     * - Finds product label by the given localized name in the key-value storage
+     *
+     * @api
+     *
+     * @param string $labelName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findLabelByLocalizedName($labelName, $localeName);
+
+    /**
+     * Specification:
+     * - Finds product label by the given name in the key-value storage
+     *
+     * @api
+     *
+     * @param string $labelName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
+     */
+    public function findLabelByName($labelName, $localeName);
+
 }

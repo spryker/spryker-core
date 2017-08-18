@@ -20,7 +20,7 @@ class CodeStyleSnifferConsole extends Console
 {
 
     const COMMAND_NAME = 'code:sniff';
-    const OPTION_BUNDLE = 'bundle';
+    const OPTION_MODULE = 'module';
     const OPTION_SNIFFS = 'sniffs';
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_FIX = 'fix';
@@ -35,12 +35,12 @@ class CodeStyleSnifferConsole extends Console
     {
         parent::configure();
 
-        $this
-            ->setName(static::COMMAND_NAME)
+        $this->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Sniff and fix code style for project or core');
+        $this->addAlias();
 
-        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to fix code style for (or "all")');
+        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to fix code style for (or "all")');
         $this->addOption(static::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
         $this->addOption(static::OPTION_EXPLAIN, 'e', InputOption::VALUE_NONE, 'Explain the standard by showing the sniffs it includes');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
@@ -56,20 +56,34 @@ class CodeStyleSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getOption(static::OPTION_BUNDLE);
+        $bundle = $this->input->getOption(static::OPTION_MODULE);
 
         $message = 'Check code style in project level';
         if ($bundle) {
-            $message = 'Check code style in all bundles';
+            $message = 'Check code style in all modules';
             if ($bundle !== static::OPTION_BUNDLE_ALL) {
-                $message = 'Check code style in ' . $bundle . ' bundle';
+                $message = 'Check code style in "' . $bundle . '" module';
             }
         }
-        $this->info($message);
 
         $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
+        if ($path) {
+            $message .= ' (' . $path . ')';
+        }
+
+        $this->info($message);
 
         return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
+    }
+
+    /**
+     * @deprecated Remove this in next major. Only for BC reasons. Please use new command name `code:sniff:style` (short `c:s:s`) instead.
+     *
+     * @return void
+     */
+    protected function addAlias()
+    {
+        $this->setAliases(['code:sniff:style']);
     }
 
 }

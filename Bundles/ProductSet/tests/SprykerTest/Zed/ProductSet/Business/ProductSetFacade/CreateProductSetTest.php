@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductSet\Business\ProductSetFacade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Spryker\Shared\ProductSet\ProductSetConfig;
 
@@ -23,7 +23,7 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
  *
  * @property \SprykerTest\Zed\ProductSet\ProductSetBusinessTester $tester
  */
-class CreateProductSetTest extends Test
+class CreateProductSetTest extends Unit
 {
 
     /**

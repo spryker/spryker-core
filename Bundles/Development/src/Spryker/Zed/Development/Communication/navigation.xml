@@ -9,6 +9,16 @@
                 <controller>dependency</controller>
                 <action>index</action>
                 <icon>fa-archive</icon>
+                <pages>
+                    <adjecency-matrix>
+                        <label>Adjacency Matrix</label>
+                        <title>Adjacency Matrix</title>
+                        <bundle>development</bundle>
+                        <controller>dependency</controller>
+                        <action>adjacency-matrix</action>
+                        <visible>0</visible>
+                    </adjecency-matrix>
+                </pages>
             </dependencies>
             <stability>
                 <label>Stability</label>
@@ -17,6 +27,17 @@
                 <controller>dependency</controller>
                 <action>stability</action>
                 <icon>fa-globe</icon>
+
+                <pages>
+                    <outgoing-dependency-graph>
+                        <label>Outgoing Dependency Graph</label>
+                        <title>Outgoing Dependency Graph</title>
+                        <bundle>development</bundle>
+                        <controller>dependency</controller>
+                        <action>outgoing-graph</action>
+                        <visible>0</visible>
+                    </outgoing-dependency-graph>
+                </pages>
             </stability>
             <architecture-sniffer>
                 <label>Architecture Sniffer</label>
@@ -35,6 +56,14 @@
                         <icon>fa-code</icon>
                         <visible>0</visible>
                     </check-bundle>
+                    <rules>
+                        <label>Rules</label>
+                        <title>Rules</title>
+                        <bundle>development</bundle>
+                        <controller>architecture</controller>
+                        <action>rules</action>
+                        <visible>0</visible>
+                    </rules>
                 </pages>
             </architecture-sniffer>
         </pages>

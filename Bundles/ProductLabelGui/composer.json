@@ -3,7 +3,7 @@
   "description": "ProductLabelGui module",
   "license": "proprietary",
   "require": {
-    "spryker/category": "^3.2.0",
+    "spryker/category": "^3.2.0 || ^4.0.0",
     "spryker/gui": "^3.4.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",

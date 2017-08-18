@@ -6,8 +6,8 @@
 
 namespace SprykerTest\Zed\Discount\Business\QueryString\Comparator;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
-use PHPUnit_Framework_TestCase;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
  * @group EqualTest
  * Add your own group annotations below this line
  */
-class EqualTest extends PHPUnit_Framework_TestCase
+class EqualTest extends Unit
 {
 
     /**

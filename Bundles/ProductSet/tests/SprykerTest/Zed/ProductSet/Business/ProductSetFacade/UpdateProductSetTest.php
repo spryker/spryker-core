@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductSet\Business\ProductSetFacade;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetDataBuilder;
@@ -28,7 +28,7 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
  *
  * @property \SprykerTest\Zed\ProductSet\ProductSetBusinessTester $tester
  */
-class UpdateProductSetTest extends Test
+class UpdateProductSetTest extends Unit
 {
 
     /**

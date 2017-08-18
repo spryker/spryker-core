@@ -71,19 +71,23 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         ProductManagementToStoreInterface $store,
         ProductStockHelperInterface $productStockHelper
     ) {
-        $this->categoryQueryContainer = $categoryQueryContainer;
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
-        $this->productQueryContainer = $productQueryContainer;
-        $this->stockQueryContainer = $stockQueryContainer;
-        $this->productImageFacade = $productImageFacade;
-        $this->localeProvider = $localeProvider;
-        $this->priceFacade = $priceFacade;
-        $this->productFacade = $productFacade;
-        $this->currentLocale = $currentLocale;
+        parent::__construct(
+            $categoryQueryContainer,
+            $productManagementQueryContainer,
+            $productQueryContainer,
+            $stockQueryContainer,
+            $priceFacade,
+            $productFacade,
+            $productImageFacade,
+            $localeProvider,
+            $currentLocale,
+            $attributeCollection,
+            $taxCollection,
+            $imageUrlPrefix,
+            $store
+        );
+
         $this->attributeTransferCollection = new Collection($attributeCollection);
-        $this->taxCollection = $taxCollection;
-        $this->imageUrlPrefix = $imageUrlPrefix;
-        $this->store = $store;
         $this->productStockHelper = $productStockHelper;
     }
 

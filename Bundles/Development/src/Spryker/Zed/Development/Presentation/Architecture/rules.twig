@@ -1,0 +1,27 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block action %}
+    {{ backActionButton('/development/architecture', 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Architecture sniffer rules' } %}
+        {% block widget_content %}
+            <div class="spy-layout sparse">
+                {% for name, rules in groupedRules %}
+                    <h3>{{ name }}</h3>
+                    <ul>
+                    {% for rule in rules %}
+                        <li>
+                            <span class="label">{{ rule.priority }}</span> <b>{{ rule.name }}</b>
+                            <p>{{ rule.description }}</p>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

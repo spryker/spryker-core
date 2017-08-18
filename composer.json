@@ -3,10 +3,10 @@
   "description": "Spryker Framework",
   "license": "proprietary",
   "require":{
-    "phpdocumentor/graphviz": "~1.0.4",
-    "paragonie/random_compat": "~1.2.1",
+    "phpdocumentor/graphviz": "^1.0.4",
+    "paragonie/random_compat": "^2.0.10",
     "everon/criteria-builder": "^1.1.0",
-    "moneyphp/money": "~3.0.0",
+    "moneyphp/money": "^3.0.0",
     "fzaninotto/faker": "^1.6"
   },
   "require-dev": {
@@ -108,7 +108,6 @@
     "spryker/oms-discount-connector": "*",
     "spryker/payment": "*",
     "spryker/payolution": "*",
-    "spryker/payone": "*",
     "spryker/pimple": "*",
     "spryker/price": "*",
     "spryker/price-cart-connector": "*",
@@ -128,6 +127,7 @@
     "spryker/product-label-discount-connector": "*",
     "spryker/product-label-gui": "*",
     "spryker/product-management": "*",
+    "spryker/product-new": "*",
     "spryker/product-option": "*",
     "spryker/product-option-cart-connector": "*",
     "spryker/product-option-discount-connector": "*",
@@ -144,6 +144,7 @@
     "spryker/refund": "*",
     "spryker/sales": "*",
     "spryker/sales-aggregator": "*",
+    "spryker/sales-product-connector": "*",
     "spryker/sales-split": "*",
     "spryker/search": "*",
     "spryker/sequence-number": "*",

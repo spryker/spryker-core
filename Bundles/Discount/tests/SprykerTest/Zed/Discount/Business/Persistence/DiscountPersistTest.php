@@ -6,6 +6,7 @@
 
 namespace SprykerTest\Zed\Discount\Business\Persistence;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -14,7 +15,6 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use PHPUnit_Framework_TestCase;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
@@ -31,7 +31,7 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  * @group DiscountPersistTest
  * Add your own group annotations below this line
  */
-class DiscountPersistTest extends PHPUnit_Framework_TestCase
+class DiscountPersistTest extends Unit
 {
 
     /**

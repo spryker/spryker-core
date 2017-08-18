@@ -57,6 +57,7 @@
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
         <property name="restorePasswordKey" type="string" />
+        <property name="restorePasswordLink" type="string" />
         <property name="restorePasswordDate" type="string" />
         <property name="registrationKey" type="string" />
         <property name="confirmationLink" type="string" />
@@ -77,6 +78,11 @@
         <property name="customerTransfer" type="Customer" />
         <property name="isSuccess" type="bool" />
         <property name="errors" type="CustomerError[]" singular="error" />
+    </transfer>
+
+    <transfer name="Order">
+        <property name="fkCustomer" type="int" />
+        <property name="customer" type="Customer" />
     </transfer>
 
 </transfers>

@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Zend\Filter\Word\DashToCamelCase;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
@@ -18,6 +20,7 @@ class DependencyTreeDependencyViolationConsole extends Console
 {
 
     const COMMAND_NAME = 'dev:dependency:find-violations';
+    const ARGUMENT_MODULE = 'module';
 
     /**
      * @return void
@@ -29,6 +32,7 @@ class DependencyTreeDependencyViolationConsole extends Console
         $this
             ->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
+            ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run checks for.')
             ->setDescription('Find dependency violations in the dependency tree (Spryker core dev only).');
     }
 
@@ -42,23 +46,21 @@ class DependencyTreeDependencyViolationConsole extends Console
     {
         $this->info('Find dependency violations');
 
-        $dependencyViolations = $this->getFacade()->getDependencyViolations();
+        $modules = $this->getFacade()->getAllBundles();
 
-        $this->info(sprintf('Found %d dependencies', count($dependencyViolations)));
-
-        foreach ($dependencyViolations as $dependencyViolation) {
-            $this->info($dependencyViolation);
+        $module = $input->getArgument(static::ARGUMENT_MODULE);
+        if ($module) {
+            $filter = new DashToCamelCase();
+            $modules = [ucfirst($filter->filter($module))];
         }
 
-        $this->printLineSeparator();
-
-        $bundles = $this->getFacade()->getAllBundles();
-        $this->info(sprintf('Checking all %d bundles for dependency issues', count($bundles)));
+        $message = sprintf('Checking %d %s for dependency issues.', count($modules), (count($modules) === 1) ? 'Module (' . $modules[0] . ')' : 'Modules');
+        $this->info($message);
 
         $count = 0;
-        foreach ($bundles as $bundle) {
+        foreach ($modules as $module) {
             $violations = [];
-            $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundle);
+            $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($module);
             $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
             foreach ($composerDependencies as $composerDependency) {
 
@@ -106,7 +108,7 @@ class DependencyTreeDependencyViolationConsole extends Console
                 continue;
             }
 
-            $this->info($bundle . ':');
+            $this->info($module . ':');
             foreach ($violations as $violation) {
                 $this->warning(' - ' . $violation);
             }
@@ -114,7 +116,7 @@ class DependencyTreeDependencyViolationConsole extends Console
             $count += count($violations);
         }
 
-        $this->info(sprintf('%d bundle dependency issues found', $count));
+        $this->info(sprintf('%d module dependency issues found', $count));
 
         return $count > 0 ? static::CODE_ERROR : static::CODE_SUCCESS;
     }

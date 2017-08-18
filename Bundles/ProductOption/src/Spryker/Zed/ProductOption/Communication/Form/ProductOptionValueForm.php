@@ -87,8 +87,8 @@ class ProductOptionValueForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALUE, 'text', [
-            'label' => 'Option name translation key *',
-            'required' => false,
+            'label' => 'Option name translation key',
+            'required' => true,
             'constraints' => [
                 new NotBlank(),
                 new Regex([
@@ -112,8 +112,8 @@ class ProductOptionValueForm extends AbstractType
     protected function addSkuField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_SKU, 'text', [
-            'label' => 'Sku *',
-            'required' => false,
+            'label' => 'Sku',
+            'required' => true,
             'constraints' => [
                 new NotBlank(),
                 new UniqueOptionValueSku([
@@ -133,8 +133,8 @@ class ProductOptionValueForm extends AbstractType
     protected function addPrice(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_PRICE, 'text', [
-            'label' => 'Price *',
-            'required' => false,
+            'label' => 'Price',
+            'required' => true,
             'constraints' => [
                 new NotBlank(),
                 new Regex([

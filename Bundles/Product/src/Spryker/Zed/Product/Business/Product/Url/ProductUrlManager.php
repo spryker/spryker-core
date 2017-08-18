@@ -40,7 +40,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\\UrlProductUrlGeneratorInterface
+     * @var \Spryker\Zed\Product\Business\Product\Url\ProductUrlGeneratorInterface
      */
     protected $urlGenerator;
 

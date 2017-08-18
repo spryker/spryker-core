@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Glossary\Communication\Controller;
 
 use Generated\Shared\DataBuilder\KeyTranslationBuilder;
-use SprykerTest\Zed\Glossary\CommunicationTester;
+use SprykerTest\Zed\Glossary\GlossaryCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -24,11 +24,11 @@ class AddControllerCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Glossary\CommunicationTester $i
+     * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
      * @return void
      */
-    public function addTranslation(CommunicationTester $i)
+    public function addTranslation(GlossaryCommunicationTester $i)
     {
         $keyTranslationTransfer = (new KeyTranslationBuilder())->build();
         $i->amOnPage('/glossary/add');
@@ -45,11 +45,11 @@ class AddControllerCest
     }
 
     /**
-     * @param \SprykerTest\Zed\Glossary\CommunicationTester $i
+     * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
      * @return void
      */
-    public function addTranslationWithoutTranslations(CommunicationTester $i)
+    public function addTranslationWithoutTranslations(GlossaryCommunicationTester $i)
     {
         $keyTranslationTransfer = (new KeyTranslationBuilder())->build();
         $i->amOnPage('/glossary/add');

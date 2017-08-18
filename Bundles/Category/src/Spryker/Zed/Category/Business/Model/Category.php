@@ -36,6 +36,11 @@ class Category
     protected $categoryAttribute;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface
+     */
+    protected $categoryExtraParents;
+
+    /**
      * @var \Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface
      */
     protected $categoryUrl;
@@ -126,6 +131,7 @@ class Category
         $this->categoryAttribute->create($categoryTransfer);
         $this->categoryUrl->create($categoryTransfer);
         $this->categoryExtraParents->create($categoryTransfer);
+        $this->runUpdatePlugins($categoryTransfer);
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
 
@@ -143,13 +149,13 @@ class Category
 
         $this->triggerEvent(CategoryEvents::CATEGORY_BEFORE_UPDATE, $categoryTransfer);
 
+        $this->runUpdatePlugins($categoryTransfer);
+
         $this->category->update($categoryTransfer);
         $this->categoryNode->update($categoryTransfer);
         $this->categoryAttribute->update($categoryTransfer);
         $this->categoryUrl->update($categoryTransfer);
         $this->categoryExtraParents->update($categoryTransfer);
-
-        $this->runUpdatePlugins($categoryTransfer);
 
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
 

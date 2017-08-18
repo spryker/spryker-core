@@ -182,9 +182,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsGlossaryAttributesFormType()
     {
-        return new CmsGlossaryAttributesFormType(
-            $this->createCmsGlossaryTranslationFormType()
-        );
+        return new CmsGlossaryAttributesFormType();
     }
 
     /**

@@ -162,7 +162,7 @@ class ImageSetForm extends AbstractSubForm
     {
         $builder
             ->add(self::PRODUCT_IMAGES, 'collection', [
-                'type' => new ImageCollectionForm(self::PRODUCT_IMAGES),
+                'type' => new ImageCollectionForm(),
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,

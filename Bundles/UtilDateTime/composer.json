@@ -2,6 +2,12 @@
   "name": "spryker/util-date-time",
   "description": "UtilDateTime module",
   "license": "proprietary",
+  "require-dev": {
+    "spryker/config": "*",
+    "spryker/kernel": "*",
+    "spryker/silex": "*",
+    "spryker/twig": "*"
+  },
   "autoload": {
     "psr-0": {
       "Spryker": "src/"

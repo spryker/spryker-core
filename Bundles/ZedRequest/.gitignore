@@ -25,4 +25,5 @@
 .sass-cache
 /node_modules/
 /tests/_output/*
+/tests/_data/Fixtures
 !/tests/_output/.gitkeep

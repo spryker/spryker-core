@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\Communication\Controller;
 
-use SprykerTest\Zed\Discount\CommunicationTester;
+use SprykerTest\Zed\Discount\DiscountCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -23,22 +23,22 @@ class IndexControllerCest
 {
 
     /**
-     * @param \SprykerTest\Zed\Discount\CommunicationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountCommunicationTester $i
      *
      * @return void
      */
-    public function testICanOpenDiscountPage(CommunicationTester $i)
+    public function testICanOpenDiscountPage(DiscountCommunicationTester $i)
     {
         $i->amOnPage('/discount/index/list');
         $i->seeResponseCodeIs(200);
     }
 
     /**
-     * @param \SprykerTest\Zed\Discount\CommunicationTester $i
+     * @param \SprykerTest\Zed\Discount\DiscountCommunicationTester $i
      *
      * @return void
      */
-    public function testICanGoFromOverviewPageToCreatePage(CommunicationTester $i)
+    public function testICanGoFromOverviewPageToCreatePage(DiscountCommunicationTester $i)
     {
         $i->amOnPage('/discount/index/list');
         $i->click('Create new Discount');

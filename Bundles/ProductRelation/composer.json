@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/application": "^3.0.0",
-    "spryker/category": "^3.0.0",
+    "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
@@ -27,7 +27,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/testify": "*"
   },
   "suggest": {

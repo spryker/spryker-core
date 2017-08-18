@@ -201,7 +201,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      */
     protected function createProductAbstractTransfer(array $data)
     {
-        $productAbstractTransfer = (new ProductAbstractTransfer())->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->fromArray($data, true)
+            ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
             ->setSku($this->utilTextService->generateSlug($data[ProductFormAdd::FIELD_SKU]))
             ->setIdTaxSet($data[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);
 

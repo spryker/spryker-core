@@ -65,14 +65,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ZedRequest\Business\Model\Repeater
-     */
-    public function getTransferObjectRepeater()
-    {
-        return $this->getProvidedDependency(SetupDependencyProvider::PLUGIN_TRANSFER_OBJECT_REPEATER);
-    }
-
-    /**
      * @deprecated Hook in commands manually on project level
      *
      * @return \Symfony\Component\Console\Command\Command[]

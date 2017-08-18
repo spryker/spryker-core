@@ -21,10 +21,10 @@ interface ZedRequestFacadeInterface
      *
      * @api
      *
-     * @param string|null $mvc
+     * @param string|null $bundleControllerAction
      *
      * @return string
      */
-    public function getRepeatData($mvc);
+    public function getRepeatData($bundleControllerAction);
 
 }

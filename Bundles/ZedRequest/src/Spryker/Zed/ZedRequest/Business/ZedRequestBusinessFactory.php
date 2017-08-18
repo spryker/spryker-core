@@ -10,6 +10,9 @@ namespace Spryker\Zed\ZedRequest\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ZedRequest\Business\Model\Repeater;
 
+/**
+ * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()
+ */
 class ZedRequestBusinessFactory extends AbstractBusinessFactory
 {
 

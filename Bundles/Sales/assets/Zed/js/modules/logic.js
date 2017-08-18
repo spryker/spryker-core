@@ -83,6 +83,18 @@ $(document).ready(function() {
         return true;
     });
 
+    $('.more-attributes').click(function(e){
+        e.preventDefault();
+        var idProductItem = $(this).data('id');
+        var $attributes = $('#attribute_details_' + idProductItem);
+        var $button = $('#attribute-details-btn-' + idProductItem);
+        var isHidden = $attributes.hasClass('hidden');
+
+        $attributes.toggleClass('hidden', !isHidden);
+        $button.toggleClass('is-hidden', !isHidden);
+        $button.toggleClass('is-shown', isHidden);
+    });
+
     $('.more-history').click(function(e){
         e.preventDefault();
         var idProductItem = $(this).data('id');

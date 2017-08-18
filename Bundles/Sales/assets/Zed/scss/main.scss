@@ -116,3 +116,45 @@ $chat-box-background-color: #f0f0f0;
 .subtotal-row, .grandTotal-row {
   background-color: #e7eaec;
 }
+
+img.product-image {
+  width: 150px;
+  border: 1px solid #e7eaec;
+}
+
+span.discounted {
+  text-decoration: line-through;
+  color: #AAAAAA;
+}
+
+.table > tbody.single-item {
+  border-top: none;
+}
+
+.table > tbody.product-bundle {
+  border-bottom: 1px;
+  border-top: none;
+}
+
+.state-history {
+  width: 300px;
+}
+
+.sku {
+  color: #AAAAAA;
+  font-size: 10px;
+}
+
+.variant-details {
+  margin-top: 10px;
+
+  h3 {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+}
+
+.tax-info {
+  color: #AAAAAA;
+  font-size: 10px;
+}

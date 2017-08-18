@@ -264,7 +264,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      * @param int $grossPrice
      * @param float $taxRate
      *
-     * @return int
+     * @return float
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
     {

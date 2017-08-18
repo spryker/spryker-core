@@ -1,7 +1,21 @@
 namespace: SprykerTest\Shared\Application
-actor: Tester
+
 paths:
     tests: .
     data: ../../../_data
     support: _support
     log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    shared:
+        path: .
+        class_name: ApplicationSharedTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment

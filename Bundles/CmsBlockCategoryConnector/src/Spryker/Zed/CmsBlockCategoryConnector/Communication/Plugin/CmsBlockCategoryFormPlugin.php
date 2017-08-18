@@ -26,7 +26,7 @@ class CmsBlockCategoryFormPlugin extends AbstractPlugin implements CmsBlockFormP
     public function buildForm(FormBuilderInterface $builder)
     {
         $formType = $this->getFactory()
-            ->createCmsBlockCategoryType();
+            ->createCmsBlockType();
 
         $dataProvider = $this->getFactory()
             ->createCmsBlockCategoryDataProvider();

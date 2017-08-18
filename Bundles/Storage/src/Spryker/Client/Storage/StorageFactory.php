@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage;
 
 use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
@@ -24,7 +25,7 @@ class StorageFactory extends AbstractFactory
     protected static $storageService;
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface
      */
     public function createService()
     {
@@ -50,7 +51,7 @@ class StorageFactory extends AbstractFactory
      */
     protected function createClient()
     {
-        return new Client($this->getConfig());
+        return new Client($this->getConfig(), $this->getPredisClientOptions());
     }
 
     /**
@@ -64,10 +65,53 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Storage\StorageConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     */
+    public function getStorageClientConfig()
+    {
+        return parent::getConfig();
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageClientInterface
+     */
+    protected function getStorageClient()
+    {
+        return $this->getProvidedDependency(StorageDependencyProvider::STORAGE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyFactory
+     */
+    protected function createStorageClientStrategyFactory()
+    {
+        return new StorageCacheStrategyFactory(
+            $this->getStorageClient(),
+            $this->getStorageClientConfig()
+        );
+    }
+
+    /**
+     * @param string $storageCacheStrategy
+     *
+     * @return Cache\StorageCacheStrategyInterface
+     */
+    public function createStorageCacheStrategy($storageCacheStrategy)
+    {
+        return $this
+            ->createStorageClientStrategyFactory()
+            ->createStorageCacheStrategy($storageCacheStrategy);
+    }
+
+    /**
      * @return array
      */
     protected function getConnectionParameters()
     {
+        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION)) {
+            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION);
+        }
+
         $config = [
             'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
             'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
@@ -75,8 +119,9 @@ class StorageFactory extends AbstractFactory
             'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
         ];
 
-        if (Config::hasKey(StorageConstants::STORAGE_REDIS_PASSWORD)) {
-            $config['password'] = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD);
+        $password = Config::get(StorageConstants::STORAGE_REDIS_PASSWORD, false);
+        if ($password !== false) {
+            $config['password'] = $password;
         }
 
         $config['persistent'] = false;
@@ -85,6 +130,18 @@ class StorageFactory extends AbstractFactory
         }
 
         return $config;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    protected function getPredisClientOptions()
+    {
+        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS)) {
+            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS);
+        }
+
+        return null;
     }
 
 }
