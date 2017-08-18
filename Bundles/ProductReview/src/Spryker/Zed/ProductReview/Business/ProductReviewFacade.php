@@ -80,6 +80,4 @@ class ProductReviewFacade extends AbstractFacade implements ProductReviewFacadeI
             ->deleteProductReview($productReviewTransfer);
     }
 
-    // TODO: Export average reviews to product_abstract for both search & storage. (not sure if data is coming from this facade or the product collector query can be extended somehow)
-
 }

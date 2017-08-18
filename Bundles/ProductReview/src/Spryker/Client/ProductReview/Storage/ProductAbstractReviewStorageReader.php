@@ -17,7 +17,7 @@ class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorage
     /**
      * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
      */
-    protected $storage;
+    protected $storageClient;
 
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
@@ -25,14 +25,14 @@ class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorage
     protected $keyBuilder;
 
     /**
-     * @param \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageInterface $storage
+     * @param \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageInterface $storageClient
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
     public function __construct(
-        ProductReviewToStorageInterface $storage,
+        ProductReviewToStorageInterface $storageClient,
         KeyBuilderInterface $keyBuilder
     ) {
-        $this->storage = $storage;
+        $this->storageClient = $storageClient;
         $this->keyBuilder = $keyBuilder;
     }
 
@@ -45,7 +45,7 @@ class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorage
     public function findProductAbstractReview($idProductAbstract, $localeName)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $localeName);
-        $productAbstractReviewData = $this->storage->get($key);
+        $productAbstractReviewData = $this->storageClient->get($key);
 
         if (!$productAbstractReviewData) {
             return null;
@@ -55,11 +55,11 @@ class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorage
     }
 
     /**
-     * @param $productAbstractReviewData
+     * @param array $productAbstractReviewData
      *
      * @return \Generated\Shared\Transfer\ProductAbstractReviewTransfer
      */
-    protected function mapProductAbstractReviewData($productAbstractReviewData)
+    protected function mapProductAbstractReviewData(array $productAbstractReviewData)
     {
         $productAbstractReviewTransfer = new ProductAbstractReviewTransfer();
         $productAbstractReviewTransfer->fromArray($productAbstractReviewData, true);

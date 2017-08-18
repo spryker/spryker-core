@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewCollector;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToCollectorBridge;
@@ -15,6 +16,8 @@ use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorT
 
 class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
+    const STORE = 'STORE';
 
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
@@ -36,6 +39,7 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
         $this->addProductReviewFacade($container);
         $this->addDataReaderService($container);
         $this->addTouchQueryContainer($container);
+        $this->addStore($container);
 
         return $container;
     }
@@ -97,6 +101,18 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[static::STORE] = function () {
+            return Store::getInstance();
         };
     }
 

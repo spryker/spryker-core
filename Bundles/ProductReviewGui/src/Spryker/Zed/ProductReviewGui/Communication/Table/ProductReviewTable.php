@@ -16,9 +16,12 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductReviewGui\Communication\Controller\EditController;
+use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface;
+use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainer;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface;
 
+// TODO: decrease dependencies
 class ProductReviewTable extends AbstractTable
 {
 
@@ -32,6 +35,7 @@ class ProductReviewTable extends AbstractTable
     const COL_RATING = 'rating';
     const COL_STATUS = 'status';
     const COL_ACTIONS = 'actions';
+    const COL_SHOW_DETAILS = 'show_details';
     const EXTRA_DETAILS = 'details';
 
     /**
@@ -45,13 +49,31 @@ class ProductReviewTable extends AbstractTable
     protected $localeTransfer;
 
     /**
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     */
+    protected $utilDateTimeService;
+
+    /**
+     * @var \Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
      * @param \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface $productReviewGuiQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface $utilDateTimeService
+     * @param \Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface $utilSanitizeService
      */
-    public function __construct(ProductReviewGuiQueryContainerInterface $productReviewGuiQueryContainer, LocaleTransfer $localeTransfer)
-    {
+    public function __construct(
+        ProductReviewGuiQueryContainerInterface $productReviewGuiQueryContainer,
+        LocaleTransfer $localeTransfer,
+        ProductReviewGuiToUtilDateTimeInterface $utilDateTimeService,
+        ProductReviewGuiToUtilSanitizeInterface $utilSanitizeService
+    ) {
         $this->productReviewGuiQueryContainer = $productReviewGuiQueryContainer;
         $this->localeTransfer = $localeTransfer;
+        $this->utilDateTimeService = $utilDateTimeService;
+        $this->utilSanitizeService = $utilSanitizeService;
 
         $this->localeTransfer->requireIdLocale();
     }
@@ -66,6 +88,7 @@ class ProductReviewTable extends AbstractTable
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
         $config->setHeader([
+            static::COL_SHOW_DETAILS => '',
             static::COL_ID_PRODUCT_REVIEW => 'ID',
             static::COL_CREATED => 'Date',
             static::COL_CUSTOMER_NAME => 'Customer',
@@ -77,6 +100,7 @@ class ProductReviewTable extends AbstractTable
         ]);
 
         $config->setRawColumns([
+            static::COL_SHOW_DETAILS,
             static::COL_STATUS,
             static::COL_ACTIONS,
             static::COL_CUSTOMER_NAME,
@@ -140,6 +164,7 @@ class ProductReviewTable extends AbstractTable
             static::COL_RATING => $productReviewEntity->getRating(),
             static::COL_STATUS => $this->getStatusLabel($productReviewEntity->getStatus()),
             static::COL_ACTIONS => $this->createActionButtons($productReviewEntity),
+            static::COL_SHOW_DETAILS => $this->createShowDetailsButton(),
             static::EXTRA_DETAILS => $this->generateDetails($productReviewEntity),
         ];
     }
@@ -165,6 +190,14 @@ class ProductReviewTable extends AbstractTable
         }
 
         return $label;
+    }
+
+    /**
+     * @return string
+     */
+    protected function createShowDetailsButton()
+    {
+        return '<i class="fa fa-chevron-down"></i>';
     }
 
     /**
@@ -255,9 +288,8 @@ class ProductReviewTable extends AbstractTable
      */
     protected function generateDetails(SpyProductReview $productReviewEntity)
     {
-        // TODO: use UtilSanitizeService::escapeHtml() instead htmlspecialchars
         return sprintf(
-            '<table>
+            '<table class="details">
                 <tr>
                     <th>Summary</th>
                     <td>%s</td>
@@ -267,8 +299,8 @@ class ProductReviewTable extends AbstractTable
                     <td>%s</td>
                 </tr>
             </table>',
-            htmlspecialchars($productReviewEntity->getSummary()),
-            htmlspecialchars($productReviewEntity->getDescription())
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getSummary()),
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getDescription())
         );
     }
 
@@ -312,8 +344,7 @@ class ProductReviewTable extends AbstractTable
      */
     protected function getCreatedAt(SpyProductReview $productReviewEntity)
     {
-        // TODO: use UtilDateTimeServiceInterface::formatDateTime() instead of formatting locally
-        return $productReviewEntity->getCreatedAt()->format('d/m/Y H:i');
+        return $this->utilDateTimeService->formatDateTime($productReviewEntity->getCreatedAt());
     }
 
 }

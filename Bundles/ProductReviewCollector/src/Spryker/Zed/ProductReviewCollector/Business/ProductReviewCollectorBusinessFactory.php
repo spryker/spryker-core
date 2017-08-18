@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductReviewCollector\Business;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductReviewCollector\Business\Collector\Search\ProductReviewCollector as ProductReviewSearchCollector;
 use Spryker\Zed\ProductReviewCollector\Business\Collector\Storage\ProductAbstractReviewCollector as ProductAbstractReviewStorageCollector;
@@ -73,7 +72,7 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function getCurrentStore()
     {
-        return Store::getInstance(); // TODO: move to dependency provider
+        return $this->getProvidedDependency(ProductReviewCollectorDependencyProvider::STORE);
     }
 
     /**

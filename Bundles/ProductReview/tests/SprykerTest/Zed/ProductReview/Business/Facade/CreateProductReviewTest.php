@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\DataBuilder\ProductReviewBuilder;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 
@@ -36,15 +35,7 @@ class CreateProductReviewTest extends Test
     public function testCreateProductReviewPersistsToDatabase()
     {
         // Arrange
-        // TODO: create ProductReviewDataHelper with having product, customer and locale assigned to it (when not seeded) if possible
-        $productAbstractTransfer = $this->tester->haveProductAbstract();
-        $customerTransfer = $this->tester->haveCustomer();
-        $localeTransfer = $this->tester->haveLocale();
-        $productReviewTransfer = (new ProductReviewBuilder([
-            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
-            ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
-            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
-        ]))->build();
+        $productReviewTransfer = $this->tester->haveProductReview();
 
         // Act
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
@@ -64,15 +55,9 @@ class CreateProductReviewTest extends Test
     public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus($inputStatus)
     {
         // Arrange
-        $productAbstractTransfer = $this->tester->haveProductAbstract();
-        $customerTransfer = $this->tester->haveCustomer();
-        $localeTransfer = $this->tester->haveLocale();
-        $productReviewTransfer = (new ProductReviewBuilder([
-            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
-            ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
-            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
+        $productReviewTransfer = $this->tester->haveProductReview([
             ProductReviewTransfer::STATUS => $inputStatus,
-        ]))->build();
+        ]);
 
         // Act
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);

@@ -12,12 +12,16 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewGui\Dependency\Facade\ProductReviewGuiToLocaleBridge;
 use Spryker\Zed\ProductReviewGui\Dependency\Facade\ProductReviewGuiToProductReviewBridge;
 use Spryker\Zed\ProductReviewGui\Dependency\QueryContainer\ProductReviewGuiToProductReviewBridge as ProductReviewGuiToProductReviewQueryContainerBridge;
+use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeBridge as ServiceProductReviewGuiToDateTimeBridge;
+use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeBridge as ServiceProductReviewGuiToUtilSanitizeBridge;
 
 class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_PRODUCT_REVIEW = 'FACADE_PRODUCT_REVIEW';
     const FACADE_LOCALE = 'FACADE_LOCALE';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
 
@@ -30,8 +34,34 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $this->provideProductReviewFacade($container);
         $this->provideLocaleFacade($container);
+        $this->provideUtilSanitizeService($container);
+        $this->provideUtilDateTimeService($container);
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideUtilSanitizeService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new ServiceProductReviewGuiToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function provideUtilDateTimeService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+            return new ServiceProductReviewGuiToDateTimeBridge($container->getLocator()->utilDateTime()->service());
+        };
     }
 
     /**

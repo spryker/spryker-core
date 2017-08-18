@@ -26,7 +26,23 @@ class ProductReviewGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductReviewTable(LocaleTransfer $localeTransfer)
     {
-        return new ProductReviewTable($this->getQueryContainer(), $localeTransfer);
+        return new ProductReviewTable($this->getQueryContainer(), $localeTransfer, $this->getUtilDateTimeService(), $this->getUtilSanitizeServiceInterface());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface
+     */
+    protected function getUtilDateTimeService()
+    {
+        return $this->getProvidedDependency(ProductReviewGuiDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface
+     */
+    protected function getUtilSanitizeServiceInterface()
+    {
+        return $this->getProvidedDependency(ProductReviewGuiDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 
     /**

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductReview\Business\Model;
 
-use Exception;
 use Generated\Shared\Transfer\ProductReviewTransfer;
+use Spryker\Zed\ProductReview\Business\Exception\MissingProductReviewException;
 use Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface;
 
 class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
@@ -30,7 +30,7 @@ class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\ProductReview\Business\Exception\MissingProductReviewException
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReview
      */
@@ -43,7 +43,12 @@ class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
             ->findOne();
 
         if (!$productReviewEntity) {
-            throw new Exception('Invalid product review'); // TODO: fix exception
+            throw new MissingProductReviewException(
+                sprintf(
+                    'Product review with id %d could not be found',
+                    $productReviewTransfer->getIdProductReview()
+                )
+            );
         }
 
         return $productReviewEntity;

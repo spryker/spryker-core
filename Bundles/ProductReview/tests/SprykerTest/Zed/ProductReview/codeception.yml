@@ -28,3 +28,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Shared\ProductReview\Helper\ProductReviewDataHelper

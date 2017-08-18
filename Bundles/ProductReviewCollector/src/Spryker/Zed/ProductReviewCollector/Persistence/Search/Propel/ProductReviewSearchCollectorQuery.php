@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel;
 
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -32,8 +33,8 @@ class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
     {
         $this->touchQuery
             ->addJoin(
-                SpyTouchTableMap::COL_ITEM_ID,
-                SpyProductReviewTableMap::COL_ID_PRODUCT_REVIEW,
+                [SpyTouchTableMap::COL_ITEM_ID, SpyLocaleTableMap::COL_ID_LOCALE, SpyLocaleTableMap::COL_LOCALE_NAME],
+                [SpyProductReviewTableMap::COL_ID_PRODUCT_REVIEW, SpyProductReviewTableMap::COL_FK_LOCALE, $this->getLocale()],
                 Criteria::INNER_JOIN
             );
 

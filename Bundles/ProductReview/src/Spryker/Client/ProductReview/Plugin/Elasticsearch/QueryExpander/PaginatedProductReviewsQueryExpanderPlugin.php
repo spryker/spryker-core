@@ -35,15 +35,15 @@ class PaginatedProductReviewsQueryExpanderPlugin extends AbstractPlugin implemen
 
     /**
      * @param \Elastica\Query $query
-     * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfig
+     * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfigBuilder
      * @param array $requestParameters
      *
      * @return void
      */
-    protected function addPaginationToQuery(Query $query, PaginationConfigBuilderInterface $paginationConfig, array $requestParameters)
+    protected function addPaginationToQuery(Query $query, PaginationConfigBuilderInterface $paginationConfigBuilder, array $requestParameters)
     {
-        $currentPage = $paginationConfig->getCurrentPage($requestParameters);
-        $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
+        $currentPage = $paginationConfigBuilder->getCurrentPage($requestParameters);
+        $itemsPerPage = $paginationConfigBuilder->getCurrentItemsPerPage($requestParameters);
 
         $query->setFrom(($currentPage - 1) * $itemsPerPage);
         $query->setSize($itemsPerPage);

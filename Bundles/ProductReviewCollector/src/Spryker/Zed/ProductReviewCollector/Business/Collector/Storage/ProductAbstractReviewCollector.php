@@ -32,9 +32,7 @@ class ProductAbstractReviewCollector extends AbstractStoragePropelCollector
     {
         $productAbstractReviewTransfer = $this->mapDataToTransfer($collectItemData);
 
-        $result = $productAbstractReviewTransfer->modifiedToArray();
-
-        return $result;
+        return $productAbstractReviewTransfer->modifiedToArray();
     }
 
     /**

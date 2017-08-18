@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\DataBuilder\ProductReviewBuilder;
-use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
@@ -36,14 +34,7 @@ class DeleteProductReviewTest extends Test
     public function testDeleteProductReviewRemovesEntityFromDatabase()
     {
         // Arrange
-        $productAbstractTransfer = $this->tester->haveProductAbstract();
-        $customerTransfer = $this->tester->haveCustomer();
-        $localeTransfer = $this->tester->haveLocale();
-        $productReviewTransfer = (new ProductReviewBuilder([
-            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
-            ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
-            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
-        ]))->build();
+        $productReviewTransfer = $this->tester->haveProductReview();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
 
         // Act
@@ -60,14 +51,7 @@ class DeleteProductReviewTest extends Test
     public function testDeleteProductReviewTouchesProductReviewSearchResource()
     {
         // Arrange
-        $productAbstractTransfer = $this->tester->haveProductAbstract();
-        $customerTransfer = $this->tester->haveCustomer();
-        $localeTransfer = $this->tester->haveLocale();
-        $productReviewTransfer = (new ProductReviewBuilder([
-            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
-            ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
-            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
-        ]))->build();
+        $productReviewTransfer = $this->tester->haveProductReview();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
 
         // Act

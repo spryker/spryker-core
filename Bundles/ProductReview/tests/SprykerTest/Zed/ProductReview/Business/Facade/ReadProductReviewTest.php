@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
-use Generated\Shared\Transfer\ProductReviewTransfer;
 
 /**
  * Auto-generated group annotations
@@ -51,14 +50,7 @@ class ReadProductReviewTest extends Test
     public function testFindProductReviewFindsExistingEntities()
     {
         // Arrange
-        $productAbstractTransfer = $this->tester->haveProductAbstract();
-        $customerTransfer = $this->tester->haveCustomer();
-        $localeTransfer = $this->tester->haveLocale();
-        $productReviewTransfer = (new ProductReviewBuilder([
-            ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
-            ProductReviewTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
-            ProductReviewTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
-        ]))->build();
+        $productReviewTransfer = $this->tester->haveProductReview();
         $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
 
         // Act

@@ -18,10 +18,6 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
-// TODO: instantiate with config
-// TODO: handle pagination and type filtering (inside this query, instead of query expanders?) -> remove AbstractAypeQueryExpander?
-// TODO: create result formatter
-
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewConfig getFactory()
  */
@@ -60,9 +56,7 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     protected function createSearchQuery()
     {
-        $productReviewTypeFilter = new Type();
-        $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
-
+        $productReviewTypeFilter = $this->createProductReviewTypeFilter();
         $productReviewsFilter = $this->createProductReviewsFilter();
 
         $boolQuery = new BoolQuery();
@@ -101,6 +95,17 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
             ->setSource([ProductReviewIndexMap::SEARCH_RESULT_DATA]);
 
         return $query;
+    }
+
+    /**
+     * @return \Elastica\Query\Type
+     */
+    protected function createProductReviewTypeFilter()
+    {
+        $productReviewTypeFilter = new Type();
+        $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
+
+        return $productReviewTypeFilter;
     }
 
 }
