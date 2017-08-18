@@ -33,6 +33,11 @@ class DiscountForm extends AbstractType
     protected $conditionsForm;
 
     /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[]
+     */
+    protected $formTypeExpanderPlugins = [];
+
+    /**
      * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\GeneralForm $generalForm
      * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\CalculatorForm $calculatorForm
      * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\ConditionsForm $conditionsForm
@@ -58,6 +63,34 @@ class DiscountForm extends AbstractType
         $this->addGeneralSubForm($builder)
             ->addCalculatorSubForm($builder)
             ->addConditionsSubForm($builder);
+
+        $this->executeFormTypeExpanderPlugins($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    protected function executeFormTypeExpanderPlugins(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($this->formTypeExpanderPlugins as $calculatorFormTypeExpanderPlugin) {
+            $builderForType = $builder->get($calculatorFormTypeExpanderPlugin->getFormTypeToExtend());
+            $calculatorFormTypeExpanderPlugin->expandFormType($builderForType, $options);
+        }
+
+        return $builder;
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[] $formTypeExpanderPlugins
+     *
+     * @return void
+     */
+    public function setFormTypeExpanderPlugins(array $formTypeExpanderPlugins)
+    {
+        $this->formTypeExpanderPlugins = $formTypeExpanderPlugins;
     }
 
     /**

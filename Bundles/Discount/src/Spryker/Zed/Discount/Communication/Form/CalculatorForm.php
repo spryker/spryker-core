@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
@@ -18,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -31,6 +33,10 @@ class CalculatorForm extends AbstractType
     const FIELD_AMOUNT = 'amount';
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
+    const FIELD_COLLECTOR_TYPE_CHOICE = 'collector_type_choice';
+    const COLLECTOR_TYPE_QUERY_STRING = 'query-string';
+
+    const OPTION_COLLECTOR_TYPE_CHOICES = 'collector_type_choices';
 
     /**
      * @var \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider
@@ -80,6 +86,7 @@ class CalculatorForm extends AbstractType
     {
         $this->addCalculatorType($builder)
             ->addAmountField($builder)
+            ->addDiscountCollectorTypeSelector($builder)
             ->addCollectorQueryString($builder);
 
         $builder->addModelTransformer($this->calculatorAmountTransformer);
@@ -91,6 +98,20 @@ class CalculatorForm extends AbstractType
                     $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
                 }
             );
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                return ['Default', $form->getData()->getCollectorType()];
+            },
+        ]);
     }
 
     /**
@@ -151,12 +172,32 @@ class CalculatorForm extends AbstractType
      *
      * @return $this
      */
+    protected function addDiscountCollectorTypeSelector(FormBuilderInterface $builder)
+    {
+        $builder->add(DiscountCalculatorTransfer::COLLECTOR_TYPE, 'choice', [
+            'expanded' => true,
+            'multiple' => false,
+            'label' => 'Discount collection type',
+            'choices' => $this->calculatorFormDataProvider->getOptions()[static::OPTION_COLLECTOR_TYPE_CHOICES],
+            'attr' => [
+                'class' => 'inline-radio',
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
     protected function addCalculatorType(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
             'label' => 'Calculator type',
             'placeholder' => 'Select one',
-            'choices' => $this->calculatorFormDataProvider->getData()[self::FIELD_CALCULATOR_PLUGIN],
+            'choices' => $this->calculatorFormDataProvider->getData()[static::FIELD_CALCULATOR_PLUGIN],
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -178,10 +219,11 @@ class CalculatorForm extends AbstractType
         $builder->add(self::FIELD_COLLECTOR_QUERY_STRING, 'textarea', [
             'label' => $label,
             'constraints' => [
-                new NotBlank(),
+                new NotBlank(['groups' => static::COLLECTOR_TYPE_QUERY_STRING]),
                 new QueryString([
                     QueryString::OPTION_DISCOUNT_FACADE => $this->discountFacade,
                     QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_COLLECTOR,
+                    'groups' => static::COLLECTOR_TYPE_QUERY_STRING,
                 ]),
             ],
             'attr' => [

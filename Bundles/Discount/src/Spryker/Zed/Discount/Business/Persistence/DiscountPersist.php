@@ -29,6 +29,16 @@ class DiscountPersist implements DiscountPersistInterface
     protected $discountQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostSavePluginInterface[]
+     */
+    protected $discountPostSavePlugins = [];
+
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
+     */
+    protected $discountPostUpdatePlugins = [];
+
+    /**
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface $voucherEngine
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
@@ -55,6 +65,10 @@ class DiscountPersist implements DiscountPersistInterface
         }
 
         $discountEntity->save();
+
+        $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
+
+        $this->executePostSavePlugins($discountConfiguratorTransfer);
 
         return $discountEntity->getIdDiscount();
     }
@@ -93,6 +107,8 @@ class DiscountPersist implements DiscountPersistInterface
         }
 
         $affectedRows = $discountEntity->save();
+
+        $this->executePostUpdatePlugins($discountConfiguratorTransfer);
 
         return $affectedRows > 0;
     }
@@ -241,6 +257,53 @@ class DiscountPersist implements DiscountPersistInterface
     protected function createVoucherPoolEntity()
     {
         return new SpyDiscountVoucherPool();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    protected function executePostSavePlugins(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    {
+        foreach ($this->discountPostSavePlugins as $discountPostSavePlugin) {
+            $discountConfiguratorTransfer = $discountPostSavePlugin->postSave($discountConfiguratorTransfer);
+        }
+
+        return $discountConfiguratorTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    protected function executePostUpdatePlugins(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    {
+        foreach ($this->discountPostUpdatePlugins as $discountPostUpdatePlugin) {
+            $discountConfiguratorTransfer = $discountPostUpdatePlugin->postUpdate($discountConfiguratorTransfer);
+        }
+        return $discountConfiguratorTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostSavePluginInterface[] $discountPostSavePlugins
+     *
+     * @return void
+     */
+    public function setDiscountPostSavePlugins(array $discountPostSavePlugins)
+    {
+        $this->discountPostSavePlugins = $discountPostSavePlugins;
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[] $discountPostUpdatePlugins
+     *
+     * @return void
+     */
+    public function setDiscountPostUpdatePlugins(array $discountPostUpdatePlugins)
+    {
+        $this->discountPostUpdatePlugins = $discountPostUpdatePlugins;
     }
 
 }

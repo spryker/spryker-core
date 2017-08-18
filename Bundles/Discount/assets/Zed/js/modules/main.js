@@ -28,7 +28,12 @@ $(document).ready(function() {
 
     $('#create-discount-button').on('click', function(element) {
         element.preventDefault();
-        sqlCalculationBuilder.saveQuery();
+
+        var isQueryStringCollectorSelected = $('#discount_discountCalculator_collectorType_0').is(":checked");
+        if (isQueryStringCollectorSelected) {
+            sqlCalculationBuilder.saveQuery();
+        }
+
         sqlConditionBuilder.saveQuery();
 
         $('#discount-form').submit();
@@ -63,5 +68,20 @@ $(document).ready(function() {
         onClose: function(selectedDate) {
             $('#discount_discountGeneral_valid_from').datepicker('option', 'maxDate', selectedDate);
         }
+    });
+
+    $('#discount_discountCalculator_collectorType input').each(function(index, element) {
+        $('#collector-type-' + $(element).val()).hide();
+        if ($(element).is(":checked")) {
+            $('#collector-type-' + $(element).val()).show();
+        }
+    });
+
+    $('#discount_discountCalculator_collectorType input').on('click', function(event) {
+          $('#discount_discountCalculator_collectorType input').each(function(index, element) {
+               $('#collector-type-' + $(element).val()).hide();
+          });
+
+          $('#collector-type-' + $(event.target).val()).show();
     });
 });

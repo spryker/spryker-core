@@ -54,6 +54,11 @@ class Calculator implements CalculatorInterface
     protected $distributor;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolverInterface|null
+     */
+    protected $collectorStrategyResolver;
+
+    /**
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $collectorBuilder
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
@@ -96,6 +101,7 @@ class Calculator implements CalculatorInterface
     protected function calculateDiscountAmount(array $discounts, QuoteTransfer $quoteTransfer)
     {
         $collectedDiscounts = [];
+        $quoteTransfer->setPromotionItems(new ArrayObject()); //@todo create calculation plugin to reset it.
         foreach ($discounts as $discountTransfer) {
             $discountableItems = $this->collectItems($quoteTransfer, $discountTransfer);
 
@@ -202,6 +208,11 @@ class Calculator implements CalculatorInterface
      */
     protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
+        $alternativeCollectorStrategyPlugin = $this->resolverCollectorPluginStrategy($quoteTransfer, $discountTransfer);
+        if ($alternativeCollectorStrategyPlugin) {
+            return $alternativeCollectorStrategyPlugin->collect($discountTransfer, $quoteTransfer);
+        }
+
         try {
             $collectorQueryString = $discountTransfer->getCollectorQueryString();
 
@@ -253,6 +264,31 @@ class Calculator implements CalculatorInterface
         $calculatedDiscounts->setDiscountableItems(new ArrayObject($discountableItems));
 
         return $calculatedDiscounts;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface|null
+     */
+    protected function resolverCollectorPluginStrategy(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
+    {
+        if (!$this->collectorStrategyResolver) {
+            return null;
+        }
+
+        return $this->collectorStrategyResolver->resolveCollector($discountTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolverInterface $collectorStrategyResolver
+     *
+     * @return void
+     */
+    public function setCollectorStrategyResolver(CollectorStrategyResolverInterface $collectorStrategyResolver)
+    {
+        $this->collectorStrategyResolver = $collectorStrategyResolver;
     }
 
 }

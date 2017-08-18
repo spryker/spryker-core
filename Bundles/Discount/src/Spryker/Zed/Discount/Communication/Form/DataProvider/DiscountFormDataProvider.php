@@ -18,20 +18,21 @@ class DiscountFormDataProvider
     /**
      * @param int $idDiscount
      *
-     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer|null
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
      */
     public function getData($idDiscount)
     {
-        $discountConfiguratorTransfer = null;
-        if (!$idDiscount) {
-            $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
-
-            $discountGeneralTransfer = $this->createDiscountGeneralTransferDefaults();
-            $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
-
-            $calculatedDiscountTransfer = $this->createDiscountCalculatorTransfer();
-            $discountConfiguratorTransfer->setDiscountCalculator($calculatedDiscountTransfer);
+        if ($idDiscount) {
+            return null;
         }
+
+        $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
+
+        $discountGeneralTransfer = $this->createDiscountGeneralTransferDefaults();
+        $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
+
+        $calculatedDiscountTransfer = $this->createDiscountCalculatorTransfer();
+        $discountConfiguratorTransfer->setDiscountCalculator($calculatedDiscountTransfer);
 
         return $discountConfiguratorTransfer;
     }

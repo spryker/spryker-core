@@ -23,6 +23,11 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected $discountQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[]
+     */
+    protected $discountConfigurationExpanderPlugins = [];
+
+    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
@@ -54,6 +59,8 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
 
         $this->hydrateDiscountVoucher($idDiscount, $discountEntity, $discountConfigurator);
 
+        $discountConfigurator = $this->executeDiscountConfigurationExpanderPlugins($discountConfigurator);
+
         return $discountConfigurator;
     }
 
@@ -82,6 +89,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     {
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->fromArray($discountEntity->toArray(), true);
+        $discountCalculatorTransfer->setCollectorType('query-string');
 
         return $discountCalculatorTransfer;
     }
@@ -125,6 +133,32 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected function createDiscountConfiguratorTransfer()
     {
         return new DiscountConfiguratorTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    protected function executeDiscountConfigurationExpanderPlugins(
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer
+    ) {
+
+        foreach ($this->discountConfigurationExpanderPlugins as $discountConfigurationExpanderPlugin) {
+            $discountConfiguratorTransfer = $discountConfigurationExpanderPlugin->expand($discountConfiguratorTransfer);
+        }
+
+        return $discountConfiguratorTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[] $discountConfigurationExpanderPlugins
+     *
+     * @return void
+     */
+    public function setDiscountConfigurationExpanderPlugins(array $discountConfigurationExpanderPlugins)
+    {
+        $this->discountConfigurationExpanderPlugins = $discountConfigurationExpanderPlugins;
     }
 
 }

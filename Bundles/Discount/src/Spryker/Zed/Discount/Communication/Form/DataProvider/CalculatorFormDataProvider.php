@@ -8,21 +8,34 @@
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
+use Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface;
 
 class CalculatorFormDataProvider
 {
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins;
 
     /**
-     * @param array $calculatorPlugins
+     * @var array
+     */
+    protected $options = [];
+
+    /**
+     * @var array
+     */
+    protected $data = [];
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
     public function __construct(array $calculatorPlugins)
     {
         $this->calculatorPlugins = $calculatorPlugins;
+
+        $this->setDefaults();
     }
 
     /**
@@ -30,9 +43,7 @@ class CalculatorFormDataProvider
      */
     public function getData()
     {
-        return [
-            CalculatorForm::FIELD_CALCULATOR_PLUGIN => $this->getCalculatorPlugins(),
-        ];
+        return $this->data;
     }
 
     /**
@@ -40,11 +51,27 @@ class CalculatorFormDataProvider
      */
     public function getOptions()
     {
-        return [];
+        return $this->options;
     }
 
     /**
-     * @return array
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[] $formExpanderPlugins
+     *
+     * @return void
+     */
+    public function applyCalculatorFormExpanderPlugins(array $formExpanderPlugins)
+    {
+        foreach ($formExpanderPlugins as $calculatorFormExpanderPlugin) {
+            if ($calculatorFormExpanderPlugin->getFormTypeToExtend() !== DiscountFormExpanderPluginInterface::FORM_TYPE_CALCULATION) {
+                continue;
+            }
+            $this->data = $calculatorFormExpanderPlugin->expandDataProviderData($this->data);
+            $this->options = $calculatorFormExpanderPlugin->expandDataProviderOptions($this->options);
+        }
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected function getCalculatorPlugins()
     {
@@ -58,6 +85,22 @@ class CalculatorFormDataProvider
         }
 
         return $calculatorPlugins;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaults()
+    {
+        $this->options = [
+            CalculatorForm::OPTION_COLLECTOR_TYPE_CHOICES => [
+                CalculatorForm::COLLECTOR_TYPE_QUERY_STRING => 'Query String',
+            ],
+        ];
+
+        $this->data = [
+            CalculatorForm::FIELD_CALCULATOR_PLUGIN => $this->getCalculatorPlugins(),
+        ];
     }
 
 }
