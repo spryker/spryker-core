@@ -86,7 +86,7 @@ function AttributeManager() {
                 ' data-attribute_key="' + key + '" ' +
                 ' value="" ' +
                 ' data-id_attribute="' + idAttribute + '" ' +
-                ' data-locale_code="' + localeData['id_locale'] + '"' +
+                ' data-locale_code="' + localeData['locale_name'] + '"' +
                 readOnly +
                 '>' +
                 '<span style="display: none"></span>';
@@ -170,12 +170,12 @@ function AttributeManager() {
         $(_attributeManager.removedKeys).each(function(index, removedKey) {
             for (var i in locales) {
                 var locale = locales[i];
-                var idLocale = locale['id_locale'];
+                var localeName = locale['locale_name'];
 
                 formData.push({
                     'key': removedKey,
                     'id': null,
-                    'locale_code': idLocale,
+                    'locale_code': localeName,
                     'value': ''
                 });
             }

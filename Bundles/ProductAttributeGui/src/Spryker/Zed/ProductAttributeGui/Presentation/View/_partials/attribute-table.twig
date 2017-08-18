@@ -60,7 +60,7 @@
                                         data-attribute_key="{{ key }}"
                                         data-is_attribute_input
                                         data-id_attribute="{{ idAttribute }}"
-                                        data-locale_code="{{ localeCode }}"
+                                        data-locale_code="{{ localeData['locale_name'] }}"
                                 /><span style="display: none">{{ attributeValue }}</span>
                             </td>
                         {% else %}
@@ -77,7 +77,7 @@
                                         data-attribute_key="{{ key }}"
                                         data-is_attribute_input
                                         data-id_attribute="{{ idAttribute }}"
-                                        data-locale_code="{{ localeCode }}"
+                                        data-locale_code="{{ localeData['locale_name'] }}"
                                 />
                                 <span style="display: none"></span>
                             </td>

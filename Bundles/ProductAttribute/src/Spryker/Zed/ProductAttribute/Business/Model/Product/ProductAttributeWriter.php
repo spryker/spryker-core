@@ -101,11 +101,11 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         unset($attributesToSave[ProductAttributeConfig::DEFAULT_LOCALE]);
 
         foreach ($localizedAttributeTransferCollection as $localizedAttributesTransfer) {
-            $idLocale = $localizedAttributesTransfer->getLocale()->getIdLocale();
+            $localeName = $localizedAttributesTransfer->getLocale()->getLocaleName();
             $localizedDataToSave = [];
 
-            if (array_key_exists($idLocale, $attributesToSave)) {
-                $localizedDataToSave = $attributesToSave[$idLocale];
+            if (array_key_exists($localeName, $attributesToSave)) {
+                $localizedDataToSave = $attributesToSave[$localeName];
             }
 
             $localizedAttributesTransfer->setAttributes($localizedDataToSave);
