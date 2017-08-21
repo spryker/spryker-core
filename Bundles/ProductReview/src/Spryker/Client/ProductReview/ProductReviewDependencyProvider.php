@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchBridge;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageBridge;
-use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\PaginatedProductReviewsQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\RatingAggregationQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatter;
@@ -69,7 +68,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     protected function addZedRequestClient(Container $container)
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return new ProductReviewToZedRequestBridge($container->getLocator()->zedRequest()->client());
+            return $container->getLocator()->zedRequest()->client();
         };
 
         return $container;

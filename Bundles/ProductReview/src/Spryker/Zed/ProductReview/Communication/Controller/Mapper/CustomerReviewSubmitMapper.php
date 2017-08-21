@@ -53,7 +53,7 @@ class CustomerReviewSubmitMapper implements CustomerReviewSubmitMapperInterface
      */
     protected function getIdLocale(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {
-        return $this->localeFacade->getLocale($productReviewRequestTransfer->getLocaleName());
+        return $this->localeFacade->getLocale($productReviewRequestTransfer->getLocaleName())->getIdLocale();
     }
 
     /**
