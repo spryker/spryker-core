@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductSetGui\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductAbstractSetTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -56,6 +58,31 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
                 ->filterByFkLocale($localeTransfer->getIdLocale())
             ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_ALIAS_NAME);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductSet
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractForAssignment($idProductSet, LocaleTransfer $localeTransfer)
+    {
+        $query = $this->queryProductAbstract($localeTransfer);
+        $query->addJoin(
+            [SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $idProductSet],
+            [SpyProductAbstractSetTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractSetTableMap::COL_FK_PRODUCT_SET],
+            Criteria::LEFT_JOIN
+        )
+            ->addAnd(
+                SpyProductAbstractSetTableMap::COL_FK_PRODUCT_SET,
+                null,
+                Criteria::ISNULL
+            );
 
         return $query;
     }

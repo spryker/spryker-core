@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
@@ -178,6 +179,33 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 'sku'
             )
             ->filterByFkProductOptionGroup($idProductOptionGroup);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $term
+     * @param int $idProductOptionGroup
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductsAbstractBySearchTermForAssignment($term, $idProductOptionGroup, LocaleTransfer $localeTransfer)
+    {
+        $query = $this->queryProductsAbstractBySearchTerm($term, $localeTransfer);
+
+        $query->addJoin(
+            [SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $idProductOptionGroup],
+            [SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_OPTION_GROUP],
+            Criteria::LEFT_JOIN
+        )
+            ->addAnd(
+                SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_OPTION_GROUP,
+                null,
+                Criteria::ISNULL
+            );
+
+        return $query;
     }
 
     /**

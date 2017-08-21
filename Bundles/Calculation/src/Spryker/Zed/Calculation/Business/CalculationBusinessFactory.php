@@ -19,6 +19,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\ExpenseTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrandTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice\PriceGrossCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice\SumGrossPriceCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\InitialGrandTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\NetPrice\PriceNetCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\NetPrice\SumNetPriceCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\OrderTaxTotalCalculator;
@@ -224,6 +225,14 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function createGrandTotalCalculator()
     {
         return new GrandTotalCalculator($this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Calculator\InitialGrandTotalCalculator
+     */
+    public function createInitialGrandTotalCalculator()
+    {
+        return new InitialGrandTotalCalculator();
     }
 
     /**
