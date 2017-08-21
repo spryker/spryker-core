@@ -15,7 +15,8 @@ interface ProductReviewClientInterface
 
     /**
      * Specification:
-     * - TODO: add spec
+     * - Stores provided product review in persistent storage with pending status.
+     * - Returns the provided transfer object updated with the stored entity's data.
      *
      * @api
      *
@@ -27,7 +28,7 @@ interface ProductReviewClientInterface
 
     /**
      * Specification:
-     * - TODO: add spec
+     * - Retrieves provided product abstract related product reviews from Search.
      *
      * @api
      *
@@ -39,7 +40,7 @@ interface ProductReviewClientInterface
 
     /**
      * Specification:
-     * - TODO: add spec
+     * - Retrieves provided product abstract and locale related review details from Storage.
      *
      * @api
      *
