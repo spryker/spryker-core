@@ -3,14 +3,11 @@
   "description": "Discount promotion module",
   "license": "proprietary",
   "require": {
-    "spryker/discount": "^3.0.0",
-    "spryker/gui": "^3.7.0",
+    "spryker/discount": "^4.5.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/product": "^3.0.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/product": "^5.0.0",
+    "spryker/symfony": "^3.0.0"
   },
-
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
@@ -19,7 +16,8 @@
     "spryker/transfer": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins."
+    "spryker/calculation": "Used by plugin to reset promotional items.",
+    "spryker/cart": "Used by plugin to add promotional item identifier to group key."
   },
   "autoload": {
     "psr-4": {

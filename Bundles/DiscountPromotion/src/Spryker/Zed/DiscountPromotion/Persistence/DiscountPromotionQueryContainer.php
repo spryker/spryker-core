@@ -30,4 +30,18 @@ class DiscountPromotionQueryContainer extends AbstractQueryContainer implements 
             ->filterByFkDiscount($idDiscount);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idDiscountPromotion
+     *
+     * @return $this|\Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery
+     */
+    public function queryDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
+    {
+        return $this->getFactory()
+            ->createDiscountPromotionQuery()
+            ->filterByIdDiscountPromotion($idDiscountPromotion);
+    }
+
 }

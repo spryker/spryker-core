@@ -10,10 +10,24 @@ namespace Spryker\Zed\DiscountPromotion\Business\Model;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
-use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery;
+use Spryker\Shared\DiscountPromotion\DiscountPromotionConstants;
+use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface;
 
 class DiscountPromotionReader implements DiscountPromotionReaderInterface
 {
+
+    /**
+     * @var \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface
+     */
+    protected $discountPromotionQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer
+     */
+    public function __construct(DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer)
+    {
+        $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
@@ -22,16 +36,18 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
      */
     public function expandDiscountPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
+        $discountConfiguratorTransfer->requireDiscountGeneral()
+            ->requireDiscountCalculator();
+
         $idDiscount = $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount();
 
-        $discountPromotionEntity = SpyDiscountPromotionQuery::create()->findOneByFkDiscount($idDiscount); //@todo move to container rename to promotion
-
+        $discountPromotionEntity = $this->findDiscountPromotionByIdDiscount($idDiscount);
         if (!$discountPromotionEntity) {
             return $discountConfiguratorTransfer;
         }
 
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
-        $discountCalculatorTransfer->setCollectorType('promotion');
+        $discountCalculatorTransfer->setCollectorType(DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY);
         $discountCalculatorTransfer->setDiscountPromotion($this->hydrateDiscountPromotion($discountPromotionEntity));
 
         return $discountConfiguratorTransfer;
@@ -44,7 +60,7 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
      */
     public function isDiscountWithPromotion($idDiscount)
     {
-        return SpyDiscountPromotionQuery::create()->filterByFkDiscount($idDiscount)->count() > 0;
+        return $this->discountPromotionQueryContainer->queryDiscountPromotionByIdDiscount($idDiscount)->count() > 0;
     }
 
     /**
@@ -58,6 +74,18 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
         $discountPromotionTransfer->fromArray($discountPromotionEntity->toArray(), true);
 
         return $discountPromotionTransfer;
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion|null
+     */
+    protected function findDiscountPromotionByIdDiscount($idDiscount)
+    {
+        return $discountPromotionEntity = $this->discountPromotionQueryContainer
+            ->queryDiscountPromotionByIdDiscount($idDiscount)
+            ->findOne();
     }
 
 }

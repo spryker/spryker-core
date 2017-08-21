@@ -37,5 +37,14 @@
         <property name="fkDiscount" type="int" />
     </transfer>
 
+    <transfer name="CalculableObject">
+        <property name="promotionItems" type="Item[]" singular="promotionItem"/>
+    </transfer>
+
+    <transfer name="StorageProduct">
+         <property name="maxQuantity" type="int"/>
+    </transfer>
+
+
 </transfers>
 

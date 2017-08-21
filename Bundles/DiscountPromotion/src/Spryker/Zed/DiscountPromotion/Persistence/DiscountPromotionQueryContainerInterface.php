@@ -23,4 +23,13 @@ interface DiscountPromotionQueryContainerInterface
      */
     public function queryDiscountPromotionByIdDiscount($idDiscount);
 
+    /**
+     * @api
+     *
+     * @param int $idDiscountPromotion
+     *
+     * @return $this|\Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery
+     */
+    public function queryDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);
+
 }

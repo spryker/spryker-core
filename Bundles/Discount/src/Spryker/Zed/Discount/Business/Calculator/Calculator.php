@@ -101,7 +101,6 @@ class Calculator implements CalculatorInterface
     protected function calculateDiscountAmount(array $discounts, QuoteTransfer $quoteTransfer)
     {
         $collectedDiscounts = [];
-        $quoteTransfer->setPromotionItems(new ArrayObject()); //@todo create calculation plugin to reset it.
         foreach ($discounts as $discountTransfer) {
             $discountableItems = $this->collectItems($quoteTransfer, $discountTransfer);
 

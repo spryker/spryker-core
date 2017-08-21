@@ -24,10 +24,10 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
-            $discountToMoneyBridge = new DiscountPromotionToProductBridge($container->getLocator()->product()->facade());
-
-            return $discountToMoneyBridge;
+            return new DiscountPromotionToProductBridge($container->getLocator()->product()->facade());
         };
+
+        return $container;
     }
 
 }

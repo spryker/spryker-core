@@ -14,9 +14,12 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class DiscountPersist implements DiscountPersistInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
@@ -60,6 +63,23 @@ class DiscountPersist implements DiscountPersistInterface
         $discountEntity = $this->createDiscountEntity();
         $this->hydrateDiscountEntity($discountConfiguratorTransfer, $discountEntity);
 
+        $this->handleDatabaseTransaction(function () use ($discountEntity, $discountConfiguratorTransfer) {
+            $this->executeSaveDiscountTransaction($discountEntity, $discountConfiguratorTransfer);
+        });
+
+        return $discountEntity->getIdDiscount();
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return void
+     */
+    protected function executeSaveDiscountTransaction(
+        SpyDiscount $discountEntity,
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer
+    ) {
         if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             $this->saveVoucherPool($discountEntity);
         }
@@ -69,8 +89,6 @@ class DiscountPersist implements DiscountPersistInterface
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
 
         $this->executePostSavePlugins($discountConfiguratorTransfer);
-
-        return $discountEntity->getIdDiscount();
     }
 
     /**
@@ -101,6 +119,24 @@ class DiscountPersist implements DiscountPersistInterface
             );
         }
 
+        $affectedRows = $this->handleDatabaseTransaction(function () use ($discountEntity, $discountConfiguratorTransfer) {
+            $this->executeUpdateDiscountTransaction($discountEntity, $discountConfiguratorTransfer);
+        });
+
+        return $affectedRows > 0;
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return int
+     */
+    protected function executeUpdateDiscountTransaction(
+        SpyDiscount $discountEntity,
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer
+    ) {
+
         $this->hydrateDiscountEntity($discountConfiguratorTransfer, $discountEntity);
         if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             $this->saveVoucherPool($discountEntity);
@@ -110,7 +146,7 @@ class DiscountPersist implements DiscountPersistInterface
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
 
-        return $affectedRows > 0;
+        return $affectedRows;
     }
 
     /**

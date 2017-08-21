@@ -20,9 +20,9 @@ class DiscountPromotionCollectorStrategyPlugin extends AbstractPlugin implements
 {
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

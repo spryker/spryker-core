@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business;
 
-use Spryker\Zed\DiscountPromotion\Business\DiscountCollectorStrategy\DiscountPromotionCollectorStrategy;
+use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategy;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionWriter;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
@@ -21,7 +21,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\DiscountPromotion\Business\DiscountCollectorStrategy\DiscountPromotionCollectorStrategyInterface
+     * @return \Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategyInterface
      */
     public function createDiscountPromotionCollectorStrategy()
     {
@@ -36,7 +36,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountPromotionWriter()
     {
-        return new DiscountPromotionWriter();
+        return new DiscountPromotionWriter($this->getQueryContainer());
     }
 
     /**
@@ -44,7 +44,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountPromotionReader()
     {
-        return new DiscountPromotionReader();
+        return new DiscountPromotionReader($this->getQueryContainer());
     }
 
     /**

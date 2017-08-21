@@ -7,23 +7,23 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business\Model;
 
-use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 
 interface DiscountPromotionWriterInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function save(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
+    public function save(DiscountPromotionTransfer $discountPromotionTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function update(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
+    public function update(DiscountPromotionTransfer $discountPromotionTransfer);
 
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DiscountPromotion\Communication\Form;
 
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
+use Spryker\Shared\DiscountPromotion\DiscountPromotionConstants;
 use Spryker\Zed\Discount\Communication\Form\AbstractDiscountExtensionSubFormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,8 +16,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
 {
-
-    const FORM_COLLECTOR_TYPE = 'promotion';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -43,7 +42,7 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
              [
                  'label' => 'Abstract product sku',
                  'constraints' => [
-                     new NotBlank(['groups' => static::FORM_COLLECTOR_TYPE]),
+                     new NotBlank(['groups' => DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY]),
                  ],
              ]
          );
@@ -64,7 +63,7 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
             [
                 'label' => 'Quantity',
                 'constraints' => [
-                    new NotBlank(['groups' => static::FORM_COLLECTOR_TYPE]),
+                    new NotBlank(['groups' => DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY]),
                 ],
             ]
         );

@@ -9,9 +9,9 @@ namespace Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount;
 
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
+use Spryker\Shared\DiscountPromotion\DiscountPromotionConstants;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface;
-use Spryker\Zed\DiscountPromotion\Communication\Form\DiscountPromotionFormType;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -23,9 +23,9 @@ class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin impl
 {
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -55,7 +55,7 @@ class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin impl
      */
     public function expandDataProviderOptions(array $options)
     {
-        $options[CalculatorForm::OPTION_COLLECTOR_TYPE_CHOICES][DiscountPromotionFormType::FORM_COLLECTOR_TYPE] = 'Discount promotion to product';
+        $options[CalculatorForm::OPTION_COLLECTOR_TYPE_CHOICES][DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY] = 'Discount promotion to product';
 
         return $options;
     }

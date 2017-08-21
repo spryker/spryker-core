@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DiscountPromotion\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Spryker\Shared\DiscountPromotion\DiscountPromotionConstants;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -19,6 +20,8 @@ class CartGroupPromotionItems extends AbstractPlugin implements ItemExpanderPlug
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -31,11 +34,20 @@ class CartGroupPromotionItems extends AbstractPlugin implements ItemExpanderPlug
             if (!$itemTransfer->getIsPromotion()) {
                 continue;
             }
-            $groupKey = $itemTransfer->getGroupKey() . '-promo';
-            $itemTransfer->setGroupKey($groupKey);
+            $itemTransfer->setGroupKey($this->buildGroupKey($itemTransfer));
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function buildGroupKey($itemTransfer)
+    {
+        return $itemTransfer->getGroupKey() . '-' . DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY;
     }
 
 }

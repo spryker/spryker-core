@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DiscountPromotion\Business;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -19,9 +20,9 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
 {
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -36,43 +37,41 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     }
 
     /**
+     * {@inheritdoc}
      *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function savePromotionDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    public function savePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer)
     {
         return $this->getFactory()
             ->createDiscountPromotionWriter()
-            ->save($discountConfiguratorTransfer);
+            ->save($discountPromotionTransfer);
     }
 
     /**
+     * {@inheritdoc}
      *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function updatePromotionDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    public function updatePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer)
     {
         return $this->getFactory()
             ->createDiscountPromotionWriter()
-            ->update($discountConfiguratorTransfer);
+            ->update($discountPromotionTransfer);
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
@@ -80,13 +79,15 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      */
     public function expandDiscountConfigurationWithPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
-        return $this->getFactory()->createDiscountPromotionReader()->expandDiscountPromotion($discountConfiguratorTransfer);
+        return $this->getFactory()
+            ->createDiscountPromotionReader()
+            ->expandDiscountPromotion($discountConfiguratorTransfer);
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param int $idDiscount
      *
@@ -94,7 +95,9 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      */
     public function isDiscountWithPromotion($idDiscount)
     {
-        return $this->getFactory()->createDiscountPromotionReader()->isDiscountWithPromotion($idDiscount);
+        return $this->getFactory()
+            ->createDiscountPromotionReader()
+            ->isDiscountWithPromotion($idDiscount);
     }
 
 }

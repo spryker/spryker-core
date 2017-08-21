@@ -19,9 +19,9 @@ class DiscountPromotionConfigurationExpanderPlugin extends AbstractPlugin implem
 {
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *

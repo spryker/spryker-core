@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DiscountPromotion\Business;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -15,9 +16,13 @@ interface DiscountPromotionFacadeInterface
 {
 
     /**
-     * @api
      *
-     * {@inheritdoc}
+     * Specification:
+     *  - Collects discountable items when promotion discount is used.
+     *  - If item is not in quote then it adds it this quote::promotionItems, if its already there then it would return
+     *    this item to discount module for discount calculation
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -27,33 +32,34 @@ interface DiscountPromotionFacadeInterface
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     *  - Persist discount promotion
      *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function savePromotionDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
+    public function savePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer);
 
     /**
+     * Specification:
+     *  - Update discount promotion
      *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function updatePromotionDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
+    public function updatePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer);
 
     /**
-     * @api
+     * Specification:
+     *  - Expand DiscountConfigurationTransfer with DiscountPromotion data.
      *
-     * {@inheritdoc}
+     * @api
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
@@ -62,9 +68,10 @@ interface DiscountPromotionFacadeInterface
     public function expandDiscountConfigurationWithPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
 
     /**
-     * @api
+     * Specification:
+     *  - Check if given discount have promotion discounts.
      *
-     * {@inheritdoc}
+     * @api
      *
      * @param int $idDiscount
      *

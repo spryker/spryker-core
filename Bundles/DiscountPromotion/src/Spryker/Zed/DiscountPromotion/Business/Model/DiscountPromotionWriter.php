@@ -7,56 +7,61 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business\Model;
 
-use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
-use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery;
+use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface;
 
 class DiscountPromotionWriter implements DiscountPromotionWriterInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @var \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface
      */
-    public function save(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    protected $discountPromotionQueryContainer;
+
+    /**
+     * @param \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer
+     */
+    public function __construct(DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer)
     {
-        return $this->saveDiscountPromotion($discountConfiguratorTransfer);
+        $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function update(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    public function save(DiscountPromotionTransfer $discountPromotionTransfer)
     {
-        return $this->saveDiscountPromotion($discountConfiguratorTransfer);
+        return $this->saveDiscountPromotion($discountPromotionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    protected function saveDiscountPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    public function update(DiscountPromotionTransfer $discountPromotionTransfer)
     {
-        if ($discountConfiguratorTransfer->getDiscountCalculator()->getCollectorType() != 'promotion') {
-            return $discountConfiguratorTransfer;
-        }
+        return $this->saveDiscountPromotion($discountPromotionTransfer);
+    }
 
-        $discountPromotionTransfer = $discountConfiguratorTransfer->getDiscountCalculator()->getDiscountPromotion();
-        $idDiscount = $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount();
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    protected function saveDiscountPromotion(DiscountPromotionTransfer $discountPromotionTransfer)
+    {
+        $discountPromotionTransfer->requireFkDiscount();
 
-        $idDiscountPromotion = $discountPromotionTransfer->getIdDiscountPromotion();
+        $discountPromotionEntity = $this->getDiscountPromotionEntity($discountPromotionTransfer->getIdDiscountPromotion());
+        $discountPromotionEntity = $this->hydrateDiscountPromotionEntity($discountPromotionEntity, $discountPromotionTransfer);
 
-        $discountPromotionEntity = $this->getDiscountPromotionEntity($idDiscountPromotion);
-
-        $discountPromotionEntity->setFkDiscount($idDiscount);
-        $discountPromotionEntity->fromArray($discountPromotionTransfer->modifiedToArray());
         $discountPromotionEntity->save();
 
-        return $discountConfiguratorTransfer;
+        return $discountPromotionTransfer;
     }
 
     /**
@@ -67,12 +72,35 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
     protected function getDiscountPromotionEntity($idDiscountPromotion)
     {
         if (!$idDiscountPromotion) {
-            return new SpyDiscountPromotion();
+            return $this->createDiscountPromotionEntity();
         }
 
-        return SpyDiscountPromotionQuery::create()
-            ->filterByIdDiscountPromotion($idDiscountPromotion)
+        return $this->discountPromotionQueryContainer
+            ->queryDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
             ->findOne();
+    }
+
+    /**
+     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion
+     */
+    protected function createDiscountPromotionEntity()
+    {
+        return new SpyDiscountPromotion();
+    }
+
+    /**
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     *
+     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion
+     */
+    protected function hydrateDiscountPromotionEntity(
+        SpyDiscountPromotion $discountPromotionEntity,
+        DiscountPromotionTransfer $discountPromotionTransfer
+    ) {
+        $discountPromotionEntity->fromArray($discountPromotionTransfer->toArray());
+
+        return $discountPromotionEntity;
     }
 
 }

@@ -20,6 +20,8 @@ class DiscountFilterPromotionDiscountsPlugin extends AbstractPlugin implements D
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer

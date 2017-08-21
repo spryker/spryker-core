@@ -9,19 +9,18 @@ namespace Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostSavePluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
-class DiscountPromotionPostSavePlugin extends AbstractPlugin implements DiscountPostSavePluginInterface
+class DiscountPromotionPostSavePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostSavePluginInterface
 {
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
@@ -29,7 +28,15 @@ class DiscountPromotionPostSavePlugin extends AbstractPlugin implements Discount
      */
     public function postSave(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
-        return $this->getFacade()->savePromotionDiscount($discountConfiguratorTransfer);
+        if (!$this->isDiscountWithPromotion($discountConfiguratorTransfer)) {
+            return $discountConfiguratorTransfer;
+        }
+
+        $discountPromotionTransfer = $this->getDiscountPromotionTransfer($discountConfiguratorTransfer);
+        $discountPromotionTransfer = $this->getFacade()->savePromotionDiscount($discountPromotionTransfer);
+        $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion($discountPromotionTransfer);
+
+        return $discountConfiguratorTransfer;
     }
 
 }

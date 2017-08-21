@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DiscountPromotion\Business\DiscountCollectorStrategy;
+namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
@@ -60,27 +60,27 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
 
         $promotionProductAbstractSku = $discountPromotionEntity->getAbstractSku();
-        $promotionProductAbstractQuantity = $discountPromotionEntity->getQuantity();
+        $promotionProductMaximumQuantity = $discountPromotionEntity->getQuantity();
 
-        $promotionItemTransferInQuote = $this->findPromotionItem(
+        $promotionItemInQuote = $this->findPromotionItem(
             $quoteTransfer,
             $promotionProductAbstractSku,
-            $promotionProductAbstractQuantity
+            $promotionProductMaximumQuantity
         );
 
-        if (!$promotionItemTransferInQuote) {
+        if (!$promotionItemInQuote) {
             $this->addPromotionItemToQuote(
                 $quoteTransfer,
                 $promotionProductAbstractSku,
-                $promotionProductAbstractQuantity
+                $promotionProductMaximumQuantity
             );
             return [];
         }
 
-        $currentQuantity = $this->adjustPromotionalItemQuantity($promotionItemTransferInQuote);
+        $adjustedQuantity = $this->adjustPromotionalItemQuantity($promotionItemInQuote);
         $discountableItemTransfer = $this->createPromotionDiscountableItemTransfer(
-            $promotionItemTransferInQuote,
-            $currentQuantity
+            $promotionItemInQuote,
+            $adjustedQuantity
         );
 
         return [$discountableItemTransfer];
@@ -89,23 +89,23 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $promotionProductAbstractSku
-     * @param int $promotionProductAbstractQuantity
+     * @param int $promotionMaximumQuantity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     protected function findPromotionItem(
         QuoteTransfer $quoteTransfer,
         $promotionProductAbstractSku,
-        $promotionProductAbstractQuantity
+        $promotionMaximumQuantity
     ) {
 
         $promotionItemTransfer = null;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getAbstractSku() == $promotionProductAbstractSku) { //@todo filter by promotion flag
-                $promotionItemTransfer = $itemTransfer;
-                $promotionItemTransfer->setMaxQuantity($promotionProductAbstractQuantity);
-                return $promotionItemTransfer;
+            if (!$this->isPromotionalItem($promotionProductAbstractSku, $itemTransfer)) {
+                continue;
             }
+            $itemTransfer->setMaxQuantity($promotionMaximumQuantity);
+            return $itemTransfer;
         }
         return null;
     }
@@ -160,6 +160,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($promotionItemTransfer->getCalculatedDiscounts());
         $discountableItemTransfer->setQuantity($currentQuantity);
         $discountableItemTransfer->setUnitGrossPrice($promotionItemTransfer->getUnitGrossPrice());
+
         return $discountableItemTransfer;
     }
 
@@ -186,6 +187,17 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $discountPromotionTransfer->fromArray($discountPromotionEntity->toArray(), true);
 
         return $discountPromotionTransfer;
+    }
+
+    /**
+     * @param string $promotionProductAbstractSku
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isPromotionalItem($promotionProductAbstractSku, ItemTransfer $itemTransfer)
+    {
+        return $itemTransfer->getAbstractSku() == $promotionProductAbstractSku && $itemTransfer->getIsPromotion() === true;
     }
 
 }
