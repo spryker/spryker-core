@@ -27,7 +27,9 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     {
          return new DiscountPromotionCollectorStrategy(
              $this->getProductFacade(),
-             $this->getQueryContainer()
+             $this->getQueryContainer(),
+             $this->getAvailabilityFacade(),
+             $this->getLocaleFacade()
          );
     }
 
@@ -53,6 +55,22 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface
+     */
+    protected function getAvailabilityFacade()
+    {
+        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_AVAILABILITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_LOCALE);
     }
 
 }

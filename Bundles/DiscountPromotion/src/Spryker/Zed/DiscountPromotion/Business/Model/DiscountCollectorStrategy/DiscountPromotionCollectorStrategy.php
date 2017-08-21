@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
+use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface;
+use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface;
 use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface;
 
@@ -30,16 +32,32 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     protected $discountPromotionQueryContainer;
 
     /**
+     * @var \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface
+     */
+    protected $availabilityFacade;
+
+    /**
+     * @var \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface $productFacade
      * @param \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer
+     * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface $availabilityFacade
+     * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface $localeFacade
      */
     public function __construct(
         DiscountPromotionToProductInterface $productFacade,
-        DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer
+        DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer,
+        DiscountPromotionToAvailabilityInterface $availabilityFacade,
+        DiscountPromotionToLocaleInterface $localeFacade
     ) {
 
         $this->productFacade = $productFacade;
         $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
+        $this->availabilityFacade = $availabilityFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -61,6 +79,10 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
 
         $promotionProductAbstractSku = $discountPromotionEntity->getAbstractSku();
         $promotionProductMaximumQuantity = $discountPromotionEntity->getQuantity();
+
+        if (!$this->isProductAbstractAvailable($promotionProductAbstractSku, $promotionProductMaximumQuantity)) {
+            return [];
+        }
 
         $promotionItemInQuote = $this->findPromotionItem(
             $quoteTransfer,
@@ -197,7 +219,34 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function isPromotionalItem($promotionProductAbstractSku, ItemTransfer $itemTransfer)
     {
-        return $itemTransfer->getAbstractSku() == $promotionProductAbstractSku && $itemTransfer->getIsPromotion() === true;
+        return ($itemTransfer->getAbstractSku() === $promotionProductAbstractSku && $itemTransfer->getIsPromotion() === true);
+    }
+
+    /**
+     * @param $promotionProductAbstractSku
+     * @param int $quantity
+     *
+     * @return bool
+     */
+    protected function isProductAbstractAvailable($promotionProductAbstractSku, $quantity)
+    {
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
+
+        $productAbstractAvailabilityTransfer = $this->availabilityFacade
+            ->getProductAbstractAvailability(
+                $promotionProductAbstractSku,
+                $localeTransfer->getIdLocale()
+            );
+
+        if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
+            return true;
+        }
+
+        if ($quantity > $productAbstractAvailabilityTransfer->getAvailability()) {
+            return false;
+        }
+
+        return true;
     }
 
 }
