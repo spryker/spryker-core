@@ -23,4 +23,12 @@ class ProductAttributeGuiConfig extends AbstractBundleConfig
     const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
     const LOCALE_CODE = 'locale_code';
 
+    /**
+     * @return string
+     */
+    public function getDefaultLocaleCode()
+    {
+        return static::DEFAULT_LOCALE;
+    }
+
 }

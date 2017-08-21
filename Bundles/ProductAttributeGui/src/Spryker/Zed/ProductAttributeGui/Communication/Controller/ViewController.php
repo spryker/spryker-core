@@ -140,11 +140,7 @@ class ViewController extends AbstractController
             ->getLocaleFacade()
             ->getLocaleCollection();
 
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setIdLocale('_');
-        $localeTransfer->setLocaleName('_');
-
-        $locales['_'] = $localeTransfer;
+        array_unshift($locales, $this->getDefaultLocaleTransfer());
 
         $localesData = [];
         foreach ($locales as $localeCode => $localeTransfer) {
@@ -154,6 +150,22 @@ class ViewController extends AbstractController
         ksort($localesData);
 
         return $localesData;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getDefaultLocaleTransfer()
+    {
+        $defaultLocaleCode = $this->getFactory()
+            ->getConfig()
+            ->getDefaultLocaleCode();
+
+        $localeTransfer = (new LocaleTransfer())
+            ->setIdLocale($defaultLocaleCode)
+            ->setLocaleName($defaultLocaleCode);
+
+        return $localeTransfer;
     }
 
     /**
