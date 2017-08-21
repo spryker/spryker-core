@@ -32,7 +32,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
-           return new DiscountPromotionToAvailabilityBridge($container->getLocator()->availability()->facade());
+            return new DiscountPromotionToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
 
         $container[static::FACADE_LOCALE] = function (Container $container) {

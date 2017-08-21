@@ -223,7 +223,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     }
 
     /**
-     * @param $promotionProductAbstractSku
+     * @param string $promotionProductAbstractSku
      * @param int $quantity
      *
      * @return bool

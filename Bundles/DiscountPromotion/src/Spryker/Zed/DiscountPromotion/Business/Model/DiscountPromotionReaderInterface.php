@@ -26,4 +26,11 @@ interface DiscountPromotionReaderInterface
      */
     public function isDiscountWithPromotion($idDiscount);
 
+    /**
+     * @param int $idDiscountPromotion
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);
+
 }

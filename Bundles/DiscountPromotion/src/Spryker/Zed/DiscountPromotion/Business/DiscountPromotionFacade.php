@@ -73,6 +73,22 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      *
      * @api
      *
+     * @param int $idDiscountPromotion
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
+    {
+         return $this->getFactory()
+             ->createDiscountPromotionReader()
+             ->findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer

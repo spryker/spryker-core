@@ -61,6 +61,8 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
 
         $discountPromotionEntity->save();
 
+        $discountPromotionTransfer->setIdDiscountPromotion($discountPromotionEntity->getIdDiscountPromotion());
+
         return $discountPromotionTransfer;
     }
 

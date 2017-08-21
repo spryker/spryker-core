@@ -57,6 +57,18 @@ interface DiscountPromotionFacadeInterface
 
     /**
      * Specification:
+     *  - Read discount promotion from persistence by given promotion id
+     *
+     * @api
+     *
+     * @param int $idDiscountPromotion
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);
+
+    /**
+     * Specification:
      *  - Expand DiscountConfigurationTransfer with DiscountPromotion data.
      *
      * @api

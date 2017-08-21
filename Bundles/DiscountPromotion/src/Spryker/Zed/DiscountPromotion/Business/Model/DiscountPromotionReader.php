@@ -64,9 +64,27 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
     }
 
     /**
+     * @param int $idDiscountPromotion
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     */
+    public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
+    {
+        $discountPromotionEntity = $this->discountPromotionQueryContainer
+            ->queryDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
+            ->findOne();
+
+        if (!$discountPromotionEntity) {
+            return null;
+        }
+
+        return $this->hydrateDiscountPromotion($discountPromotionEntity);
+    }
+
+    /**
      * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
      *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
     protected function hydrateDiscountPromotion(SpyDiscountPromotion $discountPromotionEntity)
     {
