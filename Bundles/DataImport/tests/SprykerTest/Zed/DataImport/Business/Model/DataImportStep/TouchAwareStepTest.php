@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\DataImport\Business\Model\DataImportStep;
 
 use Codeception\Test\Unit;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\TouchAwareStep;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface;
@@ -22,7 +23,7 @@ use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface;
  * @group DataImportStep
  * @group TouchAwareStepTest
  * Add your own group annotations below this line
- * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
+ * @property \SprykerTest\Zed\DataImport\DataImportBusinessTester $tester
  */
 class TouchAwareStepTest extends Unit
 {
@@ -34,12 +35,39 @@ class TouchAwareStepTest extends Unit
     /**
      * @return void
      */
-    public function testAfterExecuteTriggersTouchForMainTouchableWhenBulkSizeNotSet()
+    public function testAfterExecuteWillReturnIfNoTouchableApplied()
     {
-        $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock());
-        $touchAwareStep->addMainTouchable(static::MAIN_TOUCHABLE_KEY, 1);
+        $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock(0));
 
         $touchAwareStep->afterExecute();
+    }
+
+    /**
+     * @dataProvider noBulkSizeDataProvider
+     *
+     * @param string $method
+     * @param string $itemEvent
+     *
+     * @return void
+     */
+    public function testAfterExecuteTriggersTouchForMainTouchableWhenBulkSizeNotSet($method, $itemEvent)
+    {
+        $touchAwareStep = new TouchAwareStep($this->getTouchFacadeMock(1, $method));
+        $touchAwareStep->addMainTouchable(static::MAIN_TOUCHABLE_KEY, 1, $itemEvent);
+
+        $touchAwareStep->afterExecute();
+    }
+
+    /**
+     * @return array
+     */
+    public function noBulkSizeDataProvider()
+    {
+        return [
+            ['bulkTouchSetActive', SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE],
+            ['bulkTouchSetInActive', SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE],
+            ['bulkTouchSetDeleted', SpyTouchTableMap::COL_ITEM_EVENT_DELETED],
+        ];
     }
 
     /**
@@ -101,16 +129,17 @@ class TouchAwareStepTest extends Unit
 
     /**
      * @param int $calledCount
+     * @param string $method
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface
      */
-    private function getTouchFacadeMock($calledCount = 1)
+    private function getTouchFacadeMock($calledCount = 1, $method = 'bulkTouchSetActive')
     {
         $mockBuilder = $this->getMockBuilder(DataImportToTouchInterface::class)
-            ->setMethods(['bulkTouchSetActive']);
+            ->setMethods(['bulkTouchSetActive', 'bulkTouchSetInActive', 'bulkTouchSetDeleted']);
 
         $dataImportToTouchInterfaceMock = $mockBuilder->getMock();
-        $dataImportToTouchInterfaceMock->expects($this->exactly($calledCount))->method('bulkTouchSetActive');
+        $dataImportToTouchInterfaceMock->expects($this->exactly($calledCount))->method($method);
 
         $dataImportToTouchBridge = new DataImportToTouchBridge($dataImportToTouchInterfaceMock);
 
