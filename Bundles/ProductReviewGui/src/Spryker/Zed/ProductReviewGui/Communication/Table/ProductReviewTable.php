@@ -8,35 +8,16 @@
 namespace Spryker\Zed\ProductReviewGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReview;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductReviewGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface;
-use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainer;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface;
 
-// TODO: decrease dependencies
 class ProductReviewTable extends AbstractTable
 {
-
-    const TABLE_IDENTIFIER = 'product-review-table';
-
-    const COL_ID_PRODUCT_REVIEW = 'id_product_review';
-    const COL_CREATED = ProductReviewGuiQueryContainer::FIELD_CREATED;
-    const COL_CUSTOMER_NAME = 'customer_name';
-    const COL_NICK_NAME = 'nickname';
-    const COL_PRODUCT_NAME = ProductReviewGuiQueryContainer::FIELD_PRODUCT_NAME;
-    const COL_RATING = 'rating';
-    const COL_STATUS = 'status';
-    const COL_ACTIONS = 'actions';
-    const COL_SHOW_DETAILS = 'show_details';
-    const EXTRA_DETAILS = 'details';
 
     /**
      * @var \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface
@@ -85,45 +66,45 @@ class ProductReviewTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
+        $this->setTableIdentifier(ProductReviewTableConstants::TABLE_IDENTIFIER);
 
         $config->setHeader([
-            static::COL_SHOW_DETAILS => '',
-            static::COL_ID_PRODUCT_REVIEW => 'ID',
-            static::COL_CREATED => 'Date',
-            static::COL_CUSTOMER_NAME => 'Customer',
-            static::COL_NICK_NAME => 'Nickname',
-            static::COL_PRODUCT_NAME => 'Product Name',
-            static::COL_RATING => 'Rating',
-            static::COL_STATUS => 'Status',
-            static::COL_ACTIONS => 'Actions',
+            ProductReviewTableConstants::COL_SHOW_DETAILS => '',
+            ProductReviewTableConstants::COL_ID_PRODUCT_REVIEW => 'ID',
+            ProductReviewTableConstants::COL_CREATED => 'Date',
+            ProductReviewTableConstants::COL_CUSTOMER_NAME => 'Customer',
+            ProductReviewTableConstants::COL_NICK_NAME => 'Nickname',
+            ProductReviewTableConstants::COL_PRODUCT_NAME => 'Product Name',
+            ProductReviewTableConstants::COL_RATING => 'Rating',
+            ProductReviewTableConstants::COL_STATUS => 'Status',
+            ProductReviewTableConstants::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
-            static::COL_SHOW_DETAILS,
-            static::COL_STATUS,
-            static::COL_ACTIONS,
-            static::COL_CUSTOMER_NAME,
-            static::COL_PRODUCT_NAME,
+            ProductReviewTableConstants::COL_SHOW_DETAILS,
+            ProductReviewTableConstants::COL_STATUS,
+            ProductReviewTableConstants::COL_ACTIONS,
+            ProductReviewTableConstants::COL_CUSTOMER_NAME,
+            ProductReviewTableConstants::COL_PRODUCT_NAME,
         ]);
 
         $config->setSearchable([
-            static::COL_NICK_NAME,
-            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-            SpyCustomerTableMap::COL_FIRST_NAME,
-            SpyCustomerTableMap::COL_LAST_NAME,
+            ProductReviewTableConstants::COL_NICK_NAME,
+            ProductReviewTableConstants::COL_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_NAME,
+            ProductReviewTableConstants::COL_CUSTOMER_FIRST_NAME,
+            ProductReviewTableConstants::COL_CUSTOMER_LAST_NAME,
         ]);
 
         $config->setSortable([
-            static::COL_ID_PRODUCT_REVIEW,
-            static::COL_CREATED,
-            static::COL_NICK_NAME,
-            static::COL_PRODUCT_NAME,
-            static::COL_RATING,
-            static::COL_STATUS,
+            ProductReviewTableConstants::COL_ID_PRODUCT_REVIEW,
+            ProductReviewTableConstants::COL_CREATED,
+            ProductReviewTableConstants::COL_NICK_NAME,
+            ProductReviewTableConstants::COL_PRODUCT_NAME,
+            ProductReviewTableConstants::COL_RATING,
+            ProductReviewTableConstants::COL_STATUS,
         ]);
 
-        $config->setDefaultSortField(static::COL_ID_PRODUCT_REVIEW, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(ProductReviewTableConstants::COL_ID_PRODUCT_REVIEW, ProductReviewTableConstants::SORT_DESC);
         $config->setStateSave(false);
 
         return $config;
@@ -156,16 +137,16 @@ class ProductReviewTable extends AbstractTable
     protected function generateItem(SpyProductReview $productReviewEntity)
     {
         return [
-            static::COL_ID_PRODUCT_REVIEW => $productReviewEntity->getIdProductReview(),
-            static::COL_CREATED => $this->getCreatedAt($productReviewEntity),
-            static::COL_CUSTOMER_NAME => $this->getCustomerName($productReviewEntity),
-            static::COL_NICK_NAME => $productReviewEntity->getNickname(),
-            static::COL_PRODUCT_NAME => $this->getProductName($productReviewEntity),
-            static::COL_RATING => $productReviewEntity->getRating(),
-            static::COL_STATUS => $this->getStatusLabel($productReviewEntity->getStatus()),
-            static::COL_ACTIONS => $this->createActionButtons($productReviewEntity),
-            static::COL_SHOW_DETAILS => $this->createShowDetailsButton(),
-            static::EXTRA_DETAILS => $this->generateDetails($productReviewEntity),
+            ProductReviewTableConstants::COL_ID_PRODUCT_REVIEW => $productReviewEntity->getIdProductReview(),
+            ProductReviewTableConstants::COL_CREATED => $this->getCreatedAt($productReviewEntity),
+            ProductReviewTableConstants::COL_CUSTOMER_NAME => $this->getCustomerName($productReviewEntity),
+            ProductReviewTableConstants::COL_NICK_NAME => $productReviewEntity->getNickname(),
+            ProductReviewTableConstants::COL_PRODUCT_NAME => $this->getProductName($productReviewEntity),
+            ProductReviewTableConstants::COL_RATING => $productReviewEntity->getRating(),
+            ProductReviewTableConstants::COL_STATUS => $this->getStatusLabel($productReviewEntity->getStatus()),
+            ProductReviewTableConstants::COL_ACTIONS => $this->createActionButtons($productReviewEntity),
+            ProductReviewTableConstants::COL_SHOW_DETAILS => $this->createShowDetailsButton(),
+            ProductReviewTableConstants::EXTRA_DETAILS => $this->generateDetails($productReviewEntity),
         ];
     }
 
@@ -177,13 +158,13 @@ class ProductReviewTable extends AbstractTable
     protected function getStatusLabel($status)
     {
         switch ($status) {
-            case SpyProductReviewTableMap::COL_STATUS_REJECTED:
+            case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_REJECTED:
                 $label = '<span class="label label-danger">Rejected</span>';
                 break;
-            case SpyProductReviewTableMap::COL_STATUS_APPROVED:
+            case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_APPROVED:
                 $label = '<span class="label label-info">Approved</span>';
                 break;
-            case SpyProductReviewTableMap::COL_STATUS_PENDING:
+            case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_PENDING:
             default:
                 $label = '<span class="label label-secondary">Pending</span>';
                 break;
@@ -212,7 +193,7 @@ class ProductReviewTable extends AbstractTable
         $actions[] = $this->generateStatusChangeButton($productReviewEntity);
         $actions[] = $this->generateRemoveButton(
             Url::generate('/product-review-gui/delete', [
-                EditController::PARAM_ID => $productReviewEntity->getIdProductReview(),
+                ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
             ]),
             'Delete'
         );
@@ -229,13 +210,13 @@ class ProductReviewTable extends AbstractTable
     {
         $buttonGroupItems = [];
         switch ($productReviewEntity->getStatus()) {
-            case SpyProductReviewTableMap::COL_STATUS_REJECTED:
+            case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_REJECTED:
                 $buttonGroupItems[] = $this->generateApproveButtonGroupItem($productReviewEntity);
                 break;
-            case SpyProductReviewTableMap::COL_STATUS_APPROVED:
+            case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_APPROVED:
                 $buttonGroupItems[] = $this->generateRejectButtonGroupItem($productReviewEntity);
                 break;
-            case SpyProductReviewTableMap::COL_STATUS_PENDING:
+            case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_PENDING:
             default:
                 $buttonGroupItems[] = $this->generateApproveButtonGroupItem($productReviewEntity);
                 $buttonGroupItems[] = $this->generateRejectButtonGroupItem($productReviewEntity);
@@ -261,7 +242,7 @@ class ProductReviewTable extends AbstractTable
         return $this->createButtonGroupItem(
             'Approve',
             Url::generate('/product-review-gui/edit/approve', [
-                EditController::PARAM_ID => $productReviewEntity->getIdProductReview(),
+                ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
             ])
         );
     }
@@ -276,7 +257,7 @@ class ProductReviewTable extends AbstractTable
         return $this->createButtonGroupItem(
             'Reject',
             Url::generate('/product-review-gui/edit/reject', [
-                EditController::PARAM_ID => $productReviewEntity->getIdProductReview(),
+                ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
             ])
         );
     }
@@ -314,10 +295,10 @@ class ProductReviewTable extends AbstractTable
         return sprintf(
             '<a href="%s" target="_blank">%s %s</a>',
             Url::generate('/customer/view', [
-                'id-customer' => $productReviewEntity->getVirtualColumn(ProductReviewGuiQueryContainer::FIELD_ID_CUSTOMER),
+                'id-customer' => $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER),
             ]),
-            $productReviewEntity->getVirtualColumn(ProductReviewGuiQueryContainer::FIELD_CUSTOMER_FIRST_NAME),
-            $productReviewEntity->getVirtualColumn(ProductReviewGuiQueryContainer::FIELD_CUSTOMER_LAST_NAME)
+            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_FIRST_NAME),
+            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME)
         );
     }
 
@@ -333,7 +314,7 @@ class ProductReviewTable extends AbstractTable
             Url::generate('/product-management/view', [
                 'id-product-abstract' => $productReviewEntity->getFkProductAbstract(),
             ]),
-            $productReviewEntity->getVirtualColumn(static::COL_PRODUCT_NAME)
+            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_NAME)
         );
     }
 

@@ -4,15 +4,24 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
+    "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.1.0",
+    "spryker/product": "^5.2.0",
     "spryker/propel-orm": "^1.1.0",
+    "spryker/search": "^6.3.0",
+    "spryker/storage": "^3.0.0",
     "spryker/touch": "^3.1.0",
+    "spryker/twig": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/elastica": "Allow sending log messages to an Elastic Search server",
+    "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
     "psr-0": {
