@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Development\Business\DependencyTree\DependencyFinder;
 
 use Codeception\Test\Unit;
+use RuntimeException;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDependency;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
@@ -29,6 +30,8 @@ class ExternalDependencyTest extends Unit
 {
 
     /**
+     * @throws \RuntimeException
+     *
      * @return \Symfony\Component\Finder\SplFileInfo
      */
     public function getTestFile()
@@ -40,7 +43,7 @@ class ExternalDependencyTest extends Unit
             return $item;
         }
 
-        return false;
+        throw new RuntimeException('Not Found');
     }
 
     /**

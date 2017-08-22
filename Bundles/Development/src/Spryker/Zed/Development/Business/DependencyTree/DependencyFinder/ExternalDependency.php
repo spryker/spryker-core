@@ -8,10 +8,19 @@
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
 use PHP_CodeSniffer;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Runner;
 use PHP_CodeSniffer_File;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\Word\SeparatorToCamelCase;
+
+$manualAutoload = getcwd() . '/vendor/squizlabs/php_codesniffer/autoload.php';
+if (!class_exists(Config::class) && file_exists($manualAutoload)) {
+    require $manualAutoload;
+}
 
 class ExternalDependency extends AbstractDependencyFinder
 {
@@ -36,13 +45,12 @@ class ExternalDependency extends AbstractDependencyFinder
      */
     public function addDependencies(SplFileInfo $fileInfo)
     {
-        $content = $fileInfo->getContents();
         $_SERVER['argv'] = [];
         if (!defined('STDIN')) {
             define('STDIN', fopen(__FILE__, 'r'));
         }
-        $file = new PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], new PHP_CodeSniffer());
-        $file->start($content);
+
+        $file = $this->getFile($fileInfo);
         $tokens = $file->getTokens();
         $pointer = 0;
 
@@ -94,6 +102,40 @@ class ExternalDependency extends AbstractDependencyFinder
         }
 
         $this->cleanAutoloader();
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
+     *
+     * @return \PHP_CodeSniffer\Files\File
+     */
+    protected function getFile(SplFileInfo $fileInfo)
+    {
+        if (!class_exists(Runner::class)) {
+            // Deprecated - phpcs 2.x for BC
+            $phpcs = new PHP_CodeSniffer();
+            $phpcs->process([], null, []);
+            $fileObject = new PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], $phpcs);
+            $fileObject->start($fileInfo->getContents());
+
+            return $fileObject;
+        }
+
+        $phpcs = new Runner();
+
+        if (!defined('PHP_CODESNIFFER_CBF')) {
+            define('PHP_CODESNIFFER_CBF', false);
+        }
+        // Explictly specifying standard prevents it from searching for phpcs.xml type files.
+        $config = new Config(['--standard=PSR2']);
+        $phpcs->config = $config;
+        $phpcs->init();
+        $ruleset = new Ruleset($config);
+        $fileObject = new File($fileInfo->getPathname(), $ruleset, $config);
+        $fileObject->setContent($fileInfo->getContents());
+        $fileObject->parse();
+
+        return $fileObject;
     }
 
     /**
