@@ -48,6 +48,6 @@ interface CategoryNodeInterface
      *
      * @return void
      */
-    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode = null);
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
 
 }
