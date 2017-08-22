@@ -86,6 +86,10 @@ class CategoryUrl implements CategoryUrlInterface
         $categoryNodeUrl = $this->build($categoryNodeTransfer, $localeTransfer);
         $urlTransfer->setUrl($categoryNodeUrl);
 
+        if ($this->urlFacade->hasUrl($urlTransfer)) {
+            return;
+        }
+
         try {
             if ($urlTransfer->getIdUrl()) {
                 $this->urlFacade->updateUrl($urlTransfer);
