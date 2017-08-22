@@ -106,9 +106,20 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
         $navigationTreeTransfer->setNavigation($navigationTransfer);
 
         $rootNavigationNodes = $this->findRootNavigationNodes($navigationEntity);
+        $nodesWithoutPosition = new \ArrayObject();
         foreach ($rootNavigationNodes as $navigationNodeEntity) {
             $navigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($navigationNodeEntity, $localeTransfer);
+            if ($navigationNodeEntity->getPosition() === null) {
+                $nodesWithoutPosition[] = $navigationTreeNodeTransfer;
+
+                continue;
+            }
+
             $navigationTreeTransfer->addNode($navigationTreeNodeTransfer);
+        }
+
+        foreach ($nodesWithoutPosition as $item) {
+            $navigationTreeTransfer->getNodes()->append($item);
         }
 
         return $navigationTreeTransfer;

@@ -376,8 +376,8 @@ class DiscountFacadeTest extends Unit
         $this->assertEquals($discountGeneralTransfer->getIsActive(), $discountEntity->getIsActive());
         $this->assertEquals($discountGeneralTransfer->getIsExclusive(), $discountEntity->getIsExclusive());
         $this->assertEquals($discountGeneralTransfer->getDescription(), $discountEntity->getDescription());
-        $this->assertEquals($discountGeneralTransfer->getValidFrom(), $discountEntity->getValidFrom());
-        $this->assertEquals($discountGeneralTransfer->getValidTo(), $discountEntity->getValidTo());
+        $this->assertEquals($discountGeneralTransfer->getValidFrom()->format('Y-m-d'), $discountEntity->getValidFrom()->format('Y-m-d'));
+        $this->assertEquals($discountGeneralTransfer->getValidTo()->format('Y-m-d'), $discountEntity->getValidFrom()->format('Y-m-d'));
 
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         $this->assertEquals($discountCalculatorTransfer->getAmount(), $discountEntity->getAmount());
@@ -467,8 +467,8 @@ class DiscountFacadeTest extends Unit
         $this->assertEquals($discountGeneralTransfer->getIsActive(), $discountEntity->getIsActive());
         $this->assertEquals($discountGeneralTransfer->getIsExclusive(), $discountEntity->getIsExclusive());
         $this->assertEquals($discountGeneralTransfer->getDescription(), $discountEntity->getDescription());
-        $this->assertEquals($discountGeneralTransfer->getValidFrom(), $discountEntity->getValidFrom());
-        $this->assertEquals($discountGeneralTransfer->getValidTo(), $discountEntity->getValidTo());
+        $this->assertEquals($discountGeneralTransfer->getValidFrom()->format('Y-m-d'), $discountEntity->getValidFrom()->format('Y-m-d'));
+        $this->assertEquals($discountGeneralTransfer->getValidTo()->format('Y-m-d'), $discountEntity->getValidFrom()->format('Y-m-d'));
 
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         $this->assertEquals($discountCalculatorTransfer->getAmount(), $discountEntity->getAmount());
@@ -492,6 +492,14 @@ class DiscountFacadeTest extends Unit
         $hydratedDiscountConfiguratorTransfer = $discountFacade->getHydratedDiscountConfiguratorByIdDiscount(
             $idDiscount
         );
+
+        $discountDate = $discountConfiguratorTransfer->getDiscountGeneral()->getValidFrom()->format('Y-m-d');
+        $discountConfiguratorTransfer->getDiscountGeneral()->setValidFrom(new DateTime($discountDate));
+        $discountConfiguratorTransfer->getDiscountGeneral()->setValidTo(new DateTime($discountDate));
+
+        $originalDate = $hydratedDiscountConfiguratorTransfer->getDiscountGeneral()->getValidFrom()->format('Y-m-d');
+        $hydratedDiscountConfiguratorTransfer->getDiscountGeneral()->setValidFrom(new DateTime($originalDate));
+        $hydratedDiscountConfiguratorTransfer->getDiscountGeneral()->setValidTo(new DateTime($originalDate));
 
         $originalConfiguratorArray = $discountConfiguratorTransfer->toArray();
         $hydratedConfiguratorArray = $hydratedDiscountConfiguratorTransfer->toArray();

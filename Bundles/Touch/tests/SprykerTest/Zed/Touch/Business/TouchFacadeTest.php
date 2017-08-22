@@ -139,11 +139,14 @@ class TouchFacadeTest extends Unit
      */
     protected function createTouchEntity($itemEvent, $itemId)
     {
+        $date = new DateTime();
+        $date->sub(new \DateInterval('PT1M'));
+
         $touchEntity = new SpyTouch();
         $touchEntity->setItemEvent($itemEvent)
             ->setItemId($itemId)
             ->setItemType(self::ITEM_TYPE)
-            ->setTouched(new DateTime());
+            ->setTouched($date);
 
         $touchEntity->save();
 

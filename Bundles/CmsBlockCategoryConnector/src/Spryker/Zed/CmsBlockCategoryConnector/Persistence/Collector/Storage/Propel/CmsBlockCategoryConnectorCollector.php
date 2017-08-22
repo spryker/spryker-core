@@ -47,7 +47,7 @@ class CmsBlockCategoryConnectorCollector extends AbstractPropelCollectorQuery
         );
 
         $this->touchQuery->withColumn(
-            'GROUP_CONCAT(lower(' . SpyCmsBlockCategoryPositionTableMap::COL_NAME . ') || \':\' || ' . SpyCmsBlockTableMap::COL_NAME . ')',
+            'GROUP_CONCAT(concat(lower(' . SpyCmsBlockCategoryPositionTableMap::COL_NAME . '), \':\' ,' . SpyCmsBlockTableMap::COL_NAME . '))',
             static::COL_POSITIONS
         );
 
