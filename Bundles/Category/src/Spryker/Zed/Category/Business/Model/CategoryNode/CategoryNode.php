@@ -263,6 +263,8 @@ class CategoryNode implements CategoryNodeInterface
      * @param int $idCategoryNode
      * @param int $idChildrenDestinationNode
      *
+     * @throws MissingCategoryNodeException
+     *
      * @return void
      */
     public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
@@ -270,6 +272,10 @@ class CategoryNode implements CategoryNodeInterface
         $categoryNodeEntity = $this->queryContainer
             ->queryNodeById($idCategoryNode)
             ->findOne();
+
+        if (!$categoryNodeEntity) {
+            throw new MissingCategoryNodeException();
+        }
 
         $this->deleteNode($categoryNodeEntity, $idChildrenDestinationNode);
     }

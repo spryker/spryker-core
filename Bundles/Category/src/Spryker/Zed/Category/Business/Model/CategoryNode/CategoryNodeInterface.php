@@ -44,7 +44,9 @@ interface CategoryNodeInterface
 
     /**
      * @param int $idCategoryNode
-     * @param int|null $idChildrenDestinationNode
+     * @param int $idChildrenDestinationNode
+     *
+     * @throws MissingCategoryNodeException
      *
      * @return void
      */
