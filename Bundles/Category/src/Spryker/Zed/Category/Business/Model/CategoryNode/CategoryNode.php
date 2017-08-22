@@ -17,7 +17,7 @@ use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
-class CategoryNode implements CategoryNodeInterface
+class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterface
 {
 
     /**

@@ -42,14 +42,4 @@ interface CategoryNodeInterface
      */
     public function delete($idCategory);
 
-    /**
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @throws MissingCategoryNodeException
-     *
-     * @return void
-     */
-    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
-
 }
