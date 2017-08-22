@@ -44,9 +44,10 @@ interface CategoryNodeInterface
 
     /**
      * @param int $idCategoryNode
+     * @param int|null $idChildrenDestinationNode
      *
      * @return void
      */
-    public function deleteNodeById($idCategoryNode);
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode = null);
 
 }

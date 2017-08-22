@@ -41,7 +41,7 @@ class CategoryTree implements CategoryTreeInterface
      * @param int $idSourceCategoryNode
      * @param int $idDestinationCategoryNode
      *
-     * @return void
+     * @return int
      */
     public function moveSubTree($idSourceCategoryNode, $idDestinationCategoryNode)
     {
@@ -54,9 +54,19 @@ class CategoryTree implements CategoryTreeInterface
             ->queryNodeById($idDestinationCategoryNode)
             ->findOne();
 
+        $destinationChildrenIds = $this->queryContainer
+            ->queryFirstLevelChildren($idDestinationCategoryNode)
+            ->find()
+            ->getColumnValues('fkCategory');
+
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
             if ($childNodeEntity->getFkCategory() === $destinationCategoryNodeEntity->getFkCategory()) {
-                $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode());
+                $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
+                continue;
+            }
+
+            if (in_array($childNodeEntity->getFkCategory(), $destinationChildrenIds)) {
+                $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
                 continue;
             }
 
@@ -73,6 +83,8 @@ class CategoryTree implements CategoryTreeInterface
                 $idSourceCategoryNode
             );
         }
+
+        return count($firstLevelChildNodeCollection);
     }
 
     /**

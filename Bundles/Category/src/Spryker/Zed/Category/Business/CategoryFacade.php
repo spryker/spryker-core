@@ -318,14 +318,15 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param int $idCategoryNode
+     * @param int $idChildrenDestinationNode
      *
      * @return void
      */
-    public function deleteNodeById($idCategoryNode)
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
     {
         $this->getFactory()
             ->createCategoryNode()
-            ->deleteNodeById($idCategoryNode);
+            ->deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
     }
 
     /**

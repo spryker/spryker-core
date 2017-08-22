@@ -261,26 +261,36 @@ class CategoryNode implements CategoryNodeInterface
 
     /**
      * @param int $idCategoryNode
+     * @param int $idChildrenDestinationNode
      *
      * @return void
      */
-    public function deleteNodeById($idCategoryNode)
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
     {
         $categoryNodeEntity = $this->queryContainer
             ->queryNodeById($idCategoryNode)
             ->findOne();
 
-        $this->deleteNode($categoryNodeEntity);
+        $this->deleteNode($categoryNodeEntity, $idChildrenDestinationNode);
     }
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     * @param int|null $idChildrenDestinationNode
      *
      * @return void
      */
-    protected function deleteNode(SpyCategoryNode $categoryNodeEntity)
+    protected function deleteNode(SpyCategoryNode $categoryNodeEntity, $idChildrenDestinationNode = null)
     {
-        $this->moveSubTreeToParent($categoryNodeEntity);
+        $idChildrenDestinationNode = $idChildrenDestinationNode ?: $categoryNodeEntity->getFkParentCategoryNode();
+
+        do {
+            $childrenMoved = $this->categoryTree
+                ->moveSubTree(
+                    $categoryNodeEntity->getIdCategoryNode(),
+                    $idChildrenDestinationNode
+                );
+        } while ($childrenMoved > 0);
 
         $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
         $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
@@ -289,6 +299,8 @@ class CategoryNode implements CategoryNodeInterface
     }
 
     /**
+     * @deprecated You can directly use ::categoryTree to manipulate with subTree
+     *
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $sourceNodeEntity
      *
      * @return void

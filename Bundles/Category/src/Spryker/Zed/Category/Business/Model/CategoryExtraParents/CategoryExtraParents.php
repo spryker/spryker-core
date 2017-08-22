@@ -227,6 +227,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
                 continue;
             }
 
+            $this->moveSubTreeToParent($assignmentNodeEntity);
             $this->removeAssignmentNode($assignmentNodeEntity);
         }
     }
