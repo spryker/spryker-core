@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface;
 
@@ -94,7 +95,7 @@ class CalculatorFormDataProvider
     {
         $this->options = [
             CalculatorForm::OPTION_COLLECTOR_TYPE_CHOICES => [
-                CalculatorForm::COLLECTOR_TYPE_QUERY_STRING => 'Query String',
+                DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING => 'Query String',
             ],
         ];
 

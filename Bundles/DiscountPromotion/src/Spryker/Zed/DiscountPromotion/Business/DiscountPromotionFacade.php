@@ -75,7 +75,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      *
      * @param int $idDiscountPromotion
      *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
     {

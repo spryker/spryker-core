@@ -120,7 +120,7 @@ class DiscountPersist implements DiscountPersistInterface
         }
 
         $affectedRows = $this->handleDatabaseTransaction(function () use ($discountEntity, $discountConfiguratorTransfer) {
-            $this->executeUpdateDiscountTransaction($discountEntity, $discountConfiguratorTransfer);
+            return $this->executeUpdateDiscountTransaction($discountEntity, $discountConfiguratorTransfer);
         });
 
         return $affectedRows > 0;

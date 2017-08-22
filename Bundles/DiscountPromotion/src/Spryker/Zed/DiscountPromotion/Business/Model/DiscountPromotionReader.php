@@ -66,7 +66,7 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
     /**
      * @param int $idDiscountPromotion
      *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
     {

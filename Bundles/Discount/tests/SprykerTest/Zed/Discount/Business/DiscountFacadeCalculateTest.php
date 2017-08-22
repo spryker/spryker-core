@@ -300,8 +300,13 @@ class DiscountFacadeCalculateTest extends Unit
         $calculatorPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
         $messengerFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_MESSENGER);
         $decisionRulePlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
+        $collectorStrategyPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
 
         $container = new Container();
+
+        $container[DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS] = function () use ($collectorStrategyPlugins) {
+            return $collectorStrategyPlugins;
+        };
 
         $container[DiscountDependencyProvider::DECISION_RULE_PLUGINS] = function () use ($decisionRulePlugins) {
             return $decisionRulePlugins;

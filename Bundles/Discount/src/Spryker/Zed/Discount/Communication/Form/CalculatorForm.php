@@ -8,6 +8,7 @@ namespace Spryker\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
@@ -34,7 +35,6 @@ class CalculatorForm extends AbstractType
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
     const FIELD_COLLECTOR_TYPE_CHOICE = 'collector_type_choice';
-    const COLLECTOR_TYPE_QUERY_STRING = 'query-string';
 
     const OPTION_COLLECTOR_TYPE_CHOICES = 'collector_type_choices';
 
@@ -219,11 +219,11 @@ class CalculatorForm extends AbstractType
         $builder->add(self::FIELD_COLLECTOR_QUERY_STRING, 'textarea', [
             'label' => $label,
             'constraints' => [
-                new NotBlank(['groups' => static::COLLECTOR_TYPE_QUERY_STRING]),
+                new NotBlank(['groups' => DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING]),
                 new QueryString([
                     QueryString::OPTION_DISCOUNT_FACADE => $this->discountFacade,
                     QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_COLLECTOR,
-                    'groups' => static::COLLECTOR_TYPE_QUERY_STRING,
+                    'groups' => DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING,
                 ]),
             ],
             'attr' => [
