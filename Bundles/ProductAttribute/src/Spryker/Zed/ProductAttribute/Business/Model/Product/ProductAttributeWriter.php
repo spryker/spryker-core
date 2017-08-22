@@ -66,6 +66,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         $productAbstractTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
 
         $this->productFacade->saveProductAbstract($productAbstractTransfer);
+        $this->productFacade->touchProductAbstract($productAbstractTransfer->getIdProductAbstract());
     }
 
     /**
@@ -88,6 +89,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         $productConcreteTransfer->setLocalizedAttributes(new ArrayObject($localizedAttributes));
 
         $this->productFacade->saveProductConcrete($productConcreteTransfer);
+        $this->productFacade->touchProductConcrete($productConcreteTransfer->getIdProductConcrete());
     }
 
     /**
