@@ -263,7 +263,7 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
      * @param int $idCategoryNode
      * @param int $idChildrenDestinationNode
      *
-     * @throws MissingCategoryNodeException
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
      *
      * @return void
      */
