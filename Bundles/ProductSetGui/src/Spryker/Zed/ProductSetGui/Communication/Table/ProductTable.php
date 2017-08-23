@@ -118,7 +118,7 @@ class ProductTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->productSetGuiQueryContainer->queryProductAbstract($this->localeTransfer);
+        $query = $this->productSetGuiQueryContainer->queryProductAbstractForAssignment($this->idProductSetGuiGroup, $this->localeTransfer);
 
         $queryResults = $this->runQuery($query, $config, true);
 

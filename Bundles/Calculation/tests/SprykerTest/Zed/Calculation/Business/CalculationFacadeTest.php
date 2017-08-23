@@ -22,6 +22,7 @@ use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggreg
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ExpenseTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\GrandTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\InitialGrandTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemDiscountAmountFullAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemProductOptionPriceAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemSubtotalAggregatorPlugin;
@@ -550,6 +551,38 @@ class CalculationFacadeTest extends Unit
         $calculatedGrandTotal = $quoteTransfer->getTotals()->getGrandTotal();
 
         $this->assertSame(250, $calculatedGrandTotal);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateInitialGrandTotal()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new InitialGrandTotalCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSumSubtotalAggregation(200);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setSumPrice(350);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $calculationFacade->recalculateQuote($quoteTransfer);
+
+        $calculatedGrandTotal = $quoteTransfer->getTotals()->getGrandTotal();
+
+        $this->assertSame(550, $calculatedGrandTotal);
     }
 
     /**

@@ -10,6 +10,7 @@ use DateTime;
 use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -108,7 +109,11 @@ class CmsPageFormType extends AbstractType
      */
     protected function addSearchableField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SEARCHABLE, HiddenType::class);
+        $builder->add(
+            static::FIELD_SEARCHABLE,
+            CheckboxType::class,
+            ['required' => false]
+        );
 
         return $this;
     }

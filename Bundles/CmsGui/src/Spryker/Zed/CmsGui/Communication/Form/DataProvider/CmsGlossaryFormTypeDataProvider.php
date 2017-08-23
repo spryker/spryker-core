@@ -8,6 +8,7 @@ namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Spryker\Zed\CmsGui\Communication\Exception\CmsGlossaryNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
@@ -51,11 +52,24 @@ class CmsGlossaryFormTypeDataProvider
     /**
      * @param int $idCmsPage
      *
+     * @throws \Spryker\Zed\CmsGui\Communication\Exception\CmsGlossaryNotFoundException
+     *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function getData($idCmsPage)
     {
-        return $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
+        $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
+
+        if (!$cmsGlossaryTransfer) {
+            throw new CmsGlossaryNotFoundException(
+                sprintf(
+                    'Glossary attributes for page "%d" is not defined',
+                    $idCmsPage
+                )
+            );
+        }
+
+        return $cmsGlossaryTransfer;
     }
 
     /**
