@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Glossary\Business\Translation;
 
+use Exception;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -415,7 +416,7 @@ class TranslationManager implements TranslationManagerInterface
             }
 
             Propel::getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Propel::getConnection()->rollBack();
             throw $e;
         }
