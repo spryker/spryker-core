@@ -39,7 +39,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
     {
         $availabilityMap = [];
         foreach ($items as $item) {
-            $availabilityMap = array_merge($availabilityMap, $this->getAvailability($item));
+            $availabilityMap = array_replace($availabilityMap, $this->getAvailability($item));
         }
         return $availabilityMap;
     }
