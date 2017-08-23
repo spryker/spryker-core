@@ -74,6 +74,8 @@ interface FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
+     * @throws \Spryker\Zed\Oms\Business\Exception\StateMachineStateNotFoundException
+     *
      * @return string
      */
     public function getStateDisplayName(SpySalesOrderItem $orderItem);
