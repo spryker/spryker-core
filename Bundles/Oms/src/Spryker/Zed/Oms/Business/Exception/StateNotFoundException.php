@@ -9,6 +9,6 @@ namespace Spryker\Zed\Oms\Business\Exception;
 
 use Exception;
 
-class StateMachineStateNotFoundException extends Exception
+class StateNotFoundException extends Exception
 {
 }

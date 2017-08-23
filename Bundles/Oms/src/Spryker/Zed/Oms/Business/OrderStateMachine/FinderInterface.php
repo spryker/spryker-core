@@ -74,7 +74,7 @@ interface FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @throws \Spryker\Zed\Oms\Business\Exception\StateMachineStateNotFoundException
+     * @throws \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
      *
      * @return string
      */
