@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
+use Exception;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\CommandNotFoundException;
@@ -267,7 +268,7 @@ class Trigger implements TriggerInterface
 
             try {
                 $commandPlugin->run($stateMachineItemTransfer);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->transitionLog->setIsError(true);
                 $this->transitionLog->setErrorMessage(get_class($commandPlugin) . ' - ' . $e->getMessage());
                 $this->transitionLog->saveAll();

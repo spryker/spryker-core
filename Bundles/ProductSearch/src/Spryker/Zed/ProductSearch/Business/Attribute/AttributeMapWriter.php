@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
+use Exception;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
@@ -64,7 +65,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->rollBack();
@@ -98,7 +99,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->rollBack();

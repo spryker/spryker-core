@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
+use Exception;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
@@ -128,7 +129,7 @@ class Condition implements ConditionInterface
 
         try {
             $conditionCheck = $conditionPlugin->check($stateMachineItemTransfer);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $transactionLogger->setIsError(true);
             $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
             $transactionLogger->saveAll();

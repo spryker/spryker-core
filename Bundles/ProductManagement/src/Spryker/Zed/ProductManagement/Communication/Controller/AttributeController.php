@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Exception;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -213,7 +214,7 @@ class AttributeController extends AbstractController
 
         try {
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($request->get(self::PARAM_LOCALE_CODE));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
         }
 
