@@ -10,8 +10,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Propel\Runtime\Formatter\ArrayFormatter;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -59,9 +58,10 @@ class CategoryTree implements CategoryTreeInterface
 
         $destinationChildrenIds = $this->queryContainer
             ->queryFirstLevelChildren($idDestinationCategoryNode)
-            ->clearSelectColumns()->addSelectColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY)
+            ->select([SpyCategoryNodeTableMap::COL_FK_CATEGORY])
+            ->setFormatter(new SimpleArrayFormatter())
             ->find()
-            ->getColumnValues('fkCategory');
+            ->toArray();
 
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
             if ($childNodeEntity->getFkCategory() === $destinationCategoryNodeEntity->getFkCategory()) {

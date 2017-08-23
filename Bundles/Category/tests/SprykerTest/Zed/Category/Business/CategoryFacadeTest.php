@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Category\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 
 /**
@@ -53,37 +52,25 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteNodeById()
+    public function testDeleteByIdCategory()
     {
         $categoryFacade = $this->createCategoryFacade();
         $rootCategoryNodeTransfer = $categoryFacade->getNodeById(static::CATEGORY_NODE_ID_ROOT);
 
         //create initial category (inside root)
-        $categoryTransfer1 = (new CategoryTransfer())
-            ->fromArray([
-                'categoryKey' => 'Category 1',
-                'categoryNode' => new NodeTransfer(),
-                'parentCategoryNode' => $rootCategoryNodeTransfer,
-            ]);
-        $categoryFacade->create($categoryTransfer1);
+        $categoryTransfer1 = $this->tester->haveCategory([
+            'parentCategoryNode' => $rootCategoryNodeTransfer,
+        ]);
 
         //create a child to the initial category
-        $categoryTransfer2 = (new CategoryTransfer())
-            ->fromArray([
-                'categoryKey' => 'Category 2',
-                'categoryNode' => new NodeTransfer(),
-                'parentCategoryNode' => $categoryTransfer1->getCategoryNode(),
-            ]);
-        $categoryFacade->create($categoryTransfer2);
+        $categoryTransfer2 = $this->tester->haveCategory([
+            'parentCategoryNode' => $categoryTransfer1->getCategoryNode(),
+        ]);
 
         //create a control child to the child of initial
-        $categoryTransfer3 = (new CategoryTransfer())
-            ->fromArray([
-                'categoryKey' => 'Category 3',
-                'categoryNode' => new NodeTransfer(),
-                'parentCategoryNode' => $categoryTransfer2->getCategoryNode(),
-            ]);
-        $categoryFacade->create($categoryTransfer3);
+        $categoryTransfer3 = $this->tester->haveCategory([
+            'parentCategoryNode' => $categoryTransfer2->getCategoryNode(),
+        ]);
 
         //add extra parent to initial node (make c1 enveloped into c1 through c2)
         $categoryTransfer1->setExtraParents(new ArrayObject([
@@ -98,7 +85,7 @@ class CategoryFacadeTest extends Unit
             ->filterByFkParentCategoryNode($categoryTransfer1->getCategoryNode()->getIdCategoryNode())
             ->find();
 
-        $this->assertEquals(1, $resultNodes->count());
+        $this->assertEquals(1, $resultNodes->count(), 'If parent already contains a moving child category OR it is the same category, then they should be skipped');
         $this->assertEquals($categoryTransfer3->getCategoryNode()->getIdCategoryNode(), $resultNodes->getFirst()->getIdCategoryNode());
     }
 
