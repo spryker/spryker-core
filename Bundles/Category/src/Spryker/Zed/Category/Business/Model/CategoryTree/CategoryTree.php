@@ -9,6 +9,9 @@ namespace Spryker\Zed\Category\Business\Model\CategoryTree;
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -56,6 +59,7 @@ class CategoryTree implements CategoryTreeInterface
 
         $destinationChildrenIds = $this->queryContainer
             ->queryFirstLevelChildren($idDestinationCategoryNode)
+            ->clearSelectColumns()->addSelectColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY)
             ->find()
             ->getColumnValues('fkCategory');
 
