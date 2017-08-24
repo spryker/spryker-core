@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\ProductReview\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
+use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Shared\ProductReview\Exception\RatingOutOfRangeException;
-use Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface;
 use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
 /**
@@ -89,8 +89,11 @@ class CreateProductReviewTest extends Unit
     public function testCreateProductReviewThrowsExceptionWhenRatingExceedsRange()
     {
         // Arrange
+        $productReviewClientMock = $this->getProductReviewClientMock();
+        $this->tester->setDependency(ProductReviewDependencyProvider::CLIENT_PRODUCT_REVIEW, $productReviewClientMock);
+
         $productReviewTransfer = $this->tester->haveProductReview([
-            ProductReviewTransfer::RATING => $this->getProductReviewClient()->getMaximumRating() + 1,
+            ProductReviewTransfer::RATING => $productReviewClientMock->getMaximumRating() + 1,
         ]);
 
         // Assert
@@ -101,15 +104,13 @@ class CreateProductReviewTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Client\ProductReview\ProductReviewClientInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getProductReviewClient()
+    protected function getProductReviewClientMock()
     {
-        $mock = $this->getMockBuilder(ProductReviewToProductReviewInterface::class)->getMock();
+        $productReviewClientInterfaceMock = $this->getMockBuilder(ProductReviewClientInterface::class)->getMock();
 
-        $this->tester->setDependency(ProductReviewDependencyProvider::CLIENT_PRODUCT_REVIEW, $mock);
-
-        return $mock;
+        return $productReviewClientInterfaceMock;
     }
 
 }

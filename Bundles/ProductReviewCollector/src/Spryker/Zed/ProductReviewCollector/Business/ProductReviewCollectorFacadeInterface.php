@@ -19,7 +19,8 @@ interface ProductReviewCollectorFacadeInterface
 {
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Collects touched product reviews for the current local and stores them in Search.
      *
      * @api
      *
@@ -44,7 +45,10 @@ interface ProductReviewCollectorFacadeInterface
     );
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Collects touched "product abstract" entities and calculates their average rating and total review count.
+     *   - Considers "product reviews" with "approved" status only.
+     * - Stores results per "product abstract" in Storage.
      *
      * @api
      *

@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductReview\Business\Model;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReview;
+use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Shared\ProductReview\Exception\RatingOutOfRangeException;
-use Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
@@ -20,14 +20,14 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface
+     * @var \Spryker\Client\ProductReview\ProductReviewClientInterface
      */
     protected $productReviewClient;
 
     /**
-     * @param \Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface $productReviewClient
+     * @param \Spryker\Client\ProductReview\ProductReviewClientInterface $productReviewClient
      */
-    public function __construct(ProductReviewToProductReviewInterface $productReviewClient)
+    public function __construct(ProductReviewClientInterface $productReviewClient)
     {
         $this->productReviewClient = $productReviewClient;
     }

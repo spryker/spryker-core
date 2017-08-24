@@ -246,7 +246,7 @@ class ProductReviewTable extends AbstractTable
     {
         return $this->createButtonGroupItem(
             'Approve',
-            Url::generate('/product-review-gui/edit/approve', [
+            Url::generate('/product-review-gui/update/approve', [
                 ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
             ])
         );
@@ -261,7 +261,7 @@ class ProductReviewTable extends AbstractTable
     {
         return $this->createButtonGroupItem(
             'Reject',
-            Url::generate('/product-review-gui/edit/reject', [
+            Url::generate('/product-review-gui/update/reject', [
                 ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
             ])
         );

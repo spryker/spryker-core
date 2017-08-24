@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReview;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewBridge;
 use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToLocaleBridge;
 use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToProductBridge;
 use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToTouchBridge;
@@ -37,6 +36,11 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addLocaleFacade($container);
@@ -66,7 +70,7 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProductReviewClient(Container $container)
     {
         $container[static::CLIENT_PRODUCT_REVIEW] = function (Container $container) {
-            return new ProductReviewToProductReviewBridge($container->getLocator()->productReview()->client());
+            return $container->getLocator()->productReview()->client();
         };
 
         return $container;

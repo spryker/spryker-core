@@ -11,7 +11,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductReviewGui\Communication\Controller\EditController;
+use Spryker\Zed\ProductReviewGui\Communication\Controller\UpdateController;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainer;
 
 interface ProductReviewTableConstants
@@ -21,7 +21,7 @@ interface ProductReviewTableConstants
 
     const SORT_DESC = TableConfiguration::SORT_DESC;
 
-    const PARAM_ID = EditController::PARAM_ID;
+    const PARAM_ID = UpdateController::PARAM_ID;
 
     const COL_ID_PRODUCT_REVIEW = 'id_product_review';
     const COL_CREATED = ProductReviewGuiQueryContainer::FIELD_CREATED;

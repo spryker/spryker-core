@@ -32,10 +32,10 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $this->provideProductReviewFacade($container);
-        $this->provideLocaleFacade($container);
-        $this->provideUtilSanitizeService($container);
-        $this->provideUtilDateTimeService($container);
+        $this->addProductReviewFacade($container);
+        $this->addLocaleFacade($container);
+        $this->addUtilSanitizeService($container);
+        $this->addUtilDateTimeService($container);
 
         return $container;
     }
@@ -45,7 +45,7 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return void
      */
-    protected function provideUtilSanitizeService(Container $container)
+    protected function addUtilSanitizeService(Container $container)
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new ServiceProductReviewGuiToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
@@ -57,7 +57,7 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return void
      */
-    protected function provideUtilDateTimeService(Container $container)
+    protected function addUtilDateTimeService(Container $container)
     {
         $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
             return new ServiceProductReviewGuiToDateTimeBridge($container->getLocator()->utilDateTime()->service());
@@ -71,7 +71,7 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $this->provideProductReviewQueryContainer($container);
+        $this->addProductReviewQueryContainer($container);
 
         return $container;
     }
@@ -81,7 +81,7 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return void
      */
-    protected function provideProductReviewFacade(Container $container)
+    protected function addProductReviewFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT_REVIEW] = function (Container $container) {
             return new ProductReviewGuiToProductReviewBridge($container->getLocator()->productReview()->facade());
@@ -93,7 +93,7 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return void
      */
-    protected function provideProductReviewQueryContainer(Container $container)
+    protected function addProductReviewQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_PRODUCT_REVIEW] = function (Container $container) {
             return new ProductReviewGuiToProductReviewQueryContainerBridge($container->getLocator()->productReview()->queryContainer());
@@ -105,7 +105,7 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return void
      */
-    protected function provideLocaleFacade(Container $container)
+    protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductReviewGuiToLocaleBridge($container->getLocator()->locale()->facade());

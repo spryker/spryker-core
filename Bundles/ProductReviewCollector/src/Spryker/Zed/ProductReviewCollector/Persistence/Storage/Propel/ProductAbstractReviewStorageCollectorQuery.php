@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollectorQuery
@@ -32,6 +33,12 @@ class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollector
                 Criteria::INNER_JOIN
             )
             ->addGroupByColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
+
+        $this->touchQuery
+            ->addAnd(
+                SpyTouchTableMap::COL_ITEM_TYPE,
+                ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT
+            );
 
         $this->touchQuery
             ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)

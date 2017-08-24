@@ -107,12 +107,4 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(ProductReviewCollectorDependencyProvider::FACADE_SEARCH);
     }
 
-    /**
-     * @return \Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToProductReviewInterface
-     */
-    protected function getProductReviewFacade()
-    {
-        return $this->getProvidedDependency(ProductReviewCollectorDependencyProvider::FACADE_PRODUCT_REVIEW);
-    }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToCollectorBridge;
-use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToProductReviewBridge;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToSearchBridge;
 
 class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyProvider
@@ -36,7 +35,6 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
     {
         $this->addCollectorFacade($container);
         $this->addSearchFacade($container);
-        $this->addProductReviewFacade($container);
         $this->addDataReaderService($container);
         $this->addTouchQueryContainer($container);
         $this->addStore($container);
@@ -65,18 +63,6 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::FACADE_SEARCH] = function (Container $container) {
             return new ProductReviewCollectorToSearchBridge($container->getLocator()->search()->facade());
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function addProductReviewFacade(Container $container)
-    {
-        $container[static::FACADE_PRODUCT_REVIEW] = function (Container $container) {
-            return new ProductReviewCollectorToProductReviewBridge($container->getLocator()->productReview()->facade());
         };
     }
 

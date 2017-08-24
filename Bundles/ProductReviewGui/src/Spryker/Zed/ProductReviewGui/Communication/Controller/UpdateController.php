@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductReviewGui\Communication\ProductReviewGuiCommunicationFactory getFactory()
  */
-class EditController extends AbstractController
+class UpdateController extends AbstractController
 {
 
     const PARAM_ID = 'id';
