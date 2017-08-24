@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeKeyFormDataProvider;
@@ -16,12 +15,8 @@ use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationColle
 use Spryker\Zed\ProductAttributeGui\Communication\Form\DataProvider\AttributeFormDataProvider;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
 use Spryker\Zed\ProductAttributeGui\Communication\Table\AttributeTable;
-use Spryker\Zed\ProductAttributeGui\Communication\Table\ProductAbstractTable;
 use Spryker\Zed\ProductAttributeGui\Communication\Transfer\AttributeFormTransferMapper;
 use Spryker\Zed\ProductAttributeGui\Communication\Transfer\AttributeTranslationFormTransferMapper;
-use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToGlossaryInterface;
-use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerBridge;
-use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface;
 use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
 
 /**
@@ -29,17 +24,6 @@ use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
  */
 class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
-    /**
-     * @return \Spryker\Zed\ProductAttributeGui\Communication\Table\ProductAbstractTable
-     */
-    public function createProductAbstractTable()
-    {
-        return new ProductAbstractTable(
-            $this->getProductQueryContainer(),
-            $this->getLocaleFacade()->getCurrentLocale()
-        );
-    }
 
     /**
      * @return \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface
@@ -79,9 +63,14 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAttributeKeyForm(array $formData, array $formOptions = [])
+    public function getAttributeKeyForm(array $formData, array $formOptions = [])
     {
-        return $this->getFormFactory()->create(AttributeKeyForm::class, $formData, $formOptions);
+        return $this->getFormFactory()
+            ->create(
+                AttributeKeyForm::class,
+                $formData,
+                $formOptions
+            );
     }
 
     /**
@@ -127,15 +116,14 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return AttributeTranslationFormCollectionDataProvider
+     * @return \Spryker\Zed\ProductAttributeGui\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider
      */
     public function createAttributeTranslationFormCollectionDataProvider()
     {
         return new AttributeTranslationFormCollectionDataProvider(
             $this->getProductAttributeFacade(),
             $this->getProductAttributeQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getLocaleFacade()
         );
     }
 
@@ -161,19 +149,11 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return AttributeTranslationFormTransferMapper
+     * @return \Spryker\Zed\ProductAttributeGui\Communication\Transfer\AttributeTranslationFormTransferMapper
      */
     public function createAttributeTranslationFormTransferGenerator()
     {
         return new AttributeTranslationFormTransferMapper();
-    }
-
-    /**
-     * @return ProductAttributeGuiToGlossaryInterface
-     */
-    protected function getGlossaryFacade()
-    {
-        return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
@@ -185,7 +165,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return ProductAttributeGuiToProductAttributeQueryContainerInterface
+     * @return \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
     protected function getProductAttributeQueryContainer()
     {

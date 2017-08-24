@@ -9,18 +9,16 @@ namespace Spryker\Zed\ProductAttributeGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToGlossaryBridge;
 use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleBridge;
 use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeBridge;
+use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerBridge;
 use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductBridge;
-use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerBridge as ProductAttributeGuiToProductAttributeQueryContainerBridge;
 
 class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
-    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_ATTRIBUTE = 'QUERY_CONTAINER_PRODUCT_ATTRIBUTE';
@@ -34,7 +32,6 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = $this->addLocaleFacade($container);
         $container = $this->addProductAttributeFacade($container);
-        $container = $this->addGlossaryFacade($container);
 
         $container = $this->addProductQueryContainer($container);
         $container = $this->addProductAttributeQueryContainer($container);
@@ -85,9 +82,9 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addProductAttributeQueryContainer(Container $container)
     {
@@ -100,19 +97,4 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
         return $container;
     }
 
-    /**
-     * @param Container $container
-     *
-     * @return Container
-     */
-    protected function addGlossaryFacade(Container $container)
-    {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductAttributeGuiToGlossaryBridge(
-                $container->getLocator()->glossary()->facade()
-            );
-        };
-
-        return $container;
-    }
 }

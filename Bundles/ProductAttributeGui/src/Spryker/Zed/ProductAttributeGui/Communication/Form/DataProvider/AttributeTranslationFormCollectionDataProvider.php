@@ -8,45 +8,42 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToGlossaryInterface;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationCollectionForm;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationForm;
 use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface;
 use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface;
 use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface;
-use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationCollectionForm;
-use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationForm;
 
 class AttributeTranslationFormCollectionDataProvider
 {
 
     /**
-     * @var ProductAttributeGuiToProductAttributeQueryContainerInterface
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
     protected $productAttributeQueryContainer;
 
     /**
-     * @var ProductAttributeGuiToLocaleInterface
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @var ProductAttributeGuiToGlossaryInterface
-     */
-    protected $glossaryFacade;
-
-    /**
-     * @var ProductAttributeGuiToProductAttributeInterface
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface
      */
     protected $productAttributeFacade;
 
+    /**
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface $productAttributeFacade
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface $localeFacade
+     */
     public function __construct(
         ProductAttributeGuiToProductAttributeInterface $productAttributeFacade,
         ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer,
-        ProductAttributeGuiToLocaleInterface $localeFacade,
-        ProductAttributeGuiToGlossaryInterface $glossaryFacade
+        ProductAttributeGuiToLocaleInterface $localeFacade
     ) {
         $this->productAttributeQueryContainer = $productAttributeQueryContainer;
         $this->localeFacade = $localeFacade;
-        $this->glossaryFacade = $glossaryFacade;
         $this->productAttributeFacade = $productAttributeFacade;
     }
 

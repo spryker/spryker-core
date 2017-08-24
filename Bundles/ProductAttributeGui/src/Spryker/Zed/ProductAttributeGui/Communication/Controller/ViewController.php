@@ -36,7 +36,7 @@ class ViewController extends AbstractController
         $dataProvider = $this->getFactory()->createAttributeKeyFormDataProvider();
         $form = $this
             ->getFactory()
-            ->createAttributeKeyForm(
+            ->getAttributeKeyForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
@@ -89,7 +89,7 @@ class ViewController extends AbstractController
         $dataProvider = $this->getFactory()->createAttributeKeyFormDataProvider();
         $form = $this
             ->getFactory()
-            ->createAttributeKeyForm(
+            ->getAttributeKeyForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
