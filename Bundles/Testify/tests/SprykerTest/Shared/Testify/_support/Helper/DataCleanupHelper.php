@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Closure;
 use Codeception\Module;
-use Codeception\TestInterface;
 
 class DataCleanupHelper extends Module
 {
