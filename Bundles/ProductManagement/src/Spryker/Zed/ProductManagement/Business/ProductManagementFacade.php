@@ -14,5 +14,4 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductManagementFacade extends AbstractFacade implements ProductManagementFacadeInterface
 {
-
 }

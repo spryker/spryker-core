@@ -32,7 +32,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     protected $productFacade;
 
     /**
-     * @var ProductReaderInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface
      */
     protected $productReader;
 
@@ -40,7 +40,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $reader
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
-     * @param ProductReaderInterface $productReader
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface $productReader
      */
     public function __construct(
         ProductAttributeReaderInterface $reader,
@@ -126,11 +126,10 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
 
     /**
      * @param array $attributes
-     * @param bool $returnKeysToRemove
      *
      * @return array
      */
-    protected function getAttributesDataToSave(array $attributes, $returnKeysToRemove = false)
+    protected function getAttributesDataToSave(array $attributes)
     {
         $attributeData = [];
         $keysToRemove = [];
@@ -140,15 +139,12 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
             $key = $attribute[ProductAttributeQueryContainer::KEY];
             $value = trim($attribute['value']);
 
-            if ($value !== '') {
-                $attributeData[$localeCode][$key] = $value;
-            } else {
+            if ($value === '') {
                 $keysToRemove[$localeCode][$key] = $key;
+                continue;
             }
-        }
 
-        if ($returnKeysToRemove) {
-            return $keysToRemove;
+            $attributeData[$localeCode][$key] = $value;
         }
 
         return $attributeData;

@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
-
 
 use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductAbstractNotFoundException;
 use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductConcreteNotFoundException;
@@ -12,12 +15,12 @@ class ProductReader implements ProductReaderInterface
 {
 
     /**
-     * @var ProductAttributeToProductInterface
+     * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @param ProductAttributeToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
      */
     public function __construct(ProductAttributeToProductInterface $productFacade)
     {

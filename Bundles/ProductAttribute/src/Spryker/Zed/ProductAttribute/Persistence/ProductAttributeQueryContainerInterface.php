@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAttribute\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductAttributeQueryContainerInterface extends QueryContainerInterface
@@ -39,7 +38,7 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
      *
      * @param string[] $keys
      *
-     * @return SpyProductAttributeKeyQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKeyByKeys(array $keys);
 

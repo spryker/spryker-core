@@ -12,5 +12,4 @@ namespace Spryker\Zed\ProductManagement\Business;
  */
 interface ProductManagementFacadeInterface
 {
-
 }

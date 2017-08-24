@@ -286,7 +286,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
      *
      * @api
      *
-     * @param $attributeKey
+     * @param string $attributeKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer|null

@@ -65,7 +65,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      *
      * @param string[] $keys
      *
-     * @return SpyProductAttributeKeyQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKeyByKeys(array $keys)
     {
@@ -73,7 +73,6 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
             ->createProductAttributeKeyQuery()
             ->filterByKey_In($keys);
     }
-
 
     /**
      * @api
@@ -364,10 +363,10 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     protected function appendOrCriterion($criterionToAppend, AbstractCriterion $defaultCriterion = null)
     {
         if ($defaultCriterion === null) {
-            $defaultCriterion = $criterionToAppend;
-        } else {
-            $defaultCriterion->addOr($criterionToAppend);
+            return $criterionToAppend;
         }
+
+        $defaultCriterion->addOr($criterionToAppend);
 
         return $defaultCriterion;
     }
