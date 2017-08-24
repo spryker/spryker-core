@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Dependency\Facade;
+namespace Spryker\Shared\ProductAttribute;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
-interface ProductManagementToGlossaryInterface
+class ProductAttributeConfig
 {
 
-
+    const PRODUCT_ATTRIBUTE_GLOSSARY_PREFIX = 'product.attribute.';
 
 }

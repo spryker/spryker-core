@@ -7,12 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication;
 
-use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
@@ -21,7 +16,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
-use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
@@ -29,8 +23,6 @@ use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormAddTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
-use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMapper;
-use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -272,14 +264,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface
-     */
-    public function getGlossaryFacade()
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_GLOSSARY);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface
      */
     public function getUtilEncoding()
@@ -293,7 +277,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductAttributeCollection()
     {
         return $this->reindexAttributeCollection(
-            $this->getFacade()->getProductAttributeCollection()
+            $this->getProductAttributeFacade()->getProductAttributeCollection()
         );
     }
 
@@ -422,14 +406,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductAttributeFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
-    }
-
-    /**
-     * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
-     */
-    protected function createAttributeGlossaryKeyBuilder()
-    {
-        return new AttributeGlossaryKeyBuilder();
     }
 
     /**

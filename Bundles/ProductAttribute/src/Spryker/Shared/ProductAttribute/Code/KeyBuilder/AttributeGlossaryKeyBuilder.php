@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\ProductAttribute\Code\KeyBuilder;
 
+use Spryker\Shared\ProductAttribute\ProductAttributeConfig;
+
 class AttributeGlossaryKeyBuilder implements GlossaryKeyBuilderInterface
 {
 
@@ -17,7 +19,7 @@ class AttributeGlossaryKeyBuilder implements GlossaryKeyBuilderInterface
      */
     public function buildGlossaryKey($attributeKey)
     {
-        return 'product.attribute.' . $attributeKey;
+        return ProductAttributeConfig::PRODUCT_ATTRIBUTE_GLOSSARY_PREFIX . $attributeKey;
     }
 
 }

@@ -55,4 +55,12 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
         $this->productAttributeFacade->translateProductManagementAttribute($productManagementAttributeTransfer);
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getProductAttributeCollection()
+    {
+        return $this->productAttributeFacade->getProductAttributeCollection();
+    }
+
 }

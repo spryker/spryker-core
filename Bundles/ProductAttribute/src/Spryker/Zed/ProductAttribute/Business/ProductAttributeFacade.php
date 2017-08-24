@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttribute\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -233,6 +232,8 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      * @param string $searchText
@@ -248,6 +249,8 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param int $idProductManagementAttribute
      * @param int $idLocale
@@ -267,6 +270,8 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @return array
      */
     public function getAttributeAvailableTypes()
@@ -282,9 +287,9 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
      * @api
      *
      * @param $attributeKey
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return LocalizedProductManagementAttributeKeyTransfer|null
+     * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer|null
      */
     public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer)
     {
@@ -308,6 +313,20 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
         return $this->getFactory()
             ->createAttributeReader()
             ->suggestUnusedKeys($searchText, $limit);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getProductAttributeCollection()
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->getProductAttributeCollection();
     }
 
 }

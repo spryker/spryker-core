@@ -301,4 +301,14 @@ interface ProductAttributeFacadeInterface
      */
     public function suggestUnusedAttributeKeys($searchText = '', $limit = 10);
 
+    /**
+     * Specification:
+     * - Returns list of ALL product management attributes
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getProductAttributeCollection();
+
 }

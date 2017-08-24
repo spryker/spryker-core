@@ -33,4 +33,9 @@ interface ProductManagementToProductAttributeInterface
      */
     public function translateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
 
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getProductAttributeCollection();
+
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBridge;
@@ -40,7 +39,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_PRICE = 'FACADE_PRICE';
-    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     const FACADE_STOCK = 'FACADE_STOCK';
     const FACADE_MONEY = 'FACADE_MONEY';
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
@@ -94,10 +92,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::FACADE_PRICE] = function (Container $container) {
             return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
-        };
-
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductManagementToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
         $container[static::FACADE_STOCK] = function (Container $container) {
@@ -164,10 +158,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
-
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductManagementToGlossaryBridge($container->getLocator()->glossary()->facade());
         };
 
         $container[static::FACADE_STOCK] = function (Container $container) {

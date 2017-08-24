@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
-use Spryker\Zed\ProductAttributeGui\Communication\Form\Attribute\AttributeTranslationForm;
-//use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeValueTranslationForm;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationForm;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeValueTranslationForm;
 use Symfony\Component\Form\FormInterface;
 
 class AttributeTranslationFormTransferMapper implements AttributeTranslationFormTransferMapperInterface

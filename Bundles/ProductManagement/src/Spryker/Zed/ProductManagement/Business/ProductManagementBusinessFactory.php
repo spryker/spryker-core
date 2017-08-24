@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Business;
 
-use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductManagement\Business\Attribute\AttributeReader;
-use Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapper;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -19,18 +16,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  */
 class ProductManagementBusinessFactory extends AbstractBusinessFactory
 {
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Attribute\AttributeReaderInterface
-     */
-    public function createAttributeReader()
-    {
-        return new AttributeReader(
-            $this->getQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->createProductAttributeTransferGenerator()
-        );
-    }
 
     /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
@@ -81,14 +66,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface
-     */
-    protected function getGlossaryFacade()
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_GLOSSARY);
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected function getProductQueryContainer()
@@ -118,30 +95,6 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
-    }
-
-
-
-    ///under move
-    /**
-     * @return \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface
-     */
-    protected function createProductAttributeTransferGenerator()
-    {
-        return new ProductAttributeTransferMapper(
-            $this->getLocaleFacade(),
-            $this->getGlossaryFacade(),
-            $this->createAttributeGlossaryKeyBuilder()
-        );
-    }
-
-    //under move
-    /**
-     * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
-     */
-    protected function createAttributeGlossaryKeyBuilder()
-    {
-        return new AttributeGlossaryKeyBuilder();
     }
 
 }
