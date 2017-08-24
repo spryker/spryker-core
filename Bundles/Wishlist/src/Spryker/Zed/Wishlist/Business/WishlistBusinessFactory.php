@@ -39,7 +39,8 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     {
         return new Writer(
             $this->getQueryContainer(),
-            $this->createReader()
+            $this->createReader(),
+            $this->getProductFacade()
         );
     }
 
@@ -67,6 +68,14 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     protected function getItemExpanderPlugins()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_ITEM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT);
     }
 
 }

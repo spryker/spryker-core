@@ -26,4 +26,11 @@ interface WishlistToProductInterface
      */
     public function getProductConcreteIdBySku($sku);
 
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
+
 }
