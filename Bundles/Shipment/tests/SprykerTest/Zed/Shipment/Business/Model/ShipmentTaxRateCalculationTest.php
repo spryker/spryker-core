@@ -180,11 +180,11 @@ class ShipmentTaxRateCalculationTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $mockData
+     * @param array|null $mockData
      *
      * @return float
      */
-    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, array $mockData)
+    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
     {
         $productItemTaxRateCalculatorMock = $this->createShipmentTaxRateCalculator();
         $productItemTaxRateCalculatorMock->method('findTaxSetByIdShipmentMethod')->willReturn($mockData);
@@ -283,11 +283,11 @@ class ShipmentTaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return array
+     * @return array|null
      */
     protected function getMockDefaultTaxRates()
     {
-        return [];
+        return null;
     }
 
     /**
