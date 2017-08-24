@@ -89,13 +89,13 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
         }
 
         $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray());
+        $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray(), true);
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
         $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
         $parentCategoryNodeTransfer = new NodeTransfer();
         if ($parentCategoryNodeEntity !== null) {
-            $parentCategoryNodeTransfer->fromArray($parentCategoryNodeEntity->toArray());
+            $parentCategoryNodeTransfer->fromArray($parentCategoryNodeEntity->toArray(), true);
         }
         $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
 
@@ -132,9 +132,10 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
 
         if ($categoryTransfer->getIsActive()) {
             $this->categoryToucher->touchCategoryNodeActiveRecursively($idCategoryNode);
-        } else {
-            $this->categoryToucher->touchCategoryNodeDeletedRecursively($idCategoryNode);
+            return;
         }
+
+        $this->categoryToucher->touchCategoryNodeDeletedRecursively($idCategoryNode);
     }
 
     /**
