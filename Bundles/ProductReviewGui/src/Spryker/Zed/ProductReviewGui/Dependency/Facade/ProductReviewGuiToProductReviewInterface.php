@@ -24,7 +24,7 @@ interface ProductReviewGuiToProductReviewInterface
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function updateProductReview(ProductReviewTransfer $productReviewTransfer);
+    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer

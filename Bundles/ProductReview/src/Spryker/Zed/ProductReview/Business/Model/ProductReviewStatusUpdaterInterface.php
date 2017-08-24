@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductReview\Business\Model;
 
 use Generated\Shared\Transfer\ProductReviewTransfer;
 
-interface ProductReviewUpdaterInterface
+interface ProductReviewStatusUpdaterInterface
 {
 
     /**
@@ -17,6 +17,6 @@ interface ProductReviewUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function updateProductReview(ProductReviewTransfer $productReviewTransfer);
+    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer);
 
 }

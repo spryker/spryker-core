@@ -36,7 +36,7 @@ interface ProductReviewClientInterface
      *
      * @return array
      */
-    public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer);
+    public function findProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer);
 
     /**
      * Specification:
@@ -49,6 +49,16 @@ interface ProductReviewClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractReviewTransfer|null
      */
-    public function findProductAbstractReview($idProductAbstract, $localeName);
+    public function findProductAbstractReviewInStorage($idProductAbstract, $localeName);
+
+    /**
+     * Specification:
+     * - Retrieves the available maximum rating value
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMaximumRating();
 
 }

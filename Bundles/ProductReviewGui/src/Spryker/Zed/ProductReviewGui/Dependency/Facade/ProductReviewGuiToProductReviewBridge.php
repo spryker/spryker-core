@@ -40,9 +40,9 @@ class ProductReviewGuiToProductReviewBridge implements ProductReviewGuiToProduct
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function updateProductReview(ProductReviewTransfer $productReviewTransfer)
+    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer)
     {
-        return $this->productReviewFacade->updateProductReview($productReviewTransfer);
+        return $this->productReviewFacade->updateProductReviewStatus($productReviewTransfer);
     }
 
     /**

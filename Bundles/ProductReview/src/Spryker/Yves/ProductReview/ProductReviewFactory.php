@@ -8,6 +8,8 @@
 namespace Spryker\Yves\ProductReview;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\ProductReview\Plugin\Provider\ProductAbstractReviewMaximumRatingTwigServiceProvider;
+use Spryker\Yves\ProductReview\Twig\ProductAbstractReviewMaximumRatingTwigExtension;
 use Spryker\Yves\ProductReview\Twig\ProductAbstractReviewTwigExtension;
 
 /**
@@ -22,6 +24,14 @@ class ProductReviewFactory extends AbstractFactory
     public function createProductAbstractReviewTwigExtension()
     {
         return new ProductAbstractReviewTwigExtension($this->getClient(), $this->getApplication());
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\TwigExtension
+     */
+    public function createProductAbstractReviewMaximumRatingTwigExtension()
+    {
+        return new ProductAbstractReviewMaximumRatingTwigExtension($this->getClient());
     }
 
     /**

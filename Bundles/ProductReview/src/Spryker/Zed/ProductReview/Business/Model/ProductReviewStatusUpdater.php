@@ -12,7 +12,7 @@ use Orm\Zed\ProductReview\Persistence\Base\SpyProductReview;
 use Spryker\Zed\ProductReview\Business\Model\Touch\ProductReviewTouchInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class ProductReviewUpdater implements ProductReviewUpdaterInterface
+class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
 {
 
     use DatabaseTransactionHandlerTrait;
@@ -42,10 +42,12 @@ class ProductReviewUpdater implements ProductReviewUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function updateProductReview(ProductReviewTransfer $productReviewTransfer)
+    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer)
     {
+        $this->assertProductReviewTransfer($productReviewTransfer);
+
         return $this->handleDatabaseTransaction(function () use ($productReviewTransfer) {
-            return $this->executeUpdateProductReviewTransaction($productReviewTransfer);
+            return $this->executeUpdateProductReviewStatusTransaction($productReviewTransfer);
         });
     }
 
@@ -54,7 +56,7 @@ class ProductReviewUpdater implements ProductReviewUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    protected function executeUpdateProductReviewTransaction(ProductReviewTransfer $productReviewTransfer)
+    protected function executeUpdateProductReviewStatusTransaction(ProductReviewTransfer $productReviewTransfer)
     {
         $productReviewEntity = $this->productReviewEntityReader->getProductReviewEntity($productReviewTransfer);
 
@@ -85,7 +87,7 @@ class ProductReviewUpdater implements ProductReviewUpdaterInterface
      */
     protected function mapTransferToEntity(ProductReviewTransfer $productReviewTransfer, SpyProductReview $productReviewEntity)
     {
-        $productReviewEntity->fromArray($productReviewTransfer->modifiedToArray());
+        $productReviewEntity->setStatus($productReviewTransfer->getStatus());
 
         return $productReviewEntity;
     }
@@ -101,6 +103,17 @@ class ProductReviewUpdater implements ProductReviewUpdaterInterface
         $productReviewTransfer->fromArray($productReviewEntity->toArray(), true);
 
         return $productReviewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return void
+     */
+    protected function assertProductReviewTransfer(ProductReviewTransfer $productReviewTransfer)
+    {
+        $productReviewTransfer->requireIdProductReview();
+        $productReviewTransfer->requireStatus();
     }
 
 }

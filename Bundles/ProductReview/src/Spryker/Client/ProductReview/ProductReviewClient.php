@@ -42,7 +42,7 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      *
      * @return array
      */
-    public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
+    public function findProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
     {
         $searchQuery = $this->getFactory()->createProductReviewsQueryPlugin($productReviewSearchRequestTransfer);
         $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
@@ -62,11 +62,23 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      *
      * @return \Generated\Shared\Transfer\ProductAbstractReviewTransfer|null
      */
-    public function findProductAbstractReview($idProductAbstract, $localeName)
+    public function findProductAbstractReviewInStorage($idProductAbstract, $localeName)
     {
         return $this->getFactory()
             ->createProductAbstractReviewStorageReader()
             ->findProductAbstractReview($idProductAbstract, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getMaximumRating()
+    {
+        return $this->getFactory()->getConfig()->getMaximumRating();
     }
 
 }

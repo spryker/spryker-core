@@ -12,8 +12,8 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    business:
-        path: .
+    Business:
+        path: Business
         class_name: ProductReviewBusinessTester
         modules:
             enabled:
@@ -29,3 +29,4 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Shared\ProductReview\Helper\ProductReviewDataHelper
+

@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductReview\Business\Model;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReview;
+use Spryker\Shared\ProductReview\Exception\RatingOutOfRangeException;
+use Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
@@ -18,12 +20,27 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * @var \Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface
+     */
+    protected $productReviewClient;
+
+    /**
+     * @param \Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface $productReviewClient
+     */
+    public function __construct(ProductReviewToProductReviewInterface $productReviewClient)
+    {
+        $this->productReviewClient = $productReviewClient;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
     public function createProductReview(ProductReviewTransfer $productReviewTransfer)
     {
+        $this->assertRatingRange($productReviewTransfer);
+
         return $this->handleDatabaseTransaction(function () use ($productReviewTransfer) {
             return $this->executeCreateProductReviewTransaction($productReviewTransfer);
         });
@@ -82,6 +99,23 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         $productReviewTransfer->fromArray($productReviewEntity->toArray(), true);
 
         return $productReviewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @throws \Spryker\Shared\ProductReview\Exception\RatingOutOfRangeException
+     *
+     * @return void
+     */
+    protected function assertRatingRange(ProductReviewTransfer $productReviewTransfer)
+    {
+        if ($productReviewTransfer->getRating() > $this->productReviewClient->getMaximumRating()) {
+            throw new RatingOutOfRangeException(
+                'Field Rating exceeds limit %d',
+                $this->productReviewClient->getMaximumRating()
+            );
+        }
     }
 
 }

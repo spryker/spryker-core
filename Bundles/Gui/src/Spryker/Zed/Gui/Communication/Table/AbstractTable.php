@@ -205,6 +205,7 @@ abstract class AbstractTable
 
         $headers = $this->config->getHeader();
         $safeColumns = $this->config->getRawColumns();
+        $extraColumns = $this->config->getExtraColumns();
 
         $isArray = is_array($headers);
         foreach ($data as $row) {
@@ -216,10 +217,11 @@ abstract class AbstractTable
             }
 
             $row = $this->escapeColumns($row, $safeColumns);
-
-            $extra = array_diff($originalRow, $row);
             $row = array_values($row);
-            $row = array_merge($row, $extra);
+
+            if ($isArray) {
+                $row = $this->addExtraColumns($row, $originalRow, $extraColumns);
+            }
 
             $tableData[] = $row;
         }
@@ -266,6 +268,25 @@ abstract class AbstractTable
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $row
+     * @param array $originalRow
+     * @param array $extraColumns
+     *
+     * @return array
+     */
+    protected function addExtraColumns(array $row, array $originalRow, array $extraColumns)
+    {
+        foreach ($extraColumns as $extraColumnName) {
+            if (array_key_exists($extraColumnName, $row)) {
+                continue;
+            }
+            $row[$extraColumnName] = $originalRow[$extraColumnName];
+        }
+
+        return $row;
     }
 
     /**

@@ -8,10 +8,23 @@
 namespace Spryker\Client\ProductReview\Zed;
 
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
-use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
+use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge;
 
-class ProductReviewStub extends ZedRequestStub implements ProductReviewStubInterface
+class ProductReviewStub implements ProductReviewStubInterface
 {
+
+    /**
+     * @var \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge
+     */
+    protected $zedRequestClient;
+
+    /**
+     * @param \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge $zedRequestClient
+     */
+    public function __construct(ProductReviewToZedRequestBridge $zedRequestClient)
+    {
+        $this->zedRequestClient = $zedRequestClient;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
@@ -20,7 +33,7 @@ class ProductReviewStub extends ZedRequestStub implements ProductReviewStubInter
      */
     public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {
-        return $this->zedStub->call('/product-review/gateway/submit-customer-review', $productReviewRequestTransfer);
+        return $this->zedRequestClient->call('/product-review/gateway/submit-customer-review', $productReviewRequestTransfer);
     }
 
 }

@@ -86,6 +86,7 @@ class ProductReviewTable extends AbstractTable
             ProductReviewTableConstants::COL_ACTIONS,
             ProductReviewTableConstants::COL_CUSTOMER_NAME,
             ProductReviewTableConstants::COL_PRODUCT_NAME,
+            ProductReviewTableConstants::EXTRA_DETAILS,
         ]);
 
         $config->setSearchable([
@@ -102,6 +103,10 @@ class ProductReviewTable extends AbstractTable
             ProductReviewTableConstants::COL_PRODUCT_NAME,
             ProductReviewTableConstants::COL_RATING,
             ProductReviewTableConstants::COL_STATUS,
+        ]);
+
+        $config->setExtraColumns([
+            ProductReviewTableConstants::EXTRA_DETAILS,
         ]);
 
         $config->setDefaultSortField(ProductReviewTableConstants::COL_ID_PRODUCT_REVIEW, ProductReviewTableConstants::SORT_DESC);

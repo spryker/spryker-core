@@ -7,10 +7,11 @@
 
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
@@ -20,10 +21,10 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
  * @group ProductReview
  * @group Business
  * @group Facade
- * @group UpdateProductReviewTest
+ * @group UpdateProductReviewStatusTest
  * Add your own group annotations below this line
  */
-class UpdateProductReviewTest extends Test
+class UpdateProductReviewStatusTest extends Unit
 {
 
     /**
@@ -34,7 +35,7 @@ class UpdateProductReviewTest extends Test
     /**
      * @return void
      */
-    public function testUpdateProductReviewPersistsChangesToDatabase()
+    public function testUpdateProductReviewStatusPersistsChangesToDatabase()
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -42,14 +43,15 @@ class UpdateProductReviewTest extends Test
 
         $productReviewTransferToUpdate = (new ProductReviewBuilder([
             ProductReviewTransfer::ID_PRODUCT_REVIEW => $productReviewTransfer->getIdProductReview(),
+            ProductReviewTransfer::STATUS => SpyProductReviewTableMap::COL_STATUS_APPROVED,
         ]))->build();
 
         // Act
-        $updatedProductReviewTransfer = $this->tester->getFacade()->updateProductReview($productReviewTransferToUpdate);
+        $updatedProductReviewTransfer = $this->tester->getFacade()->updateProductReviewStatus($productReviewTransferToUpdate);
 
         // Assert
         $actualProductReviewTransfer = $this->tester->getFacade()->findProductReview($updatedProductReviewTransfer);
-        $this->assertArraySubset($productReviewTransferToUpdate->modifiedToArray(), $actualProductReviewTransfer->toArray(), 'Updated product review should have expected data.');
+        $this->assertEquals($productReviewTransferToUpdate->getStatus(), $actualProductReviewTransfer->getStatus(), 'Updated product review should have expected data.');
     }
 
     /**
@@ -60,7 +62,7 @@ class UpdateProductReviewTest extends Test
      *
      * @return void
      */
-    public function testUpdateProductReviewTouchesProductReviewSearchResource($inputStatus, $isTouchActive)
+    public function testUpdateProductReviewStatusTouchesProductReviewSearchResource($inputStatus, $isTouchActive)
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -72,7 +74,7 @@ class UpdateProductReviewTest extends Test
         ]))->build();
 
         // Act
-        $this->tester->getFacade()->updateProductReview($productReviewTransferToUpdate);
+        $this->tester->getFacade()->updateProductReviewStatus($productReviewTransferToUpdate);
 
         // Assert
         if ($isTouchActive) {
@@ -93,6 +95,40 @@ class UpdateProductReviewTest extends Test
             'approved status' => [SpyProductReviewTableMap::COL_STATUS_APPROVED, true],
             'rejected status' => [SpyProductReviewTableMap::COL_STATUS_REJECTED, false],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductReviewStatusThrowsExceptionWhenProductReviewIdIsNotProvidedInTransfer()
+    {
+        // Arrange
+        $productReviewTransferToUpdate = (new ProductReviewBuilder([
+            ProductReviewTransfer::ID_PRODUCT_REVIEW => rand(),
+        ]))->build();
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->updateProductReviewStatus($productReviewTransferToUpdate);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductReviewStatusThrowsExceptionWhenProductReviewStatusIsNotProvidedInTransfer()
+    {
+        // Arrange
+        $productReviewTransferToUpdate = (new ProductReviewBuilder([
+            ProductReviewTransfer::STATUS => SpyProductReviewTableMap::COL_STATUS_APPROVED,
+        ]))->build();
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->updateProductReviewStatus($productReviewTransferToUpdate);
     }
 
 }

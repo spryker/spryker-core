@@ -60,7 +60,7 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
      */
     public function renderProductAbstractReview(Twig_Environment $twig, $idProductAbstract, $template)
     {
-        $productAbstractReviewTransfer = $this->productReviewClient->findProductAbstractReview($idProductAbstract, $this->getLocale());
+        $productAbstractReviewTransfer = $this->productReviewClient->findProductAbstractReviewInStorage($idProductAbstract, $this->getLocale());
 
         if (!$productAbstractReviewTransfer) {
             return '';

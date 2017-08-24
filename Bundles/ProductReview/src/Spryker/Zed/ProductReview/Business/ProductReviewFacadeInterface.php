@@ -27,7 +27,7 @@ interface ProductReviewFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the product review that matches the provided id from persistent storage.
+     * - Retrieves the product review from persistent storage that matches the provided id in the transfer object.
      *
      * @api
      *
@@ -39,7 +39,7 @@ interface ProductReviewFacadeInterface
 
     /**
      * Specification:
-     * - Updates provided values of a product review in persistent storage that matches the provided id.
+     * - Updates product review's status in persistent storage that matches the provided id in the transfer object.
      * - Returns the provided transfer object updated with the saved entity's data.
      * - Touches "product review"
      *   - As "active" if status was updated to "approved".
@@ -47,7 +47,7 @@ interface ProductReviewFacadeInterface
      * - Touches "product review abstract" entities as "active".
      * - Touches product abstract
      *   - Touches abstract product and all its variants.
-     *   - Touches related "product_abstract", "product_concrete" and "attribute_map" entries.
+     *   - Touches related "product_abstract", "product_concrete", and "attribute_map" entries.
      *   - Used touch event status (active, inactive) depends on the current status of the product and its variants.
      *
      * @api
@@ -56,16 +56,16 @@ interface ProductReviewFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function updateProductReview(ProductReviewTransfer $productReviewTransfer);
+    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer);
 
     /**
      * Specification:
-     * - Permanently deletes the product review from persistent storage that matches the provided id.
+     * - Permanently deletes the product review from persistent storage that matches the provided id in the transfer object.
      * - Touches "product review" entries as "delete".
      * - Touches "product review abstract" entries as "active".
      * - Touches product abstract
      *   - Touches abstract product and all its variants.
-     *   - Touches related "product_abstract", "product_concrete" and "attribute_map" entries.
+     *   - Touches related "product_abstract", "product_concrete", and "attribute_map" entries.
      *   - Used touch event status (active, inactive) depends on the current status of the product and its variants.
      *
      * @api

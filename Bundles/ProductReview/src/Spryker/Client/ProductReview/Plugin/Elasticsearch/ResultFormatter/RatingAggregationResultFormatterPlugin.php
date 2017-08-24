@@ -14,7 +14,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
  */
-class RatingAggregationResultFormatter extends AbstractElasticsearchResultFormatterPlugin
+class RatingAggregationResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
 
     const NAME = 'ratingAggregation';

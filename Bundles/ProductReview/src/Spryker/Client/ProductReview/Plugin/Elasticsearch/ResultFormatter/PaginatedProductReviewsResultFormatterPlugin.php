@@ -14,7 +14,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
  */
-class PaginatedProductReviewsResultFormatter extends AbstractElasticsearchResultFormatterPlugin
+class PaginatedProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
 
     const NAME = 'pagination';

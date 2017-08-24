@@ -12,7 +12,7 @@ use Spryker\Zed\ProductReview\Business\Model\ProductReviewCreator;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewDeleter;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewEntityReader;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewReader;
-use Spryker\Zed\ProductReview\Business\Model\ProductReviewUpdater;
+use Spryker\Zed\ProductReview\Business\Model\ProductReviewStatusUpdater;
 use Spryker\Zed\ProductReview\Business\Model\Touch\ProductReviewTouch;
 use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
@@ -28,7 +28,7 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductReviewCreator()
     {
-        return new ProductReviewCreator();
+        return new ProductReviewCreator($this->getProvidedDependency(ProductReviewDependencyProvider::CLIENT_PRODUCT_REVIEW));
     }
 
     /**
@@ -40,11 +40,11 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductReview\Business\Model\ProductReviewUpdaterInterface
+     * @return \Spryker\Zed\ProductReview\Business\Model\ProductReviewStatusUpdaterInterface
      */
-    public function createProductReviewUpdater()
+    public function createProductReviewStatusUpdater()
     {
-        return new ProductReviewUpdater($this->createProductReviewEntityReader(), $this->createProductReviewTouch());
+        return new ProductReviewStatusUpdater($this->createProductReviewEntityReader(), $this->createProductReviewTouch());
     }
 
     /**

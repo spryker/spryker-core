@@ -37,7 +37,7 @@ class EditController extends AbstractController
 
         $this->getFactory()
             ->getProductReviewFacade()
-            ->updateProductReview($productReviewTransfer);
+            ->updateProductReviewStatus($productReviewTransfer);
 
         $this->addSuccessMessage(sprintf(
             'Product Review #%d has been approved.',
@@ -65,7 +65,7 @@ class EditController extends AbstractController
 
         $this->getFactory()
             ->getProductReviewFacade()
-            ->updateProductReview($productReviewTransfer);
+            ->updateProductReviewStatus($productReviewTransfer);
 
         $this->addSuccessMessage(sprintf(
             'Product Review #%d has been rejected.',

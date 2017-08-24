@@ -7,9 +7,12 @@
 
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
+use Spryker\Shared\ProductReview\Exception\RatingOutOfRangeException;
+use Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface;
+use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -21,7 +24,7 @@ use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
  * @group CreateProductReviewTest
  * Add your own group annotations below this line
  */
-class CreateProductReviewTest extends Test
+class CreateProductReviewTest extends Unit
 {
 
     /**
@@ -78,6 +81,35 @@ class CreateProductReviewTest extends Test
             'approved status' => [SpyProductReviewTableMap::COL_STATUS_APPROVED],
             'rejected status' => [SpyProductReviewTableMap::COL_STATUS_REJECTED],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateProductReviewThrowsExceptionWhenRatingExceedsRange()
+    {
+        // Arrange
+        $productReviewTransfer = $this->tester->haveProductReview([
+            ProductReviewTransfer::RATING => $this->getProductReviewClient()->getMaximumRating() + 1,
+        ]);
+
+        // Assert
+        $this->expectException(RatingOutOfRangeException::class);
+
+        // Act
+        $this->tester->getFacade()->createProductReview($productReviewTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReview\Dependency\Client\ProductReviewToProductReviewInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getProductReviewClient()
+    {
+        $mock = $this->getMockBuilder(ProductReviewToProductReviewInterface::class)->getMock();
+
+        $this->tester->setDependency(ProductReviewDependencyProvider::CLIENT_PRODUCT_REVIEW, $mock);
+
+        return $mock;
     }
 
 }

@@ -45,4 +45,12 @@ class ProductReviewConfig extends AbstractBundleConfig
         return $paginationConfigTransfer;
     }
 
+    /**
+     * @return int
+     */
+    public function getMaximumRating()
+    {
+        return 5;
+    }
+
 }

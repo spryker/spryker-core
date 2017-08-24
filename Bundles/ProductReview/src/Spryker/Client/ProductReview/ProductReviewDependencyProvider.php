@@ -11,11 +11,12 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchBridge;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageBridge;
+use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\PaginatedProductReviewsQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\RatingAggregationQueryExpanderPlugin;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatter;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatter;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 
 class ProductReviewDependencyProvider extends AbstractDependencyProvider
@@ -68,7 +69,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     protected function addZedRequestClient(Container $container)
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+            return new ProductReviewToZedRequestBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;
@@ -148,8 +149,8 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     {
         return [
             new ProductReviewsResultFormatterPlugin(),
-            new PaginatedProductReviewsResultFormatter(),
-            new RatingAggregationResultFormatter(),
+            new PaginatedProductReviewsResultFormatterPlugin(),
+            new RatingAggregationResultFormatterPlugin(),
         ];
     }
 

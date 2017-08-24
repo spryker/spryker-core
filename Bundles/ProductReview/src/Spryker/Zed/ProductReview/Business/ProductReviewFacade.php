@@ -57,11 +57,11 @@ class ProductReviewFacade extends AbstractFacade implements ProductReviewFacadeI
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function updateProductReview(ProductReviewTransfer $productReviewTransfer)
+    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer)
     {
         return $this->getFactory()
-            ->createProductReviewUpdater()
-            ->updateProductReview($productReviewTransfer);
+            ->createProductReviewStatusUpdater()
+            ->updateProductReviewStatus($productReviewTransfer);
     }
 
     /**
