@@ -36,7 +36,7 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
      */
     public function preSave(ConnectionInterface $con = null)
     {
-        $this->statusChanged = in_array(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, $this->modifiedColumns);
+        $this->statusChanged = array_key_exists(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, $this->modifiedColumns);
 
         return true;
     }
@@ -50,10 +50,10 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
     {
         if ($this->statusChanged) {
             // FIXME Wrong dependency direction
-            $e = new SpyOmsOrderItemStateHistory();
-            $e->setOrderItem($this);
-            $e->setState($this->getState());
-            $e->save();
+            $omsOrderItemStateHistoryEntity = $this->createOmsOrderItemStateHistoryEntity();
+            $omsOrderItemStateHistoryEntity->setOrderItem($this);
+            $omsOrderItemStateHistoryEntity->setState($this->getState());
+            $omsOrderItemStateHistoryEntity->save();
         }
         $this->statusChanged = false;
     }
@@ -66,6 +66,14 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
         parent::clear();
 
         $this->statusChanged = false;
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory
+     */
+    protected function createOmsOrderItemStateHistoryEntity()
+    {
+        return new SpyOmsOrderItemStateHistory();
     }
 
 }
