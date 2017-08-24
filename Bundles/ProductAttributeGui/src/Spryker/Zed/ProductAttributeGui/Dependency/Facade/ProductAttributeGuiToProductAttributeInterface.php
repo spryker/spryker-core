@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttributeGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 interface ProductAttributeGuiToProductAttributeInterface
@@ -126,10 +125,10 @@ interface ProductAttributeGuiToProductAttributeInterface
     public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
 
     /**
-     * @param $attributeKey
-     * @param LocaleTransfer $localeTransfer
+     * @param string $attributeKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return LocalizedProductManagementAttributeKeyTransfer|null
+     * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer|null
      */
     public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer);
 

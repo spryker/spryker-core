@@ -22,12 +22,12 @@ class AttributeTable extends AbstractTable
     const COL_ACTIONS = 'actions';
 
     /**
-     * @var ProductAttributeGuiToProductAttributeQueryContainerInterface
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
     protected $productAttributeQueryContainer;
 
     /**
-     * @param ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer
      */
     public function __construct(ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer)
     {

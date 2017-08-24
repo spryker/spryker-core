@@ -1,20 +1,23 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer;
-
-
-use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
-use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface;
 
 class ProductAttributeGuiToProductAttributeQueryContainerBridge implements ProductAttributeGuiToProductAttributeQueryContainerInterface
 {
 
     /**
-     * @var ProductAttributeQueryContainerInterface
+     * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface
      */
     protected $productAttributeQueryContainer;
 
+    /**
+     * @param \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface $productAttributeQueryContainer
+     */
     public function __construct($productAttributeQueryContainer)
     {
         $this->productAttributeQueryContainer = $productAttributeQueryContainer;
@@ -41,7 +44,7 @@ class ProductAttributeGuiToProductAttributeQueryContainerBridge implements Produ
     }
 
     /**
-     * @return SpyProductManagementAttributeQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */
     public function queryProductManagementAttribute()
     {
