@@ -39,6 +39,7 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
                 - \SprykerTest\Shared\Application\Helper\ZedHelper:
                 - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
