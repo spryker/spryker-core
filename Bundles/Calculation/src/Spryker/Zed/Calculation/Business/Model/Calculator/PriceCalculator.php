@@ -25,8 +25,8 @@ class PriceCalculator implements CalculatorInterface
     protected $grossPriceCalculators;
 
     /**
-     * @param array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $netPriceCalculators
-     * @param array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $grossPriceCalculators
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $netPriceCalculators
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $grossPriceCalculators
      */
     public function __construct(
         array $netPriceCalculators,
@@ -54,7 +54,7 @@ class PriceCalculator implements CalculatorInterface
     }
 
     /**
-     * @param array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $calculators
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $calculators
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void

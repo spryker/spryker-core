@@ -55,7 +55,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return array|\Symfony\Component\Form\FormInterface[]
+     * @return \Symfony\Component\Form\FormInterface[]
      */
     public function getForms(AbstractTransfer $dataTransfer)
     {
