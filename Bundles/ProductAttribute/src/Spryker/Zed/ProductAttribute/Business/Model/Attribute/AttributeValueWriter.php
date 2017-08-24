@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAttribute\Business\Model\Attribute;
 
+use Exception;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
@@ -61,7 +62,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
                 ->getConnection()
                 ->commit();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productAttributeQueryContainer
                 ->getConnection()
                 ->rollBack();

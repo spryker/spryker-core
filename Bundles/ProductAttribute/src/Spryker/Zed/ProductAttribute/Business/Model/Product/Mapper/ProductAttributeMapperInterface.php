@@ -25,14 +25,14 @@ interface ProductAttributeMapperInterface
     public function decodeJsonAttributes($attributesJson);
 
     /**
-     * @param array|\Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection $metaAttributeCollection
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection $metaAttributeCollection
      *
      * @return array
      */
     public function mapMetaAttributes($metaAttributeCollection);
 
     /**
-     * @param array|\Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection $metaAttributeCollection
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection $metaAttributeCollection
      *
      * @return array
      */

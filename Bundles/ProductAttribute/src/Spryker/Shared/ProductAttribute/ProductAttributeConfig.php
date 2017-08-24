@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\ProductAttribute;
 
-class ProductAttributeConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class ProductAttributeConfig extends AbstractBundleConfig
 {
 
     const PRODUCT_ATTRIBUTE_GLOSSARY_PREFIX = 'product.attribute.';

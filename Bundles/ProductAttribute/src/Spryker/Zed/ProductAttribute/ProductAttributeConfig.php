@@ -14,31 +14,6 @@ class ProductAttributeConfig extends AbstractBundleConfig
 {
 
     const DEFAULT_LOCALE = '_';
-    const STORE_PATTERN_MARKER = '{STORE}';
-
-    /**
-     * @return string
-     */
-    public function getCachePath()
-    {
-        return APPLICATION_DATA . '/' . static::STORE_PATTERN_MARKER . '/cache';
-    }
-
-    /**
-     * @return string
-     */
-    public function getAutoloaderCachePath()
-    {
-        return APPLICATION_DATA . '/' . static::STORE_PATTERN_MARKER . '/autoloader';
-    }
-
-    /**
-     * @return string
-     */
-    public function getStorePatternMarker()
-    {
-        return static::STORE_PATTERN_MARKER;
-    }
 
     /**
      * @return array
