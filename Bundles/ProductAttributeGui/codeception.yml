@@ -1,5 +1,9 @@
 namespace: ProductAttributeGui
 actor: Tester
+
+include:
+  - tests/SprykerTest/Zed/ProductAttributeGui
+
 paths:
     tests: tests
     log: tests/_output

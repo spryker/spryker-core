@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductManagement\PageObject;
+namespace SprykerTest\Zed\ProductAttributeGui\PageObject;
 
-class ProductManagementAttributeListPage
+class ProductAttributeGuiAttributeListPage
 {
 
-    const URL = '/product-management/attribute';
+    const URL = '/product-attribute-gui/attribute';
 
 }
