@@ -37,19 +37,19 @@ class Writer implements WriterInterface
     protected $reader;
 
     /**
-     * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface
+     * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null
      */
     protected $productFacade;
 
     /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Model\ReaderInterface $reader
-     * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface $productFacade
+     * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null $productFacade
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         ReaderInterface $reader,
-        WishlistToProductInterface $productFacade
+        WishlistToProductInterface $productFacade = null
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
@@ -265,7 +265,7 @@ class Writer implements WriterInterface
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
-        if (!$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())) {
+        if ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())) {
             return $wishlistItemTransfer;
         }
 
@@ -280,6 +280,8 @@ class Writer implements WriterInterface
             ->findOneOrCreate();
 
         $wishlistItemEntity->save();
+
+        $wishlistItemTransfer->setIdWishlistItem($wishlistItemEntity->getIdWishlistItem());
 
         return $wishlistItemTransfer;
     }

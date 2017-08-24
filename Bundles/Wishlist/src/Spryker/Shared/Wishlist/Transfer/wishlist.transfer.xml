@@ -17,6 +17,7 @@
     </transfer>
 
     <transfer name="WishlistItem">
+        <property name="idWishlistItem" type="int" />
         <property name="wishlistName" type="string" />
         <property name="fkWishlist" type="int" />
         <property name="fkCustomer" type="int" />
