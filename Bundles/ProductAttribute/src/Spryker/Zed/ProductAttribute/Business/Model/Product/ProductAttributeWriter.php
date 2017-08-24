@@ -32,18 +32,26 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     protected $productFacade;
 
     /**
+     * @var ProductReaderInterface
+     */
+    protected $productReader;
+
+    /**
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $reader
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface $productFacade
+     * @param ProductReaderInterface $productReader
      */
     public function __construct(
         ProductAttributeReaderInterface $reader,
         ProductAttributeToLocaleInterface $localeFacade,
-        ProductAttributeToProductInterface $productFacade
+        ProductAttributeToProductInterface $productFacade,
+        ProductReaderInterface $productReader
     ) {
         $this->reader = $reader;
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
+        $this->productReader = $productReader;
     }
 
     /**
@@ -54,7 +62,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
      */
     public function saveAbstractAttributes($idProductAbstract, array $attributes)
     {
-        $productAbstractTransfer = $this->reader->getProductAbstractTransfer($idProductAbstract);
+        $productAbstractTransfer = $this->productReader->getProductAbstractTransfer($idProductAbstract);
         $attributesToSave = $this->getAttributesDataToSave($attributes);
         $nonLocalizedAttributes = $this->getNonLocalizedAttributes($attributesToSave);
 
@@ -77,7 +85,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
      */
     public function saveConcreteAttributes($idProduct, array $attributes)
     {
-        $productConcreteTransfer = $this->reader->getProductTransfer($idProduct);
+        $productConcreteTransfer = $this->productReader->getProductTransfer($idProduct);
         $attributesToSave = $this->getAttributesDataToSave($attributes);
         $nonLocalizedAttributes = $this->getNonLocalizedAttributes($attributesToSave);
 

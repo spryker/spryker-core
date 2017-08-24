@@ -22,7 +22,7 @@ interface ProductAttributeInterface
      *
      * @return array
      */
-    public function getProductAbstractAttributeValues($idProductAbstract);
+    public function getProductAbstractAttributes($idProductAbstract);
 
     /**
      * @param int $idProduct

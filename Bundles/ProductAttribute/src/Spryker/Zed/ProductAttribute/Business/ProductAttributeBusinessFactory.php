@@ -18,6 +18,8 @@ use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeM
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriter;
+use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReader;
+use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
 /**
@@ -34,8 +36,8 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttribute(
             $this->createProductAttributeReader(),
-            $this->createProductAttributeWriter(),
-            $this->createProductAttributeMapper()
+            $this->createProductAttributeMapper(),
+            $this->createProductReader()
         );
     }
 
@@ -59,7 +61,8 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
         return new ProductAttributeWriter(
             $this->createProductAttributeReader(),
             $this->getLocaleFacade(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
+            $this->createProductReader()
         );
     }
 
@@ -109,6 +112,16 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
             $this->createAttributeGlossaryKeyBuilder()
+        );
+    }
+
+    /**
+     * @return ProductReaderInterface
+     */
+    protected function createProductReader()
+    {
+        return new ProductReader(
+            $this->getProductFacade()
         );
     }
 

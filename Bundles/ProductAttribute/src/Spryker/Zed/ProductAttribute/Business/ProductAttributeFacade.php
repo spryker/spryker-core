@@ -30,7 +30,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     {
         return $this->getFactory()
             ->createProductAttributeManager()
-            ->getProductAbstractAttributeValues($idProductAbstract);
+            ->getProductAbstractAttributes($idProductAbstract);
     }
 
     /**

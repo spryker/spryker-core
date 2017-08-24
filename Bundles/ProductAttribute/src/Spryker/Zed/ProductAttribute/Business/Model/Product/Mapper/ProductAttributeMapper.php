@@ -82,12 +82,10 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
     /**
      * $productAttributes format
      * [
-     *   [_] => [key=>value, key2=>value2]
-     *   [46] => [key=>value]
-     *   [66] => [key3=>value3, key5=value5]
+     *   [_] => [key => value, key2 => value2]
+     *   [de_DE] => [key => value]
+     *   [en_US] => [key3 => value3, key5 => value5]
      * ]
-     *
-     * @see ProductAttributeConfig::DEFAULT_LOCALE
      *
      * @param array $productAttributes
      *
@@ -106,9 +104,9 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
     /**
      * $productAttributes format
      * [
-     *   [_] => [key=>value, key2=>value2]
-     *   [46] => [key=>value]
-     *   [66] => [key3=>value3, key5=value5]
+     *   [_] => [key => value, key2 => value2]
+     *   [de_DE] => [key => value]
+     *   [en_US] => [key3 => value3, key5 => value5]
      * ]
      *
      * @see ProductAttributeConfig::DEFAULT_LOCALE

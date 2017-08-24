@@ -45,8 +45,8 @@
 
                         {% set inputName = 'attribute_values_form' ~ name  %}
                         {% set inputId = 'attribute_values_form_' ~ id  %}
-                        {% if productAttributeValues[localeCode][key] is defined %}
-                            {% set attributeValue = productAttributeValues[localeCode][key] %}
+                        {% if productAttributes[localeCode][key] is defined %}
+                            {% set attributeValue = productAttributes[localeCode][key] %}
                             <td>
                                 <input
                                         {{ readOnly }}

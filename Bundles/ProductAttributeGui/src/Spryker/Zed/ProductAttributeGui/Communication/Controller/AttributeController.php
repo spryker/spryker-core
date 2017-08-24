@@ -79,7 +79,7 @@ class AttributeController extends AbstractController
                 ->createProductManagementAttribute($attributeTransfer);
 
             return $this->redirectResponse(sprintf(
-                '/product-management/attribute/translate?id=%d',
+                '/product-attribute-gui/attribute/translate?id=%d',
                 $attributeTransfer->getIdProductManagementAttribute()
             ));
         }
@@ -119,7 +119,7 @@ class AttributeController extends AbstractController
                 ->translateProductManagementAttribute($productManagementAttributeTransfer);
 
             return $this->redirectResponse(sprintf(
-                '/product-management/attribute/view?id=%d',
+                '/product-attribute-gui/attribute/view?id=%d',
                 $idProductManagementAttribute
             ));
         }
@@ -173,7 +173,7 @@ class AttributeController extends AbstractController
                 ->updateProductManagementAttribute($attributeTransfer);
 
             return $this->redirectResponse(sprintf(
-                '/product-management/attribute/translate?id=%d',
+                '/product-attribute-gui/attribute/translate?id=%d',
                 $attributeTransfer->getIdProductManagementAttribute()
             ));
         }
@@ -198,7 +198,7 @@ class AttributeController extends AbstractController
             ->getProductManagementAttribute($idProductManagementAttribute);
 
         if (!$attributeTransfer) {
-            return $this->redirectResponse('/product-management/attribute');
+            return $this->redirectResponse('/product-attribute-gui/attribute');
         }
 
         return $this->viewResponse([

@@ -28,7 +28,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function getProductAbstractAttributeValues($idProductAbstract)
+    public function getProductAbstractAttributes($idProductAbstract)
     {
         return $this->productAttributeFacade->getProductAbstractAttributeValues($idProductAbstract);
     }

@@ -29,7 +29,7 @@ function AttributeManager() {
     };
 
     _attributeManager.init = function() {
-        _attributeManager.attributesValues = jsonLoader.load($('#productAttributeValuesJson'));
+        _attributeManager.attributesValues = jsonLoader.load($('#productAttributesJson'));
         _attributeManager.metaAttributes = jsonLoader.load($('#metaAttributesJson'));
         _attributeManager.locales = jsonLoader.load($('#localesJson'));
     };
@@ -293,7 +293,7 @@ function updateAttributeInputsWithAutoComplete() {
             minLength: 0,
             source: function(request, response) {
                 $.ajax({
-                    url: '/product-management/attribute/suggest/',
+                    url: '/product-attribute-gui/attribute/suggest/',
                     dataType: 'json',
                     data: {
                         q: request.term,

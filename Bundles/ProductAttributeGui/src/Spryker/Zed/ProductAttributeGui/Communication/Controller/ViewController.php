@@ -42,15 +42,15 @@ class ViewController extends AbstractController
             )
             ->handleRequest($request);
 
-        $values = $this
+        $productAttributes = $this
             ->getFactory()
             ->getProductAttributeFacade()
-            ->getProductAbstractAttributeValues($idProductAbstract);
+            ->getProductAbstractAttributes($idProductAbstract);
 
-        $valueKeys = $this
+        $productAttributeKeys = $this
             ->getFactory()
             ->getProductAttributeFacade()
-            ->extractKeysFromAttributes($values);
+            ->extractKeysFromAttributes($productAttributes);
 
         $productAbstractTransfer = $this->getProductAbstractTransfer($idProductAbstract);
 
@@ -66,10 +66,10 @@ class ViewController extends AbstractController
             'attributeKeyForm' => $form->createView(),
             'locales' => $this->getLocaleData(),
             'metaAttributes' => $metaAttributes,
-            'productAttributeValues' => $values,
-            'productAttributeKeys' => $valueKeys,
+            'productAttributes' => $productAttributes,
+            'productAttributeKeys' => $productAttributeKeys,
             'localesJson' => json_encode(array_values($localesData)),
-            'productAttributeValuesJson' => json_encode($values),
+            'productAttributesJson' => json_encode($productAttributes),
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
         ]);
@@ -121,10 +121,10 @@ class ViewController extends AbstractController
             'attributeKeyForm' => $form->createView(),
             'locales' => $localesData,
             'metaAttributes' => $metaAttributes,
-            'productAttributeValues' => $values,
+            'productAttributes' => $values,
             'productAttributeKeys' => $valueKeys,
             'localesJson' => json_encode(array_values($localesData)),
-            'productAttributeValuesJson' => json_encode($values),
+            'productAttributesJson' => json_encode($values),
             'metaAttributesJson' => json_encode($metaAttributes),
             'productAbstract' => $productAbstractTransfer,
             'product' => $productTransfer,

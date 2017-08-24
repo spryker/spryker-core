@@ -11,7 +11,7 @@
 {% block content %}
 
     {% include '@ProductAttributeGui/View/_partials/json-data.twig' with {
-        productAttributeValuesJson: productAttributeValuesJson,
+        productAttributesJson: productAttributesJson,
         metaAttributesJson: metaAttributesJson,
         localesJson: localesJson
     } %}
@@ -25,7 +25,7 @@
             {% include '@ProductAttributeGui/View/_partials/attribute-table.twig' with {
                 formActionUrl: '/product-attribute-gui/save/productAbstract',
                 locales: locales,
-                productAttributeValues: productAttributeValues,
+                productAttributes: productAttributes,
                 metaAttributes: metaAttributes,
                 idProductAbstract: idProductAbstract,
                 idProductConcrete: ''
