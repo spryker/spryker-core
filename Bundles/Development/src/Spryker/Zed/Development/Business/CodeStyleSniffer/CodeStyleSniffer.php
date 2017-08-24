@@ -238,6 +238,10 @@ class CodeStyleSniffer
             $config .= ' --ignore=' . $options['ignore'];
         }
 
+        if ($options[static::OPTION_VERBOSE] && !$options[static::OPTION_FIX]) {
+            $config .= ' -s';
+        }
+
         $command = $options[static::OPTION_FIX] ? 'phpcbf' : 'phpcs';
         $command = 'vendor/bin/' . $command . ' ' . $pathToFiles . $config;
 

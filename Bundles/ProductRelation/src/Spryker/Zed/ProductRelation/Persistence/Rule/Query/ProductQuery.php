@@ -60,7 +60,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
      */
     protected function buildProductMapping()
     {
@@ -95,7 +95,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
      */
     protected function buildProductAttributeMap()
     {

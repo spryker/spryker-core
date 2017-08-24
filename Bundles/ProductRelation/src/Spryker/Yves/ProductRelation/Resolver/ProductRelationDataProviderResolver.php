@@ -16,7 +16,7 @@ class ProductRelationDataProviderResolver implements ProductRelationDataProvider
     protected $productRelationDateProviderList;
 
     /**
-     * @param array|\Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface[] $productRelationDataProvider
+     * @param \Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface[] $productRelationDataProvider
      */
     public function __construct(array $productRelationDataProvider)
     {

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
+use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
@@ -92,7 +93,7 @@ class AttributeWriter implements AttributeWriterInterface
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->rollBack();
@@ -129,7 +130,7 @@ class AttributeWriter implements AttributeWriterInterface
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->rollBack();
@@ -188,7 +189,7 @@ class AttributeWriter implements AttributeWriterInterface
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->rollBack();

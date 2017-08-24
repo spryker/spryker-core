@@ -583,7 +583,7 @@ class CalculatorTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     protected function createDiscountableItemsFromQuoteTransfer(QuoteTransfer $quoteTransfer)
     {

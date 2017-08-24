@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Closure;
 use Codeception\Module;
+use Exception;
 
 class DataCleanupHelper extends Module
 {
@@ -46,7 +47,7 @@ class DataCleanupHelper extends Module
         foreach (array_reverse($this->cleanups) as $cleanup) {
             try {
                 $cleanup();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->debugSection('Cleanup Failure', $e->getMessage());
             }
         }

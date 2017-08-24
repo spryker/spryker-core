@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Plugin\ServiceProvider;
 
+use Exception;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
@@ -81,7 +82,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
             Propel::getConnection();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
