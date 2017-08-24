@@ -33,11 +33,4 @@ interface ProductManagementToProductAttributeInterface
      */
     public function translateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
 
-    /**
-     * @param int $idProductManagementAttribute
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
-     */
-    public function getProductManagementAttribute($idProductManagementAttribute);
-
 }

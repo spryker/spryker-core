@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Controller;
+namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationCollectionForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacade getFacade()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
- * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
  */
 class AttributeController extends AbstractController
 {
@@ -96,7 +94,7 @@ class AttributeController extends AbstractController
      */
     public function translateAction(Request $request)
     {
-        $idProductManagementAttribute = $this->castId($request->query->get(self::PARAM_ID));
+        $idProductManagementAttribute = $this->castId($request->query->get(static::PARAM_ID));
 
         $dataProvider = $this
             ->getFactory()
@@ -137,9 +135,11 @@ class AttributeController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $searchTerm = $request->query->get(self::PARAM_TERM);
+        $searchTerm = $request->query->get(static::PARAM_TERM);
 
-        $keys = $this->getFacade()->suggestUnusedAttributeKeys($searchTerm);
+        $keys = $this->getFactory()
+            ->getProductAttributeFacade()
+            ->suggestUnusedAttributeKeys($searchTerm);
 
         return $this->jsonResponse($keys);
     }
@@ -151,7 +151,7 @@ class AttributeController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idProductManagementAttribute = $this->castId($request->query->get(self::PARAM_ID));
+        $idProductManagementAttribute = $this->castId($request->query->get(static::PARAM_ID));
 
         $dataProvider = $this
             ->getFactory()
@@ -190,7 +190,7 @@ class AttributeController extends AbstractController
      */
     public function viewAction(Request $request)
     {
-        $idProductManagementAttribute = $this->castId($request->query->get(self::PARAM_ID));
+        $idProductManagementAttribute = $this->castId($request->query->get(static::PARAM_ID));
 
         $attributeTransfer = $this
             ->getFactory()
@@ -214,18 +214,28 @@ class AttributeController extends AbstractController
      */
     public function suggestAction(Request $request)
     {
-        $idProductManagementAttribute = $this->castId($request->get(self::PARAM_ID));
-        $searchText = trim($request->get(self::PARAM_SEARCH_TEXT));
+        $idProductManagementAttribute = $this->castId($request->get(static::PARAM_ID));
+        $localeCode = $request->get(static::PARAM_LOCALE_CODE);
+        $searchText = trim($request->get(static::PARAM_SEARCH_TEXT));
 
         try {
-            $localeTransfer = $this->getFactory()->getLocaleFacade()->getLocale($request->get(self::PARAM_LOCALE_CODE));
+            $localeTransfer = $this->getFactory()
+                ->getLocaleFacade()
+                ->getLocale($localeCode);
         } catch (\Exception $e) {
-            $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+            $localeTransfer = $this->getFactory()
+                ->getLocaleFacade()
+                ->getCurrentLocale();
         }
 
         $idLocale = $localeTransfer->getIdLocale();
-        $total = $this->getFacade()->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale);
-        $values = $this->getFacade()
+
+        $total = $this->getFactory()
+            ->getProductAttributeFacade()
+            ->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale);
+
+        $values = $this->getFactory()
+            ->getProductAttributeFacade()
             ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText);
 
         return $this->jsonResponse([

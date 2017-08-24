@@ -48,4 +48,21 @@ class ProductAttributeConfig extends AbstractBundleConfig
         return Store::getInstance()->getAllowedStores();
     }
 
+    /**
+     * @return array
+     */
+    public function getAttributeAvailableTypes()
+    {
+        return [
+            'text' => 'text',
+            'textarea' => 'textarea',
+            'number' => 'number',
+            'float' => 'float',
+            'date' => 'date',
+            'time' => 'time',
+            'datetime' => 'datetime',
+            'select' => 'select',
+        ];
+    }
+
 }

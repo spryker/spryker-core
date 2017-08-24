@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+
 interface ProductAttributeGuiToProductAttributeInterface
 {
 
@@ -75,5 +79,84 @@ interface ProductAttributeGuiToProductAttributeInterface
      * @return array
      */
     public function extractValuesFromAttributes(array $attributes);
+
+    /**
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     *
+     * @return int
+     */
+    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '');
+
+    /**
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getAttributeValueSuggestions(
+        $idProductManagementAttribute,
+        $idLocale,
+        $searchText = '',
+        $offset = 0,
+        $limit = 10
+    );
+
+    /**
+     * @param int $idProductManagementAttribute
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
+     */
+    public function getProductManagementAttribute($idProductManagementAttribute);
+
+    /**
+     * @return array
+     */
+    public function getAttributeAvailableTypes();
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
+     */
+    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+
+    /**
+     * @param $attributeKey
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return LocalizedProductManagementAttributeKeyTransfer|null
+     */
+    public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return void
+     */
+    public function translateProductManagementAttribute(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    );
+
+    /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestUnusedAttributeKeys($searchText = '', $limit = 10);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
+     */
+    public function updateProductManagementAttribute(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    );
 
 }

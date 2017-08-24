@@ -4,8 +4,8 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/product-management/attribute'), 'Back to List' | trans) }}
-    {{ editActionButton(url('/product-management/attribute/edit', {'id': app.request.query.get('id')}), 'Edit' | trans) }}
+    {{ backActionButton(url('/product-attribute-gui/attribute'), 'Back to List' | trans) }}
+    {{ editActionButton(url('/product-attribute-gui/attribute/edit', {'id': app.request.query.get('id')}), 'Edit' | trans) }}
 {% endblock %}
 
 {% block content %}

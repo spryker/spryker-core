@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form;
+namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -38,16 +38,16 @@ class AttributeForm extends AbstractType
     const GROUP_UNIQUE_KEY = 'unique_key_group';
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
-    protected $productManagementQueryContainer;
+    protected $productAttributeQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer
      */
-    public function __construct(ProductManagementQueryContainerInterface $productManagementQueryContainer)
+    public function __construct(ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer)
     {
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->productAttributeQueryContainer = $productAttributeQueryContainer;
     }
 
     /**
@@ -132,7 +132,7 @@ class AttributeForm extends AbstractType
     {
         $builder->add(self::FIELD_KEY, new AutosuggestType(), [
             'label' => 'Attribute key',
-            'url' => '/product-management/attribute/keys',
+            'url' => '/product-attribute-gui/attribute/keys',
             'constraints' => [
                 new NotBlank(),
                 new Regex([
@@ -143,10 +143,8 @@ class AttributeForm extends AbstractType
                 new Callback([
                     'methods' => [
                         function ($key, ExecutionContextInterface $context) {
-                            $keyCount = $this->productManagementQueryContainer
-                                ->queryProductAttributeKey()
-                                ->joinSpyProductManagementAttribute()
-                                ->filterByKey($key)
+                            $keyCount = $this->productAttributeQueryContainer
+                                ->queryProductAttributeKeyByKeys([$key])
                                 ->count();
 
                             if ($keyCount > 0) {

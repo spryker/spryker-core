@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Table;
+namespace Spryker\Zed\ProductAttributeGui\Communication\Table;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface;
 
 class AttributeTable extends AbstractTable
 {
@@ -22,16 +22,16 @@ class AttributeTable extends AbstractTable
     const COL_ACTIONS = 'actions';
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     * @var ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
-    protected $productManagementQueryContainer;
+    protected $productAttributeQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
+     * @param ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer
      */
-    public function __construct(ProductManagementQueryContainerInterface $productManagementQueryContainer)
+    public function __construct(ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer)
     {
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->productAttributeQueryContainer = $productAttributeQueryContainer;
     }
 
     /**
@@ -76,7 +76,7 @@ class AttributeTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this
-            ->productManagementQueryContainer
+            ->productAttributeQueryContainer
             ->queryProductAttributeKey()
             ->joinSpyProductManagementAttribute()
             ->withColumn(SpyProductManagementAttributeTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE)
@@ -108,14 +108,14 @@ class AttributeTable extends AbstractTable
         $urls = [];
 
         $urls[] = $this->generateViewButton(
-            Url::generate('/product-management/attribute/view', [
+            Url::generate('/product-attribute-gui/attribute/view', [
                 'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
             ]),
             'View'
         );
 
         $urls[] = $this->generateEditButton(
-            Url::generate('/product-management/attribute/edit', [
+            Url::generate('/product-attribute-gui/attribute/edit', [
                 'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
             ]),
             'Edit'

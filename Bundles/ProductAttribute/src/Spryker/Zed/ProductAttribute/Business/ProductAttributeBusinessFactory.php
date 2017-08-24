@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductAttribute\Business;
 use Spryker\Shared\ProductAttribute\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeReader;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslationReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeWriter;
@@ -19,7 +20,6 @@ use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReader;
-use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
 /**
@@ -116,12 +116,23 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductReaderInterface
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface
      */
     protected function createProductReader()
     {
         return new ProductReader(
             $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslationReaderInterface
+     */
+    public function createAttributeTranslationReader()
+    {
+        return new AttributeTranslationReader(
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder()
         );
     }
 

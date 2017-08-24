@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAttribute\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -226,6 +228,86 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
         $this->getFactory()
             ->createAttributeTranslator()
             ->saveProductManagementAttributeTranslation($productManagementAttributeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     *
+     * @return int
+     */
+    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '')
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText, $offset, $limit);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return array
+     */
+    public function getAttributeAvailableTypes()
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getAttributeAvailableTypes();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param $attributeKey
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return LocalizedProductManagementAttributeKeyTransfer|null
+     */
+    public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer)
+    {
+        return $this->getFactory()
+            ->createAttributeTranslationReader()
+            ->findAttributeTranslationByKey($attributeKey, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestUnusedAttributeKeys($searchText = '', $limit = 10)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->suggestUnusedKeys($searchText, $limit);
     }
 
 }

@@ -4,7 +4,7 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/product-management/attribute'), 'Back to List' | trans) }}
+    {{ backActionButton(url('/product-attribute-gui/attribute'), 'Back to List' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -21,14 +21,14 @@
                 <div id="tab_general" class="tab-pane active">
                     <div class="panel-body">
 
-                        {% include '@ProductManagement/Attribute/partials/translate-form-content.twig' %}
+                        {% include '@ProductAttributeGui/Attribute/partials/translate-form-content.twig' %}
 
                     </div>
                 </div>
             </div>
 
             <div class="tabs-footer">
-                <a href="{{ url('/product-management/attribute/edit', {'id': app.request.query.get('id')}) }}" class="btn btn-back">{{ 'Back' | trans }}</a>
+                <a href="{{ url('/product-attribute-gui/attribute/edit', {'id': app.request.query.get('id')}) }}" class="btn btn-back">{{ 'Back' | trans }}</a>
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
             </div>
         </div>

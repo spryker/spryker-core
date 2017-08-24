@@ -5,55 +5,49 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
+namespace Spryker\Zed\ProductAttributeGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationForm;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
-use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToGlossaryInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationCollectionForm;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationForm;
 
 class AttributeTranslationFormCollectionDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     * @var ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
-    protected $productManagementQueryContainer;
+    protected $productAttributeQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface
+     * @var ProductAttributeGuiToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface
+     * @var ProductAttributeGuiToGlossaryInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     * @var ProductAttributeGuiToProductAttributeInterface
      */
-    protected $glossaryKeyBuilder;
+    protected $productAttributeFacade;
 
-    /**
-     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface $glossaryFacade
-     * @param \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface $glossaryKeyBuilder
-     */
     public function __construct(
-        ProductManagementQueryContainerInterface $productManagementQueryContainer,
-        ProductManagementToLocaleInterface $localeFacade,
-        ProductManagementToGlossaryInterface $glossaryFacade,
-        GlossaryKeyBuilderInterface $glossaryKeyBuilder
+        ProductAttributeGuiToProductAttributeInterface $productAttributeFacade,
+        ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer,
+        ProductAttributeGuiToLocaleInterface $localeFacade,
+        ProductAttributeGuiToGlossaryInterface $glossaryFacade
     ) {
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
+        $this->productAttributeQueryContainer = $productAttributeQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
-        $this->glossaryKeyBuilder = $glossaryKeyBuilder;
+        $this->productAttributeFacade = $productAttributeFacade;
     }
 
     /**
@@ -108,7 +102,7 @@ class AttributeTranslationFormCollectionDataProvider
      */
     protected function getAttributeKey($idProductManagementAttribute)
     {
-        $attributeEntity = $this->productManagementQueryContainer
+        $attributeEntity = $this->productAttributeQueryContainer
             ->queryProductManagementAttribute()
             ->filterByIdProductManagementAttribute($idProductManagementAttribute)
             ->findOne();
@@ -122,19 +116,18 @@ class AttributeTranslationFormCollectionDataProvider
      * @param string $attributeKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string
+     * @return string|null
      */
     protected function getAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
     {
-        $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
+        $localizedAttributeKey = $this->productAttributeFacade
+            ->findAttributeTranslationByKey($attributeKey, $localeTransfer);
 
-        if ($this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
-            return $this->glossaryFacade
-                ->getTranslation($glossaryKey, $localeTransfer)
-                ->getValue();
+        if (!$localizedAttributeKey) {
+            return null;
         }
 
-        return null;
+        return $localizedAttributeKey->getKeyTranslation();
     }
 
     /**
@@ -144,7 +137,7 @@ class AttributeTranslationFormCollectionDataProvider
      */
     protected function getTranslateValues($idProductManagementAttribute)
     {
-        $translationCount = $this->productManagementQueryContainer
+        $translationCount = $this->productAttributeQueryContainer
             ->queryProductManagementAttributeValue()
             ->joinSpyProductManagementAttributeValueTranslation()
             ->filterByFkProductManagementAttribute($idProductManagementAttribute)
@@ -161,7 +154,7 @@ class AttributeTranslationFormCollectionDataProvider
      */
     protected function getValueTranslations($idProductManagementAttribute, $idLocale)
     {
-        $attributeValueEntities = $this->productManagementQueryContainer
+        $attributeValueEntities = $this->productAttributeQueryContainer
             ->queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale)
             ->find()
             ->toArray();

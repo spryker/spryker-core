@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Transfer;
+namespace Spryker\Zed\ProductAttributeGui\Communication\Transfer;
 
 use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeValueTranslationForm;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\Attribute\AttributeTranslationForm;
+//use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeValueTranslationForm;
 use Symfony\Component\Form\FormInterface;
 
 class AttributeTranslationFormTransferMapper implements AttributeTranslationFormTransferMapperInterface

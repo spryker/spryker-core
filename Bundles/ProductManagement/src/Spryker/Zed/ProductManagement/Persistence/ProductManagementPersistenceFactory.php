@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
 {
 
+    //to be removed
+
     /**
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */

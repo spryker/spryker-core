@@ -10,8 +10,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeTableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
-use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductAbstractNotFoundException;
-use Spryker\Zed\ProductAttribute\Business\Model\Exception\ProductConcreteNotFoundException;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer;

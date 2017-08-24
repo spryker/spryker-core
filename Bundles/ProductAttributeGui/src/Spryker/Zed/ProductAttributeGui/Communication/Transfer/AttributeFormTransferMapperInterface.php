@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Transfer;
+namespace Spryker\Zed\ProductAttributeGui\Communication\Transfer;
 
 use Symfony\Component\Form\FormInterface;
 

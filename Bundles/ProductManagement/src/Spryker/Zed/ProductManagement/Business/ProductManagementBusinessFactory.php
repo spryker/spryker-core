@@ -120,6 +120,9 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
         return $this->getLocaleFacade()->getCurrentLocale();
     }
 
+
+
+    ///under move
     /**
      * @return \Spryker\Zed\ProductManagement\Business\Transfer\ProductAttributeTransferMapperInterface
      */
@@ -132,6 +135,7 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    //under move
     /**
      * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
      */

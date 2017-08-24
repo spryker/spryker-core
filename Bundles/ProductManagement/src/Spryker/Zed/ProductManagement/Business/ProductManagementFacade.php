@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductManagementFacade extends AbstractFacade implements ProductManagementFacadeInterface
 {
 
+
+    //to be removed
     /**
      * Specification:
      * - Returns list of ALL product management attributes
@@ -30,40 +32,7 @@ class ProductManagementFacade extends AbstractFacade implements ProductManagemen
             ->getProductAttributeCollection();
     }
 
-    /**
-     * @api
-     *
-     * @param int $idProductManagementAttribute
-     * @param int $idLocale
-     * @param string $searchText
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText = '', $offset = 0, $limit = 10)
-    {
-        return $this->getFactory()
-            ->createAttributeReader()
-            ->getAttributeValueSuggestions($idProductManagementAttribute, $idLocale, $searchText, $offset, $limit);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idProductManagementAttribute
-     * @param int $idLocale
-     * @param string $searchText
-     *
-     * @return int
-     */
-    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '')
-    {
-        return $this->getFactory()
-            ->createAttributeReader()
-            ->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText);
-    }
-
+    //to be removed
     /**
      * Specification:
      * - Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted

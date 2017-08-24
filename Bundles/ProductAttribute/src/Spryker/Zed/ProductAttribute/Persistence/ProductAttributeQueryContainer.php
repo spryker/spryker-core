@@ -63,6 +63,21 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     /**
      * @api
      *
+     * @param string[] $keys
+     *
+     * @return SpyProductAttributeKeyQuery
+     */
+    public function queryProductAttributeKeyByKeys(array $keys)
+    {
+        return $this->getFactory()
+            ->createProductAttributeKeyQuery()
+            ->filterByKey_In($keys);
+    }
+
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValueQuery()

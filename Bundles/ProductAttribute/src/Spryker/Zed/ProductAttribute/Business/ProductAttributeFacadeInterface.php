@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAttribute\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 /**
@@ -224,5 +226,79 @@ interface ProductAttributeFacadeInterface
     public function translateProductManagementAttribute(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer
     );
+
+    /**
+     * Specification:
+     * - Gets total count of attribute suggestions
+     *
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     *
+     * @return int
+     */
+    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '');
+
+    /**
+     * Specification:
+     * - Reads available attributes and gives suggestions by specified parameters
+     *
+     * @api
+     *
+     * @param int $idProductManagementAttribute
+     * @param int $idLocale
+     * @param string $searchText
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function getAttributeValueSuggestions(
+        $idProductManagementAttribute,
+        $idLocale,
+        $searchText = '',
+        $offset = 0,
+        $limit = 10
+    );
+
+    /**
+     * Specification:
+     * - Provides available (supported) attribute types (e.g. number, text, date).
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAttributeAvailableTypes();
+
+    /**
+     * Specification:
+     * - Finds attribute and its translation for passed locale
+     * - Returns NULL in case the combination is not found
+     *
+     * @api
+     *
+     * @param $attributeKey
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return LocalizedProductManagementAttributeKeyTransfer|null
+     */
+    public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
+     * - Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted
+     * product management attribute list
+     *
+     * @api
+     *
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestUnusedAttributeKeys($searchText = '', $limit = 10);
 
 }

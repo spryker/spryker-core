@@ -25,14 +25,14 @@
             <attributes>
                 <label>Attributes</label>
                 <title>Attributes</title>
-                <bundle>product-attribute</bundle>
+                <bundle>product-attribute-gui</bundle>
                 <controller>attribute</controller>
                 <action>index</action>
                 <pages>
                     <attribute-create>
                         <label>Create a Product Attribute</label>
                         <title>Create a ProductAttribute</title>
-                        <bundle>product-attribute</bundle>
+                        <bundle>product-attribute-gui</bundle>
                         <controller>attribute</controller>
                         <action>create</action>
                         <visible>0</visible>
@@ -41,7 +41,7 @@
                     <attribute-view>
                         <label>View Product Attribute</label>
                         <title>View Product Attribute</title>
-                        <bundle>product-attribute</bundle>
+                        <bundle>product-attribute-gui</bundle>
                         <controller>attribute</controller>
                         <action>view</action>
                         <visible>0</visible>
@@ -50,7 +50,7 @@
                     <attribute-edit>
                         <label>Edit Product Attribute</label>
                         <title>Edit Product Attribute</title>
-                        <bundle>product-attribute</bundle>
+                        <bundle>product-attribute-gui</bundle>
                         <controller>attribute</controller>
                         <action>edit</action>
                         <visible>0</visible>

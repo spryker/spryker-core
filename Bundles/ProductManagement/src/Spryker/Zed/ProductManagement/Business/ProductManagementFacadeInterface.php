@@ -21,36 +21,6 @@ interface ProductManagementFacadeInterface
     public function getProductAttributeCollection();
 
     /**
-     * @api
-     *
-     * @param int $idProductManagementAttribute
-     * @param int $idLocale
-     * @param string $searchText
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function getAttributeValueSuggestions(
-        $idProductManagementAttribute,
-        $idLocale,
-        $searchText = '',
-        $offset = 0,
-        $limit = 10
-    );
-
-    /**
-     * @api
-     *
-     * @param int $idProductManagementAttribute
-     * @param int $idLocale
-     * @param string $searchText
-     *
-     * @return int
-     */
-    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '');
-
-    /**
      * Specification:
      * - Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted
      * product management attribute list

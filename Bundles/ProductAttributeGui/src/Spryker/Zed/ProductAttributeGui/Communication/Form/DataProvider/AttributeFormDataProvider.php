@@ -5,34 +5,38 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
+namespace Spryker\Zed\ProductAttributeGui\Communication\Form\DataProvider;
 
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
-use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
-use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
-use Spryker\Zed\ProductManagement\ProductManagementConfig;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeForm;
+use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeBridge;
+use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface;
+use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface as ProductAttributeGuiToProductAttributeInterfaceQueryContainer;
+use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerBridge as ProductAttributeGuiToProductAttributeBridgeQueryContainer;
 
 class AttributeFormDataProvider
 {
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
-    protected $productManagementQueryContainer;
+    protected $productAttributeQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\ProductManagementConfig
+     * @var \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface
      */
-    protected $config;
+    protected $productAttributeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
-     * @param \Spryker\Zed\ProductManagement\ProductManagementConfig $config
+     * @param ProductAttributeGuiToProductAttributeInterfaceQueryContainer $productAttributeQueryContainer
+     * @param ProductAttributeGuiToProductAttributeInterface $productAttributeFacade
      */
-    public function __construct(ProductManagementQueryContainerInterface $productManagementQueryContainer, ProductManagementConfig $config)
+    public function __construct(
+        ProductAttributeGuiToProductAttributeInterfaceQueryContainer $productAttributeQueryContainer,
+        ProductAttributeGuiToProductAttributeInterface $productAttributeFacade)
     {
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
-        $this->config = $config;
+        $this->productAttributeQueryContainer = $productAttributeQueryContainer;
+        $this->productAttributeFacade = $productAttributeFacade;
     }
 
     /**
@@ -68,7 +72,7 @@ class AttributeFormDataProvider
     public function getOptions($idProductManagementAttribute = null)
     {
         $options = [
-            AttributeForm::OPTION_ATTRIBUTE_TYPE_CHOICES => $this->config->getAttributeTypeChoices(),
+            AttributeForm::OPTION_ATTRIBUTE_TYPE_CHOICES => $this->productAttributeFacade->getAttributeAvailableTypes(),
             AttributeForm::OPTION_VALUES_CHOICES => [],
         ];
 
@@ -107,7 +111,7 @@ class AttributeFormDataProvider
      */
     protected function getAttributeEntity($idProductManagementAttribute)
     {
-        return $this->productManagementQueryContainer
+        return $this->productAttributeQueryContainer
             ->queryProductManagementAttribute()
             ->findOneByIdProductManagementAttribute($idProductManagementAttribute);
     }

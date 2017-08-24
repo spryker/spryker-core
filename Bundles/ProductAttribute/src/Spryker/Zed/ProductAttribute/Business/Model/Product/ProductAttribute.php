@@ -24,7 +24,7 @@ class ProductAttribute implements ProductAttributeInterface
     protected $mapper;
 
     /**
-     * @var ProductReaderInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface
      */
     protected $productReader;
 
