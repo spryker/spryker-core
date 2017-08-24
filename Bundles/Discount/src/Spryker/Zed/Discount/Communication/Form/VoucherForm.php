@@ -148,7 +148,7 @@ class VoucherForm extends AbstractType
     }
 
     /**
-     * @return array|int[]
+     * @return int[]
      */
     protected function createCodeLengthRangeList()
     {

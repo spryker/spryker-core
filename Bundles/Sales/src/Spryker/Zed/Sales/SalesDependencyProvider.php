@@ -247,7 +247,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array|\Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
      */
     protected function getOrderHydrationPlugins()
     {

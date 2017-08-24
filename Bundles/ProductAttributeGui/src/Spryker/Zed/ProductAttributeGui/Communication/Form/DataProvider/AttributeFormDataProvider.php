@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductAttributeGui\Communication\Form\DataProvider;
 
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeForm;
-use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeBridge;
 use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface;
-use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface as ProductAttributeGuiToProductAttributeInterfaceQueryContainer;
-use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerBridge as ProductAttributeGuiToProductAttributeBridgeQueryContainer;
+use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface;
 
 class AttributeFormDataProvider
 {
@@ -28,13 +26,13 @@ class AttributeFormDataProvider
     protected $productAttributeFacade;
 
     /**
-     * @param ProductAttributeGuiToProductAttributeInterfaceQueryContainer $productAttributeQueryContainer
-     * @param ProductAttributeGuiToProductAttributeInterface $productAttributeFacade
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer
+     * @param \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface $productAttributeFacade
      */
     public function __construct(
-        ProductAttributeGuiToProductAttributeInterfaceQueryContainer $productAttributeQueryContainer,
-        ProductAttributeGuiToProductAttributeInterface $productAttributeFacade)
-    {
+        ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer,
+        ProductAttributeGuiToProductAttributeInterface $productAttributeFacade
+    ) {
         $this->productAttributeQueryContainer = $productAttributeQueryContainer;
         $this->productAttributeFacade = $productAttributeFacade;
     }

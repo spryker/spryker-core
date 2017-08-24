@@ -170,7 +170,7 @@ interface StockFacadeInterface
      *
      * @param int $idProductConcrete
      *
-     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
 

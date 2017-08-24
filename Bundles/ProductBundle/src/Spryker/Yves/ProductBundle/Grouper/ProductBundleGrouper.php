@@ -157,7 +157,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
      * @param array $groupedBundleQuantity
      * @param string $bundleGroupKey
@@ -190,7 +190,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      * @param \Generated\Shared\Transfer\ItemTransfer $bundledItemTransfer
      * @param string $bundleGroupKey
      *
@@ -214,7 +214,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      * @param string $bundleGroupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
@@ -225,7 +225,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      * @param string $bundleGroupKey
      *
      * @return array
@@ -239,7 +239,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
-     * @return array|\Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
      */
     protected function getBundleOptions(ItemTransfer $itemTransfer, ArrayObject $items)
     {
@@ -254,10 +254,10 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $groupedBundleItems
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $groupedBundleItems
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      *
-     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function updateGroupedBundleItemsAggregatedSubtotal(array $groupedBundleItems, ArrayObject $bundleItems)
     {

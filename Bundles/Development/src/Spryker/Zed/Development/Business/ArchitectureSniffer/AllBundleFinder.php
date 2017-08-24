@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
+use InvalidArgumentException;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\Word\CamelCaseToDash;
 
@@ -77,7 +78,7 @@ class AllBundleFinder implements AllBundleFinderInterface
                 ->directories()
                 ->in($path)
                 ->depth('== 0');
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             // ~ Directory does not exist. It's not an error.
         }
 

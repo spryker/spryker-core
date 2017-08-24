@@ -16,7 +16,7 @@ interface AttributeTranslationReaderInterface
      * @param string $key
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer
+     * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer|null
      */
     public function findAttributeTranslationByKey($key, LocaleTransfer $localeTransfer);
 
