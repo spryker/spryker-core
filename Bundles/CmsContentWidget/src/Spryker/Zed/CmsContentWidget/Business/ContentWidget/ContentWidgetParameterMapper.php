@@ -115,7 +115,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
      * @param string $functionName
      * @param array $unProcessedFunctionParameters
      *
-     * @return void|null
+     * @return void
      */
     protected function buildParameterMap($functionName, array $unProcessedFunctionParameters)
     {
