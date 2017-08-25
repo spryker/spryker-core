@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\ProductReview\ProductReviewConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
@@ -39,10 +38,6 @@ class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
             );
 
         $this->touchQuery
-            ->addAnd(
-                SpyTouchTableMap::COL_ITEM_TYPE,
-                ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW
-            )
             ->addAnd(
                 SpyProductReviewTableMap::COL_FK_LOCALE,
                 $this->getLocale()->getIdLocale()
