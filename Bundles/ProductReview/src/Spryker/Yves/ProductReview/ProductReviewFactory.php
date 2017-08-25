@@ -8,7 +8,6 @@
 namespace Spryker\Yves\ProductReview;
 
 use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\ProductReview\Plugin\Provider\ProductAbstractReviewMaximumRatingTwigServiceProvider;
 use Spryker\Yves\ProductReview\Twig\ProductAbstractReviewMaximumRatingTwigExtension;
 use Spryker\Yves\ProductReview\Twig\ProductAbstractReviewTwigExtension;
 

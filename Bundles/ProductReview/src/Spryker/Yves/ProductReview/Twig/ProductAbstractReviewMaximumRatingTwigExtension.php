@@ -9,8 +9,6 @@ namespace Spryker\Yves\ProductReview\Twig;
 
 use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Shared\Twig\TwigExtension;
-use Spryker\Yves\Kernel\Application;
-use Twig_Environment;
 use Twig_SimpleFunction;
 
 class ProductAbstractReviewMaximumRatingTwigExtension extends TwigExtension
@@ -51,4 +49,5 @@ class ProductAbstractReviewMaximumRatingTwigExtension extends TwigExtension
     {
         return $this->productReviewClient->getMaximumRating();
     }
+
 }
