@@ -49,11 +49,14 @@ class ProductReviewDeleter implements ProductReviewDeleterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
      * @return void
      */
     protected function executeDeleteProductReviewTransaction(ProductReviewTransfer $productReviewTransfer)
     {
         $productReviewEntity = $this->productReviewEntityReader->getProductReviewEntity($productReviewTransfer);
+        $productReviewTransfer->fromArray($productReviewEntity->toArray());
 
         $productReviewEntity->delete();
 
