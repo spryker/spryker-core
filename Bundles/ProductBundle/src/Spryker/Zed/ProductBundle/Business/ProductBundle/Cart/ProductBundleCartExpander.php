@@ -358,7 +358,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
      *
      * @return int
      */

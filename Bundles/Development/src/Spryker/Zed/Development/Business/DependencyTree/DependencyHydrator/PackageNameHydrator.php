@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator;
 
+use Exception;
 use ReflectionClass;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
@@ -53,7 +54,7 @@ class PackageNameHydrator implements DependencyHydratorInterface
                 }
 
             } while (count($pathParts) > 0);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         return false;

@@ -19,7 +19,7 @@ class CmsContentWidgetConfig extends AbstractBundleConfig
      *
      * Should be registered in key value pairs where key is function name and value concrete configuration provider.
      *
-     * @return array|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
+     * @return \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
      */
     public function getCmsContentWidgetConfigurationProviders()
     {

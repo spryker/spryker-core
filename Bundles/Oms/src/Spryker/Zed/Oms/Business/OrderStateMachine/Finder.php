@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Finder implements FinderInterface
@@ -343,6 +344,8 @@ class Finder implements FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
+     * @throws \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
+     *
      * @return string
      */
     public function getStateDisplayName(SpySalesOrderItem $orderItem)
@@ -351,7 +354,18 @@ class Finder implements FinderInterface
         $builder = clone $this->builder;
         $process = $builder->createProcess($processName);
         $stateName = $orderItem->getState()->getName();
-        $state = $process->getState($stateName);
+
+        $allStates = $process->getAllStates();
+        if (!isset($allStates[$stateName])) {
+            throw new StateNotFoundException(sprintf(
+                sprintf(
+                    'State with name "%s" not found in any StateMachine processes.',
+                    $stateName
+                )
+            ));
+        }
+
+        $state = $allStates[$stateName];
 
         return $state->getDisplay();
     }

@@ -103,7 +103,7 @@ class RequestProcessor
     /**
      * @param array $context
      *
-     * @return bool|\Symfony\Component\HttpFoundation\Request
+     * @return bool|\Symfony\Component\HttpFoundation\Request|null
      */
     protected function findRequest(array $context)
     {

@@ -88,7 +88,7 @@ class OperatorBuilder implements OperatorBuilderInterface
     }
 
     /**
-     * @param array|\Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[] $operatorCollection
+     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[] $operatorCollection
      *
      * @throws \Spryker\Zed\PropelQueryBuilder\Persistence\Exception\OperatorBuilderException
      *

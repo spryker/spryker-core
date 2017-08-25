@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\PhpMd\Rules\Naming;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\Rule\Naming\ShortVariable as PHPMDShortVariable;
 
@@ -93,7 +94,7 @@ class ShortVariable extends PHPMDShortVariable
     {
         try {
             $exceptions = $this->getStringProperty('exceptions');
-        } catch (\OutOfBoundsException $e) {
+        } catch (OutOfBoundsException $e) {
             $exceptions = '';
         }
 

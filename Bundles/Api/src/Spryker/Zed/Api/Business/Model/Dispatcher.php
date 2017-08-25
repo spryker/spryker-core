@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Api\Business\Model;
 
 use ArrayObject;
+use Exception;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
@@ -17,6 +18,7 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface;
+use Throwable;
 
 class Dispatcher implements DispatcherInterface
 {
@@ -119,11 +121,11 @@ class Dispatcher implements DispatcherInterface
                 }
             }
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());

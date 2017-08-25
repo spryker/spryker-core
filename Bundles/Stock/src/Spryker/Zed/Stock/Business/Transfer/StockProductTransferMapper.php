@@ -31,7 +31,7 @@ class StockProductTransferMapper implements StockProductTransferMapperInterface
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $stockProductEntityCollection
      *
-     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function convertStockProductCollection(ObjectCollection $stockProductEntityCollection)
     {
