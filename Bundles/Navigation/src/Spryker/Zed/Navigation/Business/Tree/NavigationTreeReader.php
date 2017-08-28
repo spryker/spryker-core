@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Navigation\Business\Tree;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
@@ -106,7 +107,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
         $navigationTreeTransfer->setNavigation($navigationTransfer);
 
         $rootNavigationNodes = $this->findRootNavigationNodes($navigationEntity);
-        $nodesWithoutPosition = new \ArrayObject();
+        $nodesWithoutPosition = new ArrayObject();
         foreach ($rootNavigationNodes as $navigationNodeEntity) {
             $navigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($navigationNodeEntity, $localeTransfer);
             if ($navigationNodeEntity->getPosition() === null) {

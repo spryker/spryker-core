@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Collector\Business\Exporter\Writer;
 
 use Codeception\Test\Unit;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\CollectorConfig;
@@ -105,7 +104,7 @@ class AbstractTouchUpdaterTest extends Unit
             $expectedQuery = 'DELETE FROM touchKeyTableName_value WHERE fk_touch IN (id_touch1,id_touch2)';
         }
 
-        if ($databaseEngine ===  $this->collectorConfig->getMysqlEngineName()) {
+        if ($databaseEngine === $this->collectorConfig->getMysqlEngineName()) {
             $expectedQuery = 'DELETE FROM `touchKeyTableName_value` WHERE `fk_touch` IN (id_touch1,id_touch2)';
         }
 
