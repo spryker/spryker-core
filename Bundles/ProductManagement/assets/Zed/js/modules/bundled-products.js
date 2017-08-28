@@ -81,11 +81,11 @@ $(document).ready(function() {
                             var bundledFormId = form.attr('id');
                             $checkbox.attr('data-related-form-id', bundledFormId);
 
-                            bundledItemsToBeRemoved.push(cellIdProductConcrete);
                             numberOfAssignedProducts--;
                         }
                     });
 
+                    bundledItemsToBeRemoved.push(idProductConcrete);
                     $(element).remove();
 
                 });
