@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Closure;
 use Codeception\Module;
-use Codeception\TestInterface;
 use Exception;
 
 class DataCleanupHelper extends Module
@@ -38,11 +37,9 @@ class DataCleanupHelper extends Module
     /**
      * Cleans up inserted data
      *
-     * @param \Codeception\TestInterface $test
-     *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _afterSuite()
     {
         if (!$this->config['cleanup']) {
             return;

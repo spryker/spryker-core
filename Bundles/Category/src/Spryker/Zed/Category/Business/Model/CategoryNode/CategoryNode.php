@@ -17,11 +17,11 @@ use Spryker\Zed\Category\Business\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
-class CategoryNode implements CategoryNodeInterface
+class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterface
 {
 
     /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
+     * @var \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
      */
     protected $closureTableWriter;
 
@@ -89,13 +89,13 @@ class CategoryNode implements CategoryNodeInterface
         }
 
         $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray());
+        $categoryNodeTransfer->fromArray($categoryNodeEntity->toArray(), true);
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
         $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
         $parentCategoryNodeTransfer = new NodeTransfer();
         if ($parentCategoryNodeEntity !== null) {
-            $parentCategoryNodeTransfer->fromArray($parentCategoryNodeEntity->toArray());
+            $parentCategoryNodeTransfer->fromArray($parentCategoryNodeEntity->toArray(), true);
         }
         $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
 
@@ -132,9 +132,10 @@ class CategoryNode implements CategoryNodeInterface
 
         if ($categoryTransfer->getIsActive()) {
             $this->categoryToucher->touchCategoryNodeActiveRecursively($idCategoryNode);
-        } else {
-            $this->categoryToucher->touchCategoryNodeDeletedRecursively($idCategoryNode);
+            return;
         }
+
+        $this->categoryToucher->touchCategoryNodeDeletedRecursively($idCategoryNode);
     }
 
     /**
@@ -255,16 +256,58 @@ class CategoryNode implements CategoryNodeInterface
             ->find();
 
         foreach ($categoryNodeCollection as $categoryNodeEntity) {
-            $this->moveSubTreeToParent($categoryNodeEntity);
-
-            $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
-            $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
-
-            $categoryNodeEntity->delete();
+            $this->deleteNode($categoryNodeEntity);
         }
     }
 
     /**
+     * @param int $idCategoryNode
+     * @param int $idChildrenDestinationNode
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
+     *
+     * @return void
+     */
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
+    {
+        $categoryNodeEntity = $this->queryContainer
+            ->queryNodeById($idCategoryNode)
+            ->findOne();
+
+        if (!$categoryNodeEntity) {
+            throw new MissingCategoryNodeException();
+        }
+
+        $this->deleteNode($categoryNodeEntity, $idChildrenDestinationNode);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     * @param int|null $idChildrenDestinationNode
+     *
+     * @return void
+     */
+    protected function deleteNode(SpyCategoryNode $categoryNodeEntity, $idChildrenDestinationNode = null)
+    {
+        $idChildrenDestinationNode = $idChildrenDestinationNode ?: $categoryNodeEntity->getFkParentCategoryNode();
+
+        do {
+            $childrenMoved = $this->categoryTree
+                ->moveSubTree(
+                    $categoryNodeEntity->getIdCategoryNode(),
+                    $idChildrenDestinationNode
+                );
+        } while ($childrenMoved > 0);
+
+        $this->categoryToucher->touchCategoryNodeDeleted($categoryNodeEntity->getIdCategoryNode());
+        $this->closureTableWriter->delete($categoryNodeEntity->getIdCategoryNode());
+
+        $categoryNodeEntity->delete();
+    }
+
+    /**
+     * @deprecated You can directly use ::categoryTree to manipulate with subTree
+     *
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $sourceNodeEntity
      *
      * @return void

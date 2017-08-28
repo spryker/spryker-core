@@ -13,7 +13,7 @@ interface CategoryTreeInterface
      * @param int $idSourceCategoryNode
      * @param int $idDestinationCategoryNode
      *
-     * @return void
+     * @return int
      */
     public function moveSubTree($idSourceCategoryNode, $idDestinationCategoryNode);
 
