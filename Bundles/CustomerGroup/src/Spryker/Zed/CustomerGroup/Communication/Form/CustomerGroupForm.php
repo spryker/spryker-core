@@ -26,7 +26,6 @@ class CustomerGroupForm extends AbstractType
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
     const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
-//    const FIELD_CUSTOMERS = 'customers';
     const FIELD_CUSTOMER_ASSIGNMENT = 'customerAssignment';
 
     /**
