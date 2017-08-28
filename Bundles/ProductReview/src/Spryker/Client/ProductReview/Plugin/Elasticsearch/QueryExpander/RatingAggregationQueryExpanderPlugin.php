@@ -42,7 +42,7 @@ class RatingAggregationQueryExpanderPlugin extends AbstractPlugin implements Que
      */
     protected function addRatingAggregation(Query $query)
     {
-        $ratingAggregation = new Terms(self::AGGREGATION_NAME);
+        $ratingAggregation = new Terms(static::AGGREGATION_NAME);
         $ratingAggregation->setField(ProductReviewIndexMap::RATING);
 
         $query->addAggregation($ratingAggregation);

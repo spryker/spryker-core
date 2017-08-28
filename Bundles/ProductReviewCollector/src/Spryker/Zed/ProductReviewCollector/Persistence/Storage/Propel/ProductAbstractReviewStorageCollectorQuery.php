@@ -35,8 +35,8 @@ class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollector
 
         $this->touchQuery
             ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)
-            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), self::FIELD_AVERAGE_RATING)
-            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), self::FIELD_COUNT);
+            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)
+            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT);
     }
 
     /**
