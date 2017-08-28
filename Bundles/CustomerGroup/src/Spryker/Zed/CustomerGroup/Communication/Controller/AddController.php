@@ -35,7 +35,8 @@ class AddController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $customerGroupTransfer = $dataProvider->prepareDataAsTransfer($form->getData());
+            /** @var \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer */
+            $customerGroupTransfer = $form->getData();
 
             $this->getFacade()->add($customerGroupTransfer);
 
@@ -43,8 +44,37 @@ class AddController extends AbstractController
         }
 
         return $this->viewResponse([
+            'customerGroupFormTabs' => $this->getFactory()->createCustomerGroupFormTabs()->createView(),
             'form' => $form->createView(),
+            'availableCustomerTable' => $this->getFactory()
+                ->createAvailableCustomerTable(null)
+                ->render(),
+            'assignedCustomerTable' => $this->getFactory()
+                ->createAssignedCustomerTable(null)
+                ->render(),
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function availableCustomerTableAction()
+    {
+        $availableCustomerTable = $this->getFactory()
+            ->createAvailableCustomerTable(null);
+
+        return $this->jsonResponse($availableCustomerTable->fetchData());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedCustomerTableAction()
+    {
+        $assignedCustomerTable = $this->getFactory()
+            ->createAssignedCustomerTable(null);
+
+        return $this->jsonResponse($assignedCustomerTable->fetchData());
     }
 
     /**

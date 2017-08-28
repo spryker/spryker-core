@@ -85,12 +85,11 @@ class CustomerGroup implements CustomerGroupInterface
         $this->queryContainer->getConnection()->beginTransaction();
 
         $customerGroupEntity->save();
+        $customerGroupTransfer = $this->mapEntityToTransfer($customerGroupEntity, $customerGroupTransfer);
 
         $this->saveCustomers($customerGroupTransfer, $customerGroupEntity);
 
         $this->queryContainer->getConnection()->commit();
-
-        $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
 
         return $customerGroupTransfer;
     }
@@ -108,10 +107,9 @@ class CustomerGroup implements CustomerGroupInterface
         $this->queryContainer->getConnection()->beginTransaction();
         $customerGroupEntity->save();
 
-        $this->queryContainer
-            ->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupEntity->getIdCustomerGroup())
-            ->delete();
+        $customerGroupTransfer = $this->mapEntityToTransfer($customerGroupEntity, $customerGroupTransfer);
 
+        $this->removeCustomersFromGroup($customerGroupTransfer);
         $this->saveCustomers($customerGroupTransfer, $customerGroupEntity);
 
         $this->queryContainer->getConnection()->commit();
@@ -125,10 +123,10 @@ class CustomerGroup implements CustomerGroupInterface
      */
     protected function saveCustomers(CustomerGroupTransfer $customerGroupTransfer, SpyCustomerGroup $customerGroupEntity)
     {
-        foreach ($customerGroupTransfer->getCustomers() as $customerTransfer) {
+        foreach ($customerGroupTransfer->getCustomerAssignment()->getIdsCustomerToAssign() as $idCustomerToAssign) {
             $customerGroupToCustomerEntity = new SpyCustomerGroupToCustomer();
             $customerGroupToCustomerEntity->setFkCustomerGroup($customerGroupEntity->getIdCustomerGroup());
-            $customerGroupToCustomerEntity->setFkCustomer($customerTransfer->getFkCustomer());
+            $customerGroupToCustomerEntity->setFkCustomer($idCustomerToAssign);
 
             $customerGroupToCustomerEntity->save();
         }
@@ -178,13 +176,14 @@ class CustomerGroup implements CustomerGroupInterface
      */
     public function removeCustomersFromGroup(CustomerGroupTransfer $customerGroupTransfer)
     {
-        $customerGroupTransfer->requireIdCustomerGroup();
-        $customerGroupTransfer->requireCustomers();
+        $customerGroupTransfer
+            ->requireIdCustomerGroup()
+            ->requireCustomerAssignment();
 
-        foreach ($customerGroupTransfer->getCustomers() as $customer) {
+        foreach ($customerGroupTransfer->getCustomerAssignment()->getIdsCustomerToDeAssign() as $idCustomer) {
             $customerEntity = $this->queryContainer
                 ->queryCustomerGroupToCustomerByFkCustomerGroup($customerGroupTransfer->getIdCustomerGroup())
-                ->filterByFkCustomer($customer->getFkCustomer())->findOne();
+                ->filterByFkCustomer($idCustomer)->findOne();
 
             if (!$customerEntity) {
                 continue;
@@ -210,7 +209,7 @@ class CustomerGroup implements CustomerGroupInterface
         }
 
         $customerGroupTransfer = new CustomerGroupTransfer();
-        $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
+        $customerGroupTransfer = $this->mapEntityToTransfer($customerGroupEntity, $customerGroupTransfer);
 
         return $customerGroupTransfer;
     }
@@ -227,10 +226,11 @@ class CustomerGroup implements CustomerGroupInterface
         $customerGroupTransfers = $this->findCustomerGroupsByIdCustomer($customerTransfer->getIdCustomer());
 
         foreach ($customerGroupTransfers as $customerGroupTransfer) {
-            $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-            $customerGroupToCustomerTransfer->setFkCustomer($customerTransfer->getIdCustomer());
-
-            $customerGroupTransfer->getCustomers()->append($customerGroupToCustomerTransfer);
+            $customerGroupTransfer
+                ->getCustomerAssignment()
+                ->addIdCustomerToDeAssign(
+                    $customerTransfer->getIdCustomer()
+                );
             $this->removeCustomersFromGroup($customerGroupTransfer);
         }
     }
@@ -256,6 +256,19 @@ class CustomerGroup implements CustomerGroupInterface
         }
 
         return $groups;
+    }
+
+    /**
+     * @param \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup $customerGroupEntity
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
+     */
+    protected function mapEntityToTransfer(SpyCustomerGroup $customerGroupEntity, CustomerGroupTransfer $customerGroupTransfer)
+    {
+        $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
+
+        return $customerGroupTransfer;
     }
 
 }

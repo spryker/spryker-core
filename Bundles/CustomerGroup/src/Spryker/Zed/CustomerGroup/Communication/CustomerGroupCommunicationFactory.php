@@ -8,10 +8,15 @@
 namespace Spryker\Zed\CustomerGroup\Communication;
 
 use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Spryker\Zed\CustomerGroup\Communication\Form\CustomerAssignmentForm;
 use Spryker\Zed\CustomerGroup\Communication\Form\CustomerGroupForm;
 use Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerGroupFormDataProvider;
+use Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignedCustomerTable;
+use Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilder;
+use Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AvailableCustomerTable;
 use Spryker\Zed\CustomerGroup\Communication\Table\CustomerGroupTable;
 use Spryker\Zed\CustomerGroup\Communication\Table\CustomerTable;
+use Spryker\Zed\CustomerGroup\Communication\Tabs\CustomerGroupFormTabs;
 use Spryker\Zed\CustomerGroup\CustomerGroupDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -47,18 +52,72 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param int $idCustomerGroup
+     *
+     * @return \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignedCustomerTable
+     */
+    public function createAssignedCustomerTable($idCustomerGroup)
+    {
+        return new AssignedCustomerTable(
+            $this->createAssignmentCustomerQueryBuilder(),
+            $idCustomerGroup
+        );
+    }
+
+    /**
+     * @param int $idCustomerGroup
+     *
+     * @return \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AvailableCustomerTable
+     */
+    public function createAvailableCustomerTable($idCustomerGroup)
+    {
+        return new AvailableCustomerTable(
+            $this->createAssignmentCustomerQueryBuilder(),
+            $idCustomerGroup
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilder
+     */
+    protected function createAssignmentCustomerQueryBuilder()
+    {
+        return new AssignmentCustomerQueryBuilder(
+            $this->getCustomerQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Communication\Form\CustomerAssignmentForm
+     */
+    protected function createCustomerAssignmentForm()
+    {
+        return new CustomerAssignmentForm();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCustomerGroupForm(array $data = [], array $options = [])
+    public function createCustomerGroupForm(CustomerGroupTransfer $data, array $options = [])
     {
-        $idCustomerGroup = !empty($data[CustomerGroupForm::FIELD_ID_CUSTOMER_GROUP]) ? $data[CustomerGroupForm::FIELD_ID_CUSTOMER_GROUP] : null;
-
-        $customerFormType = new CustomerGroupForm($this->getQueryContainer(), $idCustomerGroup);
+        $customerFormType = new CustomerGroupForm(
+            $this->getQueryContainer(),
+            $this->createCustomerAssignmentForm(),
+            $data->getIdCustomerGroup()
+        );
 
         return $this->getFormFactory()->create($customerFormType, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Communication\Tabs\CustomerGroupFormTabs
+     */
+    public function createCustomerGroupFormTabs()
+    {
+        return new CustomerGroupFormTabs();
     }
 
     /**
@@ -75,6 +134,14 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     protected function getDateFormatterService()
     {
         return $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_DATE_FORMATTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Dependency\QueryContainer\CustomerGroupToCustomerQueryContainerInterface
+     */
+    protected function getCustomerQueryContainer()
+    {
+        return $this->getProvidedDependency(CustomerGroupDependencyProvider::QUERY_CONTAINER_CUSTOMER);
     }
 
 }
