@@ -16,11 +16,11 @@ class ProductReviewToStorageBridge implements ProductReviewToStorageInterface
     protected $storageClient;
 
     /**
-     * @param \Spryker\Client\Storage\StorageClientInterface $localeClient
+     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
-    public function __construct($localeClient)
+    public function __construct($storageClient)
     {
-        $this->storageClient = $localeClient;
+        $this->storageClient = $storageClient;
     }
 
     /**

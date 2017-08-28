@@ -10,14 +10,19 @@ namespace SprykerTest\Shared\ProductReview\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
 use Generated\Shared\Transfer\ProductReviewTransfer;
+use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
+use SprykerTest\Shared\Product\Helper\ProductDataHelper;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\Locale\Helper\LocaleDataHelper;
 
 class ProductReviewDataHelper extends Module
 {
 
     use DependencyHelperTrait;
     use LocatorHelperTrait;
+
+    const NAMESPACE_ROOT = '\\';
 
     /**
      * @param array $override
@@ -26,9 +31,9 @@ class ProductReviewDataHelper extends Module
      */
     public function haveProductReview($override = [])
     {
-        $productAbstractTransfer = $this->getModule("\SprykerTest\Shared\Product\Helper\ProductDataHelper")->haveProductAbstract();
-        $customerTransfer = $this->getModule("\SprykerTest\Shared\Customer\Helper\CustomerDataHelper")->haveCustomer();
-        $localeTransfer = $this->getModule("\SprykerTest\Zed\Locale\Helper\LocaleDataHelper")->haveLocale();
+        $productAbstractTransfer = $this->getModule(static::NAMESPACE_ROOT . ProductDataHelper::class)->haveProductAbstract();
+        $customerTransfer = $this->getModule(static::NAMESPACE_ROOT . CustomerDataHelper::class)->haveCustomer();
+        $localeTransfer = $this->getModule(static::NAMESPACE_ROOT . LocaleDataHelper::class)->haveLocale();
 
         $override[ProductReviewTransfer::FK_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
         $override[ProductReviewTransfer::CUSTOMER_REFERENCE] = $customerTransfer->getCustomerReference();
