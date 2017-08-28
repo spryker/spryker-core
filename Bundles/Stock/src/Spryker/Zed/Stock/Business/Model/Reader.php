@@ -229,7 +229,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
-     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete)
     {

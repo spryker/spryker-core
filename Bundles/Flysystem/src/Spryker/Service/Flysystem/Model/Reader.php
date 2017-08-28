@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\Flysystem\Model;
 
+use Exception;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FlysystemResourceTransfer;
 use League\Flysystem\AdapterInterface;
@@ -14,6 +15,7 @@ use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\Flysystem\Exception\MetadataNotFoundException;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
 use Spryker\Shared\Flysystem\OperationHandler\ReadOperationHandlerTrait;
+use Throwable;
 
 class Reader implements ReaderInterface
 {
@@ -49,9 +51,9 @@ class Reader implements ReaderInterface
                 ->getVisibility($path);
 
             return $visibility === AdapterInterface::VISIBILITY_PRIVATE;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
@@ -70,9 +72,9 @@ class Reader implements ReaderInterface
             return $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
                 ->has($path);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }

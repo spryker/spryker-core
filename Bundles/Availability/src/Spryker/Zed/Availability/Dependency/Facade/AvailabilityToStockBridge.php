@@ -76,7 +76,7 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete)
     {

@@ -203,7 +203,7 @@ class Calculator implements CalculatorInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]|array
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {

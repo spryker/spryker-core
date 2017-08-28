@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
 use ArrayObject;
+use Exception;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
@@ -82,7 +83,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
                 ->getConnection()
                 ->commit();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productManagementQueryContainer
                 ->getConnection()
                 ->rollBack();

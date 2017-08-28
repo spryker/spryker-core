@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Installer\Communication\Console;
 
+use Exception;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -46,7 +47,7 @@ class InitializeDatabaseConsole extends Console
                 $output->writeln('Installing DB data for ' . $name);
                 $plugin->install();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error($e->getMessage());
 
             return static::CODE_ERROR;

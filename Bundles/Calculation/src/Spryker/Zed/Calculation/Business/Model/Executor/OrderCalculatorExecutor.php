@@ -19,7 +19,7 @@ class OrderCalculatorExecutor implements OrderCalculatorExecutorInterface
     protected $orderCalculators;
 
     /**
-     * @param array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[] $orderCalculators
+     * @param \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[] $orderCalculators
      */
     public function __construct(array $orderCalculators)
     {

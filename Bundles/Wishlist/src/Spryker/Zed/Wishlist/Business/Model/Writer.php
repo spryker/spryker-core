@@ -16,6 +16,7 @@ use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Wishlist\Business\Exception\WishlistExistsException;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Writer implements WriterInterface
@@ -36,13 +37,23 @@ class Writer implements WriterInterface
     protected $reader;
 
     /**
+     * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Model\ReaderInterface $reader
+     * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null $productFacade
      */
-    public function __construct(WishlistQueryContainerInterface $queryContainer, ReaderInterface $reader)
-    {
+    public function __construct(
+        WishlistQueryContainerInterface $queryContainer,
+        ReaderInterface $reader,
+        WishlistToProductInterface $productFacade = null
+    ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -215,7 +226,7 @@ class Writer implements WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param array|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
      *
      * @return void
      */
@@ -254,6 +265,10 @@ class Writer implements WriterInterface
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
+        if ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())) {
+            return $wishlistItemTransfer;
+        }
+
         $idWishlist = $this->getDefaultWishlistIdByName(
             $wishlistItemTransfer->getWishlistName(),
             $wishlistItemTransfer->getFkCustomer()
@@ -265,6 +280,8 @@ class Writer implements WriterInterface
             ->findOneOrCreate();
 
         $wishlistItemEntity->save();
+
+        $wishlistItemTransfer->setIdWishlistItem($wishlistItemEntity->getIdWishlistItem());
 
         return $wishlistItemTransfer;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Newsletter\Business\Subscription;
 
+use Exception;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
@@ -100,7 +101,7 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
             }
 
             $connection->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $connection->rollBack();
             throw $e;
         }
@@ -137,7 +138,7 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
             }
 
             $connection->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $connection->rollBack();
             throw $e;
         }

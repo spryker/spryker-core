@@ -36,7 +36,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
     protected $glossaryFacade;
 
     /**
-     * @param array|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[] $contentWidgetParameterMapperPlugins
+     * @param \Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[] $contentWidgetParameterMapperPlugins
      * @param \Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetFunctionMatcherInterface $contentWidgetFunctionMatcher
      * @param \Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface $glossaryFacade
      */
@@ -120,7 +120,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
     protected function buildParameterMap($functionName, array $unProcessedFunctionParameters)
     {
         if (!isset($this->contentWidgetParameterMapperPlugins[$functionName])) {
-            return null;
+            return;
         }
 
         $mappedParameters = $this->contentWidgetParameterMapperPlugins[$functionName]->map($unProcessedFunctionParameters);
@@ -148,6 +148,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
 
             $functionParameters[] = $parameter;
         }
+
         return $functionParameters;
     }
 

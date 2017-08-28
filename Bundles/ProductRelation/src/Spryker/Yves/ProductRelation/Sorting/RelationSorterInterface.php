@@ -11,9 +11,9 @@ interface RelationSorterInterface
 {
 
     /**
-     * @param array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $relationProducts
+     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $relationProducts
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function sort(array $relationProducts);
 

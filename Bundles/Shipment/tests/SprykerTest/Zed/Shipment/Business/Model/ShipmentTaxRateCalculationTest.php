@@ -180,7 +180,7 @@ class ShipmentTaxRateCalculationTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $mockData
+     * @param array|null $mockData
      *
      * @return float
      */
@@ -283,7 +283,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return array
+     * @return array|null
      */
     protected function getMockDefaultTaxRates()
     {

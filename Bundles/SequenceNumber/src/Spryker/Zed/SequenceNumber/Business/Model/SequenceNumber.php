@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SequenceNumber\Business\Model;
 
+use Exception;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
@@ -77,7 +78,7 @@ class SequenceNumber implements SequenceNumberInterface
             $sequence->save();
 
             $this->connection->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->connection->rollback();
 
             throw new InvalidSequenceNumberException(

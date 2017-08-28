@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Heartbeat\Business\Assistant;
 
+use Exception;
 use Predis\Client;
 use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
@@ -47,7 +48,7 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     {
         try {
             $this->client->set(self::KEY_HEARTBEAT, 'ok');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
             $this->addDysfunction($e->getMessage());
         }
@@ -60,7 +61,7 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     {
         try {
             $this->client->get(self::KEY_HEARTBEAT);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
             $this->addDysfunction($e->getMessage());
         }

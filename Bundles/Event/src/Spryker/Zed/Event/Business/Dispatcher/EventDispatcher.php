@@ -75,7 +75,7 @@ class EventDispatcher implements EventDispatcherInterface
     /**
      * @param string $eventName
      *
-     * @return array|\SplPriorityQueue|\Spryker\Zed\Event\Business\\Dispatcher\EventListenerContextInterface[]
+     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\\Dispatcher\EventListenerContextInterface[]
      */
     protected function extractEventListeners($eventName)
     {

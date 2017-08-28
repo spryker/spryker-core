@@ -241,7 +241,7 @@ class Builder implements BuilderInterface
     /**
      * @param \SimpleXMLElement $xmlEvent
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface
+     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface|null
      */
     protected function createEvent(SimpleXMLElement $xmlEvent)
     {
