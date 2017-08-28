@@ -37,6 +37,7 @@ class EditController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
+            /** @var \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer */
             $customerGroupTransfer = $form->getData();
 
             $this->getFacade()->update($customerGroupTransfer);

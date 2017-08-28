@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerGroup;
 
 use Spryker\Zed\CustomerGroup\Dependency\QueryContainer\CustomerGroupToCustomerQueryContainerBridge;
+use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,6 +17,7 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
     const SERVICE_DATE_FORMATTER = 'date formatter';
+    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,6 +38,7 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addDataFormatterService($container);
         $container = $this->addCustomerQueryContainer($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -65,6 +68,20 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
             return new CustomerGroupToCustomerQueryContainerBridge(
                 $container->getLocator()->customer()->queryContainer()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new CustomerGroupToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

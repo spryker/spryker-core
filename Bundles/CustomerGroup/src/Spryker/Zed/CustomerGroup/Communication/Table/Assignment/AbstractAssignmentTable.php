@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerGroup\Communication\Table\Assignment;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -25,6 +26,11 @@ abstract class AbstractAssignmentTable extends AbstractTable
     const COL_CUSTOMER_LAST_NAME = SpyCustomerTableMap::COL_LAST_NAME;
 
     /**
+     * @var \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface
+     */
+    protected $utilEncoding;
+
+    /**
      * @var \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilder
      */
     protected $tableQueryBuilder;
@@ -36,13 +42,16 @@ abstract class AbstractAssignmentTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilder $tableQueryBuilder
+     * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface $utilEncoding
      * @param int $idCustomerGroup
      */
     public function __construct(
         AssignmentCustomerQueryBuilder $tableQueryBuilder,
+        CustomerGroupToUtilEncodingInterface $utilEncoding,
         $idCustomerGroup
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
+        $this->utilEncoding = $utilEncoding;
         $this->idCustomerGroup = $idCustomerGroup;
     }
 
@@ -200,7 +209,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
             'js-item-checkbox',
             $customerEntity->getIdCustomer(),
             $this->getCheckboxCheckedAttribute(),
-            htmlspecialchars(json_encode([
+            htmlspecialchars($this->utilEncoding->encodeJson([
                 'id' => $customerEntity->getIdCustomer(),
                 'email' => $customerEntity->getEmail(),
                 'firstName' => $customerEntity->getFirstName(),
