@@ -313,6 +313,23 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param int $idChildrenDestinationNode
+     *
+     * @return void
+     */
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
+    {
+        $this->getFactory()
+            ->createCategoryNode()
+            ->deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
+    }
+
+    /**
      * @api
      *
      * @deprecated Will be removed with next major release
