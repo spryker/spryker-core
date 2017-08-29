@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface;
@@ -82,9 +81,15 @@ class ProductCategoryTable extends AbstractTable
             SpyProductAbstractTableMap::COL_SKU,
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
+        $config->setSortable([
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductAbstractTableMap::COL_SKU,
+            SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
+        ]);
 
         $config->addRawColumn(SpyProductCategoryTableMap::COL_PRODUCT_ORDER);
         $config->addRawColumn(static::COL_CHECKBOX);
+        $config->setDefaultSortField(SpyProductCategoryTableMap::COL_PRODUCT_ORDER, TableConfiguration::SORT_ASC);
 
         return $config;
     }
@@ -97,13 +102,6 @@ class ProductCategoryTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->productCategoryQueryContainer->queryProductsByCategoryId($this->idCategory, $this->locale);
-        //because datatables won't let use what's already defined in queryProductsByCategoryId()
-        //it wil complain that the column <INSERT_NAME> is not found in <table>
-        $query->withColumn(
-            SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
-            'product_order_alias'
-        );
-        $query->orderBy('product_order_alias', Criteria::ASC);
         $query->setModelAlias('spy_product_abstract');
 
         $queryResults = $this->runQuery($query, $config);
