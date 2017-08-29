@@ -62,6 +62,7 @@ class NavigationTwigExtension extends TwigExtension
      */
     public function renderNavigation(Twig_Environment $twig, $navigationKey, $template)
     {
+        return '';
         $navigationTreeTransfer = $this->navigationClient->findNavigationTreeByKey($navigationKey, $this->getLocale());
 
         if (!$navigationTreeTransfer || !$navigationTreeTransfer->getNavigation()->getIsActive()) {

@@ -14,6 +14,14 @@
                 <action>index</action>
                 <visible>1</visible>
                 <pages>
+                    <order-view>
+                        <label>Order Overview</label>
+                        <title>Order Overview</title>
+                        <bundle>sales</bundle>
+                        <controller>detail</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </order-view>
                     <order-item>
                         <label>Order Items</label>
                         <title>Order Items</title>
@@ -22,17 +30,18 @@
                         <action>items</action>
                         <visible>0</visible>
                     </order-item>
+                    <edit-address>
+                        <label>Edit address</label>
+                        <title>Edit address</title>
+                        <bundle>sales</bundle>
+                        <controller>edit</controller>
+                        <action>address</action>
+                        <visible>0</visible>
+                    </edit-address>
                 </pages>
             </order-list>
 
-            <order-view>
-                <label>Order Overview</label>
-                <title>Order Overview</title>
-                <bundle>sales</bundle>
-                <controller>detail</controller>
-                <action>index</action>
-                <visible>0</visible>
-            </order-view>
+
 
             <order-matrix>
                 <label>Order Matrix</label>

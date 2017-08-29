@@ -11,6 +11,16 @@
         <icon>fa-sitemap</icon>
 
         <pages>
+
+            <sort-category>
+                <label>Re-sort child-categories</label>
+                <title>Re-sort child-categories</title>
+                <bundle>category</bundle>
+                <controller>re-sort</controller>
+                <action>index</action>
+                <visible>0</visible>
+            </sort-category>
+
             <view-category>
                 <label>View Category</label>
                 <title>View Category</title>
