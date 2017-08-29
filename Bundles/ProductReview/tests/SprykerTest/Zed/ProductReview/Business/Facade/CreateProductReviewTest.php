@@ -86,6 +86,22 @@ class CreateProductReviewTest extends Unit
     /**
      * @return void
      */
+    public function testCreateProductReviewReturnsUpdatedTransfer()
+    {
+        // Arrange
+        $productReviewTransfer = $this->tester->haveProductReview();
+
+        // Act
+        $actualProductReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
+
+        // Assert
+        $expectedProductReviewTransfer = $this->tester->getFacade()->findProductReview($productReviewTransfer);
+        $this->assertSame($actualProductReviewTransfer->toArray(), $expectedProductReviewTransfer->toArray(), 'Updated product review should have been returned.');
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateProductReviewThrowsExceptionWhenRatingExceedsRange()
     {
         // Arrange

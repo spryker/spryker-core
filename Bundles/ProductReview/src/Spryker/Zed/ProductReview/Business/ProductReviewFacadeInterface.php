@@ -15,6 +15,7 @@ interface ProductReviewFacadeInterface
     /**
      * Specification:
      * - Stores provided product review in persistent storage with pending status.
+     *   - Checks if provided rating in transfer object does not exceed configured limit
      * - Returns the provided transfer object updated with the stored entity's data.
      *
      * @api

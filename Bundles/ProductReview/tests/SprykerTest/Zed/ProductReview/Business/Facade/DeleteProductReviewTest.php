@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
  * @group DeleteProductReviewTest
  * Add your own group annotations below this line
  */
-class DeleteProductReviewTest extends Test
+class DeleteProductReviewTest extends Unit
 {
 
     /**
@@ -59,6 +59,22 @@ class DeleteProductReviewTest extends Test
 
         // Assert
         $this->tester->assertTouchDeleted(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_REVIEW, $productReviewTransfer->getIdProductReview(), 'Product review should have been touched as deleted.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteProductReviewTouchesProductReviewAbstractSearchResource()
+    {
+        // Arrange
+        $productReviewTransfer = $this->tester->haveProductReview();
+        $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
+
+        // Act
+        $this->tester->getFacade()->deleteProductReview($productReviewTransfer);
+
+        // Assert
+        $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_REVIEW, $productReviewTransfer->getFkProductAbstract(), 'Product review abstract should have been touched as active.');
     }
 
 }

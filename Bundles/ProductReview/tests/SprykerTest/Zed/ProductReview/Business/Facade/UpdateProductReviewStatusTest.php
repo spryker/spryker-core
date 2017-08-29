@@ -98,6 +98,53 @@ class UpdateProductReviewStatusTest extends Unit
     }
 
     /**
+     * @dataProvider statusDataProvider
+     *
+     * @param string $inputStatus
+     *
+     * @return void
+     */
+    public function testUpdateProductReviewStatusTouchesProductReviewAbstractSearchResource($inputStatus)
+    {
+        // Arrange
+        $productReviewTransfer = $this->tester->haveProductReview();
+        $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
+
+        $productReviewTransferToUpdate = (new ProductReviewBuilder([
+            ProductReviewTransfer::ID_PRODUCT_REVIEW => $productReviewTransfer->getIdProductReview(),
+            ProductReviewTransfer::STATUS => $inputStatus,
+        ]))->build();
+
+        // Act
+        $this->tester->getFacade()->updateProductReviewStatus($productReviewTransferToUpdate);
+
+        // Assert
+        $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_REVIEW, $productReviewTransferToUpdate->getFkProductAbstract(), 'Product review abstract should have been touched as active.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductReviewReturnsUpdatedTransfer()
+    {
+        // Arrange
+        $productReviewTransfer = $this->tester->haveProductReview();
+        $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
+
+        $productReviewTransferToUpdate = (new ProductReviewBuilder([
+            ProductReviewTransfer::ID_PRODUCT_REVIEW => $productReviewTransfer->getIdProductReview(),
+            ProductReviewTransfer::STATUS => SpyProductReviewTableMap::COL_STATUS_APPROVED,
+        ]))->build();
+
+        // Act
+        $actualProductReviewTransfer = $this->tester->getFacade()->updateProductReviewStatus($productReviewTransferToUpdate);
+
+        // Assert
+        $expectedProductReviewTransfer = $this->tester->getFacade()->findProductReview($productReviewTransfer);
+        $this->assertSame($actualProductReviewTransfer->toArray(), $expectedProductReviewTransfer->toArray(), 'Updated product review should have been returned.');
+    }
+
+    /**
      * @return void
      */
     public function testUpdateProductReviewStatusThrowsExceptionWhenProductReviewIdIsNotProvidedInTransfer()
