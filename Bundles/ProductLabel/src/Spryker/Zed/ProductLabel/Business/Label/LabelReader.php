@@ -83,7 +83,7 @@ class LabelReader implements LabelReaderInterface
     }
 
     /**
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findAllEntitiesSortedByPosition()
     {
@@ -133,7 +133,7 @@ class LabelReader implements LabelReaderInterface
     }
 
     /**
-     * @param array|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelEntities
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelEntities
      *
      * @return array
      */

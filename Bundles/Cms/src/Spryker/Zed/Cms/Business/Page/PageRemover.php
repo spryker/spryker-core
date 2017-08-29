@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
+use Exception;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
@@ -55,7 +56,7 @@ class PageRemover implements PageRemoverInterface
             }
 
             $this->cmsQueryContainer->getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $e;
         }

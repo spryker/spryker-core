@@ -58,7 +58,7 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
+     * @return \Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
      */
     protected function getCmsContentWidgetParameterMapperPlugins(Container $container)
     {

@@ -138,7 +138,7 @@ class BundledProductAvailabilityTable extends AbstractTable
             ->select([SpyProductBundleTableMap::COL_FK_BUNDLED_PRODUCT])
             ->find();
 
-        if ($bundledProducts->count() == 0) {
+        if ($bundledProducts->count() === 0) {
             return [];
         }
 

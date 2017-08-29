@@ -135,7 +135,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface
      */
-    protected function createCategoryNode()
+    public function createCategoryNode()
     {
         return new CategoryNode(
             $this->createClosureTableWriter(),
@@ -159,7 +159,10 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryTree()
     {
-        return new CategoryTree($this->getQueryContainer(), $this->createFacade());
+        return new CategoryTree(
+            $this->getQueryContainer(),
+            $this->createFacade()
+        );
     }
 
     /**

@@ -20,7 +20,7 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
     protected $quoteCalculators;
 
     /**
-     * @param array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[] $quoteCalculators
+     * @param \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[] $quoteCalculators
      */
     public function __construct(array $quoteCalculators)
     {

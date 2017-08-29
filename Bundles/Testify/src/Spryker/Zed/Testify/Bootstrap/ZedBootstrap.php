@@ -14,6 +14,7 @@ use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\ServiceProviderInterface;
+use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvider;
 use Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
@@ -27,12 +28,17 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorSer
 use Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
+use Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvider;
 use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as SprykerSessionServiceProvider;
 use Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider as SprykerTwigServiceProvider;
+use Spryker\Zed\ZedNavigation\Communication\Plugin\ServiceProvider\ZedNavigationServiceProvider;
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
 use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayServiceProviderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class ZedBootstrap
 {
 
@@ -147,6 +153,9 @@ class ZedBootstrap
             new GuiTwigExtensionServiceProvider(),
             $this->getGatewayServiceProvider(),
             new FormFactoryServiceProvider(),
+            new ZedNavigationServiceProvider(),
+            new DateTimeFormatterServiceProvider(),
+            new TwigMoneyServiceProvider(),
         ];
     }
 

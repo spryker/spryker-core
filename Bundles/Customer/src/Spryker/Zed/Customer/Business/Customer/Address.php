@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
+use Exception;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -493,7 +494,7 @@ class Address implements AddressInterface
             $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
             $connection->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $connection->rollBack();
             throw $e;
         }
@@ -525,7 +526,7 @@ class Address implements AddressInterface
             $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity);
 
             $connection->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $connection->rollBack();
             throw $e;
         }

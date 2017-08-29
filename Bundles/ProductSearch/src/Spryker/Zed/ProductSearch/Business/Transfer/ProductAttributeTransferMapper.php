@@ -79,7 +79,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
             $localizedAttributeKeyTransfer = new LocalizedProductSearchAttributeKeyTransfer();
             $localizedAttributeKeyTransfer
                 ->setLocaleName($localeTransfer->getLocaleName())
-                ->setKeyTranslation($this->getAttributeKeyTranslation($attributeTransfer->getKey(), $localeTransfer));
+                ->setKeyTranslation($this->findAttributeKeyTranslation($attributeTransfer->getKey(), $localeTransfer));
 
             $attributeTransfer->addLocalizedKey($localizedAttributeKeyTransfer);
         }
@@ -91,19 +91,19 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
      * @param string $attributeKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string
+     * @return string|null
      */
-    protected function getAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
+    protected function findAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
     {
         $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
 
-        if ($this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
-            return $this->glossaryFacade
-                ->getTranslation($glossaryKey, $localeTransfer)
-                ->getValue();
+        if (!$this->glossaryFacade->hasTranslation($glossaryKey, $localeTransfer)) {
+            return null;
         }
 
-        return null;
+        return $this->glossaryFacade
+            ->getTranslation($glossaryKey, $localeTransfer)
+            ->getValue();
     }
 
 }

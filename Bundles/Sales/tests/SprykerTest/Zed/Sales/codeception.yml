@@ -66,3 +66,15 @@ suites:
                 - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper
                 - \SprykerTest\Zed\Sales\Presentation\Helper\PresentationHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
+    Persistence:
+        path: Persistence
+        class_name: SalesPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Config\Helper\ConfigInit
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper

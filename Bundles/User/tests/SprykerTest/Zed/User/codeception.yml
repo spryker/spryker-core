@@ -25,22 +25,20 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Sales\Business\Helper\BusinessHelper
 
-    Presentation:
-        path: Presentation
-        class_name: UserPresentationTester
+    Communication:
+        path: Communication
+        class_name: UserCommunicationTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Config\Helper\ConfigInit
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - WebDriver:
-                    url: ''
-                    browser: chrome
-                    window_size: 1920x1080
-                    host: 0.0.0.0
-                    restart: false
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
-                - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper:
+                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
+                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
+                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
+                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig

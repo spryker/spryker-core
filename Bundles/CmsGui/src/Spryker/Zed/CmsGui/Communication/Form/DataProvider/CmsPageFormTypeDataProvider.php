@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\CmsGui\Communication\Exception\CmsPageNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
@@ -66,17 +67,23 @@ class CmsPageFormTypeDataProvider
     /**
      * @param int|null $idCmsPage
      *
+     * @throws \Spryker\Zed\CmsGui\Communication\Exception\CmsPageNotFoundException
+     *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function getData($idCmsPage = null)
     {
         if (!$idCmsPage) {
-            $cmsPageTransfer = $this->createInitialCmsPageTransfer();
-        } else {
-            $cmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+            return $this->createInitialCmsPageTransfer();
         }
+        $cmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
-        $cmsPageTransfer->setIsSearchable(true);
+        if (!$cmsPageTransfer) {
+            throw new CmsPageNotFoundException(sprintf(
+                'Cms page with id "%d" not found',
+                $idCmsPage
+            ));
+        }
 
         return $cmsPageTransfer;
     }

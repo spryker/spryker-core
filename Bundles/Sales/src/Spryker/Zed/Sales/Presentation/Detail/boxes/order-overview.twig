@@ -33,7 +33,7 @@
                       <span class="label label-info">{{ state }}</span>
                     {% endfor %}
                 </p>
-                <p><b>{{ 'Other order count' | trans }}:</b> ({{ order.totalOrderCount }})</p>
+                <p><b>{{ 'All orders of the customer' | trans }}:</b> ({{ order.totalOrderCount }})</p>
             </div>
             <div class="col-xs-12 col-md-4">
                 {{ render(controller('/sales/comment/list', {'request': app.request})) }}

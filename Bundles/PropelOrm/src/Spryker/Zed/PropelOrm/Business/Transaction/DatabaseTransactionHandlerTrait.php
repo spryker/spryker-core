@@ -8,8 +8,10 @@
 namespace Spryker\Zed\PropelOrm\Business\Transaction;
 
 use Closure;
+use Exception;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
+use Throwable;
 
 trait DatabaseTransactionHandlerTrait
 {
@@ -37,10 +39,10 @@ trait DatabaseTransactionHandlerTrait
             $connection->commit();
 
             return $result;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $connection->rollBack();
             throw $exception;
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             $connection->rollBack();
             throw $exception;
         }

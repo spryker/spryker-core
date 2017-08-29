@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\StateMachine\Business;
 
 use Codeception\Test\Unit;
+use Exception;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
@@ -62,7 +63,7 @@ class StateMachineFacadeExceptionTest extends Unit
 
         try {
             $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             // We simulate real execution
             $isException = true;
         }

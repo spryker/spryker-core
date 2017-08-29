@@ -187,8 +187,14 @@ class Customer implements CustomerInterface
     {
         $customerResponseTransfer = $this->add($customerTransfer);
 
-        if ($customerResponseTransfer->getIsSuccess()) {
-            $this->sendRegistrationToken($customerTransfer);
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return $customerResponseTransfer;
+        }
+
+        $this->sendRegistrationToken($customerTransfer);
+
+        if ($customerTransfer->getSendPasswordToken()) {
+            $this->sendPasswordRestoreMail($customerTransfer);
         }
 
         return $customerResponseTransfer;
@@ -231,10 +237,10 @@ class Customer implements CustomerInterface
     protected function sendPasswordRestoreToken(CustomerTransfer $customerTransfer)
     {
         $customerTransfer = $this->get($customerTransfer);
-        $confirmationLink = $this->customerConfig
+        $restorePasswordLink = $this->customerConfig
             ->getCustomerPasswordRestoreTokenUrl($customerTransfer->getRestorePasswordKey());
 
-        $customerTransfer->setConfirmationLink($confirmationLink);
+        $customerTransfer->setRestorePasswordLink($restorePasswordLink);
 
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(CustomerRestorePasswordMailTypePlugin::MAIL_TYPE);
@@ -715,7 +721,7 @@ class Customer implements CustomerInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer|null
      */
     public function findById($customerTransfer)
     {
@@ -735,7 +741,7 @@ class Customer implements CustomerInterface
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer|null
      */
     public function findByReference($customerReference)
     {
