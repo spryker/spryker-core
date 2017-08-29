@@ -47,10 +47,10 @@ class AddController extends AbstractController
             'customerGroupFormTabs' => $this->getFactory()->createCustomerGroupFormTabs()->createView(),
             'form' => $form->createView(),
             'availableCustomerTable' => $this->getFactory()
-                ->createAvailableCustomerTable(null)
+                ->createAvailableCustomerTable()
                 ->render(),
             'assignedCustomerTable' => $this->getFactory()
-                ->createAssignedCustomerTable(null)
+                ->createAssignedCustomerTable()
                 ->render(),
         ]);
     }
@@ -61,7 +61,7 @@ class AddController extends AbstractController
     public function availableCustomerTableAction()
     {
         $availableCustomerTable = $this->getFactory()
-            ->createAvailableCustomerTable(null);
+            ->createAvailableCustomerTable();
 
         return $this->jsonResponse($availableCustomerTable->fetchData());
     }
@@ -72,7 +72,7 @@ class AddController extends AbstractController
     public function assignedCustomerTableAction()
     {
         $assignedCustomerTable = $this->getFactory()
-            ->createAssignedCustomerTable(null);
+            ->createAssignedCustomerTable();
 
         return $this->jsonResponse($assignedCustomerTable->fetchData());
     }

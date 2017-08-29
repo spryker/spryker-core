@@ -41,12 +41,12 @@ abstract class AbstractAssignmentTable extends AbstractTable
     protected $idCustomerGroup;
 
     /**
-     * @param \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilder $tableQueryBuilder
+     * @param \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilderInterface $tableQueryBuilder
      * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface $utilEncoding
      * @param int $idCustomerGroup
      */
     public function __construct(
-        AssignmentCustomerQueryBuilder $tableQueryBuilder,
+        AssignmentCustomerQueryBuilderInterface $tableQueryBuilder,
         CustomerGroupToUtilEncodingInterface $utilEncoding,
         $idCustomerGroup
     ) {

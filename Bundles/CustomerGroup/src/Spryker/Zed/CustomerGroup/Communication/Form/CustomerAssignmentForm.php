@@ -18,8 +18,8 @@ class CustomerAssignmentForm extends AbstractType
 {
 
     const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
-    const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = 'idsCustomerToAssignCsv';
-    const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = 'idsCustomerToDeAssignCsv';
+    const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = 'idsCustomerToAssign';
+    const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = 'idsCustomerToDeAssign';
 
     /**
      * @return string
@@ -53,8 +53,8 @@ class CustomerAssignmentForm extends AbstractType
     {
         $this
             ->addIdCustomerGroupField($builder)
-            ->addIdsCustomerToAssignCsvField($builder)
-            ->addIdsCustomerToDeAssignCsvField($builder);
+            ->addIdsCustomerToAssignField($builder)
+            ->addIdsCustomerToDeAssignField($builder);
     }
 
     /**
@@ -66,10 +66,7 @@ class CustomerAssignmentForm extends AbstractType
     {
         $builder->add(
             static::FIELD_ID_CUSTOMER_GROUP,
-            HiddenType::class,
-            [
-                'property_path' => 'idCustomerGroup',
-            ]
+            HiddenType::class
         );
 
         return $this;
@@ -80,13 +77,12 @@ class CustomerAssignmentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdsCustomerToAssignCsvField(FormBuilderInterface $builder)
+    protected function addIdsCustomerToAssignField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV,
             HiddenType::class,
             [
-                'property_path' => CustomerGroupToCustomerAssignmentTransfer::IDS_CUSTOMER_TO_ASSIGN,
                 'attr' => [
                     'id' => 'js-items-to-assign-ids-csv-field',
                 ],
@@ -103,13 +99,12 @@ class CustomerAssignmentForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdsCustomerToDeAssignCsvField(FormBuilderInterface $builder)
+    protected function addIdsCustomerToDeAssignField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV,
             HiddenType::class,
             [
-                'property_path' => CustomerGroupToCustomerAssignmentTransfer::IDS_CUSTOMER_TO_DE_ASSIGN,
                 'attr' => [
                     'id' => 'js-items-to-de-assign-ids-csv-field',
                 ],

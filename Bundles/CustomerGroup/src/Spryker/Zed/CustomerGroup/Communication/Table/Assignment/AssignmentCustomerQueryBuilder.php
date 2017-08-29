@@ -12,7 +12,7 @@ use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupToCustomerTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CustomerGroup\Dependency\QueryContainer\CustomerGroupToCustomerQueryContainerInterface;
 
-class AssignmentCustomerQueryBuilder
+class AssignmentCustomerQueryBuilder implements AssignmentCustomerQueryBuilderInterface
 {
 
     /**

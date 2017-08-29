@@ -52,11 +52,11 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idCustomerGroup
+     * @param int|null $idCustomerGroup
      *
      * @return \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignedCustomerTable
      */
-    public function createAssignedCustomerTable($idCustomerGroup)
+    public function createAssignedCustomerTable($idCustomerGroup = null)
     {
         return new AssignedCustomerTable(
             $this->createAssignmentCustomerQueryBuilder(),
@@ -66,11 +66,11 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idCustomerGroup
+     * @param int|null $idCustomerGroup
      *
      * @return \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AvailableCustomerTable
      */
-    public function createAvailableCustomerTable($idCustomerGroup)
+    public function createAvailableCustomerTable($idCustomerGroup = null)
     {
         return new AvailableCustomerTable(
             $this->createAssignmentCustomerQueryBuilder(),
@@ -90,9 +90,9 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomerGroup\Communication\Form\CustomerAssignmentForm
+     * @return \Symfony\Component\Form\FormTypeInterface
      */
-    protected function createCustomerAssignmentForm()
+    protected function createCustomerAssignmentFormType()
     {
         return new CustomerAssignmentForm();
     }
@@ -107,7 +107,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     {
         $customerFormType = new CustomerGroupForm(
             $this->getQueryContainer(),
-            $this->createCustomerAssignmentForm(),
+            $this->createCustomerAssignmentFormType(),
             $data->getIdCustomerGroup()
         );
 
@@ -115,7 +115,7 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomerGroup\Communication\Tabs\CustomerGroupFormTabs
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
     public function createCustomerGroupFormTabs()
     {

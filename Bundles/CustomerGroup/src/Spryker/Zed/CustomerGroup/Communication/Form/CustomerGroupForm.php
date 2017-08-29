@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Form;
 
+use Generated\Shared\Transfer\CustomerGroupToCustomerAssignmentTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\CustomerGroup\Communication\Form\CustomerAssignmentForm;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
@@ -45,12 +46,12 @@ class CustomerGroupForm extends AbstractType
 
     /**
      * @param \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface $customerGroupQueryContainer
-     * @param \Spryker\Zed\CustomerGroup\Communication\Form\CustomerAssignmentForm $customerAssignmentForm
+     * @param \Symfony\Component\Form\FormTypeInterface $customerAssignmentForm
      * @param int|null $idCustomerGroup
      */
     public function __construct(
         CustomerGroupQueryContainerInterface $customerGroupQueryContainer,
-        CustomerAssignmentForm $customerAssignmentForm,
+        FormTypeInterface $customerAssignmentForm,
         $idCustomerGroup
     ) {
         $this->customerGroupQueryContainer = $customerGroupQueryContainer;
@@ -176,6 +177,7 @@ class CustomerGroupForm extends AbstractType
             $this->customerAssignmentForm,
             [
                 'label' => false,
+                'data_class' => CustomerGroupToCustomerAssignmentTransfer::class,
             ]
         );
 
