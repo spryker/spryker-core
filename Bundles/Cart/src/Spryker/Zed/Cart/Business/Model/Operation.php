@@ -115,7 +115,6 @@ class Operation implements OperationInterface
      */
     protected function preCheckCart(CartChangeTransfer $cartChangeTransfer)
     {
-        $isCartValid = true;
         foreach ($this->preCheckPlugins as $preCheck) {
             $cartPreCheckResponseTransfer = $preCheck->check($cartChangeTransfer);
             if ($cartPreCheckResponseTransfer->getIsSuccess()) {
@@ -126,10 +125,10 @@ class Operation implements OperationInterface
                 $this->messengerFacade->addErrorMessage($messageTransfer);
             }
 
-            $isCartValid = false;
+            return false;
         }
 
-        return $isCartValid;
+        return true;
     }
 
     /**
