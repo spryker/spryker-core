@@ -7,11 +7,13 @@ use Generated\Shared\DataBuilder\CategoryBuilder;
 use Generated\Shared\DataBuilder\NodeBuilder;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\CategoryConfig;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CategoryDataHelper extends Module
 {
 
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -21,10 +23,12 @@ class CategoryDataHelper extends Module
      */
     public function haveCategory($seedData = [])
     {
-        $node = $this->generateCategoryNodeTransfer();
+        $seedData = $seedData + [
+            'categoryNode' => $this->generateCategoryNodeTransfer(),
+            'parentCategoryNode' => $this->generateCategoryNodeTransfer(),
+        ];
+
         $categoryTransfer = $this->generateCategoryTransfer($seedData);
-        $categoryTransfer->setCategoryNode($node);
-        $categoryTransfer->setParentCategoryNode($node);
 
         if (empty($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
             $categoryTemplateTransfer = $this->haveCategoryTemplate();
@@ -32,6 +36,10 @@ class CategoryDataHelper extends Module
         }
 
         $this->getCategoryFacade()->create($categoryTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryTransfer) {
+            $this->cleanupCategory($categoryTransfer);
+        });
 
         return $categoryTransfer;
     }
@@ -83,6 +91,16 @@ class CategoryDataHelper extends Module
         $categoryNodeTransfer = (new NodeBuilder($seedData))->build();
 
         return $categoryNodeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function cleanupCategory(CategoryTransfer $categoryTransfer)
+    {
+        $this->getCategoryFacade()->delete($categoryTransfer->getIdCategory());
     }
 
 }

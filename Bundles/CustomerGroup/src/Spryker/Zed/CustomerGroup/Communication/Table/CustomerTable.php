@@ -12,7 +12,6 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupToCustomerTableMap;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -120,12 +119,6 @@ class CustomerTable extends AbstractTable
             sprintf('/customer/view?id-customer=%d', $customerGroupToCustomerEntity->getFkCustomer()),
             'View'
         );
-
-        $url = Url::generate('/customer-group/delete/customer', [
-            'id-customer-group' => $customerGroupToCustomerEntity->getFkCustomerGroup(),
-            'id-customer' => $customerGroupToCustomerEntity->getFkCustomer(),
-        ]);
-        $buttons[] = $this->generateRemoveButton($url, 'Remove');
 
         return implode(' ', $buttons);
     }

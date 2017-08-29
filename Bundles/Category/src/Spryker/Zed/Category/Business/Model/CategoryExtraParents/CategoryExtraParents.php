@@ -90,7 +90,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
             $parentNodeEntity = $categoryNodeEntity->getParentCategoryNode();
 
             $categoryNodeTransfer = new NodeTransfer();
-            $categoryNodeTransfer->fromArray($parentNodeEntity->toArray());
+            $categoryNodeTransfer->fromArray($parentNodeEntity->toArray(), true);
 
             $categoryTransfer->addExtraParent($categoryNodeTransfer);
         }
@@ -227,6 +227,7 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
                 continue;
             }
 
+            $this->moveSubTreeToParent($assignmentNodeEntity);
             $this->removeAssignmentNode($assignmentNodeEntity);
         }
     }

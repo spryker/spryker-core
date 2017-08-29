@@ -9,6 +9,8 @@ namespace Spryker\Zed\Category\Business\Model\CategoryTree;
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
@@ -29,8 +31,10 @@ class CategoryTree implements CategoryTreeInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
      */
-    public function __construct(CategoryQueryContainerInterface $queryContainer, CategoryFacadeInterface $categoryFacade)
-    {
+    public function __construct(
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryFacadeInterface $categoryFacade
+    ) {
         $this->queryContainer = $queryContainer;
         $this->categoryFacade = $categoryFacade;
     }
@@ -39,7 +43,7 @@ class CategoryTree implements CategoryTreeInterface
      * @param int $idSourceCategoryNode
      * @param int $idDestinationCategoryNode
      *
-     * @return void
+     * @return int
      */
     public function moveSubTree($idSourceCategoryNode, $idDestinationCategoryNode)
     {
@@ -48,19 +52,43 @@ class CategoryTree implements CategoryTreeInterface
             ->queryFirstLevelChildren($idSourceCategoryNode)
             ->find();
 
+        $destinationCategoryNodeEntity = $this->queryContainer
+            ->queryNodeById($idDestinationCategoryNode)
+            ->findOne();
+
+        $destinationChildrenIds = $this->queryContainer
+            ->queryFirstLevelChildren($idDestinationCategoryNode)
+            ->select([SpyCategoryNodeTableMap::COL_FK_CATEGORY])
+            ->setFormatter(new SimpleArrayFormatter())
+            ->find()
+            ->toArray();
+
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
+            if ($childNodeEntity->getFkCategory() === $destinationCategoryNodeEntity->getFkCategory()) {
+                $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
+                continue;
+            }
+
+            if (in_array($childNodeEntity->getFkCategory(), $destinationChildrenIds)) {
+                $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
+                continue;
+            }
+
             $categoryTransfer = $this->categoryFacade->read($childNodeEntity->getFkCategory());
 
             if ($childNodeEntity->getIsMain()) {
                 $this->moveMainCategoryNodeSubTree($categoryTransfer, $idDestinationCategoryNode);
-            } else {
-                $this->moveExtraParentCategoryNodeSubTree(
-                    $categoryTransfer,
-                    $idDestinationCategoryNode,
-                    $idSourceCategoryNode
-                );
+                continue;
             }
+
+            $this->moveExtraParentCategoryNodeSubTree(
+                $categoryTransfer,
+                $idDestinationCategoryNode,
+                $idSourceCategoryNode
+            );
         }
+
+        return count($firstLevelChildNodeCollection);
     }
 
     /**
