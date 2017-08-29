@@ -102,6 +102,7 @@ class ProductCategoryTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->productCategoryQueryContainer->queryProductsByCategoryId($this->idCategory, $this->locale);
+        $query->clearOrderByColumns();
         $query->setModelAlias('spy_product_abstract');
 
         $queryResults = $this->runQuery($query, $config);
