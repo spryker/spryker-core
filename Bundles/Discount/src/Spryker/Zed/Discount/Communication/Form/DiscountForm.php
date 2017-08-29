@@ -76,8 +76,7 @@ class DiscountForm extends AbstractType
     protected function executeFormTypeExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->formTypeExpanderPlugins as $calculatorFormTypeExpanderPlugin) {
-            $builderForType = $builder->get($calculatorFormTypeExpanderPlugin->getFormTypeToExtend());
-            $calculatorFormTypeExpanderPlugin->expandFormType($builderForType, $options);
+            $calculatorFormTypeExpanderPlugin->expandFormType($builder, $options);
         }
 
         return $builder;

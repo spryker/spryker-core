@@ -45,6 +45,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_DISCOUNT_POST_UPDATE = 'PLUGIN_DISCOUNT_POST_UPDATE';
     const PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER = 'PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER';
     const PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER = 'PLUGIN_DISCOUNT_FORM_EXPANDER';
+    const PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER';
+    const PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER = 'PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER';
 
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
@@ -87,6 +89,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCollectorPlugins($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addDiscountFormExpanderPlugins($container);
+        $container = $this->addDiscountFormDataProviderExpanderPlugins($container);
+        $container = $this->addDiscountViewBlockProviderPlugins($container);
 
         return $container;
     }
@@ -355,6 +359,50 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[]
      */
     protected function getDiscountFormExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountFormDataProviderExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER] = function (Container $container) {
+            return $this->getDiscountFormDataProviderExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface[]
+     */
+    protected function getDiscountFormDataProviderExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountViewBlockProviderPlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER] = function (Container $container) {
+            return $this->getDiscountViewTemplateProviderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface[]
+     */
+    protected function getDiscountViewTemplateProviderPlugins()
     {
         return [];
     }

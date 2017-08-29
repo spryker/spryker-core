@@ -141,7 +141,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createCalculatorFormDataProvider()
     {
         $calculatorDataProvider = new CalculatorFormDataProvider($this->getCalculatorPlugins());
-        $calculatorDataProvider->applyCalculatorFormExpanderPlugins($this->getDiscountFormTypeExpanderPlugins());
+        $calculatorDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
 
         return $calculatorDataProvider;
     }
@@ -151,7 +151,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createVoucherFormDataProvider()
     {
-        return new VoucherFormDataProvider();
+        $voucherFormDataProvider = new VoucherFormDataProvider();
+        $voucherFormDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
+
+        return $voucherFormDataProvider;
     }
 
     /**
@@ -194,7 +197,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createDiscountDataProvider()
     {
-        return new DiscountFormDataProvider();
+        $discountFormDataProvider = new DiscountFormDataProvider();
+        $discountFormDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
+
+        return $discountFormDataProvider;
     }
 
     /**
@@ -226,6 +232,22 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     protected function getDiscountFormTypeExpanderPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface[]
+     */
+    protected function getDiscountFormDataProviderExpanderPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface[]
+     */
+    public function getDiscountViewBlockProviderPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER);
     }
 
 }

@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
-use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface;
-use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface;
 use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface;
 
@@ -32,32 +32,24 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     protected $discountPromotionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface
+     * @var \Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculatorInterface
      */
-    protected $availabilityFacade;
-
-    /**
-     * @var \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface
-     */
-    protected $localeFacade;
+    protected $promotionAvailabilityCalculator;
 
     /**
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface $productFacade
      * @param \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer
-     * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface $availabilityFacade
-     * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator
      */
     public function __construct(
         DiscountPromotionToProductInterface $productFacade,
         DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer,
-        DiscountPromotionToAvailabilityInterface $availabilityFacade,
-        DiscountPromotionToLocaleInterface $localeFacade
+        PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator
     ) {
 
         $this->productFacade = $productFacade;
         $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
-        $this->availabilityFacade = $availabilityFacade;
-        $this->localeFacade = $localeFacade;
+        $this->promotionAvailabilityCalculator = $promotionAvailabilityCalculator;
     }
 
     /**
@@ -77,93 +69,98 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $discountPromotionTransfer = $this->hydrateDiscountPromotion($discountPromotionEntity);
         $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
 
-        $promotionProductAbstractSku = $discountPromotionEntity->getAbstractSku();
-        $promotionProductMaximumQuantity = $discountPromotionEntity->getQuantity();
+        $promotionMaximumQuantity = $this->promotionAvailabilityCalculator->getMaximumQuantityBasedOnAvailability(
+            $discountPromotionEntity->getAbstractSku(),
+            $discountPromotionEntity->getQuantity()
+        );
 
-        if (!$this->isProductAbstractAvailable($promotionProductAbstractSku, $promotionProductMaximumQuantity)) {
+        if ($promotionMaximumQuantity === 0) {
             return [];
         }
 
-        $promotionItemInQuote = $this->findPromotionItem(
-            $quoteTransfer,
-            $promotionProductAbstractSku,
-            $promotionProductMaximumQuantity
-        );
+        $promotionItemInQuote = $this->findPromotionItem($quoteTransfer, $discountPromotionEntity);
 
         if (!$promotionItemInQuote) {
             $this->addPromotionItemToQuote(
+                $discountTransfer,
                 $quoteTransfer,
-                $promotionProductAbstractSku,
-                $promotionProductMaximumQuantity
+                $discountPromotionEntity,
+                $promotionMaximumQuantity
             );
+            $this->storeVoucherCode($discountTransfer, $quoteTransfer);
+
             return [];
         }
 
-        $adjustedQuantity = $this->adjustPromotionalItemQuantity($promotionItemInQuote);
-        $discountableItemTransfer = $this->createPromotionDiscountableItemTransfer(
-            $promotionItemInQuote,
-            $adjustedQuantity
-        );
+        $adjustedQuantity = $this->adjustPromotionItemQuantity($promotionItemInQuote, $promotionMaximumQuantity);
+
+        $promotionItemInQuote->setMaxQuantity($adjustedQuantity);
+
+        $usedNotAppliedCodes = $this->findUsedNotAppliedVoucherCodes($discountTransfer, $quoteTransfer);
+        $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedCodes);
+
+        $discountableItemTransfer = $this->createPromotionDiscountableItemTransfer($promotionItemInQuote, $adjustedQuantity);
 
         return [$discountableItemTransfer];
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $promotionProductAbstractSku
-     * @param int $promotionMaximumQuantity
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findPromotionItem(
-        QuoteTransfer $quoteTransfer,
-        $promotionProductAbstractSku,
-        $promotionMaximumQuantity
-    ) {
-
+    protected function findPromotionItem(QuoteTransfer $quoteTransfer, SpyDiscountPromotion $discountPromotionEntity)
+    {
         $promotionItemTransfer = null;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$this->isPromotionalItem($promotionProductAbstractSku, $itemTransfer)) {
+            if (!$this->isPromotionItem(
+                $discountPromotionEntity->getAbstractSku(),
+                $itemTransfer,
+                $discountPromotionEntity->getIdDiscountPromotion())
+            ) {
                 continue;
             }
-            $itemTransfer->setMaxQuantity($promotionMaximumQuantity);
             return $itemTransfer;
         }
         return null;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $promotionProductAbstractSku
-     * @param string $promotionProductAbstractQuantity
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param int $promotionProductMaximumQuantity
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PromotionItemTransfer
      */
-    protected function addPromotionItemToQuote(
-        QuoteTransfer $quoteTransfer,
-        $promotionProductAbstractSku,
-        $promotionProductAbstractQuantity
+    protected function createPromotionItemTransfer(
+        SpyDiscountPromotion $discountPromotionEntity,
+        DiscountTransfer $discountTransfer,
+        $promotionProductMaximumQuantity
     ) {
 
-        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($promotionProductAbstractSku);
+        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($discountPromotionEntity->getAbstractSku());
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setAbstractSku($promotionProductAbstractSku);
-        $itemTransfer->setIdProductAbstract($idProductAbstract);
-        $itemTransfer->setMaxQuantity($promotionProductAbstractQuantity);
+        $promotionItemTransfer = new PromotionItemTransfer();
+        $promotionItemTransfer->setIdDiscountPromotion($discountPromotionEntity->getIdDiscountPromotion());
+        $promotionItemTransfer->setAbstractSku($discountPromotionEntity->getAbstractSku());
+        $promotionItemTransfer->setIdProductAbstract($idProductAbstract);
+        $promotionItemTransfer->setMaxQuantity($promotionProductMaximumQuantity);
+        $promotionItemTransfer->setDiscount($discountTransfer);
 
-        $quoteTransfer->addPromotionItem($itemTransfer);
+        return $promotionItemTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $promotionItemTransfer
+     * @param int $maxQuantity
      *
      * @return int
      */
-    protected function adjustPromotionalItemQuantity(ItemTransfer $promotionItemTransfer)
+    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $maxQuantity)
     {
         $currentQuantity = $promotionItemTransfer->getQuantity();
-        if ($promotionItemTransfer->getQuantity() > $promotionItemTransfer->getMaxQuantity()) {
+        if ($promotionItemTransfer->getQuantity() > $maxQuantity) {
             $currentQuantity = $promotionItemTransfer->getMaxQuantity();
         }
         return $currentQuantity;
@@ -214,39 +211,91 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     /**
      * @param string $promotionProductAbstractSku
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $idDiscountPromotion
      *
      * @return bool
      */
-    protected function isPromotionalItem($promotionProductAbstractSku, ItemTransfer $itemTransfer)
+    protected function isPromotionItem($promotionProductAbstractSku, ItemTransfer $itemTransfer, $idDiscountPromotion)
     {
-        return ($itemTransfer->getAbstractSku() === $promotionProductAbstractSku && $itemTransfer->getIsPromotion() === true);
+        return ($itemTransfer->getAbstractSku() === $promotionProductAbstractSku && $itemTransfer->getIdDiscountPromotion() === $idDiscountPromotion);
     }
 
     /**
-     * @param string $promotionProductAbstractSku
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idDiscountPromotion
      *
-     * @return bool
+     * @return \ArrayObject|\Generated\Shared\Transfer\PromotionItemTransfer[]
      */
-    protected function isProductAbstractAvailable($promotionProductAbstractSku, $quantity)
+    protected function removePromotionFromSuggestions(QuoteTransfer $quoteTransfer, $idDiscountPromotion)
     {
-        $localeTransfer = $this->localeFacade->getCurrentLocale();
+        $updatedPromotionItems = new ArrayObject();
+        foreach ($quoteTransfer->getPromotionItems() as $promotionItemTransfer) {
+            if ($promotionItemTransfer->getIdDiscountPromotion() === $idDiscountPromotion) {
+                continue;
+            }
+            $updatedPromotionItems->append($promotionItemTransfer);
+        }
+        return $updatedPromotionItems;
+    }
 
-        $productAbstractAvailabilityTransfer = $this->availabilityFacade
-            ->getProductAbstractAvailability(
-                $promotionProductAbstractSku,
-                $localeTransfer->getIdLocale()
-            );
+    /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
+     * @param int $promotionMaximumQuantity
+     *
+     * @return void
+     */
+    protected function addPromotionItemToQuote(
+        DiscountTransfer $discountTransfer,
+        QuoteTransfer $quoteTransfer,
+        SpyDiscountPromotion $discountPromotionEntity,
+        $promotionMaximumQuantity
+    ) {
 
-        if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
-            return true;
+        $promotionItemTransfer = $this->createPromotionItemTransfer(
+            $discountPromotionEntity,
+            $discountTransfer,
+            $promotionMaximumQuantity
+        );
+
+        $quoteTransfer->addPromotionItem($promotionItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function findUsedNotAppliedVoucherCodes(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
+    {
+        $usedNotAppliedCodes = [];
+        foreach ($quoteTransfer->getUsedNotAppliedVoucherCodes() as $unusedVoucherCode) {
+            if ($unusedVoucherCode === $discountTransfer->getVoucherCode()) {
+                continue;
+            }
+            $usedNotAppliedCodes[] = $unusedVoucherCode;
+        }
+        return $usedNotAppliedCodes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function storeVoucherCode(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
+    {
+        if (!$discountTransfer->getVoucherCode()) {
+            return;
         }
 
-        if ($quantity > $productAbstractAvailabilityTransfer->getAvailability()) {
-            return false;
+        $storedUnusedCodes = (array)$quoteTransfer->getUsedNotAppliedVoucherCodes();
+        if (!in_array($discountTransfer->getVoucherCode(), $storedUnusedCodes)) {
+            $quoteTransfer->addUsedNotAppliedVoucherCode($discountTransfer->getVoucherCode());
         }
-
-        return true;
     }
 
 }

@@ -26,10 +26,33 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideDependencies(Container $container)
     {
+        $container = $this->addProductClient($container);
+        $container = $this->addProductMapperPlugin($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductClient(Container $container)
+    {
         $container[static::PRODUCT_CLIENT] = function (Container $container) {
             return new DiscountPromotionToProductBridge($container->getLocator()->product()->client());
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProductMapperPlugin(Container $container)
+    {
         $container[static::PRODUCT_MAPPER_PLUGIN] = function (Container $container) {
             return $this->getProductMapperPlugin($container);
         };

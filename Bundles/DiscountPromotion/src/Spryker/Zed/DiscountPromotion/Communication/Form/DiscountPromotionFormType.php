@@ -8,7 +8,7 @@
 namespace Spryker\Zed\DiscountPromotion\Communication\Form;
 
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
-use Spryker\Shared\DiscountPromotion\DiscountPromotionConstants;
+use Spryker\Shared\DiscountPromotion\DiscountPromotionConfig;
 use Spryker\Zed\Discount\Communication\Form\AbstractDiscountExtensionSubFormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,7 +43,7 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
              [
                  'label' => 'Abstract product sku',
                  'constraints' => [
-                     new NotBlank(['groups' => DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY]),
+                     new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
                  ],
              ]
          );
@@ -64,7 +64,7 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
             [
                 'label' => 'Quantity',
                 'constraints' => [
-                    new NotBlank(['groups' => DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY]),
+                    new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
                     new Regex([
                         'pattern' => '/[0-9]+/',
                     ]),

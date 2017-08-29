@@ -8,7 +8,18 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="promotionItems" type="Item[]" singular="promotionItem"/>
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
+    </transfer>
+
+    <transfer name="PromotionItem">
+        <property name="idDiscountPromotion" type="int" />
+        <property name="idProductAbstract" type="int" />
+        <property name="maxQuantity" type="int" />
+        <property name="sku" type="string" />
+        <property name="abstractSku" type="string" />
+        <property name="maxQuantity" type="int" />
+        <property name="discount" type="Discount" />
     </transfer>
 
     <transfer name="Item">
@@ -16,7 +27,7 @@
         <property name="sku" type="string" />
         <property name="abstractSku" type="string" />
         <property name="maxQuantity" type="int" />
-        <property name="isPromotion" type="bool" />
+        <property name="idDiscountPromotion" type="bool" />
     </transfer>
 
     <transfer name="DiscountableItem">
@@ -38,13 +49,13 @@
     </transfer>
 
     <transfer name="CalculableObject">
-        <property name="promotionItems" type="Item[]" singular="promotionItem"/>
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
     <transfer name="StorageProduct">
+         <property name="promotionItem" type="PromotionItem"/>
          <property name="maxQuantity" type="int"/>
     </transfer>
-
 
 </transfers>
 

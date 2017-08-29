@@ -37,7 +37,7 @@ class DiscountFilterPromotionDiscountsPlugin extends AbstractPlugin implements D
 
         $discountableItems = new ArrayObject();
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $itemTransfer) {
-            if ($itemTransfer->getOriginalItem()->getIsPromotion()) {
+            if ($itemTransfer->getOriginalItem()->getIdDiscountPromotion()) {
                 continue;
             }
 

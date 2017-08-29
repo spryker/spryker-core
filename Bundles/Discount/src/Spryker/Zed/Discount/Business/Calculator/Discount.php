@@ -181,14 +181,12 @@ class Discount implements DiscountInterface
     {
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
 
-        if (count($voucherDiscounts) === 0) {
-            return [];
-        }
-
         $voucherCodes = [];
         foreach ($voucherDiscounts as $voucherDiscountTransfer) {
             $voucherCodes[] = $voucherDiscountTransfer->getVoucherCode();
         }
+
+        $voucherCodes = array_merge($voucherCodes, (array)$quoteTransfer->getUsedNotAppliedVoucherCodes());
 
         return $voucherCodes;
     }

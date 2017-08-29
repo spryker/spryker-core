@@ -27,18 +27,49 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = $this->addProductFacade($container);
+        $container = $this->addAvailabilityFacade($container);
+        $container = $this->addLocaleFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container)
+    {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new DiscountPromotionToProductBridge($container->getLocator()->product()->facade());
         };
+        return $container;
+    }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityFacade(Container $container)
+    {
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new DiscountPromotionToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
+        return $container;
+    }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container)
+    {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new DiscountPromotionToLocaleBridge($container->getLocator()->locale()->facade());
         };
-
         return $container;
     }
 

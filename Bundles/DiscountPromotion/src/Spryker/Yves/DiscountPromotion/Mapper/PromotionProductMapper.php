@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\DiscountPromotion\Mapper;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\DiscountPromotion\Dependency\Client\DiscountPromotionToProductInterface;
 use Spryker\Yves\DiscountPromotion\Dependency\StorageProductMapperPluginInterface;
@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
+
+    const VARIANT_ATTRIBUTE_URL_PARAM = 'attributes';
 
     /**
      * @var \Spryker\Yves\DiscountPromotion\Dependency\Client\DiscountPromotionToProductInterface
@@ -48,15 +50,15 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     public function mapPromotionItemsFromProductStorage(QuoteTransfer $quoteTransfer, Request $request)
     {
         $promotionProducts = [];
-        foreach ($quoteTransfer->getPromotionItems() as $itemTransfer) {
-            $itemTransfer->requireAbstractSku();
+        foreach ($quoteTransfer->getPromotionItems() as $promotionItemTransfer) {
+            $promotionItemTransfer->requireAbstractSku();
 
-            $rawProductData = $this->getProductDataFromStorage($itemTransfer);
+            $rawProductData = $this->getProductDataFromStorage($promotionItemTransfer);
 
-            $selectedAttributes = $this->getSelectedAttributes($request, $itemTransfer->getAbstractSku());
-            $storageProductTransfer = $this->mapStorageProductTransfer($rawProductData, $selectedAttributes, $itemTransfer);
+            $selectedAttributes = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());
+            $storageProductTransfer = $this->mapStorageProductTransfer($rawProductData, $selectedAttributes, $promotionItemTransfer);
 
-            $promotionProducts[$itemTransfer->getAbstractSku()] = $storageProductTransfer;
+            $promotionProducts[$promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion()] = $storageProductTransfer;
         }
 
         return $promotionProducts;
@@ -70,33 +72,47 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      */
     protected function getSelectedAttributes(Request $request, $abstractSku)
     {
-        $selectedAttributes = array_filter($request->query->get('attributes', []));
-        return isset($selectedAttributes[$abstractSku]) ? $selectedAttributes[$abstractSku] : [];
+        $selectedAttributes = $request->query->get(static::VARIANT_ATTRIBUTE_URL_PARAM, []);
+        return isset($selectedAttributes[$abstractSku]) ? $this->filterEmptyAttributes($selectedAttributes[$abstractSku]) : [];
     }
 
     /**
      * @param array $data
      * @param array $selectedAttributes
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    protected function mapStorageProductTransfer(array $data, array $selectedAttributes, ItemTransfer $itemTransfer)
-    {
+    protected function mapStorageProductTransfer(
+        array $data,
+        array $selectedAttributes,
+        PromotionItemTransfer $promotionItemTransfer
+    ) {
+
         $storageProductTransfer = $this->storageProductMapperPlugin->mapStorageProduct($data, $selectedAttributes);
-        $storageProductTransfer->setMaxQuantity($itemTransfer->getMaxQuantity());
+        $storageProductTransfer->setPromotionItem($promotionItemTransfer);
 
         return $storageProductTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
      *
      * @return array
      */
-    protected function getProductDataFromStorage(ItemTransfer $itemTransfer)
+    protected function getProductDataFromStorage(PromotionItemTransfer $promotionItemTransfer)
     {
-        return $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale($itemTransfer->getIdProductAbstract());
+        return $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale($promotionItemTransfer->getIdProductAbstract());
+    }
+
+    /**
+     * @param array $selectedAttributes
+     *
+     * @return array
+     */
+    protected function filterEmptyAttributes(array $selectedAttributes)
+    {
+        return array_filter($selectedAttributes);
     }
 
 }

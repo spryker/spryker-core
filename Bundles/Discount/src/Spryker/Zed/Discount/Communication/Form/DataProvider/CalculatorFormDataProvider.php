@@ -9,25 +9,14 @@ namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
-use Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface;
 
-class CalculatorFormDataProvider
+class CalculatorFormDataProvider extends BaseDiscountFormDataProvider
 {
 
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins;
-
-    /**
-     * @var array
-     */
-    protected $options = [];
-
-    /**
-     * @var array
-     */
-    protected $data = [];
 
     /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
@@ -37,38 +26,6 @@ class CalculatorFormDataProvider
         $this->calculatorPlugins = $calculatorPlugins;
 
         $this->setDefaults();
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        return $this->options;
-    }
-
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[] $formExpanderPlugins
-     *
-     * @return void
-     */
-    public function applyCalculatorFormExpanderPlugins(array $formExpanderPlugins)
-    {
-        foreach ($formExpanderPlugins as $calculatorFormExpanderPlugin) {
-            if ($calculatorFormExpanderPlugin->getFormTypeToExtend() !== DiscountFormExpanderPluginInterface::FORM_TYPE_CALCULATION) {
-                continue;
-            }
-            $this->data = $calculatorFormExpanderPlugin->expandDataProviderData($this->data);
-            $this->options = $calculatorFormExpanderPlugin->expandDataProviderOptions($this->options);
-        }
     }
 
     /**

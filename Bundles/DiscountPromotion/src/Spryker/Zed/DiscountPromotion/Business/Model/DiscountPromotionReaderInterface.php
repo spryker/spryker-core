@@ -15,7 +15,7 @@ interface DiscountPromotionReaderInterface
     /**
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function expandDiscountPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
 
@@ -32,5 +32,12 @@ interface DiscountPromotionReaderInterface
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     */
+    public function findDiscountPromotionByIdDiscount($idDiscount);
 
 }

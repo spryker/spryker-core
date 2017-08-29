@@ -7,15 +7,10 @@
 
 namespace Spryker\Zed\Discount\Dependency\Plugin\Form;
 
-use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Symfony\Component\Form\FormBuilderInterface;
 
 interface DiscountFormExpanderPluginInterface
 {
-
-    const FORM_TYPE_CALCULATION = DiscountConfiguratorTransfer::DISCOUNT_CALCULATOR;
-    const FORM_TYPE_GENERAL = DiscountConfiguratorTransfer::DISCOUNT_GENERAL;
-    const FORM_TYPE_CONDITIONS = DiscountConfiguratorTransfer::DISCOUNT_CONDITION;
 
     /**
      * Specification:
@@ -31,43 +26,5 @@ interface DiscountFormExpanderPluginInterface
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     public function expandFormType(FormBuilderInterface $builder, array $options);
-
-    /**
-     * Specification:
-     *
-     * Expand data provider options, the options will be passed from concrete form provider that is (calculator, general, general...)
-     *
-     * @api
-     *
-     * @param array $options
-     *
-     * @return array
-     */
-    public function expandDataProviderOptions(array $options);
-
-    /**
-     * Specification:
-     *
-     * Expand data provider data, the options will be passed from concrete form provider that is (calculator, general, general...)
-     *
-     * @api
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    public function expandDataProviderData(array $data);
-
-    /**
-     * Specification:
-     *
-     * Is a id of form type in DiscountForm, can be any defined in this interface constants.
-     * This will be used to identify which subform extend
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getFormTypeToExtend();
 
 }

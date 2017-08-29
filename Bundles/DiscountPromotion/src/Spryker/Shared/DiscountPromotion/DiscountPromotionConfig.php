@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\DiscountPromotion;
 
-class DiscountPromotionConstants
+class DiscountPromotionConfig
 {
 
     /**

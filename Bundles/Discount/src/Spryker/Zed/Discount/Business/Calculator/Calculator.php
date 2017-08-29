@@ -207,7 +207,7 @@ class Calculator implements CalculatorInterface
      */
     protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
-        $alternativeCollectorStrategyPlugin = $this->resolverCollectorPluginStrategy($quoteTransfer, $discountTransfer);
+        $alternativeCollectorStrategyPlugin = $this->resolveCollectorPluginStrategy($quoteTransfer, $discountTransfer);
         if ($alternativeCollectorStrategyPlugin) {
             return $alternativeCollectorStrategyPlugin->collect($discountTransfer, $quoteTransfer);
         }
@@ -271,7 +271,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface|null
      */
-    protected function resolverCollectorPluginStrategy(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
+    protected function resolveCollectorPluginStrategy(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
         if (!$this->collectorStrategyResolver) {
             return null;

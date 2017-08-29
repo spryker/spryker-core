@@ -18,6 +18,6 @@ use Orm\Zed\DiscountPromotion\Persistence\Base\SpyDiscountPromotionQuery as Base
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class AbstractSpyDiscountPromotionQuery extends BaseSpyDiscountPromotionQueryQuery
+abstract class AbstractSpyDiscountPromotionQuery extends BaseSpyDiscountPromotionQueryQuery
 {
 }

@@ -91,4 +91,16 @@ interface DiscountPromotionFacadeInterface
      */
     public function isDiscountWithPromotion($idDiscount);
 
+    /**
+     * Specification:
+     *  - Read discount promotion from persistence by given primary id
+     *
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     */
+    public function findDiscountPromotionByIdDiscount($idDiscount);
+
 }

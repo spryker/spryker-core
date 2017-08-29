@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Shared\DiscountPromotion\DiscountPromotionConstants;
+use Spryker\Shared\DiscountPromotion\DiscountPromotionConfig;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 /**
@@ -80,6 +80,10 @@ class DiscountPromotionFacadeTest extends Unit
         $discountConfigurationTransfer = $this->createDiscountConfiguratorTransfer();
         $idDiscount = $discountFacade->saveDiscount($discountConfigurationTransfer);
 
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer->setFkDiscount($idDiscount);
+        $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setIdDiscount($idDiscount);
 
@@ -87,13 +91,8 @@ class DiscountPromotionFacadeTest extends Unit
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setAbstractSku($promotionItemSku);
         $itemTransfer->setQuantity(1);
-        $itemTransfer->setIsPromotion(true);
+        $itemTransfer->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
         $quoteTransfer->addItem($itemTransfer);
-
-        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
-        $discountPromotionTransfer->setFkDiscount($idDiscount);
-
-        $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
 
         $collectedDiscounts = $discountPromotionFacade->collect($discountTransfer, $quoteTransfer);
 
@@ -294,7 +293,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->setAmount(100);
         $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE);
-        $discountCalculatorTransfer->setCollectorType(DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY);
+        $discountCalculatorTransfer->setCollectorType(DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY);
 
         $discountConfiguratorTransfer->setDiscountCalculator($discountCalculatorTransfer);
 

@@ -25,11 +25,11 @@ $(document).ready(function() {
 
     var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
     var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition', true);
+    var isQueryStringCollectorSelected = $('#discount_discountCalculator_collectorType_0').is(":checked");
 
     $('#create-discount-button').on('click', function(element) {
         element.preventDefault();
 
-        var isQueryStringCollectorSelected = $('#discount_discountCalculator_collectorType_0').is(":checked");
         if (isQueryStringCollectorSelected) {
             sqlCalculationBuilder.saveQuery();
         }

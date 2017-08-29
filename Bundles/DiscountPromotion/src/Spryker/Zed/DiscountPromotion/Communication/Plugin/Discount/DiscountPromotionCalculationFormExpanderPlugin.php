@@ -8,9 +8,8 @@
 namespace Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount;
 
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
+use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
-use Spryker\Shared\DiscountPromotion\DiscountPromotionConstants;
-use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,7 +33,9 @@ class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin impl
      */
     public function expandFormType(FormBuilderInterface $builder, array $options)
     {
-        return $builder->add(
+        $calculatorFormTypeBuilder = $builder->get(DiscountConfiguratorTransfer::DISCOUNT_CALCULATOR);
+
+        return $calculatorFormTypeBuilder->add(
             DiscountCalculatorTransfer::DISCOUNT_PROMOTION,
             $this->getFactory()->createDiscountFormPromotionType(),
             [
@@ -42,48 +43,6 @@ class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin impl
                 'label' => false,
             ]
         );
-    }
-
-    /**
-     * @api
-     *
-     * {@inheritdoc}
-     *
-     * @param array $options
-     *
-     * @return array
-     */
-    public function expandDataProviderOptions(array $options)
-    {
-        $options[CalculatorForm::OPTION_COLLECTOR_TYPE_CHOICES][DiscountPromotionConstants::DISCOUNT_COLLECTOR_STRATEGY] = 'Discount promotion to product';
-
-        return $options;
-    }
-
-    /**
-     * @api
-     *
-     * {@inheritdoc}
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    public function expandDataProviderData(array $data)
-    {
-        return $data;
-    }
-
-    /**
-     * @api
-     *
-     * {@inheritdoc}
-     *
-     * @return string
-     */
-    public function getFormTypeToExtend()
-    {
-        return DiscountFormExpanderPluginInterface::FORM_TYPE_CALCULATION;
     }
 
 }

@@ -13,15 +13,15 @@ use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
-class DiscountFormDataProvider
+class DiscountFormDataProvider extends BaseDiscountFormDataProvider
 {
 
     /**
-     * @param int $idDiscount
+     * @param int|null $idDiscount
      *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
      */
-    public function getData($idDiscount)
+    public function getData($idDiscount = null)
     {
         if ($idDiscount) {
             return null;
@@ -36,14 +36,6 @@ class DiscountFormDataProvider
         $discountConfiguratorTransfer->setDiscountCalculator($calculatedDiscountTransfer);
 
         return $discountConfiguratorTransfer;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [];
     }
 
     /**

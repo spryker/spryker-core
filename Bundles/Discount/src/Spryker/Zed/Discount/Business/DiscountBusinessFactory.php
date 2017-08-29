@@ -314,8 +314,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         $discountPersist = new DiscountPersist($this->createVoucherEngine(), $this->getQueryContainer());
 
-        $discountPersist->setDiscountPostSavePlugins($this->getDiscountPostSavePlugin());
-        $discountPersist->setDiscountPostUpdatePlugins($this->getDiscountPostUpdatePlugin());
+        $discountPersist->setDiscountPostSavePlugins($this->getDiscountPostSavePlugins());
+        $discountPersist->setDiscountPostUpdatePlugins($this->getDiscountPostUpdatePlugins());
 
         return $discountPersist;
     }
@@ -496,7 +496,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostSavePluginInterface[]
      */
-    protected function getDiscountPostSavePlugin()
+    protected function getDiscountPostSavePlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_POST_SAVE);
     }
@@ -504,7 +504,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
      */
-    protected function getDiscountPostUpdatePlugin()
+    protected function getDiscountPostUpdatePlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_POST_UPDATE);
     }

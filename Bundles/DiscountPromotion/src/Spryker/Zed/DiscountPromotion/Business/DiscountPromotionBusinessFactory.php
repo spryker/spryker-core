@@ -8,8 +8,10 @@
 namespace Spryker\Zed\DiscountPromotion\Business;
 
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategy;
+use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculator;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionWriter;
+use Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapper;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -28,9 +30,16 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
          return new DiscountPromotionCollectorStrategy(
              $this->getProductFacade(),
              $this->getQueryContainer(),
-             $this->getAvailabilityFacade(),
-             $this->getLocaleFacade()
+             $this->createPromotionAvailabilityCalculator()
          );
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculatorInterface
+     */
+    protected function createPromotionAvailabilityCalculator()
+    {
+        return new PromotionAvailabilityCalculator($this->getAvailabilityFacade(), $this->getLocaleFacade());
     }
 
     /**
@@ -38,7 +47,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountPromotionWriter()
     {
-        return new DiscountPromotionWriter($this->getQueryContainer());
+        return new DiscountPromotionWriter($this->getQueryContainer(), $this->createDiscountPromotionMapper());
     }
 
     /**
@@ -46,7 +55,15 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountPromotionReader()
     {
-        return new DiscountPromotionReader($this->getQueryContainer());
+        return new DiscountPromotionReader($this->getQueryContainer(), $this->createDiscountPromotionMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapperInterface
+     */
+    protected function createDiscountPromotionMapper()
+    {
+        return new DiscountPromotionMapper();
     }
 
     /**
