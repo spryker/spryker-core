@@ -12,7 +12,6 @@ interface AvailabilityClientInterface
 {
 
     /**
-     *
      * Specification:
      * - Reads product availability data for current locale, from current Yves storage provider
      *

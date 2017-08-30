@@ -54,7 +54,9 @@ class AvailabilityStorage implements AvailabilityStorageInterface
         $availability = $this->getProductAvailabilityFromStorage($idProductAbstract);
 
         if ($availability === null) {
-            throw new ProductAvailabilityNotFoundException('Product availability not found for "%d" product abstract id', $idProductAbstract);
+            throw new ProductAvailabilityNotFoundException(
+                sprintf('Product availability not found for "%d" product abstract id', $idProductAbstract)
+            );
         }
 
         return $this->getMappedStorageAvailabilityTransferFromStorage($availability);

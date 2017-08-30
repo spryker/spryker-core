@@ -17,4 +17,11 @@ interface AvailabilityStorageInterface
      */
     public function getProductAvailability($idProductAbstract);
 
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function hasProductAvailability($idProductAbstract);
+
 }

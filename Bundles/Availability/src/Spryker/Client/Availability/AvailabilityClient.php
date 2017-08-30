@@ -16,7 +16,6 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
 {
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api
