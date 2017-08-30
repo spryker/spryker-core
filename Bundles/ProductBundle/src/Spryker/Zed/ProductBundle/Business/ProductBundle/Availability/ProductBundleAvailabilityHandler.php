@@ -84,6 +84,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         $bundleProductEntity = $this->findBundleProductEntityBySku($bundleProductSku);
 
         if ($bundleProductEntity === null) {
+            $this->emptyBundleAvailability($bundleProductSku);
             return;
         }
 
@@ -175,6 +176,16 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         return $this->availabilityQueryContainer
             ->querySpyAvailabilityBySku($bundledItemSku)
             ->findOne();
+    }
+
+    /**
+     * @param string $bundleProductSku
+     *
+     * @return void
+     */
+    protected function emptyBundleAvailability($bundleProductSku)
+    {
+        $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0);
     }
 
 }
