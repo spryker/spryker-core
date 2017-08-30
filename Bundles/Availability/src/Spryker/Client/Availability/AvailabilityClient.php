@@ -22,9 +22,9 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
-     *
      * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
@@ -45,10 +45,9 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      */
     public function hasProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
-        $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
-        $availabilityStorage = $this->getFactory()->createAvailabilityStorage($locale);
-
-        return $availabilityStorage->hasProductAvailability($idProductAbstract);
+        return $this->getFactory()
+            ->createCurrentLocaleAvailabilityStorage()
+            ->hasProductAvailability($idProductAbstract);
     }
 
 }

@@ -126,4 +126,11 @@ interface ServiceInterface
      */
     public function setDebug($debug);
 
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public function exists($key);
+
 }

@@ -16,4 +16,11 @@ interface AvailabilityToStorageInterface
      */
     public function get($key);
 
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public function exists($key);
+
 }

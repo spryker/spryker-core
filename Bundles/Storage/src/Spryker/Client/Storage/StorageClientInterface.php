@@ -158,4 +158,13 @@ interface StorageClientInterface
      */
     public function unsetLastCachedKey();
 
+    /**
+     * @api
+     *
+     * @param string $key
+     *
+     * @return int
+     */
+    public function exists($key);
+
 }
