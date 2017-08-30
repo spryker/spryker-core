@@ -72,7 +72,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
 
-        return (bool)$this->storageClient->exists($key);
+        return $this->storageClient->exists($key);
     }
 
     /**

@@ -129,7 +129,7 @@ interface ServiceInterface
     /**
      * @param string $key
      *
-     * @return int
+     * @return bool
      */
     public function exists($key);
 

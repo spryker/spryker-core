@@ -289,7 +289,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @param string $key
      *
-     * @return int
+     * @return bool
      */
     public function exists($key)
     {

@@ -390,12 +390,12 @@ class Service implements ServiceInterface
     /**
      * @param string $key
      *
-     * @return int
+     * @return bool
      */
     public function exists($key)
     {
         $key = $this->getKeyName($key);
-        $doesExist = $this->client->exists($key);
+        $doesExist = (bool)$this->client->exists($key);
         $this->addReadAccessStats($key);
 
         return $doesExist;
