@@ -1,6 +1,6 @@
 {
   "name": "spryker/payment-cart-connector",
-  "description": "Payment cart connector module",
+  "description": "PaymentCartConnector module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0"
