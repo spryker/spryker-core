@@ -27,6 +27,16 @@
         <property name="nickname" type="string" />
     </transfer>
 
+    <transfer name="ProductReviewError">
+        <property name="message" type="string" />
+    </transfer>
+
+    <transfer name="ProductReviewResponse">
+        <property name="productReview" type="ProductReview" />
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="ProductReviewError[]" singular="error" />
+    </transfer>
+
     <transfer name="ProductReviewSearchConfig">
         <property name="paginationConfig" type="PaginationConfig" />
     </transfer>

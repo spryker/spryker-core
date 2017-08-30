@@ -29,7 +29,7 @@ class ProductReviewStub implements ProductReviewStubInterface
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductReviewTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {

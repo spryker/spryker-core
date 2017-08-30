@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ProductReviewCollector\Business\Collector\Search;
 
+use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Search\ProductReviewIndexMap;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
+use Spryker\Shared\ProductReview\ProductReviewConstants;
 use Spryker\Zed\Collector\Business\Collector\Search\AbstractConfigurableSearchPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewSearchCollectorQuery;
@@ -72,6 +74,7 @@ class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
         ];
 
         $result = $this->addExtraCollectorFields($result, $collectItemData);
+        $result = $this->addSortFields($result, $collectItemData);
 
         return $result;
     }
@@ -89,6 +92,30 @@ class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
         $result[CollectorConfig::COLLECTOR_SEARCH_KEY] = $collectItemData[CollectorConfig::COLLECTOR_SEARCH_KEY];
 
         return $result;
+    }
+
+    /**
+     * @param array $result
+     * @param array $collectItemData
+     *
+     * @return array
+     */
+    protected function addSortFields(array $result, array $collectItemData)
+    {
+        $result[PageIndexMap::INTEGER_SORT][ProductReviewConstants::SEARCH_SORT_FIELD_CREATED_AT] =
+            $this->normalizeDateTimeForSorting($collectItemData[ProductReviewSearchCollectorQuery::FIELD_CREATED_AT]);
+
+        return $result;
+    }
+
+    /**
+     * @param string $date
+     *
+     * @return int
+     */
+    protected function normalizeDateTimeForSorting($date)
+    {
+        return (int)strtotime($date);
     }
 
     /**

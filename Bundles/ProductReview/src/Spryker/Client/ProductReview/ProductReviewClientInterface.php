@@ -22,7 +22,7 @@ interface ProductReviewClientInterface
      *
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductReviewTransfer
+     * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer
      */
     public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer);
 

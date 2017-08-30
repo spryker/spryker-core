@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductReview\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductReviewErrorTransfer;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
+use Generated\Shared\Transfer\ProductReviewResponseTransfer;
+use Spryker\Shared\ProductReview\Exception\RatingOutOfRangeException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -20,7 +23,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductReviewTransfer
+     * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer
      */
     public function submitCustomerReviewAction(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {
@@ -28,10 +31,19 @@ class GatewayController extends AbstractGatewayController
             ->createCustomerReviewSubmitMapper()
             ->mapRequestTransfer($productReviewRequestTransfer);
 
-        $productReviewTransfer = $this->getFacade()
-            ->createProductReview($productReviewTransfer);
+        try {
+            $productReviewTransfer = $this->getFacade()
+                ->createProductReview($productReviewTransfer);
 
-        return $productReviewTransfer;
+            return (new ProductReviewResponseTransfer())
+                ->setIsSuccess(true)
+                ->setProductReview($productReviewTransfer);
+
+        } catch (RatingOutOfRangeException $exception) {
+            return (new ProductReviewResponseTransfer())
+                ->setIsSuccess(false)
+                ->addError((new ProductReviewErrorTransfer())->setMessage($exception->getMessage()));
+        }
     }
 
 }

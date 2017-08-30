@@ -14,6 +14,7 @@ use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageBridge;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\PaginatedProductReviewsQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\RatingAggregationQueryExpanderPlugin;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\SortByCreatedAtQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin;
@@ -125,6 +126,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
         return [
             new PaginatedProductReviewsQueryExpanderPlugin(),
             new RatingAggregationQueryExpanderPlugin(),
+            new SortByCreatedAtQueryExpanderPlugin(),
         ];
     }
 
