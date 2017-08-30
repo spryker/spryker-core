@@ -10,7 +10,7 @@
     "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/stock": "^4.0.0",
-    "spryker/storage": "^3.0.0",
+    "spryker/storage": "^3.2.0",
     "spryker/touch": "^3.0.0"
   },
   "require-dev": {
