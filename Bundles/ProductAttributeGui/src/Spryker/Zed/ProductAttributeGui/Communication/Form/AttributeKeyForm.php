@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -61,7 +63,7 @@ class AttributeKeyForm extends AbstractType
      */
     protected function addAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_KEY, 'text', [
+        $builder->add(static::FIELD_KEY, TextType::class, [
             'label' => 'Attribute key',
             'constraints' => [
                 new NotBlank(),
@@ -89,7 +91,7 @@ class AttributeKeyForm extends AbstractType
     protected function addAttributeKeyHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(static::FIELD_KEY_HIDDEN_ID, 'hidden', []);
+            ->add(static::FIELD_KEY_HIDDEN_ID, HiddenType::class, []);
 
         return $this;
     }

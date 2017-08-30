@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -39,7 +38,7 @@ class SaveController extends AbstractController
             ->getProductAttributeFacade()
             ->saveAbstractAttributes($idProductAbstract, $data);
 
-        return new JsonResponse([
+        return $this->jsonResponse([
             'success' => true,
             'message' => 'Product abstract attributes saved',
         ], 200);
@@ -63,7 +62,7 @@ class SaveController extends AbstractController
             ->getProductAttributeFacade()
             ->saveConcreteAttributes($idProduct, $data);
 
-        return new JsonResponse([
+        return $this->jsonResponse([
             'success' => true,
             'message' => 'Product attributes saved',
         ], 200);

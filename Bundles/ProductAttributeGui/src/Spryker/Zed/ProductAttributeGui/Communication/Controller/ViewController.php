@@ -175,7 +175,7 @@ class ViewController extends AbstractController
      */
     protected function getProductTransfer($idProduct)
     {
-        $entity = $this->getFactory()
+        $productEntity = $this->getFactory()
             ->getProductQueryContainer()
             ->queryProduct()
             ->filterByIdProduct($idProduct)
@@ -184,13 +184,13 @@ class ViewController extends AbstractController
 
         $productTransfer = new ProductConcreteTransfer();
 
-        if (!$entity) {
+        if (!$productEntity) {
             return $productTransfer;
         }
 
-        $productTransfer->setIdProductConcrete($entity->getIdProduct());
-        $productTransfer->setFkProductAbstract($entity->getFkProductAbstract());
-        $productTransfer->setSku($entity->getSku());
+        $productTransfer->setIdProductConcrete($productEntity->getIdProduct());
+        $productTransfer->setFkProductAbstract($productEntity->getFkProductAbstract());
+        $productTransfer->setSku($productEntity->getSku());
 
         return $productTransfer;
     }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Controller;
 
-use Exception;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationCollectionForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -219,16 +218,7 @@ class AttributeController extends AbstractController
         $localeCode = $request->get(static::PARAM_LOCALE_CODE);
         $searchText = trim($request->get(static::PARAM_SEARCH_TEXT));
 
-        try {
-            $localeTransfer = $this->getFactory()
-                ->getLocaleFacade()
-                ->getLocale($localeCode);
-        } catch (Exception $e) {
-            $localeTransfer = $this->getFactory()
-                ->getLocaleFacade()
-                ->getCurrentLocale();
-        }
-
+        $localeTransfer = $this->getCurrentLocaleTransfer($localeCode);
         $idLocale = $localeTransfer->getIdLocale();
 
         $total = $this->getFactory()
@@ -244,6 +234,28 @@ class AttributeController extends AbstractController
             'values' => $values,
             'total' => $total,
         ]);
+    }
+
+    /**
+     * @param string|null $localeCode
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getCurrentLocaleTransfer($localeCode)
+    {
+        $hasLocale = $this->getFactory()
+            ->getLocaleFacade()
+            ->hasLocale($localeCode);
+
+        if ($hasLocale) {
+            return $this->getFactory()
+                ->getLocaleFacade()
+                ->getLocale($localeCode);
+        }
+
+        return $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
     }
 
 }
