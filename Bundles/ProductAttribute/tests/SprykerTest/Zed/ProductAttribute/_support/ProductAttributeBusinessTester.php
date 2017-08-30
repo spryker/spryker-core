@@ -9,8 +9,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
-use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
-use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
@@ -144,15 +142,7 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createProductManagementAttributeEntity(array $values = [])
     {
-        $productAttributeKeyEntity = new SpyProductAttributeKey();
-        $productAttributeKeyEntity->setKey('some_unique_key_that_should_not_exist_in_db');
-        $productAttributeKeyEntity->save();
-
-        $productManagementAttributeEntity = new SpyProductManagementAttribute();
-        $productManagementAttributeEntity
-            ->setFkProductAttributeKey($productAttributeKeyEntity->getIdProductAttributeKey())
-            ->setInputType('bar');
-        $productManagementAttributeEntity->save();
+        $productManagementAttributeEntity = $this->haveProductManagementAttributeEntity();
 
         if (!empty($values)) {
             foreach ($values as $value) {

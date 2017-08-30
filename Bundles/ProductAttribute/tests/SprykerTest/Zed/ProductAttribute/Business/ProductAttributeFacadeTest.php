@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductAttribute\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
@@ -91,15 +90,17 @@ class ProductAttributeFacadeTest extends Test
 
         $productAttributeKeyEntity = $this->tester->createProductManagementAttributeEntity();
 
-        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+        $productManagementAttributeTransfer = $this->tester->generateProductManagementAttributeTransfer()
             ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute())
             ->setLocalizedKeys(new ArrayObject([
-                (new LocalizedProductManagementAttributeKeyTransfer())
-                    ->setLocaleName('aa_AA')
-                    ->setKeyTranslation('Foo'),
-                (new LocalizedProductManagementAttributeKeyTransfer())
-                    ->setLocaleName('bb_BB')
-                    ->setKeyTranslation('Bar'),
+               $this->tester->generateLocalizedProductManagementAttributeKeyTransfer([
+                   'locale_name' => 'aa_AA',
+                   'key_translation' => 'Foo',
+               ]),
+                $this->tester->generateLocalizedProductManagementAttributeKeyTransfer([
+                    'locale_name' => 'bb_BB',
+                    'key_translation' => 'Bar',
+                ]),
             ]));
 
         $this->productAttributeFacade->translateProductManagementAttribute($productManagementAttributeTransfer);
