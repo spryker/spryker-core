@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
-use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
-use stdClass;
-
-class SharedConfigResolver extends AbstractClassResolver
+class SharedConfigResolver extends BundleConfigResolver
 {
 
     const CLASS_NAME_PATTERN = '\\%1$s\\Shared\\%2$s%3$s\\%2$sConfig';
 
     /**
      * @param object|string $callerClass
+     *
+     * @throws \Spryker\Zed\Kernel\ClassResolver\Config\SharedConfigNotFoundException
      *
      * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
@@ -27,7 +26,7 @@ class SharedConfigResolver extends AbstractClassResolver
             return $this->getResolvedClassInstance();
         }
 
-        return new stdClass();
+        throw new SharedConfigNotFoundException($callerClass);
     }
 
     /**
