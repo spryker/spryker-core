@@ -17,20 +17,39 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
 
     /**
      *
-     * Specification:
-     *  - Reads product availability data for current locale, from current Yves storage provider
+     * {@inheritdoc}
      *
      * @api
      *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     *
+     * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
         $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
         $availabilityStorage = $this->getFactory()->createAvailabilityStorage($locale);
+
         return $availabilityStorage->getProductAvailability($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function hasProductAvailabilityByIdProductAbstract($idProductAbstract)
+    {
+        $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
+        $availabilityStorage = $this->getFactory()->createAvailabilityStorage($locale);
+
+        return $availabilityStorage->hasProductAvailability($idProductAbstract);
     }
 
 }
