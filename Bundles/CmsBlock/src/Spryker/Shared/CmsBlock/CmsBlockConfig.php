@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\CmsBlock;
 
-class CmsBlockConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class CmsBlockConfig extends AbstractSharedConfig
 {
 
     /**
@@ -17,5 +19,15 @@ class CmsBlockConfig
      * @api
      */
     const RESOURCE_TYPE_CMS_BLOCK = 'cms-block';
+
+    /**
+     * @return array
+     */
+    public function getTest()
+    {
+        return [
+            1
+        ];
+    }
 
 }
