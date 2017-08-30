@@ -54,7 +54,7 @@ class AvailabilityFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Availability\Storage\AvailabilityStorage
+     * @return \Spryker\Client\Availability\Storage\AvailabilityStorageInterface
      */
     public function createCurrentLocaleAvailabilityStorage()
     {
