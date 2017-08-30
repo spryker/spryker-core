@@ -22,6 +22,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * @method \Spryker\Zed\CmsBlock\CmsBlockConfig getConfig()
  * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Shared\CmsBlock\CmsBlockConfig getSharedConfig()
  */
 class CmsBlockBusinessFactory extends AbstractBusinessFactory
 {
