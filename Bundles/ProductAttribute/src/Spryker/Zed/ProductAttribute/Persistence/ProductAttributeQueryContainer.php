@@ -376,7 +376,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultCriterion
      *
-     * @return mixed
+     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
      */
     protected function createAttributeKeysInCriterion(array $keys, Criteria $criteria, AbstractCriterion $defaultCriterion)
     {

@@ -36,7 +36,7 @@ interface ProductAttributeMapperInterface
      *
      * @return array
      */
-    public function maSuggestKeys($metaAttributeCollection);
+    public function metaAttributeSuggestKeys($metaAttributeCollection);
 
     /**
      * $productAttributes format

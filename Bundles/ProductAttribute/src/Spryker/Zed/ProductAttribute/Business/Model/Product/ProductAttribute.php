@@ -16,12 +16,12 @@ class ProductAttribute implements ProductAttributeInterface
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface
      */
-    protected $reader;
+    protected $productAttributeReader;
 
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface
      */
-    protected $mapper;
+    protected $productAttributeMapper;
 
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface
@@ -29,17 +29,17 @@ class ProductAttribute implements ProductAttributeInterface
     protected $productReader;
 
     /**
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $attributeReader
-     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface $attributeMapper
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface $productAttributeReader
+     * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapperInterface $productAttributeMapper
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReaderInterface $productReader
      */
     public function __construct(
-        ProductAttributeReaderInterface $attributeReader,
-        ProductAttributeMapperInterface $attributeMapper,
+        ProductAttributeReaderInterface $productAttributeReader,
+        ProductAttributeMapperInterface $productAttributeMapper,
         ProductReaderInterface $productReader
     ) {
-        $this->reader = $attributeReader;
-        $this->mapper = $attributeMapper;
+        $this->productAttributeReader = $productAttributeReader;
+        $this->productAttributeMapper = $productAttributeMapper;
         $this->productReader = $productReader;
     }
 
@@ -51,7 +51,7 @@ class ProductAttribute implements ProductAttributeInterface
     public function getMetaAttributesForProductAbstract($idProductAbstract)
     {
         $values = $this->getProductAbstractAttributes($idProductAbstract);
-        return $this->reader->getMetaAttributesByValues($values);
+        return $this->productAttributeReader->getMetaAttributesByValues($values);
     }
 
     /**
@@ -78,7 +78,7 @@ class ProductAttribute implements ProductAttributeInterface
     {
         $values = $this->getProductAttributeValues($idProduct);
 
-        return $this->reader->getMetaAttributesByValues($values);
+        return $this->productAttributeReader->getMetaAttributesByValues($values);
     }
 
     /**

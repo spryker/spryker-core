@@ -71,7 +71,7 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
     {
         $query = $this->querySuggestKeys($searchText, $limit);
 
-        return $this->attributeMapper->maSuggestKeys($query->find());
+        return $this->attributeMapper->metaAttributeSuggestKeys($query->find());
     }
 
     /**
