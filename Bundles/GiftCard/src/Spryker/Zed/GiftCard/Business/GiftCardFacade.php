@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCard\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -57,6 +58,18 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function expandGiftCardMetadata(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()->createGiftCardMetadataExpander()->expandGiftCardMetadata($cartChangeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
+     *
+     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer
+     */
+    public function filterGiftCardDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer)
+    {
+        return $this->getFactory()->createGiftCardDiscountableItemFilter()->filterGiftCardDiscountableItems($collectedDiscountTransfer);
     }
 
 }

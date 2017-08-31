@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCard\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 interface GiftCardFacadeInterface
 {
@@ -38,5 +39,14 @@ interface GiftCardFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandGiftCardMetadata(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
+     *
+     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer
+     */
+    public function filterGiftCardDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer);
 
 }
