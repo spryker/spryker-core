@@ -5,24 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GiftCard\Business;
+namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
-use Generated\Shared\Transfer\GiftCardTransfer;
-interface GiftCardFacadeInterface
+interface GiftCardReaderInterface
 {
 
     /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
-     *
-     * @return void
-     */
-    public function create(GiftCardTransfer $giftCardTransfer);
-
-    /**
-     * @api
-     *
      * @param int $idGiftCard
      *
      * @return \Generated\Shared\Transfer\GiftCardTransfer|null

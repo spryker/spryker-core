@@ -9,4 +9,21 @@ namespace Spryker\Zed\GiftCard\Persistence;
 
 interface GiftCardQueryContainerInterface
 {
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
+     */
+    public function queryGiftCards();
+
+    /**
+     * @api
+     *
+     * @param int $idGiftCard
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
+     */
+    public function queryGiftCardById($idGiftCard);
+
 }

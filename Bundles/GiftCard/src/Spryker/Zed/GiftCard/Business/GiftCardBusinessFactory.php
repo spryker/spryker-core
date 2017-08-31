@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\GiftCard\Business;
 
+use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
+use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReader;
+use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -15,4 +18,32 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class GiftCardBusinessFactory extends AbstractBusinessFactory
 {
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
+     */
+    public function createGiftCardReader()
+    {
+        return new GiftCardReader(
+            $this->getQueryContainer(),
+            $this->getEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreatorInterface
+     */
+    public function createGiftCardCreator()
+    {
+        return new GiftCardCreator($this->getEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     */
+    protected function getEncodingService()
+    {
+        return $this->getProvidedDependency(GiftCardDependencyProvider::SERVICE_ENCODING);
+    }
+
 }

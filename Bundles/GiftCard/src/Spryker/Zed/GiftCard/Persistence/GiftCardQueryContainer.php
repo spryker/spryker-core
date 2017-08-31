@@ -14,4 +14,31 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQueryContainerInterface
 {
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
+     */
+    public function queryGiftCards()
+    {
+        return $this
+            ->getFactory()
+            ->createGiftCardQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idGiftCard
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
+     */
+    public function queryGiftCardById($idGiftCard)
+    {
+        return $this
+            ->queryGiftCards()
+            ->filterByIdGiftCard($idGiftCard);
+    }
+
 }
