@@ -11,4 +11,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GiftCardConfig extends AbstractBundleConfig
 {
+
+    /**
+     * @return string
+     */
+    public function getCodePrefix()
+    {
+        //TODO read it from config
+        return 'GC';
+    }
+
 }
