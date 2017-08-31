@@ -40,8 +40,6 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     protected $finder;
 
     /**
-     * CmsBlockTemplateManager constructor.
-     *
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapperInterface $cmsBlockTemplateMapper
      * @param \Spryker\Zed\CmsBlock\CmsBlockConfig $cmsBlockConfig
