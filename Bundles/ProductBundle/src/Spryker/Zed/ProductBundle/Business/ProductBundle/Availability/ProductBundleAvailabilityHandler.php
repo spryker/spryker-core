@@ -84,7 +84,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         $bundleProductEntity = $this->findBundleProductEntityBySku($bundleProductSku);
 
         if ($bundleProductEntity === null) {
-            $this->emptyBundleAvailability($bundleProductSku);
+            $this->removeBundleAvailability($bundleProductSku);
             return;
         }
 
@@ -183,7 +183,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    protected function emptyBundleAvailability($bundleProductSku)
+    protected function removeBundleAvailability($bundleProductSku)
     {
         $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0);
     }
