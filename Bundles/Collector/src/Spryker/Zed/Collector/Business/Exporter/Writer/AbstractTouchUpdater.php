@@ -52,6 +52,14 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     abstract protected function findOrCreateTouchKeyEntity($key, $idLocale);
 
     /**
+     * @param string $key
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     */
+    abstract public function deleteTouchKeyEntity($key, $idLocale);
+
+    /**
      * @param \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface $bulkTouchUpdateQuery
      * @param \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface $bulkTouchDeleteQuery
      */

@@ -36,4 +36,12 @@ interface TouchUpdaterInterface
      */
     public function getTouchKeyColumnName();
 
+    /**
+     * @param string $key
+     * @param int $idLocale
+     *
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     */
+    public function deleteTouchKeyEntity($key, $idLocale);
+
 }

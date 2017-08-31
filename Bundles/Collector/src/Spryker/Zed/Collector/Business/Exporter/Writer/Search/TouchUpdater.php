@@ -44,4 +44,18 @@ class TouchUpdater extends AbstractTouchUpdater
             ->findOneOrCreate();
     }
 
+    /**
+     * @param string $key
+     * @param int $idLocale
+     *
+     * @return void
+     */
+    public function deleteTouchKeyEntity($key, $idLocale)
+    {
+        SpyTouchSearchQuery::create()
+            ->filterByKey($key)
+            ->filterByFkLocale($idLocale)
+            ->delete();
+    }
+
 }

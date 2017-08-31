@@ -164,6 +164,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
 
                 if ($keysToDelete) {
                     $storeWriter->delete($keysToDelete);
+                    $this->deleteTouchKeyEntities($entityCollection, $touchUpdater);
                 }
             }
         }
@@ -179,6 +180,24 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     public function setLocale(LocaleTransfer $localeTransfer)
     {
         $this->locale = $localeTransfer;
+    }
+
+    /**
+     * @param array $entityCollection
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
+     */
+    protected function deleteTouchKeyEntities(
+        array $entityCollection,
+        TouchUpdaterInterface $touchUpdater
+    ) {
+        foreach ($entityCollection as $entity) {
+            $touchUpdater->deleteTouchKeyEntity(
+                $entity[$touchUpdater->getTouchKeyColumnName()],
+                $this->locale->getIdLocale()
+            );
+        }
     }
 
 }
