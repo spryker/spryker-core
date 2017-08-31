@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"
+>
+
+    <transfer name="GiftCard">
+        <property name="idGiftCard" dataBuilderRule="="/>
+        <property name="code" dataBuilderRule="unique()->word"/>
+        <property name="name" dataBuilderRule="word"/>
+        <property name="value" dataBuilderRule="numberBetween(10, 10000)"/>
+        <!--<property name="attributes" dataBuilderRule="="/>-->
+        <property name="isActive" dataBuilderRule="boolean()"/>
+    </transfer>
+
+</transfers>
+
