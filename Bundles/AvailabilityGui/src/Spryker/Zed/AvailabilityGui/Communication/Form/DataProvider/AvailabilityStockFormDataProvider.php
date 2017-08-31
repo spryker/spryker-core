@@ -58,7 +58,7 @@ class AvailabilityStockFormDataProvider
 
     /**
      * @param string $sku
-     * @param array|\Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
+     * @param \Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
      *
      * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
