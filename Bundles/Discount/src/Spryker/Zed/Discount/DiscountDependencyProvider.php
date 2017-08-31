@@ -41,7 +41,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
     const PLUGIN_DISCOUNTABLE_ITEM_FILTER = 'PLUGIN_DISCOUNTABLE_ITEM_FILTER';
     const PLUGIN_COLLECTOR_STRATEGY_PLUGINS = 'PLUGIN_COLLECTOR_STRATEGY';
-    const PLUGIN_DISCOUNT_POST_SAVE = 'PLUGIN_DISCOUNT_POST_SAVE';
+    const PLUGIN_DISCOUNT_POST_CREATE = 'PLUGIN_DISCOUNT_POST_CREATE';
     const PLUGIN_DISCOUNT_POST_UPDATE = 'PLUGIN_DISCOUNT_POST_UPDATE';
     const PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER = 'PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER';
     const PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER = 'PLUGIN_DISCOUNT_FORM_EXPANDER';
@@ -69,7 +69,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountableItemFilterPlugins($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addCollectorStrategyPlugins($container);
-        $container = $this->addDiscountPostSavePlugins($container);
+        $container = $this->addDiscountPostCreatePlugins($container);
         $container = $this->addDiscountPostUpdatePlugins($container);
         $container = $this->addDiscountConfigurationExpanderPlugins($container);
 
@@ -276,19 +276,19 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addDiscountPostSavePlugins(Container $container)
+    protected function addDiscountPostCreatePlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_POST_SAVE] = function () {
-            return $this->getDiscountPostSavePlugins();
+        $container[static::PLUGIN_DISCOUNT_POST_CREATE] = function () {
+            return $this->getDiscountPostCreatePlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostSavePluginInterface[]
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
      */
-    protected function getDiscountPostSavePlugins()
+    protected function getDiscountPostCreatePlugins()
     {
         return [];
     }

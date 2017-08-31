@@ -32,9 +32,9 @@ class DiscountPersist implements DiscountPersistInterface
     protected $discountQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostSavePluginInterface[]
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
      */
-    protected $discountPostSavePlugins = [];
+    protected $discountPostCreatePlugins = [];
 
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
@@ -88,7 +88,7 @@ class DiscountPersist implements DiscountPersistInterface
 
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
 
-        $this->executePostSavePlugins($discountConfiguratorTransfer);
+        $this->executePostCreatePlugins($discountConfiguratorTransfer);
     }
 
     /**
@@ -327,10 +327,10 @@ class DiscountPersist implements DiscountPersistInterface
      *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
-    protected function executePostSavePlugins(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    protected function executePostCreatePlugins(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
-        foreach ($this->discountPostSavePlugins as $discountPostSavePlugin) {
-            $discountConfiguratorTransfer = $discountPostSavePlugin->postSave($discountConfiguratorTransfer);
+        foreach ($this->discountPostCreatePlugins as $discountPostSavePlugin) {
+            $discountConfiguratorTransfer = $discountPostSavePlugin->postCreate($discountConfiguratorTransfer);
         }
 
         return $discountConfiguratorTransfer;
@@ -350,13 +350,13 @@ class DiscountPersist implements DiscountPersistInterface
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostSavePluginInterface[] $discountPostSavePlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[] $discountPostCreatePlugins
      *
      * @return void
      */
-    public function setDiscountPostSavePlugins(array $discountPostSavePlugins)
+    public function setDiscountPostCreatePlugins(array $discountPostCreatePlugins)
     {
-        $this->discountPostSavePlugins = $discountPostSavePlugins;
+        $this->discountPostCreatePlugins = $discountPostCreatePlugins;
     }
 
     /**

@@ -9,13 +9,13 @@ namespace Spryker\Zed\Discount\Dependency\Plugin;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
-interface DiscountPostSavePluginInterface
+interface DiscountPostCreatePluginInterface
 {
 
     /**
      * Specification:
      *
-     * Plugin is triggered after discount is saved
+     * Plugin is triggered after discount is created
      *
      * @api
      *
@@ -23,6 +23,6 @@ interface DiscountPostSavePluginInterface
      *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      */
-    public function postSave(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
+    public function postCreate(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
 
 }

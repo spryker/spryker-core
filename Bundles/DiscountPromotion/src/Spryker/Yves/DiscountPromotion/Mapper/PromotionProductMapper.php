@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
 
-    const VARIANT_ATTRIBUTE_URL_PARAM = 'attributes';
+    const URL_PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**
      * @var \Spryker\Yves\DiscountPromotion\Dependency\Client\DiscountPromotionToProductInterface
@@ -56,9 +56,10 @@ class PromotionProductMapper implements PromotionProductMapperInterface
             $rawProductData = $this->getProductDataFromStorage($promotionItemTransfer);
 
             $selectedAttributes = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());
-            $storageProductTransfer = $this->mapStorageProductTransfer($rawProductData, $selectedAttributes, $promotionItemTransfer);
+            $storageProductTransfer = $this->mapStorageProductTransfer($rawProductData, $selectedAttributes);
+            $storageProductTransfer->setPromotionItem($promotionItemTransfer);
 
-            $promotionProducts[$promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion()] = $storageProductTransfer;
+            $promotionProducts[$this->createPromotionProductBuckedIdentifier($promotionItemTransfer)] = $storageProductTransfer;
         }
 
         return $promotionProducts;
@@ -72,27 +73,19 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      */
     protected function getSelectedAttributes(Request $request, $abstractSku)
     {
-        $selectedAttributes = $request->query->get(static::VARIANT_ATTRIBUTE_URL_PARAM, []);
+        $selectedAttributes = $request->query->get(static::URL_PARAM_VARIANT_ATTRIBUTES, []);
         return isset($selectedAttributes[$abstractSku]) ? $this->filterEmptyAttributes($selectedAttributes[$abstractSku]) : [];
     }
 
     /**
-     * @param array $data
+     * @param array $rawProductData
      * @param array $selectedAttributes
-     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    protected function mapStorageProductTransfer(
-        array $data,
-        array $selectedAttributes,
-        PromotionItemTransfer $promotionItemTransfer
-    ) {
-
-        $storageProductTransfer = $this->storageProductMapperPlugin->mapStorageProduct($data, $selectedAttributes);
-        $storageProductTransfer->setPromotionItem($promotionItemTransfer);
-
-        return $storageProductTransfer;
+    protected function mapStorageProductTransfer(array $rawProductData, array $selectedAttributes)
+    {
+        return $this->storageProductMapperPlugin->mapStorageProduct($rawProductData, $selectedAttributes);
     }
 
     /**
@@ -113,6 +106,16 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     protected function filterEmptyAttributes(array $selectedAttributes)
     {
         return array_filter($selectedAttributes);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
+     *
+     * @return string
+     */
+    protected function createPromotionProductBuckedIdentifier(PromotionItemTransfer $promotionItemTransfer)
+    {
+        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();
     }
 
 }
