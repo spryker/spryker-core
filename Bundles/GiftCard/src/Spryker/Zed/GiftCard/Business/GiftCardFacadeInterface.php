@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GiftCard\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 interface GiftCardFacadeInterface
 {
@@ -28,5 +29,14 @@ interface GiftCardFacadeInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer|null
      */
     public function findById($idGiftCard);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandGiftCardMetadata(CartChangeTransfer $cartChangeTransfer);
 
 }

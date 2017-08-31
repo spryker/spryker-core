@@ -14,4 +14,21 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="giftCardMetadata" type="GiftCardMetadata" />
+    </transfer>
+
+    <transfer name="GiftCardAbstractProductConfiguration">
+        <property name="idGiftCardAbstractProductConfiguration" type="int" />
+        <property name="codePattern" type="string" />
+    </transfer>
+
+    <transfer name="GiftCardProductConfiguration">
+        <property name="idGiftCardProductConfiguration" type="int" />
+    </transfer>
+
+    <transfer name="GiftCardMetadata">
+        <property name="isGiftCard" type="bool" />
+    </transfer>
+
 </transfers>

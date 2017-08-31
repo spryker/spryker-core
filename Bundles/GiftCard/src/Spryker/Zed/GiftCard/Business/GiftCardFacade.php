@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GiftCard\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -44,6 +45,18 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
             ->getFactory()
             ->createGiftCardReader()
             ->findById($idGiftCard);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandGiftCardMetadata(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()->createGiftCardMetadataExpander()->expandGiftCardMetadata($cartChangeTransfer);
     }
 
 }

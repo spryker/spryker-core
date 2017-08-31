@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GiftCard\Business;
 
+use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReader;
 use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
@@ -44,6 +45,14 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     protected function getEncodingService()
     {
         return $this->getProvidedDependency(GiftCardDependencyProvider::SERVICE_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Cart\MetadataExpanderInterface
+     */
+    public function createGiftCardMetadataExpander()
+    {
+        return new MetadataExpander($this->getQueryContainer());
     }
 
 }
