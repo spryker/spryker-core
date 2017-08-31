@@ -19,6 +19,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     const CHECKOUT_PRE_CHECK_PLUGINS = 'pre check';
     const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
     const CHECKOUT_POST_SAVE_PLUGINS = 'post save';
+    const PAYMENT_METHOD_FILTER_PLUGINS = 'payment method filter plugins';
 
     const PAYMENT_HYDRATION_PLUGINS = 'payment hydration plugins';
 
@@ -37,7 +38,19 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getPaymentHydrationPlugins();
         };
 
+        $container[static::PAYMENT_METHOD_FILTER_PLUGINS] = function (Container $container) {
+            return $this->getPaymentMethodFilterPlugins();
+        };
+
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
+     */
+    protected function getPaymentMethodFilterPlugins()
+    {
+        return [];
     }
 
     /**

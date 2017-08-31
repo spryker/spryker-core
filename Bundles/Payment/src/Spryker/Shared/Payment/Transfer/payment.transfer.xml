@@ -26,4 +26,13 @@
         <property name="paymentMethod" type="string" />
     </transfer>
 
+    <transfer name="PaymentInformation">
+        <property name="provider" type="string" />
+        <property name="method" type="string" />
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="availableMethods" singular="availableMethod" type="PaymentInformation[]" />
+    </transfer>
+
 </transfers>

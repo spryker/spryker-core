@@ -71,4 +71,13 @@ interface PaymentFacadeInterface
      */
     public function hydrateOrderPayments(OrderTransfer $orderTransfer);
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+
 }

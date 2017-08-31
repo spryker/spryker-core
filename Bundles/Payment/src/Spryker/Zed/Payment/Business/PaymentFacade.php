@@ -98,4 +98,16 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
             ->hydrateOrderWithPayment($orderTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createPaymentMethodMarshaller()->getAvailableMethods($quoteTransfer);
+    }
+
 }
