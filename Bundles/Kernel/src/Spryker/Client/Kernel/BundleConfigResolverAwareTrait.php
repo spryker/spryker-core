@@ -8,6 +8,7 @@
 namespace Spryker\Client\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Config\BundleConfigResolver;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 trait BundleConfigResolverAwareTrait
 {
@@ -16,6 +17,11 @@ trait BundleConfigResolverAwareTrait
      * @var \Spryker\Client\Kernel\AbstractBundleConfig
      */
     private $config;
+
+    /**
+     * @var \Spryker\Shared\Kernel\AbstractSharedConfig
+     */
+    private $sharedConfig;
 
     /**
      * @param \Spryker\Client\Kernel\AbstractBundleConfig $config
@@ -30,6 +36,18 @@ trait BundleConfigResolverAwareTrait
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\AbstractSharedConfig $sharedConfig
+     *
+     * @return $this
+     */
+    public function setSharedConfig(AbstractSharedConfig $sharedConfig)
+    {
+        $this->sharedConfig = $sharedConfig;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Client\Kernel\AbstractBundleConfig
      */
     protected function getConfig()
@@ -39,6 +57,18 @@ trait BundleConfigResolverAwareTrait
         }
 
         return $this->config;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|\Spryker\Zed\Kernel\AbstractBundleConfig
+     */
+    protected function getSharedConfig()
+    {
+        if ($this->sharedConfig === null) {
+            $this->sharedConfig = $this->resolveSharedConfig();
+        }
+
+        return $this->sharedConfig;
     }
 
     /**

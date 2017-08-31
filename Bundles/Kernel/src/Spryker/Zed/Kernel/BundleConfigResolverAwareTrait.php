@@ -66,7 +66,7 @@ trait BundleConfigResolverAwareTrait
     /**
      * @return \Spryker\Shared\Kernel\AbstractSharedConfig|\Spryker\Zed\Kernel\AbstractBundleConfig
      */
-    public function getSharedConfig()
+    protected function getSharedConfig()
     {
         if ($this->sharedConfig === null) {
             $this->sharedConfig = $this->resolveSharedConfig();
