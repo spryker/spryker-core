@@ -54,9 +54,13 @@ class PromotionProductMapper implements PromotionProductMapperInterface
             $promotionItemTransfer->requireAbstractSku();
 
             $rawProductData = $this->getProductDataFromStorage($promotionItemTransfer);
+            if (!$rawProductData) {
+                continue;
+            }
 
             $selectedAttributes = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());
             $storageProductTransfer = $this->mapStorageProductTransfer($rawProductData, $selectedAttributes);
+
             $storageProductTransfer->setPromotionItem($promotionItemTransfer);
 
             $promotionProducts[$this->createPromotionProductBuckedIdentifier($promotionItemTransfer)] = $storageProductTransfer;

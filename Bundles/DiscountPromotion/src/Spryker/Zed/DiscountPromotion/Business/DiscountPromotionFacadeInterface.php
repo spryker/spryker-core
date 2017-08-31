@@ -41,7 +41,7 @@ interface DiscountPromotionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function savePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer);
+    public function createPromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer);
 
     /**
      * Specification:

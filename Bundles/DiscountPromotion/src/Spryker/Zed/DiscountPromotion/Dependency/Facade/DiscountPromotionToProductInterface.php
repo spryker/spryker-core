@@ -17,4 +17,11 @@ interface DiscountPromotionToProductInterface
      */
     public function findProductAbstractIdBySku($sku);
 
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku);
+
 }

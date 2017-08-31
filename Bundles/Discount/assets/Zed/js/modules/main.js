@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
     var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition', true);
-    var isQueryStringCollectorSelected = $('#discount_discountCalculator_collectorType_0').is(":checked");
+    var isQueryStringCollectorSelected = $('#discount_discountCalculator_collectorStrategyType_0').is(":checked");
 
     $('#create-discount-button').on('click', function(element) {
         element.preventDefault();
@@ -70,15 +70,15 @@ $(document).ready(function() {
         }
     });
 
-    $('#discount_discountCalculator_collectorType input').each(function(index, element) {
+    $('#discount_discountCalculator_collectorStrategyType input').each(function(index, element) {
         $('#collector-type-' + $(element).val()).hide();
         if ($(element).is(":checked")) {
             $('#collector-type-' + $(element).val()).show();
         }
     });
 
-    $('#discount_discountCalculator_collectorType input').on('click', function(event) {
-          $('#discount_discountCalculator_collectorType input').each(function(index, element) {
+    $('#discount_discountCalculator_collectorStrategyType input').on('click', function(event) {
+          $('#discount_discountCalculator_collectorStrategyType input').each(function(index, element) {
                $('#collector-type-' + $(element).val()).hide();
           });
 

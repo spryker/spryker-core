@@ -33,4 +33,14 @@ class DiscountPromotionToProductBridge implements DiscountPromotionToProductInte
         return $this->productFacade->findProductAbstractIdBySku($sku);
     }
 
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku)
+    {
+        return $this->productFacade->hasProductAbstract($sku);
+    }
+
 }

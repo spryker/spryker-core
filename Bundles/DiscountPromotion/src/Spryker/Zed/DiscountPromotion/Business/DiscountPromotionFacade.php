@@ -45,11 +45,11 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function savePromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer)
+    public function createPromotionDiscount(DiscountPromotionTransfer $discountPromotionTransfer)
     {
         return $this->getFactory()
             ->createDiscountPromotionWriter()
-            ->save($discountPromotionTransfer);
+            ->create($discountPromotionTransfer);
     }
 
     /**

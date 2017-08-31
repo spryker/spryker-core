@@ -43,7 +43,7 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function save(DiscountPromotionTransfer $discountPromotionTransfer)
+    public function create(DiscountPromotionTransfer $discountPromotionTransfer)
     {
         return $this->saveDiscountPromotion($discountPromotionTransfer);
     }

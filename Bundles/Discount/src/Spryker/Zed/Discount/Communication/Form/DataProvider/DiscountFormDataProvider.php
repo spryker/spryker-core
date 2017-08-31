@@ -57,7 +57,7 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
     {
         $calculatedDiscountTransfer = new DiscountCalculatorTransfer();
         $calculatedDiscountTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
-        $calculatedDiscountTransfer->setCollectorType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
+        $calculatedDiscountTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
 
         return $calculatedDiscountTransfer;
     }

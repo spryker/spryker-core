@@ -86,7 +86,7 @@ class CalculatorForm extends AbstractType
     {
         $this->addCalculatorType($builder)
             ->addAmountField($builder)
-            ->addDiscountCollectorTypeSelector($builder)
+            ->addDiscountCollectorStrategyTypeSelector($builder)
             ->addCollectorQueryString($builder);
 
         $builder->addModelTransformer($this->calculatorAmountTransformer);
@@ -109,7 +109,7 @@ class CalculatorForm extends AbstractType
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
-                return ['Default', $form->getData()->getCollectorType()];
+                return ['Default', $form->getData()->getCollectorStrategyType()];
             },
         ]);
     }
@@ -172,9 +172,9 @@ class CalculatorForm extends AbstractType
      *
      * @return $this
      */
-    protected function addDiscountCollectorTypeSelector(FormBuilderInterface $builder)
+    protected function addDiscountCollectorStrategyTypeSelector(FormBuilderInterface $builder)
     {
-        $builder->add(DiscountCalculatorTransfer::COLLECTOR_TYPE, 'choice', [
+        $builder->add(DiscountCalculatorTransfer::COLLECTOR_STRATEGY_TYPE, 'choice', [
             'expanded' => true,
             'multiple' => false,
             'label' => 'Discount collection type',

@@ -60,12 +60,16 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscount()
     {
-        return new Discount(
+        $discount = new Discount(
             $this->getQueryContainer(),
             $this->createCalculator(),
             $this->createDecisionRuleBuilder(),
             $this->createVoucherValidator()
         );
+
+        $discount->setDiscountApplicableFilterPlugins($this->getDiscountApplicableFilterPlugins());
+
+        return $discount;
     }
 
     /**
@@ -515,6 +519,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     protected function getConfigurationExpanderPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[]
+     */
+    protected function getDiscountApplicableFilterPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
     }
 
 }

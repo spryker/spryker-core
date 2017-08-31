@@ -59,7 +59,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($idDiscount);
 
-        $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         $collectedDiscounts = $discountPromotionFacade->collect($discountTransfer, $quoteTransfer);
 
@@ -82,7 +82,7 @@ class DiscountPromotionFacadeTest extends Unit
 
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($idDiscount);
-        $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setIdDiscount($idDiscount);
@@ -121,7 +121,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($idDiscount);
 
-        $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
          $this->getAvailabilityFacade()->saveProductAvailability('001_25904006', 0);
 
@@ -147,7 +147,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($idDiscount);
 
-        $discountPromotionTransferSaved = $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionTransferSaved = $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         $this->assertNotEmpty($discountPromotionTransferSaved);
 
@@ -174,7 +174,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($idDiscount);
 
-        $discountPromotionTransferSaved = $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionTransferSaved = $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         $updateSku = '321';
         $discountPromotionTransferSaved->setAbstractSku($updateSku);
@@ -204,7 +204,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($idDiscount);
 
-        $discountPromotionTransferSaved = $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionTransferSaved = $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         $discountPromotionTransferRead = $discountPromotionFacade->findDiscountPromotionByIdDiscountPromotion(
             $discountPromotionTransferSaved->getIdDiscountPromotion()
@@ -229,7 +229,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($idDiscount);
 
-        $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         $discountConfigurationTransfer = $discountPromotionFacade->expandDiscountConfigurationWithPromotion(
             $discountConfigurationTransfer
@@ -254,7 +254,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($idDiscount);
 
-        $discountPromotionFacade->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         $this->assertTrue($discountPromotionFacade->isDiscountWithPromotion($idDiscount));
     }
@@ -293,7 +293,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->setAmount(100);
         $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE);
-        $discountCalculatorTransfer->setCollectorType(DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY);
+        $discountCalculatorTransfer->setCollectorStrategyType(DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY);
 
         $discountConfiguratorTransfer->setDiscountCalculator($discountCalculatorTransfer);
 

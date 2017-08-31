@@ -46,6 +46,11 @@ class Discount implements DiscountInterface
     protected $voucherValidator;
 
     /**
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[]
+     */
+    protected $discountApplicableFilterPlugins = [];
+
+    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
@@ -228,7 +233,12 @@ class Discount implements DiscountInterface
             $compositeSpecification = $this->decisionRuleBuilder
                 ->buildFromQueryString($queryString);
 
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $discountApplicableItems = $this->filterDiscountApplicableItems(
+                $quoteTransfer,
+                $discountEntity->getIdDiscount()
+            );
+
+            foreach ($discountApplicableItems as $itemTransfer) {
                 if ($compositeSpecification->isSatisfiedBy($quoteTransfer, $itemTransfer) === true) {
                     return true;
                 }
@@ -239,6 +249,36 @@ class Discount implements DiscountInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idDiscount
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount)
+    {
+        if (count($this->discountApplicableFilterPlugins) === 0) {
+            $quoteTransfer->getItems();
+        }
+
+        $discountApplicableItems = (array)$quoteTransfer->getItems();
+        foreach ($this->discountApplicableFilterPlugins as $discountableItemFilterPlugin) {
+            $discountApplicableItems = $discountableItemFilterPlugin->filter($discountApplicableItems, $quoteTransfer, $idDiscount);
+        }
+
+        return $discountApplicableItems;
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[] $discountApplicableFilterPlugins
+     *
+     * @return void
+     */
+    public function setDiscountApplicableFilterPlugins(array $discountApplicableFilterPlugins)
+    {
+        $this->discountApplicableFilterPlugins = $discountApplicableFilterPlugins;
     }
 
 }

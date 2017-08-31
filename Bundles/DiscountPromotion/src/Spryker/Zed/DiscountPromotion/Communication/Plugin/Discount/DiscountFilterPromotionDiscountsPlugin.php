@@ -30,6 +30,10 @@ class DiscountFilterPromotionDiscountsPlugin extends AbstractPlugin implements D
      */
     public function filter(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
+        if (!$collectedDiscountTransfer->getDiscount()) {
+            return $collectedDiscountTransfer;
+        }
+
         $discountPromotionTransfer = $collectedDiscountTransfer->getDiscount()->getDiscountPromotion();
         if ($discountPromotionTransfer) {
             return $collectedDiscountTransfer;

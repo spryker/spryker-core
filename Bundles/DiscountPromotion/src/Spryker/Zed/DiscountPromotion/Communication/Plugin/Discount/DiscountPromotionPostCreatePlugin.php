@@ -33,7 +33,7 @@ class DiscountPromotionPostCreatePlugin extends BaseDiscountPromotionSaverPlugin
         }
 
         $discountPromotionTransfer = $this->getDiscountPromotionTransfer($discountConfiguratorTransfer);
-        $discountPromotionTransfer = $this->getFacade()->savePromotionDiscount($discountPromotionTransfer);
+        $discountPromotionTransfer = $this->getFacade()->createPromotionDiscount($discountPromotionTransfer);
         $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion($discountPromotionTransfer);
 
         return $discountConfiguratorTransfer;

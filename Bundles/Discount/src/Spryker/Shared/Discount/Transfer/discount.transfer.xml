@@ -107,7 +107,7 @@
         <property name="amount" type="string" />
         <property name="calculatorPlugin" type="string" />
         <property name="collectorQueryString" type="string" />
-        <property name="collectorType" type="string" />
+        <property name="collectorStrategyType" type="string" />
     </transfer>
 
     <transfer name="DiscountCondition">

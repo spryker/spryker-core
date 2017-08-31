@@ -11,7 +11,10 @@ interface StorageProductMapperPluginInterface
 {
 
     /**
-     * This plugin should map product raw data from redis store, to StorageProductTransfer this mapping is provided in project code
+     * @api
+     *
+     * Specification:
+     * - This plugin should map product raw data from redis store, to StorageProductTransfer this mapping is provided in project code
      *
      * @param array $productStorageData
      * @param array $selectedAttributes

@@ -90,7 +90,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     {
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->fromArray($discountEntity->toArray(), true);
-        $discountCalculatorTransfer->setCollectorType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
+        $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
 
         return $discountCalculatorTransfer;
     }

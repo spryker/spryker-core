@@ -17,6 +17,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
 {
 
     const PRODUCT_CLIENT = 'PRODUCT_CLIENT';
+    const AVAILABILITY_CLIENT = 'AVAILABILITY_CLIENT';
     const PRODUCT_MAPPER_PLUGIN = 'PRODUCT_MAPPER_PLUGIN';
 
     /**

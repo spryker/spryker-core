@@ -56,7 +56,7 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
         }
 
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
-        $discountCalculatorTransfer->setCollectorType(DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY);
+        $discountCalculatorTransfer->setCollectorStrategyType(DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY);
         $discountCalculatorTransfer->setDiscountPromotion($discountPromotionTransfer);
 
         return $discountConfiguratorTransfer;

@@ -17,7 +17,7 @@ interface DiscountPromotionWriterInterface
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    public function save(DiscountPromotionTransfer $discountPromotionTransfer);
+    public function create(DiscountPromotionTransfer $discountPromotionTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer

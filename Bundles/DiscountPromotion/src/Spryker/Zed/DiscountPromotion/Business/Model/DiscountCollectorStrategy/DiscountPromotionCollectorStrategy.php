@@ -66,6 +66,10 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             return [];
         }
 
+        if (!$this->productFacade->hasProductAbstract($discountPromotionEntity->getAbstractSku())) {
+            return [];
+        }
+
         $discountPromotionTransfer = $this->hydrateDiscountPromotion($discountPromotionEntity);
         $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
 
