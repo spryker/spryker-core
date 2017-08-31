@@ -17,6 +17,7 @@ abstract class AbstractFactory
 
     use BundleConfigResolverAwareTrait;
     use ContainerMocker;
+    use SharedConfigResolverAwareTrait;
 
     /**
      * @var \Spryker\Client\Kernel\Container

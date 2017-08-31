@@ -21,6 +21,7 @@ abstract class AbstractFactory implements FactoryInterface
 
     use BundleConfigResolverAwareTrait;
     use ContainerMocker;
+    use SharedConfigResolverAwareTrait;
 
     /**
      * @var \Spryker\Yves\Kernel\Container $container

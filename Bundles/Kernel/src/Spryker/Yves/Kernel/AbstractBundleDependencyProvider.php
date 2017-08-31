@@ -11,6 +11,7 @@ abstract class AbstractBundleDependencyProvider implements BundleDependencyProvi
 {
 
     use BundleConfigResolverAwareTrait;
+    use SharedConfigResolverAwareTrait;
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

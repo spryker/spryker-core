@@ -11,6 +11,7 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
 {
 
     use BundleConfigResolverAwareTrait;
+    use SharedConfigResolverAwareTrait;
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

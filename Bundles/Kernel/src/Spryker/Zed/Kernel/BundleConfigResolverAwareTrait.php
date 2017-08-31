@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\Kernel;
 
-use Spryker\Shared\Kernel\AbstractSharedConfig;
 use Spryker\Shared\Kernel\BundleConfigMock\BundleConfigMock;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
-use Spryker\Zed\Kernel\ClassResolver\Config\SharedConfigResolver;
 
 trait BundleConfigResolverAwareTrait
 {
@@ -19,11 +17,6 @@ trait BundleConfigResolverAwareTrait
      * @var \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     private $config;
-
-    /**
-     * @var \Spryker\Shared\Kernel\AbstractSharedConfig
-     */
-    private $sharedConfig;
 
     /**
      * @param \Spryker\Zed\Kernel\AbstractBundleConfig $config
@@ -52,30 +45,6 @@ trait BundleConfigResolverAwareTrait
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\AbstractSharedConfig $sharedConfig
-     *
-     * @return $this
-     */
-    public function setSharedConfig(AbstractSharedConfig $sharedConfig)
-    {
-        $this->sharedConfig = $sharedConfig;
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|\Spryker\Zed\Kernel\AbstractBundleConfig
-     */
-    protected function getSharedConfig()
-    {
-        if ($this->sharedConfig === null) {
-            $this->sharedConfig = $this->resolveSharedConfig();
-        }
-
-        return $this->sharedConfig;
-    }
-
-    /**
      * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     private function resolveBundleConfig()
@@ -89,17 +58,6 @@ trait BundleConfigResolverAwareTrait
         }
 
         return $config;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
-     */
-    private function resolveSharedConfig()
-    {
-        $resolver = new SharedConfigResolver();
-        $sharedConfig = $resolver->resolve($this);
-
-        return $sharedConfig;
     }
 
 }

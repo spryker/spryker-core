@@ -13,5 +13,6 @@ abstract class AbstractFactory
     use BundleConfigResolverAwareTrait;
     use BundleDependencyProviderResolverAwareTrait;
     use QueryContainerResolverAwareTrait;
+    use SharedConfigResolverAwareTrait;
 
 }
