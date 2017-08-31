@@ -18,6 +18,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 
     const PAYMENT_METHOD_HANDLER = 'payment method handler';
     const PAYMENT_SUB_FORMS = 'payment sub forms';
+    const PAYMENT_FILTERS = 'payment filters';
 
     const PLUGIN_APPLICATION = 'application plugin';
 
@@ -47,11 +48,23 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
             return new SubFormPluginCollection();
         };
 
+        $container[self::PAYMENT_FILTERS] = function () {
+            return $this->getPaymentFormFilterPlugins();
+        };
+
         $container[self::PAYMENT_METHOD_HANDLER] = function () {
             return new StepHandlerPluginCollection();
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
+     */
+    protected function getPaymentFormFilterPlugins()
+    {
+        return [];
     }
 
     /**
