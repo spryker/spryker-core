@@ -21,8 +21,6 @@ class OptionTabs extends AbstractTabs
     protected $productOptionGroupForm;
 
     /**
-     * OptionTabs constructor.
-     *
      * @param \Symfony\Component\Form\FormInterface $productOptionGroupForm
      */
     public function __construct(FormInterface $productOptionGroupForm)
