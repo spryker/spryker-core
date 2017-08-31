@@ -16,8 +16,6 @@ class StorageCacheReplaceStrategy implements StorageCacheStrategyInterface
     protected $storageCacheStrategyHelper;
 
     /**
-     * StorageCacheReplaceStrategy constructor.
-     *
      * @param \Spryker\Client\Storage\Cache\StorageCacheStrategyHelperInterface $storageCacheStrategyHelper
      */
     public function __construct(StorageCacheStrategyHelperInterface $storageCacheStrategyHelper)
