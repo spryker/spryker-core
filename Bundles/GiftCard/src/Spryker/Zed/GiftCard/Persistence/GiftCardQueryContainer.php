@@ -44,6 +44,32 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     /**
      * @api
      *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery
+     */
+    public function queryPaymentGiftCards()
+    {
+        return $this
+            ->getFactory()
+            ->createSalesOrderGiftCardQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $code
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery
+     */
+    public function queryPaymentGiftCardsForCode($code)
+    {
+        return $this
+            ->queryPaymentGiftCards()
+            ->filterByCode($code);
+    }
+
+    /**
+     * @api
+     *
      * @param string $abstractSku
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfigurationQuery
@@ -58,6 +84,30 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
             ->filterBySku($abstractSku)
             ->endUse()
             ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesPayment
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery
+     */
+    public function queryPaymentGiftCardsForIdSalesPayment($idSalesPayment)
+    {
+        return $this->queryPaymentGiftCards()->filterByFkSalesPayment($idSalesPayment);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $code
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
+     */
+    public function queryGiftCardByCode($code)
+    {
+        return $this->queryGiftCards()->filterByCode($code);
     }
 
 }

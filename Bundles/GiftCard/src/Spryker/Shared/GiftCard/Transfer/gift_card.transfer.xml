@@ -14,6 +14,23 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="giftCards" type="GiftCard[]" singular="giftCard" />
+        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode" />
+        <property name="payments" type="Payment[]" singular="payment" />
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="giftCard" type="GiftCard"/>
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="giftCards" type="GiftCard[]" singular="giftCard" />
+        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode" />
+        <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="payment" type="Payment" />
+    </transfer>
+
     <transfer name="Item">
         <property name="giftCardMetadata" type="GiftCardMetadata" />
     </transfer>

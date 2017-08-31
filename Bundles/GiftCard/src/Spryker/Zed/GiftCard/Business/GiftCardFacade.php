@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCard\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
@@ -85,6 +86,18 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()->createPaymentMethodFilter()->filterPaymentMethods($paymentMethods, $quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()->createGiftCardCalculator()->recalculate($calculableObjectTransfer);
     }
 
     /**

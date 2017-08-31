@@ -35,4 +35,31 @@ interface GiftCardQueryContainerInterface
      */
     public function queryGiftCardConfigurationByProductAbstractSku($abstractSku);
 
+    /**
+     * @api
+     *
+     * @param string $code
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
+     */
+    public function queryGiftCardByCode($code);
+
+    /**
+     * @api
+     *
+     * @param string $code
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery
+     */
+    public function queryPaymentGiftCardsForCode($code);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesPayment
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery
+     */
+    public function queryPaymentGiftCardsForIdSalesPayment($idSalesPayment);
+
 }
