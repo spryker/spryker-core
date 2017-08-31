@@ -72,4 +72,17 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
         return $this->getFactory()->createGiftCardDiscountableItemFilter()->filterGiftCardDiscountableItems($collectedDiscountTransfer);
     }
 
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveSalesOrderGiftCardItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this->getFactory()->createSalesOrderItemSaver()->saveSalesOrderGiftCardItems($quoteTransfer, $checkoutResponse);
+    }
+
 }

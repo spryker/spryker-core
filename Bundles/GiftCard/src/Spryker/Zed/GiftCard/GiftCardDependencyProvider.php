@@ -14,6 +14,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
+    const ATTRIBUTE_PROVIDER_PLUGINS = 'ATTRIBUTE_PROVIDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +24,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addEncodingService($container);
+        $container = $this->addAttributePlugins($container);
 
         return $container;
     }
@@ -39,6 +41,28 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAttributePlugins(Container $container)
+    {
+        $container[static::ATTRIBUTE_PROVIDER_PLUGINS] = function (Container $container) {
+            return $this->getAttributeProviderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[]
+     */
+    protected function getAttributeProviderPlugins()
+    {
+        return [];
     }
 
 }
