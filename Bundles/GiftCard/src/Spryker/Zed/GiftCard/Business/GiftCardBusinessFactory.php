@@ -11,6 +11,7 @@ use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReader;
+use Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter;
 use Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaver;
 use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -82,6 +83,14 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createGiftCardDiscountableItemFilter()
     {
         return new GiftCardDiscountableItemFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter
+     */
+    public function createPaymentMethodFilter()
+    {
+        return new PaymentMethodFilter($this->getConfig());
     }
 
 }

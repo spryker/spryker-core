@@ -21,4 +21,12 @@ class GiftCardConfig extends AbstractBundleConfig
         return 'GC';
     }
 
+    /**
+     * @return array
+     */
+    public function getGiftCardMethodBlacklist()
+    {
+        return [];
+    }
+
 }

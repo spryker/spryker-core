@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\GiftCard\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -70,6 +72,19 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function filterGiftCardDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
         return $this->getFactory()->createGiftCardDiscountableItemFilter()->filterGiftCardDiscountableItems($collectedDiscountTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     */
+    public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createPaymentMethodFilter()->filterPaymentMethods($paymentMethods, $quoteTransfer);
     }
 
     /**
