@@ -13,8 +13,8 @@
         <pages>
 
             <sort-category>
-                <label>Re-sort child-categories</label>
-                <title>Re-sort child-categories</title>
+                <label>Re-sort Child Categories</label>
+                <title>Re-sort Child Categories</title>
                 <bundle>category</bundle>
                 <controller>re-sort</controller>
                 <action>index</action>
