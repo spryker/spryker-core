@@ -37,7 +37,7 @@ class SkuGenerator implements SkuGeneratorInterface
      */
     public function generateProductAbstractSku(ProductAbstractTransfer $productAbstractTransfer)
     {
-        return $productAbstractTransfer->getSku();
+        return $this->sanitizeSku($productAbstractTransfer->getSku());
     }
 
     /**
@@ -57,6 +57,25 @@ class SkuGenerator implements SkuGeneratorInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return string
+     */
+    protected function sanitizeSku($sku)
+    {
+        if (function_exists('iconv')) {
+            $sku = iconv('UTF-8', 'ASCII//TRANSLIT', $sku);
+        }
+
+        $sku = preg_replace("/[^a-zA-Z0-9\.-]/", "", trim($sku));
+        $sku = mb_strtolower($sku);
+        $sku = preg_replace('/\s+/', '-', $sku);
+        $sku = preg_replace('/(\-)\1+/', '$1', $sku);
+
+        return $sku;
+    }
+
+    /**
      * @param string $abstractSku
      * @param string $concreteSku
      *
@@ -64,7 +83,7 @@ class SkuGenerator implements SkuGeneratorInterface
      */
     protected function formatConcreteSku($abstractSku, $concreteSku)
     {
-        return $this->utilTextService->generateSlug(sprintf(
+        return $this->sanitizeSku(sprintf(
             '%s%s%s',
             $abstractSku,
             static::SKU_ABSTRACT_SEPARATOR,
