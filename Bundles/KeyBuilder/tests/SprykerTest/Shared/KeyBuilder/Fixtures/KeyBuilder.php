@@ -32,5 +32,4 @@ class KeyBuilder
         return 'identifier.' . $data;
     }
 
-
 }

@@ -13,7 +13,7 @@ class LocatorLocator extends AbstractLocatorLocator
 {
 
     /**
-     * @return BundleProxy
+     * @return \Spryker\Shared\Kernel\BundleProxy
      */
     protected function getBundleProxy()
     {

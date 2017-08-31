@@ -52,7 +52,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/Fixtures/expected.transfer.php'),
+            file_get_contents(__DIR__ . '/test_files/expected.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
         );
     }
@@ -77,7 +77,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'FooBarTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/Fixtures/expected.merged.transfer.php'),
+            file_get_contents(__DIR__ . '/test_files/expected.merged.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php')
         );
     }
@@ -101,7 +101,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/Fixtures/expected.deprecated.transfer.php'),
+            file_get_contents(__DIR__ . '/test_files/expected.deprecated.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php')
         );
     }
@@ -126,7 +126,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/Fixtures/expected.merged.deprecated.transfer.php'),
+            file_get_contents(__DIR__ . '/test_files/expected.merged.deprecated.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php')
         );
     }
