@@ -224,14 +224,22 @@ class Discount implements DiscountInterface
             }
         }
 
+        $discountApplicableItems = $this->filterDiscountApplicableItems(
+            $quoteTransfer,
+            $discountEntity->getIdDiscount()
+        );
+
+        if (count($discountApplicableItems) === 0) {
+            return false;
+        }
+
         $queryString = $discountEntity->getDecisionRuleQueryString();
         if (!$queryString) {
             return true;
         }
 
         try {
-            $compositeSpecification = $this->decisionRuleBuilder
-                ->buildFromQueryString($queryString);
+            $compositeSpecification = $this->decisionRuleBuilder->buildFromQueryString($queryString);
 
             $discountApplicableItems = $this->filterDiscountApplicableItems(
                 $quoteTransfer,

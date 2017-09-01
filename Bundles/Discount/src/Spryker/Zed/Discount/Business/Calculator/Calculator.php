@@ -150,11 +150,13 @@ class Calculator implements CalculatorInterface
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
             if (!$discountTransfer->getCollectorQueryString()) {
                 $filteredDiscounts[] = $collectedDiscountTransfer;
+                continue;
             }
 
             if ($discountTransfer->getIsExclusive() && $exclusiveFound === false) {
                 $filteredDiscounts[] = $collectedDiscountTransfer;
                 $exclusiveFound = true;
+                continue;
             }
 
             if ($exclusiveFound === false) {
