@@ -9,6 +9,7 @@ namespace Spryker\Client\Cms;
 
 use Spryker\Client\Cms\KeyBuilder\CmsBlockKeyBuilder;
 use Spryker\Client\Cms\Storage\CmsBlockStorage;
+use Spryker\Client\Cms\Zed\CmsStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CmsFactory extends AbstractFactory
@@ -43,6 +44,14 @@ class CmsFactory extends AbstractFactory
     protected function createKeyBuilder()
     {
         return new CmsBlockKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\Cms\Zed\CmsStub
+     */
+    public function createCmsStub()
+    {
+        return new CmsStub($this->getProvidedDependency(CmsDependencyProvider::SERVICE_ZED));
     }
 
 }

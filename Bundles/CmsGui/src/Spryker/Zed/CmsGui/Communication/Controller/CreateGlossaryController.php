@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  */
 class CreateGlossaryController extends AbstractController
 {
@@ -82,6 +83,11 @@ class CreateGlossaryController extends AbstractController
             ->getCmsFacade()
             ->findCmsPageById($idCmsPage);
 
+        // TODO: implement this nicely
+        $yvesHost = $this->getFactory()->getConfig()->findYvesHost();
+        $urlPrefix = '/en/';
+        $previewPageUrl = $yvesHost . $urlPrefix . 'cms/preview/' . $idCmsPage;
+
         return [
             'glossaryForm' => $glossaryForm->createView(),
             'placeholderTabs' => $placeholderTabs->createView(),
@@ -89,6 +95,7 @@ class CreateGlossaryController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
+            'previewPageUrl' => $previewPageUrl,
         ];
     }
 

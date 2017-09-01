@@ -358,6 +358,45 @@ class CmsFacadePageTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetCmsVersionDataRetrievesDraftDataFromDatabase()
+    {
+        // Arrange
+        $fixtures = $this->createCmsPageTransferFixtures();
+        $cmsPageTransfer = $this->createCmsPageTransfer($fixtures);
+
+        $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+
+        $persistedCmsPageMetaAttributes = $persistedCmsPageTransfer->getMetaAttributes()[0];
+        $persistedCmsPageMetaAttributes->setMetaTitle(self::CMS_PAGE_NEW_TITLE);
+        $persistedCmsPageMetaAttributes->setMetaKeywords(self::CMS_PAGE_NEW_KEY_WORDS);
+        $persistedCmsPageMetaAttributes->setMetaDescription(self::CMS_PAGE_NEW_DESCRIPTION);
+
+        $persistedCmsPageAttributes = $persistedCmsPageTransfer->getPageAttributes()[0];
+        $persistedCmsPageAttributes->setName('new page name');
+        $persistedCmsPageAttributes->setUrl('updated-url');
+
+        $expectedCmsVersionData = $this->cmsFacade->updatePage($persistedCmsPageTransfer);
+
+        // Act
+        $actualCmsVersionData = $this->cmsFacade->getCmsVersionData($idCmsPage);
+
+        // Assert
+        $expectedCmsPageVersionMetaAttributes = $expectedCmsVersionData->getMetaAttributes()[0];
+        $actualCmsPageVersionMetaAttributes = $actualCmsVersionData->getCmsPage()->getMetaAttributes()[0];
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaDescription(), $actualCmsPageVersionMetaAttributes->getMetaDescription());
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaKeywords(), $actualCmsPageVersionMetaAttributes->getMetaKeywords());
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaTitle(), $actualCmsPageVersionMetaAttributes->getMetaTitle());
+
+        $expectedCmsPageVersionPageAttributes = $persistedCmsPageTransfer->getPageAttributes()[0];
+        $actualCmsPageVersionPageAttributes = $actualCmsVersionData->getCmsPage()->getPageAttributes()[0];
+        $this->assertEquals($expectedCmsPageVersionPageAttributes->getName(), $actualCmsPageVersionPageAttributes->getName());
+        $this->assertEquals($expectedCmsPageVersionPageAttributes->getUrl(), $actualCmsPageVersionPageAttributes->getUrl());
+    }
+
+    /**
      * @return int
      */
     protected function createCmsPageWithGlossaryAttributes()

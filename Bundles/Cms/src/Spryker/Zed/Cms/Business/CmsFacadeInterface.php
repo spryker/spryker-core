@@ -344,6 +344,18 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
+     * TODO: add doc
+     *
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData($idCmsPage);
+
+    /**
+     * Specification:
      * - Rollbacks latest CmsPageVersion to older version.
      * - Creates a reference cms version copy
      * - Calls publishWithVersion() method

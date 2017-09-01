@@ -75,11 +75,23 @@ class VersionPublisher implements VersionPublisherInterface
      */
     public function publishWithVersion($idCmsPage, $versionName = null)
     {
-        $cmsPageEntity = $this->findCmsPage($idCmsPage);
-        $cmsVersionDataTransfer = $this->versionDataMapper->mapToCmsVersionDataTransfer($cmsPageEntity);
+        $cmsVersionDataTransfer = $this->getCmsVersionData($idCmsPage);
         $encodedData = $this->versionDataMapper->mapToJsonData($cmsVersionDataTransfer);
 
         return $this->createCmsVersion($encodedData, $idCmsPage, $versionName);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData($idCmsPage)
+    {
+        $cmsPageEntity = $this->findCmsPage($idCmsPage);
+        $cmsVersionDataTransfer = $this->versionDataMapper->mapToCmsVersionDataTransfer($cmsPageEntity);
+
+        return $cmsVersionDataTransfer;
     }
 
     /**

@@ -459,6 +459,22 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      * @api
      *
      * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData($idCmsPage)
+    {
+        return $this->getFactory()
+            ->createVersionPublisher()
+            ->getCmsVersionData($idCmsPage);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCmsPage
      * @param int $version
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException

@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cms;
+namespace Spryker\Client\CmsContentWidget;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
-class CmsDependencyProvider extends AbstractDependencyProvider
+class CmsContentWidgetDependencyProvider extends AbstractDependencyProvider
 {
 
-    const KV_STORAGE = 'kv storage';
     const SERVICE_ZED = 'SERVICE_ZED';
 
     /**
@@ -23,10 +22,6 @@ class CmsDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[static::KV_STORAGE] = function (Container $container) {
-            return $container->getLocator()->storage()->client();
-        };
-
         $container[static::SERVICE_ZED] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
         };

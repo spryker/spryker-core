@@ -113,5 +113,8 @@
         <property name="cmsTemplate" type="CmsTemplate" />
         <property name="cmsGlossary" type="CmsGlossary" />
     </transfer>
-</transfers>
 
+    <transfer name="CmsVersionDataRequest">
+        <property name="idCmsPage" type="int" />
+    </transfer>
+</transfers>

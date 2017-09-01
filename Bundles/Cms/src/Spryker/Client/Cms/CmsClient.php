@@ -8,12 +8,18 @@
 namespace Spryker\Client\Cms;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
+/**
+ * @method \Spryker\Client\Cms\CmsFactory getFactory
+ */
 class CmsClient extends AbstractClient implements CmsClientInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @deprecated Use CMS Block module instead
@@ -35,6 +41,20 @@ class CmsClient extends AbstractClient implements CmsClientInterface
     private function createCmsBlockFinder()
     {
         return $this->getFactory()->createCmsBlockFinder();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer)
+    {
+        return $this->getFactory()->createCmsStub()->getCmsVersionData($cmsVersionDataRequestTransfer);
     }
 
 }

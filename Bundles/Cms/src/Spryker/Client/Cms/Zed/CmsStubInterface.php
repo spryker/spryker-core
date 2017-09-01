@@ -5,30 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Cms;
+namespace Spryker\Client\Cms\Zed;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
 
-interface CmsClientInterface
+interface CmsStubInterface
 {
 
     /**
-     * @api
-     *
-     * @deprecated Use CMS Block module instead
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return array
-     */
-    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer);
-
-    /**
-     * TODO: add doc
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer

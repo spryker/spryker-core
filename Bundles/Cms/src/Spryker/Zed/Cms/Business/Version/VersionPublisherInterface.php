@@ -20,4 +20,11 @@ interface VersionPublisherInterface
      */
     public function publishWithVersion($idCmsPage, $versionName = null);
 
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData($idCmsPage);
+
 }
