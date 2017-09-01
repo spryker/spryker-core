@@ -28,7 +28,7 @@ class IndexMapClassGeneratorTest extends Unit
 {
 
     const TARGET_DIRECTORY = __DIR__ . '/Generated/';
-    const FIXTURES_DIRECTORY = __DIR__ . '/Fixtures/';
+    const TEST_FILES_DIRECTORY = __DIR__ . '/test_files/';
 
     /**
      * @return void
@@ -68,7 +68,7 @@ class IndexMapClassGeneratorTest extends Unit
         $generator->generate($indexDefinition);
 
         $this->assertFileEquals(
-            self::FIXTURES_DIRECTORY . 'SimpleIndexMap.expected.php',
+            self::TEST_FILES_DIRECTORY . 'SimpleIndexMap.expected.php',
             self::TARGET_DIRECTORY . 'SimpleIndexMap.php'
         );
     }
@@ -106,7 +106,7 @@ class IndexMapClassGeneratorTest extends Unit
         $generator->generate($indexDefinition);
 
         $this->assertFileEquals(
-            self::FIXTURES_DIRECTORY . 'ComplexIndexMap.expected.php',
+            self::TEST_FILES_DIRECTORY . 'ComplexIndexMap.expected.php',
             self::TARGET_DIRECTORY . 'ComplexIndexMap.php'
         );
     }

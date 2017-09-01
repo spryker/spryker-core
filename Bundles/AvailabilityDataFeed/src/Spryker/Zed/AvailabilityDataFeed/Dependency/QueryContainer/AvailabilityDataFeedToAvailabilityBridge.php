@@ -16,8 +16,6 @@ class AvailabilityDataFeedToAvailabilityBridge implements AvailabilityDataFeedTo
     protected $availabilityQueryContainer;
 
     /**
-     * AvailabilityDataFeedBridge constructor.
-     *
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
      */
     public function __construct($availabilityQueryContainer)

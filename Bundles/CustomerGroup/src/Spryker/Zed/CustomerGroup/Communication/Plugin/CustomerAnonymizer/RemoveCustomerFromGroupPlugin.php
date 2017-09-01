@@ -12,7 +12,6 @@ use Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @package Spryker\Zed\CustomerGroup\Communication\Plugin\CustomerAnonymizer
  * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
  */

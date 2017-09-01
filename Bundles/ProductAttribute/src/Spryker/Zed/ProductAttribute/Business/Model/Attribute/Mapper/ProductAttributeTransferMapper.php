@@ -164,7 +164,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
      * @param string $attributeKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string
+     * @return string|null
      */
     protected function getAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
     {
