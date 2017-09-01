@@ -11,6 +11,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -20,6 +21,7 @@ class PostgresqlCompatibilityConsole extends Console
 {
 
     const COMMAND_NAME = 'propel:pg-sql-compat';
+    const OPTION_CORE = 'core';
 
     /**
      * @return void
@@ -27,6 +29,7 @@ class PostgresqlCompatibilityConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
+        $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Adjust core schema files too');
         $this->setDescription('Adjust Propel-XML schema files to work with PostgreSQL');
 
         parent::configure();
@@ -40,10 +43,20 @@ class PostgresqlCompatibilityConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
-            $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat)');
-            $this->getFacade()->adjustPropelSchemaFilesForPostgresql();
-            $this->getFacade()->adjustPostgresqlFunctions();
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) !== Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
+            $this->info('This command doesn\'t support chosen DB engine');
+            return null;
+        }
+
+        $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat)');
+        $this->getFacade()->adjustPropelSchemaFilesForPostgresql();
+        $this->getFacade()->adjustPostgresqlFunctions();
+
+        $adjustCore = $this->input->getOption(static::OPTION_CORE);
+        if ($adjustCore) {
+            $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat) - CORE');
+            $this->getFacade()->adjustCorePropelSchemaFilesForPostgresql();
+            $this->getFacade()->adjustCorePostgresqlFunctions();
         }
     }
 

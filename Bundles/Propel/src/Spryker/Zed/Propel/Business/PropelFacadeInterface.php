@@ -57,6 +57,13 @@ interface PropelFacadeInterface
      *
      * @return void
      */
+    public function adjustCorePropelSchemaFilesForPostgresql();
+
+    /**
+     * @api
+     *
+     * @return void
+     */
     public function adjustPostgresqlFunctions();
 
     /**

@@ -77,9 +77,29 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      *
      * @return void
      */
+    public function adjustCorePropelSchemaFilesForPostgresql()
+    {
+        $this->getFactory()->createCorePostgresqlCompatibilityAdjuster()->adjustSchemaFiles();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
     public function adjustPostgresqlFunctions()
     {
         $this->getFactory()->createPostgresqlCompatibilityAdjuster()->addMissingFunctions();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function adjustCorePostgresqlFunctions()
+    {
+        $this->getFactory()->createCorePostgresqlCompatibilityAdjuster()->addMissingFunctions();
     }
 
     /**
