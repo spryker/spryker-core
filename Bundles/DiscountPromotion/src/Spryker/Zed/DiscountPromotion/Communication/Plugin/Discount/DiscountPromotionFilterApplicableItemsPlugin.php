@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
-class DiscountPromotionFilterPlugin extends AbstractPlugin implements DiscountApplicableFilterPluginInterface
+class DiscountPromotionFilterApplicableItemsPlugin extends AbstractPlugin implements DiscountApplicableFilterPluginInterface
 {
 
     /**

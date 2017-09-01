@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
-class DiscountFilterPromotionDiscountsPlugin extends AbstractPlugin implements DiscountableItemFilterPluginInterface
+class DiscountPromotionFilterCollectedItemsPlugin extends AbstractPlugin implements DiscountableItemFilterPluginInterface
 {
 
     /**
@@ -41,7 +41,7 @@ class DiscountFilterPromotionDiscountsPlugin extends AbstractPlugin implements D
 
         $discountableItems = new ArrayObject();
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $itemTransfer) {
-            if ($itemTransfer->getOriginalItem()->getIdDiscountPromotion()) {
+            if ($itemTransfer->getOriginalItem() && $itemTransfer->getOriginalItem()->getIdDiscountPromotion()) {
                 continue;
             }
 

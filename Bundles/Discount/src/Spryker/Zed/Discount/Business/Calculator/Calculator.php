@@ -113,7 +113,6 @@ class Calculator implements CalculatorInterface
             $discountTransfer->setAmount($discountAmount);
 
             $collectedDiscounts[] = $this->createCollectedDiscountTransfer($discountTransfer, $discountableItems);
-
         }
 
         return $collectedDiscounts;
@@ -143,14 +142,27 @@ class Calculator implements CalculatorInterface
     protected function filterExclusiveDiscounts(array $collectedDiscounts)
     {
         $collectedDiscounts = $this->sortByDiscountAmountDescending($collectedDiscounts);
+
+        $exclusiveFound = false;
+        $filteredDiscounts = [];
         foreach ($collectedDiscounts as $collectedDiscountTransfer) {
+
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
-            if ($discountTransfer->getIsExclusive()) {
-                return [$collectedDiscountTransfer];
+            if (!$discountTransfer->getCollectorQueryString()) {
+                $filteredDiscounts[] = $collectedDiscountTransfer;
+            }
+
+            if ($discountTransfer->getIsExclusive() && $exclusiveFound === false) {
+                $filteredDiscounts[] = $collectedDiscountTransfer;
+                $exclusiveFound = true;
+            }
+
+            if ($exclusiveFound === false) {
+                $filteredDiscounts[] = $collectedDiscountTransfer;
             }
         }
 
-        return $collectedDiscounts;
+        return $filteredDiscounts;
     }
 
     /**

@@ -11,9 +11,12 @@ use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
 use Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapperInterface;
 use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class DiscountPromotionWriter implements DiscountPromotionWriterInterface
 {
+
+    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface
@@ -68,13 +71,35 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
         $discountPromotionTransfer->requireFkDiscount();
 
         $discountPromotionEntity = $this->getDiscountPromotionEntity($discountPromotionTransfer->getIdDiscountPromotion());
-        $discountPromotionEntity = $this->discountPromotionMapper->mapEntity($discountPromotionEntity, $discountPromotionTransfer);
 
-        $discountPromotionEntity->save();
+        $idDiscountPromotion = $this->handleDatabaseTransaction(function () use ($discountPromotionEntity, $discountPromotionTransfer) {
+            return $this->executeSaveDiscountPromotionTransaction($discountPromotionEntity, $discountPromotionTransfer);
+        });
 
-        $discountPromotionTransfer->setIdDiscountPromotion($discountPromotionEntity->getIdDiscountPromotion());
+        $discountPromotionTransfer->setIdDiscountPromotion($idDiscountPromotion);
 
         return $discountPromotionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     *
+     * @return int
+     */
+    protected function executeSaveDiscountPromotionTransaction(
+        SpyDiscountPromotion $discountPromotionEntity,
+        DiscountPromotionTransfer $discountPromotionTransfer
+    ) {
+        $this->removeCollectorQueryString($discountPromotionEntity);
+
+        $discountPromotionEntity = $this->discountPromotionMapper->mapEntity(
+            $discountPromotionEntity,
+            $discountPromotionTransfer
+        );
+        $discountPromotionEntity->save();
+
+        return $discountPromotionEntity->getIdDiscountPromotion();
     }
 
     /**
@@ -99,6 +124,18 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
     protected function createDiscountPromotionEntity()
     {
         return new SpyDiscountPromotion();
+    }
+
+    /**
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
+     *
+     * @return void
+     */
+    protected function removeCollectorQueryString(SpyDiscountPromotion $discountPromotionEntity)
+    {
+        $discountEntity = $discountPromotionEntity->getDiscount();
+        $discountEntity->setCollectorQueryString('');
+        $discountEntity->save();
     }
 
 }
