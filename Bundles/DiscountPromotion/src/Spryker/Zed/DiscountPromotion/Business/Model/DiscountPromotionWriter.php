@@ -134,6 +134,10 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
     protected function removeCollectorQueryString(SpyDiscountPromotion $discountPromotionEntity)
     {
         $discountEntity = $discountPromotionEntity->getDiscount();
+        if (!$discountEntity) {
+            return;
+        }
+
         $discountEntity->setCollectorQueryString('');
         $discountEntity->save();
     }
