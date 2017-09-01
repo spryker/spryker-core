@@ -17,7 +17,7 @@ install:
   - composer install --no-interaction --prefer-dist --no-autoloader
 
 script:
-  - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml
+  - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/test_files/
 
 notifications:
   email: false

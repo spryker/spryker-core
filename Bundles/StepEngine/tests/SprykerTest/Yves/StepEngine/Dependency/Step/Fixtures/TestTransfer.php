@@ -11,5 +11,4 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class TestTransfer extends AbstractTransfer
 {
-
 }

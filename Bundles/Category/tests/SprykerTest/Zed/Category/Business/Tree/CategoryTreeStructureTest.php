@@ -88,12 +88,12 @@ class CategoryTreeStructureTest extends Unit
      */
     public function testOutputStructureWithCategoryArrayItemThatParentDoesNotExist()
     {
-        $categories = $this->input->getCategoryStructureWithNonexistantParent();
+        $categories = $this->input->getCategoryStructureWithNonexistentParent();
 
         $treeStructure = (new CategoryTreeFormatter($categories))
             ->getCategoryTree();
 
-        $this->assertSame($this->expected->getCategoryStructureWithNonexistantParent(), $treeStructure);
+        $this->assertSame($this->expected->getCategoryStructureWithNonexistentParent(), $treeStructure);
     }
 
 }
