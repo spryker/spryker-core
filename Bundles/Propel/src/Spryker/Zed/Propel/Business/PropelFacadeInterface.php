@@ -46,6 +46,9 @@ interface PropelFacadeInterface
     public function convertConfig();
 
     /**
+     * Specification:
+     * - Changes schema files to be compatible with PostgreSql (project)
+     *
      * @api
      *
      * @return void
@@ -53,6 +56,9 @@ interface PropelFacadeInterface
     public function adjustPropelSchemaFilesForPostgresql();
 
     /**
+     * Specification:
+     * - Changes schema files to be compatible with PostgreSql (core)
+     *
      * @api
      *
      * @return void
@@ -60,11 +66,24 @@ interface PropelFacadeInterface
     public function adjustCorePropelSchemaFilesForPostgresql();
 
     /**
+     * Specification:
+     * - Adds missing in PostgreSql functions (project)
+     *
      * @api
      *
      * @return void
      */
     public function adjustPostgresqlFunctions();
+
+    /**
+     * Specification:
+     * - Adds missing in PostgreSql functions (core)
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function adjustCorePostgresqlFunctions();
 
     /**
      * @api
