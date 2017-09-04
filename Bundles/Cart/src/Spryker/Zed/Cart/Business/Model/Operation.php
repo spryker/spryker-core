@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Cart\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
+use Spryker\Zed\Cart\Dependency\CartPreCheckExclusivePluginInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 
@@ -115,20 +117,34 @@ class Operation implements OperationInterface
      */
     protected function preCheckCart(CartChangeTransfer $cartChangeTransfer)
     {
+        $isCartValid = true;
         foreach ($this->preCheckPlugins as $preCheck) {
             $cartPreCheckResponseTransfer = $preCheck->check($cartChangeTransfer);
             if ($cartPreCheckResponseTransfer->getIsSuccess()) {
                 continue;
             }
 
-            foreach ($cartPreCheckResponseTransfer->getMessages() as $messageTransfer) {
-                $this->messengerFacade->addErrorMessage($messageTransfer);
+            if ($preCheck instanceof CartPreCheckExclusivePluginInterface) {
+                return false;
             }
 
-            return false;
+            $isCartValid = false;
+            $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
         }
 
-        return true;
+        return $isCartValid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     *
+     * @return void
+     */
+    protected function collectErrorsFromPreCheckResponse(CartPreCheckResponseTransfer $cartPreCheckResponseTransfer)
+    {
+        foreach ($cartPreCheckResponseTransfer->getMessages() as $messageTransfer) {
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+        }
     }
 
     /**

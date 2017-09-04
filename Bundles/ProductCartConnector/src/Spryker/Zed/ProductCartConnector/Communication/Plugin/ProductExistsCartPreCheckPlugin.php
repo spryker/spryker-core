@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Spryker\Zed\Cart\Dependency\CartPreCheckExclusivePluginInterface;
 use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -15,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade getFacade()
  * @method \Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory getFactory()
  */
-class ProductExistsCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
+class ProductExistsCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, CartPreCheckExclusivePluginInterface
 {
 
     /**
