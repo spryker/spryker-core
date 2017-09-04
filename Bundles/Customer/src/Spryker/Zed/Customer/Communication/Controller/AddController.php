@@ -38,8 +38,14 @@ class AddController extends AbstractController
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData(), true);
 
-            $this->getFacade()->registerCustomer($customerTransfer);
+            $customerResponseTransfer = $this->getFacade()->registerCustomer($customerTransfer);
 
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                $this->addErrorMessage('Customer was not created');
+                return $this->redirectResponse('/customer');
+            }
+
+            $this->addSuccessMessage('Customer created successfully');
             return $this->redirectResponse('/customer');
         }
 

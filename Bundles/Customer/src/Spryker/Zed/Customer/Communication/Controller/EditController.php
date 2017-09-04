@@ -41,18 +41,19 @@ class EditController extends AbstractController
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData(), true);
 
-            $this->getFacade()->updateCustomer($customerTransfer);
+            $customerResponseTransfer = $this->getFacade()->updateCustomer($customerTransfer);
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                $this->addErrorMessage('Customer was not updated');
 
-            $defaultBilling = $customerTransfer->getBillingAddress() ?: null;
-            if (!$defaultBilling) {
-                $this->updateBillingAddress($idCustomer, $defaultBilling);
+                return $this->viewResponse([
+                    'form' => $form->createView(),
+                    'idCustomer' => $idCustomer,
+                ]);
             }
 
-            $defaultShipping = $customerTransfer->getShippingAddress() ?: null;
-            if (!$defaultShipping) {
-                $this->updateShippingAddress($idCustomer, $defaultShipping);
-            }
+            $this->updateCustomerAddresses($customerTransfer);
 
+            $this->addSuccessMessage('Customer updated successfully');
             return $this->redirectResponse(
                 sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
@@ -78,6 +79,24 @@ class EditController extends AbstractController
     protected function createAddressTransfer()
     {
         return new AddressTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function updateCustomerAddresses(CustomerTransfer $customerTransfer)
+    {
+        $defaultBilling = $customerTransfer->getBillingAddress() ?: null;
+        if (!$defaultBilling) {
+            $this->updateBillingAddress($customerTransfer->getIdCustomer(), $defaultBilling);
+        }
+
+        $defaultShipping = $customerTransfer->getShippingAddress() ?: null;
+        if (!$defaultShipping) {
+            $this->updateShippingAddress($customerTransfer->getIdCustomer(), $defaultShipping);
+        }
     }
 
     /**
