@@ -181,7 +181,6 @@ class Calculator implements CalculatorInterface
     {
         foreach ($collectedDiscountsTransfer as $collectedDiscountTransfer) {
             $this->distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
-            $this->setSuccessfulDiscountAddMessage($collectedDiscountTransfer->getDiscount());
         }
     }
 

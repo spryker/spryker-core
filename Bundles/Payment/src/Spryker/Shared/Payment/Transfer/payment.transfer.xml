@@ -13,7 +13,7 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="payment" type="Payment"/>
+        <property name="payment" type="Payment" deprecated="Use payments property instead." />
         <property name="payments" type="Payment[]" singular="payment"/>
     </transfer>
 
