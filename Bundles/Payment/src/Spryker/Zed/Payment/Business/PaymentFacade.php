@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payment\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -108,6 +109,18 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()->createPaymentMethodMarshaller()->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()->createPaymentCalculator()->recalculatePayments($calculableObjectTransfer);
     }
 
 }

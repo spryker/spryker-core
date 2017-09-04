@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodMarshaller;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
@@ -92,6 +93,14 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     protected function getPaymentMethodFilterPlugins()
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_METHOD_FILTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Calculation\PaymentCalculator
+     */
+    public function createPaymentCalculator()
+    {
+        return new PaymentCalculator();
     }
 
 }

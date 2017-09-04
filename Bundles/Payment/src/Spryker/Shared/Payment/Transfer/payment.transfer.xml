@@ -9,6 +9,7 @@
         <property name="paymentMethod" type="string"/>
         <property name="paymentSelection" type="string"/>
         <property name="amount" type="int"/>
+        <property name="isLimitedAmount" type="bool" />
     </transfer>
 
     <transfer name="Quote">
@@ -26,6 +27,11 @@
         <property name="paymentMethod" type="string" />
     </transfer>
 
+    <!-- these two transfers can probably be merged. PaymentInformation is contained in SalesPayment,
+     but still a reasonable object: It contains information about a payment method,
+     whether is a used on or an available one or whatever (PaymentInformation is more versatile)
+     -->
+
     <transfer name="PaymentInformation">
         <property name="provider" type="string" />
         <property name="method" type="string" />
@@ -33,6 +39,10 @@
 
     <transfer name="PaymentMethods">
         <property name="availableMethods" singular="availableMethod" type="PaymentInformation[]" />
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="priceToPay" type="int"/>
     </transfer>
 
 </transfers>
