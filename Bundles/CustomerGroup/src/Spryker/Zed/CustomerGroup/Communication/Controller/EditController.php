@@ -18,6 +18,7 @@ class EditController extends AbstractController
 {
 
     const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
+    const MESSAGE_SUCCESS_UPDATED = 'Customer group updated successfully';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -42,7 +43,7 @@ class EditController extends AbstractController
 
             $this->getFacade()->update($customerGroupTransfer);
 
-            $this->addSuccessMessage('Customer group updated successfully');
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_UPDATED);
             return $this->redirectResponse(
                 sprintf('/customer-group/view?%s=%d', static::PARAM_ID_CUSTOMER_GROUP, $idCustomerGroup)
             );
