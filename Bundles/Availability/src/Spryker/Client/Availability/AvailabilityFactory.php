@@ -14,7 +14,7 @@ class AvailabilityFactory extends AbstractFactory
 {
 
     /**
-     * @deprecated Use AvailabilityFactory::createCurrentLocaleAvailabilityStorage instead
+     * @deprecated Use AvailabilityFactory::createCurrentLocaleAvailabilityStorage() instead
      *
      * @param string $locale
      *
