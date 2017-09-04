@@ -29,8 +29,6 @@ class WorkerProgressBar implements WorkerProgressBarInterface
     protected $firstRun = false;
 
     /**
-     * WorkerProgressBar constructor.
-     *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function __construct(OutputInterface $output)

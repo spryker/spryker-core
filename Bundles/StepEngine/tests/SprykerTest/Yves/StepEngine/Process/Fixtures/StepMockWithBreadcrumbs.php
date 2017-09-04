@@ -22,7 +22,7 @@ class StepMockWithBreadcrumbs extends StepMock implements StepWithBreadcrumbInte
     }
 
     /**
-     * @param AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
