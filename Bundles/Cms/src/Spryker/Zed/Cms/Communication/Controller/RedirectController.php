@@ -27,6 +27,10 @@ class RedirectController extends AbstractController
     const REQUEST_ID_URL = 'id-url';
     const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
 
+    const MESSAGE_SUCCESS_CREATE = 'Redirect created successfully';
+    const MESSAGE_SUCCESS_UPDATE = 'Redirect update successfully';
+    const MESSAGE_ERROR_ID_NOT_SET = 'Id redirect url not set';
+
     /**
      * @return array
      */
@@ -82,6 +86,7 @@ class RedirectController extends AbstractController
                 ->getUrlFacade()
                 ->createUrlRedirect($urlRedirectTransfer);
 
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_CREATE);
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
         }
 
@@ -124,6 +129,7 @@ class RedirectController extends AbstractController
                 ->getUrlFacade()
                 ->updateUrlRedirect($urlRedirectTransfer);
 
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_UPDATE);
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
         }
 
@@ -181,7 +187,7 @@ class RedirectController extends AbstractController
         $idUrlRedirect = $this->castId($request->request->get(self::REQUEST_ID_URL_REDIRECT));
 
         if ($idUrlRedirect === 0) {
-            $this->addErrorMessage('Id redirect url not set');
+            $this->addErrorMessage(static::MESSAGE_ERROR_ID_NOT_SET);
 
             return $this->redirectResponse('/cms/redirect');
         }
