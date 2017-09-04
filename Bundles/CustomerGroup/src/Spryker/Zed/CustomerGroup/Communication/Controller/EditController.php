@@ -42,6 +42,7 @@ class EditController extends AbstractController
 
             $this->getFacade()->update($customerGroupTransfer);
 
+            $this->addSuccessMessage('Customer group updated successfully');
             return $this->redirectResponse(
                 sprintf('/customer-group/view?%s=%d', static::PARAM_ID_CUSTOMER_GROUP, $idCustomerGroup)
             );

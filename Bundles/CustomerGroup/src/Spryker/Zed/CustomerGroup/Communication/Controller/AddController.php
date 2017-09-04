@@ -40,6 +40,7 @@ class AddController extends AbstractController
 
             $this->getFacade()->add($customerGroupTransfer);
 
+            $this->addSuccessMessage('Customer group created successfully');
             return $this->redirectResponse('/customer-group');
         }
 
