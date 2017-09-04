@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Nopayment\Business;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -38,6 +40,19 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
     public function isPaid(SpySalesOrderItem $orderItem)
     {
         return $this->getFactory()->createNopaymentPaid()->isPaid($orderItem);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     */
+    public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createNopaymentMethodFilter()->filterPaymentMethods($paymentMethods, $quoteTransfer);
     }
 
 }
