@@ -157,18 +157,12 @@ class DataImporter implements
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Exception
-     *
      * @return void
      */
     protected function importDataSet(DataSetInterface $dataSet)
     {
         foreach ($this->dataSetStepBroker as $dataSetImporter) {
-            try {
-                $dataSetImporter->execute($dataSet);
-            } catch (Exception $exception) {
-                throw $exception;
-            }
+            $dataSetImporter->execute($dataSet);
         }
     }
 

@@ -19,8 +19,6 @@ class CmsCollectorToSearchBridge implements CmsCollectorToSearchInterface
     protected $searchFacade;
 
     /**
-     * CmsCollectorToSearchBridge constructor.
-     *
      * @param \Spryker\Zed\Search\Business\SearchFacadeInterface $searchFacade
      */
     public function __construct($searchFacade)
