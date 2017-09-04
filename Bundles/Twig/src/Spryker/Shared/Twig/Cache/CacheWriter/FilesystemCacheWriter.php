@@ -36,7 +36,7 @@ class FilesystemCacheWriter implements CacheWriterInterface
         foreach ($data as $key => $value) {
             $cacheFileContent .= '    \'' . $key . '\' => ' . var_export($value, true) . ',' . PHP_EOL;
         }
-        $cacheFileContent .= '];';
+        $cacheFileContent .= '];' . PHP_EOL;
 
         $directory = dirname($this->cacheFilePath);
         if (!is_dir($directory)) {
