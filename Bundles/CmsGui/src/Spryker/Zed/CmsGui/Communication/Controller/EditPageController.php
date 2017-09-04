@@ -24,6 +24,10 @@ class EditPageController extends AbstractController
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    const ERROR_MESSAGE_WRONG_TEMPLATE = 'Selected template doesn\'t exist anymore';
+    const SUCCESS_MESSAGE_PAGE_UPDATED = 'Page successfully updated.';
+    const SUCCESS_MESSAGE_PAGE_ACTIVATED = 'Page successfully activated.';
+    const SUCCESS_MESSAGE_PAGE_DEACTIVATED = 'Page successfully deactivated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -90,18 +94,16 @@ class EditPageController extends AbstractController
                     ->getCmsFacade()
                     ->updatePage($pageForm->getData());
 
-                $this->addSuccessMessage('Page successfully updated.');
+                $this->addSuccessMessage(static::SUCCESS_MESSAGE_PAGE_UPDATED);
 
                 return true;
             } catch (TemplateFileNotFoundException $exception) {
-                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
                 $error = $this->createTemplateErrorForm();
                 $pageForm->get(CmsPageFormType::FIELD_FK_TEMPLATE)->addError($error);
             }
-        } else {
-            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
         }
 
+        $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
         return false;
     }
 
@@ -120,7 +122,7 @@ class EditPageController extends AbstractController
                 ->getCmsFacade()
                 ->activatePage($idCmsPage);
 
-            $this->addSuccessMessage('Page successfully activated.');
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_PAGE_ACTIVATED);
 
         } catch (CannotActivatePageException $exception) {
              $this->addErrorMessage($exception->getMessage());
@@ -143,7 +145,7 @@ class EditPageController extends AbstractController
             ->getCmsFacade()
             ->deactivatePage($idCmsPage);
 
-        $this->addSuccessMessage('Page successfully deactivated.');
+        $this->addSuccessMessage(static::SUCCESS_MESSAGE_PAGE_DEACTIVATED);
 
         return $this->redirectResponse($redirectUrl);
     }
@@ -166,7 +168,7 @@ class EditPageController extends AbstractController
      */
     protected function createTemplateErrorForm()
     {
-        return new FormError("Selected template doesn't exist anymore");
+        return new FormError(static::ERROR_MESSAGE_WRONG_TEMPLATE);
     }
 
 }
