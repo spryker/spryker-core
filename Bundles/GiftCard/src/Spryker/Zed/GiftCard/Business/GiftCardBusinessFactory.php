@@ -13,6 +13,8 @@ use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReader;
 use Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter;
+use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver;
+use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPreChecker;
 use Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaver;
 use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -102,6 +104,24 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardCalculator(
             $this->createGiftCardReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Payment\SalesOrderPreChecker
+     */
+    public function createSalesOrderPreChecker()
+    {
+        return new SalesOrderPreChecker(
+            $this->createGiftCardReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver
+     */
+    public function createSalesOrderSaver()
+    {
+        return new SalesOrderPaymentSaver();
     }
 
 }

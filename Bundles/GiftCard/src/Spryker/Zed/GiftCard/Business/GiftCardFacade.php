@@ -10,6 +10,7 @@ namespace Spryker\Zed\GiftCard\Business;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -98,6 +99,38 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $this->getFactory()->createGiftCardCalculator()->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function precheckSalesOrderGiftCards(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this
+            ->getFactory()
+            ->createSalesOrderPreChecker()
+            ->precheckSalesOrderGiftCards($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveGiftCardPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        $this
+            ->getFactory()
+            ->createSalesOrderSaver()
+            ->saveGiftCardPayments($quoteTransfer, $checkoutResponse);
     }
 
     /**
