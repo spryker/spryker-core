@@ -28,7 +28,8 @@ class RedirectController extends AbstractController
     const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
 
     const MESSAGE_SUCCESS_CREATE = 'Redirect created successfully';
-    const MESSAGE_SUCCESS_UPDATE = 'Redirect update successfully';
+    const MESSAGE_SUCCESS_UPDATE = 'Redirect updated successfully';
+    const MESSAGE_SUCCESS_DELETE = 'Redirect deleted successfully';
     const MESSAGE_ERROR_ID_NOT_SET = 'Id redirect url not set';
 
     /**
@@ -197,6 +198,7 @@ class RedirectController extends AbstractController
 
         $this->getFactory()->getUrlFacade()->deleteUrlRedirect($urlRedirectTransfer);
 
+        $this->addSuccessMessage(static::MESSAGE_SUCCESS_DELETE);
         return $this->redirectResponse('/cms/redirect');
     }
 
