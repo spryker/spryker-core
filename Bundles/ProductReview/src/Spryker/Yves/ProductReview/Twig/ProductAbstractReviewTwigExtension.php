@@ -17,6 +17,7 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
 {
 
     const FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW = 'spyProductAbstractReview';
+    const FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW_MAXIMUM_RATING = 'spyProductAbstractReviewMaximumRating';
 
     /**
      * @var \Spryker\Client\ProductReview\ProductReviewClientInterface
@@ -44,11 +45,31 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(static::FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW, [$this, 'renderProductAbstractReview'], [
-                'is_safe' => ['html'],
-                'needs_environment' => true,
-            ]),
+            $this->createSpyProductAbstractReviewTwigExtension(),
+            $this->createSpyProductAbstractReviewMaximumRatingTwigExtension(),
         ];
+    }
+
+    /**
+     * @return \Twig_SimpleFunction
+     */
+    protected function createSpyProductAbstractReviewTwigExtension()
+    {
+        return new Twig_SimpleFunction(static::FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW, [$this, 'renderProductAbstractReview'], [
+            'is_safe' => ['html'],
+            'needs_environment' => true,
+        ]);
+    }
+
+    /**
+     * @return \Twig_SimpleFunction
+     */
+    protected function createSpyProductAbstractReviewMaximumRatingTwigExtension()
+    {
+        return new Twig_SimpleFunction(static::FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW_MAXIMUM_RATING, [$this, 'renderProductAbstractReviewMaximumRating'], [
+            'is_safe' => ['html'],
+            'needs_environment' => true,
+        ]);
     }
 
     /**
@@ -77,6 +98,14 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
     protected function getLocale()
     {
         return $this->application['locale'];
+    }
+
+    /**
+     * @return string
+     */
+    public function renderProductAbstractReviewMaximumRating()
+    {
+        return $this->productReviewClient->getMaximumRating();
     }
 
 }
