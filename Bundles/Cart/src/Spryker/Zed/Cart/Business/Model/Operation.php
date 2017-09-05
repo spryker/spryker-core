@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
-use Spryker\Zed\Cart\Dependency\CartPreCheckExclusivePluginInterface;
+use Spryker\Zed\Cart\Dependency\AwareTerminationCartPreCheckPluginInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 
@@ -124,7 +124,7 @@ class Operation implements OperationInterface
                 continue;
             }
 
-            if ($preCheck instanceof CartPreCheckExclusivePluginInterface) {
+            if ($preCheck instanceof AwareTerminationCartPreCheckPluginInterface && $preCheck->terminateOnFailure()) {
                 return false;
             }
 
