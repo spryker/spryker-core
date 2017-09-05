@@ -163,8 +163,8 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
                 );
 
                 if ($keysToDelete) {
+                    $this->deleteTouchKeyEntities($keysToDelete, $touchUpdater);
                     $storeWriter->delete($keysToDelete);
-                    $this->deleteTouchKeyEntities($entityCollection, $touchUpdater);
                 }
             }
         }
@@ -183,21 +183,17 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     }
 
     /**
-     * @param array $entityCollection
+     * @param string[] $keysToDelete
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return void
      */
-    protected function deleteTouchKeyEntities(
-        array $entityCollection,
-        TouchUpdaterInterface $touchUpdater
-    ) {
-        foreach ($entityCollection as $entity) {
-            $touchUpdater->deleteTouchKeyEntity(
-                $entity[$touchUpdater->getTouchKeyColumnName()],
-                $this->locale->getIdLocale()
-            );
-        }
+    protected function deleteTouchKeyEntities(array $keysToDelete, TouchUpdaterInterface $touchUpdater)
+    {
+        $touchUpdater->deleteTouchKeyEntities(
+            array_keys($keysToDelete),
+            $this->locale->getIdLocale()
+        );
     }
 
 }
