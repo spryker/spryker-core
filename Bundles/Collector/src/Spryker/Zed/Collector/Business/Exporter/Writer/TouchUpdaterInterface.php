@@ -40,7 +40,7 @@ interface TouchUpdaterInterface
      * @param string[] $keys
      * @param int $idLocale
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     * @return void
      */
     public function deleteTouchKeyEntities($keys, $idLocale);
 

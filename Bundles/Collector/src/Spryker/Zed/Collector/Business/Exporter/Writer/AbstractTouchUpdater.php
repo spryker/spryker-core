@@ -55,7 +55,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      * @param string[] $keys
      * @param int $idLocale
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     * @return void
      */
     abstract public function deleteTouchKeyEntities($keys, $idLocale);
 
