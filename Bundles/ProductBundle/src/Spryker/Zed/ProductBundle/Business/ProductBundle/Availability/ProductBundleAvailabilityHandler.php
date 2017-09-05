@@ -82,14 +82,22 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     public function updateBundleAvailability($bundleProductSku)
     {
         $bundleProductEntity = $this->findBundleProductEntityBySku($bundleProductSku);
-
         if ($bundleProductEntity === null) {
-            $this->removeBundleAvailability($bundleProductSku);
             return;
         }
 
         $bundleItems = $this->getBundleItemsByIdProduct($bundleProductEntity->getFkProduct());
         $this->updateBundleProductAvailability($bundleItems, $bundleProductSku);
+    }
+
+    /**
+     * @param string $bundleProductSku
+     *
+     * @return void
+     */
+    public function removeBundleAvailability($bundleProductSku)
+    {
+        $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0);
     }
 
     /**
@@ -176,16 +184,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         return $this->availabilityQueryContainer
             ->querySpyAvailabilityBySku($bundledItemSku)
             ->findOne();
-    }
-
-    /**
-     * @param string $bundleProductSku
-     *
-     * @return void
-     */
-    protected function removeBundleAvailability($bundleProductSku)
-    {
-        $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0);
     }
 
 }

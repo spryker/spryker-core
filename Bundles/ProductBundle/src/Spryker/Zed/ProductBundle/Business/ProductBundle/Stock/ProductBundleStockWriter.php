@@ -69,7 +69,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         $bundleProductEntity = $this->findProductBundleBySku($productConcreteTransfer->getSku());
 
         if ($bundleProductEntity === null) {
-            $this->emptyBundleStock($productConcreteTransfer);
+            $this->removeBundleStock($productConcreteTransfer);
             return $productConcreteTransfer;
         }
 
@@ -298,7 +298,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
      *
      * @return void
      */
-    protected function emptyBundleStock(ProductConcreteTransfer $productConcreteTransfer)
+    protected function removeBundleStock(ProductConcreteTransfer $productConcreteTransfer)
     {
         foreach ($this->findProductStocks($productConcreteTransfer->getIdProductConcrete()) as $stockProductEntity) {
             $stockProductEntity->setQuantity(0);
@@ -310,7 +310,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $productConcreteTransfer->addStock($stockTransfer);
         }
 
-        $this->productBundleAvailabilityHandler->updateBundleAvailability($productConcreteTransfer->getSku());
+        $this->productBundleAvailabilityHandler->removeBundleAvailability($productConcreteTransfer->getSku());
     }
 
     /**
