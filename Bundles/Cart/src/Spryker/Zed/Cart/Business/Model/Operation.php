@@ -124,12 +124,13 @@ class Operation implements OperationInterface
                 continue;
             }
 
+            $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
+
             if ($preCheck instanceof TerminationAwareCartPreCheckPluginInterface && $preCheck->terminateOnFailure()) {
                 return false;
             }
 
             $isCartValid = false;
-            $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
         }
 
         return $isCartValid;
