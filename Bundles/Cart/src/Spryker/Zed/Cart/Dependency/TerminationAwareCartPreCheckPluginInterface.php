@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Cart\Dependency;
 
-interface AwareTerminationCartPreCheckPluginInterface
+interface TerminationAwareCartPreCheckPluginInterface
 {
 
     /**

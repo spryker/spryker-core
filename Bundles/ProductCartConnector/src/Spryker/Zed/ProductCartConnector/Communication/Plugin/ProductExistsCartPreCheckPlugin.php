@@ -8,15 +8,15 @@
 namespace Spryker\Zed\ProductCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Cart\Dependency\AwareTerminationCartPreCheckPluginInterface;
 use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
+use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade getFacade()
  * @method \Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory getFactory()
  */
-class ProductExistsCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, AwareTerminationCartPreCheckPluginInterface
+class ProductExistsCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
 
     /**
