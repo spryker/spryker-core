@@ -10,7 +10,8 @@
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-encoding": "^2.0.0",
-    "spryker/zend": "^2.0.0"
+    "spryker/zend": "^2.0.0",
+    "spryker/error-handler": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

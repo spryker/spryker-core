@@ -133,7 +133,7 @@ class StockFacadeTest extends Unit
     public function testCreateStockType()
     {
         $stockTypeTransfer = (new TypeTransfer())
-            ->setName('Test');
+            ->setName('Test-Stock-Type');
 
         $idStock = $this->stockFacade->createStockType($stockTypeTransfer);
 
