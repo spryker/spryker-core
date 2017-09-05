@@ -28,8 +28,6 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
     protected $newsletterTypes;
 
     /**
-     * CustomerUnsubscribePlugin constructor.
-     *
      * @param array $newsletterTypes
      */
     public function __construct(array $newsletterTypes)

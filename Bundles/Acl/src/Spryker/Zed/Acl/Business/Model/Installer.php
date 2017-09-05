@@ -170,7 +170,7 @@ class Installer implements InstallerInterface
             }
 
             if (!$this->group->hasUser($group->getIdAclGroup(), $user->getIdUser())) {
-                $this->group->addUser($user->getIdUser(), $group->getIdAclGroup());
+                $this->group->addUser($group->getIdAclGroup(), $user->getIdUser());
             }
         }
     }

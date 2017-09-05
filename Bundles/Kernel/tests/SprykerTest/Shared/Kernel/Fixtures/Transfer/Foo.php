@@ -6,8 +6,8 @@
 
 namespace SprykerTest\Shared\Kernel\Fixtures\Transfer;
 
-use SprykerTest\Shared\Kernel\Fixtures\Transfer\Foo\Bar;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use SprykerTest\Shared\Kernel\Fixtures\Transfer\Foo\Bar;
 
 class Foo extends AbstractTransfer
 {
@@ -18,7 +18,7 @@ class Foo extends AbstractTransfer
     protected $bar;
 
     /**
-     * @return Bar
+     * @return \SprykerTest\Shared\Kernel\Fixtures\Transfer\Foo\Bar
      */
     public function getBar()
     {
@@ -26,9 +26,9 @@ class Foo extends AbstractTransfer
     }
 
     /**
-     * @param Bar $bar
+     * @param \SprykerTest\Shared\Kernel\Fixtures\Transfer\Foo\Bar $bar
      *
-     * @return self
+     * @return $this
      */
     public function setBar(Bar $bar)
     {

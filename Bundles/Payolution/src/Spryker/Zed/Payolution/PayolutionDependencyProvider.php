@@ -19,9 +19,22 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_MAIL = 'mail facade';
     const FACADE_GLOSSARY = 'glossary facade';
-
     const FACADE_MONEY = 'money facade';
     const FACADE_SALES = 'sales facade';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[static::FACADE_MONEY] = function (Container $container) {
+            return new PayolutionToMoneyBridge($container->getLocator()->money()->facade());
+        };
+
+        return $container;
+    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,10 +49,6 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new PayolutionToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
-
-        $container[static::FACADE_MONEY] = function (Container $container) {
-            return new PayolutionToMoneyBridge($container->getLocator()->money()->facade());
         };
 
         $container[static::FACADE_SALES] = function (Container $container) {

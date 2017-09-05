@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductLabel\Business;
 
 use Codeception\Test\Unit;
+use DateInterval;
 use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
@@ -329,7 +330,8 @@ class ProductLabelFacadeTest extends Unit
             'validTo' => (new DateTime())->setTimestamp(strtotime('+1 day'))->format('Y-m-d'),
             'isPublished' => true,
         ]);
-        $referenceTime = new DateTime('now');
+        $referenceTime = new DateTime();
+        $referenceTime->add(new DateInterval('PT1S'));
 
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();
@@ -351,7 +353,8 @@ class ProductLabelFacadeTest extends Unit
             'validTo' => (new DateTime())->setTimestamp(strtotime('-1 day'))->format('Y-m-d'),
             'isPublished' => false,
         ]);
-        $referenceTime = new DateTime('now');
+        $referenceTime = new DateTime();
+        $referenceTime->add(new DateInterval('PT1S'));
 
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelFacade->checkLabelValidityDateRangeAndTouch();
