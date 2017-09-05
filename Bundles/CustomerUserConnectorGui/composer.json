@@ -1,10 +1,13 @@
 {
-  "name": "spryker/customer-user-connector",
-  "description": "CustomerUserConnector module",
+  "name": "spryker/customer-user-connector-gui",
+  "description": "CustomerUserConnectorGui module",
   "license": "proprietary",
   "require": {
-    "spryker/user": "^3.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/customer": "^6.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/propel-orm": "1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -12,7 +15,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/customer": "If you want to have customers"
+    "spryker/user": "If you want to have user handling",
+    "spryker/util-text": "If you want to use UsersTableExpanderPlugin"
   },
   "autoload": {
     "psr-4": {

@@ -35,13 +35,20 @@ class UsersTable extends AbstractTable
     protected $utilDateTimeService;
 
     /**
+     * @var \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
+     */
+    protected $usersTableExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $userQueryContainer
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
+     * @param \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[] $userTableExpanderPlugins
      */
-    public function __construct(UserQueryContainerInterface $userQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService)
+    public function __construct(UserQueryContainerInterface $userQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService, array $userTableExpanderPlugins)
     {
         $this->userQueryContainer = $userQueryContainer;
         $this->utilDateTimeService = $utilDateTimeService;
+        $this->usersTableExpanderPlugins = $userTableExpanderPlugins;
     }
 
     /**
@@ -111,7 +118,7 @@ class UsersTable extends AbstractTable
      */
     public function createActionButtons(array $user)
     {
-        $urls = [];
+        $urls = $this->generateExpanderPluginButtons($user);
 
         $urls[] = $this->generateEditButton(
             Url::generate(self::UPDATE_USER_URL, [
@@ -174,6 +181,29 @@ class UsersTable extends AbstractTable
             ]),
             'Deactivate'
         );
+    }
+
+    /**
+     * @param array $user
+     *
+     * @return array
+     */
+    protected function generateExpanderPluginButtons(array $user)
+    {
+        $urls = [];
+
+        foreach ($this->usersTableExpanderPlugins as $usersTableExpanderPlugin) {
+            foreach ($usersTableExpanderPlugin->getActionButtonDefinitions($user) as $buttonTransfer) {
+                $urls[] = $this->generateButton(
+                    $buttonTransfer->getUrl(),
+                    $buttonTransfer->getTitle(),
+                    $buttonTransfer->getDefaultOptions(),
+                    $buttonTransfer->getCustomOptions()
+                );
+            }
+        }
+
+        return $urls;
     }
 
 }

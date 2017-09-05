@@ -27,6 +27,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const STORE = 'store';
 
     const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
+    const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -76,6 +77,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addStore($container);
+        $container = $this->addCustomerTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -114,6 +116,28 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addCustomerTransferExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CUSTOMER_TRANSFER_EXPANDER] = function (Container $container) {
+            return $this->getCustomerTransferExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
+     */
+    protected function getCustomerTransferExpanderPlugins()
+    {
+        return [];
     }
 
 }

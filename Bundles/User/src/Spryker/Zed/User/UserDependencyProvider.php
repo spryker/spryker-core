@@ -15,6 +15,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const PLUGIN_GROUP = 'group plugin';
+    const PLUGINS_USERS_TABLE_EXTENDER = 'PLUGINS_USERS_TABLE_EXTENDER';
     const CLIENT_SESSION = 'client session';
     const SERVICE_DATE_FORMATTER = 'date formatter service';
 
@@ -39,6 +40,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addDateFormatter($container);
         $container = $this->addGroupPlugin($container);
+        $container = $this->addUsersTableExtenderPlugins($container);
 
         return $container;
     }
@@ -83,6 +85,28 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUsersTableExtenderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_USERS_TABLE_EXTENDER] = function (Container $container) {
+            return $this->getUsersTableExtenderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
+     */
+    protected function getUsersTableExtenderPlugins()
+    {
+        return [];
     }
 
 }

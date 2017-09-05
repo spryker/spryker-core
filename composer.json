@@ -69,6 +69,7 @@
     "spryker/customer-group": "*",
     "spryker/customer-group-discount-connector": "*",
     "spryker/customer-user-connector": "*",
+    "spryker/customer-user-connector-gui": "*",
     "spryker/development": "*",
     "spryker/discount": "*",
     "spryker/discount-calculation-connector": "*",

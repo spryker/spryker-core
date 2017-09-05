@@ -5,6 +5,7 @@
 
     <transfer name="Customer">
         <property name="fkUser" type="int" />
+        <property name="username" type="string" />
     </transfer>
 
 </transfers>
