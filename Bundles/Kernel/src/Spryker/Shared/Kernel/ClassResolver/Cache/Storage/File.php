@@ -61,7 +61,7 @@ class File implements StorageInterface
      */
     protected function getCacheFilename()
     {
-        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/' . APPLICATION . '/unresolvable.cache';
+        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/Yves/unresolvable.cache';
     }
 
 }
