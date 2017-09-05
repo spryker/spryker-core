@@ -74,6 +74,7 @@ class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_NAME, static::COL_NAME);
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK, static::COL_ID_CMS_BLOCK);
         $this->touchQuery->addGroupByColumn(SpyCmsBlockTemplateTableMap::COL_TEMPLATE_PATH);
+        $this->touchQuery->addGroupByColumn(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK);
     }
 
 }
