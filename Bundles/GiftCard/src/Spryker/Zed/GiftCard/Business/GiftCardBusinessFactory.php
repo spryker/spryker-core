@@ -120,7 +120,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new GiftCardCalculator(
             $this->createGiftCardReader(),
-            $this->createGiftCardDecisionRuleChecker()
+            $this->createGiftCardDecisionRuleChecker(),
+            $this->getGiftCardValueProviderPlugin()
         );
     }
 
@@ -132,6 +133,14 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardDecisionRuleChecker(
             $this->getGiftCardDecisionRulePlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface
+     */
+    protected function getGiftCardValueProviderPlugin()
+    {
+        return $this->getProvidedDependency(GiftCardDependencyProvider::GIFT_CARD_VALUE_PROVIDER);
     }
 
     /**
@@ -149,7 +158,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderPreChecker(
             $this->createGiftCardReader(),
-            $this->createGiftCardDecisionRuleChecker()
+            $this->createGiftCardDecisionRuleChecker(),
+            $this->getGiftCardValueProviderPlugin()
         );
     }
 

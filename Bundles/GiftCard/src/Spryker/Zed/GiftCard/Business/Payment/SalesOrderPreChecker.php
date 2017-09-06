@@ -10,10 +10,13 @@ namespace Spryker\Zed\GiftCard\Business\Payment;
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\GiftCard\GiftCardConstants;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
+use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
 
 class SalesOrderPreChecker
 {
@@ -29,15 +32,23 @@ class SalesOrderPreChecker
     protected $giftCardDecisionRuleChecker;
 
     /**
+     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface
+     */
+    protected $giftCardValueProvider;
+
+    /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface $giftCardValueProvider
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
-        GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+        GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker,
+        GiftCardValueProviderPluginInterface $giftCardValueProvider
     ) {
         $this->giftCardReader = $giftCardReader;
         $this->giftCardDecisionRuleChecker = $giftCardDecisionRuleChecker;
+        $this->giftCardValueProvider = $giftCardValueProvider;
     }
 
     /**
@@ -65,16 +76,16 @@ class SalesOrderPreChecker
             $paymentTransfer->requireGiftCard();
             $giftCardTransfer = $paymentTransfer->getGiftCard();
 
-            if ($this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $quoteTransfer)) {
+            $errors = $this->getErrors($giftCardTransfer, $quoteTransfer, $paymentTransfer);
+
+            if ($errors->count() === 0) {
                 $validPayments[] = $paymentTransfer;
                 continue;
             }
 
-            $error = new CheckoutErrorTransfer();
-            $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' already used');
-            $error->setErrorCode(GiftCardConstants::ERROR_GIFT_CARD_ALREADY_USED);
-
-            $checkoutResponse->addError($error);
+            foreach ($errors as $error) {
+                $checkoutResponse->addError($error);
+            }
         }
 
         $quoteTransfer->setPayments($validPayments);
@@ -94,6 +105,36 @@ class SalesOrderPreChecker
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
+     */
+    protected function getErrors(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer)
+    {
+        $result = new ArrayObject();
+
+        if (!$this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $quoteTransfer)) {
+            $error = new CheckoutErrorTransfer();
+            $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' already used');
+            $error->setErrorCode(GiftCardConstants::ERROR_GIFT_CARD_ALREADY_USED);
+
+            $result[] = $error;
+        }
+
+        if ($this->giftCardValueProvider->getValue($giftCardTransfer) < $paymentTransfer->getAmount()) {
+            $error = new CheckoutErrorTransfer();
+            $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' used amount too high');
+            $error->setErrorCode(GiftCardConstants::ERROR_GIFT_CARD_AMOUNT_TOO_HIGH);
+
+            $result[] = $error;
+        }
+
+        return $result;
     }
 
 }

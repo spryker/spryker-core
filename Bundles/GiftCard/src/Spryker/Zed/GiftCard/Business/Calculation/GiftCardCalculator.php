@@ -15,6 +15,7 @@ use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
 use Spryker\Shared\GiftCard\GiftCardConstants;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
+use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
 
 class GiftCardCalculator
 {
@@ -30,15 +31,23 @@ class GiftCardCalculator
     protected $giftCardDecisionRuleChecker;
 
     /**
+     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface
+     */
+    protected $giftCardValueProvider;
+
+    /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface $giftCardValueProvider
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
-        GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+        GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker,
+        GiftCardValueProviderPluginInterface $giftCardValueProvider
     ) {
         $this->giftCardReader = $giftCardReader;
         $this->giftCardDecisionRuleChecker = $giftCardDecisionRuleChecker;
+        $this->giftCardValueProvider = $giftCardValueProvider;
     }
 
     /**
@@ -146,19 +155,21 @@ class GiftCardCalculator
     protected function addGiftCardPaymentsToQuote(CalculableObjectTransfer $calculableObjectTransfer, ArrayObject $applicableGiftCards)
     {
         foreach ($applicableGiftCards as $giftCard) {
-            if ($this->containsPayment($calculableObjectTransfer, $giftCard)) {
+            $giftCardPayment = $this->findPayment($calculableObjectTransfer, $giftCard);
+
+            if ($giftCardPayment) {
+                $giftCardPayment->setAmount($this->giftCardValueProvider->getValue($giftCard));
                 continue;
             }
+            $giftCardPayment = new PaymentTransfer();
+            $giftCardPayment->setPaymentProvider(GiftCardConstants::PROVIDER_NAME);
+            $giftCardPayment->setPaymentSelection(GiftCardConstants::PROVIDER_NAME);
+            $giftCardPayment->setPaymentMethod(GiftCardConstants::PROVIDER_NAME);
+            $giftCardPayment->setAmount($this->giftCardValueProvider->getValue($giftCard));
+            $giftCardPayment->setIsLimitedAmount(true);
+            $giftCardPayment->setGiftCard($giftCard);
 
-            $paymentTransfer = new PaymentTransfer();
-            $paymentTransfer->setPaymentProvider(GiftCardConstants::PROVIDER_NAME);
-            $paymentTransfer->setPaymentSelection(GiftCardConstants::PROVIDER_NAME);
-            $paymentTransfer->setPaymentMethod(GiftCardConstants::PROVIDER_NAME);
-            $paymentTransfer->setAmount($giftCard->getValue());
-            $paymentTransfer->setIsLimitedAmount(true);
-
-            $paymentTransfer->setGiftCard($giftCard);
-            $calculableObjectTransfer->addPayment($paymentTransfer);
+            $calculableObjectTransfer->addPayment($giftCardPayment);
         }
     }
 
@@ -166,9 +177,9 @@ class GiftCardCalculator
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PaymentTransfer|null
      */
-    protected function containsPayment(CalculableObjectTransfer $calculableObjectTransfer, GiftCardTransfer $giftCardTransfer)
+    protected function findPayment(CalculableObjectTransfer $calculableObjectTransfer, GiftCardTransfer $giftCardTransfer)
     {
         foreach ($calculableObjectTransfer->getPayments() as $payment) {
             if (!$payment->getGiftCard()) {
@@ -176,11 +187,11 @@ class GiftCardCalculator
             }
 
             if ($payment->getGiftCard()->getCode() === $giftCardTransfer->getCode()) {
-                return true;
+                return $payment;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

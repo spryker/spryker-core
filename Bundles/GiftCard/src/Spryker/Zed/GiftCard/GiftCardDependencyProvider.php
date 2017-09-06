@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GiftCard;
 
+use Spryker\Zed\GiftCard\Communication\Plugin\GiftCardRecreateValueProviderPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,6 +17,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
     const ATTRIBUTE_PROVIDER_PLUGINS = 'ATTRIBUTE_PROVIDER_PLUGINS';
     const GIFT_CARD_DECISION_RULE_PLUGINS = 'GIFT_CARD_DECISION_RULE_PLUGINS';
+    const GIFT_CARD_VALUE_PROVIDER = 'GIFT_CARD_VALUE_PROVIDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +29,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addEncodingService($container);
         $container = $this->addAttributePlugins($container);
         $container = $this->addDecisionRulePlugins($container);
+        $container = $this->addValueProvider($container);
 
         return $container;
     }
@@ -71,6 +74,28 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValueProvider(Container $container)
+    {
+        $container[static::GIFT_CARD_VALUE_PROVIDER] = function (Container $container) {
+            return $this->getValueProviderPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface
+     */
+    protected function getValueProviderPlugin()
+    {
+        return new GiftCardRecreateValueProviderPlugin();
     }
 
     /**
