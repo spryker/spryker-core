@@ -31,6 +31,13 @@ interface GiftCardReaderInterface
      *
      * @return bool
      */
+    public function isUsed($code);
+
+    /**
+     * @param string $code
+     *
+     * @return bool
+     */
     public function isPresent($code);
 
     /**

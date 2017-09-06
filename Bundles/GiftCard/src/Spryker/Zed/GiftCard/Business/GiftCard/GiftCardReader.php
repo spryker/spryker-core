@@ -147,13 +147,13 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
+     * @param string $code
      *
      * @return bool
      */
-    public function isUsed(GiftCardTransfer $giftCardTransfer)
+    public function isUsed($code)
     {
-        return $this->queryContainer->queryPaymentGiftCardsForCode($giftCardTransfer->getCode())->count() > 0;
+        return $this->queryContainer->queryPaymentGiftCardsForCode($code)->count() > 0;
     }
 
     /**

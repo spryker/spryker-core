@@ -18,7 +18,7 @@ class SalesOrderPreChecker
 {
 
     /**
-     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReader
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
     protected $giftCardReader;
 
@@ -55,7 +55,7 @@ class SalesOrderPreChecker
             $paymentTransfer->requireGiftCard();
             $giftCardTransfer = $paymentTransfer->getGiftCard();
 
-            if (!$this->giftCardReader->isUsed($giftCardTransfer)) {
+            if (!$this->giftCardReader->isUsed($giftCardTransfer->getCode())) {
                 $validPayments[] = $paymentTransfer;
                 continue;
             }

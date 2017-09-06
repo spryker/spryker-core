@@ -19,7 +19,7 @@ class GiftCardCalculator
 {
 
     /**
-     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReader
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
     protected $giftCardReader;
 
@@ -116,7 +116,7 @@ class GiftCardCalculator
      */
     protected function isApplicable(GiftCardTransfer $giftCardTransfer)
     {
-        if ($this->giftCardReader->isUsed($giftCardTransfer)) {
+        if ($this->giftCardReader->isUsed($giftCardTransfer->getCode())) {
             return false;
         }
 
