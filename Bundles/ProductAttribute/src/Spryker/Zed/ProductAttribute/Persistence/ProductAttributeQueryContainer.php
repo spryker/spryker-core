@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductAttributeQueryContainer extends AbstractQueryContainer implements ProductAttributeQueryContainerInterface
 {
 
-    const KEY = 'key';
+    const KEY = 'product_attribute_key';
     const IS_SUPER = 'is_super';
     const ATTRIBUTE_ID = 'attribute_id';
     const ALLOW_INPUT = 'allow_input';
@@ -156,7 +156,6 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
 
         $query = $this->getFactory()
             ->createProductManagementAttributeValueQuery()
-            ->clearSelectColumns()
             ->filterByFkProductManagementAttribute($idProductManagementAttribute)
             ->addJoin([
                 SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
@@ -165,8 +164,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
                 ], Criteria::LEFT_JOIN)
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
-            ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
+            ->clearSelectColumns()
             ->withColumn($idLocale, 'fk_locale')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation');
 
