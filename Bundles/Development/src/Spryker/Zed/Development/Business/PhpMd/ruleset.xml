@@ -41,7 +41,6 @@ class hierarchy. You should consider to refactor this class hierarchy.
         <priority>2</priority>
         <properties>
             <property name="minimum" value="15" description="Maximum number of acceptable child classes." />
-            <property name="customMinimum" value='{"Pyz\\Yves\\Application\\Controller\\AbstractController":25}' description="Custom maximum number of acceptable child classes per specific classes." />
         </properties>
     </rule>
 

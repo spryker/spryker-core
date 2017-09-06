@@ -16,7 +16,6 @@ class NumberOfChildren extends AbstractRule implements ClassAware
 
     const NUMBER_OF_CHILDREN = 'nocc';
     const THRESHOLD = 'minimum';
-    const CUSTOM_THRESHOLDS = 'customMinimum';
 
     /**
      * This method checks the number of classes derived from the given class
@@ -29,7 +28,7 @@ class NumberOfChildren extends AbstractRule implements ClassAware
     public function apply(AbstractNode $node)
     {
         $numberOfChildren = $node->getMetric(static::NUMBER_OF_CHILDREN);
-        $threshold = $this->getThreshold($node);
+        $threshold = $this->getIntProperty(static::THRESHOLD);
         if ($numberOfChildren >= $threshold && !$this->isIgnorable($node)) {
             $this->addViolation($node, [
                 $node->getType(),
@@ -38,31 +37,6 @@ class NumberOfChildren extends AbstractRule implements ClassAware
                 $threshold,
             ]);
         }
-    }
-
-    /**
-     * @param \PHPMD\AbstractNode $node
-     *
-     * @return int
-     */
-    private function getThreshold(AbstractNode $node)
-    {
-        $fullyQualifiedName = $node->getFullQualifiedName();
-        $customThresholds = $this->getCustomThresholds();
-
-        if (array_key_exists($fullyQualifiedName, $customThresholds)) {
-            return $customThresholds[$fullyQualifiedName];
-        }
-
-        return $this->getIntProperty(static::THRESHOLD);
-    }
-
-    /**
-     * @return array
-     */
-    private function getCustomThresholds()
-    {
-        return json_decode($this->getStringProperty(static::CUSTOM_THRESHOLDS), true);
     }
 
     /**
