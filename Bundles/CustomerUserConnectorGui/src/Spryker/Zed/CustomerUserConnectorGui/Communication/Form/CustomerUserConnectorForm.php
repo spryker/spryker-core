@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Form;
 
+use Generated\Shared\Transfer\CustomerUserConnectionTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomerUserConnectorForm extends AbstractType
 {
 
-    const FIELD_ID_USER = 'idUser';
-    const FIELD_IDS_USER_TO_ASSIGN_CSV = 'idsUserToAssignCsv';
-    const FIELD_IDS_USER_TO_DE_ASSIGN_CSV = 'idsUserToDeAssignCsv';
+    const FIELD_ID_USER = CustomerUserConnectionTransfer::ID_USER;
+    const FIELD_IDS_USER_TO_ASSIGN_CSV = CustomerUserConnectionTransfer::ID_CUSTOMERS_TO_ASSIGN;
+    const FIELD_IDS_USER_TO_DE_ASSIGN_CSV = CustomerUserConnectionTransfer::ID_CUSTOMERS_TO_DE_ASSIGN;
 
     /**
      * @return string
@@ -25,6 +27,18 @@ class CustomerUserConnectorForm extends AbstractType
     public function getName()
     {
         return 'customerUserConnection';
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => CustomerUserConnectionTransfer::class,
+        ]);
     }
 
     /**

@@ -25,7 +25,8 @@ interface CmsClientInterface
     public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
-     * TODO: add doc
+     * Specification:
+     * - Retrieves current CMS version data with localized attributes from permanent storage.
      *
      * @api
      *

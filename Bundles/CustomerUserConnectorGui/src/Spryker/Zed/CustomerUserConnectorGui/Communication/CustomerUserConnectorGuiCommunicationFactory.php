@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Communication;
 
+use Generated\Shared\Transfer\CustomerUserConnectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Form\CustomerUserConnectorForm;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Table\AssignedCustomerTable;
@@ -50,15 +51,17 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
      */
     public function createCustomerUserConnectorForm($idUser)
     {
-        return $this->getFormFactory()->create(new CustomerUserConnectorForm(), [CustomerUserConnectorForm::FIELD_ID_USER => $idUser]);
+        return $this->getFormFactory()->create(new CustomerUserConnectorForm(), $this->createUserConnectionTransfer($idUser));
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\CustomerUserConnectionTransfer
      */
-    public function getCustomerQueryContainer()
+    protected function createUserConnectionTransfer($idUser)
     {
-        return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER);
+        return (new CustomerUserConnectionTransfer())->setIdUser($idUser);
     }
 
 }

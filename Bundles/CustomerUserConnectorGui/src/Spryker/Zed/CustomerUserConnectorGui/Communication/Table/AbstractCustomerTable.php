@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -30,9 +30,9 @@ abstract class AbstractCustomerTable extends AbstractTable
     ];
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
+     * @var \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface
      */
-    protected $customerQueryContainer;
+    protected $customerUserConnectorGuiToCustomerQueryContainerBridge;
 
     /**
      * @var \Generated\Shared\Transfer\UserTransfer
@@ -40,12 +40,12 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected $userTransfer;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerUserConnectorGuiToCustomerQueryContainerBridge
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, UserTransfer $userTransfer)
+    public function __construct(CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerUserConnectorGuiToCustomerQueryContainerBridge, UserTransfer $userTransfer)
     {
-        $this->customerQueryContainer = $customerQueryContainer;
+        $this->customerUserConnectorGuiToCustomerQueryContainerBridge = $customerUserConnectorGuiToCustomerQueryContainerBridge;
         $this->userTransfer = $userTransfer;
     }
 
@@ -91,7 +91,7 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected function getSelectCheckboxColumn(SpyCustomer $customerEntity)
     {
         return sprintf(
-            '<input class="%s js-abstract-product-checkbox" type="checkbox" name="customer[]" value="%s" data-info="%s" />',
+            '<input class="%s js-customer-checkbox" type="checkbox" name="customer[]" value="%s" data-info="%s" />',
             'js-item-checkbox',
             $customerEntity->getIdCustomer(),
             htmlspecialchars(json_encode([

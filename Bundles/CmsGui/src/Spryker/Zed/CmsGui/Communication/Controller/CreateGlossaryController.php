@@ -83,11 +83,6 @@ class CreateGlossaryController extends AbstractController
             ->getCmsFacade()
             ->findCmsPageById($idCmsPage);
 
-        // TODO: implement this nicely
-        $yvesHost = $this->getFactory()->getConfig()->findYvesHost();
-        $urlPrefix = '/en/';
-        $previewPageUrl = $yvesHost . $urlPrefix . 'cms/preview/' . $idCmsPage;
-
         return [
             'glossaryForm' => $glossaryForm->createView(),
             'placeholderTabs' => $placeholderTabs->createView(),
@@ -95,8 +90,22 @@ class CreateGlossaryController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
-            'previewPageUrl' => $previewPageUrl,
+            'previewPageUrl' => $this->getPreviePagewUrl($idCmsPage),
         ];
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return string
+     */
+    protected function getPreviePagewUrl($idCmsPage)
+    {
+        $yvesHost = $this->getFactory()->getConfig()->findYvesHost();
+        $urlPrefix = '/en/';
+
+        // TODO: this has to be dynamic
+        return $previewPageUrl = $yvesHost . $urlPrefix . 'cms/preview/' . $idCmsPage;
     }
 
     /**

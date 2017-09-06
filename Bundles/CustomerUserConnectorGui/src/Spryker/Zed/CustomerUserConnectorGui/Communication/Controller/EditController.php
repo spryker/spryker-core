@@ -8,12 +8,12 @@
 namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Controller;
 
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\CustomerUserConnectorGui\Communication\Form\CustomerUserConnectorForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiFacadeInterface getFacade()
  */
 class EditController extends AbstractController
 {
@@ -33,18 +33,7 @@ class EditController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            foreach ($formData[CustomerUserConnectorForm::FIELD_IDS_USER_TO_ASSIGN_CSV] as $customerIdToAssign) {
-                $customerEntity = $this->getFactory()->getCustomerQueryContainer()->queryCustomerById($customerIdToAssign)->findOne();
-                $customerEntity->setFkUser($idUser);
-                $customerEntity->save();
-            }
-
-            foreach ($formData[CustomerUserConnectorForm::FIELD_IDS_USER_TO_DE_ASSIGN_CSV] as $customerIdToDeAssign) {
-                $customerEntity = $this->getFactory()->getCustomerQueryContainer()->queryCustomerById($customerIdToDeAssign)->findOne();
-                $customerEntity->setFkUser(null);
-                $customerEntity->save();
-            }
-
+            $this->getFacade()->updateCustomerUserConnection($formData);
             $this->addSuccessMessage('User updated.');
 
             return $this->redirectResponse('/customer-user-connector-gui/edit?id-user=' . $idUser);

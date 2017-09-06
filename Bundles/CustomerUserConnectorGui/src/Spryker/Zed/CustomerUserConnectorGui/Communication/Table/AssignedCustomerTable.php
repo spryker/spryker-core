@@ -37,7 +37,7 @@ class AssignedCustomerTable extends AbstractCustomerTable
     protected function getSelectCheckboxColumn(SpyCustomer $customerEntity)
     {
         return sprintf(
-            '<input class="%s js-abstract-product-checkbox" type="checkbox" checked name="customer[]" value="%s" data-info="%s" />',
+            '<input class="%s js-customer-checkbox" type="checkbox" checked name="customer[]" value="%s" data-info="%s" />',
             'js-item-checkbox',
             $customerEntity->getIdCustomer(),
             htmlspecialchars(json_encode([
@@ -54,7 +54,7 @@ class AssignedCustomerTable extends AbstractCustomerTable
      */
     protected function prepareQuery()
     {
-        $query = $this->customerQueryContainer
+        $query = $this->customerUserConnectorGuiToCustomerQueryContainerBridge
             ->queryCustomers()
                 ->addAnd(
                     SpyCustomerTableMap::COL_FK_USER,

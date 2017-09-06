@@ -5,7 +5,7 @@
 
 'use strict';
 
-var RelatedProductTable = require('./related-product-table/table');
+var RelatedCustomerTable = require('./related-customer-table/table');
 
 var sourceTabSelector = '#available-tab';
 var sourceTableSelector = sourceTabSelector + ' table.table';
@@ -14,20 +14,20 @@ var destinationTabSelector = '#to-be-assigned-tab';
 var destinationTabLabelSelector = destinationTabSelector + '-label';
 var destinationTableSelector = destinationTabSelector + '-table';
 
-var checkboxSelector = '.js-abstract-product-checkbox';
+var checkboxSelector = '.js-customer-checkbox';
 var tableHandler;
 
 /**
  * @return {void}
  */
 function initialize() {
-    tableHandler = RelatedProductTable.create(
+    tableHandler = RelatedCustomerTable.create(
         sourceTableSelector,
         destinationTableSelector,
         checkboxSelector,
         $(destinationTabLabelSelector).text(),
         destinationTabLabelSelector,
-        'customerUserConnection_idsUserToAssignCsv',
+        'customerUserConnection_idCustomersToAssign',
         onRemove
     );
 

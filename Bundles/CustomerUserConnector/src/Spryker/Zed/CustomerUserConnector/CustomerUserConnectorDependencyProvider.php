@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnector;
 
+use Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConnectorToUserQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -35,8 +36,7 @@ class CustomerUserConnectorDependencyProvider extends AbstractBundleDependencyPr
     protected function addUserQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_USER] = function (Container $container) {
-            // TODO: bridge is missing
-            return $container->getLocator()->user()->queryContainer();
+            return new CustomerUserConnectorToUserQueryContainerBridge($container->getLocator()->user()->queryContainer());
         };
 
         return $container;

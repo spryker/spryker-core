@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Cms;
 
+use Spryker\Client\Cms\Dependency\Client\CmsToZedRequestBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -28,7 +29,7 @@ class CmsDependencyProvider extends AbstractDependencyProvider
         };
 
         $container[static::SERVICE_ZED] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+            return new CmsToZedRequestBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

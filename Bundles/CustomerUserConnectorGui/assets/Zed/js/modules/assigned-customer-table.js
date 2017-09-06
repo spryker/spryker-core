@@ -5,7 +5,7 @@
 
 'use strict';
 
-var RelatedProductTable = require('./related-product-table/table');
+var RelatedCustomerTable = require('./related-customer-table/table');
 
 var sourceTabSelector = '#assigned-tab';
 var sourceTableSelector = sourceTabSelector + ' table.table';
@@ -14,25 +14,25 @@ var destinationTabSelector = '#deassigned-tab';
 var destinationTabLabelSelector = destinationTabSelector + '-label';
 var destinationTableSelector = destinationTabSelector + '-table';
 
-var checkboxSelector = '.js-abstract-product-checkbox';
+var checkboxSelector = '.js-customer-checkbox';
 var tableHandler;
 
 /**
  * @return {void}
  */
 function initialize() {
-    tableHandler = RelatedProductTable.create(
+    tableHandler = RelatedCustomerTable.create(
         sourceTableSelector,
         destinationTableSelector,
         checkboxSelector,
         $(destinationTabLabelSelector).text(),
         destinationTabLabelSelector,
-        'customerUserConnection_idsUserToDeAssignCsv',
+        'customerUserConnection_idCustomersToDeAssign',
         onRemove
     );
 
     tableHandler.getInitialCheckboxCheckedState = function() {
-        return RelatedProductTable.CHECKBOX_CHECKED_STATE_CHECKED;
+        return RelatedCustomerTable.CHECKBOX_CHECKED_STATE_CHECKED;
     };
 
     $(sourceTabSelector + ' .js-de-select-all-button a').on('click', tableHandler.deSelectAll);

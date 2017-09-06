@@ -33,7 +33,7 @@ class AvailableCustomerTable extends AbstractCustomerTable
      */
     protected function prepareQuery()
     {
-        $query = $this->customerQueryContainer
+        $query = $this->customerUserConnectorGuiToCustomerQueryContainerBridge
             ->queryCustomers()
                 ->addAnd(
                     SpyCustomerTableMap::COL_FK_USER,

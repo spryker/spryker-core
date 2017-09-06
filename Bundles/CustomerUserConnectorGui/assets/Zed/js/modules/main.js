@@ -6,10 +6,10 @@
 'use strict';
 
 require('ZedGui');
-var availableProductTable = require('./available-product-table');
-var assignedProductTable = require('./assigned-product-table');
+var availableCustomerTable = require('./available-customer-table');
+var assignedCustomerTable = require('./assigned-customer-table');
 
 $(document).ready(function() {
-    availableProductTable.initialize();
-    assignedProductTable.initialize();
+    availableCustomerTable.initialize();
+    assignedCustomerTable.initialize();
 });

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsContentWidget;
 
+use Spryker\Client\CmsContentWidget\Dependency\Client\CmsContentWidgetToZedRequestBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -23,7 +24,7 @@ class CmsContentWidgetDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container[static::SERVICE_ZED] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+            return new CmsContentWidgetToZedRequestBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

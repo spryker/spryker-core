@@ -8,22 +8,22 @@
 namespace Spryker\Client\CmsContentWidget\Zed;
 
 use Generated\Shared\Transfer\CmsPageCollectorDataTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\CmsContentWidget\Dependency\Client\CmsContentWidgetToZedRequestInterface;
 
 class CmsContentWidgetStub implements CmsContentWidgetStubInterface
 {
 
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClient
+     * @var \Spryker\Client\CmsContentWidget\Dependency\Client\CmsContentWidgetToZedRequestInterface
      */
-    protected $zedStub;
+    protected $cmsContentWidgetToZedRequestBridge;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param \Spryker\Client\CmsContentWidget\Dependency\Client\CmsContentWidgetToZedRequestInterface $cmsContentWidgetToZedRequestBridge
      */
-    public function __construct(ZedRequestClient $zedStub)
+    public function __construct(CmsContentWidgetToZedRequestInterface $cmsContentWidgetToZedRequestBridge)
     {
-        $this->zedStub = $zedStub;
+        $this->cmsContentWidgetToZedRequestBridge = $cmsContentWidgetToZedRequestBridge;
     }
 
     /**
@@ -33,7 +33,7 @@ class CmsContentWidgetStub implements CmsContentWidgetStubInterface
      */
     public function expandCmsPageCollectorData(CmsPageCollectorDataTransfer $cmsPageCollectorDataTransfer)
     {
-        return $this->zedStub->call('/cms-content-widget/gateway/expand-cms-page-collector-data', $cmsPageCollectorDataTransfer);
+        return $this->cmsContentWidgetToZedRequestBridge->call('/cms-content-widget/gateway/expand-cms-page-collector-data', $cmsPageCollectorDataTransfer);
     }
 
 }

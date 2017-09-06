@@ -14,7 +14,7 @@ interface CustomerTransferExpanderPluginInterface
 
     /**
      * Specification
-     * TODO: add doc
+     * - Expands the provided customer transfer object's data and returns the modified object.
      *
      * @api
      *

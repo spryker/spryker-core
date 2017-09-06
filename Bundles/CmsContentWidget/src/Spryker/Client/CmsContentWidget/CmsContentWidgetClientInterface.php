@@ -14,7 +14,7 @@ interface CmsContentWidgetClientInterface
 
     /**
      * Specification
-     * // TODO: add doc
+     * - Expands collector data with cms content widget parameter map
      *
      * @api
      *

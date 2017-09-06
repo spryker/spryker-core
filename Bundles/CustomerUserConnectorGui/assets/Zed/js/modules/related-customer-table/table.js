@@ -45,12 +45,12 @@ function create(sourceTableSelector, destinationTableSelector, checkboxSelector,
         });
 
         for (var i = 0; i < settings.json.data.length; i++) {
-            var product = settings.json.data[i];
-            var idProduct = parseInt(product[1], 10);
+            var customer = settings.json.data[i];
+            var idCustomer = parseInt(customer[1], 10);
 
             var selector = tableHandler.getSelector();
-            if (selector.isIdSelected(idProduct)) {
-                tableHandler.checkCheckbox($('input[value="' + idProduct + '"]', $(sourceTableSelector)));
+            if (selector.isIdSelected(idCustomer)) {
+                tableHandler.checkCheckbox($('input[value="' + idCustomer + '"]', $(sourceTableSelector)));
             }
         }
     });

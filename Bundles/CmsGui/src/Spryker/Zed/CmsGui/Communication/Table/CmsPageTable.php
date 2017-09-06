@@ -136,7 +136,6 @@ class CmsPageTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->createPublishButton($item);
-        $buttons[] = $this->createPreviewButton($item, $urlPrefix);
         $buttons[] = $this->createViewButtonGroup($item, $urlPrefix);
         $buttons[] = $this->createEditButtonGroup($item);
         $buttons[] = $this->createCmsStateChangeButton($item);
@@ -169,24 +168,6 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function createPreviewButton(array $item, $urlPrefix)
-    {
-        return $this->generateViewButton(
-            $this->getPreviewPageUrl($item, $urlPrefix),
-            'Preview',
-            [
-                'icon' => 'fa-eye',
-                'target' => '_blank',
-            ]
-        );
-    }
-
-    /**
-     * @param array $item
-     * @param string $urlPrefix
-     *
-     * @return string
-     */
     protected function getPreviewPageUrl(array $item, $urlPrefix)
     {
         $yvesHost = $this->cmsGuiConfig->findYvesHost();
@@ -194,7 +175,7 @@ class CmsPageTable extends AbstractTable
             return '';
         }
 
-        // TODO: enhance required
+        // TODO: enhance required, this has to be dynamic
         return $yvesHost . $urlPrefix . 'cms/preview/' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE];
     }
 
@@ -206,23 +187,22 @@ class CmsPageTable extends AbstractTable
      */
     protected function createViewButtonGroup(array $item, $urlPrefix)
     {
+        $groupItems = [
+            $this->createButtonGroupItem('Preview', $this->getPreviewPageUrl($item, $urlPrefix), false, ['target' => '_blank'])
+        ];
+
         if ($this->isDraft($item)) {
-            return '';
+            return $this->generateButtonGroup($groupItems, 'View');
         }
 
-        $groupItems = [
-            $this->createViewButtonItem($item),
-            $this->createViewInShopButtonItem($item, $urlPrefix),
-        ];
+        $groupItems[] = $this->createViewButtonItem($item);
+        $groupItems[] = $this->createViewInShopButtonItem($item, $urlPrefix);
 
         if ($this->hasMultipleVersions($item)) {
             $groupItems[] = $this->createVersionHistoryButton($item);
         }
 
-        return $this->generateButtonGroup(
-            $groupItems,
-            'View '
-        );
+        return $this->generateButtonGroup($groupItems, 'View ');
     }
 
     /**

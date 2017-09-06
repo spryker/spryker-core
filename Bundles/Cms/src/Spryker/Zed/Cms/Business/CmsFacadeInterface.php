@@ -344,7 +344,7 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     * TODO: add doc
+     * - Retrieves current CMS version data with localized attributes from permanent storage.
      *
      * @api
      *

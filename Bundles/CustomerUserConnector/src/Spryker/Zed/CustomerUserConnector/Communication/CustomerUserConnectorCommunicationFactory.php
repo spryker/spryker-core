@@ -14,7 +14,7 @@ class CustomerUserConnectorCommunicationFactory extends AbstractCommunicationFac
 {
 
     /**
-     * @return \Spryker\Zed\User\Persistence\UserQueryContainerInterface
+     * @return \Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConnectorToUserQueryContainerInterface
      */
     public function getUserQueryContainer()
     {

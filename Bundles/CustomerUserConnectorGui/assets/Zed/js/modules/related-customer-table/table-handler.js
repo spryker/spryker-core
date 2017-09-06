@@ -93,8 +93,8 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
                 return;
             }
 
-            var rowProductId = parseInt(this.data()[0], 10);
-            if (idCustomer !== rowProductId) {
+            var rowCustomerId = parseInt(this.data()[0], 10);
+            if (idCustomer !== rowCustomerId) {
                 return;
             }
 
@@ -116,8 +116,8 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
 
     tableHandler.updateSelectedCustomersLabelCount = function() {
         $(tableHandler.getLabelId()).text(labelCaption + ' (' + Object.keys(this.getSelector().getSelected()).length + ')');
-        var productIds = Object.keys(this.getSelector().getSelected());
-        var s = productIds.join(',');
+        var customerIds = Object.keys(this.getSelector().getSelected());
+        var s = customerIds.join(',');
         var field = $('#' + tableHandler.getFormFieldId());
         field.attr('value', s);
     };
