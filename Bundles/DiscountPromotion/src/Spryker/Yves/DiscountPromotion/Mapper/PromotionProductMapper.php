@@ -63,7 +63,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
 
             $storageProductTransfer->setPromotionItem($promotionItemTransfer);
 
-            $promotionProducts[$this->createPromotionProductBuckedIdentifier($promotionItemTransfer)] = $storageProductTransfer;
+            $promotionProducts[$this->createPromotionProductBucketIdentifier($promotionItemTransfer)] = $storageProductTransfer;
         }
 
         return $promotionProducts;
@@ -117,7 +117,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      *
      * @return string
      */
-    protected function createPromotionProductBuckedIdentifier(PromotionItemTransfer $promotionItemTransfer)
+    protected function createPromotionProductBucketIdentifier(PromotionItemTransfer $promotionItemTransfer)
     {
         return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();
     }
