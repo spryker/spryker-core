@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
 use Spryker\Shared\GiftCard\GiftCardConstants;
+use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 
 class GiftCardCalculator
@@ -24,11 +25,20 @@ class GiftCardCalculator
     protected $giftCardReader;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker
      */
-    public function __construct(GiftCardReaderInterface $giftCardReader)
-    {
+    protected $giftCardDecisionRuleChecker;
+
+    /**
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+     */
+    public function __construct(
+        GiftCardReaderInterface $giftCardReader,
+        GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+    ) {
         $this->giftCardReader = $giftCardReader;
+        $this->giftCardDecisionRuleChecker = $giftCardDecisionRuleChecker;
     }
 
     /**
@@ -76,30 +86,6 @@ class GiftCardCalculator
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $allGiftCards
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $allGiftCards
-     */
-    private function filterNonApplicableGiftCards(ArrayObject $allGiftCards)
-    {
-        $result = [];
-
-        foreach ($allGiftCards as $giftCard) {
-            $giftCardTransfer = $this->getGiftCard($giftCard);
-
-            if (!$giftCardTransfer) {
-                continue;
-            }
-
-            if (!$this->isApplicable($giftCardTransfer)) {
-                $result[] = $giftCardTransfer;
-            }
-        }
-
-        return new ArrayObject($result);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
      * @return \Generated\Shared\Transfer\GiftCardTransfer|null
@@ -110,25 +96,12 @@ class GiftCardCalculator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
-     *
-     * @return bool
-     */
-    protected function isApplicable(GiftCardTransfer $giftCardTransfer)
-    {
-        if ($this->giftCardReader->isUsed($giftCardTransfer->getCode())) {
-            return false;
-        }
-
-        return $giftCardTransfer->getIsActive();
-    }
-
-    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $allGiftCards
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $allGiftCards
+     * @return \ArrayObject[]
      */
-    protected function partitionGiftCardsByApplicability(ArrayObject $allGiftCards)
+    protected function partitionGiftCardsByApplicability(ArrayObject $allGiftCards, CalculableObjectTransfer $calculableObjectTransfer)
     {
         $applicableGiftCards = [];
         $nonApplicableGiftCards = [];
@@ -140,7 +113,7 @@ class GiftCardCalculator
                 continue;
             }
 
-            if ($this->isApplicable($giftCardTransfer)) {
+            if ($this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $calculableObjectTransfer->getOriginalQuote())) {
                 $applicableGiftCards[] = $giftCardTransfer;
                 continue;
             }

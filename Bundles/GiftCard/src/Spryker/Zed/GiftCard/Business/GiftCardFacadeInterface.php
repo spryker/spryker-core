@@ -121,4 +121,13 @@ interface GiftCardFacadeInterface
      */
     public function saveSalesOrderGiftCardItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
+    /**
+     * @api
+     *
+     * @param string $code
+     *
+     * @return bool
+     */
+    public function isUsed($code);
+
 }

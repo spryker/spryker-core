@@ -12,6 +12,7 @@ use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
+use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReader;
 use Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver;
@@ -118,8 +119,27 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createGiftCardCalculator()
     {
         return new GiftCardCalculator(
-            $this->createGiftCardReader()
+            $this->createGiftCardReader(),
+            $this->createGiftCardDecisionRuleChecker()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker
+     */
+    protected function createGiftCardDecisionRuleChecker()
+    {
+        return new GiftCardDecisionRuleChecker(
+            $this->getGiftCardDecisionRulePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface[]
+     */
+    protected function getGiftCardDecisionRulePlugins()
+    {
+        return $this->getProvidedDependency(GiftCardDependencyProvider::GIFT_CARD_DECISION_RULE_PLUGINS);
     }
 
     /**
@@ -128,7 +148,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderPreChecker()
     {
         return new SalesOrderPreChecker(
-            $this->createGiftCardReader()
+            $this->createGiftCardReader(),
+            $this->createGiftCardDecisionRuleChecker()
         );
     }
 

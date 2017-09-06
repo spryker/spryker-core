@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\GiftCard\GiftCardConstants;
+use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 
 class SalesOrderPreChecker
@@ -23,11 +24,20 @@ class SalesOrderPreChecker
     protected $giftCardReader;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker
      */
-    public function __construct(GiftCardReaderInterface $giftCardReader)
-    {
+    protected $giftCardDecisionRuleChecker;
+
+    /**
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+     */
+    public function __construct(
+        GiftCardReaderInterface $giftCardReader,
+        GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+    ) {
         $this->giftCardReader = $giftCardReader;
+        $this->giftCardDecisionRuleChecker = $giftCardDecisionRuleChecker;
     }
 
     /**
@@ -55,7 +65,7 @@ class SalesOrderPreChecker
             $paymentTransfer->requireGiftCard();
             $giftCardTransfer = $paymentTransfer->getGiftCard();
 
-            if (!$this->giftCardReader->isUsed($giftCardTransfer->getCode())) {
+            if ($this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $quoteTransfer)) {
                 $validPayments[] = $paymentTransfer;
                 continue;
             }

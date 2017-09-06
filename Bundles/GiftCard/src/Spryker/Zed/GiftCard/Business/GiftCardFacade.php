@@ -170,4 +170,16 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
         $this->getFactory()->createSalesOrderItemSaver()->saveSalesOrderGiftCardItems($quoteTransfer, $checkoutResponse);
     }
 
+    /**
+     * @api
+     *
+     * @param string $code
+     *
+     * @return bool
+     */
+    public function isUsed($code)
+    {
+        return $this->getFactory()->createGiftCardReader()->isUsed($code);
+    }
+
 }
