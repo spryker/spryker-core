@@ -27,11 +27,11 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
     public function create(GiftCardTransfer $giftCardTransfer)
     {
-        $this
+        return $this
             ->getFactory()
             ->createGiftCardCreator()
             ->create($giftCardTransfer);
@@ -131,6 +131,18 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
             ->getFactory()
             ->createSalesOrderSaver()
             ->saveGiftCardPayments($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer
+     */
+    public function createGiftCardForOrderItem($idSalesOrderItem)
+    {
+        return $this->getFactory()->createGiftCardCreator()->createGiftCardForOrderItem($idSalesOrderItem);
     }
 
     /**

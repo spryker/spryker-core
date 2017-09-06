@@ -110,4 +110,19 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
         return $this->queryGiftCards()->filterByCode($code);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCardQuery
+     */
+    public function queryGiftCardOrderItemMetadata($idSalesOrderItem)
+    {
+        return $this
+            ->getFactory()
+            ->createSpySalesOrderItemGiftCardQuery()
+            ->filterByFkSalesOrderItem($idSalesOrderItem);
+    }
+
 }

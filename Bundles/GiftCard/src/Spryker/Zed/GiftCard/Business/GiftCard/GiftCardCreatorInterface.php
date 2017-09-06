@@ -15,8 +15,15 @@ interface GiftCardCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
     public function create(GiftCardTransfer $giftCardTransfer);
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer
+     */
+    public function createGiftCardForOrderItem($idSalesOrderItem);
 
 }

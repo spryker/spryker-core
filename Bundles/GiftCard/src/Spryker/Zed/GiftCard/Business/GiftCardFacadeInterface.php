@@ -23,7 +23,7 @@ interface GiftCardFacadeInterface
      *
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
     public function create(GiftCardTransfer $giftCardTransfer);
 
@@ -92,6 +92,15 @@ interface GiftCardFacadeInterface
      * @return void
      */
     public function saveGiftCardPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer
+     */
+    public function createGiftCardForOrderItem($idSalesOrderItem);
 
     /**
      * @api

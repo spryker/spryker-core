@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\GiftCard\Business\Exception\GiftCardNotFoundException;
+use Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException;
 use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
 
 class GiftCardReader implements GiftCardReaderInterface
@@ -153,6 +154,34 @@ class GiftCardReader implements GiftCardReaderInterface
     public function isUsed(GiftCardTransfer $giftCardTransfer)
     {
         return $this->queryContainer->queryPaymentGiftCardsForCode($giftCardTransfer->getCode())->count() > 0;
+    }
+
+    /**
+     * @param string $code
+     *
+     * @return bool
+     */
+    public function isPresent($code)
+    {
+        return $this->queryContainer->queryGiftCardByCode($code)->count() > 0;
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @throws \Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard
+     */
+    public function getGiftCardOrderItemMetadata($idSalesOrderItem)
+    {
+        $giftCardSalesMetadata = $this->queryContainer->queryGiftCardOrderItemMetadata($idSalesOrderItem)->findOne();
+
+        if (!$giftCardSalesMetadata) {
+            throw new GiftCardSalesMetadataNotFoundException('Giftcard Metadata for item ' . $idSalesOrderItem . ' were requested but are missing');
+        }
+
+        return $giftCardSalesMetadata;
     }
 
 }

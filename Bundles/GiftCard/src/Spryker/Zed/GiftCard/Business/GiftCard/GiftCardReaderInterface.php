@@ -17,4 +17,27 @@ interface GiftCardReaderInterface
      */
     public function findById($idGiftCard);
 
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @throws \Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard
+     */
+    public function getGiftCardOrderItemMetadata($idSalesOrderItem);
+
+    /**
+     * @param string $code
+     *
+     * @return bool
+     */
+    public function isPresent($code);
+
+    /**
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer|null
+     */
+    public function findByCode($code);
+    
 }

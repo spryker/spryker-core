@@ -62,4 +62,13 @@ interface GiftCardQueryContainerInterface
      */
     public function queryPaymentGiftCardsForIdSalesPayment($idSalesPayment);
 
+    /**
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCardQuery
+     */
+    public function queryGiftCardOrderItemMetadata($idSalesOrderItem);
+
 }

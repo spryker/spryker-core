@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
 use Spryker\Zed\GiftCard\GiftCardConfig;
-use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
 
 class GiftCardCodeGenerator
 {
@@ -21,18 +20,18 @@ class GiftCardCodeGenerator
     /**
      * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface
      */
-    private $giftCardQueryContainer;
+    private $giftCardReader;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface $giftCardQueryContainer
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
-        GiftCardQueryContainerInterface $giftCardQueryContainer,
+        GiftCardReaderInterface $giftCardReader,
         GiftCardConfig $giftCardConfig
     ) {
+        $this->giftCardReader = $giftCardReader;
         $this->giftCardConfig = $giftCardConfig;
-        $this->giftCardQueryContainer = $giftCardQueryContainer;
     }
 
     /**
@@ -47,7 +46,7 @@ class GiftCardCodeGenerator
         //TODO evaluate max tries
         //TODO make sure to prevent gift card / voucher code collisions
 
-        while ($this->hasGiftCardCode($candidate)) {
+        while ($this->giftCardReader->isPresent($candidate)) {
             $candidate = $this->generateGiftCardCodeCandidate($abstractConfiguration->getCodePattern());
         }
 
@@ -127,16 +126,6 @@ class GiftCardCodeGenerator
         //TODO inject custom code validation plugins
 
         return true;
-    }
-
-    /**
-     * @param string $code
-     *
-     * @return bool
-     */
-    public function hasGiftCardCode($code)
-    {
-        return $this->giftCardQueryContainer->queryGiftCardByCode($code)->count() > 0;
     }
 
 }
