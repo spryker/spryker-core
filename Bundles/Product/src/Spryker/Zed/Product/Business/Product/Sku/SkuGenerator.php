@@ -57,6 +57,11 @@ class SkuGenerator implements SkuGeneratorInterface
     }
 
     /**
+     *  - Transliterates from UTF-8 to ASCII character set
+     *  - Removes all non Alphanumeric and (.,-,_) characters
+     *  - Replaces all space characters with dashes
+     *  - Replaces multiple dashes with single dash
+     *
      * @param string $sku
      *
      * @return string
