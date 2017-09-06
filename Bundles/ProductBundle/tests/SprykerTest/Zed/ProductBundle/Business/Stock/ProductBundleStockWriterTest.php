@@ -82,7 +82,7 @@ class ProductBundleStockWriterTest extends Unit
         $relatedProductSku = 'sku-321';
 
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandlerMock();
-        $productBundleAvailabilityHandlerMock->expects($this->once())->method('updateBundleAvailability');
+        $productBundleAvailabilityHandlerMock->expects($this->once())->method('removeBundleAvailability');
 
         $productStockWriteMock = $this->createProductStockWriterMock($productBundleAvailabilityHandlerMock);
 
