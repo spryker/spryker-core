@@ -44,7 +44,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsQueryContainer(),
             $this->getLocaleFacade(),
             $this->getConfig(),
-            $this->getCmsFacade()
+            $this->getCmsFacade(),
+            $this->getCmsPageTableExpanderPlugins()
         );
     }
 
@@ -323,6 +324,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+    protected function getCmsPageTableExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_PAGE_TABLE_EXPANDER);
     }
 
 }

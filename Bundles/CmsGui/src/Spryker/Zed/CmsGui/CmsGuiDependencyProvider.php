@@ -31,6 +31,8 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     const TWIG_ENVIRONMENT = 'twig environment';
 
+    const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -66,6 +68,8 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getTwigEnvironment();
         };
 
+        $container = $this->addCmsPageTableExpanderPlugins($container);
+
         return $container;
     }
 
@@ -76,6 +80,28 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $pimplePlugin = new Pimple();
         return $pimplePlugin->getApplication()['twig'];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsPageTableExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CMS_PAGE_TABLE_EXPANDER] = function (Container $container) {
+            return $this->getCmsPageTableExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+    protected function getCmsPageTableExpanderPlugins()
+    {
+        return [];
     }
 
 }

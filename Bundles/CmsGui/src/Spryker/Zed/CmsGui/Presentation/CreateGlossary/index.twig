@@ -15,7 +15,9 @@
 {% block action %}
     {% set redirectUrl = url('/cms-gui/create-glossary', {'id-cms-page' : idCmsPage}) %}
     {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
-    {{ viewActionButton(previewPageUrl, 'Preview' | trans, {'target': '_blank'}) }}
+    {% if previewPageUrl is defined %}
+        {{ viewActionButton(previewPageUrl, 'Preview' | trans, {'target': '_blank'}) }}
+    {% endif %}
     {{ editActionButton(url('/cms-gui/edit-page', {'id-cms-page': idCmsPage}), 'Edit page' | trans) }}
     {% if cmsVersion is not null %}
         {{ removeActionButton(url('/cms-gui/version-page/discard', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Discard Draft' | trans) }}

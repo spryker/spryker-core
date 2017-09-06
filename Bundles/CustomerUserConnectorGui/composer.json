@@ -16,7 +16,9 @@
   },
   "suggest": {
     "spryker/user": "If you want to have user handling",
-    "spryker/util-text": "If you want to use UsersTableExpanderPlugin"
+    "spryker/util-text": "If you want to use UsersTableExpanderPlugin",
+    "spryker/cms": "",
+    "spryker/cms-gui": ""
   },
   "autoload": {
     "psr-4": {

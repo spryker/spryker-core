@@ -56,21 +56,29 @@ class CmsPageTable extends AbstractTable
     protected $cmsFacade;
 
     /**
+     * @var \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+    protected $cmsPageTableExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface $localeFacade
      * @param \Spryker\Zed\CmsGui\CmsGuiConfig $cmsGuiConfig
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     * @param \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[] $cmsPageTableExpanderPlugins
      */
     public function __construct(
         CmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
         CmsGuiToLocaleInterface $localeFacade,
         CmsGuiConfig $cmsGuiConfig,
-        CmsGuiToCmsInterface $cmsFacade
+        CmsGuiToCmsInterface $cmsFacade,
+        array $cmsPageTableExpanderPlugins
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->cmsGuiConfig = $cmsGuiConfig;
         $this->cmsFacade = $cmsFacade;
+        $this->cmsPageTableExpanderPlugins = $cmsPageTableExpanderPlugins;
     }
 
     /**
@@ -168,28 +176,9 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function getPreviewPageUrl(array $item, $urlPrefix)
-    {
-        $yvesHost = $this->cmsGuiConfig->findYvesHost();
-        if ($yvesHost === null) {
-            return '';
-        }
-
-        // TODO: enhance required, this has to be dynamic
-        return $yvesHost . $urlPrefix . 'cms/preview/' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE];
-    }
-
-    /**
-     * @param array $item
-     * @param string $urlPrefix
-     *
-     * @return string
-     */
     protected function createViewButtonGroup(array $item, $urlPrefix)
     {
-        $groupItems = [
-            $this->createButtonGroupItem('Preview', $this->getPreviewPageUrl($item, $urlPrefix), false, ['target' => '_blank'])
-        ];
+        $groupItems = $this->getCmsPageTableExpanderPluginViewButtonGroupItems($item);
 
         if ($this->isDraft($item)) {
             return $this->generateButtonGroup($groupItems, 'View');
@@ -203,6 +192,22 @@ class CmsPageTable extends AbstractTable
         }
 
         return $this->generateButtonGroup($groupItems, 'View ');
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function getCmsPageTableExpanderPluginViewButtonGroupItems(array $item)
+    {
+        $viewButtonItems = [];
+
+        foreach ($this->cmsPageTableExpanderPlugins as $cmsPageTableExpanderPlugin) {
+            $viewButtonItems = array_merge($viewButtonItems, $cmsPageTableExpanderPlugin->getViewButtonGroupItems($item));
+        }
+
+        return $viewButtonItems;
     }
 
     /**

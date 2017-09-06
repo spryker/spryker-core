@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerUserConnector\Communication\Plugin;
+namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface;
@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CustomerUserConnector\Communication\CustomerUserConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiFacade getFacade()
  */
 class CustomerTransferUsernameExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
@@ -42,9 +43,12 @@ class CustomerTransferUsernameExpanderPlugin extends AbstractPlugin implements C
             ->getUserQueryContainer()
             ->queryUserById($customerTransfer->getFkUser())
             ->find();
-        $username = $userCollection[0]->getUsername();
 
-        return $customerTransfer->setUsername($username);
+        if ($userCollection->count() < 1) {
+            return $customerTransfer;
+        }
+
+        return $customerTransfer->setUsername($userCollection[0]->getUsername());
     }
 
 }

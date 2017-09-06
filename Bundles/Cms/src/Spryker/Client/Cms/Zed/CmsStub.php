@@ -14,7 +14,7 @@ class CmsStub implements CmsStubInterface
 {
 
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClient
+     * @var \Spryker\Client\Cms\Dependency\Client\CmsToZedRequestInterface
      */
     protected $cmsToZedRequestBridge;
 
