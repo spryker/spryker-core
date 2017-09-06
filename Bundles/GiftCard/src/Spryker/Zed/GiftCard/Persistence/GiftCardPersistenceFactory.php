@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCard\Persistence;
 
 use Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfigurationQuery;
+use Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfigurationQuery;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery;
 use Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCardQuery;
@@ -42,6 +43,14 @@ class GiftCardPersistenceFactory extends AbstractPersistenceFactory
     public function createSpyGiftCardProductAbstractConfigurationQuery()
     {
         return SpyGiftCardProductAbstractConfigurationQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfigurationQuery
+     */
+    public function createSpyGiftCardProductConfigurationQuery()
+    {
+        return SpyGiftCardProductConfigurationQuery::create();
     }
 
     /**

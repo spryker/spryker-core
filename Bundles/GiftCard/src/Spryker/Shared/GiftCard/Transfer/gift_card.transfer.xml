@@ -42,10 +42,13 @@
 
     <transfer name="GiftCardProductConfiguration">
         <property name="idGiftCardProductConfiguration" type="int" />
+        <property name="value" type="int" />
     </transfer>
 
     <transfer name="GiftCardMetadata">
         <property name="isGiftCard" type="bool" />
+        <property name="abstractConfiguration" type="GiftCardAbstractProductConfiguration" />
+        <property name="concreteConfiguration" type="GiftCardProductConfiguration" />
     </transfer>
 
 </transfers>

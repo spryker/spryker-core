@@ -38,6 +38,15 @@ interface GiftCardQueryContainerInterface
     /**
      * @api
      *
+     * @param string $concreteSku
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfigurationQuery
+     */
+    public function queryGiftCardConfigurationByProductSku($concreteSku);
+
+    /**
+     * @api
+     *
      * @param string $code
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery

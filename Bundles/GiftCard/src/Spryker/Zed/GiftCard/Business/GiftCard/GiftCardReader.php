@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
+use Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer;
+use Generated\Shared\Transfer\GiftCardProductConfigurationTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
@@ -164,6 +166,44 @@ class GiftCardReader implements GiftCardReaderInterface
     public function isPresent($code)
     {
         return $this->queryContainer->queryGiftCardByCode($code)->count() > 0;
+    }
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer|null
+     */
+    public function findGiftCardAbstractConfiguration($abstractSku)
+    {
+        $configurationEntity = $this->queryContainer->queryGiftCardConfigurationByProductAbstractSku($abstractSku)->findOne();
+
+        if (!$configurationEntity) {
+            return null;
+        }
+
+        $configurationTransfer = new GiftCardAbstractProductConfigurationTransfer();
+        $configurationTransfer->fromArray($configurationEntity->toArray(), true);
+
+        return $configurationTransfer;
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer|null
+     */
+    public function findGiftCardConcreteConfiguration($concreteSku)
+    {
+        $configurationEntity = $this->queryContainer->queryGiftCardConfigurationByProductSku($concreteSku)->findOne();
+
+        if (!$configurationEntity) {
+            return null;
+        }
+
+        $configurationTransfer = new GiftCardProductConfigurationTransfer();
+        $configurationTransfer->fromArray($configurationEntity->toArray(), true);
+
+        return $configurationTransfer;
     }
 
     /**

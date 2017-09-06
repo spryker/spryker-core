@@ -10,22 +10,22 @@ namespace Spryker\Zed\GiftCard\Business\Cart;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\GiftCardMetadataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
+use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 
 class MetadataExpander implements MetadataExpanderInterface
 {
 
     /**
-     * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
-    protected $giftCardQueryContainer;
+    protected $giftCardReader;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface $giftCardQueryContainer
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      */
-    public function __construct(GiftCardQueryContainerInterface $giftCardQueryContainer)
+    public function __construct(GiftCardReaderInterface $giftCardReader)
     {
-        $this->giftCardQueryContainer = $giftCardQueryContainer;
+        $this->giftCardReader = $giftCardReader;
     }
 
     /**
@@ -52,27 +52,21 @@ class MetadataExpander implements MetadataExpanderInterface
         $itemTransfer->requireAbstractSku();
         $metadata = new GiftCardMetadataTransfer();
 
-        $giftCardConfiguration = $this->findGiftCardConfiguration($itemTransfer->getAbstractSku());
+        $abstractGiftCardConfiguration = $this->giftCardReader->findGiftCardAbstractConfiguration($itemTransfer->getAbstractSku());
 
-        if (!$giftCardConfiguration) {
+        if (!$abstractGiftCardConfiguration) {
             $metadata->setIsGiftCard(false);
 
             return $metadata;
         }
 
         $metadata->setIsGiftCard(true);
+        $metadata->setAbstractConfiguration($abstractGiftCardConfiguration);
+
+        $concreteConfiguration = $this->giftCardReader->findGiftCardConcreteConfiguration($itemTransfer->getSku());
+        $metadata->setConcreteConfiguration($concreteConfiguration);
 
         return $metadata;
-    }
-
-    /**
-     * @param string $abstractSku
-     *
-     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration|null
-     */
-    protected function findGiftCardConfiguration($abstractSku)
-    {
-        return $this->giftCardQueryContainer->queryGiftCardConfigurationByProductAbstractSku($abstractSku)->findOne();
     }
 
 }

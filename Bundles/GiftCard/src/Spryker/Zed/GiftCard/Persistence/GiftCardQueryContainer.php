@@ -89,6 +89,25 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     /**
      * @api
      *
+     * @param string $concreteSku
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfigurationQuery
+     */
+    public function queryGiftCardConfigurationByProductSku($concreteSku)
+    {
+        return $this
+            ->getFactory()
+            ->createSpyGiftCardProductConfigurationQuery()
+            ->useSpyGiftCardProductConfigurationLinkQuery()
+            ->useSpyProductQuery()
+            ->filterBySku($concreteSku)
+            ->endUse()
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idSalesPayment
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery

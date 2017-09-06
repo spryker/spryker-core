@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard;
-use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class SalesOrderItemSaver
@@ -20,7 +20,7 @@ class SalesOrderItemSaver
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingService
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
@@ -31,11 +31,11 @@ class SalesOrderItemSaver
 
     /**
      * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[] $attributePlugins
-     * @param \Spryker\Service\UtilEncoding\UtilEncodingService $utilEncodingService
+     * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         array $attributePlugins,
-        UtilEncodingService $utilEncodingService
+        UtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->utilEncodingService = $utilEncodingService;
         $this->attributePlugins = $attributePlugins;
@@ -82,6 +82,15 @@ class SalesOrderItemSaver
         $salesOrderGiftCardItemEntity = new SpySalesOrderItemGiftCard();
         $salesOrderGiftCardItemEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
         $attributes = $this->getAttributes($itemTransfer);
+
+        //TODO outsource
+        $pattern = $itemTransfer->getGiftCardMetadata()->getAbstractConfiguration()->getCodePattern();
+        $salesOrderGiftCardItemEntity->setPattern($pattern);
+        $concreteConfiguration = $itemTransfer->getGiftCardMetadata()->getConcreteConfiguration();
+
+        if ($concreteConfiguration && $concreteConfiguration->getValue()) {
+            $salesOrderGiftCardItemEntity->setValue($concreteConfiguration->getValue());
+        }
 
         $salesOrderGiftCardItemEntity->setAttributes($this->utilEncodingService->encodeJson($attributes));
 

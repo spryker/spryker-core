@@ -93,7 +93,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
      */
     public function createGiftCardMetadataExpander()
     {
-        return new MetadataExpander($this->getQueryContainer());
+        return new MetadataExpander($this->createGiftCardReader());
     }
 
     /**

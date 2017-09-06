@@ -46,5 +46,19 @@ interface GiftCardReaderInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer|null
      */
     public function findByCode($code);
-    
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer|null
+     */
+    public function findGiftCardAbstractConfiguration($abstractSku);
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationTransfer|null
+     */
+    public function findGiftCardConcreteConfiguration($concreteSku);
+
 }
