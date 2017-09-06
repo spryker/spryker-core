@@ -5,14 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CmsContentWidget\Zed;
+namespace Spryker\Client\CmsCollector;
 
 use Generated\Shared\Transfer\CmsPageCollectorDataTransfer;
 
-interface CmsContentWidgetStubInterface
+interface CmsCollectorClientInterface
 {
 
     /**
+     * Specification
+     * - Expands collector data with cms content widget parameter map
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsPageCollectorDataTransfer $cmsPageCollectorDataTransfer
      *
      * @return \Generated\Shared\Transfer\CmsPageCollectorDataTransfer

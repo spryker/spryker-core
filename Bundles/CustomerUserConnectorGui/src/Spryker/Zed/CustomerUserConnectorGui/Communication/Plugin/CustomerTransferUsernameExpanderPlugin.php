@@ -12,7 +12,7 @@ use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterfa
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CustomerUserConnector\Communication\CustomerUserConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiFacade getFacade()
  */
 class CustomerTransferUsernameExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface

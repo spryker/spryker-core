@@ -22,8 +22,4 @@
         <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
-    <transfer name="CmsPageCollectorData">
-        <property name="collectedData" type="array" />
-    </transfer>
-
 </transfers>

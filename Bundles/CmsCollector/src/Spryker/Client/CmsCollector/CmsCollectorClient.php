@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CmsContentWidget;
+namespace Spryker\Client\CmsCollector;
 
 use Generated\Shared\Transfer\CmsPageCollectorDataTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\CmsContentWidget\CmsContentWidgetFactory getFactory
+ * @method \Spryker\Client\CmsCollector\CmsCollectorFactory getFactory
  */
-class CmsContentWidgetClient extends AbstractClient implements CmsContentWidgetClientInterface
+class CmsCollectorClient extends AbstractClient implements CmsCollectorClientInterface
 {
 
     /**
@@ -27,7 +27,7 @@ class CmsContentWidgetClient extends AbstractClient implements CmsContentWidgetC
      */
     public function expandCmsPageCollectorData(CmsPageCollectorDataTransfer $cmsPageCollectorDataTransfer)
     {
-        return $this->getFactory()->createCmsContentWidgetStub()->expandCmsPageCollectorData($cmsPageCollectorDataTransfer);
+        return $this->getFactory()->createCmsCollectorStub()->expandCmsPageCollectorData($cmsPageCollectorDataTransfer);
     }
 
 }

@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CmsContentWidget;
+namespace Spryker\Client\CmsCollector;
 
-use Spryker\Client\CmsContentWidget\Dependency\Client\CmsContentWidgetToZedRequestBridge;
+use Spryker\Client\CmsCollector\Dependency\Client\CmsCollectorToZedRequestBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
-class CmsContentWidgetDependencyProvider extends AbstractDependencyProvider
+class CmsCollectorDependencyProvider extends AbstractDependencyProvider
 {
 
     const SERVICE_ZED = 'SERVICE_ZED';
@@ -24,7 +24,7 @@ class CmsContentWidgetDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container[static::SERVICE_ZED] = function (Container $container) {
-            return new CmsContentWidgetToZedRequestBridge($container->getLocator()->zedRequest()->client());
+            return new CmsCollectorToZedRequestBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

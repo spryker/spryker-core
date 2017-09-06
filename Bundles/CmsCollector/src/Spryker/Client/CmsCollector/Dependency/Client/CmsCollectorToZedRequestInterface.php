@@ -3,11 +3,11 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-namespace Spryker\Client\CmsContentWidget\Dependency\Client;
+namespace Spryker\Client\CmsCollector\Dependency\Client;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-interface CmsContentWidgetToZedRequestInterface
+interface CmsCollectorToZedRequestInterface
 {
 
     /**

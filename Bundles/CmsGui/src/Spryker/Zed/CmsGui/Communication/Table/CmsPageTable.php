@@ -24,6 +24,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class CmsPageTable extends AbstractTable
 {
 
+    // TODO: reduce dependencies
     const ACTIONS = 'Actions';
     const URL_CMS_PAGE_ACTIVATE = '/cms-gui/edit-page/activate';
     const URL_CMS_PAGE_DEACTIVATE = '/cms-gui/edit-page/deactivate';

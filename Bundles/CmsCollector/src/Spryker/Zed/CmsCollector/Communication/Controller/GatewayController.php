@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsContentWidget\Communication\Controller;
+namespace Spryker\Zed\CmsCollector\Communication\Controller;
 
 use Generated\Shared\Transfer\CmsPageCollectorDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\CmsContentWidget\Communication\Plugin\CmsPageCollector\CmsPageCollectorParameterMapExpanderPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
-/**
- * @method \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacade getFacade()
- * @method \Spryker\Zed\CmsContentWidget\Communication\CmsContentWidgetCommunicationFactory getFactory()
- */
 class GatewayController extends AbstractGatewayController
 {
 
@@ -25,13 +22,24 @@ class GatewayController extends AbstractGatewayController
      */
     public function expandCmsPageCollectorDataAction(CmsPageCollectorDataTransfer $cmsPageCollectorDataTransfer)
     {
-        $expandedCollectorData = $this->getFacade()->expandCmsPageCollectorData(
-            $cmsPageCollectorDataTransfer->getCollectedData(),
-            new LocaleTransfer()
-        );
-        $cmsPageCollectorDataTransfer->setCollectedData($expandedCollectorData);
+        $collectedData = $cmsPageCollectorDataTransfer->getCollectedData();
+
+        foreach ($this->getExpanderPlugins() as $expanderPlugin) {
+            $collectedData = $expanderPlugin->expand($collectedData, new LocaleTransfer());
+        }
+        $cmsPageCollectorDataTransfer->setCollectedData($collectedData);
 
         return $cmsPageCollectorDataTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
+     */
+    protected function getExpanderPlugins()
+    {
+        return [
+            new CmsPageCollectorParameterMapExpanderPlugin(),
+        ];
     }
 
 }
