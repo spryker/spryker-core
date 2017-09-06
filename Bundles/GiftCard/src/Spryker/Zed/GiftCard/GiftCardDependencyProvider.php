@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GiftCard;
 
+use Spryker\Zed\GiftCard\Communication\Plugin\GiftCardIsActiveDecisionRulePlugin;
+use Spryker\Zed\GiftCard\Communication\Plugin\GiftCardIsUsedDecisionRulePlugin;
 use Spryker\Zed\GiftCard\Communication\Plugin\GiftCardRecreateValueProviderPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -111,7 +113,18 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getDecisionRulePlugins()
     {
-        return [];
+        return $this->getRecreateDecisionRulePlugins();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface[]
+     */
+    protected function getRecreateDecisionRulePlugins()
+    {
+        return [
+            new GiftCardIsActiveDecisionRulePlugin(),
+            new GiftCardIsUsedDecisionRulePlugin(),
+        ];
     }
 
 }
