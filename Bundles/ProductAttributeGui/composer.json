@@ -1,0 +1,38 @@
+{
+  "name": "spryker/product-attribute-gui",
+  "description": "ProductAttributeGui module",
+  "license": "proprietary",
+  "require": {
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/product": "^5.2.0",
+    "spryker/product-attribute": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-text": "^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Unit": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

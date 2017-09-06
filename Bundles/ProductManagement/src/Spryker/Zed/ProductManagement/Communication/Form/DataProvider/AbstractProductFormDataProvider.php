@@ -207,7 +207,6 @@ class AbstractProductFormDataProvider
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
         $data = array_merge($data, $this->getSeoDefaultFields());
-        $data = array_merge($data, $this->getAttributeAbstractDefaultFields());
         $data = array_merge($data, $this->getImagesDefaultFields());
 
         return $data;

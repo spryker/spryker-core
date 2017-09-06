@@ -17,23 +17,6 @@ class ProductManagementConfig extends AbstractBundleConfig
     const PRODUCT_TYPE_REGULAR = 'regular';
 
     /**
-     * @return array
-     */
-    public function getAttributeTypeChoices()
-    {
-        return [
-            'text' => 'text',
-            'textarea' => 'textarea',
-            'number' => 'number',
-            'float' => 'float',
-            'date' => 'date',
-            'time' => 'time',
-            'datetime' => 'datetime',
-            'select' => 'select',
-        ];
-    }
-
-    /**
      * @return string
      */
     public function getImageUrlPrefix()

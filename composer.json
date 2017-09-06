@@ -113,6 +113,8 @@
     "spryker/price": "*",
     "spryker/price-cart-connector": "*",
     "spryker/product": "*",
+    "spryker/product-attribute": "*",
+    "spryker/product-attribute-gui": "*",
     "spryker/product-bundle": "*",
     "spryker/product-cart-connector": "*",
     "spryker/product-category": "*",
