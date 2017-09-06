@@ -138,6 +138,18 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @param int $idSalesOrderItem
      *
+     * @return bool
+     */
+    public function isGiftCardOrderItem($idSalesOrderItem)
+    {
+        return $this->getFactory()->createGiftCardReader()->isGiftCardOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
      * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
     public function createGiftCardForOrderItem($idSalesOrderItem)

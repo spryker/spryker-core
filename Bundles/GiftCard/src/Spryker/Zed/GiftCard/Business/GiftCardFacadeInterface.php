@@ -98,6 +98,15 @@ interface GiftCardFacadeInterface
      *
      * @param int $idSalesOrderItem
      *
+     * @return bool
+     */
+    public function isGiftCardOrderItem($idSalesOrderItem);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
      * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
     public function createGiftCardForOrderItem($idSalesOrderItem);

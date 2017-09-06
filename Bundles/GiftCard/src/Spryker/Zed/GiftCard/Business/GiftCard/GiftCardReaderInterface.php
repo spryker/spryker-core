@@ -20,6 +20,13 @@ interface GiftCardReaderInterface
     /**
      * @param int $idSalesOrderItem
      *
+     * @return bool
+     */
+    public function isGiftCardOrderItem($idSalesOrderItem);
+
+    /**
+     * @param int $idSalesOrderItem
+     *
      * @throws \Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard

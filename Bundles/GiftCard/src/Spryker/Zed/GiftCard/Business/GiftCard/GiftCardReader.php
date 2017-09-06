@@ -169,6 +169,16 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
+    public function isGiftCardOrderItem($idSalesOrderItem)
+    {
+        return $this->queryContainer->queryGiftCardOrderItemMetadata($idSalesOrderItem)->count() > 0;
+    }
+
+    /**
      * @param string $abstractSku
      *
      * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer|null
