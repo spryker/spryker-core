@@ -66,7 +66,7 @@ class SalesListCest
         $url = SalesDetailPage::getOrderDetailsPageUrl($latestOrderId);
 
         $i->amOnPage($url);
-        $i->seeBreadcrumbNavigation('Dashboard / Sales / Order Overview');
+        $i->seeBreadcrumbNavigation('Dashboard / Sales / Orders / Order Overview');
     }
 
 }

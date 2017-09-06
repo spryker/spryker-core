@@ -138,7 +138,7 @@ class OrdersTable extends AbstractTable
             return $this->formatPrice(0);
         }
 
-        return $this->formatPrice($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL]);
+        return $this->formatPrice((int)$item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL]);
     }
 
     /**
