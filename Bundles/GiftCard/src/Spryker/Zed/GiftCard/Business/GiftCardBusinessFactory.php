@@ -14,6 +14,7 @@ use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReader;
+use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReplacer;
 use Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPreChecker;
@@ -169,6 +170,18 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderSaver()
     {
         return new SalesOrderPaymentSaver();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReplacer
+     */
+    public function createGiftCardReplacer()
+    {
+        return new GiftCardReplacer(
+            $this->createGiftCardReader(),
+            $this->createGiftCardCreator(),
+            $this->createGiftCardCodeGenerator()
+        );
     }
 
 }

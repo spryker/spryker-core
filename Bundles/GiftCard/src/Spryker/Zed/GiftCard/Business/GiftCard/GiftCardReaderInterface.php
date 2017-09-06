@@ -68,4 +68,11 @@ interface GiftCardReaderInterface
      */
     public function findGiftCardConcreteConfiguration($concreteSku);
 
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \ArrayObject|\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
+     */
+    public function getGiftCardPaymentsForOrder($idSalesOrder);
+
 }

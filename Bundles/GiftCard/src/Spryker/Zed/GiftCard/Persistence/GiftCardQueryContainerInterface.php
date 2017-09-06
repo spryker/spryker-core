@@ -74,6 +74,15 @@ interface GiftCardQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery
+     */
+    public function queryPaymentGiftCardsForIdSalesOrder($idSalesOrder);
+
+    /**
+     * @api
+     *
      * @param int $idSalesOrderItem
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCardQuery

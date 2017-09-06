@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCard\Dependency\Injector;
 
 use Spryker\Zed\GiftCard\Communication\Plugin\Oms\Command\CreateGiftCardCommandPlugin;
+use Spryker\Zed\GiftCard\Communication\Plugin\Oms\Command\ReplaceGiftCardsCommandPlugin;
 use Spryker\Zed\GiftCard\Communication\Plugin\Oms\Condition\IsGiftCardConditionPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
@@ -40,7 +41,8 @@ class OmsDependencyInjector extends AbstractDependencyInjector
     {
         $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection
-                ->add(new CreateGiftCardCommandPlugin(), 'GiftCard/CreateGiftCard');
+                ->add(new CreateGiftCardCommandPlugin(), 'GiftCard/CreateGiftCard')
+                ->add(new ReplaceGiftCardsCommandPlugin(), 'GiftCard/ReplaceGiftCards');
 
             return $commandCollection;
         });

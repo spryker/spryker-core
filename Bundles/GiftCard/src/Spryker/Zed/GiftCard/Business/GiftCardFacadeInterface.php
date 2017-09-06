@@ -130,4 +130,13 @@ interface GiftCardFacadeInterface
      */
     public function isUsed($code);
 
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function replaceGiftCards($idSalesOrder);
+
 }

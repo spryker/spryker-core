@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer;
 use Generated\Shared\Transfer\GiftCardProductConfigurationTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
@@ -232,6 +233,23 @@ class GiftCardReader implements GiftCardReaderInterface
         }
 
         return $giftCardSalesMetadata;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \ArrayObject|\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
+     */
+    public function getGiftCardPaymentsForOrder($idSalesOrder)
+    {
+        $result = new ArrayObject();
+
+        $queryResults = $this->queryContainer->queryPaymentGiftCardsForIdSalesOrder($idSalesOrder);
+        foreach ($queryResults as $queryResult) {
+            $result[] = $queryResult;
+        }
+
+        return $result;
     }
 
 }

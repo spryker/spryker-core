@@ -4,6 +4,7 @@
     <table name="spy_gift_card" phpName="SpyGiftCard">
         <column name="id_gift_card" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="40" required="true"/>
+        <column name="replacement_pattern" type="VARCHAR" size="40" required="false"/>
         <column name="code" type="VARCHAR" size="40" required="true"/>
         <column name="value" type="INTEGER" required="true"/>
         <column name="is_active" type="BOOLEAN" required="true" default="true"/>

@@ -120,6 +120,22 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     /**
      * @api
      *
+     * @param int $idSalesOrder
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery
+     */
+    public function queryPaymentGiftCardsForIdSalesOrder($idSalesOrder)
+    {
+        return $this
+            ->queryPaymentGiftCards()
+            ->useSpySalesPaymentQuery()
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
      * @param string $code
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery

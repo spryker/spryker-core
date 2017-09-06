@@ -9,6 +9,7 @@
         <property name="idGiftCard" type="int"/>
         <property name="code" type="string"/>
         <property name="name" type="string"/>
+        <property name="replacementPattern" type="string"/>
         <property name="value" type="int"/>
         <property name="attributes" type="array"/>
         <property name="isActive" type="bool"/>

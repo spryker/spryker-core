@@ -182,4 +182,16 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
         return $this->getFactory()->createGiftCardReader()->isUsed($code);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function replaceGiftCards($idSalesOrder)
+    {
+        $this->getFactory()->createGiftCardReplacer()->replaceGiftCards($idSalesOrder);
+    }
+
 }
