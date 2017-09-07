@@ -114,6 +114,18 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     /**
      * @param int $idCmsBlockTemplate
      *
+     * @return bool
+     */
+    public function hasTemplateFileById($idCmsBlockTemplate)
+    {
+        $templateEntity = $this->getTemplateById($idCmsBlockTemplate);
+
+        return $this->isTemplateFileExists($templateEntity->getTemplatePath());
+    }
+
+    /**
+     * @param int $idCmsBlockTemplate
+     *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate
      */
     public function getTemplateById($idCmsBlockTemplate)
