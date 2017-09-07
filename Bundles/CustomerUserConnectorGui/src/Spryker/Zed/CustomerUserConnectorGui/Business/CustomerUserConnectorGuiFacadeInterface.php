@@ -5,21 +5,22 @@
  */
 namespace Spryker\Zed\CustomerUserConnectorGui\Business;
 
-use Generated\Shared\Transfer\CustomerUserConnectionTransfer;
+use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 
 interface CustomerUserConnectorGuiFacadeInterface
 {
 
     /**
      * Specification:
-     * // TODO: to do
+     * - Assigns provided user in transfer object to the "transfer.idCustomersToAssign" customers.
+     * - De-assigns users from "transfer.idCustomersToDeAssign" customers.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerUserConnectionTransfer $customerUserConnectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
      *
      * @return bool
      */
-    public function updateCustomerUserConnection(CustomerUserConnectionTransfer $customerUserConnectionTransfer);
+    public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer);
 
 }

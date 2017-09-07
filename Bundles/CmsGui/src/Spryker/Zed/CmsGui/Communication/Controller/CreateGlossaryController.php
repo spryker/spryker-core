@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,22 +91,24 @@ class CreateGlossaryController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
-            'previewPageUrl' => $this->getPreviePagewUrl($idCmsPage),
+            'viewActionButtons' => $this->getViewActionButtons($cmsPageTransfer),
         ];
     }
 
     /**
-     * @param int $idCmsPage
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @return string
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface[]
      */
-    protected function getPreviePagewUrl($idCmsPage)
+    protected function getViewActionButtons(CmsPageTransfer $cmsPageTransfer)
     {
-        $yvesHost = $this->getFactory()->getConfig()->findYvesHost();
-        $urlPrefix = '/en/';
+        $viewActionButtons = [];
 
-        // TODO: this has to be dynamic
-        return $previewPageUrl = $yvesHost . $urlPrefix . 'cms/preview/' . $idCmsPage;
+        foreach ($this->getFactory()->getCreateGlossaryExpanderPlugins() as $createGlossaryExpanderPlugin) {
+            $viewActionButtons = array_merge($viewActionButtons, $createGlossaryExpanderPlugin->getViewActionButtons($cmsPageTransfer));
+        }
+
+        return $viewActionButtons;
     }
 
     /**

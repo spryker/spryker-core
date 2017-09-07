@@ -68,5 +68,12 @@
         <property name="lastName" type="string" />
     </transfer>
 
+    <transfer name="Button">
+        <property name="url" type="string" />
+        <property name="title" type="string" />
+        <property name="defaultOptions" type="array" />
+        <property name="customOptions" type="array" />
+    </transfer>
+
 </transfers>
 

@@ -7,19 +7,18 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Form;
 
-use Generated\Shared\Transfer\CustomerUserConnectionTransfer;
+use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomerUserConnectorForm extends AbstractType
 {
 
-    const FIELD_ID_USER = CustomerUserConnectionTransfer::ID_USER;
-    const FIELD_IDS_USER_TO_ASSIGN_CSV = CustomerUserConnectionTransfer::ID_CUSTOMERS_TO_ASSIGN;
-    const FIELD_IDS_USER_TO_DE_ASSIGN_CSV = CustomerUserConnectionTransfer::ID_CUSTOMERS_TO_DE_ASSIGN;
+    const FIELD_ID_USER = CustomerUserConnectionUpdateTransfer::ID_USER;
+    const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_ASSIGN;
+    const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_DE_ASSIGN;
 
     /**
      * @return string
@@ -27,18 +26,6 @@ class CustomerUserConnectorForm extends AbstractType
     public function getName()
     {
         return 'customerUserConnection';
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => CustomerUserConnectionTransfer::class,
-        ]);
     }
 
     /**
@@ -50,9 +37,9 @@ class CustomerUserConnectorForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addProductLabelIdField($builder)
-            ->addIdsProductAbstractToAssignCsvField($builder)
-            ->addIdsProductAbstractToDeAssignCsvField($builder);
+            ->addIdUserField($builder)
+            ->addIdsCustomerToAssignCsvField($builder)
+            ->addIdsCustomerToDeAssignCsvField($builder);
     }
 
     /**
@@ -60,7 +47,7 @@ class CustomerUserConnectorForm extends AbstractType
      *
      * @return $this
      */
-    protected function addProductLabelIdField(FormBuilderInterface $builder)
+    protected function addIdUserField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_ID_USER,
@@ -75,19 +62,14 @@ class CustomerUserConnectorForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdsProductAbstractToAssignCsvField(FormBuilderInterface $builder)
+    protected function addIdsCustomerToAssignCsvField(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_IDS_USER_TO_ASSIGN_CSV,
-            HiddenType::class,
-            [
-                'attr' => [
-                    'id' => 'js-users-to-assign-ids-csv-field',
-                ],
-            ]
+            static::FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV,
+            HiddenType::class
         );
 
-        $this->addIdsCsvModelTransformer(static::FIELD_IDS_USER_TO_ASSIGN_CSV, $builder);
+        $this->addIdsCsvModelTransformer(static::FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV, $builder);
 
         return $this;
     }
@@ -97,19 +79,14 @@ class CustomerUserConnectorForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdsProductAbstractToDeAssignCsvField(FormBuilderInterface $builder)
+    protected function addIdsCustomerToDeAssignCsvField(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_IDS_USER_TO_DE_ASSIGN_CSV,
-            HiddenType::class,
-            [
-                'attr' => [
-                    'id' => 'js-users-to-de-assign-ids-csv-field',
-                ],
-            ]
+            static::FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV,
+            HiddenType::class
         );
 
-        $this->addIdsCsvModelTransformer(static::FIELD_IDS_USER_TO_DE_ASSIGN_CSV, $builder);
+        $this->addIdsCsvModelTransformer(static::FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV, $builder);
 
         return $this;
     }
@@ -125,19 +102,19 @@ class CustomerUserConnectorForm extends AbstractType
         $builder
             ->get($fieldName)
             ->addModelTransformer(new CallbackTransformer(
-                function ($idsProductAbstractAsArray) {
-                    if (!count($idsProductAbstractAsArray)) {
+                function ($idsCustomerAsArray) {
+                    if (!count($idsCustomerAsArray)) {
                         return [];
                     }
 
-                    return implode(',', $idsProductAbstractAsArray);
+                    return implode(',', $idsCustomerAsArray);
                 },
-                function ($idsProductAbstractAsCsv) {
-                    if (empty($idsProductAbstractAsCsv)) {
+                function ($idsCustomerAsCsv) {
+                    if (empty($idsCustomerAsCsv)) {
                         return [];
                     }
 
-                    return explode(',', $idsProductAbstractAsCsv);
+                    return explode(',', $idsCustomerAsCsv);
                 }
             ));
     }

@@ -32,6 +32,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     const TWIG_ENVIRONMENT = 'twig environment';
 
     const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
+    const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -69,6 +70,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addCmsPageTableExpanderPlugins($container);
+        $container = $this->addCreateGlossaryExpanderPlugins($container);
 
         return $container;
     }
@@ -100,6 +102,28 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
      */
     protected function getCmsPageTableExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCreateGlossaryExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CREATE_GLOSSARY_EXPANDER] = function (Container $container) {
+            return $this->getCreateGlossaryExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+    protected function getCreateGlossaryExpanderPlugins()
     {
         return [];
     }

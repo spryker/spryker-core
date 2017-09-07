@@ -15,19 +15,13 @@ class CustomerUserConnectorGuiBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface
-     */
-    public function getCustomerQueryContainer()
-    {
-        return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER);
-    }
-
-    /**
      * @return \Spryker\Zed\CustomerUserConnectorGui\Business\Model\CustomerUserConnectionUpdaterInterface
      */
     public function createCustomerUserConnectionUpdater()
     {
-        return new CustomerUserConnectionUpdater($this->getCustomerQueryContainer());
+        return new CustomerUserConnectionUpdater(
+            $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER)
+        );
     }
 
 }

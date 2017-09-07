@@ -24,14 +24,24 @@ class UsersTableExpanderPlugin implements UsersTableExpanderPluginInterface
     public function getActionButtonDefinitions(array $user)
     {
         return [
-            (new ButtonTransfer())
-                ->setUrl($this->getEditCustomerUserConnectionUrl($user[SpyUserTableMap::COL_ID_USER]))
-                ->setTitle('Assigned Customers')
-                ->setDefaultOptions([
-                    'class' => 'btn-edit',
-                    'icon' => 'fa-pencil-square-o',
-                ]),
+            $this->getEditCustomerUserConnectionButton($user),
         ];
+    }
+
+    /**
+     * @param array $user
+     *
+     * @return \Generated\Shared\Transfer\ButtonTransfer
+     */
+    protected function getEditCustomerUserConnectionButton(array $user)
+    {
+        return (new ButtonTransfer())
+            ->setUrl($this->getEditCustomerUserConnectionUrl($user[SpyUserTableMap::COL_ID_USER]))
+            ->setTitle('Assigned Customers')
+            ->setDefaultOptions([
+                'class' => 'btn-edit',
+                'icon' => 'fa-pencil-square-o',
+            ]);
     }
 
     /**

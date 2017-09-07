@@ -16,14 +16,14 @@ class CmsStub implements CmsStubInterface
     /**
      * @var \Spryker\Client\Cms\Dependency\Client\CmsToZedRequestInterface
      */
-    protected $cmsToZedRequestBridge;
+    protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\Cms\Dependency\Client\CmsToZedRequestInterface $cmsToZedRequestBridge
+     * @param \Spryker\Client\Cms\Dependency\Client\CmsToZedRequestInterface $zedRequestClient
      */
-    public function __construct(CmsToZedRequestInterface $cmsToZedRequestBridge)
+    public function __construct(CmsToZedRequestInterface $zedRequestClient)
     {
-        $this->cmsToZedRequestBridge = $cmsToZedRequestBridge;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -33,7 +33,7 @@ class CmsStub implements CmsStubInterface
      */
     public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer)
     {
-        return $this->cmsToZedRequestBridge->call('/cms/gateway/get-cms-version-data', $cmsVersionDataRequestTransfer);
+        return $this->zedRequestClient->call('/cms/gateway/get-cms-version-data', $cmsVersionDataRequestTransfer);
     }
 
 }

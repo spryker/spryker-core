@@ -16,14 +16,14 @@ class CmsCollectorStub implements CmsCollectorStubInterface
     /**
      * @var \Spryker\Client\CmsCollector\Dependency\Client\CmsCollectorToZedRequestInterface
      */
-    protected $cmsCollectorToZedRequestBridge;
+    protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\CmsCollector\Dependency\Client\CmsCollectorToZedRequestInterface $cmsCollectorToZedRequestBridge
+     * @param \Spryker\Client\CmsCollector\Dependency\Client\CmsCollectorToZedRequestInterface $zedRequestClient
      */
-    public function __construct(CmsCollectorToZedRequestInterface $cmsCollectorToZedRequestBridge)
+    public function __construct(CmsCollectorToZedRequestInterface $zedRequestClient)
     {
-        $this->cmsCollectorToZedRequestBridge = $cmsCollectorToZedRequestBridge;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -33,7 +33,7 @@ class CmsCollectorStub implements CmsCollectorStubInterface
      */
     public function expandCmsPageCollectorData(CmsPageCollectorDataTransfer $cmsPageCollectorDataTransfer)
     {
-        return $this->cmsCollectorToZedRequestBridge->call('/cms-collector/gateway/expand-cms-page-collector-data', $cmsPageCollectorDataTransfer);
+        return $this->zedRequestClient->call('/cms-collector/gateway/expand-cms-page-collector-data', $cmsPageCollectorDataTransfer);
     }
 
 }

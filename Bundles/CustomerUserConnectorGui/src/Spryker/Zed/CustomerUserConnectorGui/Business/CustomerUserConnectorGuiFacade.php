@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Business;
 
-use Generated\Shared\Transfer\CustomerUserConnectionTransfer;
+use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,15 +21,15 @@ class CustomerUserConnectorGuiFacade extends AbstractFacade implements CustomerU
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerUserConnectionTransfer $customerUserConnectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
      *
      * @return bool
      */
-    public function updateCustomerUserConnection(CustomerUserConnectionTransfer $customerUserConnectionTransfer)
+    public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer)
     {
         return $this->getFactory()
             ->createCustomerUserConnectionUpdater()
-            ->updateCustomerUserConnection($customerUserConnectionTransfer);
+            ->updateCustomerUserConnection($customerUserConnectionUpdateTransfer);
     }
 
 }

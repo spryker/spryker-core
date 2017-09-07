@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Business\Model;
 
-use Generated\Shared\Transfer\CustomerUserConnectionTransfer;
+use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 
 interface CustomerUserConnectionUpdaterInterface
 {
@@ -15,10 +15,10 @@ interface CustomerUserConnectionUpdaterInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerUserConnectionTransfer $customerUserConnectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
      *
      * @return bool
      */
-    public function updateCustomerUserConnection(CustomerUserConnectionTransfer $customerUserConnectionTransfer);
+    public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer);
 
 }

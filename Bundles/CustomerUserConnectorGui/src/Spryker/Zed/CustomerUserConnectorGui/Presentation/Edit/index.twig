@@ -1,7 +1,7 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Update user #' ~ idUser   %}
+{% set widget_title = 'Update user #' ~ userTransfer.idUser   %}
 
 {% block action %}
     {{ backActionButton('/user', 'List Users' | trans) }}

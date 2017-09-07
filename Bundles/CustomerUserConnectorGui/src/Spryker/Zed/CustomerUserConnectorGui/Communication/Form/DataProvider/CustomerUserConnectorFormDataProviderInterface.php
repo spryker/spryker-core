@@ -5,18 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Dependency\Plugin;
+namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Form\DataProvider;
 
-interface CmsPageTableExpanderPluginInterface
+interface CustomerUserConnectorFormDataProviderInterface
 {
 
     /**
-     * @api
-     *
-     * @param array $cmsPage
-     *
      * @return array
      */
-    public function getViewButtonGroupPermanentItems(array $cmsPage);
+    public function getOptions();
 
 }

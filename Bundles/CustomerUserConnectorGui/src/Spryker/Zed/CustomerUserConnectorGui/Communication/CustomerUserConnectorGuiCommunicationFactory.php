@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Communication;
 
-use Generated\Shared\Transfer\CustomerUserConnectionTransfer;
+use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Form\CustomerUserConnectorForm;
+use Spryker\Zed\CustomerUserConnectorGui\Communication\Form\DataProvider\CustomerUserConnectorFormDataProvider;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Table\AssignedCustomerTable;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Table\AvailableCustomerTable;
 use Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiDependencyProvider;
@@ -51,7 +52,11 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
      */
     public function createCustomerUserConnectorForm($idUser)
     {
-        return $this->getFormFactory()->create(new CustomerUserConnectorForm(), $this->createUserConnectionTransfer($idUser));
+        return $this->getFormFactory()->create(
+            new CustomerUserConnectorForm(),
+            $this->createUserConnectionTransfer($idUser),
+            $this->createCustomerUserConnectorFormDataProvider()->getOptions()
+        );
     }
 
     /**
@@ -65,11 +70,19 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
     /**
      * @param int $idUser
      *
-     * @return \Generated\Shared\Transfer\CustomerUserConnectionTransfer
+     * @return \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer
      */
     protected function createUserConnectionTransfer($idUser)
     {
-        return (new CustomerUserConnectionTransfer())->setIdUser($idUser);
+        return (new CustomerUserConnectionUpdateTransfer())->setIdUser($idUser);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerUserConnectorGui\Communication\Form\DataProvider\CustomerUserConnectorFormDataProvider
+     */
+    protected function createCustomerUserConnectorFormDataProvider()
+    {
+        return new CustomerUserConnectorFormDataProvider();
     }
 
 }

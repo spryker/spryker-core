@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Business\Model;
 
-use Generated\Shared\Transfer\CustomerUserConnectionTransfer;
+use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface;
 
 class CustomerUserConnectionUpdater implements CustomerUserConnectionUpdaterInterface
@@ -16,14 +16,14 @@ class CustomerUserConnectionUpdater implements CustomerUserConnectionUpdaterInte
     /**
      * @var \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface
      */
-    protected $customerUserConnectorGuiToCustomerQueryContainerBridge;
+    protected $customerQueryContainer;
 
     /**
-     * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerUserConnectorGuiToCustomerQueryContainerBridge
+     * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer
      */
-    public function __construct(CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerUserConnectorGuiToCustomerQueryContainerBridge)
+    public function __construct(CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer)
     {
-        $this->customerUserConnectorGuiToCustomerQueryContainerBridge = $customerUserConnectorGuiToCustomerQueryContainerBridge;
+        $this->customerQueryContainer = $customerQueryContainer;
     }
 
     /**
@@ -31,20 +31,20 @@ class CustomerUserConnectionUpdater implements CustomerUserConnectionUpdaterInte
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerUserConnectionTransfer $customerUserConnectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
      *
      * @return bool
      */
-    public function updateCustomerUserConnection(CustomerUserConnectionTransfer $customerUserConnectionTransfer)
+    public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer)
     {
-        foreach ($customerUserConnectionTransfer->getIdCustomersToAssign() as $customerIdToAssign) {
-            $customerEntity = $this->customerUserConnectorGuiToCustomerQueryContainerBridge->queryCustomerById($customerIdToAssign)->findOne();
-            $customerEntity->setFkUser($customerUserConnectionTransfer->getIdUser());
+        foreach ($customerUserConnectionUpdateTransfer->getIdCustomersToAssign() as $customerIdToAssign) {
+            $customerEntity = $this->customerQueryContainer->queryCustomerById($customerIdToAssign)->findOne();
+            $customerEntity->setFkUser($customerUserConnectionUpdateTransfer->getIdUser());
             $customerEntity->save();
         }
 
-        foreach ($customerUserConnectionTransfer->getIdCustomersToDeAssign() as $customerIdToDeAssign) {
-            $customerEntity = $this->customerUserConnectorGuiToCustomerQueryContainerBridge->queryCustomerById($customerIdToDeAssign)->findOne();
+        foreach ($customerUserConnectionUpdateTransfer->getIdCustomersToDeAssign() as $customerIdToDeAssign) {
+            $customerEntity = $this->customerQueryContainer->queryCustomerById($customerIdToDeAssign)->findOne();
             $customerEntity->setFkUser(null);
             $customerEntity->save();
         }

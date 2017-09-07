@@ -66,6 +66,18 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->addCollectorDataExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCollectorDataExpanderPlugins(Container $container)
     {
         $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {

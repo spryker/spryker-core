@@ -118,7 +118,7 @@ class UsersTable extends AbstractTable
      */
     public function createActionButtons(array $user)
     {
-        $urls = $this->generateExpanderPluginButtons($user);
+        $urls = $this->generateUsersTableExpanderPluginsActionButtons($user);
 
         $urls[] = $this->generateEditButton(
             Url::generate(self::UPDATE_USER_URL, [
@@ -188,7 +188,7 @@ class UsersTable extends AbstractTable
      *
      * @return array
      */
-    protected function generateExpanderPluginButtons(array $user)
+    protected function generateUsersTableExpanderPluginsActionButtons(array $user)
     {
         $urls = [];
 

@@ -334,4 +334,12 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_PAGE_TABLE_EXPANDER);
     }
 
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface[]
+     */
+    public function getCreateGlossaryExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CREATE_GLOSSARY_EXPANDER);
+    }
+
 }

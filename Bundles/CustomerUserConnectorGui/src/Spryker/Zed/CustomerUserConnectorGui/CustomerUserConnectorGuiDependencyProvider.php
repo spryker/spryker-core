@@ -66,7 +66,6 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCustomerQueryContainer($container);
 
         return $container;

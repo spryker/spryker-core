@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 class EditController extends AbstractController
 {
 
+    const PARAM_ID_USER = 'id-user';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -25,24 +27,32 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idUser = $request->query->getInt('id-user');
+        $idUser = $request->query->getInt(static::PARAM_ID_USER);
 
         $form = $this->getFactory()->createCustomerUserConnectorForm($idUser);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid() && $form->isSubmitted()) {
             $formData = $form->getData();
 
             $this->getFacade()->updateCustomerUserConnection($formData);
-            $this->addSuccessMessage('User updated.');
+            $this->addSuccessMessage('Customer-user connections updated.');
 
-            return $this->redirectResponse('/customer-user-connector-gui/edit?id-user=' . $idUser);
+            return $this->redirectResponse(
+                sprintf(
+                    '/customer-user-connector-gui/edit?%s=%d',
+                    static::PARAM_ID_USER,
+                    $idUser
+                )
+            );
         }
 
+        $userTransfer = (new UserTransfer())->setIdUser($idUser);
+
         return $this->viewResponse([
-            'availableCustomers' => $this->getFactory()->createAvailableCustomerTable((new UserTransfer())->setIdUser($idUser))->render(),
-            'assignedCustomers' => $this->getFactory()->createAssignedCustomerTable((new UserTransfer())->setIdUser($idUser))->render(),
-            'idUser' => $idUser,
+            'availableCustomers' => $this->getFactory()->createAvailableCustomerTable($userTransfer)->render(),
+            'assignedCustomers' => $this->getFactory()->createAssignedCustomerTable($userTransfer)->render(),
+            'userTransfer' => $userTransfer,
             'form' => $form->createView(),
         ]);
     }
@@ -54,7 +64,7 @@ class EditController extends AbstractController
      */
     public function availableCustomerTableAction(Request $request)
     {
-        $idUser = $request->query->get('id-user');
+        $idUser = $request->query->get(static::PARAM_ID_USER);
 
         return $this->jsonResponse(
             $this->getFactory()->createAvailableCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData()
@@ -68,7 +78,7 @@ class EditController extends AbstractController
      */
     public function assignedCustomerTableAction(Request $request)
     {
-        $idUser = $request->query->get('id-user');
+        $idUser = $request->query->get(static::PARAM_ID_USER);
 
         return $this->jsonResponse(
             $this->getFactory()->createAssignedCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData()

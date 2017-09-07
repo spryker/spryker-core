@@ -18,7 +18,7 @@ class CmsPageTableExpanderPlugin implements CmsPageTableExpanderPluginInterface
      *
      * @return array
      */
-    public function getViewButtonGroupItems(array $cmsPage)
+    public function getViewButtonGroupPermanentItems(array $cmsPage)
     {
         return [
             [
