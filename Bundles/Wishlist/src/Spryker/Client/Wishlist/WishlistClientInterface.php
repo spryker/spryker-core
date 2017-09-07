@@ -104,6 +104,8 @@ interface WishlistClientInterface
     /**
      * @api
      *
+     * @deprecated Use moveCollectionToCart() instead
+     *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
