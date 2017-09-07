@@ -301,6 +301,7 @@ class DiscountFacadeCalculateTest extends Unit
         $messengerFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_MESSENGER);
         $decisionRulePlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
         $collectorStrategyPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
+        $applicableFilterPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
 
         $container = new Container();
 
@@ -328,6 +329,11 @@ class DiscountFacadeCalculateTest extends Unit
             return [
                 $filterPluginMock
             ];
+        };
+
+        $container[DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function () use ($applicableFilterPlugins) {
+            return $applicableFilterPlugins;
+
         };
 
         $discountBusinessFactory->setContainer($container);
