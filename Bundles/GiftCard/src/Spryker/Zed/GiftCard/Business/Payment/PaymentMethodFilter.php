@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PaymentInformationTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\GiftCard\GiftCardConfig;
 
-class PaymentMethodFilter
+class PaymentMethodFilter implements PaymentMethodFilterInterface
 {
 
     /**

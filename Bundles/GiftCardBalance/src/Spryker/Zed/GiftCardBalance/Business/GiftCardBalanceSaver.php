@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLog;
 
-class GiftCardBalanceSaver
+class GiftCardBalanceSaver implements GiftCardBalanceSaverInterface
 {
 
     /**

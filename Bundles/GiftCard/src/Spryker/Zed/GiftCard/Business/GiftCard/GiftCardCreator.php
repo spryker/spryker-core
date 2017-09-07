@@ -30,18 +30,18 @@ class GiftCardCreator implements GiftCardCreatorInterface
     private $giftCardReader;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGeneratorInterface
      */
     private $giftCardCodeGenerator;
 
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
-     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator $giftCardCodeGenerator
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGeneratorInterface $giftCardCodeGenerator
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $encodingService
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
-        GiftCardCodeGenerator $giftCardCodeGenerator,
+        GiftCardCodeGeneratorInterface $giftCardCodeGenerator,
         UtilEncodingServiceInterface $encodingService
     ) {
         $this->encodingService = $encodingService;

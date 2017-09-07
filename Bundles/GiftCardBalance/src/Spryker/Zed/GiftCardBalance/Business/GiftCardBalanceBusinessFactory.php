@@ -17,7 +17,7 @@ class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceChecker
+     * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceCheckerInterface
      */
     public function createGiftCardBalanceChecker()
     {
@@ -27,7 +27,7 @@ class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceSaver
+     * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceSaverInterface
      */
     public function createGiftCardBalanceSaver()
     {

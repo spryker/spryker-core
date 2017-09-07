@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payment\Business\Calculation;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 
-class PaymentCalculator
+class PaymentCalculator implements PaymentCalculatorInterface
 {
 
     /**

@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class GiftCardReplacer
+class GiftCardReplacer implements GiftCardReplacerInterface
 {
 
     use DatabaseTransactionHandlerTrait;
@@ -27,19 +27,19 @@ class GiftCardReplacer
     protected $giftCardCreator;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGeneratorInterface
      */
     protected $giftCardCodeGenerator;
 
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreatorInterface $giftCardCreator
-     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator $giftCardCodeGenerator
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGeneratorInterface $giftCardCodeGenerator
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
         GiftCardCreatorInterface $giftCardCreator,
-        GiftCardCodeGenerator $giftCardCodeGenerator
+        GiftCardCodeGeneratorInterface $giftCardCodeGenerator
     ) {
         $this->giftCardReader = $giftCardReader;
         $this->giftCardCreator = $giftCardCreator;

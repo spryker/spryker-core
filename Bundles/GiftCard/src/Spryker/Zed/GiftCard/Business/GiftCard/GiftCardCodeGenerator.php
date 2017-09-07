@@ -9,7 +9,7 @@ namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
 use Spryker\Zed\GiftCard\GiftCardConfig;
 
-class GiftCardCodeGenerator
+class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
 {
 
     /**

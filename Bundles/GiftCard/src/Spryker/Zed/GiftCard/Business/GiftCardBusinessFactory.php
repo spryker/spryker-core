@@ -53,7 +53,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator
+     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGeneratorInterface
      */
     public function createGiftCardCodeGenerator()
     {
@@ -64,7 +64,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaver
+     * @return \Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaverInterface
      */
     public function createSalesOrderItemSaver()
     {
@@ -107,7 +107,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter
+     * @return \Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilterInterface
      */
     public function createPaymentMethodFilter()
     {
@@ -115,7 +115,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator
+     * @return \Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculatorInterface
      */
     public function createGiftCardCalculator()
     {
@@ -127,7 +127,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker
+     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface
      */
     protected function createGiftCardDecisionRuleChecker()
     {
@@ -153,7 +153,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\Payment\SalesOrderPreChecker
+     * @return \Spryker\Zed\GiftCard\Business\Payment\SalesOrderPreCheckerInterface
      */
     public function createSalesOrderPreChecker()
     {
@@ -165,7 +165,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver
+     * @return \Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaverInterface
      */
     public function createSalesOrderSaver()
     {
@@ -183,7 +183,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReplacer
+     * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReplacerInterface
      */
     public function createGiftCardReplacer()
     {

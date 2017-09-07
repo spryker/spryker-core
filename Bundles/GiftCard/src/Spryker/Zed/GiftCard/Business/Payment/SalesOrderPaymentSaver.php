@@ -15,7 +15,7 @@ use Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard;
 use Spryker\Shared\GiftCard\GiftCardConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class SalesOrderPaymentSaver
+class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
 {
 
     use DatabaseTransactionHandlerTrait;

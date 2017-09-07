@@ -96,7 +96,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Business\Calculation\PaymentCalculator
+     * @return \Spryker\Zed\Payment\Business\Calculation\PaymentCalculatorInterface
      */
     public function createPaymentCalculator()
     {

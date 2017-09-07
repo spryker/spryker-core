@@ -14,7 +14,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-class SalesOrderItemSaver
+class SalesOrderItemSaver implements SalesOrderItemSaverInterface
 {
 
     use DatabaseTransactionHandlerTrait;

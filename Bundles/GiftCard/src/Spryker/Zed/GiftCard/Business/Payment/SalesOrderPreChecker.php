@@ -14,11 +14,11 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\GiftCard\GiftCardConstants;
-use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker;
+use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
 
-class SalesOrderPreChecker
+class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
 {
 
     /**
@@ -27,7 +27,7 @@ class SalesOrderPreChecker
     protected $giftCardReader;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface
      */
     protected $giftCardDecisionRuleChecker;
 
@@ -38,12 +38,12 @@ class SalesOrderPreChecker
 
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
-     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker
+     * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker
      * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface $giftCardValueProvider
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
-        GiftCardDecisionRuleChecker $giftCardDecisionRuleChecker,
+        GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker,
         GiftCardValueProviderPluginInterface $giftCardValueProvider
     ) {
         $this->giftCardReader = $giftCardReader;

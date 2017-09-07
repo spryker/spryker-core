@@ -10,7 +10,7 @@ namespace Spryker\Zed\GiftCard\Business\GiftCard;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class GiftCardDecisionRuleChecker
+class GiftCardDecisionRuleChecker implements GiftCardDecisionRuleCheckerInterface
 {
 
     /**
