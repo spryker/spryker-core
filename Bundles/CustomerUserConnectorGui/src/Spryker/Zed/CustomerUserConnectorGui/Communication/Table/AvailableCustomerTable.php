@@ -15,7 +15,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class AvailableCustomerTable extends AbstractCustomerTable
 {
 
-    const CHECKBOX_SET_BY_DEFAULT = false;
+    const IS_CHECKBOX_SET_BY_DEFAULT = false;
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config

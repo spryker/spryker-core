@@ -10,10 +10,15 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Plugin;
 use Generated\Shared\Transfer\ButtonTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\User\Communication\Controller\EditController;
 use Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface;
 
-class UsersTableExpanderPlugin implements UsersTableExpanderPluginInterface
+/**
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiFacade getFacade()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
+ */
+class UsersTableExpanderPlugin extends AbstractPlugin implements UsersTableExpanderPluginInterface
 {
 
     /**

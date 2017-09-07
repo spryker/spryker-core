@@ -18,7 +18,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 abstract class AbstractCustomerTable extends AbstractTable
 {
 
-    const COL_ID = SpyCustomerTableMap::COL_ID_CUSTOMER;
+    const COL_ID = 'id_customer';
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
     const COL_GENDER = 'gender';
@@ -30,7 +30,7 @@ abstract class AbstractCustomerTable extends AbstractTable
         1 => 'Female',
     ];
 
-    const CHECKBOX_SET_BY_DEFAULT = true;
+    const IS_CHECKBOX_SET_BY_DEFAULT = true;
 
     /**
      * @var \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface
@@ -145,7 +145,7 @@ abstract class AbstractCustomerTable extends AbstractTable
             '<input class="%s" type="checkbox" name="idCustomer[]" value="%d" %s data-info="%s" />',
             'js-customer-checkbox',
             $customerEntity->getIdCustomer(),
-            static::CHECKBOX_SET_BY_DEFAULT ? 'checked' : '',
+            static::IS_CHECKBOX_SET_BY_DEFAULT ? 'checked' : '',
             htmlspecialchars(json_encode([
                 'idCustomer' => $customerEntity->getIdCustomer(),
                 'firstname' => $customerEntity->getFirstName(),

@@ -9,8 +9,14 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Plugin;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class CmsPageTableExpanderPlugin implements CmsPageTableExpanderPluginInterface
+/**
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiFacade getFacade()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiConfig getConfig()
+ */
+class CmsPageTableExpanderPlugin extends AbstractPlugin implements CmsPageTableExpanderPluginInterface
 {
 
     /**
@@ -27,24 +33,11 @@ class CmsPageTableExpanderPlugin implements CmsPageTableExpanderPluginInterface
         return [
             [
                 'title' => 'Preview',
-                'url' => $this->getPreviewUrl($cmsPage[SpyCmsPageTableMap::COL_ID_CMS_PAGE]),
+                'url' => $this->getConfig()->getPreviewPageUrl($cmsPage[SpyCmsPageTableMap::COL_ID_CMS_PAGE]),
                 'separated' => false,
                 'options' => ['target' => '_blank'],
             ],
         ];
-    }
-
-    /**
-     * @param int $idCmsPage
-     *
-     * @return string
-     */
-    protected function getPreviewUrl($idCmsPage)
-    {
-        // TODO: set Yves host
-        $yvesHost = 'http://www.de.project.local';
-
-        return $yvesHost . '/en/cms/preview/' . $idCmsPage;
     }
 
 }

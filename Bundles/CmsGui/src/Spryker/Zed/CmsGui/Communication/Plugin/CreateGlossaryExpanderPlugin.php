@@ -10,8 +10,13 @@ namespace Spryker\Zed\CmsGui\Communication\Plugin;
 use Generated\Shared\Transfer\ButtonTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class CreateGlossaryExpanderPlugin implements CreateGlossaryExpanderPluginInterface
+/**
+ * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
+ */
+class CreateGlossaryExpanderPlugin extends AbstractPlugin implements CreateGlossaryExpanderPluginInterface
 {
 
     /**
@@ -38,22 +43,9 @@ class CreateGlossaryExpanderPlugin implements CreateGlossaryExpanderPluginInterf
     protected function getPreviewActionButton(CmsPageTransfer $cmsPageTransfer)
     {
         return (new ButtonTransfer())
-            ->setUrl($this->getPreviewPageUrl($cmsPageTransfer->getFkPage()))
+            ->setUrl($this->getConfig()->getPreviewPageUrl($cmsPageTransfer->getFkPage()))
             ->setTitle('Preview')
             ->setDefaultOptions(['target' => '_blank']);
-    }
-
-    /**
-     * @param int $idCmsPage
-     *
-     * @return string
-     */
-    protected function getPreviewPageUrl($idCmsPage)
-    {
-        // TODO: solve this
-        $yvesHost = 'http://www.de.project.local';
-
-        return $previewPageUrl = $yvesHost . '/en/cms/preview/' . $idCmsPage;
     }
 
 }

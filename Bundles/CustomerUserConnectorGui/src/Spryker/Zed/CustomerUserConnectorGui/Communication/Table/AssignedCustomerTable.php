@@ -60,7 +60,7 @@ class AssignedCustomerTable extends AbstractCustomerTable
      */
     protected function getCheckboxHeaderName()
     {
-        return 'De-assign';
+        return 'Assigned';
     }
 
 }
