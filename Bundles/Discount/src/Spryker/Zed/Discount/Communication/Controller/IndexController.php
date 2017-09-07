@@ -134,19 +134,51 @@ class IndexController extends AbstractController
      */
     public function viewAction(Request $request)
     {
-        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
+        $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
 
         $discountConfiguratorTransfer = $this->getFacade()
             ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
-
         $this->setFormattedCalculatorDiscountAmount($discountConfiguratorTransfer);
 
         return [
             'discountConfigurator' => $discountConfiguratorTransfer,
             'voucherCodesTable' => $voucherCodesTable,
+            'renderedBlocks' => $this->renderBlocks($request, $idDiscount),
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idDiscount
+     *
+     * @return array
+     */
+    protected function renderBlocks(Request $request, $idDiscount)
+    {
+        $discountViewBlockPlugins = $this->getFactory()->getDiscountViewBlockProviderPlugins();
+
+        $subRequest = clone $request;
+        $subRequest->setMethod(Request::METHOD_POST);
+        $subRequest->request->set(static::URL_PARAM_ID_DISCOUNT, $idDiscount);
+
+        $renderedBlocks = [];
+        foreach ($discountViewBlockPlugins as $discountViewBlockPlugin) {
+            $renderedBlocks[] = $this->getSubRequestHandler()
+                ->handleSubRequest($subRequest, $discountViewBlockPlugin->getUrl())
+                ->getContent();
+        }
+
+        return $renderedBlocks;
+    }
+
+    /**
+     * @return \Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface
+     */
+    protected function getSubRequestHandler()
+    {
+        return $this->getApplication()['sub_request'];
     }
 
     /**

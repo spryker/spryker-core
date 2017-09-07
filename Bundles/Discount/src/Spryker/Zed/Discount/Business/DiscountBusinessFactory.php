@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business;
 
+use Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolver;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
@@ -59,12 +60,16 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscount()
     {
-        return new Discount(
+        $discount = new Discount(
             $this->getQueryContainer(),
             $this->createCalculator(),
             $this->createDecisionRuleBuilder(),
             $this->createVoucherValidator()
         );
+
+        $discount->setDiscountApplicableFilterPlugins($this->getDiscountApplicableFilterPlugins());
+
+        return $discount;
     }
 
     /**
@@ -300,7 +305,10 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountConfiguratorHydrate()
     {
-        return new DiscountConfiguratorHydrate($this->getQueryContainer());
+        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate($this->getQueryContainer());
+        $discountConfiguratorHydrate->setDiscountConfigurationExpanderPlugins($this->getConfigurationExpanderPlugins());
+
+        return $discountConfiguratorHydrate;
     }
 
     /**
@@ -308,7 +316,12 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountPersist()
     {
-        return new DiscountPersist($this->createVoucherEngine(), $this->getQueryContainer());
+        $discountPersist = new DiscountPersist($this->createVoucherEngine(), $this->getQueryContainer());
+
+        $discountPersist->setDiscountPostCreatePlugins($this->getDiscountPostCreatePlugins());
+        $discountPersist->setDiscountPostUpdatePlugins($this->getDiscountPostUpdatePlugins());
+
+        return $discountPersist;
     }
 
     /**
@@ -439,13 +452,17 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCalculator()
     {
-        return new FilteredCalculator(
+        $calculator = new FilteredCalculator(
             $this->createCollectorBuilder(),
             $this->getMessengerFacade(),
             $this->createDistributor(),
             $this->getCalculatorPlugins(),
             $this->createDiscountableItemFilter()
         );
+
+        $calculator->setCollectorStrategyResolver($this->createCollectorResolver());
+
+        return $calculator;
     }
 
     /**
@@ -462,6 +479,54 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     protected function getDiscountableItemFilterPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolverInterface
+     */
+    protected function createCollectorResolver()
+    {
+        return new CollectorStrategyResolver($this->getCollectorStrategyPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[]
+     */
+    protected function getCollectorStrategyPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
+     */
+    protected function getDiscountPostCreatePlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
+     */
+    protected function getDiscountPostUpdatePlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_POST_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[]
+     */
+    protected function getConfigurationExpanderPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[]
+     */
+    protected function getDiscountApplicableFilterPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
     }
 
 }
