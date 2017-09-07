@@ -160,7 +160,9 @@ class Calculator implements CalculatorInterface
                 continue;
             }
 
-            $nonExclusiveDiscounts[] = $collectedDiscountTransfer;
+            if (!$discountTransfer->getIsExclusive()) {
+                $nonExclusiveDiscounts[] = $collectedDiscountTransfer;
+            }
         }
 
         if ($exclusiveFound) {
