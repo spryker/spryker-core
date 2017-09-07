@@ -117,13 +117,10 @@ class CartHandler implements CartHandlerInterface
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
     {
         $itemTransfers = [];
-        $wishlistItemCollectionTransfer = new WishlistItemCollectionTransfer();
 
         foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
             $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
-
             $itemTransfers[] = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
-            $wishlistItemCollectionTransfer->addItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
         }
 
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
