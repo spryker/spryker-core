@@ -21,7 +21,7 @@ interface CartHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer);
 
