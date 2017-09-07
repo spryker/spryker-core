@@ -98,12 +98,11 @@ class CreateGlossaryController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface[]
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
     protected function getViewActionButtons(CmsPageTransfer $cmsPageTransfer)
     {
         $viewActionButtons = [];
-
         foreach ($this->getFactory()->getCreateGlossaryExpanderPlugins() as $createGlossaryExpanderPlugin) {
             $viewActionButtons = array_merge($viewActionButtons, $createGlossaryExpanderPlugin->getViewActionButtons($cmsPageTransfer));
         }

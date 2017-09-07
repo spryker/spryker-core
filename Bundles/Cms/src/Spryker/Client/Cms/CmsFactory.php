@@ -51,7 +51,7 @@ class CmsFactory extends AbstractFactory
      */
     public function createCmsStub()
     {
-        return new CmsStub($this->getProvidedDependency(CmsDependencyProvider::SERVICE_ZED));
+        return new CmsStub($this->getProvidedDependency(CmsDependencyProvider::CLIENT_ZED_REQUEST));
     }
 
 }

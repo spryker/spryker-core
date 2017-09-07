@@ -17,6 +17,8 @@ class CreateGlossaryExpanderPlugin implements CreateGlossaryExpanderPluginInterf
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]

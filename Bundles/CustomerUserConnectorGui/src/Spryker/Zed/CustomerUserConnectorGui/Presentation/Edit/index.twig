@@ -1,7 +1,7 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Update user #' ~ userTransfer.idUser   %}
+{% set widget_title = 'Edit customer-user connections for User #' ~ userTransfer.idUser   %}
 
 {% block action %}
     {{ backActionButton('/user', 'List Users' | trans) }}
@@ -17,80 +17,9 @@
 
             {{ form_widget(form) }}
 
-            <div class="tabs-container">
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#available-tab">Select customers to assign</a></li>
-        <li class=""><a data-toggle="tab" href="#to-be-assigned-tab" id="to-be-assigned-tab-label">Customers to be assigned</a></li>
-    </ul>
-    <div class="tab-content">
-        <div id="available-tab" class="tab-pane active">
-            <div class="panel-body">
-                {{ availableCustomers | raw }}
+            {% include '@CustomerUserConnectorGui/Edit/Partial/available-customers.twig' with {'availableCustomers': availableCustomers} only %}
+            {% include '@CustomerUserConnectorGui/Edit/Partial/assigned-customers.twig' with {'assignedCustomers': assignedCustomers} only %}
 
-                <div class="js-select-all-button">
-                    <a href="#" class="btn btn-primary ">Select All</a>
-                </div>
-            </div>
-        </div>
-        <div id="to-be-assigned-tab" class="tab-pane">
-            <div class="panel-body">
-                <h3>Selected customers</h3>
-                <table class="table table-striped table-bordered table-hover gui-table-data" id="to-be-assigned-tab-table" data-paging="false">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Gender</th>
-                        <th>Selected</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<br/>
-<br/>
-
-<div class="tabs-container">
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#assigned-tab" id="">Assigned customers</a></li>
-        <li class=""><a data-toggle="tab" href="#deassigned-tab" id="deassigned-tab-label">Customers to be deassigned</a></li>
-    </ul>
-    <div class="tab-content">
-        <div id="assigned-tab" class="tab-pane active">
-            <div class="panel-body">
-                {{ assignedCustomers | raw }}
-
-                <div class="js-de-select-all-button">
-                    <a href="#" class="btn btn-primary ">Deselect All</a>
-                </div>
-            </div>
-        </div>
-        <div id="deassigned-tab" class="tab-pane">
-            <div class="panel-body">
-                <h3>Deselected customers</h3>
-                <table class="table table-striped table-bordered table-hover gui-table-data" id="deassigned-tab-table" data-paging="false">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Gender</th>
-                        <th>Selected</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
             <input type="submit" class="btn btn-primary" value="{{ 'Update' | trans }}" />
 
             {{ form_end(form) }}
@@ -104,5 +33,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-customer-user-connector-gui-assign.js"></script>
+    <script src="/assets/js/spryker-zed-customer-user-connector-gui-customer-user-connector.js"></script>
 {% endblock %}

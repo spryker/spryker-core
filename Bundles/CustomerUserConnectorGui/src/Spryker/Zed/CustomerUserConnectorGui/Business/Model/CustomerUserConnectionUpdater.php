@@ -37,19 +37,38 @@ class CustomerUserConnectionUpdater implements CustomerUserConnectionUpdaterInte
      */
     public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer)
     {
+        $this->assignUsersToCustomers($customerUserConnectionUpdateTransfer);
+        $this->deAssignUsersFromCustomers($customerUserConnectionUpdateTransfer);
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
+     *
+     * @return void
+     */
+    protected function assignUsersToCustomers(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer)
+    {
         foreach ($customerUserConnectionUpdateTransfer->getIdCustomersToAssign() as $customerIdToAssign) {
             $customerEntity = $this->customerQueryContainer->queryCustomerById($customerIdToAssign)->findOne();
             $customerEntity->setFkUser($customerUserConnectionUpdateTransfer->getIdUser());
             $customerEntity->save();
         }
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
+     *
+     * @return void
+     */
+    protected function deAssignUsersFromCustomers(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer)
+    {
         foreach ($customerUserConnectionUpdateTransfer->getIdCustomersToDeAssign() as $customerIdToDeAssign) {
             $customerEntity = $this->customerQueryContainer->queryCustomerById($customerIdToDeAssign)->findOne();
             $customerEntity->setFkUser(null);
             $customerEntity->save();
         }
-
-        return true;
     }
 
 }

@@ -18,7 +18,7 @@ class CmsCollectorFactory extends AbstractFactory
      */
     public function createCmsCollectorStub()
     {
-        return new CmsCollectorStub($this->getProvidedDependency(CmsCollectorDependencyProvider::SERVICE_ZED));
+        return new CmsCollectorStub($this->getProvidedDependency(CmsCollectorDependencyProvider::CLIENT_ZED_REQUEST));
     }
 
 }

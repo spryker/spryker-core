@@ -113,8 +113,8 @@ class ButtonUrlGenerator
         }
 
         $html = '';
-        foreach ($extraAttributes as $htmlAttribute => $attributeValue) {
-            $html .= sprintf(' %s="%s"', $htmlAttribute, $attributeValue);
+        foreach ($extraAttributes as $htmlAttributeName => $attributeValue) {
+            $html .= sprintf(' %s="%s"', $htmlAttributeName, $attributeValue);
         }
 
         return $html;

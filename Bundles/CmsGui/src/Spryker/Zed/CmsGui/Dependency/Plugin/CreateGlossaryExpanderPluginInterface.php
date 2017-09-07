@@ -14,7 +14,7 @@ interface CreateGlossaryExpanderPluginInterface
 
     /**
      * Specification:
-     * TODO: to do
+     * - Retrieves a collection of ButtonTransfer transfer objects.
      *
      * @api
      *

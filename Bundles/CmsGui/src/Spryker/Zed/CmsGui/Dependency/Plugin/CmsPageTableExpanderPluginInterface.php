@@ -11,6 +11,9 @@ interface CmsPageTableExpanderPluginInterface
 {
 
     /**
+     * Specification:
+     * - Retrieves a collection of ButtonTransfer transfer objects.
+     *
      * @api
      *
      * @param array $cmsPage

@@ -32,11 +32,11 @@ class EditController extends AbstractController
         $form = $this->getFactory()->createCustomerUserConnectorForm($idUser);
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
             $this->getFacade()->updateCustomerUserConnection($formData);
-            $this->addSuccessMessage('Customer-user connections updated.');
+            $this->addSuccessMessage('Customer-user connections are updated.');
 
             return $this->redirectResponse(
                 sprintf(
@@ -48,7 +48,6 @@ class EditController extends AbstractController
         }
 
         $userTransfer = (new UserTransfer())->setIdUser($idUser);
-
         return $this->viewResponse([
             'availableCustomers' => $this->getFactory()->createAvailableCustomerTable($userTransfer)->render(),
             'assignedCustomers' => $this->getFactory()->createAssignedCustomerTable($userTransfer)->render(),

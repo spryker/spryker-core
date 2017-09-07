@@ -28,8 +28,8 @@ interface CmsPageTableConstants
     const COL_CMS_URLS = 'cmsUrls';
     const COL_CMS_VERSION_COUNT = 'cmsVersionCount';
 
-    const COL_ID_CMS_PAGE = SpyCmsPageTableMap::COL_ID_CMS_PAGE;
-    const COL_IS_ACTIVE = SpyCmsPageTableMap::COL_IS_ACTIVE;
+    const CMS_PAGE_COL_ID_CMS_PAGE = SpyCmsPageTableMap::COL_ID_CMS_PAGE;
+    const CMS_PAGE_COL_IS_ACTIVE = SpyCmsPageTableMap::COL_IS_ACTIVE;
 
     const VERSION_PAGE_URL_PARAM_ID_CMS_PAGE = VersionPageController::URL_PARAM_ID_CMS_PAGE;
     const VERSION_PAGE_URL_PARAM_REDIRECT_URL = VersionPageController::URL_PARAM_REDIRECT_URL;

@@ -14,6 +14,10 @@ class CmsPageTableExpanderPlugin implements CmsPageTableExpanderPluginInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $cmsPage
      *
      * @return array

@@ -18,21 +18,24 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 abstract class AbstractCustomerTable extends AbstractTable
 {
 
-    const COL_FK_CUSTOMER = 'fk_customer';
+    const COL_ID = SpyCustomerTableMap::COL_ID_CUSTOMER;
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
     const COL_GENDER = 'gender';
     const COL_EMAIL = 'email';
+    const COL_CHECKBOX = 'checkbox';
 
     const GENDER_MAP = [
         0 => 'Male',
         1 => 'Female',
     ];
 
+    const CHECKBOX_SET_BY_DEFAULT = true;
+
     /**
      * @var \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface
      */
-    protected $customerUserConnectorGuiToCustomerQueryContainerBridge;
+    protected $customerQueryContainer;
 
     /**
      * @var \Generated\Shared\Transfer\UserTransfer
@@ -40,12 +43,12 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected $userTransfer;
 
     /**
-     * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerUserConnectorGuiToCustomerQueryContainerBridge
+     * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      */
-    public function __construct(CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerUserConnectorGuiToCustomerQueryContainerBridge, UserTransfer $userTransfer)
+    public function __construct(CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer, UserTransfer $userTransfer)
     {
-        $this->customerUserConnectorGuiToCustomerQueryContainerBridge = $customerUserConnectorGuiToCustomerQueryContainerBridge;
+        $this->customerQueryContainer = $customerQueryContainer;
         $this->userTransfer = $userTransfer;
     }
 
@@ -57,50 +60,46 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyCustomerTableMap::COL_ID_CUSTOMER => 'ID',
+            static::COL_ID => 'ID',
             static::COL_FIRST_NAME => 'First Name',
             static::COL_LAST_NAME => 'Last Name',
+            static::COL_EMAIL => 'Customer E-mail',
             static::COL_GENDER => 'Gender',
-            '#' => '#',
+            static::COL_CHECKBOX => $this->getCheckboxHeaderName(),
         ]);
 
         $config->setSortable([
+            static::COL_ID,
             static::COL_FIRST_NAME,
             static::COL_LAST_NAME,
             static::COL_GENDER,
         ]);
 
         $config->setRawColumns([
-            '#',
+            static::COL_CHECKBOX,
         ]);
 
         $config->setSearchable([
             SpyCustomerTableMap::COL_FIRST_NAME,
             SpyCustomerTableMap::COL_LAST_NAME,
-            SpyCustomerTableMap::COL_GENDER,
+            SpyCustomerTableMap::COL_EMAIL,
         ]);
 
         return $config;
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return string
+     * @return array
      */
-    protected function getSelectCheckboxColumn(SpyCustomer $customerEntity)
+    protected function prepareData(TableConfiguration $config)
     {
-        return sprintf(
-            '<input class="%s js-customer-checkbox" type="checkbox" name="customer[]" value="%s" data-info="%s" />',
-            'js-item-checkbox',
-            $customerEntity->getIdCustomer(),
-            htmlspecialchars(json_encode([
-                'idCustomer' => $customerEntity->getIdCustomer(),
-                'firstname' => $customerEntity->getFirstName(),
-                'lastname' => $customerEntity->getLastName(),
-                'gender' => $customerEntity->getGender(),
-            ]))
-        );
+        $query = $this->prepareQuery();
+        $customerCollection = $this->runQuery($query, $config, true);
+        $data = $this->buildResultData($customerCollection);
+
+        return $data;
     }
 
     /**
@@ -111,7 +110,6 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected function buildResultData(ObjectCollection $customerEntities)
     {
         $tableRows = [];
-
         foreach ($customerEntities as $customerEntity) {
             $tableRows[] = $this->getRow($customerEntity);
         }
@@ -127,33 +125,44 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected function getRow(SpyCustomer $customerEntity)
     {
         return [
-            '#' => $this->getSelectCheckboxColumn($customerEntity),
-            SpyCustomerTableMap::COL_ID_CUSTOMER => $customerEntity->getIdCustomer(),
+            static::COL_ID => $customerEntity->getIdCustomer(),
             static::COL_FIRST_NAME => $customerEntity->getFirstName(),
             static::COL_LAST_NAME => $customerEntity->getLastName(),
+            static::COL_EMAIL => $customerEntity->getEmail(),
             static::COL_GENDER => $customerEntity->getGender(),
+            static::COL_CHECKBOX => $this->getCheckboxColumn($customerEntity),
         ];
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
      *
-     * @return array
+     * @return string
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function getCheckboxColumn(SpyCustomer $customerEntity)
     {
-        $query = $this->prepareQuery();
-
-        $customerCollection = $this->runQuery($query, $config, true);
-
-        $data = $this->buildResultData($customerCollection);
-
-        return $data;
+        return sprintf(
+            '<input class="%s" type="checkbox" name="idCustomer[]" value="%d" %s data-info="%s" />',
+            'js-customer-checkbox',
+            $customerEntity->getIdCustomer(),
+            static::CHECKBOX_SET_BY_DEFAULT ? 'checked' : '',
+            htmlspecialchars(json_encode([
+                'idCustomer' => $customerEntity->getIdCustomer(),
+                'firstname' => $customerEntity->getFirstName(),
+                'lastname' => $customerEntity->getLastName(),
+                'gender' => $customerEntity->getGender(),
+            ]))
+        );
     }
 
     /**
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     abstract protected function prepareQuery();
+
+    /**
+     * @return string
+     */
+    abstract protected function getCheckboxHeaderName();
 
 }

@@ -15,7 +15,8 @@ class CmsDependencyProvider extends AbstractDependencyProvider
 {
 
     const KV_STORAGE = 'kv storage';
-    const SERVICE_ZED = 'SERVICE_ZED';
+
+    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,7 +29,7 @@ class CmsDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->storage()->client();
         };
 
-        $container[static::SERVICE_ZED] = function (Container $container) {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new CmsToZedRequestBridge($container->getLocator()->zedRequest()->client());
         };
 

@@ -9,10 +9,13 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Table;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\CustomerUserConnectorGui\Communication\Controller\EditController;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailableCustomerTable extends AbstractCustomerTable
 {
+
+    const CHECKBOX_SET_BY_DEFAULT = false;
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -22,8 +25,13 @@ class AvailableCustomerTable extends AbstractCustomerTable
     protected function configure(TableConfiguration $config)
     {
         $config = parent::configure($config);
-
-        $config->setUrl(sprintf('available-customer-table?id-user=%d', $this->userTransfer->getIdUser()));
+        $config->setUrl(
+            sprintf(
+                'available-customer-table?%s=%d',
+                EditController::PARAM_ID_USER,
+                $this->userTransfer->getIdUser()
+            )
+        );
 
         return $config;
     }
@@ -33,7 +41,7 @@ class AvailableCustomerTable extends AbstractCustomerTable
      */
     protected function prepareQuery()
     {
-        $query = $this->customerUserConnectorGuiToCustomerQueryContainerBridge
+        $query = $this->customerQueryContainer
             ->queryCustomers()
                 ->addAnd(
                     SpyCustomerTableMap::COL_FK_USER,
@@ -45,12 +53,21 @@ class AvailableCustomerTable extends AbstractCustomerTable
                     null,
                     Criteria::ISNULL
                 )
+            ->withColumn(SpyCustomerTableMap::COL_ID_CUSTOMER, static::COL_ID)
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_EMAIL, static::COL_EMAIL)
             ->withColumn(SpyCustomerTableMap::COL_GENDER, static::COL_GENDER);
 
         return $query;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCheckboxHeaderName()
+    {
+        return 'Assign';
     }
 
 }

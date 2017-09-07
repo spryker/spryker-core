@@ -14,7 +14,7 @@ interface CmsCollectorClientInterface
 
     /**
      * Specification
-     * - Expands collector data with cms content widget parameter map
+     * - Expands collector data with configured collector data expander plugins
      *
      * @api
      *
