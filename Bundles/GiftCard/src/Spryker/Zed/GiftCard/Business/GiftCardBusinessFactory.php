@@ -169,7 +169,17 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
      */
     public function createSalesOrderSaver()
     {
-        return new SalesOrderPaymentSaver();
+        return new SalesOrderPaymentSaver(
+            $this->getPaymentSaverPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[]
+     */
+    protected function getPaymentSaverPlugins()
+    {
+        return $this->getProvidedDependency(GiftCardDependencyProvider::GIFT_CARD_PAYMENT_SAVER_PLUGINS);
     }
 
     /**

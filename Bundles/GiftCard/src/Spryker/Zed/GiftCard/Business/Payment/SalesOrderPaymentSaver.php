@@ -21,6 +21,19 @@ class SalesOrderPaymentSaver
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[]
+     */
+    protected $giftCardPaymentSaverPlugins;
+
+    /**
+     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[] $giftCardPaymentSaverPlugins
+     */
+    public function __construct(array $giftCardPaymentSaverPlugins)
+    {
+        $this->giftCardPaymentSaverPlugins = $giftCardPaymentSaverPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -28,51 +41,65 @@ class SalesOrderPaymentSaver
      */
     public function saveGiftCardPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        if (!$this->hasGiftCardPayments($quoteTransfer)) {
-            return;
-        }
+        $giftCardPayments = $this->getGiftCardPayments($quoteTransfer);
 
-        $giftCardTransferCollection = $quoteTransfer->getPayments();
-
-        $this->handleDatabaseTransaction(function () use ($giftCardTransferCollection) {
-            $this->saveGiftCardPaymentEntities($giftCardTransferCollection);
+        $this->handleDatabaseTransaction(function () use ($giftCardPayments, $checkoutResponse) {
+            $this->runGiftCardPaymentSavers($giftCardPayments, $checkoutResponse);
         });
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return \ArrayObject|\Generated\Shared\Transfer\PaymentTransfer[]
      */
-    protected function hasGiftCardPayments(QuoteTransfer $quoteTransfer)
+    protected function getGiftCardPayments(QuoteTransfer $quoteTransfer)
     {
+        $result = new ArrayObject();
+
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
             if ($paymentTransfer->getPaymentProvider() === GiftCardConstants::PROVIDER_NAME) {
-                return true;
+                $result[] = $paymentTransfer;
             }
         }
 
-        return false;
+        return $result;
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PaymentTransfer[] $paymentTransferCollection
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    protected function saveGiftCardPaymentEntities(ArrayObject $paymentTransferCollection)
+    protected function runGiftCardPaymentSavers(ArrayObject $paymentTransferCollection, CheckoutResponseTransfer $checkoutResponse)
     {
-        foreach ($paymentTransferCollection as $giftCardTransfer) {
-            if (!$giftCardTransfer->getGiftCard()) {
+        foreach ($paymentTransferCollection as $giftCardPayment) {
+            if (!$giftCardPayment->getGiftCard()) {
                 continue;
             }
 
-            if ($giftCardTransfer->getAmount() <= 0) {
+            if ($giftCardPayment->getAmount() <= 0) {
                 continue;
             }
 
-            $salesOrderGiftCardEntity = $this->createSalesOrderGiftCardEntityFromTransfer($giftCardTransfer);
+            $salesOrderGiftCardEntity = $this->createSalesOrderGiftCardEntityFromTransfer($giftCardPayment);
             $salesOrderGiftCardEntity->save();
+
+            $this->runSaversForPayment($giftCardPayment, $checkoutResponse);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    protected function runSaversForPayment(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        foreach ($this->giftCardPaymentSaverPlugins as $giftCardPaymentSaverPlugin) {
+            $giftCardPaymentSaverPlugin->savePayment($paymentTransfer, $checkoutResponse);
         }
     }
 

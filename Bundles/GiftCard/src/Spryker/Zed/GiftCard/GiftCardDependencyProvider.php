@@ -20,6 +20,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     const ATTRIBUTE_PROVIDER_PLUGINS = 'ATTRIBUTE_PROVIDER_PLUGINS';
     const GIFT_CARD_DECISION_RULE_PLUGINS = 'GIFT_CARD_DECISION_RULE_PLUGINS';
     const GIFT_CARD_VALUE_PROVIDER = 'GIFT_CARD_VALUE_PROVIDER';
+    const GIFT_CARD_PAYMENT_SAVER_PLUGINS = 'GIFT_CARD_PAYMENT_SAVER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +32,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addEncodingService($container);
         $container = $this->addAttributePlugins($container);
         $container = $this->addDecisionRulePlugins($container);
+        $container = $this->addPaymentSaverPlugins($container);
         $container = $this->addValueProvider($container);
 
         return $container;
@@ -83,6 +85,20 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addPaymentSaverPlugins(Container $container)
+    {
+        $container[static::GIFT_CARD_PAYMENT_SAVER_PLUGINS] = function (Container $container) {
+            return $this->getPaymentSaverPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addValueProvider(Container $container)
     {
         $container[static::GIFT_CARD_VALUE_PROVIDER] = function (Container $container) {
@@ -114,6 +130,14 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     protected function getDecisionRulePlugins()
     {
         return $this->getRecreateDecisionRulePlugins();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[]
+     */
+    protected function getPaymentSaverPlugins()
+    {
+        return [];
     }
 
     /**
