@@ -69,7 +69,7 @@
                     </tr>
                     {% if customer.username is defined %}
                         <tr>
-                            <th>{{ 'E-mail' | trans }}</th>
+                            <th>{{ 'User E-mail' | trans }}</th>
                             <td><a href="{{ url('/user/edit/update', {'id-user': customer.fkUser}) }}">{{ customer.username }}</a></td>
                         </tr>
                     {% endif %}

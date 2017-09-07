@@ -16,6 +16,9 @@ use Spryker\Zed\CustomerUserConnectorGui\Communication\Table\AvailableCustomerTa
 use Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiConfig getConfig()
+ */
 class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunicationFactory
 {
 
@@ -57,14 +60,6 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
             $this->createUserConnectionTransfer($idUser),
             $this->createCustomerUserConnectorFormDataProvider()->getOptions()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToUserQueryContainerInterface
-     */
-    public function getUserQueryContainer()
-    {
-        return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_USER);
     }
 
     /**

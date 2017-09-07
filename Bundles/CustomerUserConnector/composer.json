@@ -3,6 +3,7 @@
   "description": "CustomerUserConnector module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.5.0",
     "spryker/user": "^3.0.0"
   },
   "require-dev": {
@@ -11,7 +12,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/customer": "If you want to have customers"
+    "spryker/customer": "If you want to use the CustomerTransferUsernameExpanderPlugin plugin"
   },
   "autoload": {
     "psr-4": {
