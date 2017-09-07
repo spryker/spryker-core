@@ -31,13 +31,27 @@ class TransferValidator implements TransferValidatorInterface
      * @var array
      */
     protected $typeMap = [
-        'int' => 'int',
-        'bool' => 'bool',
         'integer' => 'int',
         'boolean' => 'bool',
-        'string' => 'string',
-        'float' => 'float',
-        'array' => 'array',
+        '[]' => 'array (or more concrete `type[]`)',
+        'mixed[]' => 'array (or more concrete `type[]`)',
+        'integer[]' => 'int[]',
+        'boolean[]' => 'bool[]',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $arrayTypeMap = [
+        'int',
+        'float',
+        'string',
+        'bool',
+        'callable',
+        'iterable',
+        'iterator',
+        'resource',
+        'object',
     ];
 
     /**
@@ -48,6 +62,10 @@ class TransferValidator implements TransferValidatorInterface
     {
         $this->messenger = $messenger;
         $this->finder = $finder;
+
+        foreach ($this->arrayTypeMap as $type) {
+            $this->typeMap[$type] = $type;
+        }
     }
 
     /**
@@ -91,28 +109,82 @@ class TransferValidator implements TransferValidatorInterface
         $ok = true;
         foreach ($definition as $transfer) {
             foreach ($transfer['property'] as $property) {
-                $type = strtolower($property['type']);
-                if (!isset($this->typeMap[$type])) {
+                $type = $property['type'];
+
+                if (!$this->checkSimpleType($type)) {
+                    $ok = false;
+                    $this->messenger->warning(sprintf(
+                        '%s.%s.%s: %s should be %s',
+                        $bundle,
+                        $transfer['name'],
+                        $property['name'],
+                        $property['type'],
+                        $this->typeMap[strtolower($type)]
+                    ));
                     continue;
                 }
 
-                if ($type === $property['type'] && in_array($type, $this->typeMap)) {
+                if (!$this->checkArrayType($type)) {
+                    $ok = false;
+                    $this->messenger->warning(sprintf(
+                        '%s.%s.%s: %s is an invalid array type',
+                        $bundle,
+                        $transfer['name'],
+                        $property['name'],
+                        $property['type']
+                    ));
+
                     continue;
                 }
-
-                $ok = false;
-                $this->messenger->warning(sprintf(
-                    '%s.%s.%s: %s should be %s',
-                    $bundle,
-                    $transfer['name'],
-                    $property['name'],
-                    $property['type'],
-                    $this->typeMap[$type]
-                ));
             }
         }
 
         return $ok;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function checkSimpleType($type)
+    {
+        $typeLowercase = strtolower($type);
+
+        if (!isset($this->typeMap[$typeLowercase])) {
+            return true;
+        }
+
+        if ($typeLowercase === $type && in_array($type, $this->typeMap, true)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function checkArrayType($type)
+    {
+        if (!preg_match('#^([a-z]+)\[\]$#', $type, $matches)) {
+            return true;
+        }
+
+        $extractedType = $matches[1];
+        $extractedTypeLowercase = strtolower($extractedType);
+
+        if (!in_array($extractedTypeLowercase, $this->arrayTypeMap)) {
+            return false;
+        }
+
+        if ($extractedTypeLowercase === $extractedType && in_array($extractedType, $this->arrayTypeMap, true)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
