@@ -63,7 +63,7 @@ class CartHandler implements CartHandlerInterface
      */
     protected function getWishlistRequestCollectionToCartDiff(WishlistMoveToCartRequestCollectionTransfer $requestCollectionTransfer, QuoteTransfer $quoteTransfer)
     {
-        $diff = new WishlistMoveToCartRequestCollectionTransfer();
+        $wishlistRequestCollectionDiff = new WishlistMoveToCartRequestCollectionTransfer();
 
         $skuItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -75,10 +75,10 @@ class CartHandler implements CartHandlerInterface
                 continue;
             }
 
-            $diff->addRequest($wishlistRequestTransfer);
+            $wishlistRequestCollectionDiff->addRequest($wishlistRequestTransfer);
         }
 
-        return $diff;
+        return $wishlistRequestCollectionDiff;
     }
 
     /**
@@ -92,7 +92,7 @@ class CartHandler implements CartHandlerInterface
         WishlistMoveToCartRequestCollectionTransfer $failedCollection
     ) {
         $failedSkus = [];
-        $successfulCollection = new WishlistItemCollectionTransfer();
+        $successfulRequestCollection = new WishlistItemCollectionTransfer();
 
         foreach ($failedCollection->getRequests() as $requestTransfer) {
             $failedSkus[] = $requestTransfer->getSku();
@@ -103,10 +103,10 @@ class CartHandler implements CartHandlerInterface
                 continue;
             }
 
-            $successfulCollection->addItem($requestTransfer->getWishlistItem());
+            $successfulRequestCollection->addItem($requestTransfer->getWishlistItem());
         }
 
-        return $successfulCollection;
+        return $successfulRequestCollection;
     }
 
     /**
