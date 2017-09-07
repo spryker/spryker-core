@@ -17,10 +17,10 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/util-text": "If you want to use the in-built UsersTableExpanderPlugin",
-    "spryker/cms": "If you want to use the in-built CmsPageTableExpanderPlugin",
-    "spryker/cms-gui": "If you want to use the in-bult CmsPageTableExpanderPlugin",
-    "spryker/customer-user-connector": "If you want to use the in-bult CustomerTransferUsernameExpanderPlugin"
+    "spryker/util-text": "If you want to use the UsersTableExpanderPlugin",
+    "spryker/cms": "If you want to use the CmsPageTableExpanderPlugin",
+    "spryker/cms-gui": "If you want to use the CmsPageTableExpanderPlugin",
+    "spryker/customer-user-connector": "If you want to use the CustomerTransferUsernameExpanderPlugin"
   },
   "autoload": {
     "psr-4": {
