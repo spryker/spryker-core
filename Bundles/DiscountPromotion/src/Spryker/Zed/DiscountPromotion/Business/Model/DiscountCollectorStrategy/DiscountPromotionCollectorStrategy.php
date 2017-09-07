@@ -121,8 +121,8 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             if (!$this->isPromotionItem(
                 $discountPromotionEntity->getAbstractSku(),
                 $itemTransfer,
-                $discountPromotionEntity->getIdDiscountPromotion())
-            ) {
+                $discountPromotionEntity->getIdDiscountPromotion()
+            )) {
                 continue;
             }
             return $itemTransfer;
