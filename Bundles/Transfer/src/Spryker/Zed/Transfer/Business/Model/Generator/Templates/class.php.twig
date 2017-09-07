@@ -7,6 +7,9 @@
 
 namespace Generated\Shared\Transfer;
 
+{% if hasArrayObject %}
+use ArrayObject;
+{% endif %}
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**

@@ -6,6 +6,7 @@
 
 namespace Generated\Shared\Transfer;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
@@ -88,8 +89,6 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireName()
@@ -127,8 +126,6 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireItem()
@@ -145,7 +142,7 @@ class CatFaceTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setItems(\ArrayObject $items)
+    public function setItems(ArrayObject $items)
     {
         $this->items = $items;
         $this->addModifiedProperty(self::ITEMS);
@@ -180,8 +177,6 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @bundle Test
-     *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

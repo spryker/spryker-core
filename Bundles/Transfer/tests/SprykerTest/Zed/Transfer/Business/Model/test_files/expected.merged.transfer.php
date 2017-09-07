@@ -6,6 +6,7 @@
 
 namespace Generated\Shared\Transfer;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
@@ -88,8 +89,6 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @bundle Test
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireName()
@@ -127,8 +126,6 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @bundle Test|Test2
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireBla()
@@ -145,7 +142,7 @@ class FooBarTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setSelfReference(\ArrayObject $selfReference)
+    public function setSelfReference(ArrayObject $selfReference)
     {
         $this->selfReference = $selfReference;
         $this->addModifiedProperty(self::SELF_REFERENCE);
@@ -180,8 +177,6 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @bundle Test2
-     *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
