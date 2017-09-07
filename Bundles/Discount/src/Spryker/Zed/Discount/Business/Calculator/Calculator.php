@@ -143,28 +143,31 @@ class Calculator implements CalculatorInterface
     {
         $collectedDiscounts = $this->sortByDiscountAmountDescending($collectedDiscounts);
 
+        $applicableDiscounts = [];
+        $nonExclusiveDiscounts = [];
         $exclusiveFound = false;
-        $filteredDiscounts = [];
         foreach ($collectedDiscounts as $collectedDiscountTransfer) {
 
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
             if (!$discountTransfer->getCollectorQueryString()) {
-                $filteredDiscounts[] = $collectedDiscountTransfer;
+                $applicableDiscounts[] = $collectedDiscountTransfer;
                 continue;
             }
 
-            if ($discountTransfer->getIsExclusive() && $exclusiveFound === false) {
-                $filteredDiscounts[] = $collectedDiscountTransfer;
+            if ($discountTransfer->getIsExclusive() && !$exclusiveFound) {
+                $applicableDiscounts[] = $collectedDiscountTransfer;
                 $exclusiveFound = true;
                 continue;
             }
 
-            if ($exclusiveFound === false) {
-                $filteredDiscounts[] = $collectedDiscountTransfer;
-            }
+            $nonExclusiveDiscounts[] = $collectedDiscountTransfer;
         }
 
-        return $filteredDiscounts;
+        if ($exclusiveFound) {
+            return $applicableDiscounts;
+        }
+
+        return array_merge($applicableDiscounts, $nonExclusiveDiscounts);
     }
 
     /**
