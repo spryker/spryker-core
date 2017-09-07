@@ -72,6 +72,7 @@
     "spryker/discount": "*",
     "spryker/discount-calculation-connector": "*",
     "spryker/discount-sales-aggregator-connector": "*",
+    "spryker/discount-promotion": "*",
     "spryker/dummy-payment": "*",
     "spryker/elastica": "*",
     "spryker/error-handler": "*",
