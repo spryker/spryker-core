@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\GiftCardBalance\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 
 interface GiftCardBalanceFacadeInterface
 {
@@ -17,8 +19,27 @@ interface GiftCardBalanceFacadeInterface
      *
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
+     * @return int
+     */
+    public function getRemainingValue(GiftCardTransfer $giftCardTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
+     *
      * @return bool
      */
     public function hasPositiveBalance(GiftCardTransfer $giftCardTransfer);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveTransactionLog(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponse);
 
 }

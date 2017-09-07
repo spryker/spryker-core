@@ -11,15 +11,27 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\GiftCardBalance\GiftCardBalanceConfig getConfig()
+ * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainer getQueryContainer()
  */
 class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return GiftCardBalanceChecker
+     * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceChecker
      */
     public function createGiftCardBalanceChecker()
     {
-        return new GiftCardBalanceChecker();
+        return new GiftCardBalanceChecker(
+            $this->getQueryContainer()
+        );
     }
+
+    /**
+     * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceSaver
+     */
+    public function createGiftCardBalanceSaver()
+    {
+        return new GiftCardBalanceSaver();
+    }
+
 }
