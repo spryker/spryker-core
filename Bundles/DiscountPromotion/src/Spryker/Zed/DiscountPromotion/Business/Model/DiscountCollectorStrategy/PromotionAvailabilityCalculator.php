@@ -47,7 +47,7 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailability($promotionProductAbstractSku);
 
         if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
-            return $maxQuantity;
+            return (int)$maxQuantity;
         }
 
         if ($productAbstractAvailabilityTransfer->getAvailability() <= 0) {
@@ -55,7 +55,7 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         }
 
         if ($maxQuantity > $productAbstractAvailabilityTransfer->getAvailability()) {
-            return $productAbstractAvailabilityTransfer->getAvailability();
+            return (int)$productAbstractAvailabilityTransfer->getAvailability();
         }
 
         return $maxQuantity;

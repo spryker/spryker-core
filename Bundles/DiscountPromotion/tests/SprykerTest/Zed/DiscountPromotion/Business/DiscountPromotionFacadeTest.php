@@ -113,7 +113,7 @@ class DiscountPromotionFacadeTest extends Unit
 
         $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
-         $this->getAvailabilityFacade()->saveProductAvailability('001_25904006', 0);
+        $this->getAvailabilityFacade()->saveProductAvailability('001_25904006', 0);
 
         $collectedDiscounts = $discountPromotionFacade->collect($discountTransfer, $quoteTransfer);
 
