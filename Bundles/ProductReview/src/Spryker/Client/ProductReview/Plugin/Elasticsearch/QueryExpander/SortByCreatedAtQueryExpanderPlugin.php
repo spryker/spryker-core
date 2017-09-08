@@ -41,7 +41,7 @@ class SortByCreatedAtQueryExpanderPlugin extends AbstractPlugin implements Query
     {
         $query->addSort([
             ProductReviewIndexMap::CREATED_AT => [
-                'order' => 'asc',
+                'order' => 'desc',
             ],
         ]);
     }

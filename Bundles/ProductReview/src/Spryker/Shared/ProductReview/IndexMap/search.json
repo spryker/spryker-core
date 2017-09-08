@@ -39,7 +39,8 @@
         },
         "created-at": {
           "type": "string",
-          "include_in_all": false
+          "include_in_all": false,
+          "index": "not_analyzed"
         }
       }
     }
