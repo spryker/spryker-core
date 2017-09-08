@@ -75,6 +75,18 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
+     */
+    protected function createCoreSchemaFinder()
+    {
+        $schemaFinder = new PropelSchemaFinder(
+            $this->getConfig()->getCorePropelSchemaPathPatterns()
+        );
+
+        return $schemaFinder;
+    }
+
+    /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface
      */
     protected function createSchemaWriter()
@@ -114,6 +126,16 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         return new PostgresqlCompatibilityAdjuster(
             $this->createSchemaFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface
+     */
+    public function createCorePostgresqlCompatibilityAdjuster()
+    {
+        return new PostgresqlCompatibilityAdjuster(
+            $this->createCoreSchemaFinder()
         );
     }
 
