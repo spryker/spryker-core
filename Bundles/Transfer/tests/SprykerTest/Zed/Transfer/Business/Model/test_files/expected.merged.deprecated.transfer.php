@@ -6,6 +6,7 @@
 
 namespace Generated\Shared\Transfer;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
@@ -104,9 +105,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     ];
 
     /**
-     * @deprecated scalarField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated scalarField is deprecated.
      *
      * @param string $scalarField
      *
@@ -121,9 +122,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated scalarField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated scalarField is deprecated.
      *
      * @return string
      */
@@ -133,11 +134,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated scalarField is deprecated.
-     *
      * @bundle Deprecated
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     * @deprecated scalarField is deprecated.
      *
      * @return $this
      */
@@ -149,9 +148,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated arrayField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated arrayField is deprecated.
      *
      * @param array $arrayField
      *
@@ -166,9 +165,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated arrayField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated arrayField is deprecated.
      *
      * @return array
      */
@@ -178,9 +177,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated arrayField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated arrayField is deprecated.
      *
      * @param array $arrayField
      *
@@ -195,11 +194,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated arrayField is deprecated.
-     *
      * @bundle Deprecated
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     * @deprecated arrayField is deprecated.
      *
      * @return $this
      */
@@ -211,9 +208,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated transferField is deprecated.
      *
      * @param \Generated\Shared\Transfer\DeprecatedFooBarTransfer|null $transferField
      *
@@ -228,9 +225,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated transferField is deprecated.
      *
      * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
      */
@@ -240,11 +237,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferField is deprecated.
-     *
      * @bundle Deprecated
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     * @deprecated transferField is deprecated.
      *
      * @return $this
      */
@@ -256,15 +251,15 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferCollectionField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated transferCollectionField is deprecated.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[] $transferCollectionField
      *
      * @return $this
      */
-    public function setTransferCollectionField(\ArrayObject $transferCollectionField)
+    public function setTransferCollectionField(ArrayObject $transferCollectionField)
     {
         $this->transferCollectionField = $transferCollectionField;
         $this->addModifiedProperty(self::TRANSFER_COLLECTION_FIELD);
@@ -273,9 +268,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferCollectionField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated transferCollectionField is deprecated.
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
      */
@@ -285,9 +280,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferCollectionField is deprecated.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated transferCollectionField is deprecated.
      *
      * @param \Generated\Shared\Transfer\DeprecatedFooBarTransfer $transferCollectionField
      *
@@ -302,11 +297,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferCollectionField is deprecated.
-     *
      * @bundle Deprecated
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     * @deprecated transferCollectionField is deprecated.
      *
      * @return $this
      */
@@ -318,9 +311,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated Deprecated on project level.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated Deprecated on project level.
      *
      * @param string $projectLevelDeprecatedField
      *
@@ -335,9 +328,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated Deprecated on project level.
-     *
      * @bundle Deprecated
+     *
+     * @deprecated Deprecated on project level.
      *
      * @return string
      */
@@ -347,11 +340,9 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated Deprecated on project level.
-     *
      * @bundle Deprecated
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     * @deprecated Deprecated on project level.
      *
      * @return $this
      */

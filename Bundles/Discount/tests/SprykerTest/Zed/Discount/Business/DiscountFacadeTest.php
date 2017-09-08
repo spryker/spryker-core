@@ -743,6 +743,7 @@ class DiscountFacadeTest extends Unit
 
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->setAmount(10);
+        $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
         $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
         $discountCalculatorTransfer->setCollectorQueryString('sku = "123"');
         $discountConfiguratorTransfer->setDiscountCalculator($discountCalculatorTransfer);

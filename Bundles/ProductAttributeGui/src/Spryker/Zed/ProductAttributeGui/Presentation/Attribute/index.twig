@@ -1,0 +1,20 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product Attributes' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ createActionButton('/product-attribute-gui/attribute/create', 'Create Product Attribute' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attribute list' } %}
+
+        {% block widget_content %}
+            {{ attributeTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

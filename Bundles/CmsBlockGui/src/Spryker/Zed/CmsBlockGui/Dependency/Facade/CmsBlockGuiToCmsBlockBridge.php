@@ -106,4 +106,14 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
         return $this->cmsBlockFacade->saveGlossary($cmsBlockGlossaryTransfer);
     }
 
+    /**
+     * @param int $idCmsBlockTemplate
+     *
+     * @return bool
+     */
+    public function hasTemplateFileById($idCmsBlockTemplate)
+    {
+        return $this->cmsBlockFacade->hasTemplateFileById($idCmsBlockTemplate);
+    }
+
 }

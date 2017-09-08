@@ -1,0 +1,16 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Attribute' } %}
+    {% block widget_content %}
+        {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form', 'id': 'attribute_form'} }) }}
+        <table width="100%">
+        <tr>
+            <td width="100%">
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+            </td>
+            <td>&nbsp;</td>
+            <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" /></td>
+        </tr>
+        </table>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endembed %}

@@ -15,14 +15,14 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */
     public function queryProductManagementAttribute();
 
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValue();
 
@@ -32,7 +32,7 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
 
@@ -57,14 +57,14 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValueQuery();
 
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
     public function queryProductManagementAttributeValueTranslation();
 
@@ -73,7 +73,7 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
      *
      * @param int $idProductManagementAttribute
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute);
 

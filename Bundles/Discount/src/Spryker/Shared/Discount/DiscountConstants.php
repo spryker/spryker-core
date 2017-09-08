@@ -19,4 +19,9 @@ interface DiscountConstants
     const MESSAGE_TYPE_SUCCESS = 'success';
     const MESSAGE_TYPE_ERROR = 'error';
 
+    /**
+     * This constant used to uniquely identify promotion discount collector strategy type
+     */
+    const DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING = 'query-string';
+
 }
