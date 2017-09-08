@@ -14,6 +14,7 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
 
 /**
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
+ * @method \Spryker\Zed\GiftCard\Communication\GiftCardCommunicationFactory getFactory()
  */
 class GiftCardOrderSaverPlugin extends AbstractPlugin implements CheckoutPluginInterface
 {

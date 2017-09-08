@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 
 /**
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
+ * @method \Spryker\Zed\GiftCard\Communication\GiftCardCommunicationFactory getFactory()
  */
 class CreateGiftCardCommandPlugin extends AbstractPlugin implements CommandByItemInterface
 {

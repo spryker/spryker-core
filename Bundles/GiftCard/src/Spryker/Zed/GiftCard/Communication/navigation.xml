@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <gift-card>
+        <label>Gift Cards</label>
+        <title>Gift Cards</title>
+        <icon>fa-credit-card</icon>
+        <bundle>gift-card</bundle>
+        <controller>index</controller>
+        <action>index</action>
+    </gift-card>
+</config>

@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
+ * @method \Spryker\Zed\GiftCard\Communication\GiftCardCommunicationFactory getFactory()
  */
 class ReplaceGiftCardsCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {

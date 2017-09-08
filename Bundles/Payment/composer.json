@@ -15,6 +15,7 @@
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins.",
+    "spryker/calculation": "To correctly calculate multiple payment methods",
     "spryker/sales": "If you want to use SalesPayment saver plugin."
   },
   "autoload": {

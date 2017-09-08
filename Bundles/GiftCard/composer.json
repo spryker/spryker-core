@@ -9,7 +9,7 @@
     "spryker/sales": "^7.0.0",
     "spryker/oms": "^7.0.0",
     "spryker/util-encoding": "^2.0.0",
-    "spryker/payment": "Should actually be required"
+    "spryker/payment": "^4.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -18,10 +18,10 @@
   },
   "suggest": {
     "spryker/discount": "If you want to make sure GiftCards have no Discount applied",
-    "spryker/calculation": "Don't know why yet",
-    "spryker/cart": "Don't know why yet",
-    "spryker/checkout": "Don't know why yet",
-    "spryker/shipment": "Don't know why yet"
+    "spryker/calculation": "To correctly calculate gift card payments",
+    "spryker/cart": "To expand information about gift card products",
+    "spryker/checkout": "To save gift card payments using order savers",
+    "spryker/shipment": "To filter shipment methods based on gift card rules"
   },
   "autoload": {
     "psr-4": {
