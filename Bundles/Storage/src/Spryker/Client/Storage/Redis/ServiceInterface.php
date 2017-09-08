@@ -126,11 +126,4 @@ interface ServiceInterface
      */
     public function setDebug($debug);
 
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function exists($key);
-
 }

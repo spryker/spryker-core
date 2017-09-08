@@ -14,8 +14,6 @@ class AvailabilityFactory extends AbstractFactory
 {
 
     /**
-     * @deprecated Use AvailabilityFactory::createCurrentLocaleAvailabilityStorage instead
-     *
      * @param string $locale
      *
      * @return \Spryker\Client\Availability\Storage\AvailabilityStorage
@@ -51,18 +49,6 @@ class AvailabilityFactory extends AbstractFactory
     public function getLocaleClient()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Client\Availability\Storage\AvailabilityStorageInterface
-     */
-    public function createCurrentLocaleAvailabilityStorage()
-    {
-        return new AvailabilityStorage(
-            $this->getStorage(),
-            $this->createKeyBuilder(),
-            $this->getLocaleClient()->getCurrentLocale()
-        );
     }
 
 }

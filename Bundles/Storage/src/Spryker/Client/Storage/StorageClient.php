@@ -283,20 +283,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function exists($key)
-    {
-        return $this->getService()->exists($key);
-    }
-
-    /**
      * @return void
      */
     protected function loadKeysFromCache()

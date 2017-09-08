@@ -13,15 +13,8 @@ interface AvailabilityStorageInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
      */
     public function getProductAvailability($idProductAbstract);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    public function hasProductAvailability($idProductAbstract);
 
 }

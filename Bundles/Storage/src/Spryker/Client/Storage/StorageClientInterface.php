@@ -158,16 +158,4 @@ interface StorageClientInterface
      */
     public function unsetLastCachedKey();
 
-    /**
-     * Checks if the provided key exist in the Storage.
-     * Increases read access statistics.
-     *
-     * @api
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function exists($key);
-
 }

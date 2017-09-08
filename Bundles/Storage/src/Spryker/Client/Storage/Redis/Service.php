@@ -387,18 +387,4 @@ class Service implements ServiceInterface
         return $deleteCount;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function exists($key)
-    {
-        $key = $this->getKeyName($key);
-        $doesExist = (bool)$this->client->exists($key);
-        $this->addReadAccessStats($key);
-
-        return $doesExist;
-    }
-
 }

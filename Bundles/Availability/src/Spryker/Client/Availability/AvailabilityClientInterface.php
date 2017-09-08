@@ -19,22 +19,8 @@ interface AvailabilityClientInterface
      *
      * @param int $idProductAbstract
      *
-     * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract);
-
-    /**
-     * Specification:
-     * - Checks if product availability data exists for current locale in Storage
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    public function hasProductAvailabilityByIdProductAbstract($idProductAbstract);
 
 }

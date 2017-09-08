@@ -32,14 +32,4 @@ class AvailabilityToStorageBridge implements AvailabilityToStorageInterface
         return $this->storageClient->get($key);
     }
 
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function exists($key)
-    {
-        return $this->storageClient->exists($key);
-    }
-
 }
