@@ -9,7 +9,7 @@ namespace Spryker\Yves\Nopayment\Handler;
 
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Nopayment\NopaymentConstants;
+use Spryker\Shared\Nopayment\NopaymentConfig;
 
 class NopaymentHandler
 {
@@ -22,9 +22,9 @@ class NopaymentHandler
     public function addPaymentToQuote(QuoteTransfer $quoteTransfer)
     {
         $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentSelection(NopaymentConstants::PAYMENT_PROVIDER_NAME);
-        $paymentTransfer->setPaymentProvider(NopaymentConstants::PAYMENT_PROVIDER_NAME);
-        $paymentTransfer->setPaymentMethod(NopaymentConstants::PAYMENT_METHOD_NAME);
+        $paymentTransfer->setPaymentSelection(NopaymentConfig::PAYMENT_PROVIDER_NAME);
+        $paymentTransfer->setPaymentProvider(NopaymentConfig::PAYMENT_PROVIDER_NAME);
+        $paymentTransfer->setPaymentMethod(NopaymentConfig::PAYMENT_METHOD_NAME);
         $paymentTransfer->setIsLimitedAmount(true);
         $paymentTransfer->setAmount(0);
 

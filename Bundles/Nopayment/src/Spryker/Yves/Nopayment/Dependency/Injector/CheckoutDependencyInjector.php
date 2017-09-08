@@ -9,7 +9,7 @@ namespace Spryker\Yves\Nopayment\Dependency\Injector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
-use Spryker\Shared\Nopayment\NopaymentConstants;
+use Spryker\Shared\Nopayment\NopaymentConfig;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Nopayment\Plugin\NopaymentHandlerPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
@@ -39,7 +39,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
         $container->extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
             $nopaymentHandlerPlugin = new NopaymentHandlerPlugin();
 
-            $paymentMethodHandler->add($nopaymentHandlerPlugin, NopaymentConstants::PAYMENT_PROVIDER_NAME);
+            $paymentMethodHandler->add($nopaymentHandlerPlugin, NopaymentConfig::PAYMENT_PROVIDER_NAME);
 
             return $paymentMethodHandler;
         });

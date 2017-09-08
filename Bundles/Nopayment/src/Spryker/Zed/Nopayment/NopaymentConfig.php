@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Nopayment;
 
+use Spryker\Shared\Nopayment\NopaymentConfig as NopaymentNopaymentConfig;
 use Spryker\Shared\Nopayment\NopaymentConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -39,7 +40,7 @@ class NopaymentConfig extends AbstractBundleConfig
     protected function getNopaymentMethodsDefaults()
     {
         return [
-            NopaymentConstants::PAYMENT_PROVIDER_NAME
+            NopaymentNopaymentConfig::PAYMENT_PROVIDER_NAME
         ];
     }
 

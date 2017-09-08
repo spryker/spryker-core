@@ -7,10 +7,12 @@
 
 namespace Spryker\Shared\Nopayment;
 
-interface NopaymentConstants
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class NopaymentConfig extends AbstractBundleConfig
 {
 
-    const NO_PAYMENT_METHODS = 'NO_PAYMENT_METHODS';
-    const WHITELIST_PAYMENT_METHODS = 'WHITELIST_PAYMENT_METHODS';
+    const PAYMENT_PROVIDER_NAME = 'Nopayment';
+    const PAYMENT_METHOD_NAME = 'paid';
 
 }

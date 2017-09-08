@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Nopayment\Dependency\Injector;
 
-use Spryker\Shared\Nopayment\NopaymentConstants;
+use Spryker\Shared\Nopayment\NopaymentConfig;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Nopayment\Communication\Plugin\Checkout\NopaymentPreCheckPlugin;
@@ -37,7 +37,7 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
     protected function injectPaymentPlugins(Container $container)
     {
         $container->extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
-            $pluginCollection->add(new NopaymentPreCheckPlugin(), NopaymentConstants::PAYMENT_PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
+            $pluginCollection->add(new NopaymentPreCheckPlugin(), NopaymentConfig::PAYMENT_PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
 
             return $pluginCollection;
         });
