@@ -29,7 +29,7 @@
         <foreign-key name="spy_gift_card_product_abstract_conf_link-fk_product_abstract" foreignTable="spy_product_abstract">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
-        <foreign-key name="spy_gift_card_product_abstract_configuration_link-fk_gift_card_product_abstract_configuration" foreignTable="spy_gift_card_product_abstract_configuration">
+        <foreign-key name="spy_gift_card_pa_conf_link-fk_gift_card_pa_conf" foreignTable="spy_gift_card_product_abstract_configuration">
             <reference local="fk_gift_card_product_abstract_configuration" foreign="id_gift_card_product_abstract_configuration"/>
         </foreign-key>
     <id-method-parameter value="spy_gift_card_product_abstract_configuration_link_pk_seq"/></table>
@@ -49,7 +49,7 @@
         <foreign-key name="spy_gift_card_product_configuration_link-fk_product" foreignTable="spy_product">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
-        <foreign-key name="spy_gift_card_product_configuration_link-fk_gift_card_product_configuration" foreignTable="spy_gift_card_product_configuration">
+        <foreign-key name="spy_gift_card_p_conf_link-fk_gift_card_p_conf" foreignTable="spy_gift_card_product_configuration">
             <reference local="fk_gift_card_product_configuration" foreign="id_gift_card_product_configuration"/>
         </foreign-key>
         <id-method-parameter value="spy_gift_card_product_configuration_link_pk_seq"/>
