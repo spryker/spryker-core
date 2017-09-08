@@ -96,7 +96,11 @@ class CreateProductReviewTest extends Unit
 
         // Assert
         $expectedProductReviewTransfer = $this->tester->getFacade()->findProductReview($productReviewTransfer);
-        $this->assertSame($actualProductReviewTransfer->toArray(), $expectedProductReviewTransfer->toArray(), 'Updated product review should have been returned.');
+        $this->assertSame(
+            $this->tester->removeProductReviewDateFields($expectedProductReviewTransfer->toArray()),
+            $this->tester->removeProductReviewDateFields($actualProductReviewTransfer->toArray()),
+            'Updated product review should have been returned.'
+        );
     }
 
     /**

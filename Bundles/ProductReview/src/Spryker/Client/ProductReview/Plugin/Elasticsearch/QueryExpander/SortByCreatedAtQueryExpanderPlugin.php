@@ -8,11 +8,10 @@
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
-use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Search\ProductReviewIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Shared\ProductReview\ProductReviewConstants;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
@@ -41,7 +40,7 @@ class SortByCreatedAtQueryExpanderPlugin extends AbstractPlugin implements Query
     protected function addSortingToQuery(Query $query)
     {
         $query->addSort([
-            PageIndexMap::INTEGER_SORT . '.' . ProductReviewConstants::SEARCH_SORT_FIELD_CREATED_AT => [
+            ProductReviewIndexMap::CREATED_AT => [
                 'order' => 'desc',
             ],
         ]);

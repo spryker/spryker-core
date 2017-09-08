@@ -23,8 +23,29 @@ class ProductReviewBusinessTester extends Actor
 
     use _generated\ProductReviewBusinessTesterActions;
 
+    /**
+     * @see SpyProductReviewTableMap::COL_UPDATED_AT
+     * @see SpyProductReviewTableMap::COL_CREATED_AT
+     */
+    const DATE_FIELDS = [
+        'created_at',
+        'updated_at',
+    ];
+
    /**
     * Define custom actions here
     */
+
+    /**
+     * Note: for MySQL compatibility
+     *
+     * @param array $productReview
+     *
+     * @return array
+     */
+    public function removeProductReviewDateFields(array $productReview)
+    {
+        return array_diff_key($productReview,  array_flip(static::DATE_FIELDS));
+    }
 
 }

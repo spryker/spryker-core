@@ -58,7 +58,11 @@ class ReadProductReviewTest extends Test
 
         // Assert
         $this->assertNotNull($actualProductReviewTransfer, 'Existing product review should have been found in database.');
-        $this->assertArraySubset($productReviewTransfer->modifiedToArray(), $actualProductReviewTransfer->toArray(), '');
+        $this->assertArraySubset(
+            $this->tester->removeProductReviewDateFields($productReviewTransfer->modifiedToArray()),
+            $this->tester->removeProductReviewDateFields($actualProductReviewTransfer->toArray()),
+            'Create should return the updated entity'
+        );
     }
 
 }
