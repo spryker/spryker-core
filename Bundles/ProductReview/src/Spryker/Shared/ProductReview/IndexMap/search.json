@@ -9,6 +9,15 @@
             },
             "path_match": "search-result-data.*"
           }
+        },
+        {
+          "integer_sort": {
+            "mapping": {
+              "index": "not_analyzed",
+              "type": "integer"
+            },
+            "path_match": "integer-sort.*"
+          }
         }
       ],
       "properties": {
@@ -36,6 +45,13 @@
         "rating": {
           "type": "integer",
           "include_in_all": false
+        },
+        "integer-sort": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+
+          }
         }
       }
     }
