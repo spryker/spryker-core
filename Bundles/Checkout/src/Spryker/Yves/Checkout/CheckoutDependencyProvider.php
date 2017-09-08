@@ -18,8 +18,8 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 
     const PAYMENT_METHOD_HANDLER = 'payment method handler';
     const PAYMENT_SUB_FORMS = 'payment sub forms';
-    const PAYMENT_FILTERS = 'payment filters';
 
+    const PLUGIN_PAYMENT_FILTERS = 'PLUGIN_PAYMENT_FILTERS';
     const PLUGIN_APPLICATION = 'application plugin';
 
     const CLIENT_QUOTE = 'cart client';
@@ -44,16 +44,22 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function providePlugins(Container $container)
     {
-        $container[self::PAYMENT_SUB_FORMS] = function () {
-            return new SubFormPluginCollection();
-        };
+        $container = $this->addPaymentSubForms($container);
+        $container = $this->addPaymentFormFilterPlugins($container);
+        $container = $this->addPaymentMethodHandler($container);
 
-        $container[self::PAYMENT_FILTERS] = function () {
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPaymentFormFilterPlugins(Container $container)
+    {
+        $container[static::PLUGIN_PAYMENT_FILTERS] = function () {
             return $this->getPaymentFormFilterPlugins();
-        };
-
-        $container[self::PAYMENT_METHOD_HANDLER] = function () {
-            return new StepHandlerPluginCollection();
         };
 
         return $container;
@@ -72,9 +78,37 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addPaymentMethodHandler(Container $container)
+    {
+        $container[static::PAYMENT_METHOD_HANDLER] = function () {
+            return new StepHandlerPluginCollection();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPaymentSubForms(Container $container)
+    {
+        $container[static::PAYMENT_SUB_FORMS] = function () {
+            return new SubFormPluginCollection();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     protected function provideClients(Container $container)
     {
-        $container[self::CLIENT_QUOTE] = function () use ($container) {
+        $container[static::CLIENT_QUOTE] = function () use ($container) {
             return new CheckoutToQuoteBridge($container->getLocator()->quote()->client());
         };
 
