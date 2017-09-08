@@ -4,6 +4,7 @@
     <table name="spy_currency" phpName="SpyCurrency">
         <column name="id_currency" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" size="255" type="VARCHAR"/>
+        <column name="iso_code" size="5" type="VARCHAR"/>
 
         <id-method-parameter value="spy_currency_pk_seq"/></table>
 </database>
