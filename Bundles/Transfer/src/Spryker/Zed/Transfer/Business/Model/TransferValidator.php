@@ -30,9 +30,15 @@ class TransferValidator implements TransferValidatorInterface
     /**
      * @var array
      */
-    protected $typeMap = [
+    protected $typeMap;
+
+    /**
+     * @var array
+     */
+    protected $simpleTypeMap = [
         'integer' => 'int',
         'boolean' => 'bool',
+        'array' => 'array',
         '[]' => 'array (or more concrete `type[]`)',
         'mixed[]' => 'array (or more concrete `type[]`)',
         'integer[]' => 'int[]',
@@ -42,7 +48,7 @@ class TransferValidator implements TransferValidatorInterface
     /**
      * @var array
      */
-    protected $arrayTypeMap = [
+    protected $arrayTypeWhitelist = [
         'int',
         'float',
         'string',
@@ -63,7 +69,8 @@ class TransferValidator implements TransferValidatorInterface
         $this->messenger = $messenger;
         $this->finder = $finder;
 
-        foreach ($this->arrayTypeMap as $type) {
+        $this->typeMap = $this->simpleTypeMap;
+        foreach ($this->arrayTypeWhitelist as $type) {
             $this->typeMap[$type] = $type;
         }
     }
@@ -176,11 +183,11 @@ class TransferValidator implements TransferValidatorInterface
         $extractedType = $matches[1];
         $extractedTypeLowercase = strtolower($extractedType);
 
-        if (!in_array($extractedTypeLowercase, $this->arrayTypeMap)) {
+        if (!in_array($extractedTypeLowercase, $this->arrayTypeWhitelist)) {
             return false;
         }
 
-        if ($extractedTypeLowercase === $extractedType && in_array($extractedType, $this->arrayTypeMap, true)) {
+        if ($extractedTypeLowercase === $extractedType && in_array($extractedType, $this->arrayTypeWhitelist, true)) {
             return true;
         }
 
