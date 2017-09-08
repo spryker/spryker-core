@@ -26,6 +26,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
     const FACADE_MONEY = 'money facade';
+    const METHOD_FILTER_PLUGINS = 'shipment method filter plugins';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -103,6 +104,10 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
         };
 
+        $container[static::METHOD_FILTER_PLUGINS] = function (Container $container) {
+            return $this->getMethodFilterPlugins($container);
+        };
+
         return $container;
     }
 
@@ -132,6 +137,16 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @return array
      */
     protected function getDeliveryTimePlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     */
+    protected function getMethodFilterPlugins(Container $container)
     {
         return [];
     }

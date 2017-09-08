@@ -20,7 +20,8 @@
     "spryker/discount": "If you want to make sure GiftCards have no Discount applied",
     "spryker/calculation": "Don't know why yet",
     "spryker/cart": "Don't know why yet",
-    "spryker/checkout": "Don't know why yet"
+    "spryker/checkout": "Don't know why yet",
+    "spryker/shipment": "Don't know why yet"
   },
   "autoload": {
     "psr-4": {

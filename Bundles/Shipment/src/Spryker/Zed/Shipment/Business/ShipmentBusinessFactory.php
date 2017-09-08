@@ -48,7 +48,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new Method(
             $this->getQueryContainer(),
-            $this->getPlugins()
+            $this->getPlugins(),
+            $this->getMethodFilterPlugins()
         );
     }
 
@@ -58,6 +59,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getPlugins()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface
+     */
+    protected function getMethodFilterPlugins()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::METHOD_FILTER_PLUGINS);
     }
 
     /**

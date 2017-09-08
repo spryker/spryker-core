@@ -23,6 +23,11 @@ class Method implements MethodInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     */
+    protected $shipmentMethodFilters;
+
+    /**
      * @var array
      */
     protected $plugins;
@@ -30,11 +35,16 @@ class Method implements MethodInterface
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
      * @param array $plugins
+     * @param \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[] $shipmentMethodFilters
      */
-    public function __construct(ShipmentQueryContainerInterface $queryContainer, array $plugins)
-    {
+    public function __construct(
+        ShipmentQueryContainerInterface $queryContainer,
+        array $plugins,
+        array $shipmentMethodFilters
+    ) {
         $this->queryContainer = $queryContainer;
         $this->plugins = $plugins;
+        $this->shipmentMethodFilters = $shipmentMethodFilters;
     }
 
     /**
@@ -62,21 +72,58 @@ class Method implements MethodInterface
         $methods = $this->queryContainer->queryActiveMethods()->find();
 
         foreach ($methods as $shipmentMethodEntity) {
-            $shipmentMethodTransfer = new ShipmentMethodTransfer();
-            $shipmentMethodTransfer->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity));
-            $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
-
-            if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
-                $shipmentMethodTransfer->setDefaultPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
-                $shipmentMethodTransfer->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer));
-                $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier());
-
-                $shipmentCarrierName = $this->findShipmentCarrierName($shipmentMethodEntity);
-                $shipmentMethodTransfer->setCarrierName($shipmentCarrierName);
-
+            $shipmentMethodTransfer = $this->createShipmentMethodTransfer($shipmentMethodEntity, $quoteTransfer);
+            if ($shipmentMethodTransfer) {
                 $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
             }
         }
+
+        $shipmentMethodsTransfer = $this->applyShipmentMethodFilters($shipmentMethodsTransfer, $quoteTransfer);
+
+        return $shipmentMethodsTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function createShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer)
+    {
+        $shipmentMethodTransfer = new ShipmentMethodTransfer();
+        $shipmentMethodTransfer->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity));
+        $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
+
+        if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
+            $shipmentMethodTransfer->setDefaultPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
+            $shipmentMethodTransfer->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer));
+            $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier());
+
+            $shipmentCarrierName = $this->findShipmentCarrierName($shipmentMethodEntity);
+            $shipmentMethodTransfer->setCarrierName($shipmentCarrierName);
+
+            return $shipmentMethodTransfer;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function applyShipmentMethodFilters(ShipmentMethodsTransfer $shipmentMethodsTransfer, QuoteTransfer $quoteTransfer)
+    {
+        $shipmentMethods = $shipmentMethodsTransfer->getMethods();
+
+        foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
+            $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+        }
+
+        $shipmentMethodsTransfer->setMethods($shipmentMethods);
 
         return $shipmentMethodsTransfer;
     }
