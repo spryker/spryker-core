@@ -120,6 +120,9 @@ class GiftCardCreator implements GiftCardCreatorInterface
         $giftCardMetadata = $this->giftCardReader->getGiftCardOrderItemMetadata($idSalesOrderItem);
         $giftCardTransfer = $this->createGiftCardTransferFromMetadata($giftCardMetadata);
 
+        $giftCardMetadata->setCode($giftCardTransfer->getCode());
+        $giftCardMetadata->save();
+
         return $this->create($giftCardTransfer);
     }
 

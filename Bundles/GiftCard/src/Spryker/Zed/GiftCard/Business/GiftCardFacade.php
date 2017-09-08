@@ -194,4 +194,17 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
         $this->getFactory()->createGiftCardReplacer()->replaceGiftCards($idSalesOrder);
     }
 
+    /**
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     */
+    public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createShipmentMethodFilter()->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+    }
+
 }
