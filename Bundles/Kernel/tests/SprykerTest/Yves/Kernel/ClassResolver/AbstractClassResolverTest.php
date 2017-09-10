@@ -8,6 +8,7 @@
 namespace SprykerTest\Yves\Kernel\ClassResolver;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
 use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 /**
@@ -21,6 +22,19 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
  */
 class AbstractClassResolverTest extends Unit
 {
+
+    /**
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
+        $reflectionProperty = $reflectionResolver->getProperty('cache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
+    }
 
     /**
      * @return void
