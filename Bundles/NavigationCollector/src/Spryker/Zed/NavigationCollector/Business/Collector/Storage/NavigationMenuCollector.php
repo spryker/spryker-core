@@ -29,6 +29,19 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
     protected $keyBuilder;
 
     /**
+     * @var array
+     */
+    protected $blackList = [
+        'id_navigation',
+        'fk_navigation',
+        'fk_navigation_node',
+        'fk_parent_navigation_node',
+        'id_navigation_node_localized_attributes',
+        'fk_locale',
+        'fk_url',
+    ];
+
+    /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavigationInterface $navigationFacade
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
@@ -94,21 +107,12 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
      *
      * @return array
      */
-    private function cleanNavigationArray(array $array)
+    protected function cleanNavigationArray(array $array)
     {
         $filteredArray = [];
-        $blackList = [
-            'id_navigation',
-            'fk_navigation',
-            'fk_navigation_node',
-            'fk_parent_navigation_node',
-            'id_navigation_node_localized_attributes',
-            'fk_locale',
-            'fk_url',
-        ];
 
         foreach ($array as $key => $value) {
-            if ($value === null || in_array($key, $blackList, true)) {
+            if ($value === null || in_array($key, $this->blackList, true)) {
                 continue;
             }
 
