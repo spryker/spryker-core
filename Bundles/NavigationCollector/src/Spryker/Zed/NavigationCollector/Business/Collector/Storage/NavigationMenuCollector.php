@@ -90,7 +90,7 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
     }
 
     /**
-     * @param $array
+     * @param array $array
      *
      * @return array
      */
