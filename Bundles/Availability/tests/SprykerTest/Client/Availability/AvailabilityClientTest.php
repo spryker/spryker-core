@@ -33,14 +33,14 @@ class AvailabilityClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductAvailabilityByIdProductAbstractReturnsProductAvailabilityTransferObject()
+    public function testFindProductAvailabilityByIdProductAbstractReturnsProductAvailabilityTransferObject()
     {
         // Arrange
         $productAvailability = [];
         $this->setStorageReturn($productAvailability);
 
         // Act
-        $actualProductAvailability = $this->createAvailabilityClient()->getProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
+        $actualProductAvailability = $this->createAvailabilityClient()->findProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
 
         // Assert
         $this->assertEquals(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
@@ -49,14 +49,14 @@ class AvailabilityClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductAvailabilityByIdProductAbstractReturnsNullWhenProductAvailabilityWasNotFoundInStorage()
+    public function testFindProductAvailabilityByIdProductAbstractReturnsNullWhenProductAvailabilityWasNotFoundInStorage()
     {
         // Arrange
         $productAvailability = null;
         $this->setStorageReturn($productAvailability);
 
         // Act
-        $actualResult = $this->createAvailabilityClient()->getProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
+        $actualResult = $this->createAvailabilityClient()->findProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
 
         // Assert
         $this->assertNull($actualResult);

@@ -48,7 +48,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     public function getProductAvailability($idProductAbstract)
     {
-        // TODO: Use AvailabilityStorage::getProductAvailabilityArray
+        // TODO: Use AvailabilityStorage::getProductAvailabilityFromStorage
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $availability = $this->storageClient->get($key);
 
@@ -62,7 +62,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     public function findProductAvailability($idProductAbstract)
     {
-        $availability = $this->getProductAvailabilityArray($idProductAbstract);
+        $availability = $this->getProductAvailabilityFromStorage($idProductAbstract);
         if ($availability === null) {
             return null;
         }
@@ -73,9 +73,9 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return array|null
      */
-    protected function getProductAvailabilityArray($idProductAbstract)
+    protected function getProductAvailabilityFromStorage($idProductAbstract)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $availability = $this->storageClient->get($key);
