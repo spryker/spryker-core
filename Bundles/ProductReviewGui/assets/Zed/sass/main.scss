@@ -1,0 +1,21 @@
+#product-review-table {
+
+    i.fa-chevron-down {
+        padding: 7px;
+        cursor: pointer;
+    }
+
+    table.details {
+        margin-bottom: 15px;
+
+        th, td {
+            padding-bottom: 5px;
+        }
+
+        th {
+            padding-right: 10px;
+            vertical-align: top;
+        }
+    }
+
+}
