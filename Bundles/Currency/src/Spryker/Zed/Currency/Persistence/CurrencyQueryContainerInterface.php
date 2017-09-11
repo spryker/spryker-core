@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\Currency\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-
 /**
  * @method \Spryker\Zed\Currency\Persistence\CurrencyPersistenceFactory getFactory()
  */
-class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQueryContainerInterface
+interface CurrencyQueryContainerInterface
 {
 
     /**
@@ -22,12 +20,7 @@ class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQ
      *
      * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
      */
-    public function queryCurrencyByIsoCode($isoCode)
-    {
-        return $this->getFactory()
-            ->createCurrencyQuery()
-            ->filterByCurrencySymbol();
-    }
+    public function queryCurrencyByIsoCode($isoCode);
 
     /**
      * @api
@@ -36,11 +29,6 @@ class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQ
      *
      * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
      */
-    public function queryCurrencyByIdCurrency($idCurrency)
-    {
-        return $this->getFactory()
-            ->createCurrencyQuery()
-            ->filterByPrimaryKey($idCurrency);
-    }
+    public function queryCurrencyByIdCurrency($idCurrency);
 
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Currency\Persistence;
 
+use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -15,4 +16,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CurrencyPersistenceFactory extends AbstractPersistenceFactory
 {
+
+    /**
+     * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
+     */
+    public function createCurrencyQuery()
+    {
+        return SpyCurrencyQuery::create();
+    }
+
 }

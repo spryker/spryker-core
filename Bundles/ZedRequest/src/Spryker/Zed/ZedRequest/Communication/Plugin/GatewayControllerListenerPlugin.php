@@ -54,6 +54,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             $requestTransfer = $this->getRequestTransfer($controller, $action);
 
             $this->setCustomersLocaleIfPresent($requestTransfer);
+            $this->setCustomersCurrencyIfPresent($requestTransfer);
 
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
             $response = $this->getResponse($controller, $result);
@@ -89,6 +90,31 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         $localeTransfer = $request->getMetaTransfer('locale');
 
         return $localeTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
+     *
+     * @return void
+     */
+    protected function setCustomersCurrencyIfPresent(Request $request)
+    {
+        $currencyTransfer = $this->getCurrencyMetTransfer($request);
+        if ($currencyTransfer) {
+            Store::getInstance()->setCurrencyIsoCode($currencyTransfer->getCode());
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
+     *
+     * @return null|\Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyMetTransfer(Request $request)
+    {
+        $currencyTransfer = $request->getMetaTransfer('currency');
+
+        return $currencyTransfer;
     }
 
     /**

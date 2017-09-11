@@ -8,9 +8,14 @@
 namespace Spryker\Zed\Currency\Business;
 
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
+use Spryker\Zed\Currency\Business\Model\CurrencyMapper;
+use Spryker\Zed\Currency\Business\Model\CurrencyReader;
 use Spryker\Zed\Currency\CurrencyDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
+ */
 class CurrencyBusinessFactory extends AbstractBusinessFactory
 {
 
@@ -22,6 +27,17 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
         return new CurrencyBuilder(
             $this->getInternationalization(),
             $this->getStore()->getCurrencyIsoCode()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Currency\Business\Model\CurrencyReaderInterface
+     */
+    public function createCurrencyReader()
+    {
+        return new CurrencyReader(
+            $this->getQueryContainer(),
+            $this->createCurrencyMapper()
         );
     }
 
@@ -39,6 +55,14 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     protected function getInternationalization()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::INTERNATIONALIZATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Currency\Business\Model\CurrencyMapperInterface
+     */
+    protected function createCurrencyMapper()
+    {
+        return new CurrencyMapper($this->getInternationalization());
     }
 
 }
