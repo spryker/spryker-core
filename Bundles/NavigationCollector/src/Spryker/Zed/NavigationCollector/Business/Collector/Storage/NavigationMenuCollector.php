@@ -75,9 +75,10 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($collectItemData[NavigationMenuCollectorQuery::FIELD_ID_NAVIGATION]);
 
-        $navigationTransfer = $this->navigationFacade->findNavigationTree($navigationTransfer, $this->locale);
+        $navigationTreeTransfer = $this->navigationFacade->findNavigationTree($navigationTransfer, $this->locale);
+        $navigationTreeArray = $navigationTreeTransfer->toArray();
 
-        return $navigationTransfer->toArray();
+        return $this->cleanNavigationArray($navigationTreeArray);
     }
 
     /**
@@ -86,6 +87,40 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
     protected function isStorageTableJoinWithLocaleEnabled()
     {
         return true;
+    }
+
+    /**
+     * @param $array
+     *
+     * @return array
+     */
+    private function cleanNavigationArray(array $array)
+    {
+        $filteredArray = [];
+        $blackList = [
+            'id_navigation',
+            'fk_navigation',
+            'fk_navigation_node',
+            'fk_parent_navigation_node',
+            'id_navigation_node_localized_attributes',
+            'fk_locale',
+            'fk_url',
+        ];
+
+        foreach ($array as $key => $value) {
+            if ($value === null || in_array($key, $blackList, true)) {
+                continue;
+            }
+
+            if (is_array($value)) {
+                $filteredArray[$key] = $this->cleanNavigationArray($value);
+                continue;
+            }
+
+            $filteredArray[$key] = $value;
+        }
+
+        return $filteredArray;
     }
 
 }
