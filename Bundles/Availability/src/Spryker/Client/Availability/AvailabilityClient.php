@@ -22,7 +22,7 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
@@ -30,6 +30,22 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
         $availabilityStorage = $this->getFactory()->createAvailabilityStorage($locale);
 
         return $availabilityStorage->getProductAvailability($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
+     */
+    public function findProductAvailabilityByIdProductAbstract($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createCurrentLocaleAvailabilityStorage()
+            ->findProductAvailability($idProductAbstract);
     }
 
 }

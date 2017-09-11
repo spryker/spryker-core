@@ -44,18 +44,43 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailability($idProductAbstract)
     {
+        // TODO: Use AvailabilityStorage::getProductAvailabilityArray
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $availability = $this->storageClient->get($key);
 
+        return $this->getMappedStorageAvailabilityTransferFromStorage($availability);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
+     */
+    public function findProductAvailability($idProductAbstract)
+    {
+        $availability = $this->getProductAvailabilityArray($idProductAbstract);
         if ($availability === null) {
             return null;
         }
 
         return $this->getMappedStorageAvailabilityTransferFromStorage($availability);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    protected function getProductAvailabilityArray($idProductAbstract)
+    {
+        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
+        $availability = $this->storageClient->get($key);
+
+        return $availability;
     }
 
     /**

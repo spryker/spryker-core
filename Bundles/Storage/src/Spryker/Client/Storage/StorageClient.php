@@ -42,8 +42,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public static $service;
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return \Spryker\Client\Storage\Redis\ServiceInterface $service
@@ -58,8 +56,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return array
@@ -70,8 +66,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param array $keys
@@ -84,8 +78,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param string $key
@@ -100,8 +92,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param array $items
@@ -114,8 +104,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param string $key
@@ -128,8 +116,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return void
@@ -140,8 +126,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param string $key
@@ -154,8 +138,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param array $keys
@@ -168,8 +150,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return int
@@ -180,8 +160,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param string $key
@@ -209,8 +187,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param array $keys
@@ -223,8 +199,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return array
@@ -235,8 +209,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return array
@@ -247,8 +219,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return void
@@ -259,8 +229,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return array
@@ -271,8 +239,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return int
@@ -324,8 +290,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param mixed $pattern
@@ -338,8 +302,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -359,8 +321,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @deprecated Use persistCacheForRequest() instead.
