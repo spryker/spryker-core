@@ -55,7 +55,8 @@ class ComposerJsonUpdaterConsole extends Console
             $bundles = explode(',', $this->input->getOption(static::OPTION_BUNDLE));
         }
 
-        $processedModules = $this->getFacade()->updateComposerJsonInBundles($bundles, $this->input->getOption(static::OPTION_DRY_RUN));
+        $isDryRun = $this->input->getOption(static::OPTION_DRY_RUN);
+        $processedModules = $this->getFacade()->updateComposerJsonInBundles($bundles, $isDryRun);
         $modifiedModules = [];
         foreach ($processedModules as $processedModule => $processed) {
             if (!$processed) {
@@ -65,7 +66,9 @@ class ComposerJsonUpdaterConsole extends Console
         }
 
         if ($this->input->getOption(static::VERBOSE)) {
-            $this->output->writeln(sprintf('%s of %s module(s) updated', count($modifiedModules), count($processedModules)));
+            $text = $isDryRun ? ' need(s) updating.': 'updated.';
+
+            $this->output->writeln(sprintf('%s of %s module(s) ' . $text, count($modifiedModules), count($processedModules)));
             foreach ($modifiedModules as $modifiedModule) {
                 $this->output->writeln('- '. $modifiedModule);
             }
@@ -73,6 +76,10 @@ class ComposerJsonUpdaterConsole extends Console
 
         if (!$this->input->getOption(static::OPTION_DRY_RUN)) {
             return static::CODE_SUCCESS;
+        }
+
+        if (count($modifiedModules)) {
+            $this->output->writeln('Please run `console ' . static::COMMAND_NAME . '` locally without dry-run.');
         }
 
         return count($modifiedModules) < 1 ? static::CODE_SUCCESS  : static::CODE_ERROR;
