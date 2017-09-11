@@ -61,7 +61,7 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
      */
     protected function collectKey($data, $localeName, array $collectedItemData)
     {
-        return $this->keyBuilder->generateKey($collectedItemData[NavigationMenuCollectorQuery::FIELD_KEY], $localeName);
+        return $this->keyBuilder->generateKey($collectedItemData[NavigationMenuCollectorQuery::FIELD_NAVIGATION_KEY], $localeName);
     }
 
     /**

@@ -69,6 +69,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         $bundleProductEntity = $this->findProductBundleBySku($productConcreteTransfer->getSku());
 
         if ($bundleProductEntity === null) {
+            $this->removeBundleStock($productConcreteTransfer);
             return $productConcreteTransfer;
         }
 
@@ -105,6 +106,11 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         ProductConcreteTransfer $productConcreteTransfer,
         array $bundleTotalStockPerWarehouse
     ) {
+
+        $bundleTotalStockPerWarehouse = $this->removeBundleStockFromWarehousesWithoutBundledItems(
+            $productConcreteTransfer,
+            $bundleTotalStockPerWarehouse
+        );
 
         foreach ($bundleTotalStockPerWarehouse as $idStock => $bundleStock) {
 
@@ -263,8 +269,10 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer
      */
-    protected function mapStockTransfer(ProductConcreteTransfer $productConcreteTransfer, SpyStockProduct $stockProductEntity)
-    {
+    protected function mapStockTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        SpyStockProduct $stockProductEntity
+    ) {
         $stockTransfer = new StockProductTransfer();
         $stockTransfer->setSku($productConcreteTransfer->getSku());
         $stockTransfer->setStockType($stockProductEntity->getStock()->getName());
@@ -283,6 +291,49 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         return $this->stockQueryContainer
             ->queryStockByProducts($idProduct)
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function removeBundleStock(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        foreach ($this->findProductStocks($productConcreteTransfer->getIdProductConcrete()) as $stockProductEntity) {
+            $stockProductEntity->setQuantity(0);
+            $stockProductEntity->setIsNeverOutOfStock(false);
+            $stockProductEntity->save();
+
+            $stockTransfer = $this->mapStockTransfer($productConcreteTransfer, $stockProductEntity);
+
+            $productConcreteTransfer->addStock($stockTransfer);
+        }
+
+        $this->productBundleAvailabilityHandler->removeBundleAvailability($productConcreteTransfer->getSku());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param array $bundleTotalStockPerWarehouse
+     *
+     * @return array
+     */
+    protected function removeBundleStockFromWarehousesWithoutBundledItems(
+        ProductConcreteTransfer $productConcreteTransfer,
+        array $bundleTotalStockPerWarehouse
+    ) {
+        $productStock = $this->findProductStocks($productConcreteTransfer->getIdProductConcrete());
+
+        foreach ($productStock as $productStockEntity) {
+            if (isset($bundleTotalStockPerWarehouse[$productStockEntity->getFkStock()])) {
+                continue;
+            }
+            $productStockEntity->setQuantity(0);
+            $productStockEntity->setIsNeverOutOfStock(false);
+            $productStockEntity->save();
+        }
+        return $bundleTotalStockPerWarehouse;
     }
 
 }

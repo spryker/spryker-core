@@ -52,12 +52,12 @@
 {# set method #}
 {%- macro addSet(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
-     *
-     {% endif -%}
      {% if method.bundles is defined -%}
      * @bundle {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
@@ -76,12 +76,12 @@
 {# get method #}
 {%- macro addGet(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
-     *
-     {% endif -%}
      {% if method.bundles is defined -%}
      * @bundle {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @return {{ method.return }}
@@ -95,12 +95,12 @@
 {# add method #}
 {%- macro addAdd(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
-     *
-     {% endif -%}
      {% if method.bundles is defined -%}
      * @bundle {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @param {{ method.var }} ${{ method.property }}
@@ -119,16 +119,14 @@
 {# require method #}
 {%- macro addRequire(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
-     *
-     {% endif -%}
      {% if method.bundles is defined -%}
      * @bundle {{ method.bundles|join('|') }}
      *
      {% endif -%}
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
+     {% endif -%}
      * @return $this
      */
     public function {{ method.name }}()

@@ -106,10 +106,14 @@ class ProductReservationReader implements ProductReservationReaderInterface
         ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
     ) {
 
-        if (strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
-            $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(false);
-        } else {
-            $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(true);
+        $neverOutOfStockSet = explode(',', $productAbstractEntity->getConcreteNeverOutOfStockSet());
+
+        $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(false);
+        foreach ($neverOutOfStockSet as $status) {
+            if (filter_var($status, FILTER_VALIDATE_BOOLEAN)) {
+                $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(true);
+                break;
+            }
         }
     }
 

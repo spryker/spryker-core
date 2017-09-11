@@ -1,0 +1,12 @@
+{% macro render_plugin_types(formCollection) %}
+    {% for formType in formCollection  %}
+        {% if not formType.rendered %}
+            {% if formType.vars.template_path is defined %}
+                {% include "@" ~ formType.vars.template_path ~ ".twig" with {'form': formType.parent, 'child': formType} %}
+            {% else %}
+                {{ form_row(formType) }}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+

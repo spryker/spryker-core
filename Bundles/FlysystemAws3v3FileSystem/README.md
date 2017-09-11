@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/flysystem-aws3-filesystem
+composer require spryker/flysystem-aws3v3-file-system
 ```
 
 ## Documentation

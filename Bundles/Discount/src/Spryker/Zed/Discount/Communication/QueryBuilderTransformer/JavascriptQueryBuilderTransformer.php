@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Communication\QueryBuilderTransformer;
 
 use Spryker\Zed\Discount\Business\DiscountFacade;
 
-class JavascriptQueryBuilderTransformer
+class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransformerInterface
 {
 
     /**

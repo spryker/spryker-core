@@ -82,13 +82,22 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     public function updateBundleAvailability($bundleProductSku)
     {
         $bundleProductEntity = $this->findBundleProductEntityBySku($bundleProductSku);
-
         if ($bundleProductEntity === null) {
             return;
         }
 
         $bundleItems = $this->getBundleItemsByIdProduct($bundleProductEntity->getFkProduct());
         $this->updateBundleProductAvailability($bundleItems, $bundleProductSku);
+    }
+
+    /**
+     * @param string $bundleProductSku
+     *
+     * @return void
+     */
+    public function removeBundleAvailability($bundleProductSku)
+    {
+        $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0);
     }
 
     /**

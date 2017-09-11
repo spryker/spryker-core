@@ -50,7 +50,7 @@ class ProductBundleStockWriterTest extends Unit
 
         $productStockWriteMock = $this->createProductStockWriterMock($productBundleAvailabilityHandlerMock);
 
-        $this->setupFindProductBundleBySku($productStockWriteMock);
+        $this->setupFindProductBundleBySku($productStockWriteMock, new SpyProductBundle());
         $this->setupFindBundledItemsByIdBundleProduct($idProductBundle, $bundleQuantity, $idRelatedProductId, $relatedProductSku, $productStockWriteMock);
         $this->setupFindProductStock($productStockWriteMock, $relatedProductStock, $idRelatedProductId);
         $this->setupFindOrCreateProductStockEntity($productStockWriteMock);
@@ -70,6 +70,39 @@ class ProductBundleStockWriterTest extends Unit
 
         $stockTransfer = $stocks[1];
         $this->assertSame($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldResetStockWhenThereIsNoBundleItems()
+    {
+        $idProductBundle = 1;
+        $idRelatedProductId = 2;
+        $relatedProductSku = 'sku-321';
+
+        $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandlerMock();
+        $productBundleAvailabilityHandlerMock->expects($this->once())->method('removeBundleAvailability');
+
+        $productStockWriteMock = $this->createProductStockWriterMock($productBundleAvailabilityHandlerMock);
+
+        $this->setupFindProductBundleBySku($productStockWriteMock);
+        $this->setupFindProductStock($productStockWriteMock, 0, $idRelatedProductId);
+
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setSku($relatedProductSku);
+        $productConcreteTransfer->setIdProductConcrete($idProductBundle);
+
+        $updatedProductConcreteTransfer = $productStockWriteMock->updateStock($productConcreteTransfer);
+        $stocks = $updatedProductConcreteTransfer->getStocks();
+
+        $this->assertCount(2, $stocks);
+
+        $stockTransfer = $stocks[0];
+        $this->assertSame(0, $stockTransfer->getQuantity());
+
+        $stockTransfer = $stocks[1];
+        $this->assertSame(0, $stockTransfer->getQuantity());
     }
 
     /**
@@ -146,15 +179,17 @@ class ProductBundleStockWriterTest extends Unit
 
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $productStockWriteMock
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null $productBundleEntity
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle
      */
-    protected function setupFindProductBundleBySku(PHPUnit_Framework_MockObject_MockObject $productStockWriteMock)
-    {
-        $productBundleEntity = new SpyProductBundle();
+    protected function setupFindProductBundleBySku(
+        PHPUnit_Framework_MockObject_MockObject $productStockWriteMock,
+        SpyProductBundle $productBundleEntity = null
+    ) {
         $productStockWriteMock->method('findProductBundleBySku')->willReturn($productBundleEntity);
 
-        return $productBundleEntity;
+        return $productStockWriteMock;
     }
 
     /**
@@ -205,14 +240,14 @@ class ProductBundleStockWriterTest extends Unit
 
         $stockProducts = new ObjectCollection();
 
-        $stockProductEntity = new SpyStockProduct();
+        $stockProductEntity = $this->createStockProductEntityMock();
         $stockProductEntity->setQuantity($stock);
         $stockProductEntity->setFkProduct($idRelatedProductId);
         $stockProductEntity->setFkStock(1);
 
         $stockProducts->append($stockProductEntity);
 
-        $stockProductEntity = new SpyStockProduct();
+        $stockProductEntity = $this->createStockProductEntityMock();
         $stockProductEntity->setQuantity($stock);
         $stockProductEntity->setFkProduct($idRelatedProductId);
         $stockProductEntity->setFkStock(2);

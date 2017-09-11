@@ -52,6 +52,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private $deprecationDescription;
 
     /**
+     * @var bool
+     */
+    private $hasArrayObject = false;
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -95,6 +100,14 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasArrayObject()
+    {
+        return $this->hasArrayObject;
     }
 
     /**
@@ -174,17 +187,8 @@ class ClassDefinition implements ClassDefinitionInterface
             $property['propertyConst'] = $this->getPropertyConstantName($property);
             $property['name_underscore'] = mb_strtolower($property['propertyConst']);
 
-            if (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean/', $property['type'])) {
-                $property['is_transfer'] = true;
-                $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
-                if (preg_match('/\[\]$/', $property['type'])) {
-                    $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
-                    $property[self::TYPE_FULLY_QUALIFIED] .= str_replace('[]', '', $property['type']);
-                    $property['is_collection'] = true;
-                } else {
-                    $property['type'] = $property['type'] . 'Transfer';
-                    $property[self::TYPE_FULLY_QUALIFIED] .= $property['type'];
-                }
+            if ($this->isTransferOrTransferArray($property['type'])) {
+                $property = $this->buildTransferPropertyDefinition($property);
             }
 
             $normalizedProperties[] = $property;
@@ -198,10 +202,49 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
+     * @return array
+     */
+    private function buildTransferPropertyDefinition(array $property)
+    {
+        $property['is_transfer'] = true;
+        $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
+
+        if (preg_match('/\[\]$/', $property['type'])) {
+            $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
+            $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
+            $property['is_collection'] = true;
+
+            return $property;
+        }
+        $property['type'] = $property['type'] . 'Transfer';
+        $property[self::TYPE_FULLY_QUALIFIED] .= $property['type'];
+
+        return $property;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    private function isTransferOrTransferArray($type)
+    {
+        return (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
+    }
+
+    /**
+     * @param array $property
+     *
      * @return string
      */
     private function getPropertyType(array $property)
     {
+        if ($this->isTypedArray($property)) {
+            $type = preg_replace('/\[\]/', '', $property['type']);
+
+            return $type . '[]';
+        }
+
         if ($this->isArray($property)) {
             return 'array';
         }
@@ -234,6 +277,12 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getSetVar(array $property)
     {
+        if ($this->isTypedArray($property)) {
+            $type = preg_replace('/\[\]/', '', $property['type']);
+
+            return $type . '[]';
+        }
+
         if ($this->isArray($property)) {
             return 'array';
         }
@@ -256,6 +305,12 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getAddVar(array $property)
     {
+        if ($this->isTypedArray($property)) {
+            $type = preg_replace('/\[\]/', '', $property['type']);
+
+            return $type;
+        }
+
         if ($this->isArray($property)) {
             return 'array';
         }
@@ -302,11 +357,12 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function addPropertyMethods(array $property)
     {
+        $this->buildGetterAndSetter($property);
+
         if ($this->isCollection($property) || $this->isArray($property)) {
-            $this->buildCollectionMethods($property);
-        } else {
-            $this->buildGetterAndSetter($property);
+            $this->buildAddMethod($property);
         }
+
         $this->buildRequireMethod($property);
     }
 
@@ -340,17 +396,6 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getDeprecationDescription()
     {
         return $this->deprecationDescription;
-    }
-
-    /**
-     * @param array $property
-     *
-     * @return void
-     */
-    private function buildCollectionMethods(array $property)
-    {
-        $this->buildGetterAndSetter($property);
-        $this->buildAddMethod($property);
     }
 
     /**
@@ -395,6 +440,12 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getReturnType(array $property)
     {
+        if ($this->isTypedArray($property)) {
+            $type = preg_replace('/\[\]/', '', $property['type']);
+
+            return $type . '[]';
+        }
+
         if ($this->isArray($property)) {
             return 'array';
         }
@@ -427,7 +478,17 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isArray(array $property)
     {
-        return ($property['type'] === 'array' || $property['type'] === '[]');
+        return ($property['type'] === 'array' || $property['type'] === '[]' || $this->isTypedArray($property));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return int
+     */
+    private function isTypedArray(array $property)
+    {
+        return preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
     }
 
     /**
@@ -441,12 +502,14 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
-        if (preg_match('/^(string|int|float|bool|boolean)$/', $property['type'])) {
+        if (preg_match('/^(string|int|integer|float|bool|boolean)$/', $property['type'])) {
             return false;
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject';
+            $this->hasArrayObject = true;
+
+            return 'ArrayObject';
         }
 
         return $property['type'];
@@ -459,7 +522,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getAddTypeHint(array $property)
     {
-        if (preg_match('/^(string|int|float|bool|boolean|array|\[\])/', $property['type'])) {
+        if (preg_match('/^(string|int|integer|float|bool|boolean|mixed|resource|callable|iterable|array|\[\])/', $property['type'])) {
             return false;
         }
 
