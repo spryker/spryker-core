@@ -29,6 +29,8 @@
         <property name="uniqueProductQuantity" type="int" />
         <property name="locale" type="Locale" />
         <property name="priceMode" type="string" />
+        <property name="currencyCode" type="string" />
+        <property name="store" type="string" />
     </transfer>
 
     <transfer name="OrderList">

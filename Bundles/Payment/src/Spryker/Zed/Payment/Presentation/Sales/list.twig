@@ -18,7 +18,7 @@
                         <tr>
                             <td>{{ payment.paymentProvider }}</td>
                             <td>{{ payment.paymentMethod }}</td>
-                            <td>{{ payment.amount | money }}</td>
+                            <td>{{ payment.amount | money(true, order.currencyCode) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

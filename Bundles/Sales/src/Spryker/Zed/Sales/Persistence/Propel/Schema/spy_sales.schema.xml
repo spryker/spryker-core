@@ -86,6 +86,9 @@
         <column name="order_reference" type="VARCHAR" size="45" required="true"/>
         <column name="is_test" type="BOOLEAN" required="true" default="false"/>
 
+        <column name="store" type="VARCHAR" size="255" required="false" />
+        <column name="currency_code" type="VARCHAR" size="5" required="false" />
+
         <column name="price_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false"/>
 
         <behavior name="timestampable"/>
