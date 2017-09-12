@@ -39,7 +39,7 @@ class MigrationCheckConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Checking if migration is needed:' . PHP_EOL, OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln('Checking if migration is needed:' . PHP_EOL);
 
         $config = Config::get(PropelConstants::PROPEL);
         $command = 'APPLICATION_ENV=' . APPLICATION_ENV
