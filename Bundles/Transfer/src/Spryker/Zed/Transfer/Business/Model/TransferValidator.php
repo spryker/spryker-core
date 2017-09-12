@@ -48,7 +48,7 @@ class TransferValidator implements TransferValidatorInterface
     /**
      * @var array
      */
-    protected $arrayTypeWhitelist = [
+    protected $simpleTypeWhitelist = [
         'int',
         'float',
         'string',
@@ -70,7 +70,7 @@ class TransferValidator implements TransferValidatorInterface
         $this->finder = $finder;
 
         $this->typeMap = $this->simpleTypeMap;
-        foreach ($this->arrayTypeWhitelist as $type) {
+        foreach ($this->simpleTypeWhitelist as $type) {
             $this->typeMap[$type] = $type;
         }
     }
@@ -93,24 +93,24 @@ class TransferValidator implements TransferValidatorInterface
             $definition = Factory::fromFile($file->getPathname(), true)->toArray();
             $definition = $this->normalize($definition);
 
-            $bundle = $this->getBundleFromPathName($file->getFilename());
-            $result = $result & $this->validateDefinition($bundle, $definition, $options);
+            $module = $this->getModuleFromPathName($file->getFilename());
+            $result = $result & $this->validateDefinition($module, $definition, $options);
         }
 
         return (bool)$result;
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param array $definition
      * @param array $options
      *
      * @return bool
      */
-    protected function validateDefinition($bundle, array $definition, array $options)
+    protected function validateDefinition($module, array $definition, array $options)
     {
         if ($options['verbose']) {
-            $this->messenger->info(sprintf('Checking %s bundle', $bundle));
+            $this->messenger->info(sprintf('Checking %s module', $module));
         }
 
         $ok = true;
@@ -118,27 +118,27 @@ class TransferValidator implements TransferValidatorInterface
             foreach ($transfer['property'] as $property) {
                 $type = $property['type'];
 
-                if (!$this->checkSimpleType($type)) {
-                    $ok = false;
-                    $this->messenger->warning(sprintf(
-                        '%s.%s.%s: %s should be %s',
-                        $bundle,
-                        $transfer['name'],
-                        $property['name'],
-                        $property['type'],
-                        $this->typeMap[strtolower($type)]
-                    ));
-                    continue;
-                }
-
-                if (!$this->checkArrayType($type)) {
+                if (!$this->isValidArrayType($type)) {
                     $ok = false;
                     $this->messenger->warning(sprintf(
                         '%s.%s.%s: %s is an invalid array type',
-                        $bundle,
+                        $module,
                         $transfer['name'],
                         $property['name'],
-                        $property['type']
+                        $type
+                    ));
+
+                    continue;
+                }
+
+                if (!$this->isValidSimpleType($type)) {
+                    $ok = false;
+                    $this->messenger->warning(sprintf(
+                        '%s.%s.%s: %s is an invalid simple type',
+                        $module,
+                        $transfer['name'],
+                        $property['name'],
+                        $type
                     ));
 
                     continue;
@@ -154,15 +154,14 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return bool
      */
-    protected function checkSimpleType($type)
+    protected function isValidSimpleType($type)
     {
-        $typeLowercase = strtolower($type);
-
-        if (!isset($this->typeMap[$typeLowercase])) {
+        $whitelist = array_merge($this->simpleTypeWhitelist, ['array']);
+        if (in_array($type, $whitelist, true)) {
             return true;
         }
 
-        if ($typeLowercase === $type && in_array($type, $this->typeMap, true)) {
+        if (preg_match('/^[A-Z]/', $type) || substr($type, -2) === '[]') {
             return true;
         }
 
@@ -174,7 +173,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return bool
      */
-    protected function checkArrayType($type)
+    protected function isValidArrayType($type)
     {
         if (!preg_match('#^([a-z]+)\[\]$#', $type, $matches)) {
             return true;
@@ -183,11 +182,11 @@ class TransferValidator implements TransferValidatorInterface
         $extractedType = $matches[1];
         $extractedTypeLowercase = strtolower($extractedType);
 
-        if (!in_array($extractedTypeLowercase, $this->arrayTypeWhitelist)) {
+        if (!in_array($extractedTypeLowercase, $this->simpleTypeWhitelist)) {
             return false;
         }
 
-        if ($extractedTypeLowercase === $extractedType && in_array($extractedType, $this->arrayTypeWhitelist, true)) {
+        if ($extractedTypeLowercase === $extractedType && in_array($extractedType, $this->simpleTypeWhitelist, true)) {
             return true;
         }
 
@@ -224,7 +223,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return string
      */
-    protected function getBundleFromPathName($fileName)
+    protected function getModuleFromPathName($fileName)
     {
         $filter = new UnderscoreToCamelCase();
 
