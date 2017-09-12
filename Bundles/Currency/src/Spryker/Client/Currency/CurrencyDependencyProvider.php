@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Currency;
 
+use Spryker\Client\Currency\Dependency\Client\CurrencyToSessionBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
@@ -42,7 +43,7 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     protected function addSessionClient(Container $container)
     {
         $container[static::CLIENT_SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
+            return new CurrencyToSessionBridge($container->getLocator()->session()->client());
         };
 
         return $container;

@@ -9,6 +9,7 @@ namespace Spryker\Yves\Currency;
 
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Yves\Currency\Dependency\Client\CurrencyToSessionBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Symfony\Component\Intl\Intl;
@@ -74,7 +75,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSessionClient(Container $container)
     {
         $container[static::CLIENT_SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
+            return new CurrencyToSessionBridge($container->getLocator()->session()->client());
         };
 
         return $container;

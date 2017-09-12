@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Currency\Persistence;
 
-interface CurrentPersistenceInterface
+interface CurrencyPersistenceInterface
 {
 
     /**
@@ -15,7 +15,7 @@ interface CurrentPersistenceInterface
      *
      * @return void
      */
-    public function setCurrentCurrency($currencyCode);
+    public function setCurrentCurrencyIsoCode($currencyCode);
 
     /**
      * @return string

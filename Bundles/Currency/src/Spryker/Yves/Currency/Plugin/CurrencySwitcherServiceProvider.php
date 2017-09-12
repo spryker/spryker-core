@@ -26,6 +26,8 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
      * It should not get services.
      *
      * @param \Silex\Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -99,7 +101,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function getCurrentCurrency()
     {
-        $currentCurrencyIsoCode = $this->getFactory()->createCurrentCurrencyPersistence()->getCurrentCurrencyIsoCode();
+        $currentCurrencyIsoCode = $this->getFactory()->createCurrencyPersistence()->getCurrentCurrencyIsoCode();
 
         if (!$currentCurrencyIsoCode) {
             return $this->getFactory()->getStore()->getCurrencyIsoCode();

@@ -7,24 +7,33 @@
 
 namespace Spryker\Shared\Currency\Persistence;
 
-use Spryker\Client\Session\SessionClientInterface;
+use Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface;
+use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
+use Spryker\Shared\Kernel\Store;
 
-class CurrencyPersistence implements CurrentPersistenceInterface
+class CurrencyPersistence implements CurrencyPersistenceInterface
 {
 
     const CURRENT_CURRENCY = 'current-currency';
 
     /**
-     * @var \Spryker\Client\Session\SessionClientInterface
+     * @var \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
      */
     protected $sessionClient;
 
     /**
-     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
+     * @var \Spryker\Shared\Kernel\Store
      */
-    public function __construct(SessionClientInterface $sessionClient)
+    protected $store;
+
+    /**
+     * @param \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface $sessionClient
+     * @param \Spryker\Shared\Kernel\Store $store
+     */
+    public function __construct(CurrencyToSessionInterface $sessionClient, Store $store)
     {
         $this->sessionClient = $sessionClient;
+        $this->store = $store;
     }
 
     /**
@@ -32,7 +41,7 @@ class CurrencyPersistence implements CurrentPersistenceInterface
      *
      * @return void
      */
-    public function setCurrentCurrency($currencyCode)
+    public function setCurrentCurrencyIsoCode($currencyCode)
     {
         $this->sessionClient->set(static::CURRENT_CURRENCY, $currencyCode);
     }
@@ -42,7 +51,12 @@ class CurrencyPersistence implements CurrentPersistenceInterface
      */
     public function getCurrentCurrencyIsoCode()
     {
-        return $this->sessionClient->get(static::CURRENT_CURRENCY);
+        $currentCurrencyIsoCode = $this->sessionClient->get(static::CURRENT_CURRENCY);
+        if (!$currentCurrencyIsoCode) {
+            return $this->store->getCurrencyIsoCode();
+        }
+
+        return $currentCurrencyIsoCode;
     }
 
 }

@@ -21,16 +21,16 @@ class CurrencyFactory extends AbstractFactory
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
-            $this->createCurrentCurrencyPersistence()->getCurrentCurrencyIsoCode() ? : $this->getStore()->getCurrencyIsoCode()
+            $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Currency\Persistence\CurrentPersistenceInterface
+     * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
      */
-    public function createCurrentCurrencyPersistence()
+    public function createCurrencyPersistence()
     {
-        return new CurrencyPersistence($this->getSessionClient());
+        return new CurrencyPersistence($this->getSessionClient(), $this->getStore());
     }
 
     /**
@@ -50,7 +50,7 @@ class CurrencyFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClientInterface
+     * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
      */
     protected function getSessionClient()
     {
