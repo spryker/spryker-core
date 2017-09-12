@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
-use RuntimeException;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
@@ -46,7 +45,8 @@ class ProductAttributeBusinessTester extends Actor
         'bar' => '20 units',
     ];
 
-    const LOCALE_GENERATE_RETRY_LIMIT = 3;
+    const LOCALE_ONE_NAME = 'de_DE';
+    const LOCALE_TWO_NAME = 'en_US';
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
@@ -74,7 +74,7 @@ class ProductAttributeBusinessTester extends Actor
     public function getLocaleOne()
     {
         if ($this->localeTransferOne === null) {
-            $this->localeTransferOne = $this->haveLocale();
+            $this->localeTransferOne = $this->haveLocale(['locale_name' => static::LOCALE_ONE_NAME]);
         }
 
         return $this->localeTransferOne;
@@ -86,29 +86,10 @@ class ProductAttributeBusinessTester extends Actor
     public function getLocaleTwo()
     {
         if ($this->localeTransferTwo === null) {
-            $this->localeTransferTwo = $this->generateLocaleTwo();
+            $this->localeTransferTwo = $this->haveLocale(['locale_name' => static::LOCALE_TWO_NAME]);
         }
 
         return $this->localeTransferTwo;
-    }
-
-    /**
-     * @throws \RuntimeException
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function generateLocaleTwo()
-    {
-        $localeOne = $this->getLocaleOne();
-        for ($i = 0; $i < static::LOCALE_GENERATE_RETRY_LIMIT; $i++) {
-            $localeTwo = $this->haveLocale();
-
-            if ($localeTwo->getLocaleName() !== $localeOne->getLocaleName()) {
-                return $localeTwo;
-            }
-        };
-
-        throw new RuntimeException('The locale 2 could not be generated with different locale name');
     }
 
     /**
