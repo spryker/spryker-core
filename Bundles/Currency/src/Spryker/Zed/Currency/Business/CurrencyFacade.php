@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Currency\Business;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,8 +17,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
 {
 
     /**
-     * Specification:
-     * - Returns CurrencyTransfer object for given ISO code
+     * {@inheritdoc}
      *
      * @api
      *
@@ -31,8 +31,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns CurrencyTransfer object for current ISO code
+     * {@inheritdoc}
      *
      * @api
      *
@@ -41,6 +40,22 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     public function getCurrent()
     {
         return $this->getFactory()->createCurrencyBuilder()->getCurrent();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    public function createCurrency(CurrencyTransfer $currencyTransfer)
+    {
+        return $this->getFactory()
+            ->createCurrencyWriter()
+            ->create($currencyTransfer);
     }
 
     /**

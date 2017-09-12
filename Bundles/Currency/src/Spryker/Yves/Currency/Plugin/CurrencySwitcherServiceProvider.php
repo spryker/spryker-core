@@ -19,6 +19,8 @@ use Twig_SimpleFunction;
 class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
+    protected static $functionName = 'spyCurrencySwitch';
+
     /**
      * Registers services on the given app.
      *
@@ -34,7 +36,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) {
                 $twig->addFunction(
-                    'spyCurrencySwitcher',
+                    static::$functionName,
                     $this->getCurrencySwitcher($twig)
                 );
 
@@ -69,7 +71,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
     {
         $options = ['is_safe' => ['html']];
 
-        return new Twig_SimpleFunction('spyCurrencySwitcher', function () use ($twig) {
+        return new Twig_SimpleFunction(static::$functionName, function () use ($twig) {
             return $twig->render(
                 '@Currency/partial/currency_switcher.twig',
                 [

@@ -50,7 +50,7 @@ class CurrencyFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
+     * @return \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
      */
     protected function getSessionClient()
     {

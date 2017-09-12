@@ -10,11 +10,13 @@ namespace Spryker\Zed\Currency\Business;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Zed\Currency\Business\Model\CurrencyMapper;
 use Spryker\Zed\Currency\Business\Model\CurrencyReader;
+use Spryker\Zed\Currency\Business\Model\CurrencyWriter;
 use Spryker\Zed\Currency\CurrencyDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
  */
 class CurrencyBusinessFactory extends AbstractBusinessFactory
 {
@@ -39,6 +41,14 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCurrencyMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Currency\Business\Model\CurrencyWriterInterface
+     */
+    public function createCurrencyWriter()
+    {
+        return new CurrencyWriter($this->createCurrencyMapper());
     }
 
     /**

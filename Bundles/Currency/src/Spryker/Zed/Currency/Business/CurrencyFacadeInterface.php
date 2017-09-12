@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Currency\Business;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyBusinessFactory getFactory()
  */
@@ -48,5 +50,17 @@ interface CurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getByIdCurrency($idCurrency);
+
+    /**
+     * Specification:
+     *  - Persist currency to database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    public function createCurrency(CurrencyTransfer $currencyTransfer);
 
 }
