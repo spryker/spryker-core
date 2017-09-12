@@ -30,6 +30,11 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     protected $transferMetadata = [];
 
     /**
+     * @var array
+     */
+    protected static $buffer = [];
+
+    /**
      * @var \Zend\Filter\Word\UnderscoreToCamelCase
      */
     private static $filterUnderscoreToCamelCase;
@@ -385,8 +390,14 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
      */
     private function filterPropertyUnderscoreToCamelCase($key)
     {
+        if (isset(static::$buffer[$key])) {
+            return static::$buffer[$key];
+        }
+
         $filter = $this->getFilterUnderscoreToCamelCase();
         $property = lcfirst($filter->filter($key));
+
+        static::$buffer[$key] = $property;
 
         return $property;
     }

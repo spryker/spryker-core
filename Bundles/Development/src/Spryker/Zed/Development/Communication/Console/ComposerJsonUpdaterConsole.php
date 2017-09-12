@@ -20,6 +20,7 @@ class ComposerJsonUpdaterConsole extends Console
 
     const COMMAND_NAME = 'dev:dependency:update-composer-files';
     const OPTION_BUNDLE = 'module';
+    const OPTION_DRY_RUN = 'dry-run';
     const VERBOSE = 'verbose';
 
     /**
@@ -35,6 +36,7 @@ class ComposerJsonUpdaterConsole extends Console
             ->setDescription('Update composer.json of core modules (Spryker core dev only).');
 
         $this->addOption(static::OPTION_BUNDLE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module (comma separated for multiple ones)');
+        $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only, or use in CI');
     }
 
     /**
@@ -43,7 +45,7 @@ class ComposerJsonUpdaterConsole extends Console
      *
      * @throws \Exception
      *
-     * @return void
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -53,13 +55,34 @@ class ComposerJsonUpdaterConsole extends Console
             $bundles = explode(',', $this->input->getOption(static::OPTION_BUNDLE));
         }
 
-        $processedBundles = $this->getFacade()->updateComposerJsonInBundles($bundles);
+        $isDryRun = $this->input->getOption(static::OPTION_DRY_RUN);
+        $processedModules = $this->getFacade()->updateComposerJsonInBundles($bundles, $isDryRun);
+        $modifiedModules = [];
+        foreach ($processedModules as $processedModule => $processed) {
+            if (!$processed) {
+                continue;
+            }
+            $modifiedModules[] = $processedModule;
+        }
+
         if ($this->input->getOption(static::VERBOSE)) {
-            $this->output->writeln(count($processedBundles) . ' modules updated:');
-            foreach ($processedBundles as $processedBundle) {
-                $this->output->writeln('- '. $processedBundle);
+            $text = $isDryRun ? ' need(s) updating.': 'updated.';
+
+            $this->output->writeln(sprintf('%s of %s module(s) ' . $text, count($modifiedModules), count($processedModules)));
+            foreach ($modifiedModules as $modifiedModule) {
+                $this->output->writeln('- '. $modifiedModule);
             }
         }
+
+        if (!$this->input->getOption(static::OPTION_DRY_RUN)) {
+            return static::CODE_SUCCESS;
+        }
+
+        if (count($modifiedModules)) {
+            $this->output->writeln('Please run `console ' . static::COMMAND_NAME . '` locally without dry-run.');
+        }
+
+        return count($modifiedModules) < 1 ? static::CODE_SUCCESS  : static::CODE_ERROR;
     }
 
 }
