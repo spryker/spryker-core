@@ -10,6 +10,7 @@ namespace Spryker\Zed\Propel\Communication\Console;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
@@ -18,9 +19,6 @@ class MigrationCheckConsole extends Console
 {
 
     const COMMAND_NAME = 'propel:migration:check';
-    const OPTION_SHOW_PROPEL_OUTPUT = 'show-propel-output';
-    const MIGRATION_NOT_NEEDED = 'migration not needed';
-    const MIGRATION_NEEDED = 'migration needed';
 
     /**
      * @return void
@@ -41,7 +39,7 @@ class MigrationCheckConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Check if migration is needed', OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln('Checking if migration is needed:' . PHP_EOL, OutputInterface::VERBOSITY_VERBOSE);
 
         $config = Config::get(PropelConstants::PROPEL);
         $command = 'APPLICATION_ENV=' . APPLICATION_ENV
@@ -57,18 +55,21 @@ class MigrationCheckConsole extends Console
         $processOutput = $process->getOutput();
 
         $migrationNeeded = false;
-        $message = static::MIGRATION_NOT_NEEDED;
-
         if (strpos($processOutput, 'migration needs to be executed') !== false) {
             $migrationNeeded = true;
-            $message = static::MIGRATION_NEEDED;
         }
-
-        $output->writeln($message, OutputInterface::VERBOSITY_VERBOSE);
 
         if ($migrationNeeded) {
+            $output->writeln($processOutput, OutputInterface::VERBOSITY_VERBOSE);
+
+            $output->writeln('<error>migration needed</error>');
+
             return static::CODE_ERROR;
         }
+
+        $style = new OutputFormatterStyle('black', 'green');
+        $this->output->getFormatter()->setStyle('success', $style);
+        $output->writeln('<success>migration not needed</success>');
 
         return static::CODE_SUCCESS;
     }
