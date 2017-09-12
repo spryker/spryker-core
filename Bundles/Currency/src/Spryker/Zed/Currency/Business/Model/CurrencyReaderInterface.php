@@ -11,13 +11,6 @@ interface CurrencyReaderInterface
 {
 
     /**
-     * @param int $isoCode
-     *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
-    public function fromIsoCode($isoCode);
-
-    /**
      * @param int $idCurrency
      *
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException

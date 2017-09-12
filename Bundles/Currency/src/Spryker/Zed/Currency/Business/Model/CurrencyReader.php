@@ -14,11 +14,6 @@ class CurrencyReader implements CurrencyReaderInterface
 {
 
     /**
-     * @var \Orm\Zed\Currency\Persistence\SpyCurrency
-     */
-    protected static $currencyCache = [];
-
-    /**
      * @var \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface
      */
     protected $currencyQueryContainer;
@@ -42,18 +37,6 @@ class CurrencyReader implements CurrencyReaderInterface
     }
 
     /**
-     * @param int $isoCode
-     *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
-    public function fromIsoCode($isoCode)
-    {
-        $currencyEntity = $this->getCurrencyByIsoCode($isoCode);
-
-        return $this->currencyMapper->mapEntityToTransfer($currencyEntity);
-    }
-
-    /**
      * @param int $idCurrency
      *
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
@@ -73,34 +56,6 @@ class CurrencyReader implements CurrencyReaderInterface
         }
 
         return $this->currencyMapper->mapEntityToTransfer($currencyEntity);
-    }
-
-    /**
-     * @param string $isoCode
-     *
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
-     *
-     * @return \Orm\Zed\Currency\Persistence\SpyCurrency
-     */
-    protected function getCurrencyByIsoCode($isoCode)
-    {
-        if (isset(static::$currencyCache[$isoCode])) {
-            return static::$currencyCache[$isoCode];
-        }
-
-        $currencyEntity = $this->currencyQueryContainer
-            ->queryCurrencyByIsoCode($isoCode)
-            ->findOne();
-
-        if (!$currencyEntity) {
-            throw new CurrencyNotFoundException(
-                sprintf('Currency with iso code "%s" not found.', $isoCode)
-            );
-        }
-
-        static::$currencyCache[$isoCode] = $currencyEntity;
-
-        return $currencyEntity;
     }
 
 }

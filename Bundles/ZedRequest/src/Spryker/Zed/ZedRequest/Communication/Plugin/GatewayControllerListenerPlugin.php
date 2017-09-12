@@ -99,7 +99,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      */
     protected function setCustomersCurrencyIfPresent(Request $request)
     {
-        $currencyTransfer = $this->getCurrencyMetTransfer($request);
+        $currencyTransfer = $this->getCurrencyMetaTransfer($request);
         if ($currencyTransfer) {
             Store::getInstance()->setCurrencyIsoCode($currencyTransfer->getCode());
         }
@@ -110,7 +110,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return null|\Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrencyMetTransfer(Request $request)
+    protected function getCurrencyMetaTransfer(Request $request)
     {
         $currencyTransfer = $request->getMetaTransfer('currency');
 

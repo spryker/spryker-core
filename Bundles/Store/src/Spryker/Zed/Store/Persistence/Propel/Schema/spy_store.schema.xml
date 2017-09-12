@@ -4,6 +4,7 @@
     <table name="spy_store" phpName="SpyStore">
         <column name="id_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" size="255" type="VARCHAR"/>
-    <id-method-parameter value="spy_store_pk_seq"/></table>
+        <id-method-parameter value="spy_store_pk_seq"/>
+    </table>
 
 </database>
