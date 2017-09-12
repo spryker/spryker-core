@@ -27,7 +27,7 @@ class MigrationCheckConsole extends Console
     protected function configure()
     {
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('Checks if migration needs to be executed.');
+        $this->setDescription('Checks if migration needs to be executed. Scripts can use return code ' . static::CODE_SUCCESS . ' (all good) vs ' . static::CODE_CHANGES . ' (migration needed).');
 
         parent::configure();
     }
