@@ -62,7 +62,7 @@ class CatFaceTransfer extends AbstractTransfer
     ];
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param string $name
      *
@@ -77,7 +77,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return string
      */
@@ -87,7 +87,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return $this
      */
@@ -99,7 +99,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param \Generated\Shared\Transfer\ItemTransfer|null $item
      *
@@ -114,7 +114,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -124,7 +124,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return $this
      */
@@ -136,7 +136,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
@@ -151,7 +151,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
@@ -161,7 +161,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
@@ -176,7 +176,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return $this
      */
