@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
+use RuntimeException;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
@@ -44,6 +45,8 @@ class ProductAttributeBusinessTester extends Actor
         'foo' => 'Foo Value',
         'bar' => '20 units',
     ];
+
+    const LOCALE_GENERATE_RETRY_LIMIT = 3;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
@@ -83,10 +86,29 @@ class ProductAttributeBusinessTester extends Actor
     public function getLocaleTwo()
     {
         if ($this->localeTransferTwo === null) {
-            $this->localeTransferTwo = $this->haveLocale();
+            $this->localeTransferTwo = $this->generateLocaleTwo();
         }
 
         return $this->localeTransferTwo;
+    }
+
+    /**
+     * @throws \RuntimeException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function generateLocaleTwo()
+    {
+        $localeOne = $this->getLocaleOne();
+        for ($i = 0; $i < static::LOCALE_GENERATE_RETRY_LIMIT; $i++) {
+            $localeTwo = $this->haveLocale();
+
+            if ($localeTwo->getLocaleName() !== $localeOne->getLocaleName()) {
+                return $localeTwo;
+            }
+        };
+
+        throw new RuntimeException('The locale 2 could not be generated with different locale name');
     }
 
     /**
