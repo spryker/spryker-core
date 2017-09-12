@@ -19,6 +19,7 @@ class MigrationCheckConsole extends Console
 {
 
     const COMMAND_NAME = 'propel:migration:check';
+    const CODE_CHANGES = 2;
 
     /**
      * @return void
@@ -64,7 +65,7 @@ class MigrationCheckConsole extends Console
 
             $output->writeln('<error>migration needed</error>');
 
-            return static::CODE_ERROR;
+            return static::CODE_CHANGES;
         }
 
         $style = new OutputFormatterStyle('black', 'green');
