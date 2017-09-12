@@ -1,0 +1,3 @@
+{% block similarProducts %}
+    {{ product_relation("related-products", {idProductAbstract : product.idProductAbstract}, 'Similar products', '@ProductRelation/partial/product_relation_carousel.twig') }}
+{% endblock %}

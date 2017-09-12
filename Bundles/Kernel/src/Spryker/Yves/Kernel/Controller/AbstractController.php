@@ -14,6 +14,7 @@ use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerBridge;
 use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractController
 {
@@ -104,6 +105,22 @@ abstract class AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Yves\Kernel\Dependency\Plugin\ControllerResponseExpanderPluginInterface[] $controllerResponseExpanderPlugins
+     * @param mixed|null $data
+     * @param int $status
+     * @param array $headers
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function extendedJsonResponse(Request $request, array $controllerResponseExpanderPlugins, $data = null, $status = 200, $headers = [])
+    {
+        $data = $this->extendResponseData($request, $controllerResponseExpanderPlugins, $data);
+
+        return $this->jsonResponse($data, $status, $headers);
+    }
+
+    /**
      * @param array $data
      *
      * @return array
@@ -111,6 +128,20 @@ abstract class AbstractController
     protected function viewResponse(array $data = [])
     {
         return $data;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Yves\Kernel\Dependency\Plugin\ControllerResponseExpanderPluginInterface[] $controllerResponseExpanderPlugins
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function extendedViewResponse(Request $request, array $controllerResponseExpanderPlugins, array $data = [])
+    {
+        $data = $this->extendResponseData($request, $controllerResponseExpanderPlugins, $data);
+
+        return $this->viewResponse($data);
     }
 
     /**
@@ -225,6 +256,23 @@ abstract class AbstractController
     protected function renderView($viewPath, array $parameters = [])
     {
         return $this->getApplication()->render($viewPath, $parameters);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Yves\Kernel\Dependency\Plugin\ControllerResponseExpanderPluginInterface[] $controllerResponseExtenderPlugins
+     * @param array $data
+     *
+     * @return array
+     */
+    private function extendResponseData(Request $request, array $controllerResponseExtenderPlugins, array $data = [])
+    {
+        foreach ($controllerResponseExtenderPlugins as $controllerResponseExtenderPlugin) {
+            $controllerExpanderResult = $controllerResponseExtenderPlugin->getResult($request);
+            $data = array_merge($data, $controllerExpanderResult);
+        }
+
+        return $data;
     }
 
 }

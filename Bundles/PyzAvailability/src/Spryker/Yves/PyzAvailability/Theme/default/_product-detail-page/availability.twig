@@ -1,0 +1,11 @@
+{% block addToCartButton %}
+    <button type="submit" class="button expanded success" {{ (not product.isVariant or not product.available) ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+        <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
+    </button>
+
+    {% if not product.available %}
+        <p>
+            <strong>{{ "product.detail.out_of_stock" | trans }}</strong>
+        </p>
+    {% endif %}
+{% endblock %}

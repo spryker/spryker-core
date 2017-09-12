@@ -1,0 +1,83 @@
+{% block page_title %}
+    {% if product.metaTitle %}
+        {{ product.metaTitle }}
+    {% else %}
+        {{ product.name }}
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumbItems %}{% endblock %}
+
+{% block title %}
+    <h3>{{ product.name }}</h3>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="small-12 medium-6 xlarge-7 xxlarge-8 columns">
+            {% block productImages %}{% endblock %}
+        </div>
+
+        <div class="small-12 medium-6 xlarge-5 xxlarge-4 columns">
+
+            <div class="callout">
+                {% if product.attributes.brand is defined %}<h5><small>{{ 'page.product.by' | trans }}</small> {{ product.attributes.brand }}</h5>{% endif %}
+                <p>
+
+                    {% if product.prices.ORIGINAL is defined %}
+                        <span class="stat catalog-price__price-reduced">{{ product.price | money }}</span> <span class="catalog-price__price-original">{{ product.prices.ORIGINAL | money }}</span>
+                    {% else %}
+                        <span class="stat">{{ product.price | money }}</span>
+                    {% endif %}
+
+                    <br/>
+                    <small>{{ 'product.attribute.sku' | trans }}: {{ product.sku }}</small>
+                </p>
+
+                {% include '@PyzProduct/_product-detail-page/_partials/variants.twig' %}
+            </div>
+
+            {% block productGroups %}{% endblock %}
+
+            <form method="POST" action="/cart/add/{{ product.sku }}">
+                {% block productOptions %}{% endblock %}
+                <div>
+                    {% block addToCartButton %}
+                        <button type="submit" class="button expanded success" {{ (not product.isVariant) ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+                            <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
+                        </button>
+                    {% endblock %}
+
+                    <div class="small-12 columns"></div>
+                </div>
+            </form>
+
+            {% block addToWishlist %}{% endblock %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-12 columns">
+            <div class="callout">
+                <h5>{{ 'product.attribute.long_description' | trans }}</h5>
+                <p>{{ product.description }}</p>
+
+                <h5>{{ 'page.product.details' | trans }}</h5>
+                <div class="row">
+                    {% for attributeName, attributeValue in product.attributes if attributeName  %}
+
+                        <p class="small-12 medium-6 xlarge-4 xxlarge-3 columns">
+                            <strong>{{ ('product.attribute.'~attributeName) | trans }} </strong><br>
+                            {{ attributeValue }}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block similarProducts %}{% endblock %}
+
+    {% block productCmsBlock %}{% endblock %}
+
+{% endblock %}
