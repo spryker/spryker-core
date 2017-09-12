@@ -34,6 +34,8 @@
                     <small>{{ 'product.attribute.sku' | trans }}: {{ product.sku }}</small>
                 </p>
 
+                {% block productRating %}{% endblock %}
+
                 {% include '@PyzProduct/_product-detail-page/_partials/variants.twig' %}
             </div>
 
@@ -75,6 +77,8 @@
             </div>
         </div>
     </div>
+
+    {% block productReviews %}{% endblock %}
 
     {% block similarProducts %}{% endblock %}
 
