@@ -18,7 +18,7 @@
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider.",
     "spryker/twig": "If you want to use currency in Twig.",
-    "spryker/zed-request": "If you want to use zed request meta data provider plugin which adds currency to each request."
+    "spryker/zed-request": "If you want to use Zed request meta data provider plugin which adds currency to each request."
   },
   "autoload": {
     "psr-0": {

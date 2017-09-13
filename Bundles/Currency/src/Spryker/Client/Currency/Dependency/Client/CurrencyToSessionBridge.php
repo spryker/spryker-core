@@ -38,7 +38,7 @@ class CurrencyToSessionBridge implements CurrencyToSessionInterface
 
     /**
      * @param string $name The attribute name
-     * @param mixed $default The default value if not found
+     * @param mixed|null $default The default value if not found
      *
      * @return mixed
      */
