@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ZedRequest\Dependency\Facade\NullMessenger;
 use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToMessengerBridge;
+use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreBridge;
 
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -62,7 +63,7 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStore(Container $container)
     {
         $container[static::STORE] = function () {
-            return Store::getInstance();
+            return new ZedRequestToStoreBridge(Store::getInstance());
         };
 
         return $container;

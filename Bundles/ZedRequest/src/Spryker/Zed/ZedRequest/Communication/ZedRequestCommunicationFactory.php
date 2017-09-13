@@ -25,7 +25,7 @@ class ZedRequestCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreInterface
      */
     public function getStore()
     {
