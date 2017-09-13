@@ -18,6 +18,7 @@
 
     <transfer name="Order">
         <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="currencyCode" type="string" />
     </transfer>
 
     <transfer name="SalesPayment">
