@@ -62,7 +62,7 @@ class FooBarTransfer extends AbstractTransfer
     ];
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param string $name
      *
@@ -77,7 +77,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return string
      */
@@ -87,7 +87,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return $this
      */
@@ -99,7 +99,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test|Test2
+     * @module Test|Test2
      *
      * @param int $bla
      *
@@ -114,7 +114,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test|Test2
+     * @module Test|Test2
      *
      * @return int
      */
@@ -124,7 +124,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test|Test2
+     * @module Test|Test2
      *
      * @return $this
      */
@@ -136,7 +136,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test2
+     * @module Test2
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[] $selfReference
      *
@@ -151,7 +151,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test2
+     * @module Test2
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
      */
@@ -161,7 +161,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test2
+     * @module Test2
      *
      * @param \Generated\Shared\Transfer\FooBarTransfer $selfReference
      *
@@ -176,7 +176,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test2
+     * @module Test2
      *
      * @return $this
      */

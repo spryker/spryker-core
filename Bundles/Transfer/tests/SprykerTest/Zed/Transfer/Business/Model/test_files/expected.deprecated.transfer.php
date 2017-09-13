@@ -89,7 +89,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     ];
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated scalarField is deprecated.
      *
@@ -106,7 +106,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated scalarField is deprecated.
      *
@@ -118,7 +118,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated scalarField is deprecated.
      *
@@ -132,16 +132,20 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated arrayField is deprecated.
      *
-     * @param array $arrayField
+     * @param array|null $arrayField
      *
      * @return $this
      */
-    public function setArrayField(array $arrayField)
+    public function setArrayField(array $arrayField = null)
     {
+        if ($arrayField === null) {
+            $arrayField = [];
+        }
+
         $this->arrayField = $arrayField;
         $this->addModifiedProperty(self::ARRAY_FIELD);
 
@@ -149,7 +153,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated arrayField is deprecated.
      *
@@ -161,7 +165,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated arrayField is deprecated.
      *
@@ -178,7 +182,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated arrayField is deprecated.
      *
@@ -192,7 +196,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated transferField is deprecated.
      *
@@ -209,7 +213,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated transferField is deprecated.
      *
@@ -221,7 +225,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated transferField is deprecated.
      *
@@ -235,7 +239,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated transferCollectionField is deprecated.
      *
@@ -252,7 +256,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated transferCollectionField is deprecated.
      *
@@ -264,7 +268,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated transferCollectionField is deprecated.
      *
@@ -281,7 +285,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @deprecated transferCollectionField is deprecated.
      *

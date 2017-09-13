@@ -1,0 +1,48 @@
+{
+  "mappings": {
+    "product-review": {
+      "dynamic_templates": [
+        {
+          "search-result-data": {
+            "mapping": {
+              "index": "no"
+            },
+            "path_match": "search-result-data.*"
+          }
+        }
+      ],
+      "properties": {
+        "search-result-data": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+
+          }
+        },
+        "store": {
+          "type": "string",
+          "include_in_all": false,
+          "index": "not_analyzed"
+        },
+        "locale": {
+          "type": "string",
+          "include_in_all": false,
+          "index": "not_analyzed"
+        },
+        "id-product-abstract": {
+          "type": "integer",
+          "include_in_all": false
+        },
+        "rating": {
+          "type": "integer",
+          "include_in_all": false
+        },
+        "created-at": {
+          "type": "string",
+          "include_in_all": false,
+          "index": "not_analyzed"
+        }
+      }
+    }
+  }
+}

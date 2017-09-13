@@ -27,6 +27,7 @@ use Spryker\Zed\Propel\Communication\Console\CreateDatabaseConsole;
 use Spryker\Zed\Propel\Communication\Console\DiffConsole;
 use Spryker\Zed\Propel\Communication\Console\InsertSqlConsole;
 use Spryker\Zed\Propel\Communication\Console\MigrateConsole;
+use Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole;
 use Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;
@@ -212,6 +213,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
             $this->createInsertSqlConsole(),
             $this->createMigrateConsole(),
             $this->createSchemaCopyConsole(),
+            $this->createMigrationCheckConsole(),
         ];
     }
 
@@ -293,6 +295,14 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function createSchemaCopyConsole()
     {
         return new SchemaCopyConsole();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole
+     */
+    protected function createMigrationCheckConsole()
+    {
+        return new MigrationCheckConsole();
     }
 
 }
