@@ -21,25 +21,17 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
     /**
      * @var array
      */
-    protected $mainTouchables = [
-        SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE => [],
-        SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE => [],
-        SpyTouchTableMap::COL_ITEM_EVENT_DELETED => [],
-    ];
-
-    /**
-     * @var array
-     */
-    protected $subTouchables = [
-        SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE => [],
-        SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE => [],
-        SpyTouchTableMap::COL_ITEM_EVENT_DELETED => [],
-    ];
+    protected $touchables = [];
 
     /**
      * @var int|null
      */
     protected $bulkSize;
+
+    /**
+     * @var int
+     */
+    protected $touchableCount = 0;
 
     /**
      * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface $touchFacade
@@ -60,11 +52,23 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function addMainTouchable($itemType, $itemId, $itemEvent = SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
     {
-        if (!isset($this->mainTouchables[$itemEvent][$itemType])) {
-            $this->mainTouchables[$itemEvent][$itemType] = [];
-        }
+        $this->touchableCount++;
 
-        $this->mainTouchables[$itemEvent][$itemType][] = $itemId;
+        $this->addTouchable($itemType, $itemId, $itemEvent);
+    }
+
+    /**
+     * @deprecated Use `addTouchable()` instead.
+     *
+     * @param string $itemType
+     * @param int $itemId
+     * @param string $itemEvent
+     *
+     * @return void
+     */
+    public function addSubTouchable($itemType, $itemId, $itemEvent = SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+    {
+        $this->addTouchable($itemType, $itemId, $itemEvent);
     }
 
     /**
@@ -74,13 +78,17 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      *
      * @return void
      */
-    public function addSubTouchable($itemType, $itemId, $itemEvent = SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+    protected function addTouchable($itemType, $itemId, $itemEvent = SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
     {
-        if (!isset($this->subTouchables[$itemEvent][$itemType])) {
-            $this->subTouchables[$itemEvent][$itemType] = [];
+        if (!isset($this->touchables[$itemEvent])) {
+            $this->touchables[$itemEvent] = [];
         }
 
-        $this->subTouchables[$itemEvent][$itemType][] = $itemId;
+        if (!isset($this->touchables[$itemEvent][$itemType])) {
+            $this->touchables[$itemEvent][$itemType] = [];
+        }
+
+        $this->touchables[$itemEvent][$itemType][] = $itemId;
     }
 
     /**
@@ -88,15 +96,12 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function afterExecute()
     {
-        $touchableCount = $this->getTouchableCount($this->mainTouchables);
-
-        if ($touchableCount === 0) {
+        if ($this->touchableCount === 0) {
             return;
         }
 
-        if (!$this->bulkSize || $this->bulkSize === 1 || $touchableCount >= $this->bulkSize) {
-            $this->flushTouchables($this->mainTouchables);
-            $this->flushTouchables($this->subTouchables);
+        if (!$this->bulkSize || $this->bulkSize === 1 || $this->touchableCount >= $this->bulkSize) {
+            $this->flushTouchables();
         }
     }
 
@@ -105,73 +110,27 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function flush()
     {
-        $this->flushTouchables($this->mainTouchables);
-        $this->flushTouchables($this->subTouchables);
+        $this->flushTouchables();
     }
 
     /**
-     * @param array $touchables
-     *
-     * @return int
-     */
-    protected function getTouchableCount(array $touchables)
-    {
-        $count = 0;
-        foreach ($touchables as $itemEventTouchables) {
-            $count += count($itemEventTouchables);
-        }
-
-        return $count;
-    }
-
-    /**
-     * @param array $touchables
-     *
      * @return void
      */
-    protected function flushTouchables(array $touchables)
+    protected function flushTouchables()
     {
-        $this->flushActiveTouchables($touchables[SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE]);
-        $this->flushInActiveTouchables($touchables[SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE]);
-        $this->flushDeletedTouchables($touchables[SpyTouchTableMap::COL_ITEM_EVENT_DELETED]);
-    }
-
-    /**
-     * @param array $touchables
-     *
-     * @return void
-     */
-    protected function flushActiveTouchables(array $touchables)
-    {
-        foreach ($touchables as $itemKey => $itemIds) {
-            $this->touchFacade->bulkTouchSetActive($itemKey, array_unique($itemIds));
-            $this->mainTouchables[SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE] = [];
-        }
-    }
-
-    /**
-     * @param array $touchables
-     *
-     * @return void
-     */
-    protected function flushInActiveTouchables(array $touchables)
-    {
-        foreach ($touchables as $itemKey => $itemIds) {
-            $this->touchFacade->bulkTouchSetInActive($itemKey, array_unique($itemIds));
-            $this->mainTouchables[SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE] = [];
-        }
-    }
-
-    /**
-     * @param array $touchables
-     *
-     * @return void
-     */
-    protected function flushDeletedTouchables(array $touchables)
-    {
-        foreach ($touchables as $itemKey => $itemIds) {
-            $this->touchFacade->bulkTouchSetDeleted($itemKey, array_unique($itemIds));
-            $this->mainTouchables[SpyTouchTableMap::COL_ITEM_EVENT_DELETED] = [];
+        foreach ($this->touchables as $itemEvent => $touchableTypes) {
+            foreach ($touchableTypes as $itemType => $touchables) {
+                if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE) {
+                    $this->touchFacade->bulkTouchSetActive($itemType, array_unique($touchables));
+                }
+                if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE) {
+                    $this->touchFacade->bulkTouchSetInActive($itemType, array_unique($touchables));
+                }
+                if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
+                    $this->touchFacade->bulkTouchSetDeleted($itemType, array_unique($touchables));
+                }
+            }
+            $this->touchables[$itemEvent] = [];
         }
     }
 
