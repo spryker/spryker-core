@@ -79,9 +79,9 @@ class Discount implements DiscountInterface
             $this->getVoucherCodes($quoteTransfer)
         );
 
-        //TODO don't do this twice (checking if a discount is applicable) there should be a partitioning mechanism
         $nonApplicableDiscounts = $this->filterNonApplicableDiscounts($activeDiscounts, $quoteTransfer);
         $applicableDiscounts = $this->filterApplicableDiscounts($activeDiscounts, $quoteTransfer);
+
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
 
         $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
@@ -202,8 +202,9 @@ class Discount implements DiscountInterface
     protected function filterApplicableDiscounts(Collection $discounts, QuoteTransfer $quoteTransfer)
     {
         $applicableDiscounts = [];
-        foreach ($discounts as $discountEntity) {
+        foreach ($discounts as $key => $discountEntity) {
             if (!$this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
+                $discounts->remove($key);
                 continue;
             }
 
