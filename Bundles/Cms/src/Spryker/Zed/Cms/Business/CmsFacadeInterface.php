@@ -344,7 +344,7 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves current CMS version data with localized attributes from permanent storage.
+     * - Retrieves current CMS version data with attributes from permanent storage.
      *
      * @api
      *
