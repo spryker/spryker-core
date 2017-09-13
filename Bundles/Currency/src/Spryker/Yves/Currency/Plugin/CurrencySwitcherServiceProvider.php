@@ -59,7 +59,6 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
      */
     public function boot(Application $app)
     {
-        // TODO: Implement boot() method.
     }
 
     /**
