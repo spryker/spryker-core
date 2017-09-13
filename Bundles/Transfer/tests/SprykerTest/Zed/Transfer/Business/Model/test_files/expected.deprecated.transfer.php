@@ -136,12 +136,16 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated arrayField is deprecated.
      *
-     * @param array $arrayField
+     * @param array|null $arrayField
      *
      * @return $this
      */
-    public function setArrayField(array $arrayField)
+    public function setArrayField(array $arrayField = null)
     {
+        if ($arrayField === null) {
+            $arrayField = [];
+        }
+
         $this->arrayField = $arrayField;
         $this->addModifiedProperty(self::ARRAY_FIELD);
 
