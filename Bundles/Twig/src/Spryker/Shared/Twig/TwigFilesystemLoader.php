@@ -189,7 +189,8 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
      */
     protected function isPathInSplit($path)
     {
-        return strpos($path, 'vendor/spryker/spryker/Bundles') === false && strpos($path, 'vendor/') > 0;
+        // TODO: do we really need this?
+        return (strpos($path, 'vendor/spryker/spryker/Bundles') === false || strpos($path, 'vendor/spryker/spryker-shop/Bundles') === false) && strpos($path, 'vendor/') > 0;
     }
 
     /**
