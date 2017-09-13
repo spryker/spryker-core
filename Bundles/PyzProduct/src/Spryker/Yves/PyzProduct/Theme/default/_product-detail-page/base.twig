@@ -45,7 +45,7 @@
                 {% block productOptions %}{% endblock %}
                 <div>
                     {% block addToCartButton %}
-                        <button type="submit" class="button expanded success" {{ (not product.isVariant) ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
+                        <button type="submit" class="button expanded success js-add-to-cart-button" {{ (not product.isVariant) ? 'disabled' : '' }} onclick="this.form.submit(); this.disabled='disabled'; return false;">
                             <i class="fa fa-cart-plus"></i>{{ 'page.detail.add-to-cart' | trans }}
                         </button>
                     {% endblock %}
