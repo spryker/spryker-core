@@ -632,7 +632,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['hasDefaultNull'] = false;
 
-        if ($typeHint !== null && $this->isCollection($property) !== true && $this->isArray($property) !== true) {
+        if ($typeHint !== null && $this->isCollection($property) !== true && ($this->isArray($property) !== true || $this->isTypedArray($property) !== true)) {
             $method['hasDefaultNull'] = true;
         }
 
