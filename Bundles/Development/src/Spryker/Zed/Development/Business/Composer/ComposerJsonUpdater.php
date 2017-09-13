@@ -71,7 +71,11 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      */
     protected function updateComposerJsonFile(SplFileInfo $composerJsonFile, $dryRun = false)
     {
-        exec('./composer.phar validate ' . $composerJsonFile->getPathname(), $output, $return);
+        if (!file_exists(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'composer.phar')) {
+            exec('cd ' . APPLICATION_ROOT_DIR . ' && [ ! -f composer.phar ] && curl -sS https://getcomposer.org/installer | php', $output, $returnVar);
+        }
+
+        exec('cd ' . APPLICATION_ROOT_DIR . ' && php composer.phar validate ' . $composerJsonFile->getPathname(), $output, $return);
         if ($return !== 0) {
             throw new RuntimeException('Invalid composer file ' . $composerJsonFile->getPathname() . ': ' . print_r($output, true));
         }

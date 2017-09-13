@@ -105,7 +105,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     ];
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated scalarField is deprecated.
      *
@@ -122,7 +122,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated scalarField is deprecated.
      *
@@ -134,7 +134,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated scalarField is deprecated.
      *
@@ -148,16 +148,20 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated arrayField is deprecated.
      *
-     * @param array $arrayField
+     * @param array|null $arrayField
      *
      * @return $this
      */
-    public function setArrayField(array $arrayField)
+    public function setArrayField(array $arrayField = null)
     {
+        if ($arrayField === null) {
+            $arrayField = [];
+        }
+
         $this->arrayField = $arrayField;
         $this->addModifiedProperty(self::ARRAY_FIELD);
 
@@ -165,7 +169,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated arrayField is deprecated.
      *
@@ -177,7 +181,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated arrayField is deprecated.
      *
@@ -194,7 +198,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated arrayField is deprecated.
      *
@@ -208,7 +212,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated transferField is deprecated.
      *
@@ -225,7 +229,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated transferField is deprecated.
      *
@@ -237,7 +241,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated transferField is deprecated.
      *
@@ -251,7 +255,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated transferCollectionField is deprecated.
      *
@@ -268,7 +272,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated transferCollectionField is deprecated.
      *
@@ -280,7 +284,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated transferCollectionField is deprecated.
      *
@@ -297,7 +301,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated transferCollectionField is deprecated.
      *
@@ -311,7 +315,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated Deprecated on project level.
      *
@@ -328,7 +332,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated Deprecated on project level.
      *
@@ -340,7 +344,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Deprecated
+     * @module Deprecated
      *
      * @deprecated Deprecated on project level.
      *

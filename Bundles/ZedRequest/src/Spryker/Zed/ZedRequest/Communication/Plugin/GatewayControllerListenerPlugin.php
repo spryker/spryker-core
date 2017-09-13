@@ -10,7 +10,6 @@ namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 use Generated\Shared\Transfer\MessageTransfer;
 use LogicException;
 use ReflectionObject;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -76,7 +75,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     {
         $localeTransfer = $this->getLocaleMetaTransfer($request);
         if ($localeTransfer) {
-            Store::getInstance()->setCurrentLocale($localeTransfer->getLocaleName());
+            $this->getFactory()->getStore()->setCurrentLocale($localeTransfer->getLocaleName());
         }
     }
 
@@ -101,7 +100,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     {
         $currencyTransfer = $this->getCurrencyMetaTransfer($request);
         if ($currencyTransfer) {
-            Store::getInstance()->setCurrencyIsoCode($currencyTransfer->getCode());
+            $this->getFactory()->getStore()->setCurrencyIsoCode($currencyTransfer->getCode());
         }
     }
 
