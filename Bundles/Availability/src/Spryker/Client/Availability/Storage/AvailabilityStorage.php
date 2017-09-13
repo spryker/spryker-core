@@ -48,7 +48,6 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     public function getProductAvailability($idProductAbstract)
     {
-        // TODO: Use AvailabilityStorage::getProductAvailabilityFromStorage
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $availability = $this->storageClient->get($key);
 
