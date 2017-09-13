@@ -553,4 +553,19 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
             ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
     }
 
+    /**
+     * @api
+     *
+     * @param array $cmsPageData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function expandCmsPageData(array $cmsPageData, LocaleTransfer $localeTransfer)
+    {
+        return $this->getFactory()
+            ->createCmsPageDataExpander()
+            ->expand($cmsPageData, $localeTransfer);
+    }
+
 }

@@ -12,6 +12,7 @@ use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
+use Spryker\Zed\Cms\Business\Page\CmsPageDataExpander;
 use Spryker\Zed\Cms\Business\Page\CmsPageReader;
 use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
@@ -298,6 +299,14 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     */
+    protected function getCmsPageDataExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_DATA_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
      */
     public function getUtilEncodingService()
@@ -327,6 +336,14 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     protected function createCmsGlossaryKeyGenerator()
     {
         return new CmsGlossaryKeyGenerator($this->getGlossaryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\CmsPageDataExpanderInterface
+     */
+    public function createCmsPageDataExpander()
+    {
+        return new CmsPageDataExpander($this->getCmsPageDataExpanderPlugins());
     }
 
 }

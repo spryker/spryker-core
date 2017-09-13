@@ -31,6 +31,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
     const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
     const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
+    const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
 
     const SERVICE_UTIL_ENCODING = 'util encoding service';
 
@@ -95,6 +96,8 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
+        $container = $this->addCmsPageDataExpanderPlugins($container);
+
         return $container;
     }
 
@@ -138,6 +141,28 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
      */
     protected function getTransferExpanderPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsPageDataExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CMS_PAGE_DATA_EXPANDER] = function (Container $container) {
+            return $this->getCmsPageDataExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     */
+    protected function getCmsPageDataExpanderPlugins()
     {
         return [];
     }

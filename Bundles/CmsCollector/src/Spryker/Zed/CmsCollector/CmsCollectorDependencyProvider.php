@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsCollector;
 
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
 use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingBridge;
@@ -19,12 +20,16 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_SEARCH = 'FACADE_SEARCH';
     const FACADE_CMS_CONTENT_WIDGET = 'FACADE_CMS_CONTENT_WIDGET';
+    const FACADE_CMS = 'FACADE_CMS';
 
     const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
     const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
 
+    /**
+     * @deprecated
+     */
     const COLLECTOR_DATA_EXPANDER_PLUGINS = 'DATA_EXPANDER_PLUGINS';
 
     /**
@@ -58,17 +63,7 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getCollectorDataExpanderPlugins();
         };
 
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $container = $this->addCollectorDataExpanderPlugins($container);
+        $container = $this->addCmsFacade($container);
 
         return $container;
     }
@@ -78,10 +73,10 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCollectorDataExpanderPlugins(Container $container)
+    protected function addCmsFacade(Container $container)
     {
-        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
-            return $this->getCollectorDataExpanderPlugins();
+        $container[static::FACADE_CMS] = function (Container $container) {
+            return new CmsCollectorToCmsBridge($container->getLocator()->cms()->facade());
         };
 
         return $container;
@@ -89,6 +84,8 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * Stack of plugins which run during data collection for each item.
+     *
+     * @deprecated
      *
      * @return \Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
      */

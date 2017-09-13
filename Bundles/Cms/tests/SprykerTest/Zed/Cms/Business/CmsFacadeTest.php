@@ -9,10 +9,13 @@ namespace SprykerTest\Zed\Cms\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
@@ -71,6 +74,11 @@ class CmsFacadeTest extends Unit
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $touchQueryContainer;
+
+    /**
+     * @var \SprykerTest\Zed\Cms\CmsBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -374,6 +382,23 @@ class CmsFacadeTest extends Unit
         $touchCountAfterCreation = $touchQuery->count();
 
         $this->assertTrue($touchCountAfterCreation > $touchCountBeforeCreation);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCmsPageDataAppliesPreConfiguredCmsPageDataExpanderPlugins()
+    {
+        // Assign
+        $input = [];
+        $expanderPlugin = $this->createMock(CmsPageDataExpanderPluginInterface::class);
+        $this->tester->setDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_DATA_EXPANDER, [$expanderPlugin]);
+
+        // Assert
+        $expanderPlugin->expects($this->once())->method('expand');
+
+        // Act
+        $this->cmsFacade->expandCmsPageData($input, new LocaleTransfer());
     }
 
     /**

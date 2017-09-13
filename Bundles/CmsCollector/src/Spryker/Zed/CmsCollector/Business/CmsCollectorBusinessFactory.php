@@ -30,7 +30,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
         $cmsVersionPageCollector = new CmsVersionStoragePageCollector(
             $this->getUtilDataReaderService(),
             $this->createDataExtractor(),
-            $this->getCollectorDataExpanderPlugins()
+            $this->getCmsFacade()
         );
 
         $cmsVersionPageCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -117,14 +117,6 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
-     */
-    protected function getCollectorDataExpanderPlugins()
-    {
-        return $this->getProvidedDependency(CmsCollectorDependencyProvider::COLLECTOR_DATA_EXPANDER_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector
      */
     protected function createCmsVersionPageCollectorStorageQuery()
@@ -138,6 +130,14 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     protected function createCmsVersionPageCollectorSearchQuery()
     {
         return new CmsVersionPageCollectorSearchQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface
+     */
+    protected function getCmsFacade()
+    {
+        return $this->getProvidedDependency(CmsCollectorDependencyProvider::FACADE_CMS);
     }
 
 }

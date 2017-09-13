@@ -422,4 +422,17 @@ interface CmsFacadeInterface
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 
+    /**
+     * Specification:
+     * - Applies the preconfigured CmsPageDataExpanderPluginInterface plugins on the provided data.
+     *
+     * @api
+     *
+     * @param array $cmsPageData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function expandCmsPageData(array $cmsPageData, LocaleTransfer $localeTransfer);
+
 }

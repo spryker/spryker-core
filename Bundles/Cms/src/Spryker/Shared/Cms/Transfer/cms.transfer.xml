@@ -117,4 +117,9 @@
     <transfer name="CmsVersionDataRequest">
         <property name="idCmsPage" type="int" />
     </transfer>
+
+    <transfer name="CmsPageDataExpandRequest">
+        <property name="cmsPageData" type="array" />
+        <property name="locale" type="Locale" />
+    </transfer>
 </transfers>

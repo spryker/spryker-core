@@ -8,6 +8,7 @@
 namespace Spryker\Client\Cms;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
 use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -55,6 +56,20 @@ class CmsClient extends AbstractClient implements CmsClientInterface
     public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer)
     {
         return $this->getFactory()->createCmsStub()->getCmsVersionData($cmsVersionDataRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
+     */
+    public function expandCmsPageData(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer)
+    {
+        return $this->getFactory()->createCmsStub()->expandCmsPageData($cmsPageDataExpandRequestTransfer);
     }
 
 }

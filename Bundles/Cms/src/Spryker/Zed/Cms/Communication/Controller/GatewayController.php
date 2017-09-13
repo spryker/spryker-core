@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
 use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
@@ -24,6 +25,23 @@ class GatewayController extends AbstractGatewayController
     public function getCmsVersionDataAction(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer)
     {
         return $this->getFacade()->getCmsVersionData($cmsVersionDataRequestTransfer->getIdCmsPage());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
+     */
+    public function expandCmsPageDataAction(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer)
+    {
+        $cmsPageDataExpandRequestTransfer->setCmsPageData(
+            $this->getFacade()->expandCmsPageData(
+                $cmsPageDataExpandRequestTransfer->getCmsPageData(),
+                $cmsPageDataExpandRequestTransfer->getLocale()
+            )
+        );
+
+        return $cmsPageDataExpandRequestTransfer;
     }
 
 }

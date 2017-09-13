@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Cms\Zed;
 
+use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
 use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
 use Spryker\Client\Cms\Dependency\Client\CmsToZedRequestInterface;
 
@@ -34,6 +35,16 @@ class CmsStub implements CmsStubInterface
     public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer)
     {
         return $this->zedRequestClient->call('/cms/gateway/get-cms-version-data', $cmsVersionDataRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
+     */
+    public function expandCmsPageData(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer)
+    {
+        return $this->zedRequestClient->call('/cms/gateway/expand-cms-page-data', $cmsPageDataExpandRequestTransfer);
     }
 
 }

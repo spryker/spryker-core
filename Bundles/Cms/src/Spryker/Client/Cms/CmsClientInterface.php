@@ -8,6 +8,7 @@
 namespace Spryker\Client\Cms;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
 use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
 
 interface CmsClientInterface
@@ -35,5 +36,17 @@ interface CmsClientInterface
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
     public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer);
+
+    /**
+     * Specification
+     * - Applies preconfigured CmsPageDataExpanderPluginInterface plugins on provided CMS page data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
+     */
+    public function expandCmsPageData(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer);
 
 }

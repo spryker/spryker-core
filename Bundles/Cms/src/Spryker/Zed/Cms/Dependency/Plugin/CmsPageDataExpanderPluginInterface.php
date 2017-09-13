@@ -5,27 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsCollector\Dependency\Plugin;
+namespace Spryker\Zed\Cms\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-/**
- * @deprecated Use CmsPageDataExpanderPluginInterface instead
- */
-interface CmsPageCollectorDataExpanderPluginInterface
+interface CmsPageDataExpanderPluginInterface
 {
 
     /**
      * Specification:
-     *  - Allows providing additional data before exporting to Yves data store
+     * - Expands provided CMS page data.
      *
      * @api
      *
-     * @param array $collectedData
+     * @param array $cmsPageData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function expand(array $collectedData, LocaleTransfer $localeTransfer);
+    public function expand(array $cmsPageData, LocaleTransfer $localeTransfer);
 
 }
