@@ -18,7 +18,7 @@ class AvailabilityFactory extends AbstractFactory
      *
      * @param string $locale
      *
-     * @return \Spryker\Client\Availability\Storage\AvailabilityStorage
+     * @return \Spryker\Client\Availability\Storage\AvailabilityStorageInterface
      */
     public function createAvailabilityStorage($locale)
     {

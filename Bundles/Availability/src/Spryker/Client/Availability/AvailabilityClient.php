@@ -22,6 +22,8 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      *
      * @param int $idProductAbstract
      *
+     * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
+     *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract)

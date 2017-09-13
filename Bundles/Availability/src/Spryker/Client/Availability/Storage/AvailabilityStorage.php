@@ -9,6 +9,7 @@ namespace Spryker\Client\Availability\Storage;
 
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface;
+use Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class AvailabilityStorage implements AvailabilityStorageInterface
@@ -44,12 +45,19 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @param int $idProductAbstract
      *
+     * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
+     *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailability($idProductAbstract)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $availability = $this->storageClient->get($key);
+        if ($availability === null) {
+            throw new ProductAvailabilityNotFoundException(
+                sprintf('Product availability not found for "%d" product abstract id', $idProductAbstract)
+            );
+        }
 
         return $this->getMappedStorageAvailabilityTransferFromStorage($availability);
     }
