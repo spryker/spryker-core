@@ -79,7 +79,8 @@ class ComposerJsonUpdaterConsole extends Console
         }
 
         if (count($modifiedModules)) {
-            $this->output->writeln('Please run `console ' . static::COMMAND_NAME . '` locally without dry-run.');
+            $command = 'console ' . static::COMMAND_NAME . ' -m ' . implode(',', $modifiedModules);
+            $this->output->writeln(sprintf('Please run `%s` locally without dry-run.', $command));
         }
 
         return count($modifiedModules) < 1 ? static::CODE_SUCCESS  : static::CODE_ERROR;
