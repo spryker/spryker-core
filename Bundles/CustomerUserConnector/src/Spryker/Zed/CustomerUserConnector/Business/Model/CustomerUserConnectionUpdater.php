@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerUserConnectorGui\Business\Model;
+namespace Spryker\Zed\CustomerUserConnector\Business\Model;
 
 use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
-use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface;
+use Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConnectorToCustomerQueryContainerInterface;
 
 class CustomerUserConnectionUpdater implements CustomerUserConnectionUpdaterInterface
 {
 
     /**
-     * @var \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface
+     * @var \Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConnectorToCustomerQueryContainerInterface
      */
     protected $customerQueryContainer;
 
     /**
-     * @param \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer
+     * @param \Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConnectorToCustomerQueryContainerInterface $customerQueryContainer
      */
-    public function __construct(CustomerUserConnectorGuiToCustomerQueryContainerInterface $customerQueryContainer)
+    public function __construct(CustomerUserConnectorToCustomerQueryContainerInterface $customerQueryContainer)
     {
         $this->customerQueryContainer = $customerQueryContainer;
     }

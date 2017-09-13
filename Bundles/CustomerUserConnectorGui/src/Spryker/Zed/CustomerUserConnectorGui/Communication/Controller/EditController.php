@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiFacadeInterface getFacade()
  */
 class EditController extends AbstractController
 {
@@ -35,7 +34,7 @@ class EditController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            $this->getFacade()->updateCustomerUserConnection($formData);
+            $this->getFactory()->getCustomerUserConnectorFacade()->updateCustomerUserConnection($formData);
             $this->addSuccessMessage('Customer-user connections are updated.');
 
             return $this->redirectResponse(

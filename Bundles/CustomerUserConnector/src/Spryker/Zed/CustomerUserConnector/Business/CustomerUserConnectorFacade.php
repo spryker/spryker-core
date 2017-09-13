@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerUserConnectorGui\Business;
+namespace Spryker\Zed\CustomerUserConnector\Business;
 
 use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiBusinessFactory getFactory()
+ * @method \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorBusinessFactory getFactory()
  */
-class CustomerUserConnectorGuiFacade extends AbstractFacade implements CustomerUserConnectorGuiFacadeInterface
+class CustomerUserConnectorFacade extends AbstractFacade implements CustomerUserConnectorFacadeInterface
 {
 
     /**

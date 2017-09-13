@@ -10,11 +10,14 @@ namespace Spryker\Zed\CustomerUserConnector\Communication;
 use Spryker\Zed\CustomerUserConnector\CustomerUserConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\CustomerUserConnector\CustomerUserConnectorConfig getConfig()
+ */
 class CustomerUserConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToUserQueryContainerInterface
+     * @return \Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConnectorToUserQueryContainerInterface
      */
     public function getUserQueryContainer()
     {

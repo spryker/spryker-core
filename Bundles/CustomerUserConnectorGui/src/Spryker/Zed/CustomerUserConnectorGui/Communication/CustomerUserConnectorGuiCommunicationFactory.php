@@ -63,6 +63,14 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacadeInterface
+     */
+    public function getCustomerUserConnectorFacade()
+    {
+        return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::FACADE_CUSTOMER_USER_CONNECTOR);
+    }
+
+    /**
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer

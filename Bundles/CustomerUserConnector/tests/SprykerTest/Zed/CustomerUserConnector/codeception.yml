@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\CustomerUserConnectorGui
+namespace: SprykerTest\Zed\CustomerUserConnector
 
 paths:
     tests: .
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: CustomerUserConnectorGuiBusinessTester
+        class_name: CustomerUserConnectorBusinessTester
         modules:
             enabled:
                 - Asserts

@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerTest\Zed\CustomerUserConnectorGui\Business;
+namespace SprykerTest\Zed\CustomerUserConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -11,17 +11,17 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group CustomerUserConnectorGui
+ * @group CustomerUserConnector
  * @group Business
  * @group Facade
- * @group CustomerUserConnectorGuiFacadeTest
+ * @group CustomerUserConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class CustomerUserConnectorGuiFacadeTest extends Unit
+class CustomerUserConnectorFacadeTest extends Unit
 {
 
     /**
-     * @var \SprykerTest\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiBusinessTester
+     * @var \SprykerTest\Zed\CustomerUserConnector\CustomerUserConnectorBusinessTester
      */
     protected $tester;
 
@@ -54,11 +54,11 @@ class CustomerUserConnectorGuiFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiFacadeInterface
+     * @return \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacadeInterface
      */
     protected function getFacade()
     {
-        return $this->tester->getLocator()->customerUserConnectorGui()->facade();
+        return $this->tester->getLocator()->customerUserConnector()->facade();
     }
 
     /**

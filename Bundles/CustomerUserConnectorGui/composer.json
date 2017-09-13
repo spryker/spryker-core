@@ -7,7 +7,8 @@
     "spryker/symfony": "^3.0.0",
     "spryker/propel-orm": "1.0.0",
     "spryker/gui": "^3.0.0",
-    "spryker/customer": "^6.3.0"
+    "spryker/customer": "^6.3.0",
+    "spryker/customer-user-connector": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

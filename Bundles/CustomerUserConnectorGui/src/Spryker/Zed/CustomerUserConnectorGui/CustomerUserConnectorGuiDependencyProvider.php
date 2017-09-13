@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui;
 
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\Facade\CustomerUserConnectorGuiToCustomerUserConnectorBridge;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -15,6 +16,8 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
 {
 
     const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
+
+    const FACADE_CUSTOMER_USER_CONNECTOR = 'FACADE_CUSTOMER_USER_CONNECTOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,9 +38,11 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    protected function addCustomerUserConnectorFacade(Container $container)
     {
-        $container = $this->addCustomerQueryContainer($container);
+        $container[static::FACADE_CUSTOMER_USER_CONNECTOR] = function (Container $container) {
+            return new CustomerUserConnectorGuiToCustomerUserConnectorBridge($container->getLocator()->customerUserConnector()->facade());
+        };
 
         return $container;
     }
@@ -47,9 +52,10 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addCustomerQueryContainer($container);
+        $container = $this->addCustomerUserConnectorFacade($container);
 
         return $container;
     }
