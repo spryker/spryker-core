@@ -488,7 +488,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isTypedArray(array $property)
     {
-        return preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
+        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
     }
 
     /**
@@ -632,7 +632,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['hasDefaultNull'] = false;
 
-        if ($typeHint !== null && $this->isCollection($property) !== true && ($this->isArray($property) !== true || $this->isTypedArray($property) !== true)) {
+        if ($typeHint && (!$this->isCollection($property) || $typeHint === 'array')) {
             $method['hasDefaultNull'] = true;
         }
 
