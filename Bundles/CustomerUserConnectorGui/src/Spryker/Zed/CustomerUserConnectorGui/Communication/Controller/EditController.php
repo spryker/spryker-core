@@ -46,13 +46,26 @@ class EditController extends AbstractController
             );
         }
 
-        $userTransfer = (new UserTransfer())->setIdUser($idUser);
+        $userTransfer = $this->getUserTransfer($idUser);
         return $this->viewResponse([
             'availableCustomers' => $this->getFactory()->createAvailableCustomerTable($userTransfer)->render(),
             'assignedCustomers' => $this->getFactory()->createAssignedCustomerTable($userTransfer)->render(),
             'userTransfer' => $userTransfer,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function getUserTransfer($idUser)
+    {
+        $userEntity = $this->getFactory()->getUserQueryContainer()->queryUserById($idUser)->findOne();
+        $userTransfer = (new UserTransfer())->fromArray($userEntity->toArray(), true);
+
+        return $userTransfer;
     }
 
     /**

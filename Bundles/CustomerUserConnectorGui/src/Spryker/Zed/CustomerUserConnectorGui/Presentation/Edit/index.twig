@@ -1,7 +1,6 @@
-
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit customer-user connections for User #' ~ userTransfer.idUser   %}
+{% block section_title %}Assign Customers to User: {{ userTransfer.username }}{% endblock %}
 
 {% block action %}
     {{ backActionButton('/user', 'List Users' | trans) }}
@@ -9,7 +8,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with {'widget_title' : 'List of customers'} %}
 
         {% block widget_content %}
 
@@ -20,7 +19,7 @@
             {% include '@CustomerUserConnectorGui/Edit/Partial/available-customers.twig' with {'availableCustomers': availableCustomers} only %}
             {% include '@CustomerUserConnectorGui/Edit/Partial/assigned-customers.twig' with {'assignedCustomers': assignedCustomers} only %}
 
-            <input type="submit" class="btn btn-primary" value="{{ 'Update' | trans }}" />
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
 
             {{ form_end(form) }}
 

@@ -8,7 +8,8 @@
     "spryker/propel-orm": "1.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/customer": "^6.3.0",
-    "spryker/customer-user-connector": "^1.0.0"
+    "spryker/customer-user-connector": "^1.0.0",
+    "spryker/user": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -16,8 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/util-text": "If you want to use the UsersTableExpanderPlugin",
-    "spryker/user": "If you want to use the UsersTableExpanderPlugin"
+    "spryker/util-text": "If you want to use the UsersTableExpanderPlugin"
   },
   "autoload": {
     "psr-4": {

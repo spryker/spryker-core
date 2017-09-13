@@ -42,7 +42,7 @@ class UsersTableExpanderPlugin extends AbstractPlugin implements UsersTableExpan
     {
         return (new ButtonTransfer())
             ->setUrl($this->getEditCustomerUserConnectionUrl($user[SpyUserTableMap::COL_ID_USER]))
-            ->setTitle('Assigned Customers')
+            ->setTitle('Assign Customers')
             ->setDefaultOptions([
                 'class' => 'btn-edit',
                 'icon' => 'fa-pencil-square-o',

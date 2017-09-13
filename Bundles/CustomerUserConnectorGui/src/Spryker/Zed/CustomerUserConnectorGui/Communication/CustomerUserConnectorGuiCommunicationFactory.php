@@ -88,4 +88,12 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
         return new CustomerUserConnectorFormDataProvider();
     }
 
+    /**
+     * @return \Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToUserQueryContainerInterface
+     */
+    public function getUserQueryContainer()
+    {
+        return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_USER);
+    }
+
 }

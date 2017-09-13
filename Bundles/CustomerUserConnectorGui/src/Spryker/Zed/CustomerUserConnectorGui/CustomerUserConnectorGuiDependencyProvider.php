@@ -9,6 +9,7 @@ namespace Spryker\Zed\CustomerUserConnectorGui;
 
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\Facade\CustomerUserConnectorGuiToCustomerUserConnectorBridge;
 use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToCustomerQueryContainerBridge;
+use Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer\CustomerUserConnectorGuiToUserQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,6 +17,7 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
 {
 
     const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
+    const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
 
     const FACADE_CUSTOMER_USER_CONNECTOR = 'FACADE_CUSTOMER_USER_CONNECTOR';
 
@@ -28,6 +30,20 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::QUERY_CONTAINER_CUSTOMER] = function (Container $container) {
             return new CustomerUserConnectorGuiToCustomerQueryContainerBridge($container->getLocator()->customer()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_USER] = function (Container $container) {
+            return new CustomerUserConnectorGuiToUserQueryContainerBridge($container->getLocator()->user()->queryContainer());
         };
 
         return $container;
@@ -55,6 +71,7 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addCustomerQueryContainer($container);
+        $container = $this->addUserQueryContainer($container);
         $container = $this->addCustomerUserConnectorFacade($container);
 
         return $container;

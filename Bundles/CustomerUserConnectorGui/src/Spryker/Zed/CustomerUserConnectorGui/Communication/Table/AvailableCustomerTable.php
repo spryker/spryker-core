@@ -43,12 +43,7 @@ class AvailableCustomerTable extends AbstractCustomerTable
     {
         $query = $this->customerQueryContainer
             ->queryCustomers()
-                ->addAnd(
-                    SpyCustomerTableMap::COL_FK_USER,
-                    $this->userTransfer->getIdUser(),
-                    Criteria::NOT_EQUAL
-                )
-                ->addOr(
+                ->add(
                     SpyCustomerTableMap::COL_FK_USER,
                     null,
                     Criteria::ISNULL
