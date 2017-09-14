@@ -65,10 +65,10 @@ class ComposerJsonUpdaterConsole extends Console
             $modifiedModules[] = $processedModule;
         }
 
-        if ($this->input->getOption(static::VERBOSE)) {
-            $text = $isDryRun ? ' need(s) updating.': 'updated.';
+        $text = $isDryRun ? ' need(s) updating.': 'updated.';
+        $this->output->writeln(sprintf('%s of %s module(s) ' . $text, count($modifiedModules), count($processedModules)));
 
-            $this->output->writeln(sprintf('%s of %s module(s) ' . $text, count($modifiedModules), count($processedModules)));
+        if ($this->input->getOption(static::VERBOSE)) {
             foreach ($modifiedModules as $modifiedModule) {
                 $this->output->writeln('- '. $modifiedModule);
             }
