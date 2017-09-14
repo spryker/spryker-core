@@ -93,6 +93,14 @@
 
         <behavior name="timestampable"/>
 
+        <index name="spy_sales_order-store">
+            <index-column name="store"/>
+        </index>
+
+        <index name="spy_sales_order-currency_code">
+            <index-column name="currency_code"/>
+        </index>
+
         <foreign-key name="spy_sales_order-fk_sales_order_address_billing" foreignTable="spy_sales_order_address" phpName="BillingAddress">
             <reference local="fk_sales_order_address_billing" foreign="id_sales_order_address"/>
         </foreign-key>
