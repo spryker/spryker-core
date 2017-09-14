@@ -1,6 +1,6 @@
 {
-  "name": "spryker/{bundleDashed}",
-  "description": "{bundle} module",
+  "name": "spryker/{moduleDashed}",
+  "description": "{module} module",
   "license": "proprietary",
   "require": {
   },
