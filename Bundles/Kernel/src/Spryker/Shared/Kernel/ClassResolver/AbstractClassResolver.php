@@ -73,7 +73,7 @@ abstract class AbstractClassResolver
     public function canResolve()
     {
         if (isset($this->classInfo) && $this->classInfo->getCallerClassName() !== null) {
-            $cacheKey = get_class($this) . '-' . $this->classInfo->getCallerClassName();
+            $cacheKey = $this->buildCacheKey();
 
             if (isset(static::$cache[$cacheKey])) {
                 $this->resolvedClassName = static::$cache[$cacheKey];
@@ -97,6 +97,19 @@ abstract class AbstractClassResolver
         }
 
         return false;
+    }
+
+    /**
+     * This is needed to be able to use `canResolve` in a loop for the DependencyInjectorResolver.
+     * The cache would always return the first found Injector without the reset here.
+     *
+     * @deprecated This method can be removed together with the DependencyInjectors
+     *
+     * @return void
+     */
+    protected function unsetCurrentCacheEntry()
+    {
+        unset(static::$cache[$this->buildCacheKey()]);
     }
 
     /**
@@ -190,6 +203,14 @@ abstract class AbstractClassResolver
     protected function getCoreNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::CORE_NAMESPACES);
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildCacheKey()
+    {
+        return get_class($this) . '-' . $this->classInfo->getCallerClassName();
     }
 
 }
