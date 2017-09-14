@@ -210,8 +210,7 @@ abstract class AbstractClassResolver
      */
     protected function buildCacheKey()
     {
-        $cacheKey = get_class($this) . '-' . $this->classInfo->getCallerClassName();
-        return $cacheKey;
+        return get_class($this) . '-' . $this->classInfo->getCallerClassName();
     }
 
 }
