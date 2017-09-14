@@ -7,19 +7,17 @@
 
 namespace Spryker\Zed\Discount\Persistence\Propel;
 
-use Orm\Zed\Discount\Persistence\Base\SpyDiscount as BaseSpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery as BaseSpyDiscountAmountQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_discount' table.
+ * Skeleton subclass for performing query and update operations on the 'spy_discount_amount' table.
  *
  *
  *
  * You should add additional methods to this class to meet the
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
- *
- * @method \Orm\Zed\Discount\Persistence\SpyDiscount getVoucherCode()
  */
-abstract class AbstractSpyDiscount extends BaseSpyDiscount
+abstract class AbstractSpyDiscountAmountQuery extends BaseSpyDiscountAmountQuery
 {
 }

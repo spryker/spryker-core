@@ -14,8 +14,9 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -87,6 +88,7 @@ class CalculatorForm extends AbstractType
     {
         $this->addCalculatorType($builder)
             ->addAmountField($builder)
+            ->addDiscountAmountFields($builder)
             ->addDiscountCollectorStrategyTypeSelector($builder)
             ->addCollectorQueryString($builder);
 
@@ -164,6 +166,18 @@ class CalculatorForm extends AbstractType
             'money',
             array_merge($defaultOptions, $options)
         );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDiscountAmountFields(FormBuilderInterface $builder)
+    {
+        $builder->add(DiscountCalculatorTransfer::DISCOUNT_AMOUNTS, CollectionType::class);
 
         return $this;
     }

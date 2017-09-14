@@ -11,6 +11,10 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -25,6 +29,7 @@ class GeneralForm extends AbstractType
     const FIELD_IS_EXCLUSIVE = 'is_exclusive';
     const NON_EXCLUSIVE = 'Non-Exclusive';
     const EXCLUSIVE = 'Exclusive';
+    const FIELD_PRICE_MODE = 'price_mode';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -49,6 +54,7 @@ class GeneralForm extends AbstractType
     {
         $this
             ->addDiscountType($builder)
+            ->addPriceMode($builder)
             ->addDisplayNameField($builder)
             ->addDescriptionField($builder)
             ->addExclusive($builder, $options)
@@ -63,7 +69,7 @@ class GeneralForm extends AbstractType
      */
     protected function addDiscountType(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DISCOUNT_TYPE, 'choice', [
+        $builder->add(static::FIELD_DISCOUNT_TYPE, ChoiceType::class, [
             'label' => 'Discount Type',
             'choices' => $this->getVoucherChoices(),
             'constraints' => [
@@ -92,7 +98,7 @@ class GeneralForm extends AbstractType
      */
     protected function addDisplayNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DISPLAY_NAME, 'text', [
+        $builder->add(static::FIELD_DISPLAY_NAME, TextType::class, [
             'label' => 'Name (A unique name that will be displayed to your customers)',
             'constraints' => [
                 new NotBlank(),
@@ -113,8 +119,8 @@ class GeneralForm extends AbstractType
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_DESCRIPTION,
-            'textarea',
+            static::FIELD_DESCRIPTION,
+            TextareaType::class,
             [
                 'required' => false,
             ]
@@ -131,7 +137,7 @@ class GeneralForm extends AbstractType
      */
     protected function addExclusive(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_IS_EXCLUSIVE, 'choice', [
+        $builder->add(static::FIELD_IS_EXCLUSIVE, ChoiceType::class, [
             'expanded' => true,
             'multiple' => false,
             'label' => false,
@@ -157,7 +163,7 @@ class GeneralForm extends AbstractType
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALID_FROM, 'date', [
+        $builder->add(static::FIELD_VALID_FROM, DateType::class, [
             'widget' => 'single_text',
             'required' => true,
             'attr' => [
@@ -175,13 +181,34 @@ class GeneralForm extends AbstractType
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALID_TO, 'date', [
+        $builder->add(static::FIELD_VALID_TO, DateType::class, [
             'widget' => 'single_text',
             'required' => true,
             'attr' => [
                 'class' => 'datepicker',
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPriceMode(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_PRICE_MODE,
+            ChoiceType::class,
+            [
+                'choices' => [
+                    'GROSS_MODE' => 'Gross mode',
+                    'NET_MODE' => 'Net mode',
+                ],
+            ]
+        );
 
         return $this;
     }

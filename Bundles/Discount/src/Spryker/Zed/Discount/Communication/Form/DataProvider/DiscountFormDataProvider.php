@@ -7,10 +7,12 @@
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 use DateTime;
+use Generated\Shared\Transfer\DiscountAmountTransfer;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFormDataProvider extends BaseDiscountFormDataProvider
@@ -55,11 +57,17 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
      */
     protected function createDiscountCalculatorTransfer()
     {
-        $calculatedDiscountTransfer = new DiscountCalculatorTransfer();
-        $calculatedDiscountTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
-        $calculatedDiscountTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
+        $discountCalculatorTransfer = new DiscountCalculatorTransfer();
+        $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
+        $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
 
-        return $calculatedDiscountTransfer;
+        foreach (Store::getInstance()->getCurrencyIsoCodes() as $currencyIsoCode) {
+            $discountAmountTransfer = new DiscountAmountTransfer();
+            $discountAmountTransfer->setCurrencyCode($currencyIsoCode);
+            $discountCalculatorTransfer->addDiscountAmount($discountAmountTransfer);
+        }
+
+        return $discountCalculatorTransfer;
     }
 
 }

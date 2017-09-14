@@ -15,6 +15,7 @@
         <column name="discount_type" type="VARCHAR" size="255"/>
         <column name="decision_rule_query_string" type="VARCHAR" required="false"/>
         <column name="collector_query_string" type="VARCHAR" required="false"/>
+        <column name="price_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false"/>
 
         <behavior name="timestampable"/>
 
@@ -66,6 +67,23 @@
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
         </foreign-key>
         <id-method-parameter value="spy_discount_voucher_pk_seq"/>
+    </table>
+
+    <table name="spy_discount_amount" phpName="SpyDiscountAmount">
+        <column name="id_discount_amount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_currency" type="INTEGER" required="true" />
+        <column name="fk_discount" type="INTEGER" required="true" />
+        <column name="amount" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_discount_amount-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="DiscountAmount">
+            <reference local="fk_currency" foreign="id_currency"/>
+        </foreign-key>
+
+        <foreign-key name="spy_discount_amount-fk_discount" foreignTable="spy_discount" phpName="Discount" refPhpName="DiscountAmount">
+            <reference local="fk_discount" foreign="id_discount"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_discount_amount_pk_seq"/>
     </table>
 
 </database>

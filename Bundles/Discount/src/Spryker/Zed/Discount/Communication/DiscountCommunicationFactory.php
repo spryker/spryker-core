@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Communication\Form\ConditionsForm;
+use Spryker\Zed\Discount\Communication\Form\CurrencyForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
@@ -216,6 +217,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
     ) {
         return new DiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\Form\CurrencyForm|\Symfony\Component\Form\FormInterface
+     */
+    public function createCurrencyFormType()
+    {
+        return new CurrencyForm();
     }
 
     /**
