@@ -107,7 +107,7 @@ class RefundTable extends AbstractTable
                 SpyRefundTableMap::COL_AMOUNT => $this->formatAmount(
                     $item[SpyRefundTableMap::COL_AMOUNT],
                     true,
-                    $this->getCurrencyCode($item)
+                    $this->findCurrencyCode($item)
                 ),
                 SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
             ];
@@ -121,7 +121,7 @@ class RefundTable extends AbstractTable
      *
      * @return string|null
      */
-    protected function getCurrencyCode(array $item)
+    protected function findCurrencyCode(array $item)
     {
         if (isset($item[static::SPY_SALES_ORDER])) {
             return $item[static::SPY_SALES_ORDER][SpySalesOrderTableMap::COL_CURRENCY_CODE];
