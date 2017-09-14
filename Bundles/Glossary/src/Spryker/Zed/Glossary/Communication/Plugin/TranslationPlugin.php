@@ -24,7 +24,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     public function hasKey($keyName)
     {
-        return $this->getFacade()->hasKey($keyName);
+        return $this->getFacade()->hasTranslation($keyName);
     }
 
     /**
