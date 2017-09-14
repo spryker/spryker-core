@@ -13,8 +13,17 @@ interface AvailabilityStorageInterface
     /**
      * @param int $idProductAbstract
      *
+     * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
+     *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailability($idProductAbstract);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
+     */
+    public function findProductAvailability($idProductAbstract);
 
 }
