@@ -78,7 +78,7 @@ class LocalizedProductImageSetFormType extends AbstractType
                 new NotBlank(),
                 new Regex(
                       [
-                              'pattern' => '/^[A-Za-z0-9_]+$/',
+                              'pattern' => '/^[A-Za-z0-9_\-]+$/',
                               'match' => true,
                               'message' => 'Invalid character in name',
                       ]
