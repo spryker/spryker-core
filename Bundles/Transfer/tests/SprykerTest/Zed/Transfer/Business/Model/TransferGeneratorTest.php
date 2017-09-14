@@ -125,6 +125,7 @@ class TransferGeneratorTest extends Unit
         $transferGenerator->execute();
 
         $this->assertFileExists($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php');
+
         $this->assertSame(
             file_get_contents(__DIR__ . '/test_files/expected.merged.deprecated.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php')

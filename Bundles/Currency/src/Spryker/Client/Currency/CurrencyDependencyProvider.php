@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Currency;
 
+use Spryker\Client\Currency\Dependency\Client\CurrencyToSessionBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
@@ -18,16 +19,32 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
 
     const STORE = 'store';
     const INTERNATIONALIZATION = 'internationalization';
+    const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container|void
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addStore($container);
         $container = $this->addInternationalization($container);
+        $container = $this->addSessionClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSessionClient(Container $container)
+    {
+        $container[static::CLIENT_SESSION] = function (Container $container) {
+            return new CurrencyToSessionBridge($container->getLocator()->session()->client());
+        };
 
         return $container;
     }

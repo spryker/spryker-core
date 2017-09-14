@@ -9,6 +9,7 @@ namespace Spryker\Client\Currency;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
+use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
 
 class CurrencyFactory extends AbstractFactory
 {
@@ -20,8 +21,16 @@ class CurrencyFactory extends AbstractFactory
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
-            $this->getStore()->getCurrencyIsoCode()
+            $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
+     */
+    public function createCurrencyPersistence()
+    {
+        return new CurrencyPersistence($this->getSessionClient(), $this->getStore());
     }
 
     /**
@@ -38,6 +47,14 @@ class CurrencyFactory extends AbstractFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_SESSION);
     }
 
 }

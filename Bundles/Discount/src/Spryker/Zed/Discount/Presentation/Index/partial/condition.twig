@@ -11,4 +11,7 @@
     {{  'Plain query' | trans }}
 </button>
 
+{% import "@Discount/Index/partial/_plugin_types_macro.twig" as form_macro %}
+{{ form_macro.render_plugin_types(discountForm.discountCondition) }}
+
 {{ form_end(discountForm) }}

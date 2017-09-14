@@ -29,6 +29,11 @@ class TableConfiguration
     protected $footer = [];
 
     /**
+     * @var array
+     */
+    protected $extraColumns = [];
+
+    /**
      * @var int
      */
     protected $pageLength = 0;
@@ -158,6 +163,26 @@ class TableConfiguration
         $this->setFooter($headerKeys);
 
         return $this;
+    }
+
+    /**
+     * @param array $extraColumns
+     *
+     * @return $this
+     */
+    public function setExtraColumns(array $extraColumns)
+    {
+        $this->extraColumns = $extraColumns;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExtraColumns()
+    {
+        return $this->extraColumns;
     }
 
     /**

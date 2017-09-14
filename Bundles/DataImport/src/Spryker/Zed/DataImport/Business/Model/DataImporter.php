@@ -123,6 +123,8 @@ class DataImporter implements
 
         $this->beforeImport();
 
+        $start = microtime(true);
+
         foreach ($dataReader as $dataSet) {
             try {
                 $this->importDataSet($dataSet);
@@ -138,6 +140,8 @@ class DataImporter implements
 
             unset($dataSet);
         }
+
+        $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
 
         $this->afterImport();
 

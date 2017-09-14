@@ -45,6 +45,9 @@ class ProductAttributeBusinessTester extends Actor
         'bar' => '20 units',
     ];
 
+    const LOCALE_ONE_NAME = 'de_DE';
+    const LOCALE_TWO_NAME = 'en_US';
+
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -71,7 +74,7 @@ class ProductAttributeBusinessTester extends Actor
     public function getLocaleOne()
     {
         if ($this->localeTransferOne === null) {
-            $this->localeTransferOne = $this->haveLocale();
+            $this->localeTransferOne = $this->haveLocale(['locale_name' => static::LOCALE_ONE_NAME]);
         }
 
         return $this->localeTransferOne;
@@ -83,7 +86,7 @@ class ProductAttributeBusinessTester extends Actor
     public function getLocaleTwo()
     {
         if ($this->localeTransferTwo === null) {
-            $this->localeTransferTwo = $this->haveLocale();
+            $this->localeTransferTwo = $this->haveLocale(['locale_name' => static::LOCALE_TWO_NAME]);
         }
 
         return $this->localeTransferTwo;

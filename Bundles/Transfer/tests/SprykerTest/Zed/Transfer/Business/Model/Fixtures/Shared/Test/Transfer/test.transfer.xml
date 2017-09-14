@@ -7,6 +7,7 @@
         <property name="name" type="string" />
         <property name="item" type="Item" />
         <property name="items" type="Item[]" singular="item" />
+        <property name="typedArray" type="string[]" />
     </transfer>
 
 </transfers>

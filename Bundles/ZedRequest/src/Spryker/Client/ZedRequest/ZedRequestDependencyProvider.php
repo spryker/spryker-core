@@ -15,6 +15,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
 
     const SERVICE_NETWORK = 'util network service';
     const SERVICE_TEXT = 'util text service';
+    const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -25,6 +26,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addUtilNetworkService($container);
         $container = $this->addUtilTextService($container);
+        $container = $this->addMetaDataProviderPlugins($container);
 
         return $container;
     }
@@ -55,6 +57,31 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addMetaDataProviderPlugins(Container $container)
+    {
+        $container[static::META_DATA_PROVIDER_PLUGINS] = function (Container $container) {
+            return $this->getMetaDataProviderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * Key value pair of mata data provider plugins, array key is the index key of transfer in
+     * \Spryker\Shared\ZedRequest\Client\AbstractRequest::metaTransfers, you can read back by this key in zed.
+     *
+     * @return \Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface[]
+     */
+    protected function getMetaDataProviderPlugins()
+    {
+        return [];
     }
 
 }

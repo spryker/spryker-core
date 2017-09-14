@@ -365,7 +365,7 @@
         <property name="unitPriceGross" type="float" />
         <property name="taxRate" type="float" />
         <property name="discount" type="float" />
-        <property name="productOptions" type="[]" />
+        <property name="productOptions" type="array" />
         <property name="description" type="string" />
         <property name="descriptionAddition" type="string" />
     </transfer>

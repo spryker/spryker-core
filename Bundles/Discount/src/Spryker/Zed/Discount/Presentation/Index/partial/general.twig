@@ -25,3 +25,6 @@
         {{ form_widget(discountForm.discountGeneral.valid_to) }}
     </div>
 </div>
+
+{% import "@Discount/Index/partial/_plugin_types_macro.twig" as form_macro %}
+{{ form_macro.render_plugin_types(discountForm.discountGeneral) }}

@@ -27,6 +27,7 @@ use Spryker\Zed\Propel\Communication\Console\CreateDatabaseConsole;
 use Spryker\Zed\Propel\Communication\Console\DiffConsole;
 use Spryker\Zed\Propel\Communication\Console\InsertSqlConsole;
 use Spryker\Zed\Propel\Communication\Console\MigrateConsole;
+use Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole;
 use Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;
@@ -75,6 +76,18 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
+     */
+    protected function createCoreSchemaFinder()
+    {
+        $schemaFinder = new PropelSchemaFinder(
+            $this->getConfig()->getCorePropelSchemaPathPatterns()
+        );
+
+        return $schemaFinder;
+    }
+
+    /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface
      */
     protected function createSchemaWriter()
@@ -114,6 +127,16 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         return new PostgresqlCompatibilityAdjuster(
             $this->createSchemaFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface
+     */
+    public function createCorePostgresqlCompatibilityAdjuster()
+    {
+        return new PostgresqlCompatibilityAdjuster(
+            $this->createCoreSchemaFinder()
         );
     }
 
@@ -190,6 +213,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
             $this->createInsertSqlConsole(),
             $this->createMigrateConsole(),
             $this->createSchemaCopyConsole(),
+            $this->createMigrationCheckConsole(),
         ];
     }
 
@@ -271,6 +295,14 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function createSchemaCopyConsole()
     {
         return new SchemaCopyConsole();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole
+     */
+    protected function createMigrationCheckConsole()
+    {
+        return new MigrationCheckConsole();
     }
 
 }

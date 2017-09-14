@@ -40,6 +40,15 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
     const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
     const PLUGIN_DISCOUNTABLE_ITEM_FILTER = 'PLUGIN_DISCOUNTABLE_ITEM_FILTER';
+    const PLUGIN_COLLECTOR_STRATEGY_PLUGINS = 'PLUGIN_COLLECTOR_STRATEGY';
+    const PLUGIN_DISCOUNT_POST_CREATE = 'PLUGIN_DISCOUNT_POST_CREATE';
+    const PLUGIN_DISCOUNT_POST_UPDATE = 'PLUGIN_DISCOUNT_POST_UPDATE';
+    const PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER = 'PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER';
+    const PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER = 'PLUGIN_DISCOUNT_FORM_EXPANDER';
+    const PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER';
+    const PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER = 'PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER';
+    const PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS = 'PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS';
+
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
@@ -60,6 +69,11 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCollectorPlugins($container);
         $container = $this->addDiscountableItemFilterPlugins($container);
         $container = $this->addMoneyFacade($container);
+        $container = $this->addCollectorStrategyPlugins($container);
+        $container = $this->addDiscountPostCreatePlugins($container);
+        $container = $this->addDiscountPostUpdatePlugins($container);
+        $container = $this->addDiscountConfigurationExpanderPlugins($container);
+        $container = $this->addDiscountApplicableFilterPlugins($container);
 
         return $container;
     }
@@ -76,6 +90,9 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCalculatorPlugins($container);
         $container = $this->addCollectorPlugins($container);
         $container = $this->addMoneyFacade($container);
+        $container = $this->addDiscountFormExpanderPlugins($container);
+        $container = $this->addDiscountFormDataProviderExpanderPlugins($container);
+        $container = $this->addDiscountViewBlockProviderPlugins($container);
 
         return $container;
     }
@@ -225,13 +242,193 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addDiscountableItemFilterPlugins($container)
+    protected function addDiscountableItemFilterPlugins(Container $container)
     {
         $container[static::PLUGIN_DISCOUNTABLE_ITEM_FILTER] = function () {
             return $this->getDiscountableItemFilterPlugins();
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCollectorStrategyPlugins(Container $container)
+    {
+        $container[static::PLUGIN_COLLECTOR_STRATEGY_PLUGINS] = function () {
+            return $this->getCollectorStrategyPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[]
+     */
+    protected function getCollectorStrategyPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountPostCreatePlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_POST_CREATE] = function () {
+            return $this->getDiscountPostCreatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
+     */
+    protected function getDiscountPostCreatePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountPostUpdatePlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_POST_UPDATE] = function () {
+            return $this->getDiscountPostUpdatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
+     */
+    protected function getDiscountPostUpdatePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addDiscountConfigurationExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER] = function (Container $container) {
+            return $this->getDiscountConfigurationExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * This plugin allows to expand DiscountConfigurationTransfer when using
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[]
+     */
+    protected function getDiscountConfigurationExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addDiscountFormExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER] = function (Container $container) {
+            return $this->getDiscountFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * This plugin allows to expand DiscountConfigurationTransfer when using
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[]
+     */
+    protected function getDiscountFormExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountFormDataProviderExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER] = function (Container $container) {
+            return $this->getDiscountFormDataProviderExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface[]
+     */
+    protected function getDiscountFormDataProviderExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountViewBlockProviderPlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER] = function (Container $container) {
+            return $this->getDiscountViewTemplateProviderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface[]
+     */
+    protected function getDiscountViewTemplateProviderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountApplicableFilterPlugins(Container $container)
+    {
+        $container[static::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function (Container $container) {
+            return $this->getDiscountApplicableFilterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface[]
+     */
+    protected function getDiscountApplicableFilterPlugins()
+    {
+        return [];
     }
 
 }

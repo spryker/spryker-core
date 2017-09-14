@@ -50,6 +50,25 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getPropelSchemaPathPatterns()
     {
+        return array_merge(
+            $this->getCorePropelSchemaPathPatterns(),
+            $this->getProjectPropelSchemaPathPatterns()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getCorePropelSchemaPathPatterns()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getProjectPropelSchemaPathPatterns()
+    {
         return glob($this->get(PropelConstants::SCHEMA_FILE_PATH_PATTERN, $this->getSchemaPathPattern()));
     }
 
