@@ -8,12 +8,15 @@
 namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Table;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Controller\EditController;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailableCustomerTable extends AbstractCustomerTable
 {
+
+    const REDIRECT_WARNING = 'Your unsaved modification will be lost, are you sure to continue?';
 
     const IS_CHECKBOX_SET_BY_DEFAULT = false;
 
@@ -45,9 +48,15 @@ class AvailableCustomerTable extends AbstractCustomerTable
             ->queryCustomers()
                 ->add(
                     SpyCustomerTableMap::COL_FK_USER,
+                    $this->userTransfer->getIdUser(),
+                    Criteria::NOT_EQUAL
+                )
+                ->addOr(
+                    SpyCustomerTableMap::COL_FK_USER,
                     null,
                     Criteria::ISNULL
                 )
+            ->leftJoinSpyUser()
             ->withColumn(SpyCustomerTableMap::COL_ID_CUSTOMER, static::COL_ID)
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)
@@ -55,6 +64,49 @@ class AvailableCustomerTable extends AbstractCustomerTable
             ->withColumn(SpyCustomerTableMap::COL_GENDER, static::COL_GENDER);
 
         return $query;
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return string
+     */
+    protected function getCheckboxColumn(SpyCustomer $customerEntity)
+    {
+        if ($customerEntity->getFkUser()) {
+            return '';
+        }
+
+        return parent::getCheckboxColumn($customerEntity);
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return string
+     */
+    protected function getAssignedUserColumn(SpyCustomer $customerEntity)
+    {
+        if (!$customerEntity->getFkUser()) {
+            return '';
+        }
+
+        return sprintf(
+            '<a href="%s" onclick="return confirm(\'%s\')">%s</a>',
+            $this->getEditCustomerUserConnectionsUrl($customerEntity->getSpyUser()->getIdUser()),
+            static::REDIRECT_WARNING,
+            $customerEntity->getSpyUser()->getUsername()
+        );
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return string
+     */
+    protected function getEditCustomerUserConnectionsUrl($idUser)
+    {
+        return sprintf("/customer-user-connector-gui/edit?%s=%d", EditController::PARAM_ID_USER, $idUser);
     }
 
     /**

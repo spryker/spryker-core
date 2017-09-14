@@ -12,6 +12,9 @@
 
         {% block widget_content %}
 
+            <div class="alert alert-info">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{ 'A customer can not be assigned to multiple users at a time.' | trans }}
+            </div>
             {{ form_start(form) }}
 
             {{ form_widget(form) }}

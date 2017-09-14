@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Table;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CustomerUserConnectorGui\Communication\Controller\EditController;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -46,6 +47,7 @@ class AssignedCustomerTable extends AbstractCustomerTable
                     $this->userTransfer->getIdUser(),
                     Criteria::EQUAL
                 )
+            ->leftJoinSpyUser()
             ->withColumn(SpyCustomerTableMap::COL_ID_CUSTOMER, static::COL_ID)
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::COL_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::COL_LAST_NAME)
@@ -53,6 +55,16 @@ class AssignedCustomerTable extends AbstractCustomerTable
             ->withColumn(SpyCustomerTableMap::COL_GENDER, static::COL_GENDER);
 
         return $query;
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return string
+     */
+    protected function getAssignedUserColumn(SpyCustomer $customerEntity)
+    {
+        return $customerEntity->getSpyUser()->getUsername();
     }
 
     /**

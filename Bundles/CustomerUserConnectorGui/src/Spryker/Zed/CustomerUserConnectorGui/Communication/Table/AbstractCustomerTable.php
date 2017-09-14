@@ -23,6 +23,7 @@ abstract class AbstractCustomerTable extends AbstractTable
     const COL_LAST_NAME = 'last_name';
     const COL_GENDER = 'gender';
     const COL_EMAIL = 'email';
+    const COL_ASSIGNED_USER = 'assigned_zed_user';
     const COL_CHECKBOX = 'checkbox';
 
     const GENDER_MAP = [
@@ -65,6 +66,7 @@ abstract class AbstractCustomerTable extends AbstractTable
             static::COL_LAST_NAME => 'Last Name',
             static::COL_EMAIL => 'Customer E-mail',
             static::COL_GENDER => 'Gender',
+            static::COL_ASSIGNED_USER => 'Assigned Zed User Reference',
             static::COL_CHECKBOX => $this->getCheckboxHeaderName(),
         ]);
 
@@ -76,6 +78,7 @@ abstract class AbstractCustomerTable extends AbstractTable
         ]);
 
         $config->setRawColumns([
+            static::COL_ASSIGNED_USER,
             static::COL_CHECKBOX,
         ]);
 
@@ -130,6 +133,7 @@ abstract class AbstractCustomerTable extends AbstractTable
             static::COL_LAST_NAME => $customerEntity->getLastName(),
             static::COL_EMAIL => $customerEntity->getEmail(),
             static::COL_GENDER => $customerEntity->getGender(),
+            static::COL_ASSIGNED_USER => $this->getAssignedUserColumn($customerEntity),
             static::COL_CHECKBOX => $this->getCheckboxColumn($customerEntity),
         ];
     }
@@ -154,6 +158,13 @@ abstract class AbstractCustomerTable extends AbstractTable
             ]))
         );
     }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return string
+     */
+    abstract protected function getAssignedUserColumn(SpyCustomer $customerEntity);
 
     /**
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
