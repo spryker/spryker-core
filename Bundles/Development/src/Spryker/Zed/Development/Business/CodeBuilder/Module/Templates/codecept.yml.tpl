@@ -1,4 +1,4 @@
-namespace: {bundle}
+namespace: {module}
 actor: Tester
 paths:
     tests: tests

@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\CodeBuilder\Bundle;
+namespace Spryker\Zed\Development\Business\CodeBuilder\Module;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\CamelCaseToDash;
 
-class BundleBuilder
+class ModuleBuilder
 {
 
     const TEMPLATE_INTERFACE = 'interface';
@@ -20,10 +20,10 @@ class BundleBuilder
     /**
      * @var string
      */
-    protected $bundleRootDirectory;
+    protected $moduleRootDirectory;
 
     /**
-     * List of files to generate in each bundle.
+     * List of files to generate in each module.
      *
      * The codecept alias is required to not trigger codeception autoloading.
      *
@@ -33,38 +33,39 @@ class BundleBuilder
         '.gitattributes',
         '.gitignore',
         '.coveralls.yml',
-        'codecept.yml' => 'codeception.yml',
         '.travis.yml',
+        'codecept.yml' => 'codeception.yml',
+        'composer.json',
         'CHANGELOG.md',
         'README.md',
         'LICENSE'
     ];
 
     /**
-     * @param string $bundleRootDirectory
+     * @param string $moduleRootDirectory
      */
-    public function __construct($bundleRootDirectory)
+    public function __construct($moduleRootDirectory)
     {
-        $this->bundleRootDirectory = $bundleRootDirectory;
+        $this->moduleRootDirectory = $moduleRootDirectory;
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param array $options
      *
      * @return void
      */
-    public function build($bundle, array $options)
+    public function build($module, array $options)
     {
-        if ($bundle !== 'all') {
-            $bundle = $this->getUnderscoreToCamelCaseFilter()->filter($bundle);
-            $bundles = (array)$bundle;
+        if ($module !== 'all') {
+            $module = $this->getUnderscoreToCamelCaseFilter()->filter($module);
+            $modules = (array)$module;
         } else {
-            $bundles = $this->getBundleNames();
+            $modules = $this->getModuleNames();
         }
 
-        foreach ($bundles as $bundle) {
-            $this->createOrUpdateBundle($bundle, $options);
+        foreach ($modules as $module) {
+            $this->createOrUpdateModule($module, $options);
         }
     }
 
@@ -83,25 +84,25 @@ class BundleBuilder
     /**
      * @return array
      */
-    protected function getBundleNames()
+    protected function getModuleNames()
     {
-        $bundleDirectories = glob($this->bundleRootDirectory . '*');
+        $moduleDirectories = glob($this->moduleRootDirectory . '*');
 
-        $bundles = [];
-        foreach ($bundleDirectories as $bundleDirectory) {
-            $bundles[] = pathinfo($bundleDirectory, PATHINFO_BASENAME);
+        $modules = [];
+        foreach ($moduleDirectories as $moduleDirectory) {
+            $modules[] = pathinfo($moduleDirectory, PATHINFO_BASENAME);
         }
 
-        return $bundles;
+        return $modules;
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param array $options
      *
      * @return void
      */
-    protected function createOrUpdateBundle($bundle, $options)
+    protected function createOrUpdateModule($module, $options)
     {
         foreach ($this->files as $alias => $file) {
             $source = $file;
@@ -115,9 +116,9 @@ class BundleBuilder
 
             $templateContent = $this->getTemplateContent($source);
 
-            $templateContent = $this->replacePlaceHolder($bundle, $templateContent);
+            $templateContent = $this->replacePlaceHolder($module, $templateContent);
 
-            $this->saveFile($bundle, $templateContent, $file, $options['force']);
+            $this->saveFile($module, $templateContent, $file, $options['force']);
         }
     }
 
@@ -134,16 +135,16 @@ class BundleBuilder
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param string $templateContent
      *
      * @return string
      */
-    protected function replacePlaceHolder($bundle, $templateContent)
+    protected function replacePlaceHolder($module, $templateContent)
     {
         $templateContent = str_replace(
-            ['{bundle}', '{bundleVariable}', '{bundleDashed}'],
-            [$bundle, lcfirst($bundle), $this->camelCaseToDash($bundle)],
+            ['{module}', '{moduleVariable}', '{moduleDashed}'],
+            [$module, lcfirst($module), $this->camelCaseToDash($module)],
             $templateContent
         );
 
@@ -151,30 +152,30 @@ class BundleBuilder
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      *
      * @return string
      */
-    protected function camelCaseToDash($bundle)
+    protected function camelCaseToDash($module)
     {
         $filter = new CamelCaseToDash();
 
-        $bundle = strtolower($filter->filter($bundle));
+        $module = strtolower($filter->filter($module));
 
-        return $bundle;
+        return $module;
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param string $templateContent
      * @param string $fileName
      * @param bool $overwrite
      *
      * @return void
      */
-    protected function saveFile($bundle, $templateContent, $fileName, $overwrite = false)
+    protected function saveFile($module, $templateContent, $fileName, $overwrite = false)
     {
-        $path = $this->bundleRootDirectory . $bundle . DIRECTORY_SEPARATOR;
+        $path = $this->moduleRootDirectory . $module . DIRECTORY_SEPARATOR;
         if (!is_dir($path)) {
             mkdir($path, 0770, true);
         }
