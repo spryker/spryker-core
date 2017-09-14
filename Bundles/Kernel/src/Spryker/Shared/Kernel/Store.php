@@ -172,7 +172,7 @@ class Store
         $this->allStoreNames = array_keys($stores);
         $this->allStores = $stores;
 
-        $this->setCurrencyIsoCode(current($this->currencyIsoCodes));
+        $this->setCurrencyIsoCode($this->getDefaultCurrencyCode());
         $this->setCurrentLocale(current($this->locales));
         $this->setCurrentCountry(current($this->countries));
     }
@@ -377,6 +377,19 @@ class Store
     public function getCurrencyIsoCode()
     {
         return $this->currencyIsoCode;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultCurrencyCode()
+    {
+        $defaultCurrencyCode = current($this->currencyIsoCodes);
+        if (!$defaultCurrencyCode) {
+            return $this->currencyIsoCode;
+        }
+
+        return $defaultCurrencyCode;
     }
 
 }
