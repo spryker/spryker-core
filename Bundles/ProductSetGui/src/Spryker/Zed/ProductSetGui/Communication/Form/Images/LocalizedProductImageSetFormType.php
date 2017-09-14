@@ -80,7 +80,7 @@ class LocalizedProductImageSetFormType extends AbstractType
                       [
                               'pattern' => '/^[A-Za-z0-9_\-]+$/',
                               'match' => true,
-                              'message' => 'Please enter name using letters, numbers, underscore, and dash only.',
+                              'message' => 'Please enter name using only letters, numbers, underscore or dash.',
                       ]
                 ),
             ],
