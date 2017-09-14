@@ -100,8 +100,8 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * This is needed to be able to use `canResolve` in a loop for the DependencyInjectors.
-     * The cache would always return the first found Injector.
+     * This is needed to be able to use `canResolve` in a loop for the DependencyInjectorResolver.
+     * The cache would always return the first found Injector without the reset here.
      *
      * @deprecated This method can be removed together with the DependencyInjectors
      *
