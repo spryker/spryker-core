@@ -178,7 +178,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
         if (array_key_exists($key, self::$bufferedValues)) {
             self::$cachedKeys[$key] = self::KEY_USED;
-            return self::$bufferedValues[$key];
+            return $this->jsonDecode(self::$bufferedValues[$key]);
         }
 
         self::$cachedKeys[$key] = self::KEY_NEW;
@@ -301,7 +301,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             if (!empty($values) && is_array($values)) {
                 foreach ($values as $key => $value) {
                     $keySuffix = substr($key, strlen(Service::KV_PREFIX));
-                    self::$bufferedValues[$keySuffix] = $this->jsonDecode($value);
+                    self::$bufferedValues[$keySuffix] = $value;
                 }
             }
         }
