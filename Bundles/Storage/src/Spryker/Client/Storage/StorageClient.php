@@ -70,11 +70,11 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @param array|null $keys
      *
-     * @return void
+     * @return array|null
      */
     public function setCachedKeys($keys)
     {
-        static::$cachedKeys = $keys;
+        return static::$cachedKeys = $keys;
     }
 
     /**
