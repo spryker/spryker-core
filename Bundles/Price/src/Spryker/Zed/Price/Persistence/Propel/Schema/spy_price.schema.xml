@@ -8,6 +8,10 @@
         <column name="fk_price_type" type="INTEGER" required="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="false"/>
 
+        <index name="spy_price_product-fk_price_type">
+            <index-column name="fk_price_type"/>
+        </index>
+
         <foreign-key name="spy_price_product-fk_product" foreignTable="spy_product" phpName="Product" refPhpName="PriceProduct">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
