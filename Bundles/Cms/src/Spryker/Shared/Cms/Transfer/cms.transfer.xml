@@ -122,4 +122,25 @@
         <property name="cmsPageData" type="array" />
         <property name="locale" type="Locale" />
     </transfer>
+
+    <transfer name="LocaleCmsPageData">
+        <property name="idCmsPage" type="int" />
+        <property name="name" type="string" />
+        <property name="templatePath" type="string" />
+        <property name="placeholders" type="array" />
+        <property name="idCmsPage" type="int" />
+        <property name="metaTitle" type="string" />
+        <property name="metaKeywords" type="string" />
+        <property name="metaDescription" type="string" />
+        <property name="url" type="string" />
+        <property name="validFrom" type="string" />
+        <property name="validTo" type="string" />
+        <property name="isActive" type="int" />
+    </transfer>
+
+    <transfer name="FlattenedLocaleCmsPageDataRequest">
+        <property name="idCmsPage" type="int" />
+        <property name="locale" type="Locale" />
+        <property name="flattenedLocaleCmsPageData" type="array" />
+    </transfer>
 </transfers>

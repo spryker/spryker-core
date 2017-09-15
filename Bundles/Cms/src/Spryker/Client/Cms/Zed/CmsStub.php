@@ -7,8 +7,7 @@
 
 namespace Spryker\Client\Cms\Zed;
 
-use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
-use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
+use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 use Spryker\Client\Cms\Dependency\Client\CmsToZedRequestInterface;
 
 class CmsStub implements CmsStubInterface
@@ -28,23 +27,13 @@ class CmsStub implements CmsStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer
+     * @param \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer)
+    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer)
     {
-        return $this->zedRequestClient->call('/cms/gateway/get-cms-version-data', $cmsVersionDataRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
-     */
-    public function expandCmsPageData(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer)
-    {
-        return $this->zedRequestClient->call('/cms/gateway/expand-cms-page-data', $cmsPageDataExpandRequestTransfer);
+        return $this->zedRequestClient->call('/cms/gateway/get-flattened-locale-cms-page-data', $flattenedLocaleCmsPageDataRequestTransfer);
     }
 
 }

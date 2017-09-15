@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsCollector\Dependency\Facade;
 
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsCollectorToCmsBridge implements CmsCollectorToCmsInterface
@@ -26,14 +28,35 @@ class CmsCollectorToCmsBridge implements CmsCollectorToCmsInterface
     }
 
     /**
-     * @param array $cmsPageData
+     * @param string $cmsPageData
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function extractCmsVersionDataTransfer($cmsPageData)
+    {
+        return $this->cmsFacade->extractCmsVersionDataTransfer($cmsPageData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
+     */
+    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->cmsFacade->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $localeCmsPageDataTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function expandCmsPageData(array $cmsPageData, LocaleTransfer $localeTransfer)
+    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer)
     {
-        return $this->cmsFacade->expandCmsPageData($cmsPageData, $localeTransfer);
+        return $this->cmsFacade->calculateFlattenedLocaleCmsPageData($localeCmsPageDataTransfer, $localeTransfer);
     }
 
 }

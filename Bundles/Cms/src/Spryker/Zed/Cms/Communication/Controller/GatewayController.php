@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Controller;
 
-use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
-use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
+use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -18,30 +17,20 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer
+     * @param \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getCmsVersionDataAction(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer)
+    public function getFlattenedLocaleCmsPageDataAction(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer)
     {
-        return $this->getFacade()->getCmsVersionData($cmsVersionDataRequestTransfer->getIdCmsPage());
-    }
+        $cmsVersionDataTransfer = $this->getFacade()
+            ->getCmsVersionData($flattenedLocaleCmsPageDataRequestTransfer->getIdCmsPage());
+        $localeCmsPageDataTransfer = $this->getFacade()
+            ->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $flattenedLocaleCmsPageDataRequestTransfer->getLocale());
+        $flattenedLocaleCmsPageData = $this->getFacade()
+            ->calculateFlattenedLocaleCmsPageData($localeCmsPageDataTransfer, $flattenedLocaleCmsPageDataRequestTransfer->getLocale());
 
-    /**
-     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
-     */
-    public function expandCmsPageDataAction(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer)
-    {
-        $cmsPageDataExpandRequestTransfer->setCmsPageData(
-            $this->getFacade()->expandCmsPageData(
-                $cmsPageDataExpandRequestTransfer->getCmsPageData(),
-                $cmsPageDataExpandRequestTransfer->getLocale()
-            )
-        );
-
-        return $cmsPageDataExpandRequestTransfer;
+        return $flattenedLocaleCmsPageDataRequestTransfer->setFlattenedLocaleCmsPageData($flattenedLocaleCmsPageData);
     }
 
 }

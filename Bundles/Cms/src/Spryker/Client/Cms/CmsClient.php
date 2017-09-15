@@ -8,8 +8,7 @@
 namespace Spryker\Client\Cms;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
-use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
+use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -49,27 +48,13 @@ class CmsClient extends AbstractClient implements CmsClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer
+     * @param \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer)
+    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer)
     {
-        return $this->getFactory()->createCmsStub()->getCmsVersionData($cmsVersionDataRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
-     */
-    public function expandCmsPageData(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer)
-    {
-        return $this->getFactory()->createCmsStub()->expandCmsPageData($cmsPageDataExpandRequestTransfer);
+        return $this->getFactory()->createCmsStub()->getFlattenedLocaleCmsPageData($flattenedLocaleCmsPageDataRequestTransfer);
     }
 
 }

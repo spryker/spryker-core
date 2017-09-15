@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
@@ -356,6 +358,45 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
+     * - Populates CmsVersionData transfer object from provided CMS page data.
+     *
+     * @api
+     *
+     * @param string $cmsPageData
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function extractCmsVersionDataTransfer($cmsPageData);
+
+    /**
+     * Specification:
+     * - Populates LocaleCmsPageData transfer object using provided CmsVersionData transfer object for the specified locale.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
+     */
+    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
+     * - Flattens provided LocaleCmsPageData transfer object.
+     * - Expands flattened data with pre-configured CmsPageDataExpanderPluginInterface plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $localeCmsPageDataTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
      * - Rollbacks latest CmsPageVersion to older version.
      * - Creates a reference cms version copy
      * - Calls publishWithVersion() method
@@ -421,18 +462,5 @@ interface CmsFacadeInterface
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
-
-    /**
-     * Specification:
-     * - Applies the preconfigured CmsPageDataExpanderPluginInterface plugins on the provided data.
-     *
-     * @api
-     *
-     * @param array $cmsPageData
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function expandCmsPageData(array $cmsPageData, LocaleTransfer $localeTransfer);
 
 }

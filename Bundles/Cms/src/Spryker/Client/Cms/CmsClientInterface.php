@@ -8,8 +8,7 @@
 namespace Spryker\Client\Cms;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
-use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
+use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 
 interface CmsClientInterface
 {
@@ -27,26 +26,17 @@ interface CmsClientInterface
 
     /**
      * Specification:
-     * - Retrieves current CMS version data with localized attributes from permanent storage.
+     * - Retrieves CMS version data using provided data.
+     * - Calculates locale specific CMS page data.
+     * - Flattens locale specific CMS page data.
+     * - Expands flattened data with pre-configured CmsPageDataExpanderPluginInterface plugins.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer
+     * @param \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer);
-
-    /**
-     * Specification
-     * - Applies preconfigured CmsPageDataExpanderPluginInterface plugins on provided CMS page data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
-     */
-    public function expandCmsPageData(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer);
+    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer);
 
 }

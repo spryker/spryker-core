@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsCollector\Business\Extractor;
+namespace Spryker\Zed\Cms\Business\Extractor;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
@@ -13,20 +13,22 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
-use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface;
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
 
 class DataExtractor implements DataExtractorInterface
 {
 
     /**
-     * @var \Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface
+     * @var \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
      */
     protected $utilEncoding;
 
     /**
-     * @param \Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface $utilEncoding
      */
-    public function __construct(CmsCollectorToUtilEncodingInterface $utilEncoding)
+    public function __construct(CmsToUtilEncodingInterface $utilEncoding)
     {
         $this->utilEncoding = $utilEncoding;
     }
@@ -44,12 +46,35 @@ class DataExtractor implements DataExtractorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
+     */
+    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer)
+    {
+        $cmsMetaAttributeTransfer = $this->extractMetaAttributeByLocales($cmsVersionDataTransfer->getCmsPage(), $localeTransfer->getLocaleName());
+        $cmsPageAttributeTransfer = $this->extractPageAttributeByLocale($cmsVersionDataTransfer->getCmsPage(), $localeTransfer->getLocaleName());
+
+        $localeCmsPageDataTransfer = (new LocaleCmsPageDataTransfer())
+            ->setIdCmsPage($cmsVersionDataTransfer->getCmsPage()->getFkPage())
+            ->setMetaDescription($cmsMetaAttributeTransfer->getMetaDescription())
+            ->setMetaKeywords($cmsMetaAttributeTransfer->getMetaKeywords())
+            ->setMetaTitle($cmsMetaAttributeTransfer->getMetaTitle())
+            ->setPlaceholders($this->extractPlaceholdersByLocale($cmsVersionDataTransfer->getCmsGlossary(), $localeTransfer->getLocaleName()))
+            ->setName($cmsPageAttributeTransfer->getName())
+            ->setTemplatePath($cmsVersionDataTransfer->getCmsTemplate()->getTemplatePath());
+
+        return $localeCmsPageDataTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      * @param string $localeName
      *
      * @return array
      */
-    public function extractPlaceholdersByLocale(CmsGlossaryTransfer $cmsGlossaryTransfer, $localeName)
+    protected function extractPlaceholdersByLocale(CmsGlossaryTransfer $cmsGlossaryTransfer, $localeName)
     {
         $placeholders = [];
         foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $glossaryAttribute) {
@@ -67,7 +92,7 @@ class DataExtractor implements DataExtractorInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    public function extractPageAttributeByLocale(CmsPageTransfer $cmsPageTransfer, $localeName)
+    protected function extractPageAttributeByLocale(CmsPageTransfer $cmsPageTransfer, $localeName)
     {
         foreach ($cmsPageTransfer->getPageAttributes() as $pageAttribute) {
             if ($pageAttribute->getLocaleName() === $localeName) {
@@ -84,7 +109,7 @@ class DataExtractor implements DataExtractorInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
      */
-    public function extractMetaAttributeByLocales(CmsPageTransfer $cmsPageTransfer, $localeName)
+    protected function extractMetaAttributeByLocales(CmsPageTransfer $cmsPageTransfer, $localeName)
     {
         foreach ($cmsPageTransfer->getMetaAttributes() as $metaAttribute) {
             if ($metaAttribute->getLocaleName() === $localeName) {

@@ -5,21 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsCollector\Dependency\Facade;
+namespace Spryker\Zed\Cms\Business\Extractor;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
-use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
-interface CmsCollectorToCmsInterface
+interface DataExtractorInterface
 {
 
     /**
-     * @param string $cmsPageData
+     * @param string $data
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function extractCmsVersionDataTransfer($cmsPageData);
+    public function extractCmsVersionDataTransfer($data);
 
     /**
      * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
@@ -28,13 +27,5 @@ interface CmsCollectorToCmsInterface
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
     public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $localeCmsPageDataTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer);
 
 }

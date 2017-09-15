@@ -7,24 +7,16 @@
 
 namespace Spryker\Client\Cms\Zed;
 
-use Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer;
-use Generated\Shared\Transfer\CmsVersionDataRequestTransfer;
+use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 
 interface CmsStubInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer
+     * @param \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getCmsVersionData(CmsVersionDataRequestTransfer $cmsVersionDataRequestTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsPageDataExpandRequestTransfer
-     */
-    public function expandCmsPageData(CmsPageDataExpandRequestTransfer $cmsPageDataExpandRequestTransfer);
+    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer);
 
 }

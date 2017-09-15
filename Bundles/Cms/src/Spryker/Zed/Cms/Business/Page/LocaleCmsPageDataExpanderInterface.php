@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
-interface CmsPageDataExpanderInterface
+interface LocaleCmsPageDataExpanderInterface
 {
 
     /**
-     * @param array $cmsPageData
+     * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $localeCmsPageDataTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function expand(array $cmsPageData, LocaleTransfer $localeTransfer);
+    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer);
 
 }

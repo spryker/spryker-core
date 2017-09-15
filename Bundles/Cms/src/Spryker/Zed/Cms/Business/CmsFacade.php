@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
@@ -474,6 +476,58 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @api
      *
+     * @param string $cmsPageData
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function extractCmsVersionDataTransfer($cmsPageData)
+    {
+        return $this->getFactory()
+            ->createDataExtractor()
+            ->extractCmsVersionDataTransfer($cmsPageData);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
+     */
+    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer)
+    {
+        $localeCmsPageDataTransfer = $this->getFactory()
+            ->createDataExtractor()
+            ->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $localeTransfer);
+
+        return $localeCmsPageDataTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $localeCmsPageDataTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->getFactory()
+            ->createLocaleCmsPageDataExpander()
+            ->calculateFlattenedLocaleCmsPageData($localeCmsPageDataTransfer, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idCmsPage
      * @param int $version
      *
@@ -551,23 +605,6 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
         return $this->getFactory()
             ->createVersionFinder()
             ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $cmsPageData
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function expandCmsPageData(array $cmsPageData, LocaleTransfer $localeTransfer)
-    {
-        return $this->getFactory()
-            ->createCmsPageDataExpander()
-            ->expand($cmsPageData, $localeTransfer);
     }
 
 }
