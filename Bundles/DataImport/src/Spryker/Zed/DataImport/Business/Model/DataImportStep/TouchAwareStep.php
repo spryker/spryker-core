@@ -24,14 +24,14 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
     protected $touchables = [];
 
     /**
-     * @var int|null
-     */
-    protected $bulkSize;
-
-    /**
      * @var int
      */
     protected $touchableCount = 0;
+
+    /**
+     * @var int|null
+     */
+    protected $bulkSize;
 
     /**
      * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface $touchFacade
@@ -58,8 +58,6 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
     }
 
     /**
-     * @deprecated Use `addTouchable()` instead.
-     *
      * @param string $itemType
      * @param int $itemId
      * @param string $itemEvent
