@@ -6,8 +6,9 @@
 
 namespace SprykerTest\Shared\Kernel\Transfer\Fixtures;
 
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer as ParentAbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class AbstractTransfer extends ParentAbstractTransfer
 {
@@ -118,8 +119,6 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireString()
@@ -151,8 +150,6 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireInt()
@@ -184,8 +181,6 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireBool()
@@ -230,8 +225,6 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireArr()
@@ -263,8 +256,6 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireTransfer()
@@ -279,7 +270,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      *
      * @return $this
      */
-    public function setTransferCollection(\ArrayObject $transferCollection)
+    public function setTransferCollection(ArrayObject $transferCollection)
     {
         $this->transferCollection = $transferCollection;
         $this->addModifiedProperty(self::TRANSFER_COLLECTION);
@@ -309,8 +300,6 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function requireTransferCollection()

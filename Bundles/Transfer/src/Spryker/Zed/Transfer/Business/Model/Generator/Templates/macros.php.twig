@@ -52,12 +52,12 @@
 {# set method #}
 {%- macro addSet(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
-     {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
@@ -66,6 +66,12 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
+        {% if method.typeHint == "array" -%}
+        if (${{ method.property }} === null) {
+            ${{ method.property }} = [];
+        }
+
+        {% endif -%}
         $this->{{ method.property }} = ${{ method.property }};
         $this->addModifiedProperty(self::{{ method.propertyConst }});
 
@@ -76,12 +82,12 @@
 {# get method #}
 {%- macro addGet(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
-     {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @return {{ method.return }}
@@ -95,12 +101,12 @@
 {# add method #}
 {%- macro addAdd(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
-     {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @param {{ method.var }} ${{ method.property }}
@@ -119,16 +125,14 @@
 {# require method #}
 {%- macro addRequire(method) %}
     /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
      {% if method.deprecationDescription is not null -%}
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
-     *
-     {% endif -%}
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function {{ method.name }}()

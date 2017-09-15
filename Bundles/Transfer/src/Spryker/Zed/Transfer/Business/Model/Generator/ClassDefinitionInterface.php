@@ -40,4 +40,9 @@ interface ClassDefinitionInterface extends DefinitionInterface
      */
     public function getDeprecationDescription();
 
+    /**
+     * @return bool
+     */
+    public function hasArrayObject();
+
 }

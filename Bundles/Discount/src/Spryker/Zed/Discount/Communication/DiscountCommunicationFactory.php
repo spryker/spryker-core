@@ -49,6 +49,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
             $this->createConditionsFormType()
         );
 
+        $discountFormType->setFormTypeExpanderPlugins($this->getDiscountFormTypeExpanderPlugins());
+
         return $this->getFormFactory()->create(
             $discountFormType,
             $discountDataProvider->getData($idDiscount),
@@ -59,7 +61,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\GeneralForm
+     * @return \Spryker\Zed\Discount\Communication\Form\GeneralForm|\Symfony\Component\Form\FormTypeInterface
      */
     public function createGeneralFormType()
     {
@@ -67,7 +69,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\CalculatorForm
+     * @return \Spryker\Zed\Discount\Communication\Form\CalculatorForm|\Symfony\Component\Form\FormTypeInterface
      */
     public function createCalculatorFormType()
     {
@@ -82,7 +84,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\ConditionsForm
+     * @return \Spryker\Zed\Discount\Communication\Form\ConditionsForm|\Symfony\Component\Form\FormTypeInterface
      */
     public function createConditionsFormType()
     {
@@ -90,7 +92,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\VoucherForm
+     * @return \Spryker\Zed\Discount\Communication\Form\VoucherForm|\Symfony\Component\Form\FormTypeInterface
      */
     public function createVoucherFormType()
     {
@@ -116,7 +118,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer
+     * @return \Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer|\Symfony\Component\Form\DataTransformerInterface
      */
     public function createCalculatorAmountTransformer()
     {
@@ -124,7 +126,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Table\DiscountsTable
+     * @return \Spryker\Zed\Discount\Communication\Table\DiscountsTable|\Spryker\Zed\Gui\Communication\Table\AbstractTable
      */
     public function createDiscountsTable()
     {
@@ -138,7 +140,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCalculatorFormDataProvider()
     {
-        return new CalculatorFormDataProvider($this->getCalculatorPlugins());
+        $calculatorDataProvider = new CalculatorFormDataProvider($this->getCalculatorPlugins());
+        $calculatorDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
+
+        return $calculatorDataProvider;
     }
 
     /**
@@ -146,7 +151,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createVoucherFormDataProvider()
     {
-        return new VoucherFormDataProvider();
+        $voucherFormDataProvider = new VoucherFormDataProvider();
+        $voucherFormDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
+
+        return $voucherFormDataProvider;
     }
 
     /**
@@ -155,7 +163,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idDiscount
      * @param int $batchValue
      *
-     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
+     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable|\Spryker\Zed\Gui\Communication\Table\AbstractTable
      */
     public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $idDiscount, $batchValue)
     {
@@ -177,7 +185,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer
+     * @return \Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformerInterface
      */
     public function createJavascriptQueryBuilderTransformer()
     {
@@ -189,7 +197,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createDiscountDataProvider()
     {
-        return new DiscountFormDataProvider();
+        $discountFormDataProvider = new DiscountFormDataProvider();
+        $discountFormDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
+
+        return $discountFormDataProvider;
     }
 
     /**
@@ -213,6 +224,30 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getMoneyFacade()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[]
+     */
+    protected function getDiscountFormTypeExpanderPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface[]
+     */
+    protected function getDiscountFormDataProviderExpanderPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface[]
+     */
+    public function getDiscountViewBlockProviderPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER);
     }
 
 }

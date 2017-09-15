@@ -6,7 +6,7 @@
     "braintree/braintree_php": "~3.15.0",
     "spryker/checkout": "^3.0.0",
     "spryker/config": "^3.0.0",
-    "spryker/currency": "^2.0.0",
+    "spryker/currency": "^2.0.0 || ^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/money": "^2.0.0",

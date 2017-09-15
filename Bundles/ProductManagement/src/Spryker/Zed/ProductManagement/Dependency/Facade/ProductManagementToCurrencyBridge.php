@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
-
 class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyInterface
 {
 
@@ -20,7 +18,7 @@ class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyIn
     /**
      * @param \Spryker\Zed\Currency\Business\CurrencyFacadeInterface $currencyFacade
      */
-    public function __construct(CurrencyFacadeInterface $currencyFacade)
+    public function __construct($currencyFacade)
     {
         $this->currencyFacade = $currencyFacade;
     }

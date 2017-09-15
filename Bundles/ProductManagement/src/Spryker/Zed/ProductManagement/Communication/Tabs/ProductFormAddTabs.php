@@ -23,7 +23,6 @@ class ProductFormAddTabs extends AbstractProductFormTabs
         $this
             ->addGeneralTab($tabsViewTransfer)
             ->addPriceAndTaxTab($tabsViewTransfer)
-            ->addAttributesTab($tabsViewTransfer)
             ->addVariantsTab($tabsViewTransfer)
             ->addSeoTab($tabsViewTransfer)
             ->addImageTab($tabsViewTransfer)

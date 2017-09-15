@@ -16,8 +16,6 @@ class CategoryDataFeedToCategoryBridge implements CategoryDataFeedToCategoryInte
     protected $categoryQueryContainer;
 
     /**
-     * CategoryDataFeedToCategoryBridge constructor.
-     *
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      */
     public function __construct($categoryQueryContainer)

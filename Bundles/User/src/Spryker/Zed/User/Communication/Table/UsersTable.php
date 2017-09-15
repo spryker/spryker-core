@@ -102,7 +102,7 @@ class UsersTable extends AbstractTable
                 SpyUserTableMap::COL_USERNAME => $item[SpyUserTableMap::COL_USERNAME],
                 SpyUserTableMap::COL_FIRST_NAME => $item[SpyUserTableMap::COL_FIRST_NAME],
                 SpyUserTableMap::COL_LAST_NAME => $item[SpyUserTableMap::COL_LAST_NAME],
-                SpyUserTableMap::COL_LAST_LOGIN => $this->utilDateTimeService->formatDateTime($item[SpyUserTableMap::COL_LAST_LOGIN]),
+                SpyUserTableMap::COL_LAST_LOGIN => $this->getLastLoginDateTime($item),
                 SpyUserTableMap::COL_STATUS => $this->createStatusLabel($item),
                 self::ACTION => implode(' ', $this->createActionButtons($item)),
             ];
@@ -204,6 +204,20 @@ class UsersTable extends AbstractTable
         }
 
         return $urls;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function getLastLoginDateTime(array $item)
+    {
+        if (empty($item[SpyUserTableMap::COL_LAST_LOGIN])) {
+            return 'N/A';
+        }
+
+        return $this->utilDateTimeService->formatDateTime($item[SpyUserTableMap::COL_LAST_LOGIN]);
     }
 
 }
