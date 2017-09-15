@@ -10,6 +10,8 @@ namespace SprykerTest\Client\Storage\Redis;
 use Codeception\Test\Unit;
 use Predis\ClientInterface;
 use Spryker\Client\Storage\Redis\Service;
+use Spryker\Client\Storage\StorageClient;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
@@ -85,6 +87,60 @@ class ServiceTest extends Unit
         $requestedKeys = [];
 
         $this->assertSame($requestedKeys, $this->redisService->getMulti($requestedKeys));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGet()
+    {
+        $key = 'key';
+        $value = 'value';
+
+        $storageClient = new StorageClient();
+        $storageClient->set($key, $value);
+
+        $this->assertEquals($value, $storageClient->get($key));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMultiCached()
+    {
+        $fixtures = [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        ];
+
+        $expected = [
+            'kv:key1' => 'value1',
+            'kv:key2' => 'value2',
+            'kv:key3' => 'value3',
+        ];
+
+        $_SERVER['SERVER_NAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'TEST';
+        $_SERVER['REQUEST_URI'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '/test/url';
+
+        $storageClient = new StorageClient();
+        $storageClient->setMulti($fixtures);
+        $result = $storageClient->getMulti(array_keys($fixtures));
+        $this->assertEquals($expected, $result);
+
+        $request = new Request([], [], [], [], [], $_SERVER);
+        $storageClient->persistCacheForRequest($request);
+
+        //cleanup cache
+        $storageClient->setCachedKeys(null);
+
+        //warm-up cache
+        $storageClient->getMulti(['non-existing-key']);
+        $cachedKeys = $storageClient->getCachedKeys();
+        $this->assertNotEmpty($cachedKeys);
+
+        $cachedKeys = array_intersect_key($fixtures, $storageClient->getCachedKeys());
+        $this->assertEquals(array_keys($fixtures), array_keys($cachedKeys));
     }
 
 }

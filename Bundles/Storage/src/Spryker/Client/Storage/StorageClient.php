@@ -25,7 +25,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * All keys which have been used for the last request with same URL
      *
-     * @var array
+     * @var array|null
      */
     public static $cachedKeys;
 
@@ -58,7 +58,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @return array
+     * @return array|null
      */
     public function getCachedKeys()
     {
@@ -68,13 +68,13 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @param array $keys
+     * @param array|null $keys
      *
-     * @return array
+     * @return void
      */
     public function setCachedKeys($keys)
     {
-        return static::$cachedKeys = $keys;
+        static::$cachedKeys = $keys;
     }
 
     /**
@@ -195,7 +195,23 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function getMulti(array $keys)
     {
-        return $this->getService()->getMulti($keys);
+        if (!isset(self::$cachedKeys)) {
+            $this->loadKeysFromCache();
+        }
+
+        if (!isset(self::$bufferedValues)) {
+            $this->loadAllValues();
+        }
+
+        $keyValues = array_intersect_key(self::$bufferedValues, array_flip($keys));
+        $keys = array_diff($keys, array_keys($keyValues));
+
+        if ($keys) {
+            $keyValues += $this->getService()->getMulti($keys);
+            self::$cachedKeys += array_fill_keys($keys, self::KEY_NEW);
+        }
+
+        return $keyValues;
     }
 
     /**
@@ -249,6 +265,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * todo: Key generator in the persistence uses Request, but for loading uses $_SERVER
+     *
      * @return void
      */
     protected function loadKeysFromCache()
