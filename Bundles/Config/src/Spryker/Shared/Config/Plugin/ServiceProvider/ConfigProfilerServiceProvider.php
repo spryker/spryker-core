@@ -68,7 +68,7 @@ class ConfigProfilerServiceProvider implements ServiceProviderInterface
     protected function addCollectorTemplates(Application $app)
     {
         $app['data_collector.templates'] = $app->extend('data_collector.templates', function ($templates) {
-            $templates[] = [ConfigProfilerCollector::SPRYKER_CONFIG_PROFILER, '@Config/Collector/spryker_config_profiler.html.twig'];
+            $templates[] = [ConfigProfilerCollector::SPRYKER_CONFIG_PROFILER, '@Config/collector/spryker_config_profiler.html.twig'];
 
             return $templates;
         });
