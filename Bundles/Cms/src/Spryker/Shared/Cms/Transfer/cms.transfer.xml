@@ -113,16 +113,7 @@
         <property name="cmsTemplate" type="CmsTemplate" />
         <property name="cmsGlossary" type="CmsGlossary" />
     </transfer>
-
-    <transfer name="CmsVersionDataRequest">
-        <property name="idCmsPage" type="int" />
-    </transfer>
-
-    <transfer name="CmsPageDataExpandRequest">
-        <property name="cmsPageData" type="array" />
-        <property name="locale" type="Locale" />
-    </transfer>
-
+    
     <transfer name="LocaleCmsPageData">
         <property name="idCmsPage" type="int" />
         <property name="name" type="string" />

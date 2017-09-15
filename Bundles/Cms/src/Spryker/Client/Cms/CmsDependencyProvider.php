@@ -29,6 +29,18 @@ class CmsDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->storage()->client();
         };
 
+        $this->addZedRequestClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container)
+    {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new CmsToZedRequestBridge($container->getLocator()->zedRequest()->client());
         };
