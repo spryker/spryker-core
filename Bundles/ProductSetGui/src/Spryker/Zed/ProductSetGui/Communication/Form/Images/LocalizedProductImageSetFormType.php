@@ -77,11 +77,11 @@ class LocalizedProductImageSetFormType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Regex(
-                      [
-                              'pattern' => '/^[A-Za-z0-9_\-]+$/',
-                              'match' => true,
-                              'message' => 'Please enter name using only letters, numbers, underscore or dash.',
-                      ]
+                    [
+                        'pattern' => '/^[A-Za-z0-9_-]+$/',
+                        'match' => true,
+                        'message' => 'Please enter name using only letters, numbers, underscore or dash.',
+                    ]
                 ),
             ],
         ]);
