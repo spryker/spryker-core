@@ -265,8 +265,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * todo: Key generator in the persistence uses Request, but for loading uses $_SERVER
-     *
      * @return void
      */
     protected function loadKeysFromCache()
