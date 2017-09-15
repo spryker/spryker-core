@@ -111,7 +111,7 @@
         <property name="calculatorPlugin" type="string" />
         <property name="collectorQueryString" type="string" />
         <property name="collectorStrategyType" type="string" />
-        <property name="discountAmounts" type="DiscountAmount[]" singular="DiscountAmount" />
+        <property name="discountMoneyAmounts" type="DiscountMoneyAmount[]" singular="DiscountMoneyAmount" />
     </transfer>
 
     <transfer name="DiscountCondition">
@@ -142,7 +142,7 @@
         <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
-    <transfer name="DiscountAmount">
+    <transfer name="DiscountMoneyAmount">
         <property name="idDiscountAmount" type="int" />
         <property name="fkCurrency" type="int" />
         <property name="fkDiscount" type="int" />

@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Communication\Form\ConditionsForm;
-use Spryker\Zed\Discount\Communication\Form\CurrencyForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\GeneralForm;
+use Spryker\Zed\Discount\Communication\Form\MoneyAmountForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer;
@@ -220,11 +220,11 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\CurrencyForm|\Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\Discount\Communication\Form\MoneyAmountForm|\Symfony\Component\Form\FormInterface
      */
-    public function createCurrencyFormType()
+    public function createMoneyAmountFormType()
     {
-        return new CurrencyForm();
+        return new MoneyAmountForm();
     }
 
     /**

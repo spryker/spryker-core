@@ -7,10 +7,10 @@
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 use DateTime;
-use Generated\Shared\Transfer\DiscountAmountTransfer;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
@@ -62,9 +62,9 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
 
         foreach (Store::getInstance()->getCurrencyIsoCodes() as $currencyIsoCode) {
-            $discountAmountTransfer = new DiscountAmountTransfer();
+            $discountAmountTransfer = new DiscountMoneyAmountTransfer();
             $discountAmountTransfer->setCurrencyCode($currencyIsoCode);
-            $discountCalculatorTransfer->addDiscountAmount($discountAmountTransfer);
+            $discountCalculatorTransfer->addDiscountMoneyAmount($discountAmountTransfer);
         }
 
         return $discountCalculatorTransfer;

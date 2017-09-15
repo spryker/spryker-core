@@ -2,7 +2,8 @@
 <hr />
 
 {{ form_row(discountForm.discountCalculator.calculator_plugin) }}
-{{ form_row(discountForm.discountCalculator.amount) }}
+
+{% include "@Discount/Index/partial/calculator_input.twig" %}
 
 {{ form_row(discountForm.discountCalculator.collectorStrategyType) }}
 
