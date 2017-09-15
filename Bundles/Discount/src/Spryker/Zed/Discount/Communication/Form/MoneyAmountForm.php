@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -30,7 +32,6 @@ class MoneyAmountForm extends AbstractType
 
     const MAX_MONEY_INT = 21474835;
     const MIN_MONEY_INT = 0;
-    const VALIDATION_GROUP_CALCULATOR_MONEY_TYPE = 'calculator-money-type';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -43,33 +44,35 @@ class MoneyAmountForm extends AbstractType
         $this->addAmountField($builder)
             ->addFkCurrencyField($builder);
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $formEvent) use ($builder){
-
-            $form = $formEvent->getForm();
-
-            /** @var $discountAmountTransfer \Generated\Shared\Transfer\DiscountMoneyAmountTransfer **/
-            $discountAmountTransfer = $formEvent->getData();
-
-            /* @var $discountConfigurationTransfer \Generated\Shared\Transfer\DiscountConfiguratorTransfer  */
-            $discountConfigurationTransfer = $form->getRoot()->getData();
-
-            $options = [];
-            $calculatorPlugin = $this->getCalculatorPlugin($discountConfigurationTransfer->getDiscountCalculator()->getCalculatorPlugin());
-            if ($calculatorPlugin) {
-                $amountField = $form->get(static::FIELD_AMOUNT);
-                $constraints = $amountField->getConfig()->getOption('constraints');
-                foreach ($calculatorPlugin->getAmountValidators() as $constraint) {
-                    $constraint->groups = [static::VALIDATION_GROUP_CALCULATOR_MONEY_TYPE];
-                }
-                $options['constraints'] = array_merge($constraints, $calculatorPlugin->getAmountValidators());
-            }
-
-            $form->remove(static::FIELD_AMOUNT);
-
-            $options['currency'] = $discountAmountTransfer->getCurrencyCode();
-
-            $this->addAmountField($form, $options);
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $formEvent) {
+            $this->configureAmountField($formEvent->getForm(), $formEvent->getData());
         });
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountAmountTransfer
+     *
+     * @return void
+     */
+    protected function configureAmountField(FormInterface $form, DiscountMoneyAmountTransfer $discountAmountTransfer)
+    {
+        /** @var \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurationTransfer */
+        $discountConfigurationTransfer = $form->getRoot()->getData();
+
+        $options = [];
+        $calculatorPlugin = $this->getCalculatorPlugin($discountConfigurationTransfer->getDiscountCalculator()->getCalculatorPlugin());
+        if ($calculatorPlugin) {
+            $amountField = $form->get(static::FIELD_AMOUNT);
+            $constraints = $amountField->getConfig()->getOption('constraints');
+            $options['constraints'] = array_merge($constraints, $calculatorPlugin->getAmountValidators());
+        }
+
+        $form->remove(static::FIELD_AMOUNT);
+
+        $options['currency'] = $discountAmountTransfer->getCurrencyCode();
+
+        $this->addAmountField($form, $options);
     }
 
     /**
@@ -81,21 +84,20 @@ class MoneyAmountForm extends AbstractType
     protected function addAmountField($builder, array $options = [])
     {
         $defaultOptions = [
-            'label' => '',
             'attr' => [
                 'class' => 'input-group',
             ],
             'constraints' => [
                 new NotBlank([
-                    'groups' => static::VALIDATION_GROUP_CALCULATOR_MONEY_TYPE,
+                    'groups' => DiscountConstants::CALCULATOR_MONEY_INPUT_TYPE,
                 ]),
                 new LessThanOrEqual([
                     'value' => static::MAX_MONEY_INT,
-                    'groups' => static::VALIDATION_GROUP_CALCULATOR_MONEY_TYPE,
+                    'groups' => DiscountConstants::CALCULATOR_MONEY_INPUT_TYPE,
                 ]),
                 new GreaterThanOrEqual([
                     'value' => static::MIN_MONEY_INT,
-                    'groups' => static::VALIDATION_GROUP_CALCULATOR_MONEY_TYPE,
+                    'groups' => DiscountConstants::CALCULATOR_MONEY_INPUT_TYPE,
                 ]),
             ],
         ];
@@ -119,7 +121,6 @@ class MoneyAmountForm extends AbstractType
 
          return $this;
     }
-
 
     /**
      * @param string $pluginName

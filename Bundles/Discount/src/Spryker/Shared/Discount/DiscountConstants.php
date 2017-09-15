@@ -24,4 +24,14 @@ interface DiscountConstants
      */
     const DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING = 'query-string';
 
+    /**
+     * Constant used to indicate what kind input is used to enter amount for calculator, default is single amount input
+     */
+    const CALCULATOR_DEFAULT_INPUT_TYPE = 'calculator-default-input-type';
+
+    /**
+     * Constant used to indicate what kind input is used to enter amount for calculator, money type means it with render input form for each currency.
+     */
+    const CALCULATOR_MONEY_INPUT_TYPE = 'calculator-money-input-type';
+
 }

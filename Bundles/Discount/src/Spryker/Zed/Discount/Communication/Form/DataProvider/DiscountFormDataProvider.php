@@ -60,6 +60,7 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
+        $discountCalculatorTransfer->setCalculatorInputType(DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE);
 
         foreach (Store::getInstance()->getCurrencyIsoCodes() as $currencyIsoCode) {
             $discountAmountTransfer = new DiscountMoneyAmountTransfer();

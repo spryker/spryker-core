@@ -1,0 +1,24 @@
+{% for amountForm in discountForm.discountCalculator.discountMoneyAmounts %}
+
+    <div class="{% if amountForm.amount.vars.errors|length > 0 %}has-error{% endif %}">
+
+        {% if loop.first %}
+             {{ form_label(amountForm.amount) }}
+        {% else %}
+            <br />
+        {% endif %}
+
+        {{ form_widget(amountForm.amount) }}
+
+        <div class="{% if amountForm.amount.vars.errors|length > 0 %}has-error{% endif %}">
+             {{ form_errors(amountForm.amount) }}
+        </div>
+
+
+        {{ form_row(amountForm.fk_currency) }}
+    </div>
+{% endfor %}
+<br />
+
+
+{% do discountForm.discountCalculator.discountMoneyAmounts.setRendered %}

@@ -1,6 +1,0 @@
-{% for amountForm in discountForm.discountCalculator.discountMoneyAmounts %}
-    {{ form_row(amountForm.amount) }}
-    {{ form_row(amountForm.fk_currency) }}
-{% endfor %}
-
-{% do discountForm.discountCalculator.discountMoneyAmounts.setRendered %}
