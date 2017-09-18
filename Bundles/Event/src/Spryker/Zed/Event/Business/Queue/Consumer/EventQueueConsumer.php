@@ -102,7 +102,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     /**
      * @param array $queueMessageTransfers
      * @param array $events
-     * @param $listenerClassName
+     * @param string $listenerClassName
      *
      * @return void
      */

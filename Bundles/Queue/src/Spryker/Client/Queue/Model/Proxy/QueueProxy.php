@@ -193,7 +193,7 @@ class QueueProxy implements QueueProxyInterface
     }
 
     /**
-     * @param $queueName
+     * @param string $queueName
      *
      * @throws \Spryker\Client\Queue\Exception\MissingQueueAdapterException
      *

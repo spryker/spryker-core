@@ -83,7 +83,7 @@ class PageDataMapper implements PageDataMapperInterface
     /**
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param $mapperName
+     * @param string $mapperName
      *
      * @throws \Spryker\Zed\Search\Business\Exception\PluginNotFoundException
      *
