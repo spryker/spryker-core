@@ -138,10 +138,10 @@ class ServiceTest extends Unit
         $request = $this->createRequest();
         $storageClient->persistCacheForRequest($request);
 
-        //cleanup cache
+        //Reset cache
         $storageClient->setCachedKeys(null);
 
-        //warm-up cache
+        //Warm-up cache
         $storageClient->getMulti(['non-existing-key']);
         $cachedKeys = $storageClient->getCachedKeys();
         $this->assertNotEmpty($cachedKeys);

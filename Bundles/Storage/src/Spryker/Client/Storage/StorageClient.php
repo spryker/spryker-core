@@ -168,13 +168,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function get($key)
     {
-        if (!isset(self::$cachedKeys)) {
-            $this->loadKeysFromCache();
-        }
-
-        if (!isset(self::$bufferedValues)) {
-            $this->loadAllValues();
-        }
+        $this->loadCacheKeysAndValues();
 
         if (array_key_exists($key, self::$bufferedValues)) {
             self::$cachedKeys[$key] = self::KEY_USED;
@@ -195,13 +189,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function getMulti(array $keys)
     {
-        if (!isset(self::$cachedKeys)) {
-            $this->loadKeysFromCache();
-        }
-
-        if (!isset(self::$bufferedValues)) {
-            $this->loadAllValues();
-        }
+        $this->loadCacheKeysAndValues();
 
         $keyValues = array_intersect_key(self::$bufferedValues, array_flip($keys));
         $keys = array_diff($keys, array_keys($keyValues));
@@ -262,6 +250,20 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public function getCountItems()
     {
         return $this->getService()->getCountItems();
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadCacheKeysAndValues()
+    {
+        if (self::$cachedKeys === null) {
+            $this->loadKeysFromCache();
+        }
+
+        if (self::$bufferedValues === null) {
+            $this->loadAllValues();
+        }
     }
 
     /**
