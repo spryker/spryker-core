@@ -96,7 +96,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createCalculatorFixed()
     {
-        return new Fixed();
+        return new Fixed($this->getCurrencyFacade());
     }
 
     /**
@@ -305,7 +305,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountConfiguratorHydrate()
     {
-        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate($this->getQueryContainer());
+        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate($this->getQueryContainer(), $this->getCurrencyFacade());
         $discountConfiguratorHydrate->setDiscountConfigurationExpanderPlugins($this->getConfigurationExpanderPlugins());
 
         return $discountConfiguratorHydrate;
@@ -527,6 +527,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     protected function getDiscountApplicableFilterPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
     }
 
 }

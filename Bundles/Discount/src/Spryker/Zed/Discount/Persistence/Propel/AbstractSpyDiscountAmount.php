@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Discount\Persistence\Propel;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountAmount as BaseSpyDiscountAmount;
+use Orm\Zed\Discount\Persistence\Base\SpyDiscountAmount as BaseSpyDiscountAmount;
 
 abstract class AbstractSpyDiscountAmount extends BaseSpyDiscountAmount
 {

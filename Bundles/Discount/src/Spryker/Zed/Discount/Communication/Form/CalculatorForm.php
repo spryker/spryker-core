@@ -23,8 +23,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
@@ -95,13 +93,6 @@ class CalculatorForm extends AbstractType
             ->addCollectorQueryString($builder);
 
         $builder->addModelTransformer($this->calculatorAmountTransformer);
-
-        $builder->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
-                $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
-            }
-        );
     }
 
     /**
@@ -183,7 +174,7 @@ class CalculatorForm extends AbstractType
     protected function addAmountField($builder, array $options = [])
     {
         $defaultOptions = [
-            'label' => 'Amount',
+            'label' => 'Value',
             'attr' => [
                 'class' => 'input-group',
             ],

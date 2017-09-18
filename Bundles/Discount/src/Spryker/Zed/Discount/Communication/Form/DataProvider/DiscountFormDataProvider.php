@@ -6,17 +6,31 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
+use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFormDataProvider extends BaseDiscountFormDataProvider
 {
+
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
+     */
+    protected $currencyFacade;
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface $currencyFacade
+     */
+    public function __construct(DiscountToCurrencyInterface $currencyFacade)
+    {
+        $this->currencyFacade = $currencyFacade;
+    }
 
     /**
      * @param int|null $idDiscount
@@ -60,15 +74,24 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
-        $discountCalculatorTransfer->setCalculatorInputType(DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE);
-
-        foreach (Store::getInstance()->getCurrencyIsoCodes() as $currencyIsoCode) {
-            $discountAmountTransfer = new DiscountMoneyAmountTransfer();
-            $discountAmountTransfer->setCurrencyCode($currencyIsoCode);
-            $discountCalculatorTransfer->addDiscountMoneyAmount($discountAmountTransfer);
-        }
+        $discountCalculatorTransfer->setDiscountMoneyAmounts($this->getStoreCurrencies());
 
         return $discountCalculatorTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountMoneyAmountTransfer[]|\ArrayObject
+     */
+    protected function getStoreCurrencies()
+    {
+        $currencies = new ArrayObject();
+        foreach ($this->currencyFacade->getStoreCurrencies() as $currencyTransfer) {
+            $discountAmountTransfer = new DiscountMoneyAmountTransfer();
+            $discountAmountTransfer->setCurrencyCode($currencyTransfer->getCode());
+            $discountAmountTransfer->setFkCurrency($currencyTransfer->getIdCurrency());
+            $currencies->append($discountAmountTransfer);
+        }
+        return $currencies;
     }
 
 }

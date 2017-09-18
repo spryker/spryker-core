@@ -86,6 +86,8 @@ class DiscountPersist implements DiscountPersistInterface
 
         $discountEntity->save();
 
+        $this->saveDiscountAmounts($discountEntity, $discountConfiguratorTransfer);
+
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
 
         $this->executePostCreatePlugins($discountConfiguratorTransfer);
@@ -141,6 +143,8 @@ class DiscountPersist implements DiscountPersistInterface
         $this->updateVoucherPool($discountConfiguratorTransfer, $discountEntity);
 
         $affectedRows = $discountEntity->save();
+
+        $this->saveDiscountAmounts($discountEntity, $discountConfiguratorTransfer);
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
 
@@ -367,6 +371,25 @@ class DiscountPersist implements DiscountPersistInterface
     public function setDiscountPostUpdatePlugins(array $discountPostUpdatePlugins)
     {
         $this->discountPostUpdatePlugins = $discountPostUpdatePlugins;
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return void
+     */
+    protected function saveDiscountAmounts(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    {
+        foreach ($discountConfiguratorTransfer->getDiscountCalculator()->getDiscountMoneyAmounts() as $discountMoneyAmountTransfer) {
+            $discountAmountEntity = $this->discountQueryContainer
+                ->queryDiscountAmountById($discountMoneyAmountTransfer->getIdDiscountAmount())
+                ->findOneOrCreate();
+
+            $discountAmountEntity->fromArray($discountMoneyAmountTransfer->modifiedToArray());
+            $discountAmountEntity->setFkDiscount($discountEntity->getIdDiscount());
+            $discountAmountEntity->save();
+        }
     }
 
 }

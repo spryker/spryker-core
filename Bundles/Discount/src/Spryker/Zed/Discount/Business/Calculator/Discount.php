@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -205,6 +206,13 @@ class Discount implements DiscountInterface
     {
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->fromArray($discountEntity->toArray(), true);
+
+        foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
+            $discountMoneyAmountTransfer = new DiscountMoneyAmountTransfer();
+            $discountMoneyAmountTransfer->fromArray($discountAmountEntity->toArray(), true);
+            $discountMoneyAmountTransfer->setCurrencyCode($discountAmountEntity->getCurrency()->getCode());
+            $discountTransfer->addDiscountMoneyAmount($discountMoneyAmountTransfer);
+        }
 
         return $discountTransfer;
     }

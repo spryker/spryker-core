@@ -88,6 +88,7 @@ class DiscountsTable extends AbstractTable
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         $config->addRawColumn(self::TABLE_COL_ACTIONS);
+        $config->addRawColumn(SpyDiscountTableMap::COL_AMOUNT);
 
         return $config;
     }
@@ -198,18 +199,18 @@ class DiscountsTable extends AbstractTable
      */
     protected function createAddVoucherCodeButton(SpyDiscount $discountEntity)
     {
-        if ($discountEntity->getFkDiscountVoucherPool()) {
-            $addVoucherCodeDiscountUrl = Url::generate(
-                '/discount/index/edit',
-                [
-                    self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
-                ]
-            );
-
-            return $this->generateCreateButton($addVoucherCodeDiscountUrl, 'Add code');
+        if (!$discountEntity->getFkDiscountVoucherPool()) {
+            return '';
         }
 
-        return '';
+        $addVoucherCodeDiscountUrl = Url::generate(
+            '/discount/index/edit',
+            [
+                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
+            ]
+        );
+
+        return $this->generateCreateButton($addVoucherCodeDiscountUrl, 'Add code');
     }
 
     /**
@@ -268,9 +269,20 @@ class DiscountsTable extends AbstractTable
      */
     protected function getFormattedAmount(SpyDiscount $discountEntity)
     {
-        return $this->getCalculatorPlugin(
-            $discountEntity->getCalculatorPlugin()
-        )->getFormattedAmount($discountEntity->getAmount());
+        if (count($discountEntity->getDiscountAmounts()) === 0) {
+            return $this->getCalculatorPlugin(
+                $discountEntity->getCalculatorPlugin()
+            )->getFormattedAmount($discountEntity->getAmount());
+        }
+
+        $discountAmounts = '';
+        foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
+            $discountAmounts .= $this->getCalculatorPlugin(
+                $discountEntity->getCalculatorPlugin()
+            )->getFormattedAmount($discountAmountEntity->getAmount(), $discountAmountEntity->getCurrency()->getCode()) . '<br />';
+        }
+
+        return $discountAmounts;
     }
 
     /**

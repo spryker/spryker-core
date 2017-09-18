@@ -19,4 +19,11 @@ interface CurrencyReaderInterface
      */
     public function getByIdCurrency($idCurrency);
 
+    /**
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getStoreCurrencies();
+
 }

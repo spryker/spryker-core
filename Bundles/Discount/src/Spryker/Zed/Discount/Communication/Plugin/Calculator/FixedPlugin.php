@@ -68,12 +68,13 @@ class FixedPlugin extends AbstractCalculatorPlugin implements DiscountCalculator
      * @api
      *
      * @param int $amount
+     * @param string|null $isoCode
      *
      * @return string
      */
-    public function getFormattedAmount($amount)
+    public function getFormattedAmount($amount, $isoCode = null)
     {
-        $moneyTransfer = $this->getMoneyPlugin()->fromInteger($amount);
+        $moneyTransfer = $this->getMoneyPlugin()->fromInteger($amount, $isoCode);
 
         return $this->getMoneyPlugin()->formatWithSymbol($moneyTransfer);
     }

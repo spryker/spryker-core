@@ -39,7 +39,8 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     {
         return new CurrencyReader(
             $this->getQueryContainer(),
-            $this->createCurrencyMapper()
+            $this->createCurrencyMapper(),
+            $this->getStore()
         );
     }
 
@@ -52,7 +53,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
      */
     protected function getStore()
     {

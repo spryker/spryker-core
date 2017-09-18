@@ -47,6 +47,8 @@ class MoneyAmountForm extends AbstractType
         $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $formEvent) {
             $this->configureAmountField($formEvent->getForm(), $formEvent->getData());
         });
+
+        $builder->addModelTransformer($this->getFactory()->createCurrencyAmountTransformer());
     }
 
     /**

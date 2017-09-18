@@ -44,10 +44,11 @@ interface DiscountCalculatorPluginInterface
      * @api
      *
      * @param int $amount
+     * @param string|null $isoCode
      *
      * @return string
      */
-    public function getFormattedAmount($amount);
+    public function getFormattedAmount($amount, $isoCode = null);
 
     /**
      * @api

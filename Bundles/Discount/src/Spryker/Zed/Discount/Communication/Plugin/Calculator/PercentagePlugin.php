@@ -61,10 +61,11 @@ class PercentagePlugin extends AbstractCalculatorPlugin implements DiscountCalcu
      * @api
      *
      * @param int $amount
+     * @param string|null $isoCode
      *
      * @return string
      */
-    public function getFormattedAmount($amount)
+    public function getFormattedAmount($amount, $isoCode = null)
     {
         return $this->transformFromPersistence($amount) . ' %';
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Discount\Persistence\Propel;
 
-use Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery as BaseSpyDiscountAmountQuery;
+use Orm\Zed\Discount\Persistence\Base\SpyDiscountAmountQuery as BaseSpyDiscountAmountQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_discount_amount' table.

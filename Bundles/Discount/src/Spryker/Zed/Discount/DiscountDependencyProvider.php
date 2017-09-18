@@ -23,6 +23,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -35,6 +36,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_MESSENGER = 'MESSENGER_FACADE';
     const FACADE_MONEY = 'MONEY_FACADE';
+    const FACADE_CURRENCY = 'CURRENCY_FACADE';
 
     const PLUGIN_PROPEL_CONNECTION = 'PROPEL_CONNECTION_PLUGIN';
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
@@ -74,6 +76,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountPostUpdatePlugins($container);
         $container = $this->addDiscountConfigurationExpanderPlugins($container);
         $container = $this->addDiscountApplicableFilterPlugins($container);
+        $container = $this->addCurrencyFacade($container);
 
         return $container;
     }
@@ -93,6 +96,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountFormExpanderPlugins($container);
         $container = $this->addDiscountFormDataProviderExpanderPlugins($container);
         $container = $this->addDiscountViewBlockProviderPlugins($container);
+        $container = $this->addCurrencyFacade($container);
 
         return $container;
     }
@@ -429,6 +433,20 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     protected function getDiscountApplicableFilterPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCurrencyFacade(Container $container)
+    {
+        $container[self::FACADE_CURRENCY] = function (Container $container) {
+            return new DiscountToCurrencyBridge($container->getLocator()->currency()->facade());
+        };
+
+        return $container;
     }
 
 }

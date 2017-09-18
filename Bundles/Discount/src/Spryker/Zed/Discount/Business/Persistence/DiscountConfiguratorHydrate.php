@@ -6,13 +6,16 @@
 
 namespace Spryker\Zed\Discount\Business\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterface
@@ -29,11 +32,20 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected $discountConfigurationExpanderPlugins = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
      */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
+    protected $currencyFacade;
+
+    /**
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface $currencyFacade
+     */
+    public function __construct(
+        DiscountQueryContainerInterface $discountQueryContainer,
+        DiscountToCurrencyInterface $currencyFacade
+    ) {
         $this->discountQueryContainer = $discountQueryContainer;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -91,8 +103,31 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->fromArray($discountEntity->toArray(), true);
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
+        $discountCalculatorTransfer->setDiscountMoneyAmounts($this->getDiscountMoneyAmounts($discountEntity));
 
         return $discountCalculatorTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return \ArrayObject
+     */
+    protected function getDiscountMoneyAmounts(SpyDiscount $discountEntity)
+    {
+        $discountMoneyAmounts = new ArrayObject();
+        foreach ($discountEntity->getDiscountAmounts() as $discountMoneyAmountEntity) {
+            $discountMoneyAmountTransfer = new DiscountMoneyAmountTransfer();
+            $discountMoneyAmountTransfer->fromArray($discountMoneyAmountEntity->toArray(), true);
+            $discountMoneyAmountTransfer->setFkDiscount($discountEntity->getPrimaryKey());
+
+            $currencyTransfer = $this->currencyFacade->getByIdCurrency($discountMoneyAmountEntity->getFkCurrency());
+            $discountMoneyAmountTransfer->setCurrencyCode($currencyTransfer->getCode());
+
+            $discountMoneyAmounts->append($discountMoneyAmountTransfer);
+        }
+
+        return $discountMoneyAmounts;
     }
 
     /**
@@ -144,7 +179,6 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected function executeDiscountConfigurationExpanderPlugins(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
     ) {
-
         foreach ($this->discountConfigurationExpanderPlugins as $discountConfigurationExpanderPlugin) {
             $discountConfiguratorTransfer = $discountConfigurationExpanderPlugin->expand($discountConfiguratorTransfer);
         }
