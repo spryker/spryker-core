@@ -40,7 +40,7 @@ class DataImportToTouchBridge implements DataImportToTouchInterface
      *
      * @return void
      */
-    public function bulkTouchSetInActive($itemType, array $itemIds)
+    public function bulkTouchSetInactive($itemType, array $itemIds)
     {
         $this->touchFacade->bulkTouchSetInActive($itemType, $itemIds);
     }

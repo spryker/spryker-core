@@ -122,7 +122,7 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
                     $this->touchFacade->bulkTouchSetActive($itemType, array_unique($touchables));
                 }
                 if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE) {
-                    $this->touchFacade->bulkTouchSetInActive($itemType, array_unique($touchables));
+                    $this->touchFacade->bulkTouchSetInactive($itemType, array_unique($touchables));
                 }
                 if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
                     $this->touchFacade->bulkTouchSetDeleted($itemType, array_unique($touchables));
