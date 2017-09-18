@@ -147,6 +147,8 @@ interface ApplicationConstants
 
     /**
      * RabbitMQ
+     *
+     * @deprecated use RabbitMQ bundle constants instead
      */
     /** @deprecated Use queue-adapter specific configuration constants */
     const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';

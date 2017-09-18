@@ -16,30 +16,31 @@ interface StorageClientInterface
      * @param string $key
      * @param mixed $value
      * @param int|null $ttl
-     *
-     * @throws \Exception
+     * @param string $prefix
      *
      * @return mixed
      */
-    public function set($key, $value, $ttl = null);
+    public function set($key, $value, $ttl = null, $prefix = '');
 
     /**
      * @api
      *
      * @param array $items
+     * @param string $prefix
      *
      * @return void
      */
-    public function setMulti(array $items);
+    public function setMulti(array $items, $prefix = '');
 
     /**
      * @api
      *
      * @param string $key
+     * @param string $prefix
      *
      * @return mixed
      */
-    public function delete($key);
+    public function delete($key, $prefix = '');
 
     /**
      * @api
@@ -61,19 +62,21 @@ interface StorageClientInterface
      * @api
      *
      * @param string $key
+     * @param string $prefix
      *
      * @return mixed
      */
-    public function get($key);
+    public function get($key, $prefix = '');
 
     /**
      * @api
      *
      * @param array $keys
+     * @param string $prefix
      *
      * @return array
      */
-    public function getMulti(array $keys);
+    public function getMulti(array $keys, $prefix = '');
 
     /**
      * @api
@@ -85,18 +88,21 @@ interface StorageClientInterface
     /**
      * @api
      *
+     * @param string $prefix
+     *
      * @return array
      */
-    public function getAllKeys();
+    public function getAllKeys($prefix = '');
 
     /**
      * @api
      *
      * @param string $pattern
+     * @param string $prefix
      *
      * @return array
      */
-    public function getKeys($pattern);
+    public function getKeys($pattern, $prefix = '');
 
     /**
      * @api
@@ -115,9 +121,11 @@ interface StorageClientInterface
     /**
      * @api
      *
+     * @param string $prefix
+     *
      * @return int
      */
-    public function getCountItems();
+    public function getCountItems($prefix = '');
 
     /**
      * @api

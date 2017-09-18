@@ -58,7 +58,13 @@ class TransferDefinitionFinder implements FinderInterface
     public function getXmlTransferDefinitionFiles()
     {
         $finder = new Finder();
-        $finder->in($this->getExistingSourceDirectories())->name($this->fileNamePattern)->depth('< 1');
+
+        $existingSourceDirectories = $this->getExistingSourceDirectories();
+        if (empty($existingSourceDirectories)) {
+            return [];
+        }
+
+        $finder->in($existingSourceDirectories)->name($this->fileNamePattern)->depth('< 1');
 
         return $finder;
     }

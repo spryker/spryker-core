@@ -189,12 +189,13 @@ class Service implements ServiceInterface
 
     /**
      * @param string $key
+     * @param string $prefix
      *
      * @return mixed
      */
-    public function get($key)
+    public function get($key, $prefix = self::KV_PREFIX)
     {
-        $key = $this->getKeyName($key);
+        $key = $this->getKeyName($key, $prefix);
         $value = $this->client->get($key);
         $this->addReadAccessStats($key);
 
@@ -209,10 +210,11 @@ class Service implements ServiceInterface
 
     /**
      * @param array $keys
+     * @param string $prefix
      *
      * @return array
      */
-    public function getMulti(array $keys)
+    public function getMulti(array $keys, $prefix = self::KV_PREFIX)
     {
         if (count($keys) === 0) {
             return $keys;
@@ -220,7 +222,7 @@ class Service implements ServiceInterface
 
         $transformedKeys = [];
         foreach ($keys as $key) {
-            $transformedKeys[] = $this->getKeyName($key);
+            $transformedKeys[] = $this->getKeyName($key, $prefix);
         }
 
         $values = array_combine($transformedKeys, $this->client->mget($transformedKeys));
@@ -240,63 +242,71 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @return array
-     */
-    public function getAllKeys()
-    {
-        return $this->getKeys('*');
-    }
-
-    /**
-     * @param string $pattern
+     * @param string $prefix
      *
      * @return array
      */
-    public function getKeys($pattern)
+    public function getAllKeys($prefix = self::KV_PREFIX)
     {
-        return $this->client->keys($this->getSearchPattern($pattern));
-    }
-
-    /**
-     * @return int
-     */
-    public function getCountItems()
-    {
-        return count($this->client->keys($this->getSearchPattern()));
+        return $this->getKeys('*', $prefix);
     }
 
     /**
      * @param string $pattern
+     * @param string $prefix
+     *
+     * @return array
+     */
+    public function getKeys($pattern, $prefix = self::KV_PREFIX)
+    {
+        return $this->client->keys($this->getSearchPattern($pattern, $prefix));
+    }
+
+    /**
+     * @param string $prefix
+     *
+     * @return int
+     */
+    public function getCountItems($prefix = self::KV_PREFIX)
+    {
+        return count($this->client->keys($this->getSearchPattern('*', $prefix)));
+    }
+
+    /**
+     * @param string $pattern
+     * @param string $prefix
      *
      * @return string
      */
-    protected function getSearchPattern($pattern = '*')
+    protected function getSearchPattern($pattern = '*', $prefix = self::KV_PREFIX)
     {
-        return self::KV_PREFIX . $pattern;
+        return $prefix . $pattern;
     }
 
     /**
      * @param string $key
+     * @param string $prefix
      *
      * @return string
      */
-    protected function getKeyName($key)
+    protected function getKeyName($key, $prefix = self::KV_PREFIX)
     {
-        return self::KV_PREFIX . $key;
+        return $prefix . $key;
     }
 
     /**
      * @param string $key
      * @param mixed $value
      * @param int|null $ttl
+     * @param string $prefix
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null, $prefix = self::KV_PREFIX)
     {
-        $key = $this->getKeyName($key);
+        $key = $this->getKeyName($key, $prefix);
 
         if ($ttl === null) {
             $result = $this->client->set($key, $value);
@@ -316,17 +326,18 @@ class Service implements ServiceInterface
 
     /**
      * @param array $items
+     * @param string $prefix
      *
      * @throws \Exception
      *
      * @return void
      */
-    public function setMulti(array $items)
+    public function setMulti(array $items, $prefix = self::KV_PREFIX)
     {
         $data = [];
 
         foreach ($items as $key => $value) {
-            $dataKey = $this->getKeyName($key);
+            $dataKey = $this->getKeyName($key, $prefix);
 
             if (!is_scalar($value)) {
                 $value = json_encode($value);
@@ -352,12 +363,13 @@ class Service implements ServiceInterface
 
     /**
      * @param string $key
+     * @param string $prefix
      *
      * @return mixed
      */
-    public function delete($key)
+    public function delete($key, $prefix = self::KV_PREFIX)
     {
-        $key = $this->getKeyName($key);
+        $key = $this->getKeyName($key, $prefix);
         $result = $this->client->del([$key]);
         $this->addDeleteAccessStats($key);
 

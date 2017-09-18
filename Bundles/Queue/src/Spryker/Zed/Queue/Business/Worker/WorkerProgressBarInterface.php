@@ -19,9 +19,11 @@ interface WorkerProgressBarInterface
     public function start($steps, $round);
 
     /**
+     * @param int $step
+     *
      * @return void
      */
-    public function advance();
+    public function advance($step = 1);
 
     /**
      * @return void

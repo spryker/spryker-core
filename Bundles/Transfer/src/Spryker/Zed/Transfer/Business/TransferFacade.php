@@ -31,6 +31,18 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     }
 
     /**
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function generateEntityTransferObjects(LoggerInterface $messenger)
+    {
+        $this->getFactory()->createEntityTransferGenerator($messenger)->execute();
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

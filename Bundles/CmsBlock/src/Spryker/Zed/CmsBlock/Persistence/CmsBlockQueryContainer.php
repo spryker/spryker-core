@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlock\Persistence;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -30,6 +31,19 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     {
         return $this->queryCmsBlock()
             ->filterByIdCmsBlock($idCmsBlock);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $ids
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlockByIds(array $ids)
+    {
+        return $this->queryCmsBlock()
+            ->filterByIdCmsBlock_In($ids);
     }
 
     /**
@@ -187,6 +201,25 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     {
         return $this->getFactory()
             ->createCmsBlockGlossaryKeyMappingQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param array $cmsBlockIds
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryBlockWithRelationsByIds(array $cmsBlockIds)
+    {
+        $query = $this->getFactory()->createCmsBlockQuery()
+            ->filterByIdCmsBlock_In($cmsBlockIds)
+            ->joinWith('SpyCmsBlock.CmsBlockTemplate')
+            ->joinWith('SpyCmsBlock.SpyCmsBlockGlossaryKeyMapping')
+            ->joinWith('SpyCmsBlockGlossaryKeyMapping.GlossaryKey')
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+
+        return $query;
     }
 
 }

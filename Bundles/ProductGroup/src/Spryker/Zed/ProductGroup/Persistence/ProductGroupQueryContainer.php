@@ -33,6 +33,28 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
+     */
+    public function queryProductAbstractGroup()
+    {
+        return $this->getFactory()
+            ->createProductAbstractGroupQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
+     */
+    public function queryProductGroup()
+    {
+        return $this->getFactory()
+            ->createProductGroupQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductGroup
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery

@@ -107,4 +107,22 @@ interface AvailabilityQueryContainerInterface
      */
     public function querySpyProductAbstractAvailability();
 
+    /**
+     * @api
+     *
+     * @param array $availabilityAbstractIds
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityAbstractWithRelationsByIds(array $availabilityAbstractIds);
+
+    /**
+     * @api
+     *
+     * @param array $abstractProductSkus
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityAbstractByAbstractProductSkus(array $abstractProductSkus);
+
 }

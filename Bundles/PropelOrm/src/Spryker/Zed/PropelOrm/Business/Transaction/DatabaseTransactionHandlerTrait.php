@@ -10,6 +10,7 @@ namespace Spryker\Zed\PropelOrm\Business\Transaction;
 use Closure;
 use Exception;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Throwable;
 
@@ -46,6 +47,34 @@ trait DatabaseTransactionHandlerTrait
             $connection->rollBack();
             throw $exception;
         }
+    }
+
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function preventTransaction()
+    {
+        if (Propel::getConnection()->inTransaction()) {
+            throw new PropelException('This operation is not allowed inside of transaction');
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function disableInstancePooling()
+    {
+        Propel::disableInstancePooling();
+    }
+
+    /**
+     * @return void
+     */
+    protected function enableInstancePooling()
+    {
+        Propel::enableInstancePooling();
     }
 
 }

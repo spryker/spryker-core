@@ -107,7 +107,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet
+     * @return \Elastica\ResultSet|array
      */
     public function searchKeys($searchString, $limit = null, $offset = null)
     {
@@ -116,6 +116,64 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->createSearchKeysQuery($searchString, $limit, $offset);
 
         return $this->search($query);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $key
+     * @param string $type
+     * @param string $typeName
+     * @param string $indexName
+     *
+     * @return mixed
+     */
+    public function read($key, $type = '', $typeName = '', $indexName = '')
+    {
+        return $this
+            ->getFactory()
+            ->createReader()
+            ->read($key, $type, $typeName, $indexName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $dataSet
+     * @param string $typeName
+     * @param string $indexName
+     *
+     * @return bool
+     */
+    public function write(array $dataSet, $typeName = '', $indexName = '')
+    {
+        return $this
+            ->getFactory()
+            ->createWriter()
+            ->write($dataSet, $typeName, $indexName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $dataSet
+     * @param string $typeName
+     * @param string $indexName
+     *
+     * @return bool
+     */
+    public function delete(array $dataSet, $typeName = '', $indexName = '')
+    {
+        return $this
+            ->getFactory()
+            ->createWriter()
+            ->delete($dataSet, $typeName, $indexName);
     }
 
 }

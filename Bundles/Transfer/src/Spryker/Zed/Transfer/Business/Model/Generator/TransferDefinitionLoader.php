@@ -25,22 +25,22 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
      */
-    private $finder;
+    protected $finder;
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface
      */
-    private $definitionNormalizer;
+    protected $definitionNormalizer;
 
     /**
      * @var array
      */
-    private $transferDefinitions = [];
+    protected $transferDefinitions = [];
 
     /**
      * @var \Zend\Filter\FilterChain
      */
-    private static $filter;
+    protected static $filter;
 
     /**
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
@@ -68,7 +68,7 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * @return array
      */
-    private function loadDefinitions()
+    protected function loadDefinitions()
     {
         $xmlTransferDefinitions = $this->finder->getXmlTransferDefinitionFiles();
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
@@ -84,7 +84,7 @@ class TransferDefinitionLoader implements LoaderInterface
      *
      * @return string
      */
-    private function getBundleFromPathName($fileName)
+    protected function getBundleFromPathName($fileName)
     {
         $filterChain = new FilterChain();
         $filterChain
@@ -99,7 +99,7 @@ class TransferDefinitionLoader implements LoaderInterface
      *
      * @return string
      */
-    private function getContainingBundleFromPathName($filePath)
+    protected function getContainingBundleFromPathName($filePath)
     {
         $pathParts = explode(DIRECTORY_SEPARATOR, $filePath);
         $sharedDirectoryPosition = array_search('Shared', array_values($pathParts));
@@ -116,7 +116,7 @@ class TransferDefinitionLoader implements LoaderInterface
      *
      * @return void
      */
-    private function addDefinition(array $definition, $bundle, $containingBundle)
+    protected function addDefinition(array $definition, $bundle, $containingBundle)
     {
         if (isset($definition[self::KEY_TRANSFER][0])) {
             foreach ($definition[self::KEY_TRANSFER] as $transfer) {
@@ -145,7 +145,7 @@ class TransferDefinitionLoader implements LoaderInterface
      *
      * @return void
      */
-    private function assertCasing(array $transfer, $bundle)
+    protected function assertCasing(array $transfer, $bundle)
     {
         $name = $transfer['name'];
 
@@ -166,7 +166,7 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * @return \Zend\Filter\FilterChain
      */
-    private function getFilter()
+    protected function getFilter()
     {
         if (self::$filter === null) {
             $filter = new FilterChain();

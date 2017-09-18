@@ -19,7 +19,7 @@ interface ProcessManagerInterface
     public function triggerQueueProcess($command, $queue);
 
     /**
-     * @param array $queueName
+     * @param string $queueName
      *
      * @return int
      */
@@ -29,5 +29,12 @@ interface ProcessManagerInterface
      * @return void
      */
     public function flushIdleProcesses();
+
+    /**
+     * @param int $processId
+     *
+     * @return bool
+     */
+    public function isProcessRunning($processId);
 
 }

@@ -17,6 +17,9 @@ use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderClassGenerator;
 use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\EntityDefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\EntityTransferDefinitionLoader;
+use Spryker\Zed\Transfer\Business\Model\Generator\Helper\StandardEnglishPluralizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
@@ -43,6 +46,20 @@ class TransferBusinessFactory extends AbstractBusinessFactory
             $messenger,
             $this->createClassGenerator(),
             $this->createTransferDefinitionBuilder()
+        );
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return Model\TransferGeneratorInterface
+     */
+    public function createEntityTransferGenerator(LoggerInterface $messenger)
+    {
+        return new TransferGenerator(
+            $messenger,
+            $this->createClassGenerator(),
+            $this->createEntityTransferDefinitionBuilder()
         );
     }
 
@@ -93,6 +110,18 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder
+     */
+    protected function createEntityTransferDefinitionBuilder()
+    {
+        return new TransferDefinitionBuilder(
+            $this->createEntityLoader(),
+            $this->createTransferDefinitionMerger(),
+            $this->createClassDefinition()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
     protected function createDataBuilderDefinitionBuilder()
@@ -120,6 +149,17 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferDefinitionLoader(
             $this->createFinder(),
             $this->createDefinitionNormalizer()
+        );
+    }
+
+    /**
+     * @return Model\Generator\LoaderInterface
+     */
+    protected function createEntityLoader()
+    {
+        return new EntityTransferDefinitionLoader(
+            $this->createEntityFinder(),
+            $this->createEntityDefinitionNormalizer()
         );
     }
 
@@ -211,6 +251,22 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizerInterface
+     */
+    protected function createEntityDefinitionNormalizer()
+    {
+        return new EntityDefinitionNormalizer($this->createPluralizer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface
+     */
+    protected function createPluralizer()
+    {
+        return new StandardEnglishPluralizer();
+    }
+
+    /**
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Transfer\Business\Model\TransferValidatorInterface
@@ -230,6 +286,17 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new TransferDefinitionFinder(
             $this->getConfig()->getSourceDirectories()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface
+     */
+    protected function createEntityFinder()
+    {
+        return new TransferDefinitionFinder(
+            $this->getConfig()->getEntitiesSourceDirectories(),
+            $this->getConfig()->getEntityFileNamePattern()
         );
     }
 

@@ -18,6 +18,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     const EVENT_SUBSCRIBER = 'event_subscriber';
     const SERVICE_PROVIDERS = 'service providers';
 
+    const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'console pre run plugins';
+    const PLUGINS_CONSOLE_POST_RUN_HOOK = 'console post run plugins';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -28,6 +31,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCommands($container);
         $container = $this->addEventSubscriber($container);
         $container = $this->addServiceProviders($container);
+        $container = $this->addConsoleHookPlugins($container);
 
         return $container;
     }
@@ -76,6 +80,44 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
      */
     protected function getEventSubscriber(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConsoleHookPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
+            return $this->getConsolePreRunHookPlugins($container);
+        };
+
+        $container[static::PLUGINS_CONSOLE_POST_RUN_HOOK] = function (Container $container) {
+            return $this->getConsolePostRunHookPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     */
+    public function getConsolePreRunHookPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     */
+    public function getConsolePostRunHookPlugins(Container $container)
     {
         return [];
     }

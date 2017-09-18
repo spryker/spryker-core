@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Console\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Console\Business\ConsoleBusinessFactory getFactory()
@@ -49,6 +51,36 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     public function getServiceProviders()
     {
         return $this->getFactory()->getServiceProviders();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    public function preRun(InputInterface $input, OutputInterface $output)
+    {
+        $this->getFactory()->createConsoleRunnerHook()->preRun($input, $output);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    public function postRun(InputInterface $input, OutputInterface $output)
+    {
+        $this->getFactory()->createConsoleRunnerHook()->postRun($input, $output);
     }
 
 }

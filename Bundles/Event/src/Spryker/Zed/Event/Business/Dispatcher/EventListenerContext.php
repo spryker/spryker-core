@@ -8,15 +8,17 @@
 namespace Spryker\Zed\Event\Business\Dispatcher;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 
 class EventListenerContext implements EventListenerContextInterface
 {
 
     /**
-     * @var \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface
+     * @var \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface
      */
-    protected $eventListener;
+    protected $eventHandler;
 
     /**
      * @var bool
@@ -24,12 +26,12 @@ class EventListenerContext implements EventListenerContextInterface
     protected $isHandledInQueue;
 
     /**
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface $eventListener
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param bool $isHandledInQueue
      */
-    public function __construct(EventListenerInterface $eventListener, $isHandledInQueue)
+    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue)
     {
-        $this->eventListener = $eventListener;
+        $this->eventHandler = $eventHandler;
         $this->isHandledInQueue = $isHandledInQueue;
     }
 
@@ -43,12 +45,28 @@ class EventListenerContext implements EventListenerContextInterface
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param string $eventName
      *
      * @return void
      */
-    public function handle(TransferInterface $eventTransfer)
+    public function handle(TransferInterface $eventTransfer, $eventName)
     {
-        $this->eventListener->handle($eventTransfer);
+        if ($this->eventHandler instanceof EventHandlerInterface) {
+            $this->eventHandler->handle($eventTransfer, $eventName);
+        }
+    }
+
+    /**
+     * @param array $eventTransfers
+     * @param string $eventName
+     *
+     * @return void
+     */
+    public function handleBulk(array $eventTransfers, $eventName)
+    {
+        if ($this->eventHandler instanceof EventBulkHandlerInterface) {
+            $this->eventHandler->handleBulk($eventTransfers, $eventName);
+        }
     }
 
     /**
@@ -56,7 +74,7 @@ class EventListenerContext implements EventListenerContextInterface
      */
     public function getListenerName()
     {
-        return get_class($this->eventListener);
+        return get_class($this->eventHandler);
     }
 
 }

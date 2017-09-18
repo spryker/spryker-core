@@ -85,4 +85,47 @@ interface SearchClientInterface
      */
     public function searchKeys($searchString, $limit = null, $offset = null);
 
+    /**
+     * Specification:
+     * - Returns data from an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param string $key
+     * @param string $type
+     * @param string $typeName
+     * @param string $indexName
+     *
+     * @return mixed
+     */
+    public function read($key, $type = '', $typeName = '', $indexName = '');
+
+    /**
+     * Specification:
+     * - Writes data into an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param array $dataSet
+     * @param string $typeName
+     * @param string $indexName
+     *
+     * @return bool
+     */
+    public function write(array $dataSet, $typeName = '', $indexName = '');
+
+    /**
+     * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param array $dataSet
+     * @param string $typeName
+     * @param string $indexName
+     *
+     * @return bool
+     */
+    public function delete(array $dataSet, $typeName = '', $indexName = '');
+
 }

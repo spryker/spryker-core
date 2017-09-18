@@ -17,14 +17,24 @@ class QueueFactory extends AbstractFactory
 {
 
     /**
+     * @var \Spryker\Client\Queue\Model\Proxy\QueueProxyInterface
+     */
+    protected static $queueProxy;
+
+    /**
      * @return \Spryker\Client\Queue\Model\Proxy\QueueProxyInterface
      */
     public function createQueueProxy()
     {
-        return new QueueProxy(
-            $this->getQueueAdapters(),
-            $this->getConfig()->getQueueAdapterConfiguration()
-        );
+        if (static::$queueProxy === null) {
+            static::$queueProxy = new QueueProxy(
+                $this->getQueueAdapters(),
+                $this->getConfig()->getQueueAdapterConfiguration(),
+                $this->getConfig()->getDefaultQueueAdapterConfiguration()
+            );
+        }
+
+        return static::$queueProxy;
     }
 
     /**

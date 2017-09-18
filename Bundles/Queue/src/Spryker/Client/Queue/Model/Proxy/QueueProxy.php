@@ -26,13 +26,25 @@ class QueueProxy implements QueueProxyInterface
     protected $queueConfiguration;
 
     /**
+     * @var array
+     */
+    protected $queueDefaultConfiguration;
+
+    /**
+     * @var array
+     */
+    protected static $queueAdapterCache = [];
+
+    /**
      * @param \Spryker\Client\Queue\Model\Adapter\AdapterInterface[] $queueAdapters
      * @param array $queueConfiguration
+     * @param array $queueDefaultConfiguration
      */
-    public function __construct(array $queueAdapters, array $queueConfiguration)
+    public function __construct(array $queueAdapters, array $queueConfiguration, array $queueDefaultConfiguration)
     {
         $this->queueAdapters = $queueAdapters;
         $this->queueConfiguration = $queueConfiguration;
+        $this->queueDefaultConfiguration = $queueDefaultConfiguration;
     }
 
     /**
@@ -166,24 +178,45 @@ class QueueProxy implements QueueProxyInterface
     /**
      * @param string $queueName
      *
-     * @throws \Spryker\Client\Queue\Exception\MissingQueueAdapterException
-     *
      * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface
      */
     protected function getQueueAdapter($queueName)
     {
-        if (!array_key_exists($queueName, $this->queueConfiguration)) {
-            throw new MissingQueueAdapterException(
-                sprintf(
-                    'There is no queue adapter configuration with this name: %s ,' .
-                    ' you can fix this by adding the queue adapter in ' .
-                    'QUEUE_ADAPTER_CONFIGURATION in the config_default.php',
-                    $queueName
-                )
-            );
+        if (isset(static::$queueAdapterCache[$queueName])) {
+            return static::$queueAdapterCache[$queueName];
         }
 
-        return $this->getConfigQueueAdapter($this->queueConfiguration[$queueName]);
+        $queueConfiguration = $this->getQueueConfiguration($queueName);
+        static::$queueAdapterCache[$queueName] = $this->getConfigQueueAdapter($queueConfiguration);
+
+        return static::$queueAdapterCache[$queueName];
+    }
+
+    /**
+     * @param $queueName
+     *
+     * @throws \Spryker\Client\Queue\Exception\MissingQueueAdapterException
+     *
+     * @return array
+     */
+    protected function getQueueConfiguration($queueName)
+    {
+        if (array_key_exists($queueName, $this->queueConfiguration)) {
+            return $this->queueConfiguration[$queueName];
+        }
+
+        if (!empty($this->queueDefaultConfiguration)) {
+            return $this->queueDefaultConfiguration;
+        }
+
+        throw new MissingQueueAdapterException(
+            sprintf(
+                'There is no queue adapter configuration with this name: %s ,' .
+                ' you can fix this by adding the queue adapter in ' .
+                'QUEUE_ADAPTER_CONFIGURATION in the config_default.php',
+                $queueName
+            )
+        );
     }
 
     /**

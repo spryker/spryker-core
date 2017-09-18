@@ -56,6 +56,13 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function queryLocalizedAttributesLabel();
+
+    /**
+     * @api
+     *
      * @param int $idProductLabel
      * @param int $idLocale
      *
@@ -78,6 +85,13 @@ interface ProductLabelQueryContainerInterface
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductAbstractRelationsByIdProductLabel($idProductLabel);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductAbstractRelations();
 
     /**
      * @api

@@ -46,7 +46,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      *
      * @return array
      */
-    private function normalizeAttributes(array $attributes, $bundle)
+    protected function normalizeAttributes(array $attributes, $bundle)
     {
         if (isset($attributes[0])) {
             return $this->addBundleToAttributes($attributes, $bundle);
@@ -61,7 +61,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      *
      * @return array
      */
-    private function addBundleToAttributes(array $attributes, $bundle)
+    protected function addBundleToAttributes(array $attributes, $bundle)
     {
         foreach ($attributes as &$attribute) {
             $attribute[self::KEY_BUNDLES] = [$bundle];

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\CmsPageDataTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
@@ -605,6 +606,24 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
         return $this->getFactory()
             ->createVersionFinder()
             ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $data
+     * @param \Generated\Shared\Transfer\CmsPageDataTransfer $cmsPageDataTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CmsPageDataTransfer
+     */
+    public function expandCmsPageDataTransfer(CmsPageDataTransfer $cmsPageDataTransfer, $data, $localeName)
+    {
+        return $this->getFactory()
+            ->createDataExtractor()
+            ->expandCmsPageDataTransfer($cmsPageDataTransfer, $data, $localeName);
     }
 
 }

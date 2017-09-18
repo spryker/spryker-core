@@ -14,10 +14,11 @@ interface StorageFacadeInterface
      * @api
      *
      * @param string $key
+     * @param string $prefix
      *
      * @return mixed
      */
-    public function get($key);
+    public function get($key, $prefix = '');
 
     /**
      * @api

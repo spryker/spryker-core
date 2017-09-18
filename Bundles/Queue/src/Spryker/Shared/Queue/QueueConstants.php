@@ -28,6 +28,14 @@ interface QueueConstants
 
     /**
      * Specification:
+     * - The Default configuration of queue adapters and worker number as an array
+     *
+     * @api
+     */
+    const QUEUE_ADAPTER_CONFIGURATION_DEFAULT = 'QUEUE_ADAPTER_CONFIGURATION_DEFAULT';
+
+    /**
+     * Specification:
      * - Delay interval between each execution of worker in milliseconds
      *
      * @api
@@ -49,5 +57,29 @@ interface QueueConstants
      * @api
      */
     const QUEUE_WORKER_OUTPUT_FILE_NAME = 'QUEUE_WORKER_OUTPUT_FILE_NAME';
+
+    /**
+     * Specification:
+     * - This flag will use for activation or deactivation logs for queue workers
+     *
+     * @api
+     */
+    const QUEUE_WORKER_LOG_ACTIVE = 'QUEUE_WORKER_LOG_ACTIVE';
+
+    /**
+     * Specification:
+     * - The Default consuming/receiving configuration
+     *
+     * @api
+     */
+    const QUEUE_DEFAULT_RECEIVER = 'QUEUE_DEFAULT_RECEIVER';
+
+    /**
+     * Specification:
+     * - This option will use to check if there is at least one message in queue
+     *
+     * @api
+     */
+    const QUEUE_WORKER_MESSAGE_CHECK_OPTION = 'QUEUE_WORKER_MESSAGE_CHECK_OPTION';
 
 }

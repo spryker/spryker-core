@@ -11,7 +11,7 @@ use ArrayIterator;
 use SplPriorityQueue;
 use Spryker\Zed\Event\Business\Dispatcher\EventListenerContext;
 use Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException;
-use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
 
 class EventCollection implements EventCollectionInterface
 {
@@ -23,28 +23,28 @@ class EventCollection implements EventCollectionInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface $eventListener
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param int $priority
      *
      * @return $this
      */
-    public function addListener($eventName, EventListenerInterface $eventListener, $priority = 0)
+    public function addListener($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0)
     {
-        $this->add($eventName, $eventListener, false, $priority);
+        $this->add($eventName, $eventHandler, false, $priority);
 
         return $this;
     }
 
     /**
      * @param string $eventName
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface $eventListener
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param int $priority
      *
      * @return $this
      */
-    public function addListenerQueued($eventName, EventListenerInterface $eventListener, $priority = 0)
+    public function addListenerQueued($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0)
     {
-        $this->add($eventName, $eventListener, true, $priority);
+        $this->add($eventName, $eventHandler, true, $priority);
 
         return $this;
     }
@@ -61,19 +61,19 @@ class EventCollection implements EventCollectionInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface $eventListener
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param bool $isHandledInQueue
      * @param int $priority
      *
      * @return void
      */
-    protected function add($eventName, EventListenerInterface $eventListener, $isHandledInQueue = false, $priority = 0)
+    protected function add($eventName, EventBaseHandlerInterface $eventHandler, $isHandledInQueue = false, $priority = 0)
     {
         if (!$this->has($eventName)) {
             $this->eventListeners[$eventName] = new SplPriorityQueue();
         }
 
-        $this->eventListeners[$eventName]->insert(new EventListenerContext($eventListener, $isHandledInQueue), $priority);
+        $this->eventListeners[$eventName]->insert(new EventListenerContext($eventHandler, $isHandledInQueue), $priority);
     }
 
     /**

@@ -58,24 +58,10 @@ class StorageTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $keys = $this->storageClient->getAllKeys();
-
-        sort($keys);
-
         $result = [];
-
-        foreach ($keys as $i => $key) {
-            $keys[$i] = str_replace('kv:', '', $key);
-        }
-
-        $values = $this->storageClient->getMulti($keys);
-
-        $fixedValues = [];
-        foreach ($values as $i => $value) {
-            $i = str_replace('kv:', '', $i);
-            $fixedValues[$i] = $value;
-        }
-        $values = $fixedValues;
+        $valuesKV = $this->getAllStorageKeyValues('kv:');
+        $valuesPS = $this->getAllStorageKeyValues('ps:');
+        $values = array_merge($valuesKV, $valuesPS);
 
         foreach ($values as $key => $value) {
             $url = Url::generate('/storage/maintenance/key', ['key' => $key]);
@@ -89,6 +75,23 @@ class StorageTable extends AbstractTable
         $this->setTotal(count($result));
 
         return $result;
+    }
+
+    /**
+     * @param string $prefix
+     *
+     * @return array
+     */
+    protected function getAllStorageKeyValues($prefix = 'kv:')
+    {
+        $keys = $this->storageClient->getAllKeys($prefix);
+        sort($keys);
+
+        foreach ($keys as $i => $key) {
+            $keys[$i] = str_replace($prefix, '', $key);
+        }
+
+        return $this->storageClient->getMulti($keys, $prefix);
     }
 
 }

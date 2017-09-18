@@ -20,6 +20,13 @@ interface ProductSetQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
+     */
+    public function queryProductSetData();
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductAbstractSetQuery
      */
     public function queryProductAbstractSet();

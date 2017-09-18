@@ -50,6 +50,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
             $this->createProcessManager(),
             $this->getConfig(),
             $this->createWorkerProgressbar($output),
+            $this->getQueueClient(),
             $this->getQueueNames()
         );
     }

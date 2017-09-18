@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Console\Business;
 
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
 interface ConsoleFacadeInterface
 {
 
@@ -39,5 +42,31 @@ interface ConsoleFacadeInterface
      * @return \Silex\ServiceProviderInterface[]
      */
     public function getServiceProviders();
+
+    /**
+     * Specification
+     * - Executes pre-run plugins which provided in ConsoleDependencyProvider
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    public function preRun(InputInterface $input, OutputInterface $output);
+
+    /**
+     * Specification
+     * - Executes pos-run plugins which provided in ConsoleDependencyProvider
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    public function postRun(InputInterface $input, OutputInterface $output);
 
 }
