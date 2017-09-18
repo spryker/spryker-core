@@ -253,8 +253,8 @@ class ServiceTest extends Unit
      */
     protected function setupServerVariable()
     {
-        $_SERVER['SERVER_NAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'TEST';
-        $_SERVER['REQUEST_URI'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '/test/url';
+        $_SERVER['SERVER_NAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost';
+        $_SERVER['REQUEST_URI'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/test/url';
     }
 
     /**
