@@ -27,6 +27,28 @@ class ServiceTest extends Unit
 {
 
     /**
+     * @var array
+     */
+    protected $fixtures = [
+        'multi' => [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    protected $expected = [
+        'multi' => [
+            'kv:key1' => 'value1',
+            'kv:key2' => 'value2',
+            'kv:key3' => 'value3',
+        ],
+    ];
+
+    /**
      * @var \Spryker\Client\Storage\Redis\Service
      */
     protected $redisService;
@@ -118,22 +140,10 @@ class ServiceTest extends Unit
      */
     public function testGetMultiCached()
     {
-        $fixtures = [
-            'key1' => 'value1',
-            'key2' => 'value2',
-            'key3' => 'value3',
-        ];
-
-        $expected = [
-            'kv:key1' => 'value1',
-            'kv:key2' => 'value2',
-            'kv:key3' => 'value3',
-        ];
-
         $storageClient = new StorageClient();
-        $storageClient->setMulti($fixtures);
-        $result = $storageClient->getMulti(array_keys($fixtures));
-        $this->assertEquals($expected, $result);
+        $storageClient->setMulti($this->fixtures['multi']);
+        $result = $storageClient->getMulti(array_keys($this->fixtures['multi']));
+        $this->assertEquals($this->expected['multi'], $result);
 
         $request = $this->createRequest();
         $storageClient->persistCacheForRequest($request);
@@ -146,8 +156,8 @@ class ServiceTest extends Unit
         $cachedKeys = $storageClient->getCachedKeys();
         $this->assertNotEmpty($cachedKeys);
 
-        $cachedKeys = array_intersect_key($fixtures, $storageClient->getCachedKeys());
-        $this->assertEquals(array_keys($fixtures), array_keys($cachedKeys));
+        $cachedKeys = array_intersect_key($this->fixtures['multi'], $storageClient->getCachedKeys());
+        $this->assertEquals(array_keys($this->fixtures['multi']), array_keys($cachedKeys));
     }
 
     /**
@@ -155,19 +165,11 @@ class ServiceTest extends Unit
      */
     public function testGetMultiReplaceStrategy()
     {
-        $fixtures = [
-            'key1' => 'value1',
-            'key2' => 'value2',
-            'key3' => 'value3',
-        ];
-
-        $expected = [
-            'kv:key1' => 'value1',
-            'kv:key2' => 'value2',
-            'kv:key3' => 'value3',
-        ];
-
-        $this->testMultiKeyStrategy(StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE, $fixtures, $expected);
+        $this->testMultiKeyStrategy(
+            StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE,
+            $this->fixtures['multi'],
+            $this->expected['multi']
+        );
     }
 
     /**
@@ -175,19 +177,11 @@ class ServiceTest extends Unit
      */
     public function testGetMultiIncrementalStrategy()
     {
-        $fixtures = [
-            'key1' => 'value1',
-            'key2' => 'value2',
-            'key3' => 'value3',
-        ];
-
-        $expected = [
-            'kv:key1' => 'value1',
-            'kv:key2' => 'value2',
-            'kv:key3' => 'value3',
-        ];
-
-        $this->testMultiKeyStrategy(StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL, $fixtures, $expected);
+        $this->testMultiKeyStrategy(
+            StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
+            $this->fixtures['multi'],
+            $this->expected['multi']
+        );
     }
 
     /**
