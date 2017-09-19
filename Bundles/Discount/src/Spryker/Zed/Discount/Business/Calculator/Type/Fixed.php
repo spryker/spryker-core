@@ -8,23 +8,9 @@
 namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 
 class Fixed implements CalculatorInterface
 {
-
-    /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
-     */
-    protected $currencyFacade;
-
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface $currencyFacade
-     */
-    public function __construct(DiscountToCurrencyInterface $currencyFacade)
-    {
-        $this->currencyFacade = $currencyFacade;
-    }
 
     /**
      * @deprecated use calculateDiscount instead
@@ -65,9 +51,8 @@ class Fixed implements CalculatorInterface
      */
     protected function getDiscountAmountForCurrentCurrency(DiscountTransfer $discountTransfer)
     {
-        $currentCurrency = $this->currencyFacade->getCurrent();
         foreach ($discountTransfer->getDiscountMoneyAmounts() as $moneyAmountTransfer) {
-            if ($currentCurrency->getCode() === $moneyAmountTransfer->getCurrencyIsoCode()) {
+            if ($discountTransfer->getCurrency()->getCode() === $moneyAmountTransfer->getCurrencyIsoCode()) {
                 return $moneyAmountTransfer->getAmount();
             }
         }

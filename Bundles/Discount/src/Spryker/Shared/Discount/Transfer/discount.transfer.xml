@@ -20,6 +20,7 @@
         <property name="decisionRuleQueryString" type="string" />
         <property name="priceMode" type="string" />
         <property name="discountMoneyAmounts" type="DiscountMoneyAmount[]" singular="DiscountMoneyAmount" />
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="CalculatedDiscount">

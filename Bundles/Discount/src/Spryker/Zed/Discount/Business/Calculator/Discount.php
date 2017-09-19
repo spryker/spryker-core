@@ -172,7 +172,7 @@ class Discount implements DiscountInterface
                 continue;
             }
 
-            $applicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity);
+            $applicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity, $quoteTransfer);
         }
 
         return $applicableDiscounts;
@@ -199,12 +199,14 @@ class Discount implements DiscountInterface
 
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */
-    protected function hydrateDiscountTransfer(SpyDiscount $discountEntity)
+    protected function hydrateDiscountTransfer(SpyDiscount $discountEntity, QuoteTransfer $quoteTransfer)
     {
         $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setCurrency($quoteTransfer->getCurrency());
         $discountTransfer->fromArray($discountEntity->toArray(), true);
 
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
