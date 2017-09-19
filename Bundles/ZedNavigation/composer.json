@@ -11,7 +11,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/silex": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider.",

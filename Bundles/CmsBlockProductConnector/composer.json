@@ -16,6 +16,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/cms-block-gui": "*",
+    "spryker/product-management": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },

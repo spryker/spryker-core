@@ -12,8 +12,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/cms-block-collector": "*",
+    "spryker/cms-block-gui": "*",
+    "spryker/cms-collector": "*",
+    "spryker/cms-gui": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

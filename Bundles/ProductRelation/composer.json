@@ -26,7 +26,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^3.0.0",
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/twig": "*",
     "spryker/testify": "*"
   },
   "suggest": {
