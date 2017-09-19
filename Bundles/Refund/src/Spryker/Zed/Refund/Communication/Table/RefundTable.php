@@ -107,7 +107,7 @@ class RefundTable extends AbstractTable
                 SpyRefundTableMap::COL_AMOUNT => $this->formatAmount(
                     $item[SpyRefundTableMap::COL_AMOUNT],
                     true,
-                    $this->findCurrencyCode($item)
+                    $this->findCurrencyIsoCode($item)
                 ),
                 SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
             ];
@@ -121,10 +121,10 @@ class RefundTable extends AbstractTable
      *
      * @return string|null
      */
-    protected function findCurrencyCode(array $item)
+    protected function findCurrencyIsoCode(array $item)
     {
         if (isset($item[static::SPY_SALES_ORDER])) {
-            return $item[static::SPY_SALES_ORDER][SpySalesOrderTableMap::COL_CURRENCY_CODE];
+            return $item[static::SPY_SALES_ORDER][SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE];
         }
 
         return null;
@@ -133,13 +133,13 @@ class RefundTable extends AbstractTable
     /**
      * @param int $value
      * @param bool $includeSymbol
-     * @param string|null $currencyCode
+     * @param string|null $currencyIsoCode
      *
      * @return string
      */
-    protected function formatAmount($value, $includeSymbol = true, $currencyCode = null)
+    protected function formatAmount($value, $includeSymbol = true, $currencyIsoCode = null)
     {
-        $moneyTransfer = $this->moneyFacade->fromInteger($value, $currencyCode);
+        $moneyTransfer = $this->moneyFacade->fromInteger($value, $currencyIsoCode);
         if ($includeSymbol) {
             return $this->moneyFacade->formatWithSymbol($moneyTransfer);
         }

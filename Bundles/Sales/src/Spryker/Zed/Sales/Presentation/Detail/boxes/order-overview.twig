@@ -5,8 +5,8 @@
             <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Order Reference' | trans }}:</b> {{ order.orderReference }}</p>
                 <p><b>{{ 'Order date' | trans }}:</b> {{ order.createdAt | formatDateTime }}</p>
-                <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | money(true, order.currencyCode) }}</p>
-                <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | money(true, order.currencyCode) }}</p>
+                <p><b>{{ 'Grand total' | trans }}:</b> {{ order.totals.grandTotal | money(true, order.currencyIsoCode) }}</p>
+                <p><b>{{ 'Discount' | trans }}:</b> {{ order.totals.discountTotal | money(true, order.currencyIsoCode) }}</p>
                 <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ order.uniqueProductQuantity }}</p>
             </div>
             <div class="col-xs-12 col-md-4">

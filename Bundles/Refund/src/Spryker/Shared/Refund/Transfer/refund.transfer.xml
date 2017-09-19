@@ -28,7 +28,7 @@
     </transfer>
 
     <transfer name="Order">
-        <property name="currencyCode" type="string" />
+        <property name="currencyIsoCode" type="string" />
     </transfer>
 
 </transfers>

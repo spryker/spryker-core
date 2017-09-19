@@ -211,7 +211,7 @@ class OrderSaver implements OrderSaverInterface
         $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
         $salesOrderEntity->setPriceMode($quoteTransfer->getPriceMode());
         $salesOrderEntity->setStore($this->store->getStoreName());
-        $salesOrderEntity->setCurrencyCode($this->store->getCurrencyIsoCode());
+        $salesOrderEntity->setCurrencyIsoCode($this->store->getCurrencyIsoCode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
     }

@@ -14,7 +14,7 @@
                             </tr>
                             <tr>
                                 <th>{{ 'Value' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.sumGrossAmount | money(true, order.currencyCode) }}</td>
+                                <td class="text-right">{{ calculatedDiscount.sumGrossAmount | money(true, order.currencyIsoCode) }}</td>
                             </tr>
                             <tr>
                                 <th>{{ 'Voucher Code' | trans }}</th>
@@ -39,7 +39,7 @@
                             </tr>
                             <tr>
                                 <th>{{ 'Value' | trans }}</th>
-                                <td class="text-right">{{ calculatedDiscount.sumGrossAmount | money(true, order.currencyCode) }}</td>
+                                <td class="text-right">{{ calculatedDiscount.sumGrossAmount | money(true, order.currencyIsoCode) }}</td>
                             </tr>
                             <tr>
                                 <th>{{ 'Description' | trans }}</th>

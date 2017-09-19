@@ -134,12 +134,12 @@ class OrdersTable extends AbstractTable
      */
     protected function getGrandTotal(array $item)
     {
-        $currencyCode = $item[SpySalesOrderTableMap::COL_CURRENCY_CODE];
+        $currencyIsoCode = $item[SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE];
         if (!isset($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL])) {
-            return $this->formatPrice(0, true, $currencyCode);
+            return $this->formatPrice(0, true, $currencyIsoCode);
         }
 
-        return $this->formatPrice((int)$item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL], true, $currencyCode);
+        return $this->formatPrice((int)$item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL], true, $currencyIsoCode);
     }
 
     /**
@@ -209,13 +209,13 @@ class OrdersTable extends AbstractTable
     /**
      * @param int $value
      * @param bool $includeSymbol
-     * @param null|string $isoCode
+     * @param null|string $currencyIsoCode
      *
      * @return string
      */
-    protected function formatPrice($value, $includeSymbol = true, $isoCode = null)
+    protected function formatPrice($value, $includeSymbol = true, $currencyIsoCode = null)
     {
-        $moneyTransfer = $this->moneyFacade->fromInteger($value, $isoCode);
+        $moneyTransfer = $this->moneyFacade->fromInteger($value, $currencyIsoCode);
 
         if ($includeSymbol) {
             return $this->moneyFacade->formatWithSymbol($moneyTransfer);

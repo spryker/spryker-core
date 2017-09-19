@@ -87,7 +87,7 @@
         <column name="is_test" type="BOOLEAN" required="true" default="false"/>
 
         <column name="store" type="VARCHAR" size="255" required="false" />
-        <column name="currency_code" type="VARCHAR" size="5" required="false" />
+        <column name="currency_iso_code" type="VARCHAR" size="5" required="false" />
 
         <column name="price_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false"/>
 
@@ -97,8 +97,8 @@
             <index-column name="store"/>
         </index>
 
-        <index name="spy_sales_order-currency_code">
-            <index-column name="currency_code"/>
+        <index name="spy_sales_order-currency_iso_code">
+            <index-column name="currency_iso_code"/>
         </index>
 
         <foreign-key name="spy_sales_order-fk_sales_order_address_billing" foreignTable="spy_sales_order_address" phpName="BillingAddress">
