@@ -15,8 +15,8 @@
     "spryker/util-data-reader": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/cms-block-gui": "*",
+    "spryker/code-sniffer": "*",
     "spryker/product-management": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"

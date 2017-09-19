@@ -29,8 +29,8 @@
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/twig": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/event": "Required to listen for changes affecting product relations.",
