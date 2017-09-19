@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\Transformer;
 
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -33,6 +34,10 @@ class CurrencyAmountTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
+         if (!$this->isValueSet($value)) {
+             return $value;
+         }
+
          $value->setAmount($this->moneyFacade->convertIntegerToDecimal($value->getAmount()));
          return $value;
     }
@@ -44,8 +49,22 @@ class CurrencyAmountTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+         if (!$this->isValueSet($value)) {
+             return $value;
+         }
+
          $value->setAmount($this->moneyFacade->convertDecimalToInteger((float)$value->getAmount()));
          return $value;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $value
+     *
+     * @return bool
+     */
+    protected function isValueSet(DiscountMoneyAmountTransfer $value)
+    {
+        return ($value && $value->getAmount());
     }
 
 }

@@ -65,7 +65,6 @@
     "spryker/country": "*",
     "spryker/csv": "*",
     "spryker/currency": "*",
-    "spryker/currency-discount-connector": "*",
     "spryker/customer": "*",
     "spryker/customer-group": "*",
     "spryker/customer-group-discount-connector": "*",

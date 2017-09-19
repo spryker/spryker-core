@@ -67,7 +67,7 @@ class Fixed implements CalculatorInterface
     {
         $currentCurrency = $this->currencyFacade->getCurrent();
         foreach ($discountTransfer->getDiscountMoneyAmounts() as $moneyAmountTransfer) {
-            if ($currentCurrency->getCode() === $moneyAmountTransfer->getCurrencyCode()) {
+            if ($currentCurrency->getCode() === $moneyAmountTransfer->getCurrencyIsoCode()) {
                 return $moneyAmountTransfer->getAmount();
             }
         }

@@ -62,6 +62,7 @@
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="priceMode" type="string" />
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="Item">
@@ -130,6 +131,7 @@
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="priceMode" type="string" />
+        <property name="currencyIsoCode" type="string" />
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="originalOrder" type="Order" />

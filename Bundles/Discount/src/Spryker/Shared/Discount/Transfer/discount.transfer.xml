@@ -43,6 +43,7 @@
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="priceMode" type="string" />
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="Item">
@@ -68,7 +69,7 @@
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="totals" type="Totals" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
-        <property name="currencyIsoCode" type="string" />
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="OrderItems">
@@ -148,7 +149,7 @@
         <property name="fkCurrency" type="int" />
         <property name="fkDiscount" type="int" />
         <property name="amount" type="int" />
-        <property name="currencyCode" type="string" />
+        <property name="currencyIsoCode" type="string" />
     </transfer>
 
 </transfers>

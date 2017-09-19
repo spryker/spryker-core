@@ -74,7 +74,7 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
-        $discountCalculatorTransfer->setDiscountMoneyAmounts($this->getStoreCurrencies());
+        $discountCalculatorTransfer->setDiscountMoneyAmounts($this->creteInitialDiscountMoneyAmounts());
 
         return $discountCalculatorTransfer;
     }
@@ -82,16 +82,16 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
     /**
      * @return \Generated\Shared\Transfer\DiscountMoneyAmountTransfer[]|\ArrayObject
      */
-    protected function getStoreCurrencies()
+    protected function creteInitialDiscountMoneyAmounts()
     {
-        $currencies = new ArrayObject();
+        $discountMoneyAmounts = new ArrayObject();
         foreach ($this->currencyFacade->getStoreCurrencies() as $currencyTransfer) {
             $discountAmountTransfer = new DiscountMoneyAmountTransfer();
-            $discountAmountTransfer->setCurrencyCode($currencyTransfer->getCode());
+            $discountAmountTransfer->setCurrencyIsoCode($currencyTransfer->getCode());
             $discountAmountTransfer->setFkCurrency($currencyTransfer->getIdCurrency());
-            $currencies->append($discountAmountTransfer);
+            $discountMoneyAmounts->append($discountAmountTransfer);
         }
-        return $currencies;
+        return $discountMoneyAmounts;
     }
 
 }

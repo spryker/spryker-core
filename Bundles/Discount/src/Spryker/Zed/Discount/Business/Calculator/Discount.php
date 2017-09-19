@@ -210,7 +210,7 @@ class Discount implements DiscountInterface
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
             $discountMoneyAmountTransfer = new DiscountMoneyAmountTransfer();
             $discountMoneyAmountTransfer->fromArray($discountAmountEntity->toArray(), true);
-            $discountMoneyAmountTransfer->setCurrencyCode($discountAmountEntity->getCurrency()->getCode());
+            $discountMoneyAmountTransfer->setCurrencyIsoCode($discountAmountEntity->getCurrency()->getCode());
             $discountTransfer->addDiscountMoneyAmount($discountMoneyAmountTransfer);
         }
 

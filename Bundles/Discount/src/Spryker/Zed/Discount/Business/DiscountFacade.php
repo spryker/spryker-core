@@ -659,4 +659,26 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
             ->getQueryStringValueOptions();
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isCurrencyDecisionRuleSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+
+        return $this->getFactory()
+            ->createCurrencyDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
 }

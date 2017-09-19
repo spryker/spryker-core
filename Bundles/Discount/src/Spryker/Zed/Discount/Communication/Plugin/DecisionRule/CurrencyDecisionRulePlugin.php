@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CurrencyDiscountConnector\Communication\Plugin\Collector;
+namespace Spryker\Zed\Discount\Communication\Plugin\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
-use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CurrencyDiscountConnector\Business\CurrencyDiscountConnectorFacade getFacade()
- * @method \Spryker\Zed\CurrencyDiscountConnector\Communication\CurrencyDiscountConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class CurrencyCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithValueOptionsPluginInterface
+class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
 
     /**
@@ -27,13 +28,23 @@ class CurrencyCollectorPlugin extends AbstractPlugin implements CollectorPluginI
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return bool
      */
-    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
-    {
-        return $this->getFacade()->collectDiscountableItemsFor($quoteTransfer, $clauseTransfer);
+    public function isSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+
+        return $this->getFacade()
+            ->isCurrencyDecisionRuleSatisfiedBy(
+                $quoteTransfer,
+                $itemTransfer,
+                $clauseTransfer
+            );
     }
 
     /**
@@ -45,7 +56,7 @@ class CurrencyCollectorPlugin extends AbstractPlugin implements CollectorPluginI
      */
     public function getFieldName()
     {
-        return 'item-currency';
+        return 'currency';
     }
 
     /**
@@ -53,7 +64,7 @@ class CurrencyCollectorPlugin extends AbstractPlugin implements CollectorPluginI
      *
      * @api
      *
-     * @return string[]
+     * @return array
      */
     public function acceptedDataTypes()
     {

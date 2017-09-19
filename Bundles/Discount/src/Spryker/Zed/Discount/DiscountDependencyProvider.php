@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByPriceCollectorPlug
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByQuantityCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\CalendarWeekDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\CurrencyDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\DayOfTheWeekDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\GrandTotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\ItemPriceDecisionRulePlugin;
@@ -50,12 +51,9 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER';
     const PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER = 'PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER';
     const PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS = 'PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS';
-
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
-
-    const CURRENCY_MANAGER = 'CURRENCY_MANAGER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -107,8 +105,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public function getAvailableCalculatorPlugins()
     {
         return [
-            self::PLUGIN_CALCULATOR_PERCENTAGE => new PercentagePlugin(),
-            self::PLUGIN_CALCULATOR_FIXED => new FixedPlugin(),
+            static::PLUGIN_CALCULATOR_PERCENTAGE => new PercentagePlugin(),
+            static::PLUGIN_CALCULATOR_FIXED => new FixedPlugin(),
         ];
     }
 
@@ -131,6 +129,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [
             new SkuDecisionRulePlugin(),
+            new CurrencyDecisionRulePlugin(),
             new GrandTotalDecisionRulePlugin(),
             new SubTotalDecisionRulePlugin(),
             new TotalQuantityDecisionRulePlugin(),
@@ -178,7 +177,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[self::STORE_CONFIG] = function () {
+        $container[static::STORE_CONFIG] = function () {
             return Store::getInstance();
         };
 
@@ -192,7 +191,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container)
     {
-        $container[self::FACADE_MESSENGER] = function (Container $container) {
+        $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new DiscountToMessengerBridge($container->getLocator()->messenger()->facade());
         };
 
@@ -206,7 +205,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculatorPlugins(Container $container)
     {
-        $container[self::CALCULATOR_PLUGINS] = function () {
+        $container[static::CALCULATOR_PLUGINS] = function () {
             return $this->getAvailableCalculatorPlugins();
         };
 
@@ -220,7 +219,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDecisionRulePlugins(Container $container)
     {
-        $container[self::DECISION_RULE_PLUGINS] = function () {
+        $container[static::DECISION_RULE_PLUGINS] = function () {
             return $this->getDecisionRulePlugins();
         };
 
@@ -234,7 +233,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCollectorPlugins(Container $container)
     {
-        $container[self::COLLECTOR_PLUGINS] = function () {
+        $container[static::COLLECTOR_PLUGINS] = function () {
             return $this->getCollectorPlugins();
         };
 
@@ -442,7 +441,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyFacade(Container $container)
     {
-        $container[self::FACADE_CURRENCY] = function (Container $container) {
+        $container[static::FACADE_CURRENCY] = function (Container $container) {
             return new DiscountToCurrencyBridge($container->getLocator()->currency()->facade());
         };
 

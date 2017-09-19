@@ -72,7 +72,7 @@ class MoneyAmountForm extends AbstractType
 
         $form->remove(static::FIELD_AMOUNT);
 
-        $options['currency'] = $discountAmountTransfer->getCurrencyCode();
+        $options['currency'] = $discountAmountTransfer->getCurrencyIsoCode();
 
         $this->addAmountField($form, $options);
     }

@@ -122,7 +122,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
             $discountMoneyAmountTransfer->setFkDiscount($discountEntity->getPrimaryKey());
 
             $currencyTransfer = $this->currencyFacade->getByIdCurrency($discountMoneyAmountEntity->getFkCurrency());
-            $discountMoneyAmountTransfer->setCurrencyCode($currencyTransfer->getCode());
+            $discountMoneyAmountTransfer->setCurrencyIsoCode($currencyTransfer->getCode());
 
             $discountMoneyAmounts->append($discountMoneyAmountTransfer);
         }

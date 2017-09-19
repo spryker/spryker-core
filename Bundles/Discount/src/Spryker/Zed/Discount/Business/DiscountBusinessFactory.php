@@ -16,6 +16,7 @@ use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
 use Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\CurrencyDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
@@ -487,6 +488,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     protected function createCollectorResolver()
     {
         return new CollectorStrategyResolver($this->getCollectorStrategyPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\CurrencyDecisionRule|\Spryker\Zed\Discount\Business\DecisionRule\DecisionRuleInterface
+     */
+    public function createCurrencyDecisionRule()
+    {
+        return new CurrencyDecisionRule($this->createComparatorOperators());
     }
 
     /**

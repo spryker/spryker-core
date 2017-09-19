@@ -519,4 +519,23 @@ interface DiscountFacadeInterface
      */
     public function getQueryStringValueOptions($type);
 
+
+    /**
+     * Specification:
+     *  - Checks if current currency equals to provided in decision rule
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isCurrencyDecisionRuleSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    );
+
 }
