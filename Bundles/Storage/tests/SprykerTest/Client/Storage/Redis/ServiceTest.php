@@ -10,6 +10,9 @@ namespace SprykerTest\Client\Storage\Redis;
 use Codeception\Test\Unit;
 use Predis\ClientInterface;
 use Spryker\Client\Storage\Redis\Service;
+use Spryker\Client\Storage\StorageClient;
+use Spryker\Shared\Storage\StorageConstants;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
@@ -24,6 +27,28 @@ class ServiceTest extends Unit
 {
 
     /**
+     * @var array
+     */
+    protected $fixtures = [
+        'multi' => [
+            'key1' => 'value1',
+            'key2' => 'value2',
+            'key3' => 'value3',
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    protected $expected = [
+        'multi' => [
+            'kv:key1' => 'value1',
+            'kv:key2' => 'value2',
+            'kv:key3' => 'value3',
+        ],
+    ];
+
+    /**
      * @var \Spryker\Client\Storage\Redis\Service
      */
     protected $redisService;
@@ -32,6 +57,15 @@ class ServiceTest extends Unit
      * @var \Predis\ClientInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $clientMock;
+
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->setupServerVariable();
+    }
 
     /**
      * @return void
@@ -85,6 +119,152 @@ class ServiceTest extends Unit
         $requestedKeys = [];
 
         $this->assertSame($requestedKeys, $this->redisService->getMulti($requestedKeys));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGet()
+    {
+        $key = 'key';
+        $value = 'value';
+
+        $storageClient = new StorageClient();
+        $storageClient->set($key, $value);
+
+        $this->assertEquals($value, $storageClient->get($key));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMultiCached()
+    {
+        $storageClient = new StorageClient();
+        $storageClient->setMulti($this->fixtures['multi']);
+        $result = $storageClient->getMulti(array_keys($this->fixtures['multi']));
+        $this->assertEquals($this->expected['multi'], $result);
+
+        $request = $this->createRequest();
+        $storageClient->persistCacheForRequest($request);
+
+        //Reset cache
+        $storageClient->setCachedKeys(null);
+
+        //Warm-up cache
+        $storageClient->getMulti(['non-existing-key']);
+        $cachedKeys = $storageClient->getCachedKeys();
+        $this->assertNotEmpty($cachedKeys);
+
+        $cachedKeys = array_intersect_key($this->fixtures['multi'], $storageClient->getCachedKeys());
+        $this->assertEquals(array_keys($this->fixtures['multi']), array_keys($cachedKeys));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMultiReplaceStrategy()
+    {
+        $this->testMultiKeyStrategy(
+            StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE,
+            $this->fixtures['multi'],
+            $this->expected['multi']
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMultiIncrementalStrategy()
+    {
+        $this->testMultiKeyStrategy(
+            StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
+            $this->fixtures['multi'],
+            $this->expected['multi']
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSingleReplaceStrategy()
+    {
+        $this->testSingleKeyStrategy(
+            StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
+            'test.replace.key',
+            'test.replace.value'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSingleIncrementalStrategy()
+    {
+        $this->testSingleKeyStrategy(
+            StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
+            'test.incremental.key',
+            'test.incremental.value'
+        );
+    }
+
+    /**
+     * @param string $strategyName
+     * @param array $fixtures
+     * @param array $expected
+     *
+     * @return void
+     */
+    protected function testMultiKeyStrategy($strategyName, $fixtures, $expected)
+    {
+        $request = $this->createRequest();
+
+        $storageClient = new StorageClient();
+        $storageClient->setMulti($fixtures);
+        $this->assertEquals($expected, $storageClient->getMulti(array_keys($fixtures)));
+
+        $storageClient->persistCacheForRequest($request, $strategyName);
+        $storageClient->setCachedKeys(null);
+        $this->assertEquals($expected, $storageClient->getMulti(array_keys($fixtures)));
+    }
+
+    /**
+     * @param string $strategyName
+     * @param string $key
+     * @param string $value
+     *
+     * @return void
+     */
+    protected function testSingleKeyStrategy($strategyName, $key, $value)
+    {
+        $request = $this->createRequest();
+
+        $storageClient = new StorageClient();
+        $storageClient->set($key, $value);
+        $this->assertEquals($value, $storageClient->get($key));
+
+        $storageClient->persistCacheForRequest($request, $strategyName);
+        $storageClient->setCachedKeys(null);
+        $this->assertEquals($value, $storageClient->get($key));
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupServerVariable()
+    {
+        $_SERVER['SERVER_NAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost';
+        $_SERVER['REQUEST_URI'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/test/url';
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function createRequest()
+    {
+        $request = new Request([], [], [], [], [], $_SERVER);
+
+        return $request;
     }
 
 }

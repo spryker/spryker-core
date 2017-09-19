@@ -57,18 +57,18 @@ class CodeStyleSniffer
     }
 
     /**
-     * @param string|null $bundle
+     * @param string|null $module
      * @param array $options
      *
      * @return int
      */
-    public function checkCodeStyle($bundle, array $options = [])
+    public function checkCodeStyle($module, array $options = [])
     {
-        $path = isset($options['path']) ? $options['path'] : null;
-        $path = $this->resolvePath($bundle, $path);
+        $pathOption = isset($options['path']) ? $options['path'] : null;
+        $path = $this->resolvePath($module, $pathOption);
 
         $defaults = [
-            'ignore' => $bundle ? '' : 'vendor/',
+            'ignore' => ($module || $pathOption) ? '' : 'vendor/',
         ];
         $options += $defaults;
 
@@ -76,21 +76,21 @@ class CodeStyleSniffer
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param string|null $path
      *
      * @return string
      */
-    protected function resolvePath($bundle, $path = null)
+    protected function resolvePath($module, $path = null)
     {
         $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : null;
 
-        if ($bundle) {
-            if (strtolower($bundle) === static::BUNDLE_ALL) {
+        if ($module) {
+            if (strtolower($module) === static::BUNDLE_ALL) {
                 return rtrim($this->pathToBundles, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
-            return $this->getPathToBundle($bundle, $path);
+            return $this->getPathToBundle($module, $path);
         }
 
         return rtrim($this->applicationRoot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $path;

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <pages>
+            <reviews>
+                <label>Product Reviews</label>
+                <title>Product Reviews</title>
+                <bundle>product-review-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </reviews>
+        </pages>
+    </product>
+</config>

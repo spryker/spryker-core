@@ -9,6 +9,7 @@ namespace Spryker\Zed\Price\Business\Model;
 
 use Exception;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Zed\Price\Business\Exception\MissingPriceException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
@@ -344,11 +345,12 @@ class Reader implements ReaderInterface
      */
     protected function hasPriceForProductConcrete($sku, SpyPriceType $priceType)
     {
-        $priceProductCount = $this->queryContainer
+        $productConcrete = $this->queryContainer
             ->queryPriceEntityForProductConcrete($sku, $priceType)
-            ->count();
+            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
+            ->findOne();
 
-        return $priceProductCount > 0;
+        return $productConcrete !== null;
     }
 
     /**
@@ -359,11 +361,12 @@ class Reader implements ReaderInterface
      */
     protected function hasPriceForProductAbstract($sku, $priceType)
     {
-        $priceProductCount = $this->queryContainer
+        $productAbstract = $this->queryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceType)
-            ->count();
+            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
+            ->findOne();
 
-        return $priceProductCount > 0;
+        return $productAbstract !== null;
     }
 
     /**

@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\Kernel\ClassResolver;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -63,6 +65,11 @@ abstract class AbstractResolverTest extends Unit
     public function tearDown()
     {
         parent::tearDown();
+
+        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
+        $reflectionProperty = $reflectionResolver->getProperty('cache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
 
         $this->deleteCreatedFiles();
     }

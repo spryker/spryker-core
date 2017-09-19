@@ -8,15 +8,18 @@
 namespace Spryker\Zed\ZedRequest;
 
 use LogicException;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ZedRequest\Dependency\Facade\NullMessenger;
 use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToMessengerBridge;
+use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreBridge;
 
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_MESSENGER = 'messenger facade';
+    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +29,7 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addMessengerFacade($container);
+        $container = $this->addStore($container);
 
         return $container;
     }
@@ -46,6 +50,20 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
             $zedRequestToMessengerBridge = new ZedRequestToMessengerBridge($messenger);
 
             return $zedRequestToMessengerBridge;
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[static::STORE] = function () {
+            return new ZedRequestToStoreBridge(Store::getInstance());
         };
 
         return $container;

@@ -8,13 +8,13 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Reader\Search;
 
 use Elastica\Client;
+use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 
-class ElasticsearchReader implements ReaderInterface
+class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderInterface
 {
 
     const READER_NAME = 'elastic-search-reader';
-    const META_ATTRIBUTE = '_meta';
 
     /**
      * @var \Elastica\Client
@@ -22,14 +22,9 @@ class ElasticsearchReader implements ReaderInterface
     protected $client;
 
     /**
-     * @var \Elastica\Index
+     * @var \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
      */
-    protected $index;
-
-    /**
-     * @var string
-     */
-    protected $type;
+    protected $searchCollectorConfiguration;
 
     /**
      * @param \Elastica\Client $searchClient
@@ -39,8 +34,11 @@ class ElasticsearchReader implements ReaderInterface
     public function __construct(Client $searchClient, $indexName, $type)
     {
         $this->client = $searchClient;
-        $this->index = $this->client->getIndex($indexName);
-        $this->type = $type;
+
+        $this->searchCollectorConfiguration = new SearchCollectorConfigurationTransfer();
+        $this->searchCollectorConfiguration
+            ->setIndexName($indexName)
+            ->setTypeName($type);
     }
 
     /**
@@ -51,7 +49,7 @@ class ElasticsearchReader implements ReaderInterface
      */
     public function read($key, $type = '')
     {
-        return $this->index->getType($this->type)->getDocument($key);
+        return $this->getType()->getDocument($key);
     }
 
     /**
@@ -59,7 +57,35 @@ class ElasticsearchReader implements ReaderInterface
      */
     public function getName()
     {
-        return self::READER_NAME;
+        return static::READER_NAME;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer $collectorConfigurationTransfer
+     *
+     * @return void
+     */
+    public function setSearchCollectorConfiguration(SearchCollectorConfigurationTransfer $collectorConfigurationTransfer)
+    {
+        $this->searchCollectorConfiguration->fromArray($collectorConfigurationTransfer->modifiedToArray());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
+     */
+    public function getSearchCollectorConfiguration()
+    {
+        return $this->searchCollectorConfiguration;
+    }
+
+    /**
+     * @return \Elastica\Type
+     */
+    protected function getType()
+    {
+        return $this->client
+            ->getIndex($this->searchCollectorConfiguration->getIndexName())
+            ->getType($this->searchCollectorConfiguration->getTypeName());
     }
 
 }
