@@ -44,8 +44,10 @@ class QuoteSession implements QuoteSessionInterface
     public function getQuote()
     {
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->session->get(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
         $this->setCurrency($quoteTransfer);
-        return $this->session->get(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
