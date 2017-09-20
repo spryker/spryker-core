@@ -9,6 +9,7 @@
     "spryker/tax": "^4.0.0 || ^5.0.0"
   },
   "require-dev": {
+    "spryker/calculation": "*",
     "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/propel": "*",

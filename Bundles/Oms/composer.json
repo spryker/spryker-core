@@ -15,6 +15,7 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/propel": "*",

@@ -17,6 +17,8 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
+    "spryker/search": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

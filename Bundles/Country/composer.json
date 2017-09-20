@@ -8,6 +8,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/log": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
