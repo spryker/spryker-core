@@ -106,7 +106,7 @@ class AvailableCustomerTable extends AbstractCustomerTable
      */
     protected function getEditCustomerUserConnectionsUrl($idUser)
     {
-        return sprintf("/customer-user-connector-gui/edit?%s=%d", EditController::PARAM_ID_USER, $idUser);
+        return sprintf(EditController::PAGE_EDIT_WITH_PARAMS, EditController::PARAM_ID_USER, $idUser);
     }
 
     /**

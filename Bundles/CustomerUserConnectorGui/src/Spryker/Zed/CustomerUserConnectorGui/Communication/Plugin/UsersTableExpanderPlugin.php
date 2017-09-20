@@ -10,6 +10,7 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Plugin;
 use Generated\Shared\Transfer\ButtonTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CustomerUserConnectorGui\Communication\Controller\EditController as ControllerEditController;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\User\Communication\Controller\EditController;
 use Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface;
@@ -56,9 +57,12 @@ class UsersTableExpanderPlugin extends AbstractPlugin implements UsersTableExpan
      */
     protected function getEditCustomerUserConnectionUrl($idUser)
     {
-        return Url::generate('/customer-user-connector-gui/edit', [
-            EditController::PARAM_ID_USER => $idUser,
-        ]);
+        return Url::generate(
+            ControllerEditController::PAGE_EDIT,
+            [
+                EditController::PARAM_ID_USER => $idUser,
+            ]
+        );
     }
 
 }

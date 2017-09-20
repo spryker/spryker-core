@@ -11,8 +11,6 @@ interface CustomerUserConnectorGuiToCustomerUserConnectorInterface
 {
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
      *
      * @return bool

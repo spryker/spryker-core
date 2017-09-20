@@ -12,9 +12,6 @@
     "spryker/propel": "^3.0.0",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/customer": "If you want to use the CustomerTransferUsernameExpanderPlugin plugin"
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

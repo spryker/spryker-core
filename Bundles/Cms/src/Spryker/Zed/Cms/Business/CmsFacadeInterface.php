@@ -358,7 +358,7 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
-     * - Populates CmsVersionData transfer object from provided CMS page data.
+     * - Populates CmsVersionData transfer object from provided CMS page JSON data.
      *
      * @api
      *

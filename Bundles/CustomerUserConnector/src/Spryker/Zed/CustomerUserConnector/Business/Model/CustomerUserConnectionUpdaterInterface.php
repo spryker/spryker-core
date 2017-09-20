@@ -13,8 +13,6 @@ interface CustomerUserConnectionUpdaterInterface
 {
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
      *
      * @return bool

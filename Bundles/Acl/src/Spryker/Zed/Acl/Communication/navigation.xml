@@ -3,10 +3,6 @@
     <acl>
         <label>Users Control</label>
         <title>Users Control</title>
-        <bundle>acl</bundle>
-        <controller>index</controller>
-        <action>index</action>
-        <uri>/acl</uri>
         <icon>fa-users</icon>
         <pages>
             <roles>

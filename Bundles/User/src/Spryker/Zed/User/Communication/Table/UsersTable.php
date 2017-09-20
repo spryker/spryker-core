@@ -12,6 +12,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
@@ -186,24 +187,40 @@ class UsersTable extends AbstractTable
     /**
      * @param array $user
      *
-     * @return array
+     * @return string[]
      */
     protected function generateUsersTableExpanderPluginsActionButtons(array $user)
     {
-        $urls = [];
-
+        $actionButtons = [];
         foreach ($this->usersTableExpanderPlugins as $usersTableExpanderPlugin) {
-            foreach ($usersTableExpanderPlugin->getActionButtonDefinitions($user) as $buttonTransfer) {
-                $urls[] = $this->generateButton(
-                    $buttonTransfer->getUrl(),
-                    $buttonTransfer->getTitle(),
-                    $buttonTransfer->getDefaultOptions(),
-                    $buttonTransfer->getCustomOptions()
-                );
-            }
+            $actionButtons = array_merge(
+                $actionButtons,
+                $this->generateUsersTableExpanderPluginActionButtons($usersTableExpanderPlugin, $user)
+            );
         }
 
-        return $urls;
+        return $actionButtons;
+    }
+
+    /**
+     * @param \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface $usersTableExpanderPlugin
+     * @param array $user
+     *
+     * @return string[]
+     */
+    protected function generateUsersTableExpanderPluginActionButtons(UsersTableExpanderPluginInterface $usersTableExpanderPlugin, array $user)
+    {
+        $pluginActionButtons = [];
+        foreach ($usersTableExpanderPlugin->getActionButtonDefinitions($user) as $buttonTransfer) {
+            $pluginActionButtons[] = $this->generateButton(
+                $buttonTransfer->getUrl(),
+                $buttonTransfer->getTitle(),
+                $buttonTransfer->getDefaultOptions(),
+                $buttonTransfer->getCustomOptions()
+            );
+        }
+
+        return $pluginActionButtons;
     }
 
     /**

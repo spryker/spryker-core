@@ -9,8 +9,6 @@ interface CustomerUserConnectorGuiToCustomerQueryContainerInterface
 {
 
     /**
-     * @api
-     *
      * @param int $id
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -18,8 +16,6 @@ interface CustomerUserConnectorGuiToCustomerQueryContainerInterface
     public function queryCustomerById($id);
 
     /**
-     * @api
-     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomers();

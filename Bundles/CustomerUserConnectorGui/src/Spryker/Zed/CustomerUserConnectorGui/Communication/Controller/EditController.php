@@ -19,6 +19,9 @@ class EditController extends AbstractController
 
     const PARAM_ID_USER = 'id-user';
 
+    const PAGE_EDIT = '/customer-user-connector-gui/edit';
+    const PAGE_EDIT_WITH_PARAMS = '/customer-user-connector-gui/edit?%s=%d';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -37,13 +40,7 @@ class EditController extends AbstractController
             $this->getFactory()->getCustomerUserConnectorFacade()->updateCustomerUserConnection($formData);
             $this->addSuccessMessage('Customer-user connections are updated.');
 
-            return $this->redirectResponse(
-                sprintf(
-                    '/customer-user-connector-gui/edit?%s=%d',
-                    static::PARAM_ID_USER,
-                    $idUser
-                )
-            );
+            return $this->redirectResponse(sprintf(static::PAGE_EDIT_WITH_PARAMS, static::PARAM_ID_USER, $idUser));
         }
 
         $userTransfer = $this->getUserTransfer($idUser);

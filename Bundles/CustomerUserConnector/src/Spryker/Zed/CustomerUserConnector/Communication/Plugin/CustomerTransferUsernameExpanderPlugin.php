@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CustomerUserConnector\Communication\CustomerUserConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacade getFacade()
  */
 class CustomerTransferUsernameExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
@@ -38,16 +39,16 @@ class CustomerTransferUsernameExpanderPlugin extends AbstractPlugin implements C
      */
     protected function addUsername(CustomerTransfer $customerTransfer)
     {
-        $userCollection = $this->getFactory()
+        $userEntity = $this->getFactory()
             ->getUserQueryContainer()
             ->queryUserById($customerTransfer->getFkUser())
-            ->find();
+            ->findOne();
 
-        if ($userCollection->count() < 1) {
+        if ($userEntity === null) {
             return $customerTransfer;
         }
 
-        return $customerTransfer->setUsername($userCollection[0]->getUsername());
+        return $customerTransfer->setUsername($userEntity->getUsername());
     }
 
 }
