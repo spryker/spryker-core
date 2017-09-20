@@ -17,6 +17,8 @@
         <property name="nodeType" type="string" />
         <property name="position" type="int" />
         <property name="isActive" type="bool" />
+        <property name="validFrom" type="string" />
+        <property name="validTo" type="string" />
         <property name="navigationNodeLocalizedAttributes" type="NavigationNodeLocalizedAttributes[]" singular="navigationNodeLocalizedAttribute" />
     </transfer>
 

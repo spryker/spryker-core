@@ -46,4 +46,7 @@
     {% endfor %}
 </div>
 
+{{ form_row(navigationNodeForm.valid_from) }}
+{{ form_row(navigationNodeForm.valid_to) }}
+
 {{ form_widget(navigationNodeForm.is_active) }}
