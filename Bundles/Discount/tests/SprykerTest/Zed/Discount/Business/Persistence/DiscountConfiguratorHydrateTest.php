@@ -10,6 +10,7 @@ use Codeception\Test\Unit;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
@@ -101,18 +102,25 @@ class DiscountConfiguratorHydrateTest extends Unit
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface|null $currencyFacadeMock
      *
      * @return \Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate
      */
     protected function createDiscountConfiguratorHydrate(
-        DiscountQueryContainerInterface $discountQueryContainerMock = null
+        DiscountQueryContainerInterface $discountQueryContainerMock = null,
+        DiscountToCurrencyInterface $currencyFacadeMock = null
     ) {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
 
+        if (!$currencyFacadeMock) {
+            $currencyFacadeMock = $this->createDiscountCurrencyFacadeMock();
+        }
+
         return new DiscountConfiguratorHydrate(
-            $discountQueryContainerMock
+            $discountQueryContainerMock,
+            $currencyFacadeMock
         );
     }
 
@@ -151,6 +159,14 @@ class DiscountConfiguratorHydrateTest extends Unit
     protected function createDiscountQueryMock()
     {
         return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['findOneByIdDiscount'])->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
+     */
+    protected function createDiscountCurrencyFacadeMock()
+    {
+        return $this->getMockBuilder(DiscountToCurrencyInterface::class)->getMock();
     }
 
 }

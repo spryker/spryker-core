@@ -11,11 +11,13 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -600,7 +602,16 @@ class DiscountFacadeTest extends Unit
     public function testCalculatedFixedShouldUseFixedAmountGiver()
     {
         $discountFacade = $this->createDiscountFacade();
-        $amount = $discountFacade->calculateFixed([], 50);
+        $discountTransfer = new DiscountTransfer();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $discountTransfer->setCurrency($currencyTransfer);
+
+        $discountMoneyTransfer = new DiscountMoneyAmountTransfer();
+        $discountMoneyTransfer->setAmount(50);
+        $discountMoneyTransfer->setCurrencyIsoCode('EUR');
+        $discountTransfer->addDiscountMoneyAmount($discountMoneyTransfer);
+        $amount = $discountFacade->calculateFixedDiscount([], $discountTransfer);
 
         $this->assertEquals(50, $amount);
     }

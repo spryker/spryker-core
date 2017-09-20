@@ -246,6 +246,7 @@ class CartClientTest extends Unit
             'getQuote',
             'setQuote',
             'clearQuote',
+            'rebuild',
         ])->getMock();
 
         return $quoteMock;
@@ -259,6 +260,7 @@ class CartClientTest extends Unit
         return $this->getMockBuilder(CartStubInterface::class)->setMethods([
             'addItem',
             'removeItem',
+            'rebuild',
         ])->getMock();
     }
 

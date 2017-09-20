@@ -133,7 +133,8 @@ class DiscountCreatePage
 
         $this->tab('Discount calculation');
         !$data['calcType'] ?: $i->selectOption('#discount_discountCalculator_calculator_plugin', $data['calcType']);
-        !$data['amount'] ?: $i->fillField('#discount_discountCalculator_amount', $data['amount']);
+        !$data['amount'] ?: $i->fillField('#discount_discountCalculator_discountMoneyAmounts_0_amount', $data['amount']);
+        !$data['amount'] ?: $i->fillField('#discount_discountCalculator_discountMoneyAmounts_1_amount', $data['amount']);
         $i->click(self::BTN_CALCULATION_GET);
         !$data['applyTo'] ?: $i->fillField(self::FIELD_DISCOUNT_QUERY, $data['applyTo']);
 

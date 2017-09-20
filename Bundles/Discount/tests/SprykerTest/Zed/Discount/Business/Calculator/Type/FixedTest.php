@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Discount\Business\Calculator\Type;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
@@ -44,7 +46,7 @@ class FixedTest extends Unit
         );
 
         $calculator = new Fixed();
-        $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_AMOUNT_FIXED_100);
+        $discountTransfer = $this->createDiscountTransfer(self::DISCOUNT_AMOUNT_FIXED_100);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertSame(self::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
@@ -64,10 +66,31 @@ class FixedTest extends Unit
         );
 
         $calculator = new Fixed();
-        $discountTransfer = (new DiscountTransfer())->setAmount(-1 * self::DISCOUNT_AMOUNT_FIXED_100);
+        $discountTransfer = $this->createDiscountTransfer(-1 * self::DISCOUNT_AMOUNT_FIXED_100);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertSame(0, $discountAmount);
+    }
+
+    /**
+     * @param int $amount
+     *
+     * @return \Generated\Shared\Transfer\DiscountTransfer
+     */
+    protected function createDiscountTransfer($amount)
+    {
+        $discountTransfer = new DiscountTransfer();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $discountTransfer->setCurrency($currencyTransfer);
+
+        $discountMoneyAmountTransfer = new DiscountMoneyAmountTransfer();
+        $discountMoneyAmountTransfer->setCurrencyIsoCode('EUR');
+        $discountMoneyAmountTransfer->setAmount($amount);
+
+        $discountTransfer->addDiscountMoneyAmount($discountMoneyAmountTransfer);
+
+        return $discountTransfer;
     }
 
     /**

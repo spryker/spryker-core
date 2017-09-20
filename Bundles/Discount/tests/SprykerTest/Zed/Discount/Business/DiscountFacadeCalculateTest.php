@@ -11,10 +11,13 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
@@ -211,6 +214,9 @@ class DiscountFacadeCalculateTest extends Unit
     protected function createQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer->setCurrency($currencyTransfer);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setAbstractSku('123');
@@ -259,6 +265,13 @@ class DiscountFacadeCalculateTest extends Unit
         $discountEntity->setValidFrom(new DateTime('yesterday'));
         $discountEntity->setValidTo(new DateTime('tomorrow'));
         $discountEntity->save();
+
+        $discountAmount = new SpyDiscountAmount();
+        $currencyEntity = $this->getCurrency();
+        $discountAmount->setFkCurrency($currencyEntity->getIdCurrency());
+        $discountAmount->setAmount(100);
+        $discountAmount->setFkDiscount($discountEntity->getIdDiscount());
+        $discountAmount->save();
 
         return $discountEntity;
     }
@@ -350,6 +363,14 @@ class DiscountFacadeCalculateTest extends Unit
     protected function createDiscountableItemFilterPluginMock()
     {
         return $this->getMockBuilder(DiscountableItemFilterPluginInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Orm\Zed\Currency\Persistence\SpyCurrency
+     */
+    protected function getCurrency()
+    {
+        return SpyCurrencyQuery::create()->findOneByCode('EUR');
     }
 
 }
