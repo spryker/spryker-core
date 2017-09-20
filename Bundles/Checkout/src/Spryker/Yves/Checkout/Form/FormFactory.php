@@ -39,7 +39,7 @@ class FormFactory extends AbstractFactory
      */
     public function getMethodFormFilters()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PAYMENT_FILTERS);
+        return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGIN_PAYMENT_FILTERS);
     }
 
     /**
