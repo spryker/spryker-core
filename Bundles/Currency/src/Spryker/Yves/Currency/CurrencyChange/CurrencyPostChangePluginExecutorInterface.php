@@ -5,21 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Currency\Persistence;
+namespace Spryker\Yves\Currency\CurrencyChange;
 
-interface CurrencyPersistenceInterface
+interface CurrencyPostChangePluginExecutorInterface
 {
 
     /**
+     *
+     * Specification:
+     * - Plugin executed when currency is changed
+     *
+     * @api
+     *
      * @param string $currencyIsoCode
      *
      * @return void
      */
-    public function setCurrentCurrencyIsoCode($currencyIsoCode);
-
-    /**
-     * @return string
-     */
-    public function getCurrentCurrencyIsoCode();
+    public function execute($currencyIsoCode);
 
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Client\Cart\Zed;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartStubInterface
 {
@@ -25,5 +26,12 @@ interface CartStubInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function removeItem(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function rebuild(QuoteTransfer $quoteTransfer);
 
 }

@@ -121,4 +121,11 @@ interface CartClientInterface
      */
     public function storeQuote(QuoteTransfer $quoteTransfer);
 
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function rebuild();
+
 }

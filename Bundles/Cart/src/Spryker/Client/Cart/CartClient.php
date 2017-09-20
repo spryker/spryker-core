@@ -261,6 +261,20 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function rebuild()
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer = $this->getZedStub()->rebuild($quoteTransfer);
+        $this->storeQuote($quoteTransfer);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function createCartChangeTransfer()

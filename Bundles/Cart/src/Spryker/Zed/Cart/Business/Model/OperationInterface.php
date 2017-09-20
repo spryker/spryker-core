@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface OperationInterface
 {
@@ -25,5 +26,12 @@ interface OperationInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function remove(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function rebuild(QuoteTransfer $quoteTransfer);
 
 }

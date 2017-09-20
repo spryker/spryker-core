@@ -1,0 +1,44 @@
+{
+  "name": "spryker/cart-currency-connector",
+  "description": "CartCurrencyConnector module",
+  "license": "proprietary",
+  "require": {
+    "spryker/cart": "^4.1.0",
+    "spryker/currency": "^3.0.0",
+    "spryker/kernel": "^3.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\CartCurrencyConnector\\": "tests/SprykerTest/Shared/CartCurrencyConnector/_support/",
+      "SprykerTest\\Zed\\CartCurrencyConnector\\": "tests/SprykerTest/Zed/CartCurrencyConnector/_support/",
+      "CartCurrencyConnector\\Module\\": "tests/_support/Module/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    },
+    "psr-0": {
+      "Acceptance": "tests/",
+      "Functional": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
