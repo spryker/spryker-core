@@ -195,8 +195,8 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new VersionPublisher(
             $this->createVersionGenerator(),
             $this->createVersionDataMapper(),
+            $this->createVersionFinder(),
             $this->getTouchFacade(),
-            $this->getQueryContainer(),
             $this->getCmsVersionPostSavePlugins()
         );
     }

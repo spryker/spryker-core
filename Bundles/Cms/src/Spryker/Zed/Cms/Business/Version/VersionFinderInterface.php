@@ -32,4 +32,11 @@ interface VersionFinderInterface
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData($idCmsPage);
+
 }

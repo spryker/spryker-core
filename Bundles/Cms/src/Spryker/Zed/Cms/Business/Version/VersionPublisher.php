@@ -9,10 +9,8 @@ namespace Spryker\Zed\Cms\Business\Version;
 
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Shared\Cms\CmsConstants;
-use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class VersionPublisher implements VersionPublisherInterface
@@ -31,14 +29,14 @@ class VersionPublisher implements VersionPublisherInterface
     protected $versionDataMapper;
 
     /**
+     * @var \Spryker\Zed\Cms\Business\Version\VersionFinderInterface
+     */
+    protected $versionFinder;
+
+    /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
      */
     protected $touchFacade;
-
-    /**
-     * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
-     */
-    protected $queryContainer;
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
@@ -48,22 +46,22 @@ class VersionPublisher implements VersionPublisherInterface
     /**
      * @param \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface $versionGenerator
      * @param \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface $versionDataMapper
+     * @param \Spryker\Zed\Cms\Business\Version\VersionFinderInterface $versionFinder
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[] $postSavePlugins
      */
     public function __construct(
         VersionGeneratorInterface $versionGenerator,
         VersionDataMapperInterface $versionDataMapper,
+        VersionFinderInterface $versionFinder,
         CmsToTouchInterface $touchFacade,
-        CmsQueryContainerInterface $queryContainer,
         array $postSavePlugins
     ) {
 
         $this->versionGenerator = $versionGenerator;
         $this->versionDataMapper = $versionDataMapper;
+        $this->versionFinder = $versionFinder;
         $this->touchFacade = $touchFacade;
-        $this->queryContainer = $queryContainer;
         $this->postSavePlugins = $postSavePlugins;
     }
 
@@ -75,48 +73,10 @@ class VersionPublisher implements VersionPublisherInterface
      */
     public function publishWithVersion($idCmsPage, $versionName = null)
     {
-        $cmsVersionDataTransfer = $this->getCmsVersionData($idCmsPage);
+        $cmsVersionDataTransfer = $this->versionFinder->getCmsVersionData($idCmsPage);
         $encodedData = $this->versionDataMapper->mapToJsonData($cmsVersionDataTransfer);
 
         return $this->createCmsVersion($encodedData, $idCmsPage, $versionName);
-    }
-
-    /**
-     * @param int $idCmsPage
-     *
-     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
-     */
-    public function getCmsVersionData($idCmsPage)
-    {
-        $cmsPageEntity = $this->findCmsPage($idCmsPage);
-        $cmsVersionDataTransfer = $this->versionDataMapper->mapToCmsVersionDataTransfer($cmsPageEntity);
-
-        return $cmsVersionDataTransfer;
-    }
-
-    /**
-     * @param int $idCmsPage
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
-     */
-    protected function findCmsPage($idCmsPage)
-    {
-        $cmsPageCollection = $this->queryContainer
-            ->queryCmsPageWithAllRelationsByIdPage($idCmsPage)
-            ->find();
-
-        if ($cmsPageCollection->count() === 0) {
-            throw new MissingPageException(
-                sprintf(
-                    'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
-                    $idCmsPage
-                )
-            );
-        }
-
-        return $cmsPageCollection->getFirst();
     }
 
     /**

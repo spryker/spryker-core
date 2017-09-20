@@ -467,7 +467,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     public function getCmsVersionData($idCmsPage)
     {
         return $this->getFactory()
-            ->createVersionPublisher()
+            ->createVersionFinder()
             ->getCmsVersionData($idCmsPage);
     }
 
