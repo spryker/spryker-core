@@ -17,7 +17,7 @@ class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyPr
 {
 
     const MAIL_FACADE = 'MAIL_FACADE';
-    const CUSTOMER_FACADE = 'MAIL_FACADE';
+    const CUSTOMER_FACADE = 'CUSTOMER_FACADE';
     const GIFT_CARD_QUERY_CONTAINER = 'GIFT_CARD_QUERY_CONTAINER';
 
     /**

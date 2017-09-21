@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException;
-use Spryker\Zed\GiftCardMailConnector\Communication\Plugin\Mail\GiftDeliveryMailTypePlugin;
+use Spryker\Zed\GiftCardMailConnector\Communication\Plugin\Mail\GiftCardDeliveryMailTypePlugin;
 use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerInterface;
 use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface;
 use Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface;
@@ -85,7 +85,7 @@ class GiftCardCarrier implements GiftCardCarrierInterface
         );
 
         $mailTransfer = $mailTransfer
-            ->setType(GiftDeliveryMailTypePlugin::MAIL_TYPE)
+            ->setType(GiftCardDeliveryMailTypePlugin::MAIL_TYPE)
             ->setCustomer($customerTransfer)
             ->setGiftCard($giftCardTransfer);
 

@@ -4,12 +4,12 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
+    "spryker/oms": "^7.0.0",
+    "spryker/payment": "^4.0.0",
     "spryker/product": "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^7.0.0",
-    "spryker/oms": "^7.0.0",
-    "spryker/util-encoding": "^2.0.0",
-    "spryker/payment": "^4.0.0"
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

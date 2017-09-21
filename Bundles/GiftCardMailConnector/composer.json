@@ -3,10 +3,18 @@
   "description": "GiftCardMailConnector module",
   "license": "proprietary",
   "require": {
+    "spryker/customer": "^6.2.0",
+    "spryker/gift-card": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/mail": "^4.0.0",
+    "spryker/sales": "^7.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/oms": "In case you will use ShipGiftCardByEmailCommandPlugin"
   },
   "autoload": {
     "psr-4": {

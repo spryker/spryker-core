@@ -15,7 +15,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  * @method \Spryker\Zed\GiftCardMailConnector\Business\GiftCardMailConnectorFacade getFacade()
  * @method \Spryker\Zed\GiftCardMailConnector\Communication\GiftCardMailConnectorCommunicationFactory getFactory()
  */
-class GiftDeliveryMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
+class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
 
     const MAIL_TYPE = 'gift card delivery mail';
@@ -62,7 +62,7 @@ class GiftDeliveryMailTypePlugin extends AbstractPlugin implements MailTypePlugi
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setHtmlTemplate('giftCardMailConnector/mail/gift_card_delivery.html.html.twig');
+        $mailBuilder->setHtmlTemplate('giftCardMailConnector/mail/gift_card_delivery.html.twig');
 
         return $this;
     }
@@ -74,7 +74,7 @@ class GiftDeliveryMailTypePlugin extends AbstractPlugin implements MailTypePlugi
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setTextTemplate('giftCardMailConnector/mail/gift_card_delivery.html.text.twig');
+        $mailBuilder->setTextTemplate('giftCardMailConnector/mail/gift_card_delivery.text.twig');
 
         return $this;
     }

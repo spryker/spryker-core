@@ -3,16 +3,13 @@
   "description": "GiftCardBalance module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/gift-card": "^1.0.0"
+    "spryker/gift-card": "^1.0.0",
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
     "spryker/testify": "*"
-  },
-  "suggest": {
   },
   "autoload": {
     "psr-4": {

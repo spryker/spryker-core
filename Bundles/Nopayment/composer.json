@@ -3,15 +3,19 @@
   "description": "Nopayment module",
   "license": "proprietary",
   "require": {
+    "spryker/checkout": "^3.1.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0"
+    "spryker/payment": "^4.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/step-engine": "^3.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/oms": "If you want to use Oms command plugins."
+    "spryker/oms": "If you want to use Oms command plugins.",
+    "spryker/symfony": "If you want to use Oms command plugins."
   },
   "autoload": {
     "psr-0": {
