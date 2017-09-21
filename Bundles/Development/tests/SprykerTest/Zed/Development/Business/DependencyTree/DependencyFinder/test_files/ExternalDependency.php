@@ -2,78 +2,49 @@
 
 namespace SprykerTest\Zed\Development\Business\DependencyTree\DependencyFinder\Fixtures;
 
-use Company\SomeClassName;
-use DateTime;
-use Exception;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDependency as BaseExternalDependency;
-use Symfony\Component\Config\Definition\Exception\Exception as ExceptionException;
-use Symfony\Component\Finder\Finder2;
-use Symfony\Component\Finder\Finder3;
-use ZendAPI_Job;
+use Company\MyClass as Something;
+use Exception;
 
 abstract class ExternalDependency
 {
 
     /**
      * @throws \Exception
-     *
+     * @throws \Symfony\Component\Finder\Finder
      * @return void
      */
     public function exceptionA()
     {
-        throw new Exception();
+        throw new \Exception();
     }
 
     /**
-     *
-     * @throws
-     * @throws 
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     * @throws
-     *
+     * @throws \Exception
+     * @throws \Symfony\Component\Finder\Finder
      * @return void
      */
     public function exceptionB()
     {
-        $className = ExceptionException::class;
+        $className = \Symfony\Component\Config\Definition\Exception\Exception::class;
 
         throw new $className;
     }
 
     /**
-     *
+     * @throws \Exception
+     * @throws \Symfony\Component\Finder\Finder
      * @return void
      */
     public function method()
     {
-        new Finder2();
-        Finder3::class;
-        new ZendAPI_Job('foo');
+        new \Symfony\Component\Finder\Finder2();
+        \Symfony\Component\Finder\Finder3::class;
+        new \ZendAPI_Job('foo');
         new BaseExternalDependency();
-        (new DateTime())->format(DateTime::ATOM);
+        (new \DateTime())->format(\DateTime::ATOM);
         $variable = [];
-        $variable[SomeClassName::SOME_CONST][self::SOME_CONST];
+        $variable[\Company\SomeClassName::SOME_CONST][self::SOME_CONST];
     }
 
     /**
