@@ -140,11 +140,11 @@ class VersionFinder implements VersionFinderInterface
      */
     protected function getCmsPage($idCmsPage)
     {
-        $cmsPageEntity = $this->queryContainer
+        $cmsPageCollection = $this->queryContainer
             ->queryCmsPageWithAllRelationsByIdPage($idCmsPage)
-            ->findOne();
+            ->find();
 
-        if ($cmsPageEntity === null) {
+        if ($cmsPageCollection->count() === 0) {
             throw new MissingPageException(
                 sprintf(
                     'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
@@ -153,7 +153,7 @@ class VersionFinder implements VersionFinderInterface
             );
         }
 
-        return $cmsPageEntity;
+        return $cmsPageCollection->getFirst();
     }
 
 }
