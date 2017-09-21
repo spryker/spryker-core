@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Context\ExecutionContext;
 
 class NavigationNodeFormType extends AbstractType
 {
@@ -207,7 +207,7 @@ class NavigationNodeFormType extends AbstractType
     protected function createValidFromRangeConstraint()
     {
         return new Callback([
-            'callback' => function ($dateTimeFrom, ExecutionContextInterface $context) {
+            'callback' => function ($dateTimeFrom, ExecutionContext $context) {
                 $dateTimeTo = $context->getRoot()->getData()->getValidTo();
                 if (empty($dateTimeFrom) || empty($dateTimeTo)) {
                     return;
@@ -226,7 +226,7 @@ class NavigationNodeFormType extends AbstractType
     protected function createValidToFieldRangeConstraint()
     {
         return new Callback([
-            'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
+            'callback' => function ($dateTimeTo, ExecutionContext $context) {
                 $dateTimeFrom = $context->getRoot()->getData()->getValidFrom();
                 if (empty($dateTimeFrom) || empty($dateTimeTo)) {
                     return;
