@@ -144,7 +144,7 @@ class CmsPageTable extends AbstractTable
     {
         return $this->generateCreateButton(
             Url::generate('/cms-gui/version-page/publish', [
-                CmsPageTableConstants::VERSION_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE],
+                CmsPageTableConstants::VERSION_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
                 CmsPageTableConstants::VERSION_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
             ]),
             'Publish',
@@ -223,7 +223,7 @@ class CmsPageTable extends AbstractTable
         return $this->createButtonGroupItem(
             'In Zed',
             Url::generate('/cms-gui/view-page/index', [
-                CmsPageTableConstants::LIST_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE],
+                CmsPageTableConstants::LIST_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
             ])
         );
     }
@@ -272,7 +272,7 @@ class CmsPageTable extends AbstractTable
         return $this->createButtonGroupItem(
             'Version History',
             Url::generate('/cms-gui/version-page/history', [
-                CmsPageTableConstants::VERSION_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE],
+                CmsPageTableConstants::VERSION_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
             ]),
             true
         );
@@ -308,7 +308,7 @@ class CmsPageTable extends AbstractTable
         return $this->createButtonGroupItem(
             'Page',
             Url::generate('/cms-gui/edit-page/index', [
-                CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE],
+                CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
             ])
         );
     }
@@ -323,7 +323,7 @@ class CmsPageTable extends AbstractTable
         return $this->createButtonGroupItem(
             'Placeholders',
             Url::generate('/cms-gui/create-glossary/index', [
-                CmsPageTableConstants::CREATE_GLOSSARY_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE],
+                CmsPageTableConstants::CREATE_GLOSSARY_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
             ])
         );
     }
@@ -361,10 +361,10 @@ class CmsPageTable extends AbstractTable
             return '';
         }
 
-        if ($item[CmsPageTableConstants::CMS_PAGE_COL_IS_ACTIVE]) {
+        if ($item[CmsPageTableConstants::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
                 Url::generate(CmsPageTableConstants::URL_CMS_PAGE_DEACTIVATE, [
-                    CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE],
+                    CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
                     CmsPageTableConstants::EDIT_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
                 ]),
                 'Deactivate'
@@ -373,7 +373,7 @@ class CmsPageTable extends AbstractTable
 
         return $this->generateViewButton(
             Url::generate(CmsPageTableConstants::URL_CMS_PAGE_ACTIVATE, [
-                CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE],
+                CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
                 CmsPageTableConstants::EDIT_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
             ]),
             'Activate'
@@ -387,7 +387,7 @@ class CmsPageTable extends AbstractTable
      */
     protected function getActiveStatusLabel($item)
     {
-        if (!$item[CmsPageTableConstants::CMS_PAGE_COL_IS_ACTIVE]) {
+        if (!$item[CmsPageTableConstants::COL_IS_ACTIVE]) {
             return '<span class="label label-danger">Inactive</span>';
         }
 
@@ -426,7 +426,7 @@ class CmsPageTable extends AbstractTable
     protected function setHeaders(TableConfiguration $config)
     {
         $config->setHeader([
-            CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE => '#',
+            CmsPageTableConstants::COL_ID_CMS_PAGE => '#',
             CmsPageTableConstants::COL_NAME => 'Name',
             CmsPageTableConstants::COL_URL => 'Url',
             CmsPageTableConstants::COL_TEMPLATE => 'Template',
@@ -457,7 +457,7 @@ class CmsPageTable extends AbstractTable
     protected function setSortableFields(TableConfiguration $config)
     {
         $config->setSortable([
-            CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE,
+            CmsPageTableConstants::COL_ID_CMS_PAGE,
             CmsPageTableConstants::COL_TEMPLATE,
             CmsPageTableConstants::COL_NAME,
         ]);
@@ -471,7 +471,7 @@ class CmsPageTable extends AbstractTable
     protected function setSearchableFields(TableConfiguration $config)
     {
         $config->setSearchable([
-            CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE,
+            CmsPageTableConstants::COL_ID_CMS_PAGE,
             CmsPageTableConstants::COL_NAME,
             CmsPageTableConstants::COL_TEMPLATE,
         ]);
@@ -484,7 +484,7 @@ class CmsPageTable extends AbstractTable
      */
     protected function setDefaultSortField(TableConfiguration $config)
     {
-        $config->setDefaultSortField(CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE, CmsPageTableConstants::SORT_DESC);
+        $config->setDefaultSortField(CmsPageTableConstants::COL_ID_CMS_PAGE, CmsPageTableConstants::SORT_DESC);
     }
 
     /**
@@ -497,7 +497,7 @@ class CmsPageTable extends AbstractTable
     {
         $actions = implode(' ', $this->buildLinks($item, $urlPrefix));
         return [
-            CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE => $item[CmsPageTableConstants::CMS_PAGE_COL_ID_CMS_PAGE],
+            CmsPageTableConstants::COL_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
             CmsPageTableConstants::COL_NAME => $item[CmsPageTableConstants::COL_NAME],
             CmsPageTableConstants::COL_URL => $this->buildUrlList($item),
             CmsPageTableConstants::COL_TEMPLATE => $item[CmsPageTableConstants::COL_TEMPLATE],

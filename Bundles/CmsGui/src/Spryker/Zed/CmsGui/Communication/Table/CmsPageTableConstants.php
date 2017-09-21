@@ -21,15 +21,14 @@ interface CmsPageTableConstants
     const URL_CMS_PAGE_ACTIVATE = '/cms-gui/edit-page/activate';
     const URL_CMS_PAGE_DEACTIVATE = '/cms-gui/edit-page/deactivate';
 
+    const COL_ID_CMS_PAGE = SpyCmsPageTableMap::COL_ID_CMS_PAGE;
+    const COL_IS_ACTIVE = SpyCmsPageTableMap::COL_IS_ACTIVE;
     const COL_URL = 'Url';
     const COL_TEMPLATE = 'template_name';
     const COL_NAME = 'name';
     const COL_STATUS = 'status';
     const COL_CMS_URLS = 'cmsUrls';
     const COL_CMS_VERSION_COUNT = 'cmsVersionCount';
-
-    const CMS_PAGE_COL_ID_CMS_PAGE = SpyCmsPageTableMap::COL_ID_CMS_PAGE;
-    const CMS_PAGE_COL_IS_ACTIVE = SpyCmsPageTableMap::COL_IS_ACTIVE;
 
     const VERSION_PAGE_URL_PARAM_ID_CMS_PAGE = VersionPageController::URL_PARAM_ID_CMS_PAGE;
     const VERSION_PAGE_URL_PARAM_REDIRECT_URL = VersionPageController::URL_PARAM_REDIRECT_URL;

@@ -125,7 +125,7 @@ class VersionFinder implements VersionFinderInterface
      */
     public function getCmsVersionData($idCmsPage)
     {
-        $cmsPageEntity = $this->findCmsPage($idCmsPage);
+        $cmsPageEntity = $this->getCmsPage($idCmsPage);
         $cmsVersionDataTransfer = $this->versionDataMapper->mapToCmsVersionDataTransfer($cmsPageEntity);
 
         return $cmsVersionDataTransfer;
@@ -138,13 +138,13 @@ class VersionFinder implements VersionFinderInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
-    protected function findCmsPage($idCmsPage)
+    protected function getCmsPage($idCmsPage)
     {
-        $cmsPageCollection = $this->queryContainer
+        $cmsPageEntity = $this->queryContainer
             ->queryCmsPageWithAllRelationsByIdPage($idCmsPage)
-            ->find();
+            ->findOne();
 
-        if ($cmsPageCollection->count() === 0) {
+        if ($cmsPageEntity === null) {
             throw new MissingPageException(
                 sprintf(
                     'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
@@ -153,7 +153,7 @@ class VersionFinder implements VersionFinderInterface
             );
         }
 
-        return $cmsPageCollection->getFirst();
+        return $cmsPageEntity;
     }
 
 }
