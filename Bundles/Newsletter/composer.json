@@ -12,6 +12,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/silex": "*",

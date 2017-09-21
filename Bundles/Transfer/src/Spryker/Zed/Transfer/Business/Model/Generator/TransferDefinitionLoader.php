@@ -11,6 +11,7 @@ use InvalidArgumentException;
 use Zend\Config\Factory;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\CamelCaseToUnderscore;
+use Zend\Filter\Word\DashToCamelCase;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferDefinitionLoader implements LoaderInterface
@@ -85,9 +86,12 @@ class TransferDefinitionLoader implements LoaderInterface
      */
     private function getBundleFromPathName($fileName)
     {
-        $filter = new UnderscoreToCamelCase();
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new UnderscoreToCamelCase())
+            ->attach(new DashToCamelCase());
 
-        return $filter->filter(str_replace(self::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
+        return $filterChain->filter(str_replace(self::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
     }
 
     /**

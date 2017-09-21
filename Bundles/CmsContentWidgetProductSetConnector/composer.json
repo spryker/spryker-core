@@ -13,7 +13,8 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/twig": "Required by Yves Twig function."

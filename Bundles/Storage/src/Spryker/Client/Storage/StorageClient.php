@@ -25,7 +25,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * All keys which have been used for the last request with same URL
      *
-     * @var array
+     * @var array|null
      */
     public static $cachedKeys;
 
@@ -58,7 +58,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @return array
+     * @return array|null
      */
     public function getCachedKeys()
     {
@@ -68,9 +68,9 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @param array $keys
+     * @param array|null $keys
      *
-     * @return array
+     * @return array|null
      */
     public function setCachedKeys($keys)
     {
@@ -168,17 +168,11 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function get($key)
     {
-        if (!isset(self::$cachedKeys)) {
-            $this->loadKeysFromCache();
-        }
-
-        if (!isset(self::$bufferedValues)) {
-            $this->loadAllValues();
-        }
+        $this->loadCacheKeysAndValues();
 
         if (array_key_exists($key, self::$bufferedValues)) {
             self::$cachedKeys[$key] = self::KEY_USED;
-            return self::$bufferedValues[$key];
+            return $this->jsonDecode(self::$bufferedValues[$key]);
         }
 
         self::$cachedKeys[$key] = self::KEY_NEW;
@@ -195,7 +189,17 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function getMulti(array $keys)
     {
-        return $this->getService()->getMulti($keys);
+        $this->loadCacheKeysAndValues();
+
+        $keyValues = array_intersect_key(self::$bufferedValues, array_flip($keys));
+        $keys = array_diff($keys, array_keys($keyValues));
+
+        if ($keys) {
+            $keyValues += $this->getService()->getMulti($keys);
+            self::$cachedKeys += array_fill_keys($keys, self::KEY_NEW);
+        }
+
+        return $keyValues;
     }
 
     /**
@@ -251,6 +255,20 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @return void
      */
+    protected function loadCacheKeysAndValues()
+    {
+        if (self::$cachedKeys === null) {
+            $this->loadKeysFromCache();
+        }
+
+        if (self::$bufferedValues === null) {
+            $this->loadAllValues();
+        }
+    }
+
+    /**
+     * @return void
+     */
     protected function loadKeysFromCache()
     {
         self::$cachedKeys = [];
@@ -283,7 +301,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             if (!empty($values) && is_array($values)) {
                 foreach ($values as $key => $value) {
                     $keySuffix = substr($key, strlen(Service::KV_PREFIX));
-                    self::$bufferedValues[$keySuffix] = $this->jsonDecode($value);
+                    self::$bufferedValues[$keySuffix] = $value;
                 }
             }
         }

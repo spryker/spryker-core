@@ -23,9 +23,11 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/customer": "*",
+    "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/silex": "*",
