@@ -7,18 +7,22 @@
 
 namespace Spryker\Yves\Kernel\Dependency\Plugin;
 
+use Spryker\Yves\Kernel\Controller\View;
 use Symfony\Component\HttpFoundation\Request;
 
-interface ControllerResponseExpanderPluginInterface
+interface WidgetBuilderPluginInterface
 {
 
     /**
+     * TODO: add specification
+     *
      * @api
      *
+     * @param \Spryker\Yves\Kernel\Controller\View $view
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Spryker\Yves\Kernel\Controller\Widget
      */
-    public function getResult(Request $request);
+    public function buildWidget(View $view, Request $request);
 
 }
