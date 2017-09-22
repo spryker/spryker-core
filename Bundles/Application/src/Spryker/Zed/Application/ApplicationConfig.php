@@ -24,7 +24,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getSslExcluded()
+    public function getSslExcludedResources()
     {
         return $this->get(ApplicationConstants::ZED_SSL_EXCLUDED, []);
     }

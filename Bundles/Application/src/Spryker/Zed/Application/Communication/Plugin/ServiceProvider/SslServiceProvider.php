@@ -93,9 +93,9 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     {
         $isSecure = $request->isSecure();
         $isYvesRequest = $this->isYvesRequest($request);
-        $isExcluded = $this->isSslExcluded($request);
+        $isSslExcludedResource = $this->isSslExcludedResource($request);
 
-        return (!$isSecure && !$isYvesRequest && !$isExcluded);
+        return (!$isSecure && !$isYvesRequest && !$isSslExcludedResource);
     }
 
     /**
@@ -113,9 +113,9 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      *
      * @return bool
      */
-    protected function isSslExcluded(Request $request)
+    protected function isSslExcludedResource(Request $request)
     {
-        return in_array($request->attributes->get('module') . '/' . $request->attributes->get('controller'), $this->getConfig()->getSslExcluded());
+        return in_array($request->attributes->get('module') . '/' . $request->attributes->get('controller'), $this->getConfig()->getSslExcludedResources());
     }
 
 }

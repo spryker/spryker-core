@@ -90,9 +90,9 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     protected function shouldBeSsl(Request $request)
     {
         $requestIsSecure = $request->isSecure();
-        $isExcluded = $this->isSslExcluded($request);
+        $isSslExcludedResource = $this->isSslExcludedResource($request);
 
-        return (!$requestIsSecure && !$isExcluded);
+        return (!$requestIsSecure && !$isSslExcludedResource);
     }
 
     /**
@@ -100,9 +100,9 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      *
      * @return bool
      */
-    protected function isSslExcluded(Request $request)
+    protected function isSslExcludedResource(Request $request)
     {
-        return in_array($request->getPathInfo(), $this->getConfig()->getSslExcluded());
+        return in_array($request->getPathInfo(), $this->getConfig()->getSslExcludedResources());
     }
 
 }
