@@ -48,14 +48,11 @@ class ItemPriceCollector extends BaseCollector implements CollectorInterface
 
         $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($this->comparators->compare($clauseTransfer, $itemTransfer->getUnitGrossPrice()) === false) {
+            if ($this->comparators->compare($clauseTransfer, $itemTransfer->getUnitPrice()) === false) {
                 continue;
             }
 
-            $discountableItems[] = $this->createDiscountableItemForItemTransfer(
-                $quoteTransfer->getPriceMode(),
-                $itemTransfer
-            );
+            $discountableItems[] = $this->createDiscountableItemForItemTransfer($itemTransfer);
         }
 
         return $discountableItems;

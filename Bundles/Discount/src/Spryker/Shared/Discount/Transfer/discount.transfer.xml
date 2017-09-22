@@ -18,9 +18,9 @@
         <property name="validTo" type="string" />
         <property name="collectorQueryString" type="string" />
         <property name="decisionRuleQueryString" type="string" />
-        <property name="priceMode" type="string" />
-        <property name="discountMoneyAmounts" type="DiscountMoneyAmount[]" singular="DiscountMoneyAmount" />
+        <property name="moneyValueCollection" type="moneyValue[]" singular="MoneyValue" />
         <property name="currency" type="Currency" />
+        <property name="priceMode" type="string" />
     </transfer>
 
     <transfer name="CalculatedDiscount">
@@ -28,8 +28,10 @@
         <property name="displayName" type="string" />
         <property name="description" type="string" />
         <property name="voucherCode" type="string"/>
-        <property name="unitGrossAmount" type="int" />
-        <property name="sumGrossAmount" type="int" />
+        <property name="unitAmount" type="int" />
+        <property name="sumAmount" type="int" />
+        <property name="unitGrossAmount" type="int" deprecated="use unitAmount" />
+        <property name="sumGrossAmount" type="int" deprecated="use sumAmount"/>
         <property name="quantity" type="int" />
     </transfer>
 
@@ -55,7 +57,8 @@
 
     <transfer name="DiscountableItem">
         <property name="quantity" type="int"/>
-        <property name="unitGrossPrice" type="int"/>
+        <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
+        <property name="unitPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
         <property name="originalItem" type="Item" />
     </transfer>
@@ -106,7 +109,6 @@
         <property name="validTo" type="string" />
         <property name="isExclusive" type="bool" />
         <property name="isActive" type="bool" />
-        <property name="priceMode" type="string" />
     </transfer>
 
     <transfer name="DiscountCalculator">
@@ -114,7 +116,7 @@
         <property name="calculatorPlugin" type="string" />
         <property name="collectorQueryString" type="string" />
         <property name="collectorStrategyType" type="string" />
-        <property name="discountMoneyAmounts" type="DiscountMoneyAmount[]" singular="DiscountMoneyAmount" />
+        <property name="moneyValueCollection" type="moneyValue[]" singular="MoneyValue" />
     </transfer>
 
     <transfer name="DiscountCondition">
@@ -149,8 +151,10 @@
         <property name="idDiscountAmount" type="int" />
         <property name="fkCurrency" type="int" />
         <property name="fkDiscount" type="int" />
-        <property name="amount" type="int" />
+        <property name="netAmount" type="int" />
+        <property name="grossAmount" type="int" />
         <property name="currencyIsoCode" type="string" />
+        <property name="currencySymbol" type="string" />
     </transfer>
 
 </transfers>

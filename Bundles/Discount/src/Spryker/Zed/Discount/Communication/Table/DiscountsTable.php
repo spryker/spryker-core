@@ -277,9 +277,22 @@ class DiscountsTable extends AbstractTable
 
         $discountAmounts = '';
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
-            $discountAmounts .= $this->getCalculatorPlugin(
-                $discountEntity->getCalculatorPlugin()
-            )->getFormattedAmount($discountAmountEntity->getAmount(), $discountAmountEntity->getCurrency()->getCode()) . '<br />';
+
+            if ($discountAmountEntity->getNetAmount()) {
+                $discountAmounts .= $this->getCalculatorPlugin($discountEntity->getCalculatorPlugin())
+                    ->getFormattedAmount(
+                        $discountAmountEntity->getNetAmount(),
+                        $discountAmountEntity->getCurrency()->getCode()
+                    );
+            }
+
+            if ($discountAmountEntity->getGrossAmount()) {
+                $discountAmounts .= $this->getCalculatorPlugin($discountEntity->getCalculatorPlugin())
+                    ->getFormattedAmount(
+                        $discountAmountEntity->getGrossAmount(),
+                        $discountAmountEntity->getCurrency()->getCode()
+                    );
+            }
         }
 
         return $discountAmounts;

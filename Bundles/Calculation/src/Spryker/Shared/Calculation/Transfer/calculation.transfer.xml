@@ -53,6 +53,7 @@
         <property name="discountTotal" type="int" />
         <property name="taxTotal" type="TaxTotal" />
         <property name="grandTotal" type="int" />
+        <property name="netTotal" type="int"/>
         <property name="canceledTotal" type="int" />
         <property name="hash" type="string"/>
     </transfer>

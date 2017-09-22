@@ -29,7 +29,6 @@ class GeneralForm extends AbstractType
     const FIELD_IS_EXCLUSIVE = 'is_exclusive';
     const NON_EXCLUSIVE = 'Non-Exclusive';
     const EXCLUSIVE = 'Exclusive';
-    const FIELD_PRICE_MODE = 'price_mode';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
@@ -52,9 +51,7 @@ class GeneralForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this
-            ->addDiscountType($builder)
-            ->addPriceMode($builder)
+        $this->addDiscountType($builder)
             ->addDisplayNameField($builder)
             ->addDescriptionField($builder)
             ->addExclusive($builder, $options)
@@ -188,27 +185,6 @@ class GeneralForm extends AbstractType
                 'class' => 'datepicker',
             ],
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addPriceMode(FormBuilderInterface $builder)
-    {
-        $builder->add(
-            static::FIELD_PRICE_MODE,
-            ChoiceType::class,
-            [
-                'choices' => [
-                    'GROSS_MODE' => 'Gross mode',
-                    'NET_MODE' => 'Net mode',
-                ],
-            ]
-        );
 
         return $this;
     }

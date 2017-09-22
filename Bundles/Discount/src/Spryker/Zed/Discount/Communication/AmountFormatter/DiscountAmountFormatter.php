@@ -61,6 +61,10 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
      */
     protected function formatAmount(DiscountCalculatorPluginInterface $calculatorPlugin, $amount, $isoCode = null)
     {
+        if (!$amount) {
+            return 'N/A';
+        }
+
         return $calculatorPlugin->getFormattedAmount($amount, $isoCode);
     }
 
@@ -72,13 +76,20 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
      */
     protected function formatDiscountMoneyAmounts(DiscountConfiguratorTransfer $discountConfiguratorTransfer, $calculatorPlugin)
     {
-        foreach ($discountConfiguratorTransfer->getDiscountCalculator()->getDiscountMoneyAmounts() as $discountMoneyAmountTransfer) {
-            $formattedAmount = $this->formatAmount(
+        foreach ($discountConfiguratorTransfer->getDiscountCalculator()->getMoneyValueCollection() as $moneyValueTransfer) {
+            $formattedGrossAmount = $this->formatAmount(
                 $calculatorPlugin,
-                $discountMoneyAmountTransfer->getAmount(),
-                $discountMoneyAmountTransfer->getCurrencyCode()
+                $moneyValueTransfer->getGrossAmount(),
+                $moneyValueTransfer->getCurrency()->getCode()
             );
-            $discountMoneyAmountTransfer->setAmount($formattedAmount);
+            $moneyValueTransfer->setGrossAmount($formattedGrossAmount);
+
+            $formattedNetAmount = $this->formatAmount(
+                $calculatorPlugin,
+                $moneyValueTransfer->getNetAmount(),
+                $moneyValueTransfer->getCurrency()->getCode()
+            );
+            $moneyValueTransfer->setNetAmount($formattedNetAmount);
         }
         return $discountConfiguratorTransfer;
     }

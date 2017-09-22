@@ -380,6 +380,22 @@ class Store
     }
 
     /**
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getAvailableCurrenciesForStore($storeName)
+    {
+        $stores = $this->getStoreSetup($storeName);
+        $storeArray = $stores[$storeName];
+
+        if (isset($storeArray['currencyIsoCodes'])) {
+            return $storeArray['currencyIsoCodes'];
+        }
+        return [];
+    }
+
+    /**
      * @return string
      */
     protected function getDefaultCurrencyCode()

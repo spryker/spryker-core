@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class Fixed implements CalculatorInterface
 {
+    const PRICE_NET_MODE = 'NET_MODE';
 
     /**
      * @deprecated use calculateDiscount instead
@@ -51,10 +52,17 @@ class Fixed implements CalculatorInterface
      */
     protected function getDiscountAmountForCurrentCurrency(DiscountTransfer $discountTransfer)
     {
-        foreach ($discountTransfer->getDiscountMoneyAmounts() as $moneyAmountTransfer) {
-            if ($discountTransfer->getCurrency()->getCode() === $moneyAmountTransfer->getCurrencyIsoCode()) {
-                return $moneyAmountTransfer->getAmount();
+        foreach ($discountTransfer->getMoneyValueCollection() as $moneyValueTransfer) {
+            if ($discountTransfer->getCurrency()->getCode() !== $moneyValueTransfer->getCurrency()->getCode()) {
+                continue;
             }
+
+            if ($discountTransfer->getPriceMode() === static::PRICE_NET_MODE) {
+                return $moneyValueTransfer->getNetAmount();
+            }
+
+
+            return $moneyValueTransfer->getGrossAmount();
         }
 
         return 0;

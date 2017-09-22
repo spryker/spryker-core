@@ -17,4 +17,13 @@
         <property name="localeName" type="string" />
     </transfer>
 
+    <transfer name="MoneyValue">
+        <property name="idEntity" type="int" />
+        <property name="fkCurrency" type="int" />
+        <property name="fkStore"  type="int"/>
+        <property name="currency" type="Currency" />
+        <property name="netAmount" type="int" />
+        <property name="grossAmount" type="int" />
+    </transfer>
+
 </transfers>

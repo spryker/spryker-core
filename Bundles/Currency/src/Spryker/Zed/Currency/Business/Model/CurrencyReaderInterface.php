@@ -24,6 +24,11 @@ interface CurrencyReaderInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer[]
      */
-    public function getStoreCurrencies();
+    public function getCurrentStoreCurrencies();
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
+     */
+    public function getAvailableStoreCurrencies();
 
 }

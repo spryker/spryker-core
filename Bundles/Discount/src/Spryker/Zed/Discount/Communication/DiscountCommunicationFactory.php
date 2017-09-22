@@ -19,7 +19,6 @@ use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\GeneralForm;
 use Spryker\Zed\Discount\Communication\Form\MoneyAmountForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
-use Spryker\Zed\Discount\Communication\Form\Transformer\CurrencyAmountTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer;
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
@@ -27,6 +26,9 @@ use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
+use Spryker\Zed\Money\Communication\Form\Type\SpyPriceCollectionType;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -222,19 +224,11 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\MoneyAmountForm|\Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyType|\Symfony\Component\Form\FormInterface
      */
     public function createMoneyAmountFormType()
     {
-        return new MoneyAmountForm();
-    }
-
-    /**
-     * @return \Spryker\Zed\Discount\Communication\Form\Transformer\CurrencyAmountTransformer|\Symfony\Component\Form\DataTransformerInterface
-     */
-    public function createCurrencyAmountTransformer()
-    {
-        return new CurrencyAmountTransformer($this->getMoneyFacade());
+        return new MoneyType();
     }
 
     /**
@@ -243,6 +237,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createDiscountAmountFormatter()
     {
         return new DiscountAmountFormatter($this->getCalculatorPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType
+     */
+    public function createPriceCollectionType()
+    {
+        return new MoneyCollectionType();
     }
 
     /**

@@ -28,49 +28,33 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected $cartRuleDiscountTotals = [];
 
     /**
-     * @var bool
-     */
-    protected $isOrder = false;
-
-    /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->isOrder = !empty($calculableObjectTransfer->getOriginalOrder()) ? true : false;
-
-        $this->calculateDiscountAmountAggregationForItems(
-            $calculableObjectTransfer->getItems(),
-            $calculableObjectTransfer->getPriceMode()
-        );
-        $this->calculateDiscountAmountAggregationForExpenses(
-            $calculableObjectTransfer->getExpenses(),
-            $calculableObjectTransfer->getPriceMode()
-        );
+        $this->calculateDiscountAmountAggregationForItems($calculableObjectTransfer->getItems());
+        $this->calculateDiscountAmountAggregationForExpenses($calculableObjectTransfer->getExpenses());
 
         $this->updateDiscountTotals($calculableObjectTransfer);
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param string $priceMode
      *
      * @return void
      */
-    protected function calculateDiscountAmountAggregationForItems(ArrayObject $items, $priceMode)
+    protected function calculateDiscountAmountAggregationForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
 
-            $this->calculateDiscountAmountForProductOptions($itemTransfer, $priceMode);
+            $this->calculateDiscountAmountForProductOptions($itemTransfer);
 
             $itemTransfer->setUnitDiscountAmountAggregation(
                 $this->calculateUnitDiscountAmountAggregation(
                     $itemTransfer->getCalculatedDiscounts(),
-                    $itemTransfer->getUnitPrice(),
-                    $priceMode,
-                    $itemTransfer->getTaxRate()
+                    $itemTransfer->getUnitPrice()
                 )
             );
 
@@ -85,19 +69,16 @@ class DiscountAmountAggregator implements CalculatorInterface
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
-     * @param string $priceMode
      *
      * @return void
      */
-    protected function calculateDiscountAmountAggregationForExpenses(ArrayObject $expenses, $priceMode)
+    protected function calculateDiscountAmountAggregationForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
 
             $unitDiscountAmountAggregation = $this->calculateUnitDiscountAmountAggregation(
                 $expenseTransfer->getCalculatedDiscounts(),
-                $expenseTransfer->getUnitPrice(),
-                $priceMode,
-                $expenseTransfer->getTaxRate()
+                $expenseTransfer->getUnitPrice()
             );
             $expenseTransfer->setUnitDiscountAmountAggregation($unitDiscountAmountAggregation);
 
@@ -114,10 +95,10 @@ class DiscountAmountAggregator implements CalculatorInterface
      *
      * @return void
      */
-    protected function setCalculatedDiscountsSumGrossAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
+    protected function setCalculatedDiscountsSumAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
-        $calculatedDiscountTransfer->setSumGrossAmount(
-            $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
+        $calculatedDiscountTransfer->setSumAmount(
+            $calculatedDiscountTransfer->getUnitAmount() * $calculatedDiscountTransfer->getQuantity()
         );
 
         $this->setCalculatedDiscounts($calculatedDiscountTransfer);
@@ -125,20 +106,17 @@ class DiscountAmountAggregator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $priceMode
      *
      * @return void
      */
-    protected function calculateDiscountAmountForProductOptions(ItemTransfer $itemTransfer, $priceMode)
+    protected function calculateDiscountAmountForProductOptions(ItemTransfer $itemTransfer)
     {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
 
             $productOptionTransfer->setUnitDiscountAmountAggregation(
                 $this->calculateUnitDiscountAmountAggregation(
                     $productOptionTransfer->getCalculatedDiscounts(),
-                    $productOptionTransfer->getUnitPrice(),
-                    $priceMode,
-                    $productOptionTransfer->getTaxRate()
+                    $productOptionTransfer->getUnitPrice()
                 )
             );
 
@@ -161,8 +139,8 @@ class DiscountAmountAggregator implements CalculatorInterface
     {
         $itemSumDiscountAmountAggregation = 0;
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
-            $this->setCalculatedDiscountsSumGrossAmount($calculatedDiscountTransfer);
-            $discountAmount = $calculatedDiscountTransfer->getSumGrossAmount();
+            $this->setCalculatedDiscountsSumAmount($calculatedDiscountTransfer);
+            $discountAmount = $calculatedDiscountTransfer->getSumAmount();
 
             $itemSumDiscountAmountAggregation += $discountAmount;
         }
@@ -177,28 +155,17 @@ class DiscountAmountAggregator implements CalculatorInterface
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
      * @param int $maxAmount
-     * @param string $priceMode
-     * @param int $taxRate
      *
      * @return int
      */
-    protected function calculateUnitDiscountAmountAggregation(
-        ArrayObject $calculateDiscounts,
-        $maxAmount,
-        $priceMode,
-        $taxRate
-    ) {
+    protected function calculateUnitDiscountAmountAggregation(ArrayObject $calculateDiscounts, $maxAmount)
+    {
         $itemUnitDiscountAmountAggregation = 0;
         $appliedDiscounts = [];
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
             $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
 
-            $discountAmount = $calculatedDiscountTransfer->getUnitGrossAmount();
-            if ($priceMode === CalculationPriceMode::PRICE_MODE_NET && $this->isOrder === false) {
-                $discountAmount = $this->calculateNetDiscountAmount($taxRate, $calculatedDiscountTransfer->getUnitGrossAmount());
-                $calculatedDiscountTransfer->setUnitGrossAmount($discountAmount);
-            }
-
+            $discountAmount = $calculatedDiscountTransfer->getUnitAmount();
             if (isset($appliedDiscounts[$idDiscount])) {
                 continue;
             }
@@ -215,17 +182,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param int $taxRate
-     * @param int $discountAmount
-     *
-     * @return int
-     */
-    protected function calculateNetDiscountAmount($taxRate, $discountAmount)
-    {
-        return (int)round($discountAmount - ($discountAmount * $taxRate / (100 + $taxRate)));
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *
      * @return void
@@ -233,7 +189,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function setCalculatedDiscounts(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
         $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
-        $discountAmount = $calculatedDiscountTransfer->getSumGrossAmount();
+        $discountAmount = $calculatedDiscountTransfer->getSumAmount();
 
         if ($calculatedDiscountTransfer->getVoucherCode()) {
             if (!isset($this->voucherDiscountTotals[$idDiscount])) {
@@ -258,10 +214,6 @@ class DiscountAmountAggregator implements CalculatorInterface
      */
     protected function updateDiscountTotals(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        if ($calculableObjectTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_GROSS) {
-            return;
-        }
-
         foreach ($calculableObjectTransfer->getCartRuleDiscounts() as $discountTransfer) {
             if (isset($this->cartRuleDiscountTotals[$discountTransfer->getIdDiscount()])) {
                 $discountTransfer->setAmount(

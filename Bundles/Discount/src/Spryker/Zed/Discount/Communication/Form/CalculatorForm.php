@@ -17,12 +17,15 @@ use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
@@ -93,6 +96,13 @@ class CalculatorForm extends AbstractType
             ->addCollectorQueryString($builder);
 
         $builder->addModelTransformer($this->calculatorAmountTransformer);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
+            }
+        );
     }
 
     /**
@@ -160,7 +170,7 @@ class CalculatorForm extends AbstractType
     protected function addCalculatorInputs(FormBuilderInterface $builder)
     {
         $this->addAmountField($builder)
-            ->addMoneyAmountFields($builder);
+            ->addMoneyValueCollectionType($builder);
 
         return $this;
     }
@@ -199,17 +209,9 @@ class CalculatorForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMoneyAmountFields(FormBuilderInterface $builder)
+    protected function addMoneyValueCollectionType(FormBuilderInterface $builder)
     {
-        $builder->add(
-            DiscountCalculatorTransfer::DISCOUNT_MONEY_AMOUNTS,
-            CollectionType::class, [
-                'type' => $this->getFactory()->createMoneyAmountFormType(),
-                'entry_options' => [
-                    'data_class' => DiscountMoneyAmountTransfer::class,
-                ],
-            ]
-        );
+        $builder->add(DiscountCalculatorTransfer::MONEY_VALUE_COLLECTION, MoneyCollectionType::class);
 
         return $this;
     }

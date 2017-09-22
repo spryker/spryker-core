@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Propel\Runtime\Collection\Collection;
@@ -207,13 +209,18 @@ class Discount implements DiscountInterface
     {
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setCurrency($quoteTransfer->getCurrency());
+        $discountTransfer->setPriceMode($quoteTransfer->getPriceMode());
         $discountTransfer->fromArray($discountEntity->toArray(), true);
 
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
-            $discountMoneyAmountTransfer = new DiscountMoneyAmountTransfer();
-            $discountMoneyAmountTransfer->fromArray($discountAmountEntity->toArray(), true);
-            $discountMoneyAmountTransfer->setCurrencyIsoCode($discountAmountEntity->getCurrency()->getCode());
-            $discountTransfer->addDiscountMoneyAmount($discountMoneyAmountTransfer);
+            $moneyValueTransfer = new MoneyValueTransfer();
+            $moneyValueTransfer->fromArray($discountAmountEntity->toArray(), true);
+
+            $currencyTransfer = new CurrencyTransfer();
+            $currencyTransfer->fromArray($discountAmountEntity->getCurrency()->toArray());
+            $moneyValueTransfer->setCurrency($currencyTransfer);
+
+            $discountTransfer->addMoneyValue($moneyValueTransfer);
         }
 
         return $discountTransfer;

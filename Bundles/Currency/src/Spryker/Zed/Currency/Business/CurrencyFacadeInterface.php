@@ -73,6 +73,18 @@ interface CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer[]
      */
-    public function getStoreCurrencies();
+    public function getCurrentStoreCurrencies();
+
+    /**
+     * Specification:
+     *  - Reads all active store currencies
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
+     */
+    public function getAvailableStoreCurrencies();
 
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
@@ -103,7 +104,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->fromArray($discountEntity->toArray(), true);
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
-        $discountCalculatorTransfer->setDiscountMoneyAmounts($this->getDiscountMoneyAmounts($discountEntity));
+        $discountCalculatorTransfer->setMoneyValueCollection($this->getMoneyValueCollection($discountEntity));
 
         return $discountCalculatorTransfer;
     }
@@ -113,21 +114,21 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
      *
      * @return \ArrayObject
      */
-    protected function getDiscountMoneyAmounts(SpyDiscount $discountEntity)
+    protected function getMoneyValueCollection(SpyDiscount $discountEntity)
     {
-        $discountMoneyAmounts = new ArrayObject();
+        $moneyValueCollection = new ArrayObject();
         foreach ($discountEntity->getDiscountAmounts() as $discountMoneyAmountEntity) {
-            $discountMoneyAmountTransfer = new DiscountMoneyAmountTransfer();
-            $discountMoneyAmountTransfer->fromArray($discountMoneyAmountEntity->toArray(), true);
-            $discountMoneyAmountTransfer->setFkDiscount($discountEntity->getPrimaryKey());
+            $moneyValueTransfer = new MoneyValueTransfer();
+            $moneyValueTransfer->fromArray($discountMoneyAmountEntity->toArray(), true);
+            $moneyValueTransfer->setIdEntity($discountMoneyAmountEntity->getPrimaryKey());
 
             $currencyTransfer = $this->currencyFacade->getByIdCurrency($discountMoneyAmountEntity->getFkCurrency());
-            $discountMoneyAmountTransfer->setCurrencyIsoCode($currencyTransfer->getCode());
+            $moneyValueTransfer->setCurrency($currencyTransfer);
 
-            $discountMoneyAmounts->append($discountMoneyAmountTransfer);
+            $moneyValueCollection->append($moneyValueTransfer);
         }
 
-        return $discountMoneyAmounts;
+        return $moneyValueCollection;
     }
 
     /**

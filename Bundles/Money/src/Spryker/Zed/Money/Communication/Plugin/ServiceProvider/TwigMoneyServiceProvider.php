@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\MoneyTransfer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig\TwigFunction;
+use Twig_Environment;
 use Twig_SimpleFilter;
 
 /**
@@ -18,6 +20,9 @@ use Twig_SimpleFilter;
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+
+    const FUNCTION_NAME_MONEY_COLLECTION = 'form_money_collection';
+    const TEMPLATE_PATH_MONEY_TABLE = '@Money/Form/Type/money_table.twig';
 
     /**
      * @param \Silex\Application $app
@@ -27,8 +32,9 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) {
+            $app->extend('twig', function (Twig_Environment $twig) {
                 $twig->addFilter($this->getFilter());
+                $twig->addFunction(static::FUNCTION_NAME_MONEY_COLLECTION, $this->getMoneyFormTableFunction($twig));
 
                 return $twig;
             })
@@ -74,6 +80,31 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
         });
 
         return $filter;
+    }
+
+
+    /**
+     *
+     * @param \Twig_Environment $twig
+     *
+     * @return \Twig\TwigFunction
+     */
+    public function getMoneyFormTableFunction(Twig_Environment $twig)
+    {
+        $options = ['is_safe' => ['html']];
+
+        return new TwigFunction(
+            static::FUNCTION_NAME_MONEY_COLLECTION,
+            function ($moneyValueFormViewCollection) use ($twig) {
+                return $twig->render(
+                    static::TEMPLATE_PATH_MONEY_TABLE,
+                    [
+                        'moneyValueFormViewCollection' => $moneyValueFormViewCollection,
+                    ]
+                );
+            },
+            $options
+        );
     }
 
 }

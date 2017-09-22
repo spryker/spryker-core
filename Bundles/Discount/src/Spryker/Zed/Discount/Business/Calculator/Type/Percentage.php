@@ -60,7 +60,7 @@ class Percentage implements CalculatorInterface
         }
 
         foreach ($discountableItems as $discountableItemTransfer) {
-            $itemTotalAmount = $discountableItemTransfer->getUnitGrossPrice() * $this->getDiscountableObjectQuantity($discountableItemTransfer);
+            $itemTotalAmount = $discountableItemTransfer->getUnitPrice() * $this->getDiscountableObjectQuantity($discountableItemTransfer);
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $value);
         }
 
@@ -72,14 +72,14 @@ class Percentage implements CalculatorInterface
     }
 
     /**
-     * @param int $grossPrice
+     * @param int $unitPrice
      * @param int $discountPercentage
      *
      * @return int
      */
-    protected function calculateDiscountAmount($grossPrice, $discountPercentage)
+    protected function calculateDiscountAmount($unitPrice, $discountPercentage)
     {
-        $itemDiscountAmount = ($grossPrice * $discountPercentage / 100) + static::$roundingError;
+        $itemDiscountAmount = ($unitPrice * $discountPercentage / 100) + static::$roundingError;
         $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
         static::$roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 

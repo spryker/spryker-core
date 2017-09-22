@@ -86,12 +86,7 @@ class FixedPlugin extends AbstractCalculatorPlugin implements DiscountCalculator
      */
     public function getAmountValidators()
     {
-        return [
-            new Regex([
-                'pattern' => '/[0-9\.\,]+/',
-                'groups' => DiscountConstants::CALCULATOR_MONEY_INPUT_TYPE,
-            ]),
-        ];
+        return [];
     }
 
     /**

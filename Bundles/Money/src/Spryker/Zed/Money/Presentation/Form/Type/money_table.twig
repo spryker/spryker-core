@@ -1,0 +1,57 @@
+{% set rowSpanTable = [] %}
+{% for moneyValueFormView in moneyValueFormViewCollection %}
+
+    {% if not rowSpanTable[moneyValueFormView.vars.store_name] is defined %}
+        {%  set rowSpanTable = rowSpanTable|merge({ (moneyValueFormView.vars.store_name): 0  }) %}
+    {% endif %}
+
+    {% set rowSpanCountTable = rowSpanTable[moneyValueFormView.vars.store_name] + 1 %}
+
+    {% set rowSpanTable = rowSpanTable|merge({ (moneyValueFormView.vars.store_name): rowSpanCountTable  }) %}
+{% endfor %}
+
+{% set lastStore = '' %}
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
+        <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF;;"></th>
+        <th>{{ 'Gross price' | trans }}</th>
+        <th>{{ 'Net price' | trans }}</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for moneyValueFormView in moneyValueFormViewCollection %}
+        <tr>
+            {% if moneyValueFormView.vars.store_name != lastStore or loop.first %}
+            <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold" rowspan="{{ rowSpanTable[moneyValueFormView.vars.store_name] }}">
+                {{ moneyValueFormView.vars.store_name }}
+            </td>
+            {% endif %}
+
+            <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
+                {{ moneyValueFormView.vars.currency_symbol }}
+            </td>
+            <td class="{% if moneyValueFormView.gross_amount.vars.errors|length > 0 %}has-error{% endif %}">
+                {{ form_widget(moneyValueFormView.gross_amount) }}
+                <div class="{% if moneyValueFormView.gross_amount.vars.errors|length > 0 %}has-error{% endif %}">
+                    {{ form_errors(moneyValueFormView.gross_amount) }}
+                </div>
+            </td>
+            <td class="{% if moneyValueFormView.net_amount.vars.errors|length > 0 %}has-error{% endif %}">
+                {{ form_widget(moneyValueFormView.net_amount) }}
+                <div class="{% if moneyValueFormView.net_amount.vars.errors|length > 0 %}has-error{% endif %}">
+                    {{ form_errors(moneyValueFormView.net_amount) }}
+                </div>
+            </td>
+            {{ form_row(moneyValueFormView.fk_currency) }}
+        </tr>
+        {% set lastStore = moneyValueFormView.vars.store_name %}
+
+    {% endfor %}
+    </tbody>
+</table>
+
+{% do moneyValueFormViewCollection.setRendered %}

@@ -83,9 +83,23 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer[]
      */
-    public function getStoreCurrencies()
+    public function getCurrentStoreCurrencies()
     {
-        return $this->getFactory()->createCurrencyReader()->getStoreCurrencies();
+        return $this->getFactory()->createCurrencyReader()->getCurrentStoreCurrencies();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
+     */
+    public function getAvailableStoreCurrencies()
+    {
+        return $this->getFactory()->createCurrencyReader()->getAvailableStoreCurrencies();
     }
 
 }

@@ -33,4 +33,22 @@ class MoneyToCurrencyBridge implements MoneyToCurrencyInterface
         return $this->currencyFacade->fromIsoCode($isoCode);
     }
 
+    /**
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getStoreCurrencies()
+    {
+        return $this->currencyFacade->getCurrentStoreCurrencies();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
+     */
+    public function getAvailableStoreCurrencies()
+    {
+        return $this->currencyFacade->getAvailableStoreCurrencies();
+    }
+
 }

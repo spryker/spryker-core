@@ -11,12 +11,12 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
 {
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $storeFacade
+     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     public function __construct($storeFacade)
     {
@@ -24,11 +24,11 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
     }
 
     /**
-     * @return string[]
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getCurrencyIsoCodes()
+    public function getAllActiveStores()
     {
-         return $this->storeFacade->getCurrencyIsoCodes();
+        return $this->storeFacade->getAllActiveStores();
     }
 
     /**
@@ -36,7 +36,32 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
      */
     public function getCurrencyIsoCode()
     {
-        return $this->storeFacade->getCurrencyIsoCode();
+       return $this->storeFacade->getCurrencyIsoCode();
     }
 
+    /**
+     * @return array
+     */
+    public function getCurrencyIsoCodes()
+    {
+        return $this->storeFacade->getCurrencyIsoCodes();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAvailableCurrenciesForStore($storeName)
+    {
+        return $this->storeFacade->getAvailableCurrenciesForStore($storeName);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore()
+    {
+        return $this->storeFacade->getCurrentStore();
+    }
 }

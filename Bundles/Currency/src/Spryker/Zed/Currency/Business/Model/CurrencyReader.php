@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Currency\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\StoreCurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
 use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface;
 use Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface;
@@ -27,22 +30,22 @@ class CurrencyReader implements CurrencyReaderInterface
     /**
      * @var \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface $currencyQueryContainer
      * @param \Spryker\Zed\Currency\Business\Model\CurrencyMapperInterface $currencyMapper
-     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface $store
+     * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface $storeFacade
      */
     public function __construct(
         CurrencyQueryContainerInterface $currencyQueryContainer,
         CurrencyMapperInterface $currencyMapper,
-        CurrencyToStoreInterface $store
+        CurrencyToStoreInterface $storeFacade
     ) {
 
         $this->currencyQueryContainer = $currencyQueryContainer;
         $this->currencyMapper = $currencyMapper;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -64,7 +67,11 @@ class CurrencyReader implements CurrencyReaderInterface
             );
         }
 
-        return $this->currencyMapper->mapEntityToTransfer($currencyEntity);
+        $currencyTransfer = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
+        $currencyTransfer->setStore($this->storeFacade->getCurrentStore());
+
+        return $currencyTransfer;
+
     }
 
     /**
@@ -72,15 +79,49 @@ class CurrencyReader implements CurrencyReaderInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer[]
      */
-    public function getStoreCurrencies()
+    public function getCurrentStoreCurrencies()
     {
-        $storeCurrencyIsoCodes = $this->store->getCurrencyIsoCodes();
-        $currencyCollection = $this->currencyQueryContainer->queryCurrenciesByIsoCodes($storeCurrencyIsoCodes);
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
+        return $this->getCurrenciesByIsoCodes($storeTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
+     */
+    public function getAvailableStoreCurrencies()
+    {
+        $currenciesPerStore = [];
+        foreach ($this->storeFacade->getAllActiveStores() as $storeTransfer) {
+
+            $storeCurrencyTransfer = new StoreCurrencyTransfer();
+            $storeCurrencyTransfer->setCurrencies(
+                new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
+            );
+
+            $currenciesPerStore[] = $storeCurrencyTransfer;
+        }
+
+        return $currenciesPerStore;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return array
+     */
+    protected function getCurrenciesByIsoCodes(StoreTransfer $storeTransfer)
+    {
+        $currencyCollection = $this->currencyQueryContainer
+            ->queryCurrenciesByIsoCodes($storeTransfer->getAvailableCurrencyIsoCodes())
+            ->find();
 
         if (count($currencyCollection) === 0) {
             throw new CurrencyNotFoundException(
                 sprintf(
-                    "There is no currencyCollection configured for current store, 
+                    "There is no currency configured for current store, 
                     make sure you have currency iso codes provided in 'currencyIsoCodes' array in current stores.php config."
                 )
             );
@@ -88,9 +129,10 @@ class CurrencyReader implements CurrencyReaderInterface
 
         $currencies = [];
         foreach ($currencyCollection as $currencyEntity) {
-            $currencies[] = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
+            $currencyTransfer = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
+            $currencyTransfer->setStore($storeTransfer);
+            $currencies[] = $currencyTransfer;
         }
         return $currencies;
     }
-
 }

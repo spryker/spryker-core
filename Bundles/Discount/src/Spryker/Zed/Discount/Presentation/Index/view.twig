@@ -58,9 +58,10 @@
               <tr>
                   <td>{{ 'Amount:' | trans }}</td>
                   <td>
-                      {% if discountConfigurator.discountCalculator.discountMoneyAmounts|length > 0 %}
-                          {% for discountMoneyAmount in discountConfigurator.discountCalculator.discountMoneyAmounts  %}
-                              {{ discountMoneyAmount.amount }} <br />
+                      {% if discountConfigurator.discountCalculator.moneyValueCollection|length > 0 %}
+                          {% for moneyValue in discountConfigurator.discountCalculator.moneyValueCollection  %}
+                              Gross {{ moneyValue.grossAmount }} <br />
+                              Net {{ moneyValue.netAmount }} <br />
                           {% endfor %}
                       {% else %}
                           {{ discountConfigurator.discountCalculator.amount }}
