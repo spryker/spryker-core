@@ -21,8 +21,11 @@ use PHPUnit_Framework_TestCase;
 class AbstractHttpClientTest extends PHPUnit_Framework_TestCase
 {
 
-    public function () {
-
+    /**
+     * @return void
+     */
+    public function testFoo()
+    {
     }
 
 }

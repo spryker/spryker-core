@@ -20,6 +20,7 @@ use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\ZedRequest\Client\Exception\InvalidRequestOptionException;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
@@ -93,21 +94,21 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @var array
      */
-    protected $clientOptions;
+    protected $clientConfiguration;
 
     /**
      * @param string $baseUrl
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
-     * @param array $clientOptions
+     * @param array $clientConfiguration
      */
     public function __construct(
         $baseUrl,
         UtilNetworkServiceInterface $utilNetworkService,
-        array $clientOptions = []
+        array $clientConfiguration = []
     ) {
         $this->baseUrl = $baseUrl;
         $this->utilNetworkService = $utilNetworkService;
-        $this->clientOptions = $clientOptions;
+        $this->clientConfiguration = $clientConfiguration;
     }
 
     /**
@@ -149,7 +150,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $request = $this->createGuzzleRequest($pathInfo);
 
         try {
-            $response = $this->sendRequest($request, $requestTransfer, $timeoutInSeconds);
+            $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
             $message = $e->getMessage();
             $response = $e->getResponse();
@@ -219,36 +220,105 @@ abstract class AbstractHttpClient implements HttpClientInterface
     /**
      * @param \Psr\Http\Message\RequestInterface $request
      * @param \Spryker\Shared\ZedRequest\Client\ObjectInterface $requestTransfer
-     * @param int|null $timeoutInSeconds
+     * @param array|int|null $requestOptions
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function sendRequest(MessageRequestInterface $request, ObjectInterface $requestTransfer, $timeoutInSeconds = null)
+    protected function sendRequest(MessageRequestInterface $request, ObjectInterface $requestTransfer, $requestOptions = null)
     {
-        $handlerStackContainer = new HandlerStackContainer();
-        $config = [
-            'timeout' => ($timeoutInSeconds ?: static::$timeoutInSeconds),
-            'connect_timeout' => 1.5,
-            'handler' => $handlerStackContainer->getHandlerStack(),
-        ];
-        $config = $this->addCookiesToForwardDebugSession($config);
-        $client = new Client($config);
+        $client = $this->getClient(
+            $this->getClientConfiguration()
+        );
 
-        $options = [
-            'json' => $requestTransfer->toArray(),
-            'allow_redirects' => [
-                'strict' => true,
-            ],
-        ];
-        $response = $client->send($request, $options);
+        $response = $client->send($request, $this->buildRequestOptions($requestTransfer, $requestOptions));
 
         if (!$response || $response->getStatusCode() !== 200 || !$response->getBody()->getSize()) {
             throw new InvalidZedResponseException('Invalid or empty response', $response, $request->getUri());
         }
 
         return $response;
+    }
+
+    /**
+     * @param array $clientConfiguration
+     *
+     * @return \GuzzleHttp\Client
+     */
+    protected function getClient(array $clientConfiguration)
+    {
+        $client = new Client($clientConfiguration);
+
+        return $client;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getClientConfiguration()
+    {
+        $config = $this->addCookiesToForwardDebugSession($this->clientConfiguration);
+        $config['handler'] = $this->getHandlerStack();
+
+        return $config;
+    }
+
+    /**
+     * @return \GuzzleHttp\HandlerStack
+     */
+    protected function getHandlerStack()
+    {
+        $handlerStackContainer = new HandlerStackContainer();
+
+        return $handlerStackContainer->getHandlerStack();
+    }
+
+    /**
+     * @param \Spryker\Shared\ZedRequest\Client\ObjectInterface $requestTransfer
+     * @param array|int|null $requestOptions
+     *
+     * @return array
+     */
+    protected function buildRequestOptions(ObjectInterface $requestTransfer, $requestOptions = null)
+    {
+        $normalizedRequestOptions = $this->normalizeRequestOptions($requestOptions);
+        $requestOptions = [
+            'json' => $requestTransfer->toArray(),
+            'allow_redirects' => [
+                'strict' => true,
+            ],
+        ];
+
+        $requestOptions = array_merge($requestOptions, $normalizedRequestOptions);
+
+        return $requestOptions;
+    }
+
+    /**
+     * @deprecated Added for BC reasons. Previously an integer was used for timeout settings. We now allow an array to pass more options to the request.
+     *
+     * @param array|int|null $requestOptions
+     *
+     * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidRequestOptionException
+     *
+     * @return array
+     */
+    protected function normalizeRequestOptions($requestOptions = null)
+    {
+        if (is_array($requestOptions)) {
+            return $requestOptions;
+        }
+
+        if ($requestOptions === null) {
+            return [];
+        }
+
+        if (is_int($requestOptions)) {
+            return ['timeout' => $requestOptions];
+        }
+
+        throw new InvalidRequestOptionException(sprintf('Invalid argument given. Allowed types are "int (previous accepted $timeoutInSeconds), array" found "%s"', gettype($requestOptions)));
     }
 
     /**

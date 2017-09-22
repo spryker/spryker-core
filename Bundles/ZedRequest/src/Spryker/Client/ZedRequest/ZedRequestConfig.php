@@ -8,6 +8,7 @@
 namespace Spryker\Client\ZedRequest;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 class ZedRequestConfig extends AbstractBundleConfig
@@ -45,14 +46,14 @@ class ZedRequestConfig extends AbstractBundleConfig
             }
 
             return $this->getConfig()->get(ZedRequestConstants::BASE_URL_SSL_ZED_API);
-        } else {
-            // @deprecated This is just for backward compatibility
-            if (!$this->getConfig()->hasKey(ZedRequestConstants::BASE_URL_ZED_API)) {
-                return 'http://' . $this->getConfig()->get(ZedRequestConstants::HOST_ZED_API);
-            }
-
-            return $this->getConfig()->get(ZedRequestConstants::BASE_URL_ZED_API);
         }
+
+        // @deprecated This is just for backward compatibility
+        if (!$this->getConfig()->hasKey(ZedRequestConstants::BASE_URL_ZED_API)) {
+            return 'http://' . $this->getConfig()->get(ZedRequestConstants::HOST_ZED_API);
+        }
+
+        return $this->getConfig()->get(ZedRequestConstants::BASE_URL_ZED_API);
     }
 
     /**
@@ -66,14 +67,28 @@ class ZedRequestConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getClientOptions()
+    public function getClientConfiguration()
     {
-        $clientOptions = [
-            'timeout' => ($timeoutInSeconds ?: static::$timeoutInSeconds),
+        $clientConfiguration = [
+            'timeout' => 60,
             'connect_timeout' => 1.5,
-            'handler' => $handlerStackContainer->getHandlerStack(),
         ];
 
-        return $clientOptions;
+        if (Config::hasKey(ZedRequestConstants::CLIENT_CONFIG)) {
+            $customClientConfiguration = $this->get(ZedRequestConstants::CLIENT_CONFIG);
+            $clientConfiguration = array_merge($clientConfiguration, $customClientConfiguration);
+        }
+
+        return $clientConfiguration;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTokenOptions()
+    {
+        return [
+            'cost' => $this->getHashCost(),
+        ];
     }
 }

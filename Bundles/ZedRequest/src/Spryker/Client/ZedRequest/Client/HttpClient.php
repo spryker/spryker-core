@@ -40,7 +40,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
      * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      * @param array $tokenGenerationOptions
-     * @param array $clientOptions
+     * @param array $clientConfiguration
      */
     public function __construct(
         $baseUrl,
@@ -49,9 +49,9 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
         UtilTextServiceInterface $utilTextService,
         UtilNetworkServiceInterface $utilNetworkService,
         array $tokenGenerationOptions = [],
-        array $clientOptions = []
+        array $clientConfiguration = []
     ) {
-        parent::__construct($baseUrl, $utilNetworkService, $clientOptions);
+        parent::__construct($baseUrl, $utilNetworkService, $clientConfiguration);
 
         $this->rawToken = $rawToken;
         $this->isAuthenticationEnabled = $isAuthenticationEnabled;

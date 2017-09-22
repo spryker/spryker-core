@@ -12,15 +12,18 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 interface ZedRequestClientInterface
 {
     /**
+     * Third argument has changed from int to array. BC compatibility method will
+     * convert the previous accepted integer to `['timeout => $timeoutInSeconds]`
+     *
      * @api
      *
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
-     * @param int|null $timeoutInSeconds
+     * @param array|int|null $requestOptions
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $timeoutInSeconds = null);
+    public function call($url, TransferInterface $object, $requestOptions = null);
 
     /**
      * @api
