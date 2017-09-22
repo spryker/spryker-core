@@ -62,4 +62,18 @@ class ZedRequestConfig extends AbstractBundleConfig
     {
         return $this->getConfig()->get(ZedRequestConstants::AUTH_ZED_ENABLED, true);
     }
+
+    /**
+     * @return array
+     */
+    public function getClientOptions()
+    {
+        $clientOptions = [
+            'timeout' => ($timeoutInSeconds ?: static::$timeoutInSeconds),
+            'connect_timeout' => 1.5,
+            'handler' => $handlerStackContainer->getHandlerStack(),
+        ];
+
+        return $clientOptions;
+    }
 }

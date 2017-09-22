@@ -37,7 +37,9 @@ class ZedRequestFactory extends AbstractFactory
             $this->getConfig()->isAuthenticationEnabled(),
             $this->getUtilTextService(),
             $this->getUtilNetworkService(),
-            $this->createTokenOptions()
+            $this->createTokenOptions(),
+            $this->getConfig()->getClientOptions()
+
         );
 
         return $httpClient;

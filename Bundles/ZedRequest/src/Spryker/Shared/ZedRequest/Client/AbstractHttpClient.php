@@ -91,18 +91,28 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected $utilNetworkService;
 
     /**
+     * @var array
+     */
+    protected $clientOptions;
+
+    /**
      * @param string $baseUrl
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
+     * @param array $clientOptions
      */
     public function __construct(
         $baseUrl,
-        UtilNetworkServiceInterface $utilNetworkService
+        UtilNetworkServiceInterface $utilNetworkService,
+        array $clientOptions = []
     ) {
         $this->baseUrl = $baseUrl;
         $this->utilNetworkService = $utilNetworkService;
+        $this->clientOptions = $clientOptions;
     }
 
     /**
+     * @deprecated Please use ZedRequestConstants::CLIENT_OPTIONS to change the default timeout.
+     *
      * @param int $timeoutInSeconds
      *
      * @return void
@@ -121,7 +131,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param string $pathInfo
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
-     * @param int|null $timeoutInSeconds
+     * @param array|int|null $requestOptions
      *
      * @throws \Spryker\Shared\ZedRequest\Client\Exception\RequestException
      *
@@ -131,7 +141,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $pathInfo,
         TransferInterface $transferObject = null,
         array $metaTransfers = [],
-        $timeoutInSeconds = null
+        $requestOptions = null
     ) {
         static::$requestCounter++;
 
