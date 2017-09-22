@@ -14,7 +14,8 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/util-text": "*"
   },
   "suggest": {
     "spryker/util-text": "If you want to use the UsersTableExpanderPlugin"
