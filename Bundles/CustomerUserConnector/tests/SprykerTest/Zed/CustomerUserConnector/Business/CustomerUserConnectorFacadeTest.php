@@ -50,6 +50,8 @@ class CustomerUserConnectorFacadeTest extends Unit
         // Assert
         $actualAssignedCustomerIds = $this->getAssignedCustomerIds($userTransfer->getIdUser());
 
+        sort($expectedAssignedCustomerIds);
+        sort($actualAssignedCustomerIds);
         $this->assertEquals($expectedAssignedCustomerIds, $actualAssignedCustomerIds);
     }
 
