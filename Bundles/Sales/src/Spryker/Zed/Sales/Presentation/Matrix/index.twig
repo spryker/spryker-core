@@ -1,5 +1,9 @@
 {% extends '@Sales/Layout/layout.twig' %}
 
+{% block section_title %}
+    {{ 'Overview of Order Matrix' | trans }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Matrix' } %}

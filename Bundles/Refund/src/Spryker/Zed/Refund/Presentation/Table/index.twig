@@ -1,7 +1,11 @@
 {% extends '@Application/Layout/layout.twig' %}
 
+{% block section_title %}
+    {{ 'Overview of Refunds' | trans }}
+{% endblock %}
+
 {% block content %}
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Refunds List' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of refunds' } %}
         {% block widget_content %}
             {{ refunds | raw }}
         {% endblock %}
