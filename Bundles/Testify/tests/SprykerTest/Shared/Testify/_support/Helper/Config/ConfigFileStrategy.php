@@ -81,7 +81,9 @@ class ConfigFileStrategy implements ConfigStrategyInterface
             return;
         }
 
-        unlink($this->getPathToConfigLocal());
+        if (file_exists($this->getPathToConfigLocal())) {
+            unlink($this->getPathToConfigLocal());
+        }
     }
 
 }
