@@ -31,8 +31,8 @@
                         <visible>0</visible>
                     </order-item>
                     <edit-address>
-                        <label>Edit Address</label>
-                        <title>Edit Address</title>
+                        <label>Edit Billing/Shipment Address</label>
+                        <title>Edit Billing/Shipment Address</title>
                         <bundle>sales</bundle>
                         <controller>edit</controller>
                         <action>address</action>

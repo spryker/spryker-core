@@ -98,6 +98,7 @@ class EditController extends AbstractController
 
         return $this->viewResponse([
             'idSalesOrder' => $idSalesOrder,
+            'idOrderAddress' => $idOrderAddress,
             'form' => $form->createView(),
         ]);
     }
