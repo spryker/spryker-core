@@ -249,11 +249,15 @@ class ProductTable extends AbstractProductTable
      */
     protected function getIsGiftCard(SpyProductAbstract $productAbstractEntity)
     {
-        if ($productAbstractEntity->getSpyGiftCardProductAbstractConfigurationLinks()->getFirst()) {
-            return true;
+        if (!method_exists($productAbstractEntity, 'getSpyGiftCardProductAbstractConfigurationLinks')) {
+            return false;
         }
 
-        return false;
+        if (!$productAbstractEntity->getSpyGiftCardProductAbstractConfigurationLinks()->getFirst()) {
+            return false;
+        }
+
+        return true;
     }
 
 }
