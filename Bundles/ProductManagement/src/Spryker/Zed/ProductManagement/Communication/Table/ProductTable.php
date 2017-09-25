@@ -28,7 +28,7 @@ class ProductTable extends AbstractProductTable
     const COL_STATUS = 'status';
 
     const COL_ACTIONS = 'actions';
-    const COL_IS_BUNDLE = 'is_bundle';
+    const COL_PRODUCT_TYPE = 'product_type';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -66,13 +66,13 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => 'Tax Set',
             static::COL_VARIANT_COUNT => 'Variants',
             static::COL_STATUS => 'Status',
-            static::COL_IS_BUNDLE => 'Contains bundles',
+            static::COL_PRODUCT_TYPE => 'Product type',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_STATUS,
-            static::COL_IS_BUNDLE,
+            static::COL_PRODUCT_TYPE,
             static::COL_ACTIONS,
         ]);
 
@@ -135,9 +135,27 @@ class ProductTable extends AbstractProductTable
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_IS_BUNDLE => $this->getIsBundleProductLable($productAbstractEntity),
+            static::COL_PRODUCT_TYPE => $this->getTypeName($productAbstractEntity),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productAbstractEntity)),
         ];
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    protected function getTypeName(SpyProductAbstract $productAbstractEntity)
+    {
+        if ($this->getIsBundleProduct($productAbstractEntity)) {
+            return 'Product Bundle';
+        }
+
+        if ($this->getIsGiftCard($productAbstractEntity)) {
+            return 'Gift card';
+        }
+
+        return 'Product';
     }
 
     /**
@@ -191,6 +209,8 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
+     * @deprecated Use getIsBundleProduct instead
+     *
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
@@ -204,6 +224,36 @@ class ProductTable extends AbstractProductTable
         }
 
         return 'No';
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    protected function getIsBundleProduct(SpyProductAbstract $productAbstractEntity)
+    {
+        foreach ($productAbstractEntity->getSpyProducts() as $productEntity) {
+            if ($productEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return bool
+     */
+    protected function getIsGiftCard(SpyProductAbstract $productAbstractEntity)
+    {
+        if ($productAbstractEntity->getSpyGiftCardProductAbstractConfigurationLinks()->getFirst()) {
+            return true;
+        }
+
+        return false;
     }
 
 }
