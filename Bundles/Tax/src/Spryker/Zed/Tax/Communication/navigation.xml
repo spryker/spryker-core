@@ -15,8 +15,8 @@
                 <action>list</action>
                 <pages>
                     <tax-rate-create>
-                        <label>Create New Tax Rate</label>
-                        <title>Create New Tax Rate</title>
+                        <label>Create Tax Rate</label>
+                        <title>Create Tax Rate</title>
                         <bundle>tax</bundle>
                         <controller>rate</controller>
                         <action>create</action>
@@ -52,8 +52,8 @@
 
                 <pages>
                     <tax-set-create>
-                        <label>Create New Tax Set</label>
-                        <title>Create New Tax Set</title>
+                        <label>Create Tax Set</label>
+                        <title>Create Tax Set</title>
                         <bundle>tax</bundle>
                         <controller>set</controller>
                         <action>create</action>
