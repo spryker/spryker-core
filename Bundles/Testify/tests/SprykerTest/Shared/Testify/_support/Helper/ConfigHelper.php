@@ -7,40 +7,63 @@
 
 namespace SprykerTest\Shared\Testify\Helper;
 
-use ArrayObject;
+use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 use Codeception\TestInterface;
 use ReflectionClass;
-use Spryker\Shared\Config\Config;
+use SprykerTest\Shared\Testify\Helper\Config\ConfigFileStrategy;
+use SprykerTest\Shared\Testify\Helper\Config\ConfigReflectionStrategy;
 
 class ConfigHelper extends Module
 {
 
     /**
-     * @var array
+     * @var \SprykerTest\Shared\Testify\Helper\Config\ConfigStrategyInterface
      */
-    protected $configCache;
+    protected $configStrategy;
 
     /**
-     * @return void
+     * @return \SprykerTest\Shared\Testify\Helper\Config\ConfigStrategyInterface
      */
-    public function _initialize()
+    protected function getConfigStrategy()
     {
-        Config::init();
-        $reflectionProperty = $this->getConfigReflectionProperty();
-        $this->configCache = $reflectionProperty->getValue()->getArrayCopy();
+        if (!$this->configStrategy) {
+            $this->configStrategy = $this->createConfigStrategy();
+        }
+
+        return $this->configStrategy;
     }
 
     /**
-     * @return \ReflectionProperty
+     * @return \SprykerTest\Shared\Testify\Helper\Config\ConfigFileStrategy|\SprykerTest\Shared\Testify\Helper\Config\ConfigReflectionStrategy|\SprykerTest\Shared\Testify\Helper\Config\ConfigStrategyInterface
      */
-    protected function getConfigReflectionProperty()
+    protected function createConfigStrategy()
     {
-        $reflection = new ReflectionClass(Config::class);
-        $reflectionProperty = $reflection->getProperty('config');
-        $reflectionProperty->setAccessible(true);
+        $moduleContainerConfig = $this->getModuleContainerConfig();
+        $className = $moduleContainerConfig['class_name'];
+        if (!preg_match('/PresentationTester/', $className)) {
+            $this->configStrategy = new ConfigReflectionStrategy();
+            $this->configStrategy->storeConfig();
 
-        return $reflectionProperty;
+            return $this->configStrategy;
+        }
+
+        $this->configStrategy = new ConfigFileStrategy();
+        $this->configStrategy->storeConfig();
+
+        return $this->configStrategy;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getModuleContainerConfig()
+    {
+        $moduleContainer = new ReflectionClass(ModuleContainer::class);
+        $configProperty = $moduleContainer->getProperty('config');
+        $configProperty->setAccessible(true);
+
+        return $configProperty->getValue($this->moduleContainer);
     }
 
     /**
@@ -51,10 +74,7 @@ class ConfigHelper extends Module
      */
     public function setConfig($key, $value)
     {
-        $configProperty = $this->getConfigReflectionProperty();
-        $config = $configProperty->getValue();
-        $config[$key] = $value;
-        $configProperty->setValue($config);
+        $this->getConfigStrategy()->setConfig($key, $value);
     }
 
     /**
@@ -64,10 +84,7 @@ class ConfigHelper extends Module
      */
     public function removeConfig($key)
     {
-        $configProperty = $this->getConfigReflectionProperty();
-        $config = $configProperty->getValue();
-        unset($config[$key]);
-        $configProperty->setValue($config);
+        $this->getConfigStrategy()->removeConfig($key);
     }
 
     /**
@@ -77,7 +94,7 @@ class ConfigHelper extends Module
      */
     public function _after(TestInterface $test)
     {
-        $this->resetConfig();
+        $this->getConfigStrategy()->resetConfig();
     }
 
     /**
@@ -85,16 +102,7 @@ class ConfigHelper extends Module
      */
     public function _afterSuite()
     {
-        $this->resetConfig();
-    }
-
-    /**
-     * @return void
-     */
-    private function resetConfig()
-    {
-        $reflectionProperty = $this->getConfigReflectionProperty();
-        $reflectionProperty->setValue(new ArrayObject($this->configCache));
+        $this->getConfigStrategy()->resetConfig();
     }
 
 }
