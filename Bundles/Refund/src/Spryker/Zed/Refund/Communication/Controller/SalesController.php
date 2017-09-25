@@ -31,6 +31,7 @@ class SalesController extends AbstractController
 
         return $this->viewResponse([
             'refunds' => $refunds,
+            'order' => $orderTransfer,
         ]);
     }
 
