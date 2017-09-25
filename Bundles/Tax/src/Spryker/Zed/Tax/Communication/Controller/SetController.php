@@ -38,7 +38,7 @@ class SetController extends AbstractController
 
             if ($taxSetForm->isValid()) {
                 $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
-                $this->addSuccessMessage(sprintf('Tax set %d created successfully.', $taxSetTransfer->getIdTaxSet()));
+                $this->addSuccessMessage(sprintf('Tax set %d was created successfully.', $taxSetTransfer->getIdTaxSet()));
                 $redirectUrl = Url::generate('/tax/set/edit', [
                     static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet(),
                 ])->build();
@@ -76,7 +76,7 @@ class SetController extends AbstractController
                 $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
 
                 if ($rowsAffected > 0) {
-                    $this->addSuccessMessage(sprintf('Tax set %d updated successfully.', $idTaxSet));
+                    $this->addSuccessMessage(sprintf('Tax set %d was updated successfully.', $idTaxSet));
                 }
             } else {
                 $this->addErrorMessage('Tax set is not updated. Please fill-in all required fields.');
@@ -117,7 +117,7 @@ class SetController extends AbstractController
         try {
             $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
             $this->getFacade()->deleteTaxSet($idTaxSet);
-            $this->addSuccessMessage(sprintf('Tax set %d deleted successfully.', $idTaxSet));
+            $this->addSuccessMessage(sprintf('Tax set %d was deleted successfully.', $idTaxSet));
         } catch (PropelException $e) {
             $this->addErrorMessage('Could not delete tax set. Is it assigned to product or shipping method?');
         }
