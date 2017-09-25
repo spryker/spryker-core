@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class Fixed implements CalculatorInterface
 {
+
     const PRICE_NET_MODE = 'NET_MODE';
 
     /**
@@ -60,7 +61,6 @@ class Fixed implements CalculatorInterface
             if ($discountTransfer->getPriceMode() === static::PRICE_NET_MODE) {
                 return $moneyValueTransfer->getNetAmount();
             }
-
 
             return $moneyValueTransfer->getGrossAmount();
         }

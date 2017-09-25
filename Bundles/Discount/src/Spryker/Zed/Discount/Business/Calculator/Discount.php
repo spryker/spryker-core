@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;

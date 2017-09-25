@@ -15,7 +15,9 @@
 <table class="table table-bordered">
     <thead>
     <tr>
-        <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
+        {%  if moneyValueFormViewCollection.vars.amount_per_store %}
+            <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
+        {% endif %}
         <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF;;"></th>
         <th>{{ 'Gross price' | trans }}</th>
         <th>{{ 'Net price' | trans }}</th>
@@ -25,7 +27,7 @@
     <tbody>
     {% for moneyValueFormView in moneyValueFormViewCollection %}
         <tr>
-            {% if moneyValueFormView.vars.store_name != lastStore or loop.first %}
+            {% if moneyValueFormViewCollection.vars.amount_per_store and (moneyValueFormView.vars.store_name != lastStore or loop.first) %}
             <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold" rowspan="{{ rowSpanTable[moneyValueFormView.vars.store_name] }}">
                 {{ moneyValueFormView.vars.store_name }}
             </td>

@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Money\Communication\Form\Type;
 
-use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
-use Spryker\Zed\Discount\Business\Exception\CalculatorException;
+use Exception;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -19,7 +18,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
@@ -27,6 +25,7 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class MoneyType extends AbstractType
 {
+
     const FIELD_NET_AMOUNT = 'net_amount';
     const FIELD_GROSS_AMOUNT = 'gross_amount';
     const FIELD_FK_CURRENCY = 'fk_currency';
@@ -47,18 +46,61 @@ class MoneyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addFieldAmount($builder, static::FIELD_NET_AMOUNT, $options)
-            ->addFieldAmount($builder, static::FIELD_GROSS_AMOUNT, $options)
+        $validationGroups = $options[static::OPTION_VALIDATION_GROUPS];
+        $this->addFieldAmount($builder, static::FIELD_NET_AMOUNT, $validationGroups)
+            ->addFieldAmount($builder, static::FIELD_GROSS_AMOUNT, $validationGroups)
             ->addFieldFkCurrency($builder)
             ->addFieldFkStore($builder);
 
-        $builder->addModelTransformer($this->getFactory()->createCurrencyAmountTransformer());
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($validationGroups) {
+                $moneyCurrencyOptions = $this->getFactory()
+                    ->createMoneyDataProvider()
+                    ->getMoneyCurrencyOptionsFor($event->getData());
+
+                $this->configureMoneyInputs(
+                    $event->getForm(),
+                    static::FIELD_NET_AMOUNT,
+                    $validationGroups,
+                    $moneyCurrencyOptions
+                );
+                $this->configureMoneyInputs(
+                    $event->getForm(),
+                    static::FIELD_GROSS_AMOUNT,
+                    $validationGroups,
+                    $moneyCurrencyOptions
+                );
+            }
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param string $fieldName
+     * @param string $validationGroups
+     * @param array $moneyCurrencyOptions
+     *
+     * @return void
+     */
+    protected function configureMoneyInputs(
+        FormInterface $form,
+        $fieldName,
+        $validationGroups,
+        array $moneyCurrencyOptions
+    ) {
+
+        $field = $form->get($fieldName);
+        $options = $field->getConfig()->getOptions();
+        $form->remove($fieldName);
+
+        $this->addFieldAmount($form, $fieldName, $validationGroups, array_merge($options, $moneyCurrencyOptions));
     }
 
     /**
      * Configures the options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver The resolver for the options
      *
      * @return void
      */
@@ -70,10 +112,12 @@ class MoneyType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface|\Symfony\Component\Form\FormInterface $builder
      * @param string $fieldName
+     * @param string $validationGroups
      * @param array $options
+     *
      * @return $this
      */
-    protected function addFieldAmount($builder, $fieldName, array $options = [])
+    protected function addFieldAmount($builder, $fieldName, $validationGroups, array $options = [])
     {
         $defaultOptions = [
             'attr' => [
@@ -82,20 +126,20 @@ class MoneyType extends AbstractType
             'constraints' => [
                 new LessThanOrEqual([
                     'value' => static::MAX_MONEY_INT,
-                    'groups' => $options[static::OPTION_VALIDATION_GROUPS],
+                    'groups' => $validationGroups,
                 ]),
                 new GreaterThanOrEqual([
                     'value' => static::MIN_MONEY_INT,
-                    'groups' => $options[static::OPTION_VALIDATION_GROUPS],
+                    'groups' => $validationGroups,
                 ]),
                 new Regex([
                     'pattern' => static::REGULAR_EXPRESSION_MONEY_VALUE,
-                    'groups' => $options[static::OPTION_VALIDATION_GROUPS],
+                    'groups' => $validationGroups,
                 ]),
             ],
         ];
 
-        $builder->add($fieldName, SimpleMoneyType::class, $defaultOptions);
+        $builder->add($fieldName, SimpleMoneyType::class, array_merge($defaultOptions, $options));
 
         return $this;
     }
@@ -111,6 +155,7 @@ class MoneyType extends AbstractType
 
         return $this;
     }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -125,12 +170,13 @@ class MoneyType extends AbstractType
 
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $viewData = $form->getViewData();
         if (!method_exists($viewData, 'getCurrency')) {
-            throw new \Exception(sprintf(
+            throw new Exception(sprintf(
                 'Transfer object "%s" missing "%s" method which should provide currency transfer for current formType.',
                 get_class($viewData),
                 'getCurrency'
@@ -140,4 +186,5 @@ class MoneyType extends AbstractType
         $view->vars['currency_symbol'] = $viewData->getCurrency()->getSymbol();
         $view->vars['store_name'] = $viewData->getCurrency()->getStore()->getName();
     }
+
 }

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -33,8 +34,6 @@ class StoreToKernelStoreBridge implements StoreToKernelStoreInterface
     /**
      * @param string $currentStoreName
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function initializeSetup($currentStoreName)
@@ -43,8 +42,6 @@ class StoreToKernelStoreBridge implements StoreToKernelStoreInterface
     }
 
     /**
-     * @throws \Spryker\Shared\Kernel\Locale\LocaleNotFoundException
-     *
      * @return string
      */
     public function getCurrentLocale()
@@ -115,8 +112,6 @@ class StoreToKernelStoreBridge implements StoreToKernelStoreInterface
     /**
      * @param string $currentLocale
      *
-     * @throws \InvalidArgumentException
-     *
      * @return void
      */
     public function setCurrentLocale($currentLocale)
@@ -168,8 +163,6 @@ class StoreToKernelStoreBridge implements StoreToKernelStoreInterface
 
     /**
      * @param string $currencyIsoCode
-     *
-     * @throws \InvalidArgumentException
      *
      * @return void
      */

@@ -14,8 +14,8 @@ use Spryker\Zed\Store\Dependency\StoreToKernelStoreBridge;
 
 class StoreDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const KERNEL_STORE = 'store';
 
+    const KERNEL_STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

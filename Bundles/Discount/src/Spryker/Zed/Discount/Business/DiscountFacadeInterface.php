@@ -519,7 +519,6 @@ interface DiscountFacadeInterface
      */
     public function getQueryStringValueOptions($type);
 
-
     /**
      * Specification:
      *  - Checks if current currency equals to provided in decision rule

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Currency;
 
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -65,4 +64,5 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

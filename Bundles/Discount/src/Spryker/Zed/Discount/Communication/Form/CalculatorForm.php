@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
-use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
@@ -20,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -211,7 +209,13 @@ class CalculatorForm extends AbstractType
      */
     protected function addMoneyValueCollectionType(FormBuilderInterface $builder)
     {
-        $builder->add(DiscountCalculatorTransfer::MONEY_VALUE_COLLECTION, MoneyCollectionType::class);
+        $builder->add(
+            DiscountCalculatorTransfer::MONEY_VALUE_COLLECTION,
+            MoneyCollectionType::class,
+            [
+                MoneyCollectionType::OPTION_AMOUNT_PER_STORE => false,
+            ]
+        );
 
         return $this;
     }

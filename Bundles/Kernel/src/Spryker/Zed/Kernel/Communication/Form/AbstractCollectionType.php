@@ -1,22 +1,23 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Communication\Form;
 
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Symfony\Component\Form\AbstractType as SymfonyAbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 abstract class AbstractCollectionType extends CollectionType
 {
+
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
@@ -172,4 +173,5 @@ abstract class AbstractCollectionType extends CollectionType
     {
         return new BundleConfigResolver();
     }
+
 }

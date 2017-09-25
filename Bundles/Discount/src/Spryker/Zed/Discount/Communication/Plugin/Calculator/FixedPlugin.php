@@ -10,7 +10,6 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
-use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()

@@ -54,4 +54,5 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
 
         return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitPrice());
     }
+
 }

@@ -71,12 +71,9 @@ class CurrencyReader implements CurrencyReaderInterface
         $currencyTransfer->setStore($this->storeFacade->getCurrentStore());
 
         return $currencyTransfer;
-
     }
 
     /**
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
-     *
      * @return \Generated\Shared\Transfer\CurrencyTransfer[]
      */
     public function getCurrentStoreCurrencies()
@@ -135,4 +132,5 @@ class CurrencyReader implements CurrencyReaderInterface
         }
         return $currencies;
     }
+
 }

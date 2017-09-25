@@ -16,7 +16,7 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
      */
     public function __construct($storeFacade)
     {
@@ -36,7 +36,7 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
      */
     public function getCurrencyIsoCode()
     {
-       return $this->storeFacade->getCurrencyIsoCode();
+        return $this->storeFacade->getCurrencyIsoCode();
     }
 
     /**
@@ -64,4 +64,5 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
     {
         return $this->storeFacade->getCurrentStore();
     }
+
 }

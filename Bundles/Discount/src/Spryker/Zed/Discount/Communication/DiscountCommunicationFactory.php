@@ -17,7 +17,6 @@ use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvide
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\GeneralForm;
-use Spryker\Zed\Discount\Communication\Form\MoneyAmountForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer;
@@ -27,7 +26,6 @@ use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
-use Spryker\Zed\Money\Communication\Form\Type\SpyPriceCollectionType;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 use Symfony\Component\Form\FormInterface;
 

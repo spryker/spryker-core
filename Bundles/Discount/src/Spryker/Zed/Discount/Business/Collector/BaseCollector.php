@@ -49,4 +49,5 @@ class BaseCollector
 
         return $discountableItemTransfer;
     }
+
 }

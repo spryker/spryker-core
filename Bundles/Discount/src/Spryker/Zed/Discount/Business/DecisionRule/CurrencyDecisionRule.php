@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 
 class CurrencyDecisionRule implements DecisionRuleInterface
 {

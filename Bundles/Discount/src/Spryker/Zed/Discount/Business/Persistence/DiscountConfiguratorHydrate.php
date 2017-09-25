@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
-use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;

@@ -17,6 +17,7 @@ use Twig_SimpleFilter;
 
 /**
  * @method \Spryker\Zed\Money\Business\MoneyFacade getFacade()
+ * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -82,9 +83,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
         return $filter;
     }
 
-
     /**
-     *
      * @param \Twig_Environment $twig
      *
      * @return \Twig\TwigFunction

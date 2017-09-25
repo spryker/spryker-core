@@ -6,13 +6,10 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
-use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
-use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;

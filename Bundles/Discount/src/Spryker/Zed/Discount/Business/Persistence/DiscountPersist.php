@@ -382,11 +382,12 @@ class DiscountPersist implements DiscountPersistInterface
      */
     protected function saveDiscountMoneyValues(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
-        if ($discountConfiguratorTransfer->getDiscountCalculator()->getCalculatorPlugin() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED) {
+        $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
+        if ($discountCalculatorTransfer->getCalculatorPlugin() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED) {
             return;
         }
 
-        foreach ($discountConfiguratorTransfer->getDiscountCalculator()->getMoneyValueCollection() as $moneyValueTransfer) {
+        foreach ($discountCalculatorTransfer->getMoneyValueCollection() as $moneyValueTransfer) {
             $discountAmountEntity = $this->discountQueryContainer
                 ->queryDiscountAmountById($moneyValueTransfer->getIdEntity())
                 ->findOneOrCreate();
