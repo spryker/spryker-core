@@ -30,7 +30,7 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idGlossaryKey = $this->castId($request->query->get(self::URL_PARAMETER_GLOSSARY_KEY));
+        $idGlossaryKey = $this->castId($request->query->get(static::URL_PARAMETER_GLOSSARY_KEY));
         $formData = $this
             ->getFactory()
             ->createTranslationDataProvider()
