@@ -1,7 +1,7 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Edit tax set ' | trans ~ form.vars.value.name %}
+{% block section_title 'Edit Tax Set ' | trans ~ form.vars.value.name %}
 
 {% block action %}
     {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}

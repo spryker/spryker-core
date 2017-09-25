@@ -1,7 +1,7 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'View tax rate ' | trans ~ taxRate.name %}
+{% block section_title 'View Tax Rate ' | trans ~ taxRate.name %}
 
 {% block action %}
     {{ editActionButton(url('/tax/rate/edit', {'id-tax-rate': taxRate.idTaxRate}), 'Edit' | trans) }}
