@@ -17,10 +17,10 @@ use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
-use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
@@ -585,7 +585,7 @@ class DiscountFacadeTest extends Unit
 
         $discountableItemTransfer = new DiscountableItemTransfer();
         $discountableItemTransfer->setQuantity(3);
-        $discountableItemTransfer->setUnitGrossPrice(30);
+        $discountableItemTransfer->setUnitPrice(30);
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($calculatedDiscounts);
         $discountableItems[] = $discountableItemTransfer;
 
@@ -607,10 +607,10 @@ class DiscountFacadeTest extends Unit
         $currencyTransfer->setCode('EUR');
         $discountTransfer->setCurrency($currencyTransfer);
 
-        $discountMoneyTransfer = new DiscountMoneyAmountTransfer();
-        $discountMoneyTransfer->setAmount(50);
-        $discountMoneyTransfer->setCurrencyIsoCode('EUR');
-        $discountTransfer->addDiscountMoneyAmount($discountMoneyTransfer);
+        $moneyValueTransfer = new MoneyValueTransfer();
+        $moneyValueTransfer->setGrossAmount(50);
+        $moneyValueTransfer->setCurrency($currencyTransfer);
+        $discountTransfer->addMoneyValue($moneyValueTransfer);
         $amount = $discountFacade->calculateFixedDiscount([], $discountTransfer);
 
         $this->assertEquals(50, $amount);
@@ -637,7 +637,7 @@ class DiscountFacadeTest extends Unit
 
             $discountableItemTransfer = new DiscountableItemTransfer();
             $discountableItemTransfer->setQuantity(1);
-            $discountableItemTransfer->setUnitGrossPrice($price);
+            $discountableItemTransfer->setUnitPrice($price);
             $discountableItemTransfer->setOriginalItemCalculatedDiscounts($calculatedDiscounts);
             $discountableItems->append($discountableItemTransfer);
         }
@@ -647,8 +647,8 @@ class DiscountFacadeTest extends Unit
         $discountFacade = $this->createDiscountFacade();
         $discountFacade->distributeAmount($collectedDiscountTransfer);
 
-        $firstItemDistributedAmount = $discountableItems[0]->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
-        $secondItemDistributedAmount = $discountableItems[1]->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
+        $firstItemDistributedAmount = $discountableItems[0]->getOriginalItemCalculatedDiscounts()[0]->getUnitAmount();
+        $secondItemDistributedAmount = $discountableItems[1]->getOriginalItemCalculatedDiscounts()[0]->getUnitAmount();
 
         $this->assertEquals(14, $firstItemDistributedAmount);
         $this->assertEquals(86, $secondItemDistributedAmount);

@@ -143,7 +143,7 @@ class PercentageTest extends Unit
 
         foreach ($grossPrices as $grossPrice) {
             $discountableItems = new DiscountableItemTransfer();
-            $discountableItems->setUnitGrossPrice($grossPrice);
+            $discountableItems->setUnitPrice($grossPrice);
             $discountableItems->setQuantity(1);
             $discountableItems->setOriginalItemCalculatedDiscounts(new ArrayObject());
 

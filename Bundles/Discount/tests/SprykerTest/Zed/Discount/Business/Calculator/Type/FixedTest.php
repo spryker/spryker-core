@@ -9,9 +9,9 @@ namespace SprykerTest\Zed\Discount\Business\Calculator\Type;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
 
 /**
@@ -80,15 +80,16 @@ class FixedTest extends Unit
     protected function createDiscountTransfer($amount)
     {
         $discountTransfer = new DiscountTransfer();
+
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
         $discountTransfer->setCurrency($currencyTransfer);
 
-        $discountMoneyAmountTransfer = new DiscountMoneyAmountTransfer();
-        $discountMoneyAmountTransfer->setCurrencyIsoCode('EUR');
-        $discountMoneyAmountTransfer->setAmount($amount);
+        $moneyValueTransfer = new MoneyValueTransfer();
+        $moneyValueTransfer->setCurrency($currencyTransfer);
+        $moneyValueTransfer->setGrossAmount($amount);
 
-        $discountTransfer->addDiscountMoneyAmount($discountMoneyAmountTransfer);
+        $discountTransfer->addMoneyValue($moneyValueTransfer);
 
         return $discountTransfer;
     }

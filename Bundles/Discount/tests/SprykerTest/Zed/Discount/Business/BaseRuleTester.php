@@ -69,7 +69,7 @@ class BaseRuleTester extends Unit
     protected function createItemTransfer($price = 0, $quantity = 0, $sku = '')
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitGrossPrice($price);
+        $itemTransfer->setUnitPrice($price);
         $itemTransfer->setQuantity($quantity);
         $itemTransfer->setSku($sku);
 

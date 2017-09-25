@@ -53,8 +53,9 @@ class Fixed implements CalculatorInterface
      */
     protected function getDiscountAmountForCurrentCurrency(DiscountTransfer $discountTransfer)
     {
+        $currentCurrency = $discountTransfer->getCurrency();
         foreach ($discountTransfer->getMoneyValueCollection() as $moneyValueTransfer) {
-            if ($discountTransfer->getCurrency()->getCode() !== $moneyValueTransfer->getCurrency()->getCode()) {
+            if ($currentCurrency->getCode() !== $moneyValueTransfer->getCurrency()->getCode()) {
                 continue;
             }
 

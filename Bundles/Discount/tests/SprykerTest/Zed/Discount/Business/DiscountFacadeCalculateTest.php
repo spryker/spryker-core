@@ -269,7 +269,7 @@ class DiscountFacadeCalculateTest extends Unit
         $discountAmount = new SpyDiscountAmount();
         $currencyEntity = $this->getCurrency();
         $discountAmount->setFkCurrency($currencyEntity->getIdCurrency());
-        $discountAmount->setAmount(100);
+        $discountAmount->setGrossAmount(100);
         $discountAmount->setFkDiscount($discountEntity->getIdDiscount());
         $discountAmount->save();
 
