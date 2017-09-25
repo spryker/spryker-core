@@ -158,7 +158,6 @@ class SalesFacadeSaveOrderTest extends Unit
         $country->save();
 
         $quoteTransfer = new QuoteTransfer();
-
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
         $quoteTransfer->setCurrency($currencyTransfer);
