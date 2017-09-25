@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class ShipmentMethodFilter implements ShipmentMethodFilterInterface
 {
 
-    const NO_SHIPMENT_METHOD = 'Noshipment';
+    const NO_SHIPMENT_METHOD = 'Email';
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
