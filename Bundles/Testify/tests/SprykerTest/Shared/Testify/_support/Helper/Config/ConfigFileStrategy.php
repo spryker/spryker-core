@@ -16,6 +16,11 @@ class ConfigFileStrategy implements ConfigStrategyInterface
     protected $configCache;
 
     /**
+     * @var bool
+     */
+    protected $fileWasPresent = true;
+
+    /**
      * @return void
      */
     public function storeConfig()
@@ -27,6 +32,7 @@ class ConfigFileStrategy implements ConfigStrategyInterface
             return;
         }
 
+        $this->fileWasPresent = false;
         file_put_contents($pathToConfigLocal, '<?php' . PHP_EOL);
     }
 
@@ -46,40 +52,10 @@ class ConfigFileStrategy implements ConfigStrategyInterface
      */
     public function setConfig($key, $value)
     {
-        $value = $this->buildValue($value);
+        $value = var_export($value, true);
         $configuration = sprintf('$config["%s"] = %s;', $key, $value) . PHP_EOL;
 
         file_put_contents($this->getPathToConfigLocal(), $configuration, FILE_APPEND);
-    }
-
-    /**
-     * @param mixed $value
-     *
-     * @return string
-     */
-    protected function buildValue($value)
-    {
-        if (is_string($value)) {
-            $value = sprintf('"%s"', $value);
-        }
-
-        if (is_bool($value)) {
-            $value = ($value) ? 'true' : 'false';
-        }
-
-        if (is_array($value)) {
-            $arrayAsString = '[' . PHP_EOL;
-            foreach ($value as $key => $innerValue) {
-                if (is_string($key)) {
-                    $key = sprintf('"%s"', $key);
-                }
-                $arrayAsString .= sprintf('%s => %s,', $key,  $this->buildValue($innerValue)) . PHP_EOL;
-            }
-            $arrayAsString .= ']';
-            $value = $arrayAsString;
-        }
-
-        return $value;
     }
 
     /**
@@ -99,7 +75,13 @@ class ConfigFileStrategy implements ConfigStrategyInterface
      */
     public function resetConfig()
     {
-        file_put_contents($this->getPathToConfigLocal(), $this->configCache);
+        if ($this->fileWasPresent) {
+            file_put_contents($this->getPathToConfigLocal(), $this->configCache);
+
+            return;
+        }
+
+        unlink($this->getPathToConfigLocal());
     }
 
 }
