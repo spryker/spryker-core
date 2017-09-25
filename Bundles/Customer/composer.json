@@ -19,10 +19,12 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/assertion": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/console": "*",
     "spryker/propel": "*",
+    "spryker/sales": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"

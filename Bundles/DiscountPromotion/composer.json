@@ -12,6 +12,8 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
+    "spryker/calculation": "*",
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",

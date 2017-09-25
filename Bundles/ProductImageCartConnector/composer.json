@@ -7,6 +7,7 @@
     "spryker/product-image": "^3.1.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",

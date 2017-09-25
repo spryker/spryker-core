@@ -14,9 +14,9 @@ class CartStub extends ZedRequestStub implements CartStubInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function addItem(CartChangeTransfer $cartChangeTransfer)
     {
@@ -24,9 +24,9 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function removeItem(CartChangeTransfer $changeTransfer)
     {

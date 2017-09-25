@@ -5,14 +5,11 @@
   "require": {
     "spryker/kernel": "^3.0.0"
   },
+  "require-dev": {
+    "spryker/cart": "^3.0.0"
+  },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."
-  },
-  "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Function": "tests/"
-    }
   },
   "autoload-dev": {
     "psr-0": {

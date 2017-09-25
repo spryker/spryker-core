@@ -14,7 +14,7 @@ class CalculationFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\Calculation\Zed\CalculationStub
+     * @return \Spryker\Client\Calculation\Zed\CalculationStubInterface
      */
     public function createZedStub()
     {

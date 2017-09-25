@@ -12,6 +12,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

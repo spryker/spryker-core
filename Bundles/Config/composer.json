@@ -8,7 +8,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/silex": "You need to have Silex installed to use the Config Profiler",

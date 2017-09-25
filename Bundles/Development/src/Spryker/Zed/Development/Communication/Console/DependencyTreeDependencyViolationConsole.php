@@ -82,6 +82,10 @@ class DependencyTreeDependencyViolationConsole extends Console
                     $violations[] = $composerDependency['src'] . ' is optional but in require';
                 }
 
+                if ($composerDependency['isOptional'] && !$composerDependency['composerRequireDev']) {
+                    $violations[] = $composerDependency['src'] . ' is optional but for testing it must be declared in require-dev';
+                }
+
                 if ($this->isMissingInSrc($composerDependency)) {
                     $violations[] = 'src: - / require: ' . $composerDependency['composerRequire'];
                 }
@@ -90,7 +94,7 @@ class DependencyTreeDependencyViolationConsole extends Console
                     $violations[] = 'tests: ' . $composerDependency['tests'] . ' / require-dev: -';
                 }
 
-                if ($this->isMissingInTests($composerDependency)) {
+                if ($this->isMissingInTests($composerDependency) && !$composerDependency['isOptional']) {
                     $violations[] = 'tests: - / require-dev: ' . $composerDependency['composerRequireDev'];
                 }
 

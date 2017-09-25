@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Shipment\Zed;
+namespace Spryker\Client\Calculation\Zed;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ShipmentStubInterface
+interface CalculationStubInterface
 {
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+    public function recalculate(QuoteTransfer $quoteTransfer);
 
 }
