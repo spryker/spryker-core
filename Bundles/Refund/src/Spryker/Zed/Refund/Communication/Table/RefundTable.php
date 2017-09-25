@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Refund\Communication\Table;
 
 use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -20,6 +19,7 @@ class RefundTable extends AbstractTable
 
     const ACTIONS = 'Actions';
     const SPY_SALES_ORDER = 'SpySalesOrder';
+    const COL_CURRENCY_ISO_CODE = 'spy_sales_order.currency_iso_code';
 
     /**
      * @var \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface
@@ -123,8 +123,8 @@ class RefundTable extends AbstractTable
      */
     protected function findCurrencyIsoCode(array $item)
     {
-        if (isset($item[static::SPY_SALES_ORDER])) {
-            return $item[static::SPY_SALES_ORDER][SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE];
+        if (isset($item[static::SPY_SALES_ORDER]) && isset($item[static::SPY_SALES_ORDER][static::COL_CURRENCY_ISO_CODE])) {
+            return $item[static::SPY_SALES_ORDER][static::COL_CURRENCY_ISO_CODE];
         }
 
         return null;
