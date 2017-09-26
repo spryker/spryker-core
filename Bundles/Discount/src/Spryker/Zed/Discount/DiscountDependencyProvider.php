@@ -329,7 +329,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addDiscountConfigurationExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER] = function () {
             return $this->getDiscountConfigurationExpanderPlugins();
         };
 
@@ -353,7 +353,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addDiscountFormExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER] = function () {
             return $this->getDiscountFormExpanderPlugins();
         };
 
@@ -377,7 +377,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDiscountFormDataProviderExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER] = function () {
             return $this->getDiscountFormDataProviderExpanderPlugins();
         };
 
@@ -399,7 +399,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDiscountViewBlockProviderPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER] = function () {
             return $this->getDiscountViewTemplateProviderPlugins();
         };
 
@@ -421,7 +421,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDiscountApplicableFilterPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function () {
             return $this->getDiscountApplicableFilterPlugins();
         };
 

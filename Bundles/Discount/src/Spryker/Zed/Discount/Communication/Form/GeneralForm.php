@@ -54,7 +54,7 @@ class GeneralForm extends AbstractType
         $this->addDiscountType($builder)
             ->addDisplayNameField($builder)
             ->addDescriptionField($builder)
-            ->addExclusive($builder, $options)
+            ->addExclusive($builder)
             ->addValidFromField($builder)
             ->addValidToField($builder);
     }
@@ -128,11 +128,10 @@ class GeneralForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addExclusive(FormBuilderInterface $builder, array $options)
+    protected function addExclusive(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_EXCLUSIVE, ChoiceType::class, [
             'expanded' => true,
