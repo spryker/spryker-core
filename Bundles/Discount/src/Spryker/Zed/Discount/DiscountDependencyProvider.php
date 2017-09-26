@@ -20,6 +20,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\GrandTotalDecisionRul
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\ItemPriceDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\ItemQuantityDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MonthDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\PriceModeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
@@ -130,6 +131,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         return [
             new SkuDecisionRulePlugin(),
             new CurrencyDecisionRulePlugin(),
+            new PriceModeDecisionRulePlugin(),
             new GrandTotalDecisionRulePlugin(),
             new SubTotalDecisionRulePlugin(),
             new TotalQuantityDecisionRulePlugin(),

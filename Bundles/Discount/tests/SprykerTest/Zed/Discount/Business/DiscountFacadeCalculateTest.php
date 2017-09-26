@@ -315,6 +315,7 @@ class DiscountFacadeCalculateTest extends Unit
         $decisionRulePlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
         $collectorStrategyPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
         $applicableFilterPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
+        $currencyFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
 
         $container = new Container();
 
@@ -346,7 +347,10 @@ class DiscountFacadeCalculateTest extends Unit
 
         $container[DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function () use ($applicableFilterPlugins) {
             return $applicableFilterPlugins;
+        };
 
+        $container[DiscountDependencyProvider::FACADE_CURRENCY] = function () use ($currencyFacade) {
+            return $currencyFacade;
         };
 
         $discountBusinessFactory->setContainer($container);

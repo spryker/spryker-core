@@ -61,7 +61,9 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
     {
         $discountableItemTransfer = new DiscountableItemTransfer();
         $discountableItemTransfer->fromArray($itemTransfer->toArray(), true);
-        $discountableItemTransfer->setUnitGrossPrice($this->getPrice($itemTransfer, $priceMode));
+        $price = $this->getPrice($itemTransfer, $priceMode);
+        $discountableItemTransfer->setUnitPrice($price);
+        $discountableItemTransfer->setUnitGrossPrice($price);
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($itemTransfer->getCalculatedDiscounts());
         $discountableItemTransfer->setOriginalItem($itemTransfer);
 
@@ -69,8 +71,6 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
     }
 
     /**
-     * @deprecated This method calculated gross price when in tax mode, because discounts currently working with gross mode, will be removed in the future
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
      *
@@ -79,7 +79,7 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
     protected function getPrice(ItemTransfer $itemTransfer, $priceMode)
     {
         if ($priceMode === 'NET_MODE') {
-            return $itemTransfer->getUnitNetPrice() + (int)round($itemTransfer->getUnitNetPrice() * $itemTransfer->getTaxRate() / 100);
+            return $itemTransfer->getUnitNetPrice();
         } else {
             return $itemTransfer->getUnitGrossPrice();
         }

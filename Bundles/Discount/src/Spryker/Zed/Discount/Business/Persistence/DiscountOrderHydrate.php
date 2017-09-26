@@ -183,6 +183,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         $calculatedDiscountTransfer->setIdDiscount($salesOrderDiscountEntity->getIdSalesDiscount());
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
         $calculatedDiscountTransfer->setUnitGrossAmount((int)$salesOrderDiscountEntity->getAmount());
+        $calculatedDiscountTransfer->setUnitAmount($salesOrderDiscountEntity->getAmount());
         $calculatedDiscountTransfer->setQuantity(1);
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {

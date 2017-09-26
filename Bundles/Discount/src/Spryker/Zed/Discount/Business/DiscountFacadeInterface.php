@@ -537,4 +537,23 @@ interface DiscountFacadeInterface
         ClauseTransfer $clauseTransfer
     );
 
+    /**
+     *
+     * Specification:
+     *  - Check if price mode equals provided in decision rule
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isPriceModeDecisionRuleSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    );
+
 }

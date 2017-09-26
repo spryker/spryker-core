@@ -8,9 +8,6 @@
 namespace Spryker\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Propel\Runtime\Collection\Collection;
@@ -18,6 +15,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
+use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -53,21 +51,29 @@ class Discount implements DiscountInterface
     protected $discountApplicableFilterPlugins = [];
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
+     */
+    protected $discountEntityMapper;
+
+    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface $voucherValidator
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
         CalculatorInterface $calculator,
         SpecificationBuilderInterface $decisionRuleBuilder,
-        VoucherValidatorInterface $voucherValidator
+        VoucherValidatorInterface $voucherValidator,
+        DiscountEntityMapperInterface $discountEntityMapper
     ) {
         $this->queryContainer = $queryContainer;
         $this->calculator = $calculator;
         $this->decisionRuleBuilder = $decisionRuleBuilder;
         $this->voucherValidator = $voucherValidator;
+        $this->discountEntityMapper = $discountEntityMapper;
     }
 
     /**
@@ -206,21 +212,9 @@ class Discount implements DiscountInterface
      */
     protected function hydrateDiscountTransfer(SpyDiscount $discountEntity, QuoteTransfer $quoteTransfer)
     {
-        $discountTransfer = new DiscountTransfer();
+        $discountTransfer = $this->discountEntityMapper->mapFromEntity($discountEntity);
         $discountTransfer->setCurrency($quoteTransfer->getCurrency());
         $discountTransfer->setPriceMode($quoteTransfer->getPriceMode());
-        $discountTransfer->fromArray($discountEntity->toArray(), true);
-
-        foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
-            $moneyValueTransfer = new MoneyValueTransfer();
-            $moneyValueTransfer->fromArray($discountAmountEntity->toArray(), true);
-
-            $currencyTransfer = new CurrencyTransfer();
-            $currencyTransfer->fromArray($discountAmountEntity->getCurrency()->toArray());
-            $moneyValueTransfer->setCurrency($currencyTransfer);
-
-            $discountTransfer->addMoneyValue($moneyValueTransfer);
-        }
 
         return $discountTransfer;
     }

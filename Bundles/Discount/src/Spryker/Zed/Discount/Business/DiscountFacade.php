@@ -681,4 +681,26 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isPriceModeDecisionRuleSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+
+         return $this->getFactory()
+             ->createPriceModeDecisionRule()
+             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
 }
