@@ -124,6 +124,8 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      * You can specify the key type of the array by passing one of the class
      * type constants.
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param string $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
      *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                    Defaults to TableMap::TYPE_FIELDNAME.
@@ -139,10 +141,15 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
         $alreadyDumpedObjects = [],
         $includeForeignObjects = false
     ) {
+        if (isset($alreadyDumpedObjects['SpySalesOrder'][$this->hashCode()])) {
+            return '*RECURSION*';
+        }
+
         $array = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
 
         if (!property_exists($this, static::COL_FK_CUSTOMER) || isset($array[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-            $array[static::COL_FK_CUSTOMER] = $this->getFkCustomer();
+            $idCustomer = $this->getFkCustomer();
+            $array[static::COL_FK_CUSTOMER] = $idCustomer;
         }
 
         return $array;
