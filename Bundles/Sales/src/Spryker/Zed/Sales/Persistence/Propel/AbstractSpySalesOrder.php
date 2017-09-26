@@ -115,14 +115,10 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
-     *
-     * This is for bc reasons, because we don't have database foreign key from fk_customer.
-     * Will be removed in the future.
-     *
      * Exports the object as an array.
      *
-     * You can specify the key type of the array by passing one of the class
-     * type constants.
+     * This is for BC reasons, because we don't have database foreign key from fk_customer anymore.
+     * Will be removed in the future. Please migrate away from requiring this field.
      *
      * @deprecated Will be removed in the next major.
      *
