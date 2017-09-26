@@ -139,10 +139,15 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
         $alreadyDumpedObjects = [],
         $includeForeignObjects = false
     ) {
+        if (isset($alreadyDumpedObjects['SpySalesOrder'][$this->hashCode()])) {
+            return '*RECURSION*';
+        }
+
         $array = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
 
         if (!property_exists($this, static::COL_FK_CUSTOMER) || isset($array[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-            $array[static::COL_FK_CUSTOMER] = $this->getFkCustomer();
+            $idCustomer = $this->getFkCustomer();
+            $array[static::COL_FK_CUSTOMER] = $idCustomer;
         }
 
         return $array;
