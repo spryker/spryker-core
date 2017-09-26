@@ -591,7 +591,10 @@ class DiscountFacadeTest extends Unit
 
         $discountFacade = $this->createDiscountFacade();
 
-        $amount = $discountFacade->calculatePercentage($discountableItems, 10 * 100);
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setAmount(10 * 100);
+
+        $amount = $discountFacade->calculatePercentageDiscount($discountableItems, $discountTransfer);
 
         $this->assertEquals(9, $amount);
     }
