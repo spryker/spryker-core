@@ -22,15 +22,6 @@ interface CmsBlockQueryContainerInterface
     /**
      * @api
      *
-     * @param array $ids
-     *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
-     */
-    public function queryCmsBlockByIds(array $ids);
-
-    /**
-     * @api
-     *
      * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
@@ -105,14 +96,5 @@ interface CmsBlockQueryContainerInterface
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingById($idGlossaryKeyMapping);
-
-    /**
-     * @api
-     *
-     * @param array $cmsBlockIds
-     *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
-     */
-    public function queryBlockWithRelationsByIds(array $cmsBlockIds);
 
 }

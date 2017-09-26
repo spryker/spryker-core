@@ -40,6 +40,6 @@ interface EventConstants
      *
      * @api
      */
-    const EVENT_ERROR_QUEUE = 'event.error';
+    const EVENT_QUEUE_ERROR = 'event.error';
 
 }

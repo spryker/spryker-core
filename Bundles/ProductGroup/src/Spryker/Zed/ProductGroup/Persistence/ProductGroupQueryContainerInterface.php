@@ -24,14 +24,14 @@ interface ProductGroupQueryContainerInterface
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
      */
-    public function queryProductAbstractGroup();
+    public function queryAllProductAbstractGroups();
 
     /**
      * @api
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
      */
-    public function queryProductGroup();
+    public function queryAllProductGroups();
 
     /**
      * @api

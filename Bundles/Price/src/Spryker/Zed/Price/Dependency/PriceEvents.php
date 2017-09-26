@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Price\Dependency;
 
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\Price\Persistence\Map\SpyPriceTypeTableMap;
-
 interface PriceEvents
 {
 
@@ -19,12 +16,12 @@ interface PriceEvents
     const PRICE_PRODUCT_PUBLISH = 'Price.product.publish';
     const PRICE_PRODUCT_UNPUBLISH = 'Price.product.unpublish';
 
-    const ENTITY_SPY_PRICE_PRODUCT_CREATE = 'Entity.' . SpyPriceProductTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_PRICE_PRODUCT_UPDATE = 'Entity.' . SpyPriceProductTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_PRICE_PRODUCT_DELETE = 'Entity.' . SpyPriceProductTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_PRICE_PRODUCT_CREATE = 'Entity.spy_price_product.create';
+    const ENTITY_SPY_PRICE_PRODUCT_UPDATE = 'Entity.spy_price_product.update';
+    const ENTITY_SPY_PRICE_PRODUCT_DELETE = 'Entity.spy_price_product.delete';
 
-    const ENTITY_SPY_PRICE_TYPE_CREATE = 'Entity.' . SpyPriceTypeTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_PRICE_TYPE_UPDATE = 'Entity.' . SpyPriceTypeTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_PRICE_TYPE_DELETE = 'Entity.' . SpyPriceTypeTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_PRICE_TYPE_CREATE = 'Entity.spy_price_type.create';
+    const ENTITY_SPY_PRICE_TYPE_UPDATE = 'Entity.spy_price_type.update';
+    const ENTITY_SPY_PRICE_TYPE_DELETE = 'Entity.spy_price_type.delete';
 
 }

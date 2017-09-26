@@ -51,7 +51,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
-    public function queryProductRelations()
+    public function queryAllProductRelations()
     {
         return $this->getFactory()
             ->createProductRelationQuery();

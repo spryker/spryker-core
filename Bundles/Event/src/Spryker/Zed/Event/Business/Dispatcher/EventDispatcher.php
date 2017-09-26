@@ -66,10 +66,8 @@ class EventDispatcher implements EventDispatcherInterface
         foreach ($this->extractEventListeners($eventName) as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
                 $this->eventQueueProducer->enqueueListener($eventName, $eventTransfer, $eventListener->getListenerName());
-            } else {
-                if ($eventListener instanceof EventHandlerInterface) {
-                    $eventListener->handle($eventTransfer, $eventName);
-                }
+            } elseif ($eventListener instanceof EventHandlerInterface) {
+                $eventListener->handle($eventTransfer, $eventName);
             }
             $this->logEventHandle($eventName, $eventTransfer, $eventListener);
         }

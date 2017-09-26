@@ -28,21 +28,21 @@ interface ProductOptionQueryContainerInterface
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */
-    public function queryProductOptionGroup();
+    public function queryAllProductOptionGroups();
 
     /**
      * @api
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
-    public function queryProductAbstractProductOptionGroup();
+    public function queryAllProductAbstractProductOptionGroups();
 
     /**
      * @api
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
-    public function queryProductOptionValues();
+    public function queryAllProductOptionValues();
 
     /**
      * @api

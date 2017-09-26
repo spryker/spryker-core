@@ -88,14 +88,4 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductCategoryChildrenMappingsByCategoryNodeId($idCategoryNode);
 
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     * @param array $idsCategoryNode
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryProductCategoryMappingsByIdAbstractProductAndIdsCategoryNode($idProductAbstract, array $idsCategoryNode);
-
 }

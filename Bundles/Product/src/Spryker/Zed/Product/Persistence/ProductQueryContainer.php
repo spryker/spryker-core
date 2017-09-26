@@ -213,19 +213,4 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
     }
 
-    /**
-     * @api
-     *
-     * @param array $abstractProductIds
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstractWithProductByAbstractProductIds(array $abstractProductIds)
-    {
-        return $this->getFactory()
-            ->createProductAbstractQuery()
-            ->filterByIdProductAbstract_In($abstractProductIds)
-            ->joinWithSpyProduct();
-    }
-
 }

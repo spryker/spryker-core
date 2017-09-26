@@ -132,13 +132,4 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductAbstractWithName($idLocale);
 
-    /**
-     * @api
-     *
-     * @param array $abstractProductIds
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstractWithProductByAbstractProductIds(array $abstractProductIds);
-
 }

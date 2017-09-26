@@ -25,7 +25,7 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
-    public function queryProductRelations();
+    public function queryAllProductRelations();
 
     /**
      * @api

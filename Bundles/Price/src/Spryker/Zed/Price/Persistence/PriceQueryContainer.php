@@ -50,7 +50,7 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
-    public function queryAllPriceProduct()
+    public function queryAllPriceProducts()
     {
         return $this->getFactory()->createPriceProductQuery();
     }

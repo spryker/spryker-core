@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\ProductImage\Dependency;
 
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
-
 interface ProductImageEvents
 {
 
@@ -20,16 +16,16 @@ interface ProductImageEvents
     const PRODUCT_IMAGE_PRODUCT_PUBLISH = 'ProductImage.product.publish';
     const PRODUCT_IMAGE_PRODUCT_UNPUBLISH = 'ProductImage.product.unpublish';
 
-    const ENTITY_SPY_PRODUCT_IMAGE_CREATE = 'Entity.' . SpyProductImageTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_PRODUCT_IMAGE_UPDATE = 'Entity.' . SpyProductImageTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_PRODUCT_IMAGE_DELETE = 'Entity.' . SpyProductImageTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_PRODUCT_IMAGE_CREATE = 'Entity.spy_product_image.create';
+    const ENTITY_SPY_PRODUCT_IMAGE_UPDATE = 'Entity.spy_product_image.update';
+    const ENTITY_SPY_PRODUCT_IMAGE_DELETE = 'Entity.spy_product_image.delete';
 
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE = 'Entity.' . SpyProductImageSetTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE = 'Entity.' . SpyProductImageSetTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE = 'Entity.' . SpyProductImageSetTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE = 'Entity.spy_product_image_set.create';
+    const ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE = 'Entity.spy_product_image_set.update';
+    const ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE = 'Entity.spy_product_image_set.delete';
 
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE = 'Entity.' . SpyProductImageSetToProductImageTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE = 'Entity.' . SpyProductImageSetToProductImageTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE = 'Entity.' . SpyProductImageSetToProductImageTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE = 'Entity.spy_product_image_set_to_product_image.create';
+    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE = 'Entity.spy_product_image_set_to_product_image.update';
+    const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE = 'Entity.spy_product_image_set_to_product_image.delete';
 
 }

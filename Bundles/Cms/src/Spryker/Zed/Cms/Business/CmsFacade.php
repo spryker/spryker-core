@@ -613,8 +613,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @api
      *
-     * @param string $data
      * @param \Generated\Shared\Transfer\CmsPageDataTransfer $cmsPageDataTransfer
+     * @param string $data
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\CmsPageDataTransfer

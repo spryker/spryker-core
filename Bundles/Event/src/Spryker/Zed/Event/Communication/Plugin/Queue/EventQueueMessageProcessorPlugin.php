@@ -36,7 +36,7 @@ class EventQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMe
      */
     public function getChunkSize()
     {
-        return 3000;
+        return 1000;
     }
 
 }

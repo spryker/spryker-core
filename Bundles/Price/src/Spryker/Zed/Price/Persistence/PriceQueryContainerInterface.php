@@ -34,7 +34,7 @@ interface PriceQueryContainerInterface
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
-    public function queryAllPriceProduct();
+    public function queryAllPriceProducts();
 
     /**
      * @api

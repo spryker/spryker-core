@@ -16,7 +16,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -35,7 +34,6 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     const CONCRETE_AVAILABILITY = 'concreteAvailability';
     const CONCRETE_NAME = 'concreteName';
     const ID_PRODUCT = 'idProduct';
-    const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const GROUP_CONCAT = "GROUP_CONCAT";
     const CONCAT = "CONCAT";
     const CONCRETE_NEVER_OUT_OF_STOCK_SET = 'concreteNeverOutOfStockSet';
@@ -216,37 +214,11 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     /**
      * @api
      *
-     * @param array $availabilityAbstractIds
-     *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryAvailabilityAbstractWithRelationsByIds(array $availabilityAbstractIds)
+    public function queryAllAvailabilityAbstracts()
     {
-        return $this->getFactory()->createSpyAvailabilityAbstractQuery()
-            ->filterByIdAvailabilityAbstract_In($availabilityAbstractIds)
-            ->joinWithSpyAvailability()
-            ->addJoin(
-                SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU,
-                SpyProductAbstractTableMap::COL_SKU,
-                Criteria::INNER_JOIN
-            )
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::ID_PRODUCT_ABSTRACT)
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $abstractProductSkus
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
-     */
-    public function queryAvailabilityAbstractByAbstractProductSkus(array $abstractProductSkus)
-    {
-        return $this->getFactory()
-            ->createSpyAvailabilityAbstractQuery()
-            ->filterByAbstractSku_In($abstractProductSkus)
-            ->select([SpyAvailabilityAbstractTableMap::COL_ID_AVAILABILITY_ABSTRACT]);
+        return $this->getFactory()->createSpyAvailabilityAbstractQuery();
     }
 
 }

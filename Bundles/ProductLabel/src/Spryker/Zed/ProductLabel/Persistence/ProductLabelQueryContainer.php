@@ -99,7 +99,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
      */
-    public function queryLocalizedAttributesLabel()
+    public function queryAllLocalizedAttributesLabels()
     {
         return $this->getFactory()
             ->createLocalizedAttributesQuery();
@@ -159,7 +159,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryProductAbstractRelations()
+    public function queryAllProductLabelProductAbstractRelations()
     {
         return $this
             ->getFactory()

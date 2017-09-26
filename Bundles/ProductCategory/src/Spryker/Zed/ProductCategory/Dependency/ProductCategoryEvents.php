@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Dependency;
 
-use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
-
 interface ProductCategoryEvents
 {
 
@@ -18,8 +16,8 @@ interface ProductCategoryEvents
     const PRODUCT_CATEGORY_ABSTRACT_PUBLISH = 'ProductCategory.productAbstract.publish';
     const PRODUCT_CATEGORY_ABSTRACT_UNPUBLISH = 'ProductCategory.productAbstract.unpublish';
 
-    const ENTITY_SPY_PRODUCT_CATEGORY_CREATE = 'Entity.' . SpyProductCategoryTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_PRODUCT_CATEGORY_UPDATE = 'Entity.' . SpyProductCategoryTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_PRODUCT_CATEGORY_DELETE = 'Entity.' . SpyProductCategoryTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_PRODUCT_CATEGORY_CREATE = 'Entity.spy_product_category.create';
+    const ENTITY_SPY_PRODUCT_CATEGORY_UPDATE = 'Entity.spy_product_category.update';
+    const ENTITY_SPY_PRODUCT_CATEGORY_DELETE = 'Entity.spy_product_category.delete';
 
 }

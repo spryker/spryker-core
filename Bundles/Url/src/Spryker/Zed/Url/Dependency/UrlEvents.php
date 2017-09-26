@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Url\Dependency;
 
-use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-
 interface UrlEvents
 {
 
@@ -19,12 +16,12 @@ interface UrlEvents
     const REDIRECT_ENTITY_PUBLISH = 'Redirect.entity.publish';
     const REDIRECT_ENTITY_UNPUBLISH = 'Redirect.entity.unpublish';
 
-    const ENTITY_SPY_URL_CREATE = 'Entity.' . SpyUrlTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_URL_UPDATE = 'Entity.' . SpyUrlTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_URL_DELETE = 'Entity.' . SpyUrlTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_URL_CREATE = 'Entity.spy_url.create';
+    const ENTITY_SPY_URL_UPDATE = 'Entity.spy_url.update';
+    const ENTITY_SPY_URL_DELETE = 'Entity.spy_url.delete';
 
-    const ENTITY_SPY_URL_REDIRECT_CREATE = 'Entity.' . SpyUrlRedirectTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_URL_REDIRECT_UPDATE = 'Entity.' . SpyUrlRedirectTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_URL_REDIRECT_DELETE = 'Entity.' . SpyUrlRedirectTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_URL_REDIRECT_CREATE = 'Entity.spy_url_redirect.create';
+    const ENTITY_SPY_URL_REDIRECT_UPDATE = 'Entity.spy_url_redirect.update';
+    const ENTITY_SPY_URL_REDIRECT_DELETE = 'Entity.spy_url_redirect.delete';
 
 }

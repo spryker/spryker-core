@@ -7,16 +7,14 @@
 
 namespace Spryker\Zed\ProductGroup\Dependency;
 
-use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
-
 interface ProductGroupEvents
 {
 
     const PRODUCT_GROUP_ABSTRACT_PUBLISH = 'ProductGroup.productAbstract.publish';
     const PRODUCT_GROUP_ABSTRACT_UNPUBLISH = 'ProductGroup.productAbstract.unpublish';
 
-    const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE = 'Entity.' . SpyProductAbstractGroupTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_UPDATE = 'Entity.' . SpyProductAbstractGroupTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_DELETE = 'Entity.' . SpyProductAbstractGroupTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE = 'Entity.spy_product_abstract_group.create';
+    const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_UPDATE = 'Entity.spy_product_abstract_group.update';
+    const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_DELETE = 'Entity.spy_product_abstract_group.delete';
 
 }

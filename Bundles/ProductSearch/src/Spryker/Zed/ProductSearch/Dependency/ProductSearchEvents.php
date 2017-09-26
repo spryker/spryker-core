@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\ProductSearch\Dependency;
 
-use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeTableMap;
-
 interface ProductSearchEvents
 {
 
-    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE = 'Entity.' . SpyProductSearchAttributeTableMap::TABLE_NAME . '.create';
-    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE = 'Entity.' . SpyProductSearchAttributeTableMap::TABLE_NAME . '.update';
-    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE = 'Entity.' . SpyProductSearchAttributeTableMap::TABLE_NAME . '.delete';
+    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_CREATE = 'Entity.spy_product_search_attribute.create';
+    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_UPDATE = 'Entity.spy_product_search_attribute.update';
+    const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE = 'Entity.spy_product_search_attribute.delete';
 
 }

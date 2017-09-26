@@ -58,7 +58,7 @@ interface ProductLabelQueryContainerInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
      */
-    public function queryLocalizedAttributesLabel();
+    public function queryAllLocalizedAttributesLabels();
 
     /**
      * @api
@@ -91,7 +91,7 @@ interface ProductLabelQueryContainerInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
-    public function queryProductAbstractRelations();
+    public function queryAllProductLabelProductAbstractRelations();
 
     /**
      * @api

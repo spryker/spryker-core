@@ -48,7 +48,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
-    public function queryProductAbstractProductOptionGroup()
+    public function queryAllProductAbstractProductOptionGroups()
     {
         return $this->getFactory()
             ->createProductAbstractProductOptionGroupQuery();
@@ -59,7 +59,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */
-    public function queryProductOptionGroup()
+    public function queryAllProductOptionGroups()
     {
         return $this->getFactory()
             ->createProductOptionGroupQuery();
@@ -70,7 +70,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
-    public function queryProductOptionValues()
+    public function queryAllProductOptionValues()
     {
         return $this->getFactory()
             ->createProductOptionValueQuery();
