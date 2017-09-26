@@ -3,12 +3,12 @@
   "description": "Store module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*",
     "spryker/transfer": "*",
     "spryker/twig": "*"
