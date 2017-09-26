@@ -40,19 +40,63 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
     public function createAggregation()
     {
         $fieldName = $this->facetConfigTransfer->getFieldName();
+        $nestedFieldName = $this->getNestedFieldName($this->facetConfigTransfer);
 
-        $facetValueAgg = $this
-            ->aggregationBuilder
-            ->createTermsAggregation($fieldName . self::VALUE_SUFFIX)
-            ->setField($this->addNestedFieldPrefix($fieldName, self::FACET_VALUE));
-
+        $facetValueAgg = $this->createValueAgg($fieldName, $nestedFieldName);
         $this->setTermsAggregationSize($facetValueAgg, $this->facetConfigTransfer->getSize());
 
         $facetNameAgg = $this
-            ->createFacetNameAggregation($fieldName)
+            ->createNameAgg($this->facetConfigTransfer)
             ->addAggregation($facetValueAgg);
 
-        return $this->createNestedFacetAggregation($fieldName, $facetNameAgg);
+        return $this->createNestedFacetAggregation($nestedFieldName, $facetNameAgg, $fieldName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return \Elastica\Aggregation\AbstractAggregation|\Elastica\Aggregation\AbstractSimpleAggregation
+     */
+    protected function createNameAgg(FacetConfigTransfer $facetConfigTransfer)
+    {
+        if ($facetConfigTransfer->getIsStandalone()) {
+            return $this->createStandaloneFacetNameAggregation(
+                $facetConfigTransfer->getFieldName(),
+                $facetConfigTransfer->getName()
+            );
+        }
+
+        return $this->createFacetNameAggregation(
+            $facetConfigTransfer->getFieldName()
+        );
+    }
+
+    /**
+     * @param string $fieldName
+     * @param string $nestedFieldName
+     *
+     * @return \Elastica\Aggregation\AbstractTermsAggregation
+     */
+    protected function createValueAgg($fieldName, $nestedFieldName)
+    {
+        return $this
+            ->aggregationBuilder
+            ->createTermsAggregation($nestedFieldName . static::VALUE_SUFFIX)
+            ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_VALUE));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return string
+     */
+    protected function getNestedFieldName(FacetConfigTransfer $facetConfigTransfer)
+    {
+        if ($facetConfigTransfer->getIsStandalone()) {
+            return $this->addNestedFieldPrefix($facetConfigTransfer->getFieldName(), $facetConfigTransfer->getName());
+        }
+
+        return $facetConfigTransfer->getFieldName();
     }
 
 }

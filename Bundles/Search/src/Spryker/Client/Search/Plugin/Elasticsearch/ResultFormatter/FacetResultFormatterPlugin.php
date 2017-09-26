@@ -18,6 +18,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
 {
 
     const NAME = 'facets';
+    const PATH_SEPARATOR = '.';
 
     /**
      * @return string
@@ -68,8 +69,8 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      */
     protected function getAggregationRawData(array $aggregations, FacetConfigTransfer $facetConfigTransfer)
     {
-        $fieldName = $facetConfigTransfer->getFieldName();
-        $bucketName = FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetConfigTransfer->getName();
+        $fieldName = $this->getFieldName($facetConfigTransfer);
+        $bucketName = $this->getBucketName($facetConfigTransfer);
 
         if (isset($aggregations[$bucketName])) {
             return $aggregations[$bucketName][FacetQueryExpanderPlugin::AGGREGATION_FILTER_NAME][$fieldName];
@@ -80,6 +81,44 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
         }
 
         return [];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return string
+     */
+    protected function getBucketName(FacetConfigTransfer $facetConfigTransfer)
+    {
+        return FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetConfigTransfer->getName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return string
+     */
+    protected function getFieldName(FacetConfigTransfer $facetConfigTransfer)
+    {
+        if ($facetConfigTransfer->getIsStandalone()) {
+            return $this->addNestedFieldPrefix(
+                $facetConfigTransfer->getFieldName(),
+                $facetConfigTransfer->getName()
+            );
+        }
+
+        return $facetConfigTransfer->getFieldName();
+    }
+
+    /**
+     * @param string $fieldName
+     * @param string $nestedFieldName
+     *
+     * @return string
+     */
+    protected function addNestedFieldPrefix($fieldName, $nestedFieldName)
+    {
+        return $fieldName . static::PATH_SEPARATOR . $nestedFieldName;
     }
 
 }

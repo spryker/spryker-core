@@ -8,8 +8,10 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Elastica\Aggregation\AbstractAggregation;
+use Elastica\Aggregation\Filter;
 use Elastica\Aggregation\Nested;
 use Elastica\Aggregation\Terms;
+use Elastica\Query\Term;
 
 abstract class AbstractFacetAggregation implements FacetAggregationInterface
 {
@@ -21,12 +23,17 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
     /**
      * @param string $fieldName
      * @param \Elastica\Aggregation\AbstractAggregation $aggregation
+     * @param string|null $path
      *
      * @return \Elastica\Aggregation\AbstractAggregation
      */
-    protected function createNestedFacetAggregation($fieldName, AbstractAggregation $aggregation)
+    protected function createNestedFacetAggregation($fieldName, AbstractAggregation $aggregation, $path = null)
     {
-        return (new Nested($fieldName, $fieldName))
+        if ($path === null) {
+            $path = $fieldName;
+        }
+
+        return (new Nested($fieldName, $path))
             ->addAggregation($aggregation);
     }
 
@@ -37,8 +44,25 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
      */
     protected function createFacetNameAggregation($fieldName)
     {
-        return (new Terms($fieldName . self::NAME_SUFFIX))
-            ->setField($this->addNestedFieldPrefix($fieldName, self::FACET_NAME));
+        return (new Terms($fieldName . static::NAME_SUFFIX))
+            ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_NAME));
+    }
+
+    /**
+     * @param string $fieldName
+     * @param string $nestedFieldName
+     *
+     * @return \Elastica\Aggregation\AbstractAggregation
+     */
+    protected function createStandaloneFacetNameAggregation($fieldName, $nestedFieldName)
+    {
+        $filterName = $this->addNestedFieldPrefix($fieldName, $nestedFieldName);
+        $filterName = $filterName . static::NAME_SUFFIX;
+
+        return (new Filter($filterName))
+            ->setFilter(new Term([
+                $this->addNestedFieldPrefix($fieldName, static::FACET_NAME) => $nestedFieldName,
+            ]));
     }
 
     /**

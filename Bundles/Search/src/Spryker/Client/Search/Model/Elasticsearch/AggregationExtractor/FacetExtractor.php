@@ -16,6 +16,8 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation
 class FacetExtractor implements AggregationExtractorInterface
 {
 
+    const PATH_SEPARATOR = '.';
+
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -77,14 +79,32 @@ class FacetExtractor implements AggregationExtractorInterface
      */
     protected function extractFacetData(array $aggregation, $parameterName, $fieldName)
     {
-        $facetResultValues = new ArrayObject();
+        if ($this->facetConfigTransfer->getIsStandalone()) {
+            return $this->extractStandaloneFacetDataBuckets($aggregation, $fieldName);
+        }
 
-        foreach ($aggregation[$fieldName . StringFacetAggregation::NAME_SUFFIX]['buckets'] as $nameBucket) {
+        return $this->extractFacetDataBuckets($aggregation, $parameterName, $fieldName);
+    }
+
+    /**
+     * @param array $aggregation
+     * @param string $parameterName
+     * @param string $fieldName
+     *
+     * @return \ArrayObject
+     */
+    protected function extractFacetDataBuckets(array $aggregation, $parameterName, $fieldName)
+    {
+        $facetResultValues = new ArrayObject();
+        $nameFieldName = $fieldName . StringFacetAggregation::NAME_SUFFIX;
+        $valueFieldName = $fieldName . StringFacetAggregation::VALUE_SUFFIX;
+
+        foreach ($aggregation[$nameFieldName]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;
             }
 
-            foreach ($nameBucket[$fieldName . StringFacetAggregation::VALUE_SUFFIX]['buckets'] as $valueBucket) {
+            foreach ($nameBucket[$valueFieldName]['buckets'] as $valueBucket) {
                 $facetResultValueTransfer = new FacetSearchResultValueTransfer();
                 $value = $this->getFacetValue($valueBucket);
 
@@ -99,6 +119,44 @@ class FacetExtractor implements AggregationExtractorInterface
         }
 
         return $facetResultValues;
+    }
+
+    /**
+     * @param array $aggregation
+     * @param string $fieldName
+     *
+     * @return \ArrayObject
+     */
+    protected function extractStandaloneFacetDataBuckets(array $aggregation, $fieldName)
+    {
+        $facetResultValues = new ArrayObject();
+        $fieldName = $this->addNestedFieldPrefix($fieldName, $this->facetConfigTransfer->getName());
+        $nameFieldName = $fieldName . StringFacetAggregation::NAME_SUFFIX;
+        $valueFieldName = $fieldName . StringFacetAggregation::VALUE_SUFFIX;
+
+        foreach ($aggregation[$nameFieldName][$valueFieldName]['buckets'] as $valueBucket) {
+            $facetResultValueTransfer = new FacetSearchResultValueTransfer();
+            $value = $this->getFacetValue($valueBucket);
+
+            $facetResultValueTransfer
+                ->setValue($value)
+                ->setDocCount($valueBucket['doc_count']);
+
+            $facetResultValues->append($facetResultValueTransfer);
+        }
+
+        return $facetResultValues;
+    }
+
+    /**
+     * @param string $fieldName
+     * @param string $nestedFieldName
+     *
+     * @return string
+     */
+    protected function addNestedFieldPrefix($fieldName, $nestedFieldName)
+    {
+        return $fieldName . static::PATH_SEPARATOR . $nestedFieldName;
     }
 
     /**
