@@ -13,16 +13,6 @@ interface CalculatorInterface
 {
 
     /**
-     * @deprecated use calculateDiscount instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param int $value
-     *
-     * @return int
-     */
-    public function calculate(array $discountableItems, $value);
-
-    /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *

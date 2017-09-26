@@ -20,22 +20,6 @@ class Percentage implements CalculatorInterface
     protected static $roundingError = 0.0;
 
     /**
-     * @deprecated use calculateDiscount instead
-     *
-     * @param array $discountableItems
-     * @param int $percentage
-     *
-     * @return int
-     */
-    public function calculate(array $discountableItems, $percentage)
-    {
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount($percentage);
-
-        return $this->calculateDiscount($discountableItems, $discountTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *

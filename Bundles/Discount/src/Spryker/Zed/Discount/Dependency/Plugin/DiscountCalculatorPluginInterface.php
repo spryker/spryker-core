@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\Discount\Dependency\Plugin;
 
+use Generated\Shared\Transfer\DiscountTransfer;
+
 interface DiscountCalculatorPluginInterface
 {
 
     /**
      * @api
      *
-     * @deprecated Use DiscountAmountCalculatorPluginInterface::calculateDiscount() instead.
-     *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param mixed $percentage
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int
      */
-    public function calculate(array $discountableItems, $percentage);
+    public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer);
 
     /**
      * @api

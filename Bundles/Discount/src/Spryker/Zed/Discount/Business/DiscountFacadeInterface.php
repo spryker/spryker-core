@@ -384,46 +384,12 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @deprecated Use calculatePercentageDiscount() instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $percentage
-     *
-     * @return int
-     */
-    public function calculatePercentage(array $discountableObjects, $percentage);
-
-    /**
-     * Specification:
-     * - Loops over all discountable items and calculate discount price amount per item
-     * - Sums each amount to to total
-     * - Rounds up cent fraction for total discount amount.
-     * - Returns total calculated discount amount on given discountable items
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int
      */
     public function calculatePercentageDiscount(array $discountableObjects, DiscountTransfer $discountTransfer);
-
-    /**
-     * Specification:
-     * - Returns amount passed as parameter
-     * - Returns 0 if negative number is given
-     *
-     * @api
-     *
-     * @deprecated Use calculateFixedDiscount() instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $amount
-     *
-     * @return int
-     */
-    public function calculateFixed(array $discountableObjects, $amount);
 
     /**
      * Specification:

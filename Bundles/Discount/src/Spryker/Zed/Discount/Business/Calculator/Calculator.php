@@ -18,7 +18,6 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class Calculator implements CalculatorInterface
@@ -109,29 +108,13 @@ class Calculator implements CalculatorInterface
             }
 
             $calculatorPlugin = $this->getCalculatorPlugin($discountTransfer);
-            $discountAmount = $this->getCalculatedDiscountAmount($discountableItems, $discountTransfer, $calculatorPlugin);
+            $discountAmount = $calculatorPlugin->calculateDiscount($discountableItems, $discountTransfer);
             $discountTransfer->setAmount($discountAmount);
 
             $collectedDiscounts[] = $this->createCollectedDiscountTransfer($discountTransfer, $discountableItems);
         }
 
         return $collectedDiscounts;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculatorPlugin
-     *
-     * @return int
-     */
-    protected function getCalculatedDiscountAmount(array $discountableItems, DiscountTransfer $discountTransfer, $calculatorPlugin)
-    {
-        if ($calculatorPlugin instanceof DiscountAmountCalculatorPluginInterface) {
-            return $calculatorPlugin->calculateDiscount($discountableItems, clone $discountTransfer);
-        }
-
-        return $calculatorPlugin->calculate($discountableItems, $discountTransfer->getAmount());
     }
 
     /**
