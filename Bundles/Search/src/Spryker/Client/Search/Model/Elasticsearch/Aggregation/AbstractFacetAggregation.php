@@ -19,6 +19,7 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
     const FACET_VALUE = 'facet-value';
     const FACET_NAME = 'facet-name';
     const NAME_SUFFIX = '-name';
+    const PATH_SEPARATOR = '.';
 
     /**
      * @param string $fieldName
@@ -73,7 +74,7 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
      */
     protected function addNestedFieldPrefix($nestedFieldName, $fieldName)
     {
-        return $nestedFieldName . '.' . $fieldName;
+        return $nestedFieldName . static::PATH_SEPARATOR . $fieldName;
     }
 
 }

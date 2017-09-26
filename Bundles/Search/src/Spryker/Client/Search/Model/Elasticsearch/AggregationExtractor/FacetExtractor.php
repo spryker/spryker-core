@@ -96,8 +96,8 @@ class FacetExtractor implements AggregationExtractorInterface
     protected function extractFacetDataBuckets(array $aggregation, $parameterName, $fieldName)
     {
         $facetResultValues = new ArrayObject();
-        $nameFieldName = $fieldName . StringFacetAggregation::NAME_SUFFIX;
-        $valueFieldName = $fieldName . StringFacetAggregation::VALUE_SUFFIX;
+        $nameFieldName = $this->getFieldNameWithNameSuffix($fieldName);
+        $valueFieldName = $this->getFieldNameWithValueSuffix($fieldName);
 
         foreach ($aggregation[$nameFieldName]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
@@ -130,9 +130,10 @@ class FacetExtractor implements AggregationExtractorInterface
     protected function extractStandaloneFacetDataBuckets(array $aggregation, $fieldName)
     {
         $facetResultValues = new ArrayObject();
-        $fieldName = $this->addNestedFieldPrefix($fieldName, $this->facetConfigTransfer->getName());
-        $nameFieldName = $fieldName . StringFacetAggregation::NAME_SUFFIX;
-        $valueFieldName = $fieldName . StringFacetAggregation::VALUE_SUFFIX;
+        $nestedFieldName = $this->addNestedFieldPrefix($fieldName, $this->facetConfigTransfer->getName());
+
+        $nameFieldName = $this->getFieldNameWithNameSuffix($nestedFieldName);
+        $valueFieldName = $this->getFieldNameWithValueSuffix($nestedFieldName);
 
         foreach ($aggregation[$nameFieldName][$valueFieldName]['buckets'] as $valueBucket) {
             $facetResultValueTransfer = new FacetSearchResultValueTransfer();
@@ -157,6 +158,26 @@ class FacetExtractor implements AggregationExtractorInterface
     protected function addNestedFieldPrefix($fieldName, $nestedFieldName)
     {
         return $fieldName . static::PATH_SEPARATOR . $nestedFieldName;
+    }
+
+    /**
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    protected function getFieldNameWithNameSuffix($fieldName)
+    {
+        return $fieldName . StringFacetAggregation::NAME_SUFFIX;
+    }
+
+    /**
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    protected function getFieldNameWithValueSuffix($fieldName)
+    {
+        return $fieldName . StringFacetAggregation::VALUE_SUFFIX;
     }
 
     /**
