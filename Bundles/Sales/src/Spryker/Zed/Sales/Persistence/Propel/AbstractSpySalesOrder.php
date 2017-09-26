@@ -124,6 +124,8 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      * You can specify the key type of the array by passing one of the class
      * type constants.
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param string $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
      *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                    Defaults to TableMap::TYPE_FIELDNAME.
