@@ -19,6 +19,7 @@
 
     <transfer name="Order">
         <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="currencyIsoCode" type="string" />
     </transfer>
 
     <transfer name="SalesPayment">
