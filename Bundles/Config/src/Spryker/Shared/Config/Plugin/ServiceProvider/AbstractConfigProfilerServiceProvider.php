@@ -16,7 +16,7 @@ use Spryker\Shared\Config\Profiler\ConfigProfilerCollector;
 use Spryker\Shared\Config\Profiler\ConfigProfilerCollectorFactory;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 
-class ConfigProfilerServiceProvider implements ServiceProviderInterface
+abstract class AbstractConfigProfilerServiceProvider implements ServiceProviderInterface
 {
 
     /**
@@ -68,13 +68,23 @@ class ConfigProfilerServiceProvider implements ServiceProviderInterface
     protected function addCollectorTemplates(Application $app)
     {
         $app['data_collector.templates'] = $app->extend('data_collector.templates', function ($templates) {
-            $templates[] = [ConfigProfilerCollector::SPRYKER_CONFIG_PROFILER, '@Config/Collector/spryker_config_profiler.html.twig'];
+            $templates[] = [ConfigProfilerCollector::SPRYKER_CONFIG_PROFILER, $this->getTemplateName()];
 
             return $templates;
         });
 
         return $app;
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getTemplateName();
+
+    /**
+     * @return string
+     */
+    abstract protected function getPathToTemplates();
 
     /**
      * @param \Silex\Application $app
@@ -131,14 +141,6 @@ class ConfigProfilerServiceProvider implements ServiceProviderInterface
         });
 
         return $app;
-    }
-
-    /**
-     * @return bool|string
-     */
-    protected function getPathToTemplates()
-    {
-        return realpath(dirname(__DIR__) . '/../Theme/default');
     }
 
 }
