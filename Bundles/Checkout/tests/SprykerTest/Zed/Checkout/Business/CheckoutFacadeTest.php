@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Checkout\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -100,6 +101,7 @@ class CheckoutFacadeTest extends Unit
             ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withCustomer()
             ->withTotals()
+            ->withCurrency()
             ->withShippingAddress()
             ->withBillingAddress()
             ->build();
@@ -122,6 +124,7 @@ class CheckoutFacadeTest extends Unit
             ->withItem([ItemTransfer::SKU => $product->getSku()])
             ->withCustomer()
             ->withTotals()
+            ->withCurrency()
             ->withShippingAddress()
             ->withBillingAddress()
             ->build();
@@ -148,6 +151,7 @@ class CheckoutFacadeTest extends Unit
             ->withAnotherItem([ItemTransfer::SKU => $product2->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withCustomer()
             ->withTotals()
+            ->withCurrency()
             ->withShippingAddress()
             ->withBillingAddress()
             ->build();
@@ -279,6 +283,10 @@ class CheckoutFacadeTest extends Unit
     protected function getBaseQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer->setCurrency($currencyTransfer);
 
         $country = new SpyCountry();
         $country

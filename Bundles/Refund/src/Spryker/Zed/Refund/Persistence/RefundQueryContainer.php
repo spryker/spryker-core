@@ -25,7 +25,8 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefunds()
     {
-        return $this->getFactory()->createRefundQuery();
+        return $this->getFactory()->createRefundQuery()
+            ->joinWithSpySalesOrder();
     }
 
 }
