@@ -14,25 +14,57 @@ class SeeHelper extends Module
 {
 
     /**
-     * @param string $pattern
-     * @param mixed $value
+     * @var bool
+     */
+    protected $isPresentationSuite = true;
+
+    /**
+     * @param array $settings
      *
      * @return void
      */
-    public function seeMatches($pattern, $value)
+    public function _beforeSuite($settings = [])
     {
-        PHPUnit_Framework_Assert::assertRegExp($pattern, $value);
+        $className = $settings['class_name'];
+        if (preg_match('/CommunicationTester/', $className)) {
+            $this->isPresentationSuite = false;
+        }
     }
 
     /**
      * @param string $pattern
-     * @param mixed $value
+     * @param string $selector
      *
      * @return void
      */
-    public function dontSeeMatches($pattern, $value)
+    public function seeMatches($pattern, $selector)
     {
-        PHPUnit_Framework_Assert::assertNotRegExp($pattern, $value);
+        $nodes = $this->getDriver()->grabMultiple($selector);
+        PHPUnit_Framework_Assert::assertRegExp($pattern, implode('', $nodes));
+    }
+
+    /**
+     * @param string $pattern
+     * @param string $selector
+     *
+     * @return void
+     */
+    public function dontSeeMatches($pattern, $selector)
+    {
+        $nodes = $this->getDriver()->grabMultiple($selector);
+        PHPUnit_Framework_Assert::assertNotRegExp($pattern, implode('', $nodes));
+    }
+
+    /**
+     * @return \Codeception\Module|\Codeception\Module\WebDriver|\Codeception\Lib\Framework
+     */
+    protected function getDriver()
+    {
+        if ($this->isPresentationSuite) {
+            return $this->getModule('WebDriver');
+        }
+
+        return $this->getModule('\\' . ZedBootstrap::class);
     }
 
 }
