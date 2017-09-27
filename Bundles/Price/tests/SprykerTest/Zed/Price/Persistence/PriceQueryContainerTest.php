@@ -17,7 +17,6 @@ use Spryker\Zed\Price\Persistence\PriceQueryContainer;
  * @group Zed
  * @group Price
  * @group Persistence
- * @group QueryContainer
  * @group PriceQueryContainerTest
  * Add your own group annotations below this line
  */
@@ -35,4 +34,5 @@ class PriceQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyPriceProductQuery::class, $query);
     }
+
 }

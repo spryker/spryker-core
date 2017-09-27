@@ -22,9 +22,9 @@ class QueueConfig extends AbstractBundleConfig
      */
     public function getWorkerMessageCheckOption()
     {
-        $messageCheckOption = $this->getMessageCheckOption();
+        $messageCheckOption = $this->getMessageCheckOptions();
 
-        if (array_key_exists(QueueConstants::QUEUE_WORKER_MESSAGE_CHECK_OPTION, $this->getMessageCheckOption())) {
+        if (array_key_exists(QueueConstants::QUEUE_WORKER_MESSAGE_CHECK_OPTION, $this->getMessageCheckOptions())) {
             return $messageCheckOption[QueueConstants::QUEUE_WORKER_MESSAGE_CHECK_OPTION];
         }
 
@@ -69,7 +69,7 @@ class QueueConfig extends AbstractBundleConfig
      *
      * @return array
      */
-    protected function getMessageCheckOption()
+    protected function getMessageCheckOptions()
     {
         return [];
     }

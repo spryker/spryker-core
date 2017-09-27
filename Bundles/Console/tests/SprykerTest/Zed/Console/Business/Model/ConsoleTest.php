@@ -9,8 +9,17 @@ namespace SprykerTest\Zed\Console\Business\Model;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Console\Business\ConsoleBusinessFactory;
+use Spryker\Zed\Console\Business\ConsoleFacade;
+use Spryker\Zed\Console\ConsoleDependencyProvider;
+use Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface;
+use Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Auto-generated group annotations
@@ -37,6 +46,50 @@ class ConsoleTest extends Unit
             'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
             $console->getFactory()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testPreRunPluginsWillExecutesBeforeConsoleCommands()
+    {
+        $container = new Container();
+        $container[ConsoleDependencyProvider::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
+            $preRunPluginMock = $this->getPreRunPluginMock();
+
+            return [$preRunPluginMock];
+        };
+
+        $container[ConsoleDependencyProvider::PLUGINS_CONSOLE_POST_RUN_HOOK] = function (Container $container) {
+            return [];
+        };
+
+        $consoleFacade = $this->prepareFacade($container);
+        $inputMock = $this->getMockBuilder(InputInterface::class)->getMock();
+        $outputMock = $this->getMockBuilder(OutputInterface::class)->getMock();
+        $consoleFacade->preRun($inputMock, $outputMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPostRunPluginsWillExecutesBeforeConsoleCommands()
+    {
+        $container = new Container();
+        $container[ConsoleDependencyProvider::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
+            return [];
+        };
+
+        $container[ConsoleDependencyProvider::PLUGINS_CONSOLE_POST_RUN_HOOK] = function (Container $container) {
+            $postRunPluginMock = $this->getPostRunPluginMock();
+
+            return [$postRunPluginMock];
+        };
+
+        $consoleFacade = $this->prepareFacade($container);
+        $inputMock = $this->getMockBuilder(InputInterface::class)->getMock();
+        $outputMock = $this->getMockBuilder(OutputInterface::class)->getMock();
+        $consoleFacade->postRun($inputMock, $outputMock);
     }
 
     /**
@@ -80,11 +133,57 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \Unit\Spryker\Zed\Console\Business\Model\Fixtures\ConsoleMock
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Console\Business\ConsoleBusinessFactory
+     */
+    private function getBusinessFactoryMock()
+    {
+        return $this->getMockBuilder(ConsoleDependencyProvider::class)->disableOriginalConstructor()->getMock();
+    }
+
+    /**
+     * @return \SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock
      */
     private function getConsole()
     {
         return new ConsoleMock('TestCommand');
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getPreRunPluginMock()
+    {
+        $mock = $this->getMockBuilder(ConsolePreRunHookPluginInterface::class)->setMethods(['preRun'])->getMock();
+        $mock->expects($this->once())->method('preRun');
+
+        return $mock;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getPostRunPluginMock()
+    {
+        $mock = $this->getMockBuilder(ConsolePostRunHookPluginInterface::class)->setMethods(['postRun'])->getMock();
+        $mock->expects($this->once())->method('postRun');
+
+        return $mock;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Console\Business\ConsoleFacade
+     */
+    protected function prepareFacade(Container $container)
+    {
+        $consoleBusinessFactory = new ConsoleBusinessFactory();
+        $consoleBusinessFactory->setContainer($container);
+
+        $consoleFacade = new ConsoleFacade();
+        $consoleFacade->setFactory($consoleBusinessFactory);
+
+        return $consoleFacade;
     }
 
 }

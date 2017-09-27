@@ -1,0 +1,50 @@
+{
+  "name": "spryker/event-behavior",
+  "type": "propel-behavior",
+  "description": "EventBehavior module",
+  "license": "proprietary",
+  "require": {
+    "spryker/error-handler": "^2.1.2",
+    "spryker/event": "^1.1.0",
+    "spryker/kernel": "^3.8.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/symfony": "^3.1.0",
+    "spryker/util-encoding": "^2.0.0",
+    "spryker/zend": "^2.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "^3.1.0",
+    "spryker/console": "^3.1.0",
+    "spryker/propel": "^3.0.0",
+    "spryker/silex": "^2.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/console": "*",
+    "spryker/silex": "^2.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "name": "event",
+    "class": "\\Spryker\\Zed\\EventBehavior\\Persistence\\Propel\\Behavior\\EventBehavior",
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

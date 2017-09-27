@@ -17,7 +17,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
  * @group Zed
  * @group Cms
  * @group Persistence
- * @group QueryContainer
  * @group CmsQueryContainerTest
  * Add your own group annotations below this line
  */
@@ -35,4 +34,5 @@ class CmsQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyCmsVersionQuery::class, $query);
     }
+
 }

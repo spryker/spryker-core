@@ -14,6 +14,9 @@ interface ConsolePreRunHookPluginInterface
 {
 
     /**
+     * Specification
+     *  - The pre-run plugins will be executed before each console commands
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input

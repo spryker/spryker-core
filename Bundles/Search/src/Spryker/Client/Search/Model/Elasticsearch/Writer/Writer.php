@@ -57,11 +57,11 @@ class Writer implements WriterInterface
             throw new InvalidDataSetException();
         }
 
-        if (!empty($typeName)) {
+        if ($typeName) {
             $this->type = $typeName;
         }
 
-        if (!empty($indexName)) {
+        if ($indexName) {
             $this->index = $this->client->getIndex($indexName);
         }
 
@@ -88,11 +88,11 @@ class Writer implements WriterInterface
             throw new InvalidDataSetException();
         }
 
-        if (!empty($typeName)) {
+        if ($typeName) {
             $this->type = $typeName;
         }
 
-        if (!empty($indexName)) {
+        if ($indexName) {
             $this->index = $this->client->getIndex($indexName);
         }
 
@@ -158,7 +158,10 @@ class Writer implements WriterInterface
      */
     protected function hasIntegerKeys(array $array)
     {
-        return count(array_filter(array_keys($array), 'is_int')) > 0;
+        $keys = array_keys($array);
+        $integerKeys = array_filter($keys, 'is_int');
+
+        return count($integerKeys) > 0;
     }
 
 }

@@ -52,11 +52,11 @@ class Reader implements ReaderInterface
      */
     public function read($key, $type = '', $typeName = '', $indexName = '')
     {
-        if (!empty($typeName)) {
+        if ($typeName) {
             $this->type = $typeName;
         }
 
-        if (!empty($indexName)) {
+        if ($indexName) {
             $this->index = $this->client->getIndex($indexName);
         }
 
@@ -68,7 +68,7 @@ class Reader implements ReaderInterface
      */
     public function getName()
     {
-        return self::READER_NAME;
+        return static::READER_NAME;
     }
 
 }

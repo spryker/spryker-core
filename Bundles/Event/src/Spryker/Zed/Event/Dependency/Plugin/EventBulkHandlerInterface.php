@@ -11,6 +11,10 @@ interface EventBulkHandlerInterface extends EventBaseHandlerInterface
 {
 
     /**
+     * Specification
+     *  - Listeners needs to implement this interface to execute the codes for more
+     *  than one event at same time (Bulk Operation)
+     *
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers

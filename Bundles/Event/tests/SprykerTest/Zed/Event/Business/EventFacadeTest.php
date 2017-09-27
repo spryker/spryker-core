@@ -20,7 +20,7 @@ use Spryker\Zed\Event\Dependency\EventCollection;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollection;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface;
-use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Event\EventDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -185,11 +185,11 @@ class EventFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface
      */
     protected function createEventListenerMock()
     {
-        return $this->getMockBuilder(EventListenerInterface::class)
+        return $this->getMockBuilder(EventHandlerInterface::class)
             ->getMock();
     }
 
@@ -285,13 +285,13 @@ class EventFacadeTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface|null $eventListenerMock
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface|null $eventListenerMock
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
     protected function createQueueReceiveMessageTransfer(
-        EventListenerInterface $eventListenerMock = null,
+        EventHandlerInterface $eventListenerMock = null,
         TransferInterface $transferObject = null
     ) {
 

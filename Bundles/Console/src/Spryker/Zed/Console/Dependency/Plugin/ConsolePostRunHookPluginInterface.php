@@ -14,6 +14,9 @@ interface ConsolePostRunHookPluginInterface
 {
 
     /**
+     * Specification
+     *  - The post-run plugins will be executed after each console commands
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input

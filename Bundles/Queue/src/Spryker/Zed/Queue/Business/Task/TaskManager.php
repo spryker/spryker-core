@@ -98,7 +98,7 @@ class TaskManager implements TaskManagerInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */

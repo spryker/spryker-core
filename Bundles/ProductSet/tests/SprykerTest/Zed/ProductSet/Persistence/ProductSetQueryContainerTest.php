@@ -17,7 +17,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainer;
  * @group Zed
  * @group ProductSet
  * @group Persistence
- * @group QueryContainer
  * @group ProductSetQueryContainerTest
  * Add your own group annotations below this line
  */
@@ -35,4 +34,5 @@ class ProductSetQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyProductSetDataQuery::class, $query);
     }
+
 }

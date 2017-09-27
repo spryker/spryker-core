@@ -18,8 +18,8 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     const EVENT_SUBSCRIBER = 'event_subscriber';
     const SERVICE_PROVIDERS = 'service providers';
 
-    const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'console pre run plugins';
-    const PLUGINS_CONSOLE_POST_RUN_HOOK = 'console post run plugins';
+    const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
+    const PLUGINS_CONSOLE_POST_RUN_HOOK = 'PLUGINS_CONSOLE_POST_RUN_HOOK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Synchronization\Communication\Plugin\Queue;
+
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
+
+/**
+ * @method \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface getFacade()
+ * @method \Spryker\Zed\Synchronization\Communication\SynchronizationCommunicationFactory getFactory()
+ */
+class SynchronizationSearchQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
+{
+
+    const WRITE_TYPE = 'write';
+    const DELETE_TYPE = 'delete';
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processMessages(array $queueMessageTransfers)
+    {
+        foreach ($queueMessageTransfers as $queueMessageTransfer) {
+            $message = $this->getFactory()->getUtilEncodingService()->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
+
+            if (isset($message[static::WRITE_TYPE])) {
+                $this->getFacade()->searchWrite($message[static::WRITE_TYPE], $queueMessageTransfer->getQueueName());
+            }
+
+            if (isset($message[static::DELETE_TYPE])) {
+                $this->getFacade()->searchDelete($message[static::DELETE_TYPE], $queueMessageTransfer->getQueueName());
+            }
+
+            $queueMessageTransfer->setAcknowledge(true);
+        }
+
+        return $queueMessageTransfers;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChunkSize()
+    {
+        return 10000;
+    }
+
+}

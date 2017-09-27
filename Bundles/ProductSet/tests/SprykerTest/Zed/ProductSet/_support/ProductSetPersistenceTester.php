@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\ProductSet;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace SprykerTest\Zed\ProductSet;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ProductSetPersistenceTester extends \Codeception\Actor
+ */
+class ProductSetPersistenceTester extends Actor
 {
+
     use _generated\ProductSetPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

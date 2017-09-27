@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\Cms;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace SprykerTest\Zed\Cms;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class CmsPersistenceTester extends \Codeception\Actor
+ */
+class CmsPersistenceTester extends Actor
 {
+
     use _generated\CmsPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

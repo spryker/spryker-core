@@ -13,6 +13,10 @@ interface EventHandlerInterface extends EventBaseHandlerInterface
 {
 
     /**
+     * Specification
+     *  - Listeners needs to implement this interface to execute the codes for each
+     *  event.
+     *
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
