@@ -1,12 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Update Navigation' %}
+{% set widget_title = 'Navigation element details' %}
+{% block section_title 'Edit Navigation Element: ' ~ idNavigation %}
 
 {% block head_title widget_title %}
-{% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/navigation-gui', 'Back to list' | trans) }}
+    {{ backActionButton('/navigation-gui', 'Back to Navigation Elements' | trans) }}
 {% endblock %}
 
 {% block content %}
