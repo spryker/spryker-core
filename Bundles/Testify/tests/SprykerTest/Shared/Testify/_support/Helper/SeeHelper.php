@@ -39,8 +39,7 @@ class SeeHelper extends Module
      */
     public function seeMatches($pattern, $selector)
     {
-        $nodes = $this->getDriver()->grabMultiple($selector);
-        PHPUnit_Framework_Assert::assertRegExp($pattern, implode('', $nodes));
+        PHPUnit_Framework_Assert::assertRegExp($pattern, $this->grabMultipleText($selector));
     }
 
     /**
@@ -51,8 +50,21 @@ class SeeHelper extends Module
      */
     public function dontSeeMatches($pattern, $selector)
     {
+        PHPUnit_Framework_Assert::assertNotRegExp($pattern, $this->grabMultipleText($selector));
+    }
+
+    /**
+     * Retrieves concatenated text of all matched nodes.
+     *
+     * @param string $selector
+     *
+     * @return string
+     */
+    protected function grabMultipleText($selector)
+    {
         $nodes = $this->getDriver()->grabMultiple($selector);
-        PHPUnit_Framework_Assert::assertNotRegExp($pattern, implode('', $nodes));
+
+        return implode('', $nodes);
     }
 
     /**
