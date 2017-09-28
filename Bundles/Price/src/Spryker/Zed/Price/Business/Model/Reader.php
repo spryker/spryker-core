@@ -40,7 +40,7 @@ class Reader implements ReaderInterface
     /**
      * @var array
      */
-    protected $priceTypeEntityByNameCache = [];
+    protected static $priceTypeEntityByNameCache = [];
 
     /**
      * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $queryContainer
@@ -207,7 +207,7 @@ class Reader implements ReaderInterface
             throw new Exception(self::PRICE_TYPE_UNKNOWN . $priceTypeName);
         }
 
-        return $this->priceTypeEntityByNameCache[$priceTypeName];
+        return clone self::$priceTypeEntityByNameCache[$priceTypeName];
     }
 
     /**
@@ -217,14 +217,14 @@ class Reader implements ReaderInterface
      */
     protected function hasPriceType($priceTypeName)
     {
-        if (!isset($this->priceTypeEntityByNameCache[$priceTypeName])) {
+        if (!isset(self::$priceTypeEntityByNameCache[$priceTypeName])) {
             $priceTypeEntity = $this->queryContainer->queryPriceType($priceTypeName)->findOne();
 
             if ($priceTypeEntity === null) {
                 return false;
             }
 
-            $this->priceTypeEntityByNameCache[$priceTypeName] = $priceTypeEntity;
+            self::$priceTypeEntityByNameCache[$priceTypeName] = $priceTypeEntity;
         }
 
         return true;
