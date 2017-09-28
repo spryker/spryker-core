@@ -30,6 +30,7 @@ class TriggerController extends AbstractController
         $redirect = $request->query->get('redirect', '/');
 
         $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
+        $this->addInfoMessage('Status change triggered successfully.');
 
         return $this->redirectResponse($redirect);
     }
@@ -49,6 +50,7 @@ class TriggerController extends AbstractController
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
 
         $this->getFacade()->triggerEvent($event, $orderItems, []);
+        $this->addInfoMessage('Status change triggered successfully.');
 
         return $this->redirectResponse($redirect);
     }
