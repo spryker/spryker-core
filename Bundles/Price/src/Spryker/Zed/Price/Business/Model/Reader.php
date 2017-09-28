@@ -316,12 +316,16 @@ class Reader implements ReaderInterface
      */
     protected function getPriceEntity($sku, SpyPriceType $priceType)
     {
-        if ($this->hasPriceForProductConcrete($sku, $priceType)) {
-            return $this->getPriceEntityForProductConcrete($sku, $priceType);
+        $priceProductConcreteEntity = $this->getPriceEntityForProductConcrete($sku, $priceType);
+
+        if ($priceProductConcreteEntity) {
+            return $priceProductConcreteEntity;
         }
 
-        if ($this->hasPriceForProductAbstract($sku, $priceType)) {
-            return $this->getPriceEntityForProductAbstract($sku, $priceType);
+        $priceProductAbstractEntity = $this->getPriceEntityForProductAbstract($sku, $priceType);
+
+        if ($priceProductAbstractEntity) {
+            return $priceProductAbstractEntity;
         }
 
         if ($this->hasProductConcrete($sku)) {
