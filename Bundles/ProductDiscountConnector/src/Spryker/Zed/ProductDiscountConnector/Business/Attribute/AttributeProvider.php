@@ -18,6 +18,11 @@ class AttributeProvider implements AttributeProviderInterface
     protected $queryContainer;
 
     /**
+     * @var array
+     */
+    protected static $attributeKeyTypes = [];
+
+    /**
      * @param \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface $queryContainer
      */
     public function __construct(ProductDiscountConnectorQueryContainerInterface $queryContainer)
@@ -30,11 +35,14 @@ class AttributeProvider implements AttributeProviderInterface
      */
     public function getAllAttributeTypes()
     {
-        $attributeMetaData = $this->queryContainer
-            ->queryProductAttributeKeys()
-            ->find();
+        if (empty(self::$attributeKeyTypes)) {
+            self::$attributeKeyTypes = $this->queryContainer
+                ->queryProductAttributeKeys()
+                ->find()
+                ->toArray();
+        }
 
-        return $attributeMetaData->toArray();
+        return self::$attributeKeyTypes;
     }
 
 }
