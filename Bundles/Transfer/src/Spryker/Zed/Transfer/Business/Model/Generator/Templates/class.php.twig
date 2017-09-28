@@ -29,6 +29,8 @@ class {{ className }} extends AbstractTransfer
 {% for property in properties %}
 {{ macro.addProperty(property) }}
 {% endfor -%}
+{{ macro.addPropertyNameMap(propertyNameMap) }}
+
 {{ macro.addMetadata(normalizedProperties) }}
 {{ macro.addConstructor(constructorDefinition) }}
 {% for methodName, method  in methods %}

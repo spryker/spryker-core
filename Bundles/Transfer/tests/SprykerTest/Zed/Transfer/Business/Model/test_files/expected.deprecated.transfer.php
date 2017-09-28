@@ -61,6 +61,24 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @var array
      */
+    protected $transferPropertyNameMap = [
+        'scalar_field' => 'scalarField',
+        'scalarField' => 'scalarField',
+        'ScalarField' => 'scalarField',
+        'array_field' => 'arrayField',
+        'arrayField' => 'arrayField',
+        'ArrayField' => 'arrayField',
+        'transfer_field' => 'transferField',
+        'transferField' => 'transferField',
+        'TransferField' => 'transferField',
+        'transfer_collection_field' => 'transferCollectionField',
+        'transferCollectionField' => 'transferCollectionField',
+        'TransferCollectionField' => 'transferCollectionField',
+    ];
+
+    /**
+     * @var array
+     */
     protected $transferMetadata = [
         self::SCALAR_FIELD => [
             'type' => 'string',
@@ -100,7 +118,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function setScalarField($scalarField)
     {
         $this->scalarField = $scalarField;
-        $this->addModifiedProperty(self::SCALAR_FIELD);
+        $this->modifiedProperties[self::SCALAR_FIELD] = true;
 
         return $this;
     }
@@ -147,7 +165,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
         }
 
         $this->arrayField = $arrayField;
-        $this->addModifiedProperty(self::ARRAY_FIELD);
+        $this->modifiedProperties[self::ARRAY_FIELD] = true;
 
         return $this;
     }
@@ -176,7 +194,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function addArrayField($arrayField)
     {
         $this->arrayField[] = $arrayField;
-        $this->addModifiedProperty(self::ARRAY_FIELD);
+        $this->modifiedProperties[self::ARRAY_FIELD] = true;
 
         return $this;
     }
@@ -207,7 +225,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function setTransferField(DeprecatedFooBarTransfer $transferField = null)
     {
         $this->transferField = $transferField;
-        $this->addModifiedProperty(self::TRANSFER_FIELD);
+        $this->modifiedProperties[self::TRANSFER_FIELD] = true;
 
         return $this;
     }
@@ -250,7 +268,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function setTransferCollectionField(ArrayObject $transferCollectionField)
     {
         $this->transferCollectionField = $transferCollectionField;
-        $this->addModifiedProperty(self::TRANSFER_COLLECTION_FIELD);
+        $this->modifiedProperties[self::TRANSFER_COLLECTION_FIELD] = true;
 
         return $this;
     }
@@ -279,7 +297,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function addTransferCollectionField(DeprecatedFooBarTransfer $transferCollectionField)
     {
         $this->transferCollectionField[] = $transferCollectionField;
-        $this->addModifiedProperty(self::TRANSFER_COLLECTION_FIELD);
+        $this->modifiedProperties[self::TRANSFER_COLLECTION_FIELD] = true;
 
         return $this;
     }
