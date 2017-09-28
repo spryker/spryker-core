@@ -30,7 +30,7 @@ class LocaleManager
     /**
      * @var array
      */
-    private static $locales = [];
+    private static $localesById = [];
 
     /**
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
@@ -101,13 +101,13 @@ class LocaleManager
      */
     public function getLocaleById($idLocale)
     {
-        if (!isset(self::$locales[$idLocale])) {
-            self::$locales[$idLocale] = $this->localeQueryContainer
+        if (!isset(self::$localesById[$idLocale])) {
+            self::$localesById[$idLocale] = $this->localeQueryContainer
                 ->queryLocales()
                 ->findOneByIdLocale($idLocale);
         }
 
-        if (!isset(self::$locales[$idLocale])) {
+        if (!isset(self::$localesById[$idLocale])) {
             throw new MissingLocaleException(
                 sprintf(
                     'Tried to retrieve locale with id %s, but it does not exist',
@@ -116,7 +116,7 @@ class LocaleManager
             );
         }
 
-        return $this->transferGenerator->convertLocale(self::$locales[$idLocale]);
+        return $this->transferGenerator->convertLocale(self::$localesById[$idLocale]);
     }
 
     /**
