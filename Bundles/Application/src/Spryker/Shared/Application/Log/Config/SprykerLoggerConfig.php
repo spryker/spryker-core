@@ -10,6 +10,7 @@ namespace Spryker\Shared\Application\Log\Config;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Formatter\LogstashFormatter;
 use Monolog\Handler\FilterHandler;
+use Monolog\Handler\LogglyHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
@@ -31,6 +32,10 @@ class SprykerLoggerConfig implements LoggerConfigInterface
      */
     public function getChannelName()
     {
+        if (Config::hasKey(LogConstants::LOGGER_CHANNEL)) {
+            return Config::get(LogConstants::LOGGER_CHANNEL);
+        }
+
         return 'Spryker';
     }
 
@@ -39,9 +44,15 @@ class SprykerLoggerConfig implements LoggerConfigInterface
      */
     public function getHandlers()
     {
-        $handler = [
-            $this->createStreamHandler(),
-        ];
+        $handler = [];
+
+        if (Config::hasKey(LogConstants::LOG_FILE_PATH)) {
+            $handler[] = $this->createStreamHandler();
+        }
+
+        if (Config::hasKey(LogConstants::LOGGLY_TOKEN)) {
+            $handler[] = $this->createLogglyHandler();
+        }
 
         if (Config::hasKey(LogConstants::EXCEPTION_LOG_FILE_PATH)) {
             $handler[] = $this->createExceptionHandler();
@@ -80,10 +91,23 @@ class SprykerLoggerConfig implements LoggerConfigInterface
             Config::get(LogConstants::LOG_FILE_PATH),
             Config::get(LogConstants::LOG_LEVEL, Logger::INFO)
         );
-        $formatter = new LogstashFormatter('Spryker');
+        $formatter = new LogstashFormatter(APPLICATION);
         $streamHandler->setFormatter($formatter);
 
         return $streamHandler;
+    }
+
+    /**
+     * @return \Monolog\Handler\LogglyHandler
+     */
+    protected function createLogglyHandler()
+    {
+        $handler = new LogglyHandler(
+            Config::get(LogConstants::LOGGLY_TOKEN),
+            Config::get(LogConstants::LOG_LEVEL, Logger::INFO)
+        );
+
+        return $handler;
     }
 
     /**

@@ -19,6 +19,14 @@ interface LogConstants
 
     /**
      * Specification:
+     * - Channel name used for logs.
+     *
+     * @api
+     */
+    const LOGGER_CHANNEL = 'LOG:LOGGER_CHANNEL';
+
+    /**
+     * Specification:
      * - Log level were to start to log. E.g. when set to error, info messages will not be logged
      *
      * @api
@@ -28,6 +36,7 @@ interface LogConstants
     /**
      * Specification:
      * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
+     * - If set logs will be written to the specified file.
      *
      * @api
      */
@@ -40,6 +49,15 @@ interface LogConstants
      * @api
      */
     const EXCEPTION_LOG_FILE_PATH = 'LOG:EXCEPTION_LOG_FILE_PATH';
+
+    /**
+     * Specification:
+     * - Token for loggly @see https://www.loggly.com
+     * - If set logs will be send to loggly.
+     *
+     * @api
+     */
+    const LOGGLY_TOKEN = 'LOG:LOGGLY_TOKEN';
 
     /**
      * Specification:
