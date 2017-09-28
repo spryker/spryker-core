@@ -34,6 +34,10 @@
             <index-column name="fk_price_type" />
         </index>
 
+        <index name="spy_price_product-index-fk_product">
+            <index-column name="fk_product" />
+        </index>
+
         <id-method-parameter value="spy_price_product_pk_seq"/>
     </table>
 
