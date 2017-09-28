@@ -7,8 +7,8 @@
         <icon>fa-globe</icon>
         <pages>
             <glossary-create>
-                <label>Add Glossary Translation</label>
-                <title>Add Glossary Translation</title>
+                <label>Create Translation</label>
+                <title>Create Translation</title>
                 <bundle>glossary</bundle>
                 <controller>add</controller>
                 <action>index</action>
@@ -16,8 +16,8 @@
             </glossary-create>
 
             <glossary-edit>
-                <label>Edit Glossary Translation</label>
-                <title>Edit Glossary Translation</title>
+                <label>Edit Translation</label>
+                <title>Edit Translation</title>
                 <bundle>glossary</bundle>
                 <controller>edit</controller>
                 <action>index</action>

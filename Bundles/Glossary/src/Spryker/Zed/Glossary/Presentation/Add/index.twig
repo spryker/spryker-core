@@ -1,16 +1,16 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'Add a translation' %}
+    {% set widget_title = 'Translation details' %}
 {% endif %}
 
 {% block head_title widget_title %}
-{% block section_title widget_title %}
+{% block section_title 'Create Translation' %}
 
 {% form_theme form '@Glossary/Twig/filter-label-form.twig' %}
 
 {% block action %}
-    {{ backActionButton('/glossary', 'List Translations' | trans) }}
+    {{ backActionButton('/glossary', 'Back to Translations' | trans) }}
 {% endblock %}
 
 {% block content %}
