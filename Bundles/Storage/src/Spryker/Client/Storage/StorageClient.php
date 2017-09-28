@@ -203,14 +203,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $this->loadCacheKeysAndValues();
 
-        //get immediately available values
+        // Get immediately available values
         $keyValues = array_intersect_key(self::$bufferedValues, array_flip($keys));
 
         foreach ($keyValues as $key => $keyValue) {
             self::$cachedKeys[$key] = self::KEY_USED;
         }
 
-        //get the rest of requested keys without a value
+        // Get the rest of requested keys without a value
         $keys = array_diff($keys, array_keys($keyValues));
 
         if ($keys) {
