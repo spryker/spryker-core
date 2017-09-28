@@ -19,7 +19,6 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
     const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
-    const PLUGIN_SEARCH_DATA_MAP = 'PLUGIN_SEARCH_DATA_MAP';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,17 +27,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
-            return new SynchronizationToStorageBridge($container->getLocator()->storage()->client());
-        };
-
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
-            return new SynchronizationToSearchBridge($container->getLocator()->search()->client());
-        };
-
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new SynchronizationToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        $container = $this->addStorageClient($container);
+        $container = $this->addSearchClient($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -49,6 +40,46 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addStorageClient(Container $container)
+    {
+        $container[self::CLIENT_STORAGE] = function (Container $container) {
+            return new SynchronizationToStorageBridge($container->getLocator()->storage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addSearchClient(Container $container)
+    {
+        $container[self::CLIENT_SEARCH] = function (Container $container) {
+            return new SynchronizationToSearchBridge($container->getLocator()->search()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addUtilEncodingService(Container $container)
     {
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new SynchronizationToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());

@@ -24,7 +24,7 @@ interface SynchronizationToStorageInterface
      * @param string $key
      * @param string $prefix
      *
-     * @return array
+     * @return array|null
      */
     public function get($key, $prefix = '');
 

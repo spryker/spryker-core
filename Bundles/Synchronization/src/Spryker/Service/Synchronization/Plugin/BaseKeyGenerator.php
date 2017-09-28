@@ -9,7 +9,7 @@ namespace Spryker\Service\Synchronization\Plugin;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 
-class AbstractKeyGenerator
+class BaseKeyGenerator
 {
 
     /**
@@ -30,7 +30,7 @@ class AbstractKeyGenerator
      *
      * @return void
      */
-    public function setResource(string $resource)
+    public function setResource($resource)
     {
         $this->resource = $resource;
     }

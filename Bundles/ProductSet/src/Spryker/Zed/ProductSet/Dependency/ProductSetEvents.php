@@ -10,19 +10,78 @@ namespace Spryker\Zed\ProductSet\Dependency;
 interface ProductSetEvents
 {
 
-    const PRODUCT_SET_PUBLISH = 'ProductSet.entity.publish';
-    const PRODUCT_SET_UNPUBLISH = 'ProductSet.entity.unpublish';
-
+    /**
+     * Specification
+     * - This events will be used for spy_product_set entity creation
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_SET_CREATE = 'Entity.spy_product_set.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_set entity changes
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_SET_UPDATE = 'Entity.spy_product_set.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_set entity deletion
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_SET_DELETE = 'Entity.spy_product_set.delete';
 
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_abstract_set entity creation
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE = 'Entity.spy_product_abstract_set.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_abstract_set entity changes
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_SET_UPDATE = 'Entity.spy_product_abstract_set.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_abstract_set entity deletion
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE = 'Entity.spy_product_abstract_set.delete';
 
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_set_data entity creation
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_SET_DATA_CREATE = 'Entity.spy_product_set_data.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_set_data entity changes
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_SET_DATA_UPDATE = 'Entity.spy_product_set_data.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_set_data entity deletion
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_SET_DATA_DELETE = 'Entity.spy_product_set_data.delete';
 
 }

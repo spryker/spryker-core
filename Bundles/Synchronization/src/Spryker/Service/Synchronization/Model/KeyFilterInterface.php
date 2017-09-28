@@ -5,11 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Synchronization;
+namespace Spryker\Service\Synchronization\Model;
 
-interface SynchronizationConfig
+interface KeyFilterInterface
 {
 
-    const SYNCHRONIZATION_STORAGE_PREFIX = 'ps:';
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function escapeKey($key);
 
 }

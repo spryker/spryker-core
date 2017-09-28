@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Client;
+namespace SprykerTest\Client\Search;
 
 use Codeception\Test\Unit;
 use Elastica\Client;

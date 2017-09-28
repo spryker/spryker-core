@@ -5,41 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilSynchronization;
+namespace Spryker\Service\EventBehavior\Model;
 
-interface UtilSynchronizationServiceInterface
+interface EventEntityInterface
 {
 
     /**
-     * Specification:
-     *  - Filters null elements of an array recursively
-     *
-     * @api
-     *
-     * @param array $array
-     *
-     * @return array
-     */
-    public function arrayFilterRecursive(array $array);
-
-    /**
-     * Specification:
-     *  - Filters invalid string in given key
-     *
-     * @api
-     *
-     * @param string $key
-     *
-     * @return string
-     */
-    public function escapeKey($key);
-
-    /**
-     * Specification:
-     *  - Return Ids in eventTransfers
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return array
@@ -47,11 +18,6 @@ interface UtilSynchronizationServiceInterface
     public function getEventTransferIds(array $eventTransfers);
 
     /**
-     * Specification:
-     *  - Return ForeignKeys in eventTransfers
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $foreignKeyColumnName
      *
@@ -60,11 +26,6 @@ interface UtilSynchronizationServiceInterface
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
 
     /**
-     * Specification:
-     *  - Return eventTransfers with matched modifiedColumns
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param array $columns
      *

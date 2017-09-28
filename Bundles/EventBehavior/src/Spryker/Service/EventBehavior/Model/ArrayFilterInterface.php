@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Synchronization\Dependency\Service;
+namespace Spryker\Service\EventBehavior\Model;
 
-interface SynchronizationToUtilSynchronizationServiceInterface
+interface ArrayFilterInterface
 {
 
     /**
-     * @param string $key
+     * @param array $array
      *
-     * @return string
+     * @return array
      */
-    public function escapeKey($key);
+    public function arrayFilterRecursive(array $array);
 
 }

@@ -92,13 +92,12 @@ interface SearchClientInterface
      * @api
      *
      * @param string $key
-     * @param string $type
-     * @param string $typeName
-     * @param string $indexName
+     * @param string|null $typeName
+     * @param string|null $indexName
      *
      * @return mixed
      */
-    public function read($key, $type = '', $typeName = '', $indexName = '');
+    public function read($key, $typeName = null, $indexName = null);
 
     /**
      * Specification:
@@ -107,12 +106,12 @@ interface SearchClientInterface
      * @api
      *
      * @param array $dataSet
-     * @param string $typeName
-     * @param string $indexName
+     * @param string|null $typeName
+     * @param string|null $indexName
      *
      * @return bool
      */
-    public function write(array $dataSet, $typeName = '', $indexName = '');
+    public function write(array $dataSet, $typeName = null, $indexName = null);
 
     /**
      * Specification:
@@ -121,11 +120,11 @@ interface SearchClientInterface
      * @api
      *
      * @param array $dataSet
-     * @param string $typeName
-     * @param string $indexName
+     * @param string|null $typeName
+     * @param string|null $indexName
      *
      * @return bool
      */
-    public function delete(array $dataSet, $typeName = '', $indexName = '');
+    public function delete(array $dataSet, $typeName = null, $indexName = null);
 
 }

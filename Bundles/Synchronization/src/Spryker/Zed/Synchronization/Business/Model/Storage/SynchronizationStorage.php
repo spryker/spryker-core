@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\Synchronization\Business\Model\Storage;
 
-use Spryker\Shared\Synchronization\SynchronizationConfig as SharedSynchronizationConfig;
-use Spryker\Zed\Synchronization\Business\Model\AbstractSynchronization;
 use Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface;
+use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface;
 use Spryker\Zed\Synchronization\SynchronizationConfig;
 
-class SynchronizationStorage extends AbstractSynchronization implements SynchronizationInterface
+class SynchronizationStorage implements SynchronizationInterface
 {
 
     const KEY = 'key';
@@ -26,15 +25,25 @@ class SynchronizationStorage extends AbstractSynchronization implements Synchron
     protected $storageClient;
 
     /**
-     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface $storageClient
-     * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\Synchronization\SynchronizationConfig $config
+     * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface
      */
-    public function __construct(SynchronizationToStorageInterface $storageClient, SynchronizationToUtilEncodingInterface $utilEncodingService, SynchronizationConfig $config)
-    {
-        parent::__construct($utilEncodingService, $config);
+    protected $utilEncodingService;
 
+    /**
+     * @var OutdatedValidatorInterface
+     */
+    protected $outdatedValidator;
+
+    /**
+     * @param SynchronizationToStorageInterface $storageClient
+     * @param SynchronizationToUtilEncodingInterface $utilEncodingService
+     * @param OutdatedValidatorInterface $outdatedValidator
+     */
+    public function __construct(SynchronizationToStorageInterface $storageClient, SynchronizationToUtilEncodingInterface $utilEncodingService, OutdatedValidatorInterface $outdatedValidator)
+    {
         $this->storageClient = $storageClient;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->outdatedValidator = $outdatedValidator;
     }
 
     /**
@@ -47,8 +56,9 @@ class SynchronizationStorage extends AbstractSynchronization implements Synchron
     {
         $key = $data[static::KEY];
         $value = $data[static::VALUE];
+        $existingEntry = $this->get($key);
 
-        if ($this->isInvalid($queueName, $key, $value)) {
+        if ($existingEntry !== null && $this->outdatedValidator->isInvalid($queueName, $value, $existingEntry)) {
             return;
         }
 
@@ -65,8 +75,9 @@ class SynchronizationStorage extends AbstractSynchronization implements Synchron
     {
         $key = $data[static::KEY];
         $value = $data[static::VALUE];
+        $existingEntry = $this->get($key);
 
-        if ($this->isInvalid($queueName, $key, $value)) {
+        if ($existingEntry !== null && $this->outdatedValidator->isInvalid($queueName, $value, $existingEntry)) {
             return;
         }
 
@@ -81,7 +92,7 @@ class SynchronizationStorage extends AbstractSynchronization implements Synchron
      */
     protected function set($key, array $value)
     {
-        $this->storageClient->set($key, $this->getEncodedValue($value), null, SharedSynchronizationConfig::SYNCHRONIZATION_STORAGE_PREFIX);
+        $this->storageClient->set($key, $this->getEncodedValue($value));
     }
 
     /**
@@ -91,17 +102,27 @@ class SynchronizationStorage extends AbstractSynchronization implements Synchron
      */
     protected function del($key)
     {
-        $this->storageClient->delete($key, SharedSynchronizationConfig::SYNCHRONIZATION_STORAGE_PREFIX);
+        $this->storageClient->delete($key);
     }
 
     /**
      * @param string $key
      *
-     * @return array
+     * @return array|null
      */
-    protected function getExistEntryByKey($key)
+    protected function get($key)
     {
-        return $this->storageClient->get($key, SharedSynchronizationConfig::SYNCHRONIZATION_STORAGE_PREFIX);
+        return $this->storageClient->get($key);
+    }
+
+    /**
+     * @param string|array $value
+     *
+     * @return string
+     */
+    protected function getEncodedValue($value)
+    {
+        return $this->utilEncodingService->encodeJson($value);
     }
 
 }

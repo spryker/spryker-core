@@ -12,13 +12,12 @@ interface ReaderInterface
 
     /**
      * @param string $key
-     * @param string $type
-     * @param string $typeName
-     * @param string $indexName
+     * @param string|null $typeName
+     * @param string|null $indexName
      *
      * @return mixed
      */
-    public function read($key, $type = '', $typeName = '', $indexName = '');
+    public function read($key, $typeName = null, $indexName = null);
 
     /**
      * @return string

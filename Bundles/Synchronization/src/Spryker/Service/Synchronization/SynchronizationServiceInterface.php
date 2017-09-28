@@ -23,4 +23,16 @@ interface SynchronizationServiceInterface
      */
     public function getStorageKeyBuilder($resourceName);
 
+    /**
+     * Specification:
+     *  - Filters invalid string in given key
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    public function escapeKey($key);
+
 }

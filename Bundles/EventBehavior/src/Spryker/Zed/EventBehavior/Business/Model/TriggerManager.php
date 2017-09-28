@@ -80,8 +80,9 @@ class TriggerManager implements TriggerManagerInterface
         } catch (Throwable $t) {
             ErrorLogger::getInstance()->log($t);
             throw new EventBehaviorDatabaseException('
-            EventBehavior requires Database tables and connection to trigger events, you can fix this by installing Database or if you want to run console commands, 
-            please add `--no-post` as an option to skip this error');
+                EventBehavior requires Database tables and connection to trigger events, you can fix this by installing Database or if you want to run console commands, 
+                please add `--no-post` as an option to skip this error', $t->getCode(), $t
+            );
         }
     }
 

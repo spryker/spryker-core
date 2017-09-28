@@ -44,23 +44,25 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $key
-     * @param string $type
-     * @param string $typeName
-     * @param string $indexName
+     * @param null $typeName
+     * @param null $indexName
      *
      * @return \Elastica\Document
      */
-    public function read($key, $type = '', $typeName = '', $indexName = '')
+    public function read($key, $typeName = null, $indexName = null)
     {
+        $defaultType = $this->type;
+        $defaultIndex = $this->index;
+
         if ($typeName) {
-            $this->type = $typeName;
+            $defaultType = $typeName;
         }
 
         if ($indexName) {
-            $this->index = $this->client->getIndex($indexName);
+            $defaultIndex = $this->client->getIndex($indexName);
         }
 
-        return $this->index->getType($this->type)->getDocument($key);
+        return $defaultIndex->getType($defaultType)->getDocument($key);
     }
 
     /**

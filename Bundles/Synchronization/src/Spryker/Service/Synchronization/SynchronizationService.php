@@ -26,9 +26,22 @@ class SynchronizationService extends AbstractService implements SynchronizationS
      */
     public function getStorageKeyBuilder($resourceName)
     {
-        return $this->getFactory()
-            ->createSynchronizationKeyBuilder()
-            ->getStorageKeyBuilder($resourceName);
+        return $this->getFactory()->createSynchronizationKeyBuilder()->getStorageKeyBuilder($resourceName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    public function escapeKey($key)
+    {
+        return $this->getFactory()->createKeyFilter()->escapeKey($key);
+    }
+
 
 }

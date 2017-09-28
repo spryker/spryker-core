@@ -10,11 +10,28 @@ namespace Spryker\Zed\ProductGroup\Dependency;
 interface ProductGroupEvents
 {
 
-    const PRODUCT_GROUP_ABSTRACT_PUBLISH = 'ProductGroup.productAbstract.publish';
-    const PRODUCT_GROUP_ABSTRACT_UNPUBLISH = 'ProductGroup.productAbstract.unpublish';
-
+    /**
+     * Specification
+     * - This events will be used for spy_product_abstract_group entity creation
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE = 'Entity.spy_product_abstract_group.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_abstract_group entity changes
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_UPDATE = 'Entity.spy_product_abstract_group.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_abstract_group entity deletion
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_DELETE = 'Entity.spy_product_abstract_group.delete';
 
 }

@@ -9,22 +9,22 @@ namespace Spryker\Service\Synchronization\Plugin;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-use Spryker\Service\Synchronization\Dependency\Service\SynchronizationToUtilSynchronizationServiceInterface;
+use Spryker\Service\Synchronization\Model\KeyFilterInterface;
 
-class DefaultKeyGeneratorPlugin extends AbstractKeyGenerator implements SynchronizationKeyGeneratorPluginInterface
+class DefaultKeyGeneratorPlugin extends BaseKeyGenerator implements SynchronizationKeyGeneratorPluginInterface
 {
 
     /**
-     * @var \Spryker\Service\Synchronization\Dependency\Service\SynchronizationToUtilSynchronizationServiceInterface
+     * @var KeyFilterInterface
      */
-    protected $utilSynchronization;
+    protected $keyFilter;
 
     /**
-     * @param \Spryker\Service\Synchronization\Dependency\Service\SynchronizationToUtilSynchronizationServiceInterface $utilSynchronization
+     * @param KeyFilterInterface $keyFilter
      */
-    public function __construct(SynchronizationToUtilSynchronizationServiceInterface $utilSynchronization)
+    public function __construct(KeyFilterInterface $keyFilter)
     {
-        $this->utilSynchronization = $utilSynchronization;
+        $this->keyFilter = $keyFilter;
     }
 
     /**
@@ -36,7 +36,7 @@ class DefaultKeyGeneratorPlugin extends AbstractKeyGenerator implements Synchron
      */
     public function generateKey(SynchronizationDataTransfer $dataTransfer)
     {
-        $reference = $this->utilSynchronization->escapeKey($dataTransfer->getReference());
+        $reference = $this->keyFilter->escapeKey($dataTransfer->getReference());
         $localeAndStore = $this->getStoreAndLocaleKey($dataTransfer);
         if (!empty($reference) && !empty($localeAndStore)) {
             $keySuffix = sprintf('%s:%s', $this->getStoreAndLocaleKey($dataTransfer), $reference);

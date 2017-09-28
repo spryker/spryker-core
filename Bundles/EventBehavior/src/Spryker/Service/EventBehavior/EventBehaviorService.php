@@ -1,18 +1,13 @@
 <?php
 
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
-namespace Spryker\Service\UtilSynchronization;
+namespace Spryker\Service\EventBehavior;
 
 use Spryker\Service\Kernel\AbstractService;
 
 /**
- * @method \Spryker\Service\UtilSynchronization\UtilSynchronizationServiceFactory getFactory()
+ * @method \Spryker\Service\EventBehavior\EventBehaviorServiceFactory getFactory()
  */
-class UtilSynchronizationService extends AbstractService implements UtilSynchronizationServiceInterface
+class EventBehaviorService extends AbstractService implements EventBehaviorServiceInterface
 {
 
     /**
@@ -34,21 +29,7 @@ class UtilSynchronizationService extends AbstractService implements UtilSynchron
      *
      * @api
      *
-     * @param string $key
-     *
-     * @return string
-     */
-    public function escapeKey($key)
-    {
-        return $this->getFactory()->createKeyFilter()->escapeKey($key);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Spryker\Service\UtilSynchronization\Model\EventEntityInterface[] $eventTransfers
+     * @param \Spryker\Service\EventBehavior\Model\EventEntityInterface[] $eventTransfers
      *
      * @return array
      */
@@ -62,7 +43,7 @@ class UtilSynchronizationService extends AbstractService implements UtilSynchron
      *
      * @api
      *
-     * @param \Spryker\Service\UtilSynchronization\Model\EventEntityInterface[] $eventTransfers
+     * @param \Spryker\Service\EventBehavior\Model\EventEntityInterface[] $eventTransfers
      * @param string $foreignKeyColumnName
      *
      * @return array
@@ -86,5 +67,4 @@ class UtilSynchronizationService extends AbstractService implements UtilSynchron
     {
         return $this->getFactory()->createEventEntity()->getEventTransfersByModifiedColumns($eventTransfers, $columns);
     }
-
 }

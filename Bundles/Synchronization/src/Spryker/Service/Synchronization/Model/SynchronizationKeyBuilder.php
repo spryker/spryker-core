@@ -8,7 +8,7 @@
 namespace Spryker\Service\Synchronization\Model;
 
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-use Spryker\Service\Synchronization\Plugin\AbstractKeyGenerator;
+use Spryker\Service\Synchronization\Plugin\BaseKeyGenerator;
 
 class SynchronizationKeyBuilder implements SynchronizationKeyBuilderInterface
 {
@@ -55,7 +55,7 @@ class SynchronizationKeyBuilder implements SynchronizationKeyBuilderInterface
             $keyGeneratorPlugin = $this->storageSyncKeyGeneratorPlugins[$resourceName];
         }
 
-        if ($keyGeneratorPlugin instanceof AbstractKeyGenerator) {
+        if ($keyGeneratorPlugin instanceof BaseKeyGenerator) {
             $keyGeneratorPlugin->setResource($resourceName);
         }
 

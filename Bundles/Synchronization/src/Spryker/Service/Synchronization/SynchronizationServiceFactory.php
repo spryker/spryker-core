@@ -8,6 +8,7 @@
 namespace Spryker\Service\Synchronization;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\Synchronization\Model\KeyFilter;
 use Spryker\Service\Synchronization\Model\SynchronizationKeyBuilder;
 use Spryker\Service\Synchronization\Plugin\DefaultKeyGeneratorPlugin;
 
@@ -43,21 +44,21 @@ class SynchronizationServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Synchronization\Dependency\Service\SynchronizationToUtilSynchronizationServiceInterface
-     */
-    protected function getUtilSynchronizationService()
-    {
-        return $this->getProvidedDependency(SynchronizationDependencyProvider::SERVICE_UTIL_SYNCHRONIZATION);
-    }
-
-    /**
      * @return \Spryker\Service\Synchronization\Plugin\DefaultKeyGeneratorPlugin
      */
     protected function createDefaultKeyGeneratorPlugin()
     {
         return new DefaultKeyGeneratorPlugin(
-            $this->getUtilSynchronizationService()
+            $this->createKeyFilter()
         );
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Model\KeyFilterInterface
+     */
+    public function createKeyFilter()
+    {
+        return new KeyFilter();
     }
 
 }

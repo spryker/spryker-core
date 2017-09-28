@@ -108,12 +108,12 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function handleBulk(array $queueMessageTransfers, array $events, $listenerClassName)
     {
-        foreach ($events as $eventName => $eventTransfers) {
-            $listener = $this->createEventListener($listenerClassName);
-            if (!($listener instanceof EventBulkHandlerInterface)) {
-                continue;
-            }
+        $listener = $this->createEventListener($listenerClassName);
+        if (!($listener instanceof EventBulkHandlerInterface)) {
+            return;
+        }
 
+        foreach ($events as $eventName => $eventTransfers) {
             try {
                 $listener->handleBulk($eventTransfers, $eventName);
             } catch (Exception $exception) {

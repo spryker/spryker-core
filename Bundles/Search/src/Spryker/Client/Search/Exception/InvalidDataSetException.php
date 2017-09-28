@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Search\Exception;
 
-use RuntimeException;
+use Exception;
 
-class InvalidDataSetException extends RuntimeException
+class InvalidDataSetException extends Exception
 {
 }

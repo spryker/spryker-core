@@ -7,36 +7,41 @@
 
 namespace Spryker\Zed\Synchronization\Business\Model\Search;
 
+use Elastica\Exception\NotFoundException;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
-use Spryker\Zed\Synchronization\Business\Model\AbstractSynchronization;
 use Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface;
+use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface;
 use Spryker\Zed\Synchronization\SynchronizationConfig;
 use Throwable;
 
-class SynchronizationSearch extends AbstractSynchronization implements SynchronizationInterface
+class SynchronizationSearch implements SynchronizationInterface
 {
 
-    const MESSAGE_TIMESTAMP = 'timestamp';
+    const KEY = 'key';
+    const VALUE = 'value';
+    const TYPE = 'type';
+    const INDEX = 'index';
+    const TIMESTAMP = '_timestamp';
 
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface
      */
     protected $searchClient;
+    /**
+     * @var OutdatedValidatorInterface
+     */
+    protected $outdatedValidator;
 
     /**
-     * SynchronizationSearch constructor.
-     *
-     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface $searchClient
-     * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\Synchronization\SynchronizationConfig $config
+     * @param SynchronizationToSearchInterface $searchClient
+     * @param OutdatedValidatorInterface $outdatedValidator
      */
-    public function __construct(SynchronizationToSearchInterface $searchClient, SynchronizationToUtilEncodingInterface $utilEncodingService, SynchronizationConfig $config)
+    public function __construct(SynchronizationToSearchInterface $searchClient, OutdatedValidatorInterface $outdatedValidator)
     {
-        parent::__construct($utilEncodingService, $config);
-
         $this->searchClient = $searchClient;
+        $this->outdatedValidator = $outdatedValidator;
     }
 
     /**
@@ -47,15 +52,16 @@ class SynchronizationSearch extends AbstractSynchronization implements Synchroni
      */
     public function write(array $data, $queueName)
     {
-        $typeName = $this->getParam($data, 'type');
-        $indexName = $this->getParam($data, 'index');
+        $typeName = $this->getParam($data, static::TYPE);
+        $indexName = $this->getParam($data, static::INDEX);
         $data = $this->formatTimestamp($data);
+        $existingEntry = $this->read($data[static::KEY]);
 
         $formattedData = [
-            $data['key'] => $data['value'],
+            $data[static::KEY] => $data[static::VALUE],
         ];
 
-        if ($this->isInvalid($queueName, $data['key'], $data['value'])) {
+        if ($existingEntry !== null && $this->outdatedValidator->isInvalid($queueName, $data[static::VALUE], $existingEntry)) {
             return;
         }
 
@@ -70,15 +76,16 @@ class SynchronizationSearch extends AbstractSynchronization implements Synchroni
      */
     public function delete(array $data, $queueName)
     {
-        $typeName = $this->getParam($data, 'type');
-        $indexName = $this->getParam($data, 'index');
+        $typeName = $this->getParam($data, static::TYPE);
+        $indexName = $this->getParam($data, static::INDEX);
         $data = $this->formatTimestamp($data);
+        $existingEntry = $this->read($data[static::KEY]);
 
         $formattedData = [
-            $data['key'] => [],
+            $data[static::KEY] => [],
         ];
 
-        if ($this->isInvalid($queueName, $data['key'], $data['value'])) {
+        if ($existingEntry !== null && $this->outdatedValidator->isInvalid($queueName, $data[static::VALUE], $existingEntry)) {
             return;
         }
 
@@ -104,16 +111,14 @@ class SynchronizationSearch extends AbstractSynchronization implements Synchroni
     /**
      * @param string $key
      *
-     * @return array
+     * @return array|null
      */
-    protected function getExistEntryByKey($key)
+    protected function read($key)
     {
         try {
             return $this->searchClient->read($key)->getData();
-        } catch (Throwable $exception) {
-            ErrorLogger::getInstance()->log($exception);
-
-            return [];
+        } catch (NotFoundException $exception) {
+            return null;
         }
     }
 
@@ -124,12 +129,12 @@ class SynchronizationSearch extends AbstractSynchronization implements Synchroni
      */
     protected function formatTimestamp(array $data)
     {
-        if (!isset($data['value']['_timestamp'])) {
+        if (!isset($data[static::VALUE][static::TIMESTAMP])) {
             return $data;
         }
 
-        $data['value']['timestamp'] = $data['value']['_timestamp'];
-        unset($data['value']['_timestamp']);
+        $data[static::VALUE]['timestamp'] = $data[static::VALUE][static::TIMESTAMP];
+        unset($data[static::VALUE][static::TIMESTAMP]);
 
         return $data;
     }

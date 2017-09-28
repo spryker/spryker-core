@@ -99,7 +99,7 @@ class EventBehavior extends Behavior
     /**
      * @param string $script
      *
-     * @return string
+     * @return void
      */
     public function objectFilter(&$script)
     {

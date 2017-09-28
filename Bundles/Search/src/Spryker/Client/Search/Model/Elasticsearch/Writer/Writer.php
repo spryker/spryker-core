@@ -44,28 +44,31 @@ class Writer implements WriterInterface
 
     /**
      * @param array $dataSet
-     * @param string $typeName
-     * @param string $indexName
+     * @param string|null $typeName
+     * @param string|null $indexName
      *
      * @throws \Spryker\Client\Search\Exception\InvalidDataSetException
      *
      * @return bool
      */
-    public function write(array $dataSet, $typeName = '', $indexName = '')
+    public function write(array $dataSet, $typeName = null, $indexName = null)
     {
+        $defaultType = $this->type;
+        $defaultIndex = $this->index;
+
         if ($this->hasIntegerKeys($dataSet)) {
             throw new InvalidDataSetException();
         }
 
         if ($typeName) {
-            $this->type = $typeName;
+            $defaultType = $typeName;
         }
 
         if ($indexName) {
-            $this->index = $this->client->getIndex($indexName);
+            $defaultIndex = $this->client->getIndex($indexName);
         }
 
-        $type = $this->index->getType($this->type);
+        $type = $defaultIndex->getType($defaultType);
         $documents = $this->createDocuments($dataSet);
         $type->addDocuments($documents);
         $response = $type->getIndex()->refresh();
@@ -75,31 +78,34 @@ class Writer implements WriterInterface
 
     /**
      * @param array $dataSet
-     * @param string $typeName
-     * @param string $indexName
+     * @param string|null $typeName
+     * @param string|null $indexName
      *
      * @throws \Spryker\Client\Search\Exception\InvalidDataSetException
      *
      * @return bool
      */
-    public function delete(array $dataSet, $typeName = '', $indexName = '')
+    public function delete(array $dataSet, $typeName = null, $indexName = null)
     {
         if ($this->hasIntegerKeys($dataSet)) {
             throw new InvalidDataSetException();
         }
 
+        $defaultType = $this->type;
+        $defaultIndex = $this->index;
+
         if ($typeName) {
-            $this->type = $typeName;
+            $defaultType = $typeName;
         }
 
         if ($indexName) {
-            $this->index = $this->client->getIndex($indexName);
+            $defaultIndex = $this->client->getIndex($indexName);
         }
 
         $documents = [];
         foreach ($dataSet as $key => $value) {
             try {
-                $documents[] = $this->index->getType($this->type)->getDocument($key);
+                $documents[] = $defaultIndex->getType($defaultType)->getDocument($key);
             } catch (NotFoundException $e) {
                 continue;
             }
@@ -109,8 +115,8 @@ class Writer implements WriterInterface
             return true;
         }
 
-        $response = $this->index->deleteDocuments($documents);
-        $this->index->flush(true);
+        $response = $defaultIndex->deleteDocuments($documents);
+        $defaultIndex->flush(true);
 
         return $response->isOk();
     }
@@ -126,7 +132,7 @@ class Writer implements WriterInterface
     /**
      * @param array $dataSet
      *
-     * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
+     * @throws \Spryker\Client\Search\Exception\InvalidDataSetException
      *
      * @return array
      */

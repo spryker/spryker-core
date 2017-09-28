@@ -34,15 +34,24 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getElasticsearchConfig()
     {
-        $config = [
-            'transport' => ucfirst($this->get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT)),
-            'port' => $this->get(SearchConstants::ELASTICA_PARAMETER__PORT),
-            'host' => $this->get(SearchConstants::ELASTICA_PARAMETER__HOST),
-        ];
+        $config = $this->get(SearchConstants::ELASTICA_CLIENT_CONFIGURATION, null);
+        if ($config !== null) {
+            return $config;
+        }
 
-        if ($this->get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
+        $config = $this->get(SearchConstants::ELASTICA_PARAMETER__EXTRA, null);
+        if ($config === null) {
+            $config = [];
+        }
+
+        $config['protocol'] = ucfirst($this->get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
+        $config['port'] = $this->get(SearchConstants::ELASTICA_PARAMETER__PORT);
+        $config['host'] = $this->get(SearchConstants::ELASTICA_PARAMETER__HOST);
+
+        $authHeader = $this->get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER, null);
+        if ($authHeader !== null) {
             $config['headers'] = [
-                'Authorization' => 'Basic ' . $this->get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER),
+                'Authorization' => 'Basic ' . $authHeader,
             ];
         }
 

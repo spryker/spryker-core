@@ -10,10 +10,28 @@ namespace Spryker\Zed\CmsBlock\Dependency;
 interface CmsBlockEvents
 {
 
-    const CMS_BLOCK_PUBLISH = 'Cms.block.publish';
-    const CMS_BLOCK_UNPUBLISH = 'Cms.block.unpublish';
+    /**
+     * Specification
+     * - This events will be used for spy_cms_block_glossary_key_mapping entity creation
+     *
+     * @api
+     */
+    const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE = 'Entity.spy_cms_block_glossary_key_mapping.create';
 
+    /**
+     * Specification
+     * - This events will be used for spy_cms_block_glossary_key_mapping entity changes
+     *
+     * @api
+     */
     const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_UPDATE = 'Entity.spy_cms_block_glossary_key_mapping.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_cms_block_glossary_key_mapping entity deletion
+     *
+     * @api
+     */
     const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE = 'Entity.spy_cms_block_glossary_key_mapping.delete';
 
 }

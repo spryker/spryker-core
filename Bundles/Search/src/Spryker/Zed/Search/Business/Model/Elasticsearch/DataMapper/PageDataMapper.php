@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException;
 use Spryker\Zed\Search\Business\Exception\PluginNotFoundException;
+use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
@@ -40,20 +41,33 @@ class PageDataMapper implements PageDataMapperInterface
     protected $pageIndexMap;
 
     /**
-     * @var \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
+     * @var \Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface[]
      */
-    protected $pageMapPlugins = [];
+    protected $pageMapInterfaces = [];
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $pageMapPlugins
+     * @param array $namedPageMapPlugins
      */
-    public function __construct(PageMapBuilderInterface $pageMapBuilder, array $pageMapPlugins)
+    public function __construct(PageMapBuilderInterface $pageMapBuilder, array $namedPageMapPlugins = [])
     {
         $this->pageMapBuilder = $pageMapBuilder;
-        $this->pageMapPlugins = $pageMapPlugins;
+        $this->pageMapInterfaces = $this->mapPluginClassesByName($namedPageMapPlugins);
         $this->underscoreToDashFilter = new UnderscoreToDash();
         $this->pageIndexMap = new PageIndexMap();
+    }
+
+    /**
+     * @param NamedPageMapInterface[] $namedPageMapPlugins
+     *
+     * @return array
+     */
+    protected function mapPluginClassesByName(array $namedPageMapPlugins)
+    {
+        $pageMaps = [];
+        foreach ($namedPageMapPlugins as $namedPageMapPlugin) {
+            $pageMaps[$namedPageMapPlugin->getName()] = $namedPageMapPlugin;
+        }
     }
 
     /**
@@ -93,11 +107,11 @@ class PageDataMapper implements PageDataMapperInterface
     {
         $result = [];
 
-        if (!isset($this->pageMapPlugins[$mapperName])) {
+        if (!isset($this->pageMapInterfaces[$mapperName])) {
             throw new PluginNotFoundException(sprintf('PageMap plugin with this name: `%s` cannot be found', $mapperName));
         }
 
-        $pageMap = $this->pageMapPlugins[$mapperName];
+        $pageMap = $this->pageMapInterfaces[$mapperName];
         $pageMapTransfer = $pageMap->buildPageMap($this->pageMapBuilder, $data, $localeTransfer);
 
         foreach ($pageMapTransfer->modifiedToArray() as $key => $value) {

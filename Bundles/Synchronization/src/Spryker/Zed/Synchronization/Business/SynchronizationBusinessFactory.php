@@ -10,6 +10,8 @@ namespace Spryker\Zed\Synchronization\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Synchronization\Business\Model\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Model\Storage\SynchronizationStorage;
+use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidator;
+use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 
 /**
@@ -26,7 +28,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
         return new SynchronizationStorage(
             $this->getStorageClient(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->createOutdatedValidator()
         );
     }
 
@@ -37,7 +39,16 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     {
         return new SynchronizationSearch(
             $this->getSearchClient(),
-            $this->getUtilEncodingService(),
+            $this->createOutdatedValidator()
+        );
+    }
+
+    /**
+     * @return OutdatedValidatorInterface
+     */
+    public function createOutdatedValidator()
+    {
+        return new OutdatedValidator(
             $this->getConfig()
         );
     }

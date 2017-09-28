@@ -9,14 +9,12 @@ namespace Spryker\Service\Synchronization;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\Synchronization\Dependency\Service\SynchronizationToUtilSynchronizationServiceBridge;
 
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS';
     const SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS';
-    const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -25,17 +23,36 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideServiceDependencies(Container $container)
     {
-        $container[self::SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS] = function (Container $container) {
-            return $this->getStorageKeyGeneratorPlugins($container);
-        };
+        $container = $this->addSynchronizationStorageKeyPlugins($container);
+        $this->addSynchronizationSearchKeyPlugins($container);
+    }
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addSynchronizationSearchKeyPlugins(Container $container)
+    {
         $container[self::SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS] = function (Container $container) {
             return $this->getSearchKeyGeneratorPlugins($container);
         };
 
-        $container[self::SERVICE_UTIL_SYNCHRONIZATION] = function (Container $container) {
-            return new SynchronizationToUtilSynchronizationServiceBridge($container->getLocator()->utilSynchronization()->service());
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addSynchronizationStorageKeyPlugins(Container $container)
+    {
+        $container[self::SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS] = function (Container $container) {
+            return $this->getStorageKeyGeneratorPlugins($container);
         };
+
+        return $container;
     }
 
     /**
@@ -43,7 +60,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
      */
-    protected function getStorageKeyGeneratorPlugins(Container $container)
+    protected function getSearchKeyGeneratorPlugins(Container $container)
     {
         return [];
     }
@@ -53,7 +70,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
      */
-    protected function getSearchKeyGeneratorPlugins(Container $container)
+    protected function getStorageKeyGeneratorPlugins(Container $container)
     {
         return [];
     }
