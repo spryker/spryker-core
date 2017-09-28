@@ -17,6 +17,12 @@
         <unique name="spy_user-username">
             <unique-column name="username"/>
         </unique>
+
+        <index name="spy_user-index-id_user-status">
+            <index-column name="id_user" />
+            <index-column name="status" />
+        </index>
+
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
         <id-method-parameter value="spy_user_pk_seq"/>
