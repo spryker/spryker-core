@@ -32,11 +32,7 @@ class SprykerLoggerConfig implements LoggerConfigInterface
      */
     public function getChannelName()
     {
-        if (Config::hasKey(LogConstants::LOGGER_CHANNEL)) {
-            return Config::get(LogConstants::LOGGER_CHANNEL);
-        }
-
-        return 'Spryker';
+        return Config::get(LogConstants::LOGGER_CHANNEL, 'Spryker');
     }
 
     /**
