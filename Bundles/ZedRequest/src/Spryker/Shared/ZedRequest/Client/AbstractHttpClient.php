@@ -12,6 +12,7 @@ use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use GuzzleHttp\Psr7\Request as Psr7Request;
+use InvalidArgumentException;
 use LogicException;
 use Psr\Http\Message\RequestInterface as MessageRequestInterface;
 use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
@@ -20,7 +21,6 @@ use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Shared\ZedRequest\Client\Exception\InvalidRequestOptionException;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
@@ -300,7 +300,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @param array|int|null $requestOptions
      *
-     * @throws \Spryker\Shared\ZedRequest\Client\Exception\InvalidRequestOptionException
+     * @throws \InvalidArgumentException
      *
      * @return array
      */
@@ -318,7 +318,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             return ['timeout' => $requestOptions];
         }
 
-        throw new InvalidRequestOptionException(sprintf('Invalid argument given. Allowed types are "int (previous accepted $timeoutInSeconds), array" found "%s"', gettype($requestOptions)));
+        throw new InvalidArgumentException(sprintf('Invalid argument given. Allowed types are "int (previous accepted $timeoutInSeconds), array" found "%s"', gettype($requestOptions)));
     }
 
     /**
