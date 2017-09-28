@@ -36,6 +36,14 @@ interface LogConstants
 
     /**
      * Specification:
+     * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
+     *
+     * @api
+     */
+    const EXCEPTION_LOG_FILE_PATH = 'LOG:EXCEPTION_LOG_FILE_PATH';
+
+    /**
+     * Specification:
      * - Array with names which is used to sanitize data in your logs.
      *
      * The data which goes to the sanitizer is an array. Before it gets formatted the sanitizer will iterate of the given

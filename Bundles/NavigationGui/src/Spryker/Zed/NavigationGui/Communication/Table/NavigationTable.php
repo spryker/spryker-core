@@ -54,6 +54,7 @@ class NavigationTable extends AbstractTable
         ]);
 
         $config->addRawColumn(static::COL_ACTIONS);
+        $config->addRawColumn(SpyNavigationTableMap::COL_IS_ACTIVE);
 
         $config->setSortable([
             SpyNavigationTableMap::COL_ID_NAVIGATION,
@@ -137,7 +138,7 @@ class NavigationTable extends AbstractTable
     {
         return $this->generateRemoveButton(
             Url::generate('/navigation-gui/delete', [DeleteController::PARAM_ID_NAVIGATION => $idNavigation]),
-            'Remove'
+            'Delete'
         );
     }
 
@@ -169,10 +170,10 @@ class NavigationTable extends AbstractTable
     protected function getStatus(SpyNavigation $navigationEntity)
     {
         if ($navigationEntity->getIsActive()) {
-            return 'Active';
+            return '<span class="label label-info">Active</span>';
         }
 
-        return 'Inactive';
+        return '<span class="label label-danger">Inactive</span>';
     }
 
 }

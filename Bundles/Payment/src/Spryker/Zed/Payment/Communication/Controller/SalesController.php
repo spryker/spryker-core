@@ -23,6 +23,7 @@ class SalesController extends AbstractController
         $orderTransfer = $request->request->get('orderTransfer');
         return [
             'payments' => $orderTransfer->getPayments(),
+            'order' => $orderTransfer,
         ];
     }
 
