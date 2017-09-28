@@ -330,8 +330,10 @@ class Reader implements ReaderInterface
 
         if ($this->hasProductConcrete($sku)) {
             $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-            if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
-                return $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
+            $priceProductAbstractEntity = $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
+
+            if ($priceProductAbstractEntity) {
+                return $priceProductAbstractEntity;
             }
         }
 
