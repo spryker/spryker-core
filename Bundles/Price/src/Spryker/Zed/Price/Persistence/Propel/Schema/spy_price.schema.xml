@@ -29,6 +29,11 @@
             <unique-column name="fk_product"/>
             <unique-column name="fk_price_type"/>
         </unique>
+
+        <index name="spy_price_product-index-fk_price_type">
+            <index-column name="fk_price_type" />
+        </index>
+
         <id-method-parameter value="spy_price_product_pk_seq"/>
     </table>
 
