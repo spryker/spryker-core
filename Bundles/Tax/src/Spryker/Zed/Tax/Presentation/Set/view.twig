@@ -1,17 +1,17 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'View tax set' | trans %}
+{% block section_title 'View Tax Set: ' | trans ~ taxSet.idTaxSet %}
 
 {% block action %}
     {{ editActionButton(url('/tax/set/edit', {'id-tax-set': taxSet.idTaxSet}), 'Edit' | trans) }}
     {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
-    {{ backActionButton('/tax/set/list', 'List of tax sets' | trans) }}
+    {{ backActionButton('/tax/set/list', 'Back to Tax Sets' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'View tax set' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax set details' | trans } %}
 
         {% block widget_content %}
             <table class="table">
