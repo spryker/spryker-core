@@ -30,11 +30,8 @@
             <unique-column name="fk_price_type"/>
         </unique>
 
-        <index name="spy_price_product-index-fk_price_type">
+        <index name="spy_price_product-index-fk_price_type-fk_product">
             <index-column name="fk_price_type" />
-        </index>
-
-        <index name="spy_price_product-index-fk_product">
             <index-column name="fk_product" />
         </index>
 
