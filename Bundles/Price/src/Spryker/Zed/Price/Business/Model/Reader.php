@@ -318,13 +318,13 @@ class Reader implements ReaderInterface
     {
         $priceProductConcreteEntity = $this->getPriceEntityForProductConcrete($sku, $priceType);
 
-        if ($priceProductConcreteEntity) {
+        if ($priceProductConcreteEntity !== null) {
             return $priceProductConcreteEntity;
         }
 
         $priceProductAbstractEntity = $this->getPriceEntityForProductAbstract($sku, $priceType);
 
-        if ($priceProductAbstractEntity) {
+        if ($priceProductAbstractEntity !== null) {
             return $priceProductAbstractEntity;
         }
 
@@ -332,7 +332,7 @@ class Reader implements ReaderInterface
             $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
             $priceProductAbstractEntity = $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
 
-            if ($priceProductAbstractEntity) {
+            if ($priceProductAbstractEntity !== null) {
                 return $priceProductAbstractEntity;
             }
         }
