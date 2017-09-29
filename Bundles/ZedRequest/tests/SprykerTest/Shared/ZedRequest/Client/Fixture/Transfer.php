@@ -22,6 +22,14 @@ class Transfer extends AbstractTransfer
     /**
      * @var array
      */
+    protected $transferPropertyNameMap = [
+        'key' => 'key',
+        'Key' => 'key',
+    ];
+
+    /**
+     * @var array
+     */
     protected $transferMetadata = [
         self::KEY => [
             'type' => 'string',
@@ -39,7 +47,7 @@ class Transfer extends AbstractTransfer
     public function setKey($key)
     {
         $this->key = $key;
-        $this->addModifiedProperty(self::KEY);
+        $this->modifiedProperties[self::KEY] = $key;
 
         return $this;
     }

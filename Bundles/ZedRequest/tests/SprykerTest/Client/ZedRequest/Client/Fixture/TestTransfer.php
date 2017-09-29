@@ -22,6 +22,14 @@ class TestTransfer extends AbstractTransfer
     /**
      * @var array
      */
+    protected $transferPropertyNameMap = [
+        'foo' => 'foo',
+        'Foo' => 'foo',
+    ];
+
+    /**
+     * @var array
+     */
     protected $transferMetadata = [
         self::FOO => [
             'type' => 'string',
@@ -39,7 +47,7 @@ class TestTransfer extends AbstractTransfer
     public function setFoo($foo)
     {
         $this->foo = $foo;
-        $this->addModifiedProperty(self::FOO);
+        $this->modifiedProperties[self::FOO] = true;
 
         return $this;
     }

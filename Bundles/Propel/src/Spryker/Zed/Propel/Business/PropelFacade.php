@@ -112,6 +112,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * @deprecated Please add the Commands directly to your ConsoleDependencyProvider.
+     *
      * {@inheritdoc}
      *
      * @api
