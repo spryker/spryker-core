@@ -1,21 +1,19 @@
 {
-  "name": "spryker/log",
-  "description": "Log module",
+  "name": "spryker/loggly",
+  "description": "Loggly module",
   "license": "proprietary",
   "require": {
-    "psr/log": "~1.0.0",
-    "spryker/config": "^3.0.0",
-    "spryker/kernel": "^3.8.0",
-    "spryker/monolog": "^2.0.0",
-    "spryker/queue": "^0.3.0"
+    "spryker/kernel": "^3.0.0"
+  },
+  "suggest": {
+    "spryker/queue": "Needed to process messages from the queue",
+    "spryker/monolog": "Needed to send messages to loggly via Curl helper"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/silex": "If you want to use ServiceProvider."
+    "spryker/monolog": "*",
+    "spryker/testify": "*",
+    "spryker/queue": "*"
   },
   "autoload": {
     "psr-4": {
@@ -31,7 +29,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {
