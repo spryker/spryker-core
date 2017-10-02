@@ -51,14 +51,6 @@ interface LogConstants
 
     /**
      * Specification:
-     * - Channel name used for logs.
-     *
-     * @api
-     */
-    const LOGGER_CHANNEL = 'LOG:LOGGER_CHANNEL';
-
-    /**
-     * Specification:
      * - Log level were to start to log. E.g. when set to error, info messages will not be logged
      *
      * @api

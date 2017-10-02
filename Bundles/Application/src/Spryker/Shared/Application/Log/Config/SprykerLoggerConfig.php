@@ -31,7 +31,7 @@ class SprykerLoggerConfig implements LoggerConfigInterface
      */
     public function getChannelName()
     {
-        return Config::get(LogConstants::LOGGER_CHANNEL, 'Spryker');
+        return 'Spryker';
     }
 
     /**
@@ -39,11 +39,9 @@ class SprykerLoggerConfig implements LoggerConfigInterface
      */
     public function getHandlers()
     {
-        $handler = [];
-
-        if (Config::hasKey(LogConstants::LOG_FILE_PATH)) {
-            $handler[] = $this->createStreamHandler();
-        }
+        $handler = [
+            $this->createStreamHandler(),
+        ];
 
         if (Config::hasKey(LogConstants::EXCEPTION_LOG_FILE_PATH)) {
             $handler[] = $this->createExceptionHandler();
@@ -82,7 +80,7 @@ class SprykerLoggerConfig implements LoggerConfigInterface
             Config::get(LogConstants::LOG_FILE_PATH),
             Config::get(LogConstants::LOG_LEVEL, Logger::INFO)
         );
-        $formatter = new LogstashFormatter(APPLICATION);
+        $formatter = new LogstashFormatter('Spryker');
         $streamHandler->setFormatter($formatter);
 
         return $streamHandler;
