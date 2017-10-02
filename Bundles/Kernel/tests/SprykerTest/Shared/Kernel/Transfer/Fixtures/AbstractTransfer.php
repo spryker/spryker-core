@@ -58,6 +58,19 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @var array
      */
+    protected $transferPropertyNameMap = [
+        'string' => 'string',
+        'int' => 'int',
+        'bool' => 'bool',
+        'array' => 'array',
+        'transfer' => 'transfer',
+        'transfer_collection' => 'transferCollection',
+        'transferCollection' => 'transferCollection',
+    ];
+
+    /**
+     * @var array
+     */
     protected $transferMetadata = [
         self::STRING => [
             'type' => 'string',
@@ -105,7 +118,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setString($string)
     {
         $this->string = $string;
-        $this->addModifiedProperty(self::STRING);
+        $this->modifiedProperties[self::STRING] = true;
 
         return $this;
     }
@@ -136,7 +149,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setInt($int)
     {
         $this->int = $int;
-        $this->addModifiedProperty(self::INT);
+        $this->modifiedProperties[self::INT] = true;
 
         return $this;
     }
@@ -167,7 +180,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setBool($bool)
     {
         $this->bool = $bool;
-        $this->addModifiedProperty(self::BOOL);
+        $this->modifiedProperties[self::BOOL] = true;
 
         return $this;
     }
@@ -198,7 +211,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setArray(array $array = [])
     {
         $this->array = $array;
-        $this->addModifiedProperty(self::ARRAY_PROPERTY);
+        $this->modifiedProperties[self::ARRAY_PROPERTY] = true;
 
         return $this;
     }
@@ -219,7 +232,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function addArr($arr)
     {
         $this->array[] = $arr;
-        $this->addModifiedProperty(self::ARRAY_PROPERTY);
+        $this->modifiedProperties[self::ARRAY_PROPERTY] = true;
 
         return $this;
     }
@@ -242,7 +255,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setTransfer(TransferInterface $transfer = null)
     {
         $this->transfer = $transfer;
-        $this->addModifiedProperty(self::TRANSFER);
+        $this->modifiedProperties[self::TRANSFER] = true;
 
         return $this;
     }
@@ -273,7 +286,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setTransferCollection(ArrayObject $transferCollection)
     {
         $this->transferCollection = $transferCollection;
-        $this->addModifiedProperty(self::TRANSFER_COLLECTION);
+        $this->modifiedProperties[self::TRANSFER_COLLECTION] = true;
 
         return $this;
     }
@@ -294,7 +307,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function addTransferCollection(TransferInterface $transferCollection)
     {
         $this->transferCollection[] = $transferCollection;
-        $this->addModifiedProperty(self::TRANSFER_COLLECTION);
+        $this->modifiedProperties[self::TRANSFER_COLLECTION] = true;
 
         return $this;
     }

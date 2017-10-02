@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\ErrorHandler\Plugin\ServiceProvider;
 
-use Exception;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config\Config;
@@ -77,7 +76,7 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
      */
     protected function getErrorLoggerCallbackHandler()
     {
-        return new CallbackHandler(function (Exception $exception) {
+        return new CallbackHandler(function ($exception) {
             ErrorLogger::getInstance()->log($exception);
         });
     }

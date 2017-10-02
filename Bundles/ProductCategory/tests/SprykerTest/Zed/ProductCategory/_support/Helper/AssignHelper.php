@@ -6,10 +6,10 @@
 
 namespace SprykerTest\Zed\ProductCategory\Helper;
 
-use Acceptance\ProductCategory\ProductCategory\Zed\PageObject\ProductCategoryAssignPage;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
+use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
 
 class AssignHelper extends Module
 {

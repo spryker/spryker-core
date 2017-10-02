@@ -37,6 +37,13 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedValues;
 
     /**
+     * The Buffer for already decoded buffered values
+     *
+     * @var array
+     */
+    protected static $bufferedDecodedValues = [];
+
+    /**
      * @var \Spryker\Client\Storage\Redis\ServiceInterface
      */
     public static $service;
@@ -170,14 +177,19 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $this->loadCacheKeysAndValues();
 
-        if (array_key_exists($key, self::$bufferedValues)) {
-            self::$cachedKeys[$key] = self::KEY_USED;
-            return $this->jsonDecode(self::$bufferedValues[$key]);
+        if (!array_key_exists($key, self::$bufferedValues)) {
+            self::$cachedKeys[$key] = self::KEY_NEW;
+
+            return $this->getService()->get($key);
         }
 
-        self::$cachedKeys[$key] = self::KEY_NEW;
+        self::$cachedKeys[$key] = self::KEY_USED;
 
-        return $this->getService()->get($key);
+        if (!array_key_exists($key, self::$bufferedDecodedValues)) {
+            self::$bufferedDecodedValues[$key] = $this->jsonDecode(self::$bufferedValues[$key]);
+        }
+
+        return self::$bufferedDecodedValues[$key];
     }
 
     /**
@@ -191,7 +203,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $this->loadCacheKeysAndValues();
 
+        // Get immediately available values
         $keyValues = array_intersect_key(self::$bufferedValues, array_flip($keys));
+
+        foreach ($keyValues as $key => $keyValue) {
+            self::$cachedKeys[$key] = self::KEY_USED;
+        }
+
+        // Get the rest of requested keys without a value
         $keys = array_diff($keys, array_keys($keyValues));
 
         if ($keys) {

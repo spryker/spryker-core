@@ -26,6 +26,14 @@
             <unique-column name="fk_product_abstract"/>
         </unique>
 
+        <index name="spy_product_image_set-index-fk_product">
+            <index-column name="fk_product" />
+        </index>
+
+        <index name="spy_product_image_set-index-fk_product_abstract">
+            <index-column name="fk_product_abstract" />
+        </index>
+
         <id-method-parameter value="spy_product_image_set_pk_seq"/>
     </table>
 

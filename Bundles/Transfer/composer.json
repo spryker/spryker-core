@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "fzaninotto/faker": "^1.6",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.10.0",
     "spryker/log": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",

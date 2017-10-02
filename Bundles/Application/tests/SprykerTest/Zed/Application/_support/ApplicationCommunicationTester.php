@@ -2,6 +2,10 @@
 namespace SprykerTest\Zed\Application;
 
 use Codeception\Actor;
+use Silex\Application;
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Inherited Methods
@@ -23,8 +27,33 @@ class ApplicationCommunicationTester extends Actor
 
     use _generated\ApplicationCommunicationTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param string $controllerResponse
+     * @param bool $isSslEnabled
+     *
+     * @return \Silex\Application
+     */
+    public function getApplicationForSslTest($controllerResponse = '', $isSslEnabled = true)
+    {
+        $this->setConfig(ApplicationConstants::ZED_SSL_ENABLED, $isSslEnabled);
+        $this->setConfig(ApplicationConstants::ZED_TRUSTED_HOSTS, []);
+
+        $application = new Application();
+        $application->register(new SslServiceProvider());
+
+        $application->get('/foo', function () use ($controllerResponse) {
+            return $controllerResponse;
+        });
+
+        return $application;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequestForSslTest()
+    {
+        return Request::create('/foo');
+    }
 
 }
