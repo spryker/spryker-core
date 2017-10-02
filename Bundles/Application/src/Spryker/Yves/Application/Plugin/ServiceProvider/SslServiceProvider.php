@@ -5,18 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace Spryker\Yves\Application\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
- * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
- * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
+ * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
  */
 class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -91,21 +89,10 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     protected function shouldBeSsl(Request $request)
     {
-        $isSecure = $request->isSecure();
-        $isYvesRequest = $this->isYvesRequest($request);
+        $requestIsSecure = $request->isSecure();
         $isSslExcludedResource = $this->isSslExcludedResource($request);
 
-        return (!$isSecure && !$isYvesRequest && !$isSslExcludedResource);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return bool
-     */
-    protected function isYvesRequest(Request $request)
-    {
-        return (bool)$request->headers->get('X-Yves-Host');
+        return (!$requestIsSecure && !$isSslExcludedResource);
     }
 
     /**
@@ -115,7 +102,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     protected function isSslExcludedResource(Request $request)
     {
-        return in_array($request->attributes->get('module') . '/' . $request->attributes->get('controller'), $this->getConfig()->getSslExcludedResources());
+        return in_array($request->getPathInfo(), $this->getConfig()->getSslExcludedResources());
     }
 
 }

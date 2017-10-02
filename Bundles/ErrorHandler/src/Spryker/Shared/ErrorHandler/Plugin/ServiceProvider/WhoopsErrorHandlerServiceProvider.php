@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\ErrorHandler\Plugin\ServiceProvider;
 
-use Exception;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config\Config;
