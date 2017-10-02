@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -232,7 +231,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems)
     {
-        /** @var SpySalesOrderItem $orderItemEntity */
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity */
         foreach ($salesOrderItems as $orderItemEntity) {
 
             $criteria = new Criteria();
@@ -243,6 +242,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed with the next major
      *
      * @param int $idSalesOrderItem

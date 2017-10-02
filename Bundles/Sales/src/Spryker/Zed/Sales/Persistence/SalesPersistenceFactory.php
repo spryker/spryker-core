@@ -65,7 +65,7 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @deprecated Will be removed with the next major
      *
-     * @return SpyOmsOrderItemStateHistoryQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
      */
     public function createOmsOrderItemStateHistoryQuery()
     {

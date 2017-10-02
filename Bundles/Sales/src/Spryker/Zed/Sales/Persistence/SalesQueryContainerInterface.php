@@ -129,6 +129,8 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems);
 
     /**
+     * @api
+     *
      * @deprecated Will be removed with the next major
      *
      * @param int $idSalesOrderItem
