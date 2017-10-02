@@ -90,6 +90,12 @@
         <foreign-key name="spy_oms_order_item_state_history-fk_oms_order_item_state" foreignTable="spy_oms_order_item_state" phpName="State" refPhpName="StateHistory">
             <reference local="fk_oms_order_item_state" foreign="id_oms_order_item_state"/>
         </foreign-key>
+
+        <index name="spy_oms_order_item_state_history-index-fk_soi-fk_oois">
+            <index-column name="fk_sales_order_item" />
+            <index-column name="fk_oms_order_item_state" />
+        </index>
+
         <id-method-parameter value="spy_oms_order_item_state_history_pk_seq"/>
     </table>
 

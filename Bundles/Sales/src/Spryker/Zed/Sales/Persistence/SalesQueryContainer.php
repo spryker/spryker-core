@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -231,6 +232,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems)
     {
+        /** @var SpySalesOrderItem $orderItemEntity */
         foreach ($salesOrderItems as $orderItemEntity) {
 
             $criteria = new Criteria();
@@ -238,6 +240,23 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             $orderItemEntity->getStateHistoriesJoinState($criteria);
             $orderItemEntity->resetPartialStateHistories(false);
         }
+    }
+
+    /**
+     * @deprecated Will be removed with the next major
+     *
+     * @param int $idSalesOrderItem
+     * @param int $idOmsOrderItemState
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    public function queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc($idSalesOrderItem, $idOmsOrderItemState)
+    {
+        return $this->getFactory()
+            ->createOmsOrderItemStateHistoryQuery()
+            ->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->filterByFkOmsOrderItemState($idOmsOrderItemState)
+            ->orderByIdOmsOrderItemStateHistory(Criteria::DESC);
     }
 
     /**

@@ -129,6 +129,16 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems);
 
     /**
+     * @deprecated Will be removed with the next major
+     *
+     * @param int $idSalesOrderItem
+     * @param int $idOmsOrderItemState
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    public function queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc($idSalesOrderItem, $idOmsOrderItemState);
+
+    /**
      * @api
      *
      * @param int $idSalesOrder
