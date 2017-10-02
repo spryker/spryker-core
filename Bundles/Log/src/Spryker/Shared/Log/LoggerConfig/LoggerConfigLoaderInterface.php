@@ -18,6 +18,6 @@ interface LoggerConfigLoaderInterface
     /**
      * @return \Spryker\Shared\Log\Config\LoggerConfigInterface
      */
-    public function load();
+    public function create();
 
 }

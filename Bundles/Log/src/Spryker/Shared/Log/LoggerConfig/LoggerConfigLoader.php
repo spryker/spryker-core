@@ -34,7 +34,7 @@ class LoggerConfigLoader
     {
         foreach ($this->loggerLoader as $loggerLoader) {
             if ($loggerLoader->accept()) {
-                return $loggerLoader->load();
+                return $loggerLoader->create();
             }
         }
 

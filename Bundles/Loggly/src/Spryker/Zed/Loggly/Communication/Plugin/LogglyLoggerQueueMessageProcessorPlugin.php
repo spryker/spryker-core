@@ -20,7 +20,7 @@ class LogglyLoggerQueueMessageProcessorPlugin extends AbstractPlugin implements 
 
     const HOST = 'logs-01.loggly.com';
 
-    const ENDPOINT_BATCH = 'bulk';
+    const ENDPOINT_BULK = 'bulk';
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
@@ -34,7 +34,7 @@ class LogglyLoggerQueueMessageProcessorPlugin extends AbstractPlugin implements 
             foreach ($queueMessageTransfers as $queueMessageTransfer) {
                 $data .= $queueMessageTransfer->getQueueMessage()->getBody() . PHP_EOL;
             }
-            $url = sprintf("https://%s/%s/%s/", self::HOST, static::ENDPOINT_BATCH, $this->getConfig()->getLogglyToken());
+            $url = sprintf('https://%s/%s/%s/', static::HOST, static::ENDPOINT_BULK, $this->getConfig()->getLogglyToken());
 
             $headers = ['Content-Type: application/json'];
 

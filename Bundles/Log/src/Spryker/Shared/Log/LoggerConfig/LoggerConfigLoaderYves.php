@@ -28,7 +28,7 @@ class LoggerConfigLoaderYves implements LoggerConfigLoaderInterface
     /**
      * @return \Spryker\Shared\Log\Config\LoggerConfigInterface
      */
-    public function load()
+    public function create()
     {
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG_YVES);
 
