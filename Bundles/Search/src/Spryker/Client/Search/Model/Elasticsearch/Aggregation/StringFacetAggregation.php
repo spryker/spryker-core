@@ -43,7 +43,10 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
         $nestedFieldName = $this->getNestedFieldName($this->facetConfigTransfer);
 
         $facetValueAgg = $this->createValueAgg($fieldName, $nestedFieldName);
-        $this->setTermsAggregationSize($facetValueAgg, $this->facetConfigTransfer->getSize());
+        $this->setTermsAggregationSize(
+            $facetValueAgg,
+            $this->getSizeParam($this->facetConfigTransfer)
+        );
 
         $facetNameAgg = $this
             ->createNameAgg($this->facetConfigTransfer)
@@ -59,7 +62,7 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
      */
     protected function createNameAgg(FacetConfigTransfer $facetConfigTransfer)
     {
-        if ($facetConfigTransfer->getIsStandalone()) {
+        if ($facetConfigTransfer->getAggregationParams()) {
             return $this->createStandaloneFacetNameAggregation(
                 $facetConfigTransfer->getFieldName(),
                 $facetConfigTransfer->getName()
@@ -92,11 +95,28 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
      */
     protected function getNestedFieldName(FacetConfigTransfer $facetConfigTransfer)
     {
-        if ($facetConfigTransfer->getIsStandalone()) {
+        if ($facetConfigTransfer->getAggregationParams()) {
             return $this->addNestedFieldPrefix($facetConfigTransfer->getFieldName(), $facetConfigTransfer->getName());
         }
 
         return $facetConfigTransfer->getFieldName();
+    }
+
+    /**
+     * @deprecated Use aggregationParams to set a category facet size instead.
+     * Will be removed with the next major release.
+     *
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return int|null
+     */
+    protected function getSizeParam(FacetConfigTransfer $facetConfigTransfer)
+    {
+        if (isset($facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE])) {
+            return $facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE];
+        }
+
+        return $facetConfigTransfer->getSize();
     }
 
 }

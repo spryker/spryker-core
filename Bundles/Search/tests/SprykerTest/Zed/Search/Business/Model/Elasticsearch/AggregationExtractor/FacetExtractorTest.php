@@ -34,8 +34,7 @@ class FacetExtractorTest extends Unit
         $facetConfigTransfer = (new FacetConfigTransfer())
             ->setName($testFieldName)
             ->setParameterName($testFieldName)
-            ->setFieldName(PageIndexMap::STRING_FACET)
-            ->setIsStandalone(false);
+            ->setFieldName(PageIndexMap::STRING_FACET);
 
         $facetValueTransformerFactory = $this->getMockBuilder(FacetValueTransformerFactoryInterface::class)->getMock();
         $facetExtractor = new FacetExtractor(
@@ -63,7 +62,9 @@ class FacetExtractorTest extends Unit
             ->setName($testFieldName)
             ->setParameterName($testFieldName)
             ->setFieldName(PageIndexMap::STRING_FACET)
-            ->setIsStandalone(true);
+            ->setAggregationParams([
+                StringFacetAggregation::AGGREGATION_PARAM_SIZE => 10
+            ]);
 
         $facetValueTransformerFactory = $this->getMockBuilder(FacetValueTransformerFactoryInterface::class)->getMock();
         $facetExtractor = new FacetExtractor(

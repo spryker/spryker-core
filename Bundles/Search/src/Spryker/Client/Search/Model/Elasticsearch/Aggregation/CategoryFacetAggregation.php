@@ -39,14 +39,41 @@ class CategoryFacetAggregation extends AbstractTermsFacetAggregation
     {
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
+        if ($this->facetConfigTransfer->getAggregationParams()) {
+            $fieldName = $this->addNestedFieldPrefix(
+                $fieldName,
+                $this->facetConfigTransfer->getName()
+            );
+        }
+
         $aggregation = $this
             ->aggregationBuilder
             ->createTermsAggregation($fieldName)
             ->setField($fieldName);
 
-        $this->setTermsAggregationSize($aggregation, $this->facetConfigTransfer->getSize());
+        $this->setTermsAggregationSize(
+            $aggregation,
+            $this->getSizeParam($this->facetConfigTransfer)
+        );
 
         return $aggregation;
+    }
+
+    /**
+     * @deprecated Use aggregationParams to set a category facet size instead.
+     * Will be removed with the next major release.
+     *
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return int|null
+     */
+    protected function getSizeParam(FacetConfigTransfer $facetConfigTransfer)
+    {
+        if (isset($facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE])) {
+            return $facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE];
+        }
+
+        return $facetConfigTransfer->getSize();
     }
 
 }

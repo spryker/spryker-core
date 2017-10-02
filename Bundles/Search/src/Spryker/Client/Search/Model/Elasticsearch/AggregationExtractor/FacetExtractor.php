@@ -79,7 +79,7 @@ class FacetExtractor implements AggregationExtractorInterface
      */
     protected function extractFacetData(array $aggregation, $parameterName, $fieldName)
     {
-        if ($this->facetConfigTransfer->getIsStandalone()) {
+        if ($this->facetConfigTransfer->getAggregationParams()) {
             return $this->extractStandaloneFacetDataBuckets($aggregation, $fieldName);
         }
 

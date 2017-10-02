@@ -100,7 +100,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      */
     protected function getFieldName(FacetConfigTransfer $facetConfigTransfer)
     {
-        if ($facetConfigTransfer->getIsStandalone()) {
+        if ($facetConfigTransfer->getAggregationParams()) {
             return $this->addNestedFieldPrefix(
                 $facetConfigTransfer->getFieldName(),
                 $facetConfigTransfer->getName()
