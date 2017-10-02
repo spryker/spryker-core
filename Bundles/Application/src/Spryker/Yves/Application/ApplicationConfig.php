@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application;
+namespace Spryker\Yves\Application;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ApplicationConfig extends AbstractBundleConfig
 {
@@ -18,7 +18,7 @@ class ApplicationConfig extends AbstractBundleConfig
      */
     public function isSslEnabled()
     {
-        return $this->get(ApplicationConstants::ZED_SSL_ENABLED, true);
+        return $this->get(ApplicationConstants::YVES_SSL_ENABLED, true);
     }
 
     /**
@@ -26,7 +26,7 @@ class ApplicationConfig extends AbstractBundleConfig
      */
     public function getSslExcludedResources()
     {
-        return $this->get(ApplicationConstants::ZED_SSL_EXCLUDED, []);
+        return $this->get(ApplicationConstants::YVES_SSL_EXCLUDED, []);
     }
 
     /**
@@ -34,7 +34,7 @@ class ApplicationConfig extends AbstractBundleConfig
      */
     public function getTrustedProxies()
     {
-        return $this->get(ApplicationConstants::ZED_TRUSTED_PROXIES, []);
+        return $this->get(ApplicationConstants::YVES_TRUSTED_PROXIES, []);
     }
 
     /**
@@ -42,7 +42,7 @@ class ApplicationConfig extends AbstractBundleConfig
      */
     public function getTrustedHosts()
     {
-        return $this->get(ApplicationConstants::ZED_TRUSTED_HOSTS, []);
+        return $this->get(ApplicationConstants::YVES_TRUSTED_HOSTS, []);
     }
 
 }
