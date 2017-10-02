@@ -63,7 +63,7 @@ class FacetExtractorTest extends Unit
             ->setParameterName($testFieldName)
             ->setFieldName(PageIndexMap::STRING_FACET)
             ->setAggregationParams([
-                StringFacetAggregation::AGGREGATION_PARAM_SIZE => 10
+                StringFacetAggregation::AGGREGATION_PARAM_SIZE => 10,
             ]);
 
         $facetValueTransformerFactory = $this->getMockBuilder(FacetValueTransformerFactoryInterface::class)->getMock();
