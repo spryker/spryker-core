@@ -268,43 +268,30 @@ class DiscountsTable extends AbstractTable
      */
     protected function getFormattedAmount(SpyDiscount $discountEntity)
     {
+        $calculatorPlugin = $this->calculatorPlugins[$discountEntity->getCalculatorPlugin()];
+
         if (count($discountEntity->getDiscountAmounts()) === 0) {
-            return $this->getCalculatorPlugin(
-                $discountEntity->getCalculatorPlugin()
-            )->getFormattedAmount($discountEntity->getAmount());
+            return $calculatorPlugin->getFormattedAmount($discountEntity->getAmount());
         }
 
         $discountAmounts = [];
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
 
             if ($discountAmountEntity->getNetAmount()) {
-                $discountAmounts[] = $this->getCalculatorPlugin($discountEntity->getCalculatorPlugin())
-                    ->getFormattedAmount(
-                        $discountAmountEntity->getNetAmount(),
-                        $discountAmountEntity->getCurrency()->getCode()
-                    );
+                $discountAmounts[] = $calculatorPlugin->getFormattedAmount(
+                    $discountAmountEntity->getNetAmount(),
+                    $discountAmountEntity->getCurrency()->getCode()
+                );
             }
 
             if ($discountAmountEntity->getGrossAmount()) {
-                $discountAmounts[] = $this->getCalculatorPlugin($discountEntity->getCalculatorPlugin())
-                    ->getFormattedAmount(
-                        $discountAmountEntity->getGrossAmount(),
-                        $discountAmountEntity->getCurrency()->getCode()
-                    );
+                $discountAmounts[] = $calculatorPlugin->getFormattedAmount(
+                    $discountAmountEntity->getGrossAmount(),
+                    $discountAmountEntity->getCurrency()->getCode()
+                );
             }
         }
 
         return implode('<br />', $discountAmounts);
     }
-
-    /**
-     * @param string $pluginName
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
-     */
-    protected function getCalculatorPlugin($pluginName)
-    {
-        return $this->calculatorPlugins[$pluginName];
-    }
-
 }

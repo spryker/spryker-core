@@ -13,7 +13,7 @@ interface CartCurrencyConnectorToCartClientInterface
     /**
      * @return void
      */
-    public function rebuild();
+    public function reloadItems();
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer

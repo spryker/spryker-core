@@ -26,9 +26,9 @@ class CartCurrencyConnectorToCartClientBridge implements CartCurrencyConnectorTo
     /**
      * @return void
      */
-    public function rebuild()
+    public function reloadItems()
     {
-        $this->cartClient->rebuild();
+        $this->cartClient->reloadItems();
     }
 
     /**
