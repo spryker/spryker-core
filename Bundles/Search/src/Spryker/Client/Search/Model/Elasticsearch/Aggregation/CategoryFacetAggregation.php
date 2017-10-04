@@ -37,18 +37,18 @@ class CategoryFacetAggregation extends AbstractTermsFacetAggregation
      */
     public function createAggregation()
     {
-        $fieldName = $this->facetConfigTransfer->getFieldName();
+        $fieldName = $nestedFieldName = $this->facetConfigTransfer->getFieldName();
 
         if ($this->facetConfigTransfer->getAggregationParams()) {
-            $fieldName = $this->addNestedFieldPrefix(
-                $fieldName,
+            $nestedFieldName = $this->addNestedFieldPrefix(
+                $nestedFieldName,
                 $this->facetConfigTransfer->getName()
             );
         }
 
         $aggregation = $this
             ->aggregationBuilder
-            ->createTermsAggregation($fieldName)
+            ->createTermsAggregation($nestedFieldName)
             ->setField($fieldName);
 
         $this->setTermsAggregationSize(
