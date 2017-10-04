@@ -26,35 +26,9 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getAllActiveStores()
+    public function getAllStores()
     {
-        return $this->storeFacade->getAllActiveStores();
-    }
-
-    /**
-     * @return string
-     */
-    public function getCurrencyIsoCode()
-    {
-        return $this->storeFacade->getCurrencyIsoCode();
-    }
-
-    /**
-     * @return array
-     */
-    public function getCurrencyIsoCodes()
-    {
-        return $this->storeFacade->getCurrencyIsoCodes();
-    }
-
-    /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getAvailableCurrenciesForStore($storeName)
-    {
-        return $this->storeFacade->getAvailableCurrenciesForStore($storeName);
+        return $this->storeFacade->getAllStores();
     }
 
     /**

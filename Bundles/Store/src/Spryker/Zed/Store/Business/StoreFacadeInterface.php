@@ -31,38 +31,6 @@ interface StoreFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getAllActiveStores();
-
-    /**
-     * Specification:
-     *  - Returns currently selected currency iso code
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getCurrencyIsoCode();
-
-    /**
-     * Specification:
-     *  - Returns all available currency codes for currently selected store.
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function getCurrencyIsoCodes();
-
-    /**
-     * Specification:
-     * - Returns all available currencies for given store
-     *
-     * @api
-     *
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getAvailableCurrenciesForStore($storeName);
+    public function getAllStores();
 
 }

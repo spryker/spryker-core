@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Store\Business\Model;
 
-use Spryker\Zed\Store\Dependency\StoreToKernelStoreInterface;
+use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
 class StoreReader implements StoreReaderInterface
 {
 
     /**
-     * @var \Spryker\Zed\Store\Dependency\StoreToKernelStoreInterface
+     * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface
      */
     protected $storeConfigurationProvider;
 
@@ -29,12 +29,12 @@ class StoreReader implements StoreReaderInterface
     protected $storeMapper;
 
     /**
-     * @param \Spryker\Zed\Store\Dependency\StoreToKernelStoreInterface $storeConfigurationProvider
+     * @param \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface $storeConfigurationProvider
      * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
      * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
      */
     public function __construct(
-        StoreToKernelStoreInterface $storeConfigurationProvider,
+        StoreConfigurationProviderInterface $storeConfigurationProvider,
         StoreQueryContainerInterface $storeQueryContainer,
         StoreMapperInterface $storeMapper
     ) {
@@ -46,9 +46,9 @@ class StoreReader implements StoreReaderInterface
     /**
      * @return array
      */
-    public function getAllActiveStores()
+    public function getAllStores()
     {
-        $stores = $this->storeConfigurationProvider->getAllowedStores();
+        $stores = $this->storeConfigurationProvider->getAllStoreNames();
         $storeCollection = $this->storeQueryContainer
             ->queryStoresByNames($stores)
             ->find();
@@ -73,32 +73,6 @@ class StoreReader implements StoreReaderInterface
             ->findOne();
 
         return $this->storeMapper->mapEntityToTransfer($storeEntity);
-    }
-
-    /**
-     * @return string
-     */
-    public function getCurrencyIsoCode()
-    {
-        return $this->storeConfigurationProvider->getCurrencyIsoCode();
-    }
-
-    /**
-     * @return array
-     */
-    public function getCurrencyIsoCodes()
-    {
-        return $this->storeConfigurationProvider->getCurrencyIsoCodes();
-    }
-
-    /**
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getAvailableCurrenciesForStore($storeName)
-    {
-        return $this->storeConfigurationProvider->getAvailableCurrenciesForStore($storeName);
     }
 
 }

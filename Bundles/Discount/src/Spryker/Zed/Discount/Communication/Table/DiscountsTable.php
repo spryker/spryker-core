@@ -64,11 +64,11 @@ class DiscountsTable extends AbstractTable
             SpyDiscountTableMap::COL_ID_DISCOUNT => 'Discount ID',
             SpyDiscountTableMap::COL_DISPLAY_NAME => 'Name',
             SpyDiscountTableMap::COL_AMOUNT => 'Amount',
-            self::TABLE_COL_TYPE => self::TABLE_COL_TYPE,
-            self::TYPE_COL_PERIOD => self::TABLE_COL_PERIOD,
+            static::TABLE_COL_TYPE => static::TABLE_COL_TYPE,
+            static::TYPE_COL_PERIOD => static::TABLE_COL_PERIOD,
             SpyDiscountTableMap::COL_IS_ACTIVE => 'Status',
             SpyDiscountTableMap::COL_IS_EXCLUSIVE => 'Exclusive',
-            self::TABLE_COL_ACTIONS => self::TABLE_COL_ACTIONS,
+            static::TABLE_COL_ACTIONS => static::TABLE_COL_ACTIONS,
         ]);
 
         $config->setSearchable([
@@ -110,11 +110,11 @@ class DiscountsTable extends AbstractTable
                 SpyDiscountTableMap::COL_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $discountEntity->getDisplayName(),
                 SpyDiscountTableMap::COL_AMOUNT => $this->getFormattedAmount($discountEntity),
-                self::TABLE_COL_TYPE => $this->getDiscountType($discountEntity),
-                self::TYPE_COL_PERIOD => $this->createTimePeriod($discountEntity),
+                static::TABLE_COL_TYPE => $this->getDiscountType($discountEntity),
+                static::TYPE_COL_PERIOD => $this->createTimePeriod($discountEntity),
                 SpyDiscountTableMap::COL_IS_ACTIVE => $this->getStatus($discountEntity),
                 SpyDiscountTableMap::COL_IS_EXCLUSIVE => $discountEntity->getIsExclusive(),
-                self::TABLE_COL_ACTIONS => $this->getActionButtons($discountEntity),
+                static::TABLE_COL_ACTIONS => $this->getActionButtons($discountEntity),
             ];
         }
 
@@ -167,7 +167,7 @@ class DiscountsTable extends AbstractTable
         $editDiscountUrl = Url::generate(
             '/discount/index/edit',
             [
-                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
+                static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
             ]
         );
 
@@ -184,7 +184,7 @@ class DiscountsTable extends AbstractTable
         $viewDiscountUrl = Url::generate(
             '/discount/index/view',
             [
-                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
+                static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
             ]
         );
 
@@ -205,7 +205,7 @@ class DiscountsTable extends AbstractTable
         $addVoucherCodeDiscountUrl = Url::generate(
             '/discount/index/edit',
             [
-                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
+                static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
             ]
         );
 
@@ -219,17 +219,17 @@ class DiscountsTable extends AbstractTable
      */
     protected function createToggleDiscountVisibilityButton(SpyDiscount $discountEntity)
     {
-        $visibility = self::BUTTON_ACTIVATE;
+        $visibility = static::BUTTON_ACTIVATE;
         if ($discountEntity->getIsActive()) {
-            $visibility = self::BUTTON_DEACTIVATE;
+            $visibility = static::BUTTON_DEACTIVATE;
         }
 
         $viewDiscountUrl = Url::generate(
             '/discount/index/toggle-discount-visibility',
             [
-                self::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
-                self::URL_PARAM_VISIBILITY => $visibility,
-                self::URL_PARAM_REDIRECT_URL => '/discount/index/list',
+                static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
+                static::URL_PARAM_VISIBILITY => $visibility,
+                static::URL_PARAM_REDIRECT_URL => '/discount/index/list',
             ]
         );
 
@@ -244,7 +244,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function generateStatusButton(Url $viewDiscountUrl, $visibility)
     {
-        if ($visibility === self::BUTTON_ACTIVATE) {
+        if ($visibility === static::BUTTON_ACTIVATE) {
             return $this->generateViewButton($viewDiscountUrl, $visibility);
         }
 
@@ -258,7 +258,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function createTimePeriod(SpyDiscount $discountEntity)
     {
-        return $discountEntity->getValidFrom(self::DATE_FORMAT) . ' - ' . $discountEntity->getValidTo(self::DATE_FORMAT);
+        return $discountEntity->getValidFrom(static::DATE_FORMAT) . ' - ' . $discountEntity->getValidTo(self::DATE_FORMAT);
     }
 
     /**
@@ -274,11 +274,11 @@ class DiscountsTable extends AbstractTable
             )->getFormattedAmount($discountEntity->getAmount());
         }
 
-        $discountAmounts = '';
+        $discountAmounts = [];
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
 
             if ($discountAmountEntity->getNetAmount()) {
-                $discountAmounts .= $this->getCalculatorPlugin($discountEntity->getCalculatorPlugin())
+                $discountAmounts[] = $this->getCalculatorPlugin($discountEntity->getCalculatorPlugin())
                     ->getFormattedAmount(
                         $discountAmountEntity->getNetAmount(),
                         $discountAmountEntity->getCurrency()->getCode()
@@ -286,7 +286,7 @@ class DiscountsTable extends AbstractTable
             }
 
             if ($discountAmountEntity->getGrossAmount()) {
-                $discountAmounts .= $this->getCalculatorPlugin($discountEntity->getCalculatorPlugin())
+                $discountAmounts[] = $this->getCalculatorPlugin($discountEntity->getCalculatorPlugin())
                     ->getFormattedAmount(
                         $discountAmountEntity->getGrossAmount(),
                         $discountAmountEntity->getCurrency()->getCode()
@@ -294,7 +294,7 @@ class DiscountsTable extends AbstractTable
             }
         }
 
-        return $discountAmounts;
+        return implode('<br />', $discountAmounts);
     }
 
     /**
