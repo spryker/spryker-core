@@ -131,6 +131,18 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with the next major
+     *
+     * @param int $idSalesOrderItem
+     * @param int $idOmsOrderItemState
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    public function queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc($idSalesOrderItem, $idOmsOrderItemState);
+
+    /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
