@@ -131,6 +131,7 @@ class CurrencyReader implements CurrencyReaderInterface
         }
 
         $currencyTransfer = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
+        $currencyTransfer->setStore($this->storeFacade->getCurrentStore());
 
         static::$currencyCache[$isoCode] = $currencyTransfer;
 
