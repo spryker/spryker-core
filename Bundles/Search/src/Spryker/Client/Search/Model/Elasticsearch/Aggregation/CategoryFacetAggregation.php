@@ -53,27 +53,10 @@ class CategoryFacetAggregation extends AbstractTermsFacetAggregation
 
         $this->setTermsAggregationSize(
             $aggregation,
-            $this->getSizeParam($this->facetConfigTransfer)
+            $this->getSizeParamFallback($this->facetConfigTransfer)
         );
 
         return $aggregation;
-    }
-
-    /**
-     * @deprecated Use aggregationParams to set a category facet size instead.
-     * Will be removed with the next major release.
-     *
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     *
-     * @return int|null
-     */
-    protected function getSizeParam(FacetConfigTransfer $facetConfigTransfer)
-    {
-        if (isset($facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE])) {
-            return $facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE];
-        }
-
-        return $facetConfigTransfer->getSize();
     }
 
 }

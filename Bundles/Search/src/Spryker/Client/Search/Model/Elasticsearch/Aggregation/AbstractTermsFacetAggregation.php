@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Elastica\Aggregation\AbstractTermsAggregation;
+use Generated\Shared\Transfer\FacetConfigTransfer;
 
 abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
 {
@@ -27,6 +28,39 @@ abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
         }
 
         $aggregation->setSize($size);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return int|null
+     */
+    protected function getSizeParam(FacetConfigTransfer $facetConfigTransfer)
+    {
+        if (isset($facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE])) {
+            return $facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE];
+        }
+
+        return null;
+    }
+
+    /**
+     * @deprecated Use getSizeParam instead.
+     * Will be removed with the next major release.
+     *
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return int|null
+     */
+    protected function getSizeParamFallback(FacetConfigTransfer $facetConfigTransfer)
+    {
+        $size = $this->getSizeParam($facetConfigTransfer);
+
+        if ($size !== null) {
+            return $size;
+        }
+
+        return $facetConfigTransfer->getSize();
     }
 
 }
