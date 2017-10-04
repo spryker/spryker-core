@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Money\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionDataProvider;
+use Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionMultiStoreCollectionDataProvider;
+use Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionSingleStoreDataProvider;
 use Spryker\Zed\Money\Communication\Form\DataProvider\MoneyDataProvider;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 use Spryker\Zed\Money\MoneyDependencyProvider;
@@ -29,11 +30,19 @@ class MoneyCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionDataProvider
+     * @return \Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionSingleStoreDataProvider|\Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionDataProviderInterface
      */
-    public function createMoneyCollectionDataProvider()
+    public function createMoneyCollectionSingleStoreDataProvider()
     {
-        return new MoneyCollectionDataProvider($this->getCurrencyFacade());
+        return new MoneyCollectionSingleStoreDataProvider($this->getCurrencyFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionMultiStoreCollectionDataProvider|\Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionDataProviderInterface
+     */
+    public function createMoneyCollectionMultiStoreDataProvider()
+    {
+        return new MoneyCollectionMultiStoreCollectionDataProvider($this->getCurrencyFacade());
     }
 
     /**
