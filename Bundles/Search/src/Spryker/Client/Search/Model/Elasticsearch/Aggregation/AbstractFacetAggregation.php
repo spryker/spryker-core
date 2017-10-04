@@ -12,6 +12,7 @@ use Elastica\Aggregation\Filter;
 use Elastica\Aggregation\Nested;
 use Elastica\Aggregation\Terms;
 use Elastica\Query\Term;
+use Generated\Shared\Transfer\FacetConfigTransfer;
 
 abstract class AbstractFacetAggregation implements FacetAggregationInterface
 {
@@ -75,6 +76,21 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
     protected function addNestedFieldPrefix($nestedFieldName, $fieldName)
     {
         return $nestedFieldName . static::PATH_SEPARATOR . $fieldName;
+    }
+
+    /**
+     * @param AbstractAggregation $aggregation
+     * @param FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return AbstractAggregation
+     */
+    protected function applyAggregationParams(AbstractAggregation $aggregation, FacetConfigTransfer $facetConfigTransfer)
+    {
+        foreach ($facetConfigTransfer->getAggregationParams() as $aggregationParamKey => $aggregationParamValue) {
+            $aggregation->setParam($aggregationParamKey, $aggregationParamValue);
+        }
+
+        return $aggregation;
     }
 
 }

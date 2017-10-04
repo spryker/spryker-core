@@ -51,10 +51,7 @@ class CategoryFacetAggregation extends AbstractTermsFacetAggregation
             ->createTermsAggregation($nestedFieldName)
             ->setField($fieldName);
 
-        $this->setTermsAggregationSize(
-            $aggregation,
-            $this->getSizeParamFallback($this->facetConfigTransfer)
-        );
+        $aggregation = $this->applyAggregationParams($aggregation, $this->facetConfigTransfer);
 
         return $aggregation;
     }

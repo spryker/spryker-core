@@ -48,6 +48,8 @@ class NumericFacetAggregation extends AbstractFacetAggregation
             ->createStatsAggregation($fieldName . self::STATS_SUFFIX)
             ->setField($prefixedFieldName);
 
+        $facetValueStats = $this->applyAggregationParams($facetValueStats, $this->facetConfigTransfer);
+
         $facetNameAgg = $this
             ->createFacetNameAggregation($fieldName)
             ->addAggregation($facetValueStats);

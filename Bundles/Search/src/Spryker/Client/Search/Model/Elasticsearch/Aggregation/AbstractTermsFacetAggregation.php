@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
+use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Aggregation\AbstractTermsAggregation;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
@@ -31,36 +32,34 @@ abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param AbstractAggregation $aggregation
+     * @param FacetConfigTransfer $facetConfigTransfer
      *
-     * @return int|null
+     * @return AbstractAggregation
      */
-    protected function getSizeParam(FacetConfigTransfer $facetConfigTransfer)
+    protected function applyAggregationParams(AbstractAggregation $aggregation, FacetConfigTransfer $facetConfigTransfer)
     {
-        if (isset($facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE])) {
-            return $facetConfigTransfer->getAggregationParams()[static::AGGREGATION_PARAM_SIZE];
-        }
+        $aggregation = parent::applyAggregationParams($aggregation, $facetConfigTransfer);
+        $aggregation = $this->applyAggregationSize($aggregation, $facetConfigTransfer);
 
-        return null;
+        return $aggregation;
     }
 
     /**
-     * @deprecated Use getSizeParam instead.
-     * Will be removed with the next major release.
+     * @deprecated Use FacetConfigTransfer::setAggregationParams() instead
      *
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param AbstractAggregation $aggregation
+     * @param FacetConfigTransfer $facetConfigTransfer
      *
-     * @return int|null
+     * @return AbstractAggregation
      */
-    protected function getSizeParamFallback(FacetConfigTransfer $facetConfigTransfer)
+    protected function applyAggregationSize(AbstractAggregation $aggregation, FacetConfigTransfer $facetConfigTransfer)
     {
-        $size = $this->getSizeParam($facetConfigTransfer);
-
-        if ($size !== null) {
-            return $size;
+        if ($facetConfigTransfer->getSize() !== null) {
+            $aggregation->setParam(static::AGGREGATION_PARAM_SIZE, $facetConfigTransfer->getSize());
         }
 
-        return $facetConfigTransfer->getSize();
+        return $aggregation;
     }
 
 }

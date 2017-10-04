@@ -43,10 +43,6 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
         $nestedFieldName = $this->getNestedFieldName($this->facetConfigTransfer);
 
         $facetValueAgg = $this->createValueAgg($fieldName, $nestedFieldName);
-        $this->setTermsAggregationSize(
-            $facetValueAgg,
-            $this->getSizeParamFallback($this->facetConfigTransfer)
-        );
 
         $facetNameAgg = $this
             ->createNameAgg($this->facetConfigTransfer)
@@ -82,10 +78,14 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
      */
     protected function createValueAgg($fieldName, $nestedFieldName)
     {
-        return $this
+        $aggregation =  $this
             ->aggregationBuilder
             ->createTermsAggregation($nestedFieldName . static::VALUE_SUFFIX)
             ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_VALUE));
+
+        $aggregation = $this->applyAggregationParams($aggregation, $this->facetConfigTransfer);
+
+        return $aggregation;
     }
 
     /**
