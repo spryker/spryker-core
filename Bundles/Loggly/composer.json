@@ -5,15 +5,15 @@
   "require": {
     "spryker/kernel": "^3.0.0"
   },
-  "suggest": {
-    "spryker/queue": "Needed to process messages from the queue",
-    "spryker/monolog": "Needed to send messages to loggly via Curl helper"
-  },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/monolog": "*",
-    "spryker/testify": "*",
-    "spryker/queue": "*"
+    "spryker/queue": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/queue": "Needed to process messages from the queue",
+    "spryker/monolog": "Needed to send messages to loggly via Curl helper"
   },
   "autoload": {
     "psr-4": {
