@@ -94,7 +94,6 @@
         <index name="spy_oms_order_item_state_history-index-fk_soi-fk_oois-id_ooish">
             <index-column name="fk_sales_order_item" />
             <index-column name="fk_oms_order_item_state" />
-            <index-column name="id_oms_order_item_state_history" />
         </index>
 
         <id-method-parameter value="spy_oms_order_item_state_history_pk_seq"/>
