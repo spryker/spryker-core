@@ -32,7 +32,7 @@ class GlossaryEditCest
     {
         $i->listDataTable(GlossaryListPage::URL . '/index/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Glossary / Edit Glossary Translation');
+        $i->seeBreadcrumbNavigation('Dashboard / Glossary / Edit Translation');
     }
 
 }

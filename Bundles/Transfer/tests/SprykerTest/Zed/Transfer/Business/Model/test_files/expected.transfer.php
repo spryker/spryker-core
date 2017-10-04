@@ -47,6 +47,21 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @var array
      */
+    protected $transferPropertyNameMap = [
+        'name' => 'name',
+        'Name' => 'name',
+        'item' => 'item',
+        'Item' => 'item',
+        'items' => 'items',
+        'Items' => 'items',
+        'typed_array' => 'typedArray',
+        'typedArray' => 'typedArray',
+        'TypedArray' => 'typedArray',
+    ];
+
+    /**
+     * @var array
+     */
     protected $transferMetadata = [
         self::NAME => [
             'type' => 'string',
@@ -84,7 +99,7 @@ class CatFaceTransfer extends AbstractTransfer
     public function setName($name)
     {
         $this->name = $name;
-        $this->addModifiedProperty(self::NAME);
+        $this->modifiedProperties[self::NAME] = true;
 
         return $this;
     }
@@ -121,7 +136,7 @@ class CatFaceTransfer extends AbstractTransfer
     public function setItem(ItemTransfer $item = null)
     {
         $this->item = $item;
-        $this->addModifiedProperty(self::ITEM);
+        $this->modifiedProperties[self::ITEM] = true;
 
         return $this;
     }
@@ -158,7 +173,7 @@ class CatFaceTransfer extends AbstractTransfer
     public function setItems(ArrayObject $items)
     {
         $this->items = $items;
-        $this->addModifiedProperty(self::ITEMS);
+        $this->modifiedProperties[self::ITEMS] = true;
 
         return $this;
     }
@@ -183,7 +198,7 @@ class CatFaceTransfer extends AbstractTransfer
     public function addItem(ItemTransfer $item)
     {
         $this->items[] = $item;
-        $this->addModifiedProperty(self::ITEMS);
+        $this->modifiedProperties[self::ITEMS] = true;
 
         return $this;
     }
@@ -214,7 +229,7 @@ class CatFaceTransfer extends AbstractTransfer
         }
 
         $this->typedArray = $typedArray;
-        $this->addModifiedProperty(self::TYPED_ARRAY);
+        $this->modifiedProperties[self::TYPED_ARRAY] = true;
 
         return $this;
     }
@@ -239,7 +254,7 @@ class CatFaceTransfer extends AbstractTransfer
     public function addTypedArray($typedArray)
     {
         $this->typedArray[] = $typedArray;
-        $this->addModifiedProperty(self::TYPED_ARRAY);
+        $this->modifiedProperties[self::TYPED_ARRAY] = true;
 
         return $this;
     }
@@ -251,7 +266,7 @@ class CatFaceTransfer extends AbstractTransfer
      */
     public function requireTypedArray()
     {
-        $this->assertCollectionPropertyIsSet(self::TYPED_ARRAY);
+        $this->assertPropertyIsSet(self::TYPED_ARRAY);
 
         return $this;
     }

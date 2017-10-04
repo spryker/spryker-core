@@ -57,6 +57,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private $hasArrayObject = false;
 
     /**
+     * @var array
+     */
+    private $propertyNameMap = [];
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -73,6 +78,7 @@ class ClassDefinition implements ClassDefinitionInterface
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
             $this->addProperties($properties);
+            $this->setPropertyNameMap($properties);
             $this->addMethods($properties);
         }
 
@@ -166,6 +172,21 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
+    }
+
+    /**
+     * @param array $properties
+     *
+     * @return void
+     */
+    private function setPropertyNameMap(array $properties)
+    {
+        foreach ($properties as $property) {
+            $nameCamelCase = $this->getPropertyName($property);
+            $this->propertyNameMap[$property['name_underscore']] = $nameCamelCase;
+            $this->propertyNameMap[$nameCamelCase] = $nameCamelCase;
+            $this->propertyNameMap[ucfirst($nameCamelCase)] = $nameCamelCase;
+        }
     }
 
     /**
@@ -336,6 +357,14 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getProperties()
     {
         return $this->properties;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPropertyNameMap()
+    {
+        return $this->propertyNameMap;
     }
 
     /**
@@ -652,7 +681,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'isCollection' => $this->isCollection($property),
+            'isCollection' => ($this->isCollection($property) && !$this->isArray($property)),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];

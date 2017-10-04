@@ -57,8 +57,8 @@ class NodeController extends AbstractController
                 ->createNavigationNode($navigationNodeTransfer);
 
             $this->addSuccessMessage(sprintf(
-                'Navigation node #%d successfully created.',
-                $navigationNodeTransfer->getIdNavigationNode()
+                'Navigation node "%s" was created successfully.',
+                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
             ));
 
             $queryParams = [
@@ -113,8 +113,8 @@ class NodeController extends AbstractController
                 ->updateNavigationNode($navigationNodeTransfer);
 
             $this->addSuccessMessage(sprintf(
-                'Navigation node #%d successfully updated.',
-                $navigationNodeTransfer->getIdNavigationNode()
+                'Navigation node "%s" was updated successfully.',
+                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
             ));
 
             $queryParams = [
@@ -146,14 +146,17 @@ class NodeController extends AbstractController
 
         $navigationNodeTransfer = new NavigationNodeTransfer();
         $navigationNodeTransfer->setIdNavigationNode($idNavigationNode);
+        $navigationNodeTransfer = $this->getFactory()
+            ->getNavigationFacade()
+            ->findNavigationNode($navigationNodeTransfer);
 
         $this->getFactory()
             ->getNavigationFacade()
             ->deleteNavigationNode($navigationNodeTransfer);
 
         $this->addSuccessMessage(sprintf(
-            'Navigation node #%d successfully deleted.',
-            $idNavigationNode
+            'Navigation node "%s" was deleted successfully.',
+            $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
         ));
 
         $queryParams = [

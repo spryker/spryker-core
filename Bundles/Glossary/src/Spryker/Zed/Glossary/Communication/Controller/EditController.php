@@ -21,6 +21,8 @@ class EditController extends AbstractController
     const FORM_UPDATE_TYPE = 'update';
     const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
 
+    const MESSAGE_UPDATE_SUCCESS = 'Translation %d was updated successfully.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,11 +30,12 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $idGlossaryKey = $this->castId($request->query->get(static::URL_PARAMETER_GLOSSARY_KEY));
         $formData = $this
             ->getFactory()
             ->createTranslationDataProvider()
             ->getData(
-                $this->castId($request->query->get(self::URL_PARAMETER_GLOSSARY_KEY)),
+                $idGlossaryKey,
                 $this->getFactory()->getEnabledLocales()
             );
 
@@ -51,7 +54,7 @@ class EditController extends AbstractController
             $glossaryFacade = $this->getFacade();
 
             if ($glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer)) {
-                $this->addSuccessMessage('Saved entry to glossary.');
+                $this->addSuccessMessage(sprintf(static::MESSAGE_UPDATE_SUCCESS, $idGlossaryKey));
             } else {
                 $this->addErrorMessage('Translations could not be saved');
             }
@@ -61,6 +64,7 @@ class EditController extends AbstractController
 
         return $this->viewResponse([
             'form' => $glossaryForm->createView(),
+            'idGlossaryKey' => $idGlossaryKey,
         ]);
     }
 
