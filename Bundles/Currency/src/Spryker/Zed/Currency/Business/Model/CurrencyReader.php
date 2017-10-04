@@ -33,6 +33,11 @@ class CurrencyReader implements CurrencyReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    protected static $currencyCache = [];
+
+    /**
      * @param \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface $currencyQueryContainer
      * @param \Spryker\Zed\Currency\Business\Model\CurrencyMapperInterface $currencyMapper
      * @param \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface $storeFacade
@@ -63,7 +68,7 @@ class CurrencyReader implements CurrencyReaderInterface
 
         if (!$currencyEntity) {
             throw new CurrencyNotFoundException(
-                sprintf('Currency with id "%s" not found.', $idCurrency)
+                sprintf('Currency with id "%d" not found.', $idCurrency)
             );
         }
 
@@ -89,7 +94,7 @@ class CurrencyReader implements CurrencyReaderInterface
     public function getAvailableStoreCurrencies()
     {
         $currenciesPerStore = [];
-        foreach ($this->storeFacade->getAllActiveStores() as $storeTransfer) {
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
 
             $storeCurrencyTransfer = new StoreCurrencyTransfer();
             $storeCurrencyTransfer->setCurrencies(
@@ -100,6 +105,36 @@ class CurrencyReader implements CurrencyReaderInterface
         }
 
         return $currenciesPerStore;
+    }
+
+    /**
+     * @param string $isoCode
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getByIsoCode($isoCode)
+    {
+        if (isset(static::$currencyCache[$isoCode])) {
+            return static::$currencyCache[$isoCode];
+        }
+
+        $currencyEntity = $this->currencyQueryContainer
+            ->queryCurrencyByIsoCode($isoCode)
+            ->findOne();
+
+        if (!$currencyEntity) {
+            throw new CurrencyNotFoundException(
+                sprintf('Currency with iso code "%s" not found.', $isoCode)
+            );
+        }
+
+        $currencyTransfer = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
+
+        static::$currencyCache[$isoCode] = $currencyTransfer;
+
+        return $currencyTransfer;
     }
 
     /**

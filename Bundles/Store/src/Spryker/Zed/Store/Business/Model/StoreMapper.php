@@ -9,20 +9,20 @@ namespace Spryker\Zed\Store\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Spryker\Zed\Store\Dependency\StoreToKernelStoreInterface;
+use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
 
 class StoreMapper implements StoreMapperInterface
 {
 
     /**
-     * @var \Spryker\Zed\Store\Dependency\StoreToKernelStoreInterface
+     * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
      */
     protected $storeConfigurationProvider;
 
     /**
-     * @param \Spryker\Zed\Store\Dependency\StoreToKernelStoreInterface $storeConfigurationProvider
+     * @param \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface $storeConfigurationProvider
      */
-    public function __construct(StoreToKernelStoreInterface $storeConfigurationProvider)
+    public function __construct(StoreConfigurationProviderInterface $storeConfigurationProvider)
     {
         $this->storeConfigurationProvider = $storeConfigurationProvider;
     }
@@ -36,9 +36,9 @@ class StoreMapper implements StoreMapperInterface
     {
         $currencyTransfer = (new StoreTransfer())
             ->setCurrencyIsoCode($this->storeConfigurationProvider->getStoreName())
-            ->setAvailableCurrencyIsoCodes($this->storeConfigurationProvider->getCurrencyIsoCodes())
-            ->setSelectedLocaleIsoCode($this->storeConfigurationProvider->getCurrentLocale())
-            ->setAvailableLocaleIsoCodes($this->storeConfigurationProvider->getLocales());
+            ->setAvailableCurrencyIsoCodes($this->storeConfigurationProvider->getAvailableCurrencyIsoCodes())
+            ->setSelectedLocaleIsoCode($this->storeConfigurationProvider->getSelectedLocaleIsoCode())
+            ->setAvailableLocaleIsoCodes($this->storeConfigurationProvider->getAvailableLocaleIsoCodes());
 
         return $currencyTransfer->fromArray($storeEntity->toArray(), true);
     }

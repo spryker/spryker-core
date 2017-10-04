@@ -34,47 +34,9 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getAllActiveStores()
+    public function getAllStores()
     {
-        return $this->getFactory()->createStoreReader()->getAllActiveStores();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getCurrencyIsoCode()
-    {
-        return $this->getFactory()->createStoreReader()->getCurrencyIsoCode();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function getCurrencyIsoCodes()
-    {
-        return $this->getFactory()->createStoreReader()->getCurrencyIsoCodes();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getAvailableCurrenciesForStore($storeName)
-    {
-        return $this->getFactory()->createStoreReader()->getAvailableCurrenciesForStore($storeName);
+        return $this->getFactory()->createStoreReader()->getAllStores();
     }
 
 }

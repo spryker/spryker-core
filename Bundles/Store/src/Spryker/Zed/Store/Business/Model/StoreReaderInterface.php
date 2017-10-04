@@ -13,24 +13,7 @@ interface StoreReaderInterface
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getAllActiveStores();
-
-    /**
-     * @return string
-     */
-    public function getCurrencyIsoCode();
-
-    /**
-     * @return array
-     */
-    public function getCurrencyIsoCodes();
-
-    /**
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getAvailableCurrenciesForStore($storeName);
+    public function getAllStores();
 
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer

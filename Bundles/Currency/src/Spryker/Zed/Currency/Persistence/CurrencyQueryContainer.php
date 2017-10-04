@@ -27,7 +27,7 @@ class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQ
     {
         return $this->getFactory()
             ->createCurrencyQuery()
-            ->filterByCurrencySymbol();
+            ->filterByCode($isoCode);
     }
 
     /**

@@ -29,6 +29,10 @@ class MoneyDataProvider
     }
 
     /**
+     *
+     * The fraction digits is number of digits after decimal point,
+     * It returns integer divisor value which will be used when converting value to cents
+     *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return int

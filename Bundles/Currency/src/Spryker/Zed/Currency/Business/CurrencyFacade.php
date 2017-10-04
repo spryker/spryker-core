@@ -27,7 +27,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      */
     public function fromIsoCode($isoCode)
     {
-        return $this->getFactory()->createCurrencyBuilder()->fromIsoCode($isoCode);
+        return $this->getFactory()->createCurrencyReader()->getByIsoCode($isoCode);
     }
 
     /**
