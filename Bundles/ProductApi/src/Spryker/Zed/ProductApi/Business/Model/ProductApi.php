@@ -60,7 +60,7 @@ class ProductApi implements ProductApiInterface
     /**
      * @var \Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductInterface
      */
-    private $productFacade;
+    protected $productFacade;
 
     /**
      * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface $apiQueryContainer

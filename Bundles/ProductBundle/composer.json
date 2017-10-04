@@ -10,12 +10,17 @@
     "spryker/product": "^5.0.0",
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^6.0.0 || ^7.0.0",
+    "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/stock": "^4.0.0"
   },
   "require-dev": {
+    "spryker/calculation": "*",
+    "spryker/cart": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
     "spryker/propel": "*",
+    "spryker/sales-aggregator": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },

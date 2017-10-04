@@ -8,11 +8,13 @@
 namespace Spryker\Zed\Cart\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
+use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 
 class Operation implements OperationInterface
 {
@@ -122,14 +124,28 @@ class Operation implements OperationInterface
                 continue;
             }
 
-            foreach ($cartPreCheckResponseTransfer->getMessages() as $messageTransfer) {
-                $this->messengerFacade->addErrorMessage($messageTransfer);
+            $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
+
+            if ($preCheck instanceof TerminationAwareCartPreCheckPluginInterface && $preCheck->terminateOnFailure()) {
+                return false;
             }
 
             $isCartValid = false;
         }
 
         return $isCartValid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     *
+     * @return void
+     */
+    protected function collectErrorsFromPreCheckResponse(CartPreCheckResponseTransfer $cartPreCheckResponseTransfer)
+    {
+        foreach ($cartPreCheckResponseTransfer->getMessages() as $messageTransfer) {
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+        }
     }
 
     /**

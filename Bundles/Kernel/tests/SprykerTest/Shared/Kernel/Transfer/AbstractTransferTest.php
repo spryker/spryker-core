@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Kernel\Transfer;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use InvalidArgumentException;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
@@ -449,26 +448,6 @@ class AbstractTransferTest extends Unit
         $transfer->setTransferCollection($collection);
 
         $this->assertCount(2, $transfer->getTransferCollection());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFromArrayShouldThrowInvalidArgumentExceptionWhenMissingPropertyCanBeIgnoredAndPropertyExistsButExpectedTypeDoesNotMatch()
-    {
-        if (version_compare(PHP_VERSION, '7.0') >= 0) {
-            $this->markTestSkipped('We must first upgrade PHPUnit to 5.6+');
-            return;
-        }
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Could not call "setArray(string)" (type string) in "%s". Maybe there is a type miss match.',
-            AbstractTransfer::class
-        ));
-
-        $abstractTransfer = new AbstractTransfer();
-        $abstractTransfer->fromArray(['array' => 'string']);
     }
 
 }

@@ -6,16 +6,13 @@
 
 namespace SprykerTest\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 class FooPlugin extends AbstractPlugin
 {
 
     /**
-     * @return AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     public function getFactory()
     {
@@ -23,7 +20,7 @@ class FooPlugin extends AbstractPlugin
     }
 
     /**
-     * @return AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     public function getFacade()
     {
@@ -31,7 +28,7 @@ class FooPlugin extends AbstractPlugin
     }
 
     /**
-     * @return AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     public function getQueryContainer()
     {

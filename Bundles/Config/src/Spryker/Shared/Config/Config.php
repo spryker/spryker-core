@@ -28,15 +28,25 @@ class Config
     private static $instance;
 
     /**
+     * @var \Spryker\Shared\Config\Profiler
+     */
+    private static $profiler;
+
+    /**
+     * @var bool
+     */
+    private static $isProfilerEnabled;
+
+    /**
      * @return \Spryker\Shared\Config\Config
      */
     public static function getInstance()
     {
-        if (self::$instance === null) {
-            self::$instance = new self();
+        if (static::$instance === null) {
+            static::$instance = new static();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -49,19 +59,65 @@ class Config
      */
     public static function get($key, $default = null)
     {
-        if (empty(self::$config)) {
-            self::init();
+        if (empty(static::$config)) {
+            static::init();
         }
 
-        if (!self::hasValue($key) && $default !== null) {
+        if (!static::hasValue($key) && $default !== null) {
+            static::addProfileData($key, $default, null);
+
             return $default;
         }
 
-        if (!self::hasValue($key)) {
+        if (!static::hasValue($key)) {
             throw new Exception(sprintf('Could not find config key "%s" in "%s"', $key, __CLASS__));
         }
 
-        return self::$config[$key];
+        $value = static::$config[$key];
+
+        static::addProfileData($key, $default, $value);
+
+        return $value;
+    }
+
+    /**
+     * @param string $key
+     * @param mixed|null $default
+     * @param mixed|null $value
+     *
+     * @return void
+     */
+    protected static function addProfileData($key, $default, $value)
+    {
+        if (!static::isProfilerEnabled()) {
+            return;
+        }
+
+        if (!static::$profiler) {
+            static::$profiler = new Profiler();
+        }
+
+        static::$profiler->add($key, $default, $value);
+    }
+
+    /**
+     * @return bool
+     */
+    protected static function isProfilerEnabled()
+    {
+        if (static::$isProfilerEnabled === null) {
+            static::$isProfilerEnabled = (static::hasValue(ConfigConstants::ENABLE_WEB_PROFILER)) ? static::$config[ConfigConstants::ENABLE_WEB_PROFILER] : false;
+        }
+
+        return static::$isProfilerEnabled;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getProfileData()
+    {
+        return static::$profiler->getProfileData();
     }
 
     /**
@@ -71,7 +127,7 @@ class Config
      */
     public static function hasValue($key)
     {
-        return isset(self::$config[$key]);
+        return isset(static::$config[$key]);
     }
 
     /**
@@ -81,7 +137,7 @@ class Config
      */
     public static function hasKey($key)
     {
-        return array_key_exists($key, self::$config);
+        return array_key_exists($key, static::$config);
     }
 
     /**
@@ -102,44 +158,44 @@ class Config
         /*
          * e.g. config_default.php
          */
-        self::buildConfig('default', $config);
+        static::buildConfig('default', $config);
 
         /*
          * e.g. config_default-production.php
          */
-        self::buildConfig('default-' . $environment, $config);
+        static::buildConfig('default-' . $environment, $config);
 
         /*
          * e.g. config_default_DE.php
          */
-        self::buildConfig('default_' . $storeName, $config);
+        static::buildConfig('default_' . $storeName, $config);
 
         /*
          * e.g. config_default-production_DE.php
          */
-        self::buildConfig('default-' . $environment . '_' . $storeName, $config);
+        static::buildConfig('default-' . $environment . '_' . $storeName, $config);
 
         /*
          * e.g. config_local_test.php
          */
-        self::buildConfig('local_test', $config);
+        static::buildConfig('local_test', $config);
 
         /*
          * e.g. config_local.php
          */
-        self::buildConfig('local', $config);
+        static::buildConfig('local', $config);
 
         /*
          * e.g. config_local_DE.php
          */
-        self::buildConfig('local_' . $storeName, $config);
+        static::buildConfig('local_' . $storeName, $config);
 
         /*
          * e.g. config_propel.php
          */
-        self::buildConfig('propel', $config);
+        static::buildConfig('propel', $config);
 
-        self::$config = $config;
+        static::$config = $config;
     }
 
     /**
@@ -150,7 +206,7 @@ class Config
      */
     protected static function buildConfig($type, ArrayObject $config)
     {
-        $fileName = APPLICATION_ROOT_DIR . self::CONFIG_FILE_PREFIX . $type . self::CONFIG_FILE_SUFFIX;
+        $fileName = APPLICATION_ROOT_DIR . static::CONFIG_FILE_PREFIX . $type . static::CONFIG_FILE_SUFFIX;
         if (file_exists($fileName)) {
             include $fileName;
         }

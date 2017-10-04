@@ -18,6 +18,8 @@ class RefundTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
+    const SPY_SALES_ORDER = 'SpySalesOrder';
+    const COL_CURRENCY_ISO_CODE = 'spy_sales_order.currency_iso_code';
 
     /**
      * @var \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface
@@ -95,14 +97,18 @@ class RefundTable extends AbstractTable
     {
         $refundQuery = $this->refundQueryContainer->queryRefunds();
 
-        $queryResults = $this->runQuery($refundQuery, $config);
+        $queryResults = $this->runQuery($refundQuery, $config, false);
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyRefundTableMap::COL_ID_REFUND => $item[SpyRefundTableMap::COL_ID_REFUND],
                 SpyRefundTableMap::COL_FK_SALES_ORDER => $item[SpyRefundTableMap::COL_FK_SALES_ORDER],
                 SpyRefundTableMap::COL_CREATED_AT => $this->formatDate($item[SpyRefundTableMap::COL_CREATED_AT]),
-                SpyRefundTableMap::COL_AMOUNT => $this->formatAmount($item[SpyRefundTableMap::COL_AMOUNT]),
+                SpyRefundTableMap::COL_AMOUNT => $this->formatAmount(
+                    $item[SpyRefundTableMap::COL_AMOUNT],
+                    true,
+                    $this->findCurrencyIsoCode($item)
+                ),
                 SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
             ];
         }
@@ -111,14 +117,29 @@ class RefundTable extends AbstractTable
     }
 
     /**
+     * @param array $item
+     *
+     * @return string|null
+     */
+    protected function findCurrencyIsoCode(array $item)
+    {
+        if (isset($item[static::SPY_SALES_ORDER]) && isset($item[static::SPY_SALES_ORDER][static::COL_CURRENCY_ISO_CODE])) {
+            return $item[static::SPY_SALES_ORDER][static::COL_CURRENCY_ISO_CODE];
+        }
+
+        return null;
+    }
+
+    /**
      * @param int $value
      * @param bool $includeSymbol
+     * @param string|null $currencyIsoCode
      *
      * @return string
      */
-    protected function formatAmount($value, $includeSymbol = true)
+    protected function formatAmount($value, $includeSymbol = true, $currencyIsoCode = null)
     {
-        $moneyTransfer = $this->moneyFacade->fromInteger($value);
+        $moneyTransfer = $this->moneyFacade->fromInteger($value, $currencyIsoCode);
         if ($includeSymbol) {
             return $this->moneyFacade->formatWithSymbol($moneyTransfer);
         }

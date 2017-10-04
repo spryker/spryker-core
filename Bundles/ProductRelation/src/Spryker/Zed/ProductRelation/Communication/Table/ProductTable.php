@@ -225,7 +225,7 @@ class ProductTable extends AbstractProductTable
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             SpyProductAbstractTableMap::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $item[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
-            SpyPriceProductTableMap::COL_PRICE => $this->formatProductPrice($item[SpyPriceProductTableMap::COL_PRICE]),
+            SpyPriceProductTableMap::COL_PRICE => $this->formatProductPrice((int)$item[SpyPriceProductTableMap::COL_PRICE]),
             ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES => $item[ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES],
             static::COL_STATUS => $this->getStatusLabel($item),
         ];

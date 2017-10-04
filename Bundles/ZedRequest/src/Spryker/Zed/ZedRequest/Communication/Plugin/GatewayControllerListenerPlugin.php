@@ -10,7 +10,6 @@ namespace Spryker\Zed\ZedRequest\Communication\Plugin;
 use Generated\Shared\Transfer\MessageTransfer;
 use LogicException;
 use ReflectionObject;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Messenger\MessengerConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -54,6 +53,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             $requestTransfer = $this->getRequestTransfer($controller, $action);
 
             $this->setCustomersLocaleIfPresent($requestTransfer);
+            $this->setCustomersCurrencyIfPresent($requestTransfer);
 
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
             $response = $this->getResponse($controller, $result);
@@ -75,7 +75,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     {
         $localeTransfer = $this->getLocaleMetaTransfer($request);
         if ($localeTransfer) {
-            Store::getInstance()->setCurrentLocale($localeTransfer->getLocaleName());
+            $this->getFactory()->getStore()->setCurrentLocale($localeTransfer->getLocaleName());
         }
     }
 
@@ -89,6 +89,31 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         $localeTransfer = $request->getMetaTransfer('locale');
 
         return $localeTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
+     *
+     * @return void
+     */
+    protected function setCustomersCurrencyIfPresent(Request $request)
+    {
+        $currencyTransfer = $this->getCurrencyMetaTransfer($request);
+        if ($currencyTransfer) {
+            $this->getFactory()->getStore()->setCurrencyIsoCode($currencyTransfer->getCode());
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
+     *
+     * @return null|\Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyMetaTransfer(Request $request)
+    {
+        $currencyTransfer = $request->getMetaTransfer('currency');
+
+        return $currencyTransfer;
     }
 
     /**

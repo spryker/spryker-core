@@ -24,4 +24,12 @@ class ZedRequestCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(ZedRequestDependencyProvider::FACADE_MESSENGER);
     }
 
+    /**
+     * @return \Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreInterface
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::STORE);
+    }
+
 }

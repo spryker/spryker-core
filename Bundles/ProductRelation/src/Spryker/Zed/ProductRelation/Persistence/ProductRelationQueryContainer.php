@@ -198,7 +198,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function queryProductRelationsWithProductCount($idLocale)
     {
-        return $this->getFactory()
+        $query = $this->getFactory()
             ->createProductRelationQuery()
             ->select([
                 SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION,
@@ -215,9 +215,11 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                     ->filterByFkLocale($idLocale)
                 ->endUse()
             ->endUse()
-            ->withColumn('COUNT(num_alias)', static::COL_NUMBER_OF_RELATED_PRODUCTS)
+            ->withColumn("COUNT('num_alias')", static::COL_NUMBER_OF_RELATED_PRODUCTS)
             ->joinSpyProductRelationType()
             ->groupByIdProductRelation();
+
+        return $query;
     }
 
     /**

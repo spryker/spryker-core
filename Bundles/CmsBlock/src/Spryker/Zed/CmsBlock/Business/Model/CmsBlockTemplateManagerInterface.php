@@ -37,6 +37,13 @@ interface CmsBlockTemplateManagerInterface
     /**
      * @param int $idCmsBlockTemplate
      *
+     * @return bool
+     */
+    public function hasTemplateFileById($idCmsBlockTemplate);
+
+    /**
+     * @param int $idCmsBlockTemplate
+     *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate
      */
     public function getTemplateById($idCmsBlockTemplate);

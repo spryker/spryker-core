@@ -150,7 +150,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderStateMachinePersistenceManager()
     {
-        return new PersistenceManager();
+        return new PersistenceManager($this->getConfig());
     }
 
     /**

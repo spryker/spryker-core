@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/flysystem-local-filesystem
+composer require spryker/flysystem-local-file-system
 ```
 
 ## Documentation

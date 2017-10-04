@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductManagement\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTableMap;
-use Orm\Zed\ProductManagement\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
+use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTableMap;
+use Orm\Zed\ProductAttribute\Persistence\Map\SpyProductManagementAttributeValueTranslationTableMap;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -23,7 +23,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */
     public function queryProductManagementAttribute()
     {
@@ -33,7 +33,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValue()
     {
@@ -46,7 +46,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
      * @param int $idProductManagementAttribute
      * @param int $idLocale
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale)
     {
@@ -114,7 +114,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValueQuery()
     {
@@ -125,7 +125,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
     public function queryProductManagementAttributeValueTranslation()
     {
@@ -138,7 +138,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
      *
      * @param int $idProductManagementAttribute
      *
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
     {

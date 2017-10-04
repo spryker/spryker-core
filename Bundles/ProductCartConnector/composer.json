@@ -8,6 +8,7 @@
     "spryker/product": "^5.0.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
@@ -16,7 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cart": "If you want to use Cart plugins."
+    "spryker/cart": "If you want to use Cart plugins. Must be >= 4.0.2!"
   },
   "autoload": {
     "psr-0": {

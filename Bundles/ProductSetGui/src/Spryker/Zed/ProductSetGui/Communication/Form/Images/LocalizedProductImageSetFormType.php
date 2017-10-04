@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class LocalizedProductImageSetFormType extends AbstractType
 {
@@ -75,6 +76,13 @@ class LocalizedProductImageSetFormType extends AbstractType
             'label' => 'Image Set Name *',
             'constraints' => [
                 new NotBlank(),
+                new Regex(
+                    [
+                        'pattern' => '/^[A-Za-z0-9_-]+$/',
+                        'match' => true,
+                        'message' => 'Please enter name using only letters, numbers, underscore or dash.',
+                    ]
+                ),
             ],
         ]);
 

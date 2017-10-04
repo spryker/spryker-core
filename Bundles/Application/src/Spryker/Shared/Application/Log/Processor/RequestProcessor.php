@@ -71,7 +71,7 @@ class RequestProcessor
         ];
 
         $request = $this->findRequest((array)$record[self::RECORD_CONTEXT]);
-        if ($request) {
+        if ($request && $request->getSession() !== null) {
             $sessionId = $request->getSession()->getId();
             $fields[static::SESSION_ID] = $sessionId;
 

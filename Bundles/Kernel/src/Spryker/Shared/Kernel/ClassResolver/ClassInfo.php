@@ -7,15 +7,13 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
-
 class ClassInfo
 {
 
     const KEY_NAMESPACE = 0;
     const KEY_APPLICATION = 1;
     const KEY_BUNDLE = 2;
+    const KEY_LAYER = 3;
 
     /**
      * @var string
@@ -49,7 +47,7 @@ class ClassInfo
         ];
 
         if ($this->isFullyQualifiedClassName($callerClass)) {
-            $callerClassParts = explode('\\', $callerClass);
+            $callerClassParts = explode('\\', ltrim($callerClass, '\\'));
             $callerClassParts = $this->removeTestNamespace($callerClassParts);
         }
 
@@ -116,26 +114,35 @@ class ClassInfo
     }
 
     /**
-     * @TODO find a better way to get around this. Problem is that when we extend classes and use this class to
-     * extract the needed elements, we will get namespaces like Unit, Functional, ClientUnit etc
-     *
      * @param array $callerClassParts
      *
      * @return array
      */
     private function removeTestNamespace(array $callerClassParts)
     {
-        $config = Config::getInstance();
-        $projectNamespaces = $config->get(KernelConstants::PROJECT_NAMESPACES);
-        $coreNamespaces = $config->get(KernelConstants::CORE_NAMESPACES);
+        $namespace = $callerClassParts[self::KEY_NAMESPACE];
+        $namespaceLength = strlen($namespace);
 
-        $namespaces = array_merge($projectNamespaces, $coreNamespaces);
+        $testNamespaceSuffix = 'Test';
+        $testNamespaceSuffixLength = strlen($testNamespaceSuffix);
 
-        if (!in_array($callerClassParts[self::KEY_NAMESPACE], $namespaces)) {
-            array_shift($callerClassParts);
+        if ($testNamespaceSuffixLength < $namespaceLength) {
+            $isTestNamespace = substr_compare($namespace, $testNamespaceSuffix, $namespaceLength - $testNamespaceSuffixLength, $testNamespaceSuffixLength) === 0;
+            if ($isTestNamespace) {
+                $namespaceWithoutTestSuffix = substr($namespace, 0, -$testNamespaceSuffixLength);
+                $callerClassParts[self::KEY_NAMESPACE] = $namespaceWithoutTestSuffix;
+            }
         }
 
         return $callerClassParts;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLayer()
+    {
+        return $this->callerClassParts[self::KEY_LAYER];
     }
 
 }

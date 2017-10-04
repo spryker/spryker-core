@@ -25,7 +25,7 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceDependencies(Container $container)
     {
         $container = parent::provideServiceDependencies($container);
 

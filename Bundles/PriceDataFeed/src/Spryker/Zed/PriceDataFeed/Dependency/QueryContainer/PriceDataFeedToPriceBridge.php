@@ -16,8 +16,6 @@ class PriceDataFeedToPriceBridge implements PriceDataFeedToPriceInterface
     protected $priceQueryContainer;
 
     /**
-     * PriceDataFeedToPriceBridge constructor.
-     *
      * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
      */
     public function __construct($priceQueryContainer)

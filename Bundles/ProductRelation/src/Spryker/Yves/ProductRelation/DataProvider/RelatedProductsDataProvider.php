@@ -41,7 +41,7 @@ class RelatedProductsDataProvider implements ProductRelationDataProviderInterfac
     /**
      * @param array $parameters
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function buildTemplateData(array $parameters)
     {

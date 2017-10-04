@@ -27,6 +27,7 @@ use Spryker\Zed\Propel\Communication\Console\CreateDatabaseConsole;
 use Spryker\Zed\Propel\Communication\Console\DiffConsole;
 use Spryker\Zed\Propel\Communication\Console\InsertSqlConsole;
 use Spryker\Zed\Propel\Communication\Console\MigrateConsole;
+use Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole;
 use Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;
@@ -75,6 +76,18 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
+     */
+    protected function createCoreSchemaFinder()
+    {
+        $schemaFinder = new PropelSchemaFinder(
+            $this->getConfig()->getCorePropelSchemaPathPatterns()
+        );
+
+        return $schemaFinder;
+    }
+
+    /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface
      */
     protected function createSchemaWriter()
@@ -114,6 +127,16 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         return new PostgresqlCompatibilityAdjuster(
             $this->createSchemaFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface
+     */
+    public function createCorePostgresqlCompatibilityAdjuster()
+    {
+        return new PostgresqlCompatibilityAdjuster(
+            $this->createCoreSchemaFinder()
         );
     }
 
@@ -175,6 +198,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the needed Commands into your ConsoleDependencyProvider
+     *
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands()
@@ -190,10 +215,13 @@ class PropelBusinessFactory extends AbstractBusinessFactory
             $this->createInsertSqlConsole(),
             $this->createMigrateConsole(),
             $this->createSchemaCopyConsole(),
+            $this->createMigrationCheckConsole(),
         ];
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\PropelInstallConsole
      */
     protected function createPropelInstallConsole()
@@ -202,6 +230,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole
      */
     protected function createPostgresqlCompatibilityConsole()
@@ -210,6 +240,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\BuildModelConsole
      */
     protected function createBuildModelConsole()
@@ -218,6 +250,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\BuildSqlConsole
      */
     protected function createBuildSqlConsole()
@@ -226,6 +260,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole
      */
     protected function createConvertConfigConsole()
@@ -234,6 +270,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\CreateDatabaseConsole
      */
     protected function createCreateDatabaseConsole()
@@ -242,6 +280,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\DiffConsole
      */
     protected function createDiffConsole()
@@ -250,6 +290,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\InsertSqlConsole
      */
     protected function createInsertSqlConsole()
@@ -258,6 +300,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\MigrateConsole
      */
     protected function createMigrateConsole()
@@ -266,11 +310,23 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
      * @return \Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole
      */
     protected function createSchemaCopyConsole()
     {
         return new SchemaCopyConsole();
+    }
+
+    /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
+     * @return \Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole
+     */
+    protected function createMigrationCheckConsole()
+    {
+        return new MigrationCheckConsole();
     }
 
 }

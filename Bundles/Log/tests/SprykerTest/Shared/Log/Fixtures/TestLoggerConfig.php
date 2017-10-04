@@ -6,7 +6,6 @@
 
 namespace SprykerTest\Shared\Log\Fixtures;
 
-use Monolog\Handler\HandlerInterface;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 class TestLoggerConfig implements LoggerConfigInterface
@@ -21,7 +20,7 @@ class TestLoggerConfig implements LoggerConfigInterface
     }
 
     /**
-     * @return HandlerInterface[]
+     * @return \Monolog\Handler\HandlerInterface[]
      */
     public function getHandlers()
     {

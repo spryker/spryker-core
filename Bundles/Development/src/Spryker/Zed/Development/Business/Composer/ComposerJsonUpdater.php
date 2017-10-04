@@ -41,10 +41,11 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
     /**
      * @param array $bundles
+     * @param bool $dryRun
      *
      * @return array
      */
-    public function update(array $bundles)
+    public function update(array $bundles, $dryRun = false)
     {
         $composerJsonFiles = $this->finder->find();
 
@@ -54,9 +55,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
                 continue;
             }
 
-            $this->updateComposerJsonFile($composerJsonFile);
-
-            $processed[] = $composerJsonFile->getRelativePath();
+            $processed[$composerJsonFile->getRelativePath()] = $this->updateComposerJsonFile($composerJsonFile, $dryRun);
         }
 
         return $processed;
@@ -64,33 +63,44 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
+     * @param bool $dryRun
      *
      * @throws \RuntimeException
      *
-     * @return void
+     * @return bool
      */
-    protected function updateComposerJsonFile(SplFileInfo $composerJsonFile)
+    protected function updateComposerJsonFile(SplFileInfo $composerJsonFile, $dryRun = false)
     {
-        exec('./composer.phar validate ' . $composerJsonFile->getPathname(), $output, $return);
+        if (!file_exists(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'composer.phar')) {
+            exec('cd ' . APPLICATION_ROOT_DIR . ' && [ ! -f composer.phar ] && curl -sS https://getcomposer.org/installer | php', $output, $returnVar);
+        }
+
+        exec('cd ' . APPLICATION_ROOT_DIR . ' && php composer.phar validate ' . $composerJsonFile->getPathname(), $output, $return);
         if ($return !== 0) {
             throw new RuntimeException('Invalid composer file ' . $composerJsonFile->getPathname() . ': ' . print_r($output, true));
         }
 
-        $composerJson = json_decode($composerJsonFile->getContents(), true);
+        $composerJson = $composerJsonFile->getContents();
+        $composerJsonArray = json_decode($composerJson, true);
 
-        $this->assertCorrectName($composerJson['name'], $composerJsonFile->getRelativePath());
+        $this->assertCorrectName($composerJsonArray['name'], $composerJsonFile->getRelativePath());
 
-        $composerJson = $this->updater->update($composerJson, $composerJsonFile);
+        $composerJsonArray = $this->updater->update($composerJsonArray, $composerJsonFile);
+        $composerJsonArray = $this->clean($composerJsonArray);
+        $composerJsonArray = $this->order($composerJsonArray);
 
-        $composerJson = $this->clean($composerJson);
+        $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
 
-        $composerJson = $this->order($composerJson);
+        if ($modifiedComposerJson === $composerJson) {
+            return false;
+        }
 
-        $composerJson = json_encode($composerJson, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        if (!$dryRun) {
+            file_put_contents($composerJsonFile->getPathname(), $modifiedComposerJson);
+        }
 
-        $composerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $composerJson) . PHP_EOL;
-
-        file_put_contents($composerJsonFile->getPathname(), $composerJson);
+        return true;
     }
 
     /**

@@ -16,8 +16,6 @@ class ProductAbstractDataFeedToProductBridge implements ProductAbstractDataFeedT
     protected $productQueryContainer;
 
     /**
-     * ProductAbstractDataFeedToProductBridge constructor.
-     *
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct($productQueryContainer)

@@ -383,6 +383,39 @@ class CalculatorTest extends Unit
     /**
      * @return void
      */
+    public function testCalculateShouldTakeHighestExclusiveWithPromotions()
+    {
+        $discounts[] = $this->createDiscountTransfer(70)->setIsExclusive(false);
+        $discounts[] = $this->createDiscountTransfer(30)->setIsExclusive(true);
+        $discounts[] = $this->createDiscountTransfer(20)->setIsExclusive(true);
+        $discounts[] = $this->createDiscountTransfer(25)->setCollectorQueryString('');
+
+        $quoteTransfer = $this->createQuoteTransfer();
+
+        $discountableItems = $this->createDiscountableItemsFromQuoteTransfer($quoteTransfer);
+
+        $specificationBuilderMock = $this->createSpecificationBuilderMock();
+        $collectorSpecificationMock = $this->collectorSpecificationMock();
+        $collectorSpecificationMock->expects($this->exactly(4))
+            ->method('collect')
+            ->willReturn($discountableItems);
+
+        $specificationBuilderMock->expects($this->exactly(4))
+            ->method('buildFromQueryString')
+            ->willReturn($collectorSpecificationMock);
+
+        $calculator = $this->createCalculator($specificationBuilderMock);
+
+        $collectedDiscounts = $calculator->calculate($discounts, $quoteTransfer);
+
+        $this->assertCount(2, $collectedDiscounts);
+        $this->assertSame(30, $collectedDiscounts[0]->getDiscount()->getAmount());
+        $this->assertSame(25, $collectedDiscounts[1]->getDiscount()->getAmount());
+    }
+
+    /**
+     * @return void
+     */
     public function testCalculateWhenCalculatorNotFoundShouldThrowException()
     {
         $this->expectException(CalculatorException::class);
@@ -606,6 +639,7 @@ class CalculatorTest extends Unit
     {
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setCalculatorPlugin('test');
+        $discountTransfer->setCollectorQueryString('sku = "*"');
         $discountTransfer->setAmount($amount);
 
         return $discountTransfer;

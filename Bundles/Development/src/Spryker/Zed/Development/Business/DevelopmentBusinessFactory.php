@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
-use Spryker\Zed\Development\Business\CodeBuilder\Bundle\BundleBuilder;
+use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
@@ -133,11 +133,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\CodeBuilder\Bundle\BundleBuilder
+     * @return \Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder
      */
-    public function createBundleBuilder()
+    public function createModuleBuilder()
     {
-        return new BundleBuilder(
+        return new ModuleBuilder(
             $this->getConfig()->getBundleDirectory()
         );
     }

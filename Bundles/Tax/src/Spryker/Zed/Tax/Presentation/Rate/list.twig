@@ -1,15 +1,15 @@
 
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Tax rate list' | trans %}
+{% block section_title 'Overview of Tax Rates' | trans %}
 
 {% block action %}
-    {{ createActionButton('/tax/rate/create', 'Create new tax rate' | trans) }}
+    {{ createActionButton('/tax/rate/create', 'Create Tax Rate' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Tax rate list' | trans } %}
+     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of tax rates' | trans } %}
 
         {% block widget_content %}
             {{ taxRateTable | raw }}

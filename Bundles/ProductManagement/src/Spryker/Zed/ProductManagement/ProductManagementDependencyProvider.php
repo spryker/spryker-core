@@ -13,10 +13,10 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
@@ -34,11 +34,11 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_CATEGORY = 'FACADE_LOCALE';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_PRICE = 'FACADE_PRICE';
-    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     const FACADE_STOCK = 'FACADE_STOCK';
     const FACADE_MONEY = 'FACADE_MONEY';
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
@@ -62,59 +62,59 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
         };
 
-        $container[self::FACADE_CATEGORY] = function (Container $container) {
+        $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
         };
 
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductManagementToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
         };
 
-        $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
             return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
-        $container[self::FACADE_TAX] = function (Container $container) {
+        $container[static::FACADE_TAX] = function (Container $container) {
             return new ProductManagementToTaxBridge($container->getLocator()->tax()->facade());
         };
 
-        $container[self::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
         };
 
-        $container[self::FACADE_PRICE] = function (Container $container) {
+        $container[static::FACADE_PRICE] = function (Container $container) {
             return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductManagementToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
-
-        $container[self::FACADE_STOCK] = function (Container $container) {
+        $container[static::FACADE_STOCK] = function (Container $container) {
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
         };
 
-        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_PRODUCT_ATTRIBUTE] = function (Container $container) {
+            return new ProductManagementToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
+        };
+
+        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
         };
 
-        $container[self::QUERY_CONTAINER_STOCK] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_STOCK] = function (Container $container) {
             return $container->getLocator()->stock()->queryContainer();
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return $container->getLocator()->productImage()->queryContainer();
         };
 
@@ -128,80 +128,80 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
         };
 
-        $container[self::FACADE_CATEGORY] = function (Container $container) {
+        $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
         };
 
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductManagementToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductManagementToTouchBridge($container->getLocator()->touch()->facade());
         };
 
-        $container[self::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
             return new ProductManagementToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
-        $container[self::FACADE_TAX] = function (Container $container) {
+        $container[static::FACADE_TAX] = function (Container $container) {
             return new ProductManagementToTaxBridge($container->getLocator()->tax()->facade());
         };
 
-        $container[self::FACADE_PRICE] = function (Container $container) {
+        $container[static::FACADE_PRICE] = function (Container $container) {
             return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
-        $container[self::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
         };
 
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductManagementToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
-
-        $container[self::FACADE_STOCK] = function (Container $container) {
+        $container[static::FACADE_STOCK] = function (Container $container) {
             return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
         };
 
-        $container[self::FACADE_MONEY] = function (Container $container) {
+        $container[static::FACADE_MONEY] = function (Container $container) {
             return new ProductManagementToMoneyBridge($container->getLocator()->money()->facade());
         };
 
-        $container[self::FACADE_CURRENCY] = function (Container $container) {
+        $container[static::FACADE_CURRENCY] = function (Container $container) {
             return new ProductManagementToCurrencyBridge($container->getLocator()->currency()->facade());
         };
 
-        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
         };
 
-        $container[self::QUERY_CONTAINER_STOCK] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_STOCK] = function (Container $container) {
             return $container->getLocator()->stock()->queryContainer();
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return $container->getLocator()->productImage()->queryContainer();
         };
 
-        $container[self::QUERY_CONTAINER_PRODUCT_GROUP] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT_GROUP] = function (Container $container) {
             return $container->getLocator()->productGroup()->queryContainer();
         };
 
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ProductManagementToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
 
-        $container[self::FACADE_AVAILABILITY] = function (Container $container) {
+        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new ProductManagementToAvailabilityBridge($container->getLocator()->availability()->facade());
+        };
+
+        $container[static::FACADE_PRODUCT_ATTRIBUTE] = function (Container $container) {
+            return new ProductManagementToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
         };
 
         $container = $this->addStore($container);

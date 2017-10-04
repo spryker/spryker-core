@@ -8,15 +8,15 @@ namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 
-class VoucherFormDataProvider
+class VoucherFormDataProvider extends BaseDiscountFormDataProvider
 {
 
     /**
-     * @param int $idDiscount
+     * @param int|null $idDiscount
      *
      * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
      */
-    public function getData($idDiscount)
+    public function getData($idDiscount = null)
     {
         $discountVoucherTransfer = new DiscountVoucherTransfer();
         $discountVoucherTransfer->setIdDiscount($idDiscount);
@@ -26,14 +26,6 @@ class VoucherFormDataProvider
         }
 
         return $discountVoucherTransfer;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [];
     }
 
 }

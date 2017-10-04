@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Sales\Dependency\Service;
 
-use Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface;
-
 class SalesToUtilSanitizeBridge implements SalesToUtilSanitizeInterface
 {
 
@@ -18,11 +16,9 @@ class SalesToUtilSanitizeBridge implements SalesToUtilSanitizeInterface
     private $utilSanitizeService;
 
     /**
-     * SalesToUtilSanitizeBridge constructor.
-     *
      * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
-    public function __construct(UtilSanitizeServiceInterface $utilSanitizeService)
+    public function __construct($utilSanitizeService)
     {
         $this->utilSanitizeService = $utilSanitizeService;
     }

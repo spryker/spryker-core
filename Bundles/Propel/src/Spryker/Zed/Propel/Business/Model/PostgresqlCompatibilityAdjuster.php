@@ -80,6 +80,8 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     }
 
     /**
+     * @deprecated Is not in use anymore
+     *
      * @param \DOMDocument $dom
      *
      * @return int

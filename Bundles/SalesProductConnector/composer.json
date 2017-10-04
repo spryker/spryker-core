@@ -6,10 +6,11 @@
     "spryker/kernel": "^3.0.0",
     "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^7.0.0",
+    "spryker/sales": "^7.0.0 || ^8.0.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"

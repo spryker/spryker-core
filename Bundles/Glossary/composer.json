@@ -16,9 +16,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/installer": "If you want to use Installer plugins.",

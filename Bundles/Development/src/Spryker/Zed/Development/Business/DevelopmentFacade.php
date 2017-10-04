@@ -71,26 +71,27 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string $bundle
+     * @param string $module
      * @param array $options
      *
      * @return void
      */
-    public function createBundle($bundle, $options)
+    public function createModule($module, $options)
     {
-        $this->getFactory()->createBundleBuilder()->build($bundle, $options);
+        $this->getFactory()->createModuleBuilder()->build($module, $options);
     }
 
     /**
      * @api
      *
      * @param array $bundles
+     * @param bool $dryRun
      *
      * @return array
      */
-    public function updateComposerJsonInBundles(array $bundles)
+    public function updateComposerJsonInBundles(array $bundles, $dryRun = false)
     {
-        return $this->getFactory()->createComposerJsonUpdater()->update($bundles);
+        return $this->getFactory()->createComposerJsonUpdater()->update($bundles, $dryRun);
     }
 
     /**

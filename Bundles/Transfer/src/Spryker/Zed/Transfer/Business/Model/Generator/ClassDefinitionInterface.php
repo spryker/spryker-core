@@ -23,6 +23,11 @@ interface ClassDefinitionInterface extends DefinitionInterface
     /**
      * @return array
      */
+    public function getPropertyNameMap();
+
+    /**
+     * @return array
+     */
     public function getConstructorDefinition();
 
     /**
@@ -39,5 +44,10 @@ interface ClassDefinitionInterface extends DefinitionInterface
      * @return string|null
      */
     public function getDeprecationDescription();
+
+    /**
+     * @return bool
+     */
+    public function hasArrayObject();
 
 }

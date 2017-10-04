@@ -31,7 +31,7 @@ class MoneyFactory extends AbstractFactory
         return new MoneyBuilder(
             $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
-            $this->getStore()->getCurrencyIsoCode()
+            $this->getCurrencyPlugin()->getCurrent()->getCode()
         );
     }
 

@@ -52,6 +52,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
 
         $this->getClient()->addMetaTransfer('locale', $localeTransfer);
 
+        $this->applyMetaData($object);
+
         return $this->getClient()->call($url, $object, $timeoutInSeconds);
     }
 
@@ -95,6 +97,23 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
         }
 
         return $this->getClient()->getLastResponse()->getSuccessMessages();
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $requestTransfer
+     *
+     * @return void
+     */
+    protected function applyMetaData(TransferInterface $requestTransfer)
+    {
+        $plugins = $this->getFactory()->getMetaDataProviderPlugins();
+
+        foreach ($plugins as $key => $plugin) {
+            $this->getClient()->addMetaTransfer(
+                $key,
+                $plugin->getRequestMetaData($requestTransfer)
+            );
+        }
     }
 
 }

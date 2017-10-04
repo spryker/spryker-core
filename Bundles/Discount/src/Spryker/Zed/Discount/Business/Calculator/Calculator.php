@@ -54,6 +54,11 @@ class Calculator implements CalculatorInterface
     protected $distributor;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolverInterface|null
+     */
+    protected $collectorStrategyResolver;
+
+    /**
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $collectorBuilder
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
@@ -108,7 +113,6 @@ class Calculator implements CalculatorInterface
             $discountTransfer->setAmount($discountAmount);
 
             $collectedDiscounts[] = $this->createCollectedDiscountTransfer($discountTransfer, $discountableItems);
-
         }
 
         return $collectedDiscounts;
@@ -138,14 +142,34 @@ class Calculator implements CalculatorInterface
     protected function filterExclusiveDiscounts(array $collectedDiscounts)
     {
         $collectedDiscounts = $this->sortByDiscountAmountDescending($collectedDiscounts);
+
+        $applicableDiscounts = [];
+        $nonExclusiveDiscounts = [];
+        $exclusiveFound = false;
         foreach ($collectedDiscounts as $collectedDiscountTransfer) {
+
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
-            if ($discountTransfer->getIsExclusive()) {
-                return [$collectedDiscountTransfer];
+            if (!$discountTransfer->getCollectorQueryString()) {
+                $applicableDiscounts[] = $collectedDiscountTransfer;
+                continue;
+            }
+
+            if ($discountTransfer->getIsExclusive() && !$exclusiveFound) {
+                $applicableDiscounts[] = $collectedDiscountTransfer;
+                $exclusiveFound = true;
+                continue;
+            }
+
+            if (!$discountTransfer->getIsExclusive()) {
+                $nonExclusiveDiscounts[] = $collectedDiscountTransfer;
             }
         }
 
-        return $collectedDiscounts;
+        if ($exclusiveFound) {
+            return $applicableDiscounts;
+        }
+
+        return array_merge($applicableDiscounts, $nonExclusiveDiscounts);
     }
 
     /**
@@ -202,6 +226,11 @@ class Calculator implements CalculatorInterface
      */
     protected function collectItems(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
     {
+        $alternativeCollectorStrategyPlugin = $this->resolveCollectorPluginStrategy($quoteTransfer, $discountTransfer);
+        if ($alternativeCollectorStrategyPlugin) {
+            return $alternativeCollectorStrategyPlugin->collect($discountTransfer, $quoteTransfer);
+        }
+
         try {
             $collectorQueryString = $discountTransfer->getCollectorQueryString();
 
@@ -253,6 +282,31 @@ class Calculator implements CalculatorInterface
         $calculatedDiscounts->setDiscountableItems(new ArrayObject($discountableItems));
 
         return $calculatedDiscounts;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface|null
+     */
+    protected function resolveCollectorPluginStrategy(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer)
+    {
+        if (!$this->collectorStrategyResolver) {
+            return null;
+        }
+
+        return $this->collectorStrategyResolver->resolveCollector($discountTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolverInterface $collectorStrategyResolver
+     *
+     * @return void
+     */
+    public function setCollectorStrategyResolver(CollectorStrategyResolverInterface $collectorStrategyResolver)
+    {
+        $this->collectorStrategyResolver = $collectorStrategyResolver;
     }
 
 }

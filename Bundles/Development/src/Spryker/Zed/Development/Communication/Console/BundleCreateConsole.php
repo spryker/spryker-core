@@ -20,7 +20,7 @@ class BundleCreateConsole extends Console
 {
 
     const COMMAND_NAME = 'dev:module:create';
-    const ARGUMENT_BUNDLE = 'module';
+    const ARGUMENT_MODULE = 'module';
     const ARGUMENT_FILE = 'file';
     const OPTION_FORCE = 'force';
 
@@ -35,7 +35,7 @@ class BundleCreateConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Create basic core module (Spryker core dev only).');
 
-        $this->addArgument(static::ARGUMENT_BUNDLE, InputArgument::REQUIRED, 'Name of core module to create or sync. Use "all" for all.');
+        $this->addArgument(static::ARGUMENT_MODULE, InputArgument::REQUIRED, 'Name of core module to create or sync. Use "all" for all.');
         $this->addArgument(static::ARGUMENT_FILE, InputArgument::OPTIONAL, 'Name of file to create or sync.');
         $this->addOption(static::OPTION_FORCE, 'f', InputOption::VALUE_NONE, 'Force the command, will overwrite existing files.');
     }
@@ -48,10 +48,10 @@ class BundleCreateConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getArgument(static::ARGUMENT_BUNDLE);
+        $module = $this->input->getArgument(static::ARGUMENT_MODULE);
 
-        if ($bundle !== 'all') {
-            $message = 'Create or update Spryker core module ' . $bundle;
+        if ($module !== 'all') {
+            $message = 'Create or update Spryker core module ' . $module;
         } else {
             $message = 'Sync all Spryker core modules';
         }
@@ -61,7 +61,7 @@ class BundleCreateConsole extends Console
         $options = $this->input->getOptions();
         $options[static::ARGUMENT_FILE] = $this->input->getArgument(static::ARGUMENT_FILE);
 
-        $this->getFacade()->createBundle($bundle, $options);
+        $this->getFacade()->createModule($module, $options);
     }
 
 }

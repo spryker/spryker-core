@@ -64,7 +64,7 @@ class EditController extends AddController
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
-                    ->buildProductAbstractTransfer($form);
+                    ->buildProductAbstractTransfer($form, $idProductAbstract);
 
                 $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 

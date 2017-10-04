@@ -26,8 +26,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^3.0.0",
-    "spryker/testify": "*"
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/event": "Required to listen for changes affecting product relations.",

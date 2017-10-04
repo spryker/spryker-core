@@ -150,4 +150,17 @@ interface CmsBlockFacadeInterface
      */
     public function findTemplate($path);
 
+    /**
+     * Specification:
+     * - Finds a template in DB
+     * - Checks template file in template directories
+     *
+     * @api
+     *
+     * @param int $idCmsBlockTemplate
+     *
+     * @return bool
+     */
+    public function hasTemplateFileById($idCmsBlockTemplate);
+
 }

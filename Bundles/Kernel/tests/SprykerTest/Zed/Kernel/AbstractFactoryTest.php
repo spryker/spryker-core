@@ -70,17 +70,6 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyProvideExternalDependencies()
-    {
-        $this->markTestSkipped();
-        $factory = new Factory();
-
-        $this->assertSame(self::CONTAINER_VALUE, $factory->getProvidedDependency(self::CONTAINER_KEY));
-    }
-
-    /**
-     * @return void
-     */
     public function testGetProvidedDependencyShouldResolveContainer()
     {
         $container = new Container();

@@ -43,6 +43,18 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
     }
 
     /**
+     * @param string $path
+     *
+     * @return $this
+     */
+    public function addPath($path)
+    {
+        $this->paths[] = rtrim($path, '/\\');
+
+        return $this;
+    }
+
+    /**
      * @param string $name
      *
      * @return string

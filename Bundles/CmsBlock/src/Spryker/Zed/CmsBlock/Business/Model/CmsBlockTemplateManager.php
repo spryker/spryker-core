@@ -40,8 +40,6 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     protected $finder;
 
     /**
-     * CmsBlockTemplateManager constructor.
-     *
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapperInterface $cmsBlockTemplateMapper
      * @param \Spryker\Zed\CmsBlock\CmsBlockConfig $cmsBlockConfig
@@ -111,6 +109,18 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
                 sprintf('Template file not found in "%s"', $path)
             );
         }
+    }
+
+    /**
+     * @param int $idCmsBlockTemplate
+     *
+     * @return bool
+     */
+    public function hasTemplateFileById($idCmsBlockTemplate)
+    {
+        $templateEntity = $this->getTemplateById($idCmsBlockTemplate);
+
+        return $this->isTemplateFileExists($templateEntity->getTemplatePath());
     }
 
     /**

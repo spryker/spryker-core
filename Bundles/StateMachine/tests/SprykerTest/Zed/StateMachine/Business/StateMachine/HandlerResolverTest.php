@@ -39,7 +39,7 @@ class HandlerResolverTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testHandlerResolverWhenRequestedNonExistantShouldThrowException()
+    public function testHandlerResolverWhenRequestedNonExistentShouldThrowException()
     {
         $this->expectException(StateMachineHandlerNotFound::class);
 

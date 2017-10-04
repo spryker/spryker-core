@@ -3,12 +3,20 @@
 
 {{ form_row(discountForm.discountCalculator.calculator_plugin) }}
 {{ form_row(discountForm.discountCalculator.amount) }}
-{{ form_row(discountForm.discountCalculator.collector_query_string) }}
 
-<div id="builder_calculation" class="query-builder-container {% if discountForm.discountCalculator.collector_query_string.vars.errors|length > 0 %}has-error{% endif %}">
-{{ form_errors(discountForm.discountCalculator.collector_query_string) }}
+{{ form_row(discountForm.discountCalculator.collectorStrategyType) }}
+
+<div id="collector-type-query-string">
+    {{ form_row(discountForm.discountCalculator.collector_query_string) }}
+    <div id="builder_calculation" class="query-builder-container {% if discountForm.discountCalculator.collector_query_string.vars.errors|length > 0 %}has-error{% endif %}">
+    {{ form_errors(discountForm.discountCalculator.collector_query_string) }}
+    </div>
+
+    <button type="button" class="btn btn-sm btn-success" id="btn-calculation-get" data-label-plain-query="{{ 'Plain query' | trans }}" data-label-query-builder="{{ 'Query builder' | trans }}">
+        {{ 'Plain query' | trans }}
+    </button>
 </div>
 
-<button type="button" class="btn btn-sm btn-success" id="btn-calculation-get" data-label-plain-query="{{ 'Plain query' | trans }}" data-label-query-builder="{{ 'Query builder' | trans }}">
-    {{ 'Plain query' | trans }}
-</button>
+{% import "@Discount/Index/partial/_plugin_types_macro.twig" as form_macro %}
+{{ form_macro.render_plugin_types(discountForm.discountCalculator) }}
+

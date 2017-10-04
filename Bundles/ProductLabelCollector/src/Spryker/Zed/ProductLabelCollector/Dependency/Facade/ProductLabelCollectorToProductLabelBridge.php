@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductLabelCollector\Dependency\Facade;
 
-use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
-
 class ProductLabelCollectorToProductLabelBridge implements ProductLabelCollectorToProductLabelInterface
 {
 
@@ -20,7 +18,7 @@ class ProductLabelCollectorToProductLabelBridge implements ProductLabelCollector
     /**
      * @param \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface $productLabelFacade
      */
-    public function __construct(ProductLabelFacadeInterface $productLabelFacade)
+    public function __construct($productLabelFacade)
     {
         $this->productLabelFacade = $productLabelFacade;
     }

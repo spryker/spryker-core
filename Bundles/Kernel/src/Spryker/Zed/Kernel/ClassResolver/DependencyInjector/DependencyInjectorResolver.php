@@ -26,7 +26,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     public function resolve($callerClass)
     {
@@ -39,6 +39,8 @@ class DependencyInjectorResolver extends AbstractClassResolver
         foreach ($injectFromBundles as $injectFromBundle) {
             $this->fromBundle = $injectFromBundle;
 
+            $this->unsetCurrentCacheEntry();
+
             if ($this->canResolve()) {
                 $resolvedInjector = $this->getResolvedClassInstance();
                 $dependencyInjectorCollection->addDependencyInjector($resolvedInjector);
@@ -49,7 +51,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface
+     * @return object|\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
     protected function getResolvedClassInstance()
     {

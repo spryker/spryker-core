@@ -44,7 +44,7 @@ class TransferCleanerTest extends Unit
      */
     private function getTestDirectory()
     {
-        return __DIR__ . '/Fixtures/';
+        return __DIR__ . '/test_files/';
     }
 
     /**

@@ -42,7 +42,7 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface[]
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface[]|\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface[]
      */
     public function getDefinitions()
     {

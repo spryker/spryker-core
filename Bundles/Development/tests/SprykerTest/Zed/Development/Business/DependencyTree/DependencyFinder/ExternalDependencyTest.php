@@ -37,7 +37,7 @@ class ExternalDependencyTest extends Unit
     public function getTestFile()
     {
         $finder = new Finder();
-        $finder->files()->in(__DIR__ . '/Fixtures');
+        $finder->files()->in(__DIR__ . '/test_files');
 
         foreach ($finder as $item) {
             return $item;

@@ -19,7 +19,7 @@ class BraintreeToRefundBridge implements BraintreeToRefundInterface
     protected $refundFacade;
 
     /**
-     * @param \Spryker\Zed\Refund\Business\RefundFacade $refundFacade
+     * @param \Spryker\Zed\Refund\Business\RefundFacadeInterface $refundFacade
      */
     public function __construct($refundFacade)
     {

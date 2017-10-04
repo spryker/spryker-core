@@ -163,7 +163,7 @@ class CategoryStructureExpected
     /**
      * @return array
      */
-    public function getCategoryStructureWithNonexistantParent()
+    public function getCategoryStructureWithNonexistentParent()
     {
         $categories = [
             1 => [

@@ -19,7 +19,8 @@ class QuoteFactory extends AbstractFactory
     public function createSession()
     {
         return new QuoteSession(
-            $this->getSessionClient()
+            $this->getSessionClient(),
+            $this->getCurrencyPlugin()
         );
     }
 
@@ -29,6 +30,14 @@ class QuoteFactory extends AbstractFactory
     protected function getSessionClient()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
+     */
+    protected function getCurrencyPlugin()
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::CURRENCY_PLUGIN);
     }
 
 }

@@ -23,7 +23,6 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $this
             ->addGeneralTab($tabsViewTransfer)
             ->addPriceAndStockTab($tabsViewTransfer)
-            ->addAttributesTab($tabsViewTransfer)
             ->addImageTab($tabsViewTransfer)
             ->addAssigneBundledProductsTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Shared\Transfer\Log\Processor\Fixtures;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
@@ -66,7 +67,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     public function __construct()
     {
         parent::__construct();
-        $this->emptyTransfer = new \ArrayObject();
+        $this->emptyTransfer = new ArrayObject();
         $this->innerTransfer = new SimpleTransfer();
         $this->transferCollection = [
             new SimpleTransfer(),
@@ -152,6 +153,5 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
 
         return $this;
     }
-
 
 }

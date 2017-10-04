@@ -156,6 +156,7 @@ class DataImportConsole extends Console
             . 'Importer type: <fg=green>%s</>' . PHP_EOL
             . 'Importable DataSets: <fg=green>%s</>' . PHP_EOL
             . 'Imported DataSets: <fg=green>%s</>' . PHP_EOL
+            . 'Import Time Used: <fg=green>%.2f ms</>' . PHP_EOL
             . 'Import status: %s</>';
 
         $this->info(sprintf(
@@ -163,6 +164,7 @@ class DataImportConsole extends Console
             $dataImporterReport->getImportType(),
             $dataImporterReport->getExpectedImportableDataSetCount(),
             $dataImporterReport->getImportedDataSetCount(),
+            $dataImporterReport->getImportTime(),
             $this->getImportStatus($dataImporterReport)
         ));
     }

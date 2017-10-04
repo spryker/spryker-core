@@ -1,8 +1,12 @@
 {% extends '@Sales/Layout/layout.twig' %}
 
+{% block section_title %}
+    {{ 'Overview of Orders' | trans }}
+{% endblock %}
+
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Orders List' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of orders' } %}
 
         {% block widget_content %}
 

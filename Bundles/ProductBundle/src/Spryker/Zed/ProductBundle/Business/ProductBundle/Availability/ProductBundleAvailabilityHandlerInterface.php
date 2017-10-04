@@ -24,4 +24,11 @@ interface ProductBundleAvailabilityHandlerInterface
      */
     public function updateBundleAvailability($bundleProductSku);
 
+    /**
+     * @param string $bundleProductSku
+     *
+     * @return void
+     */
+    public function removeBundleAvailability($bundleProductSku);
+
 }

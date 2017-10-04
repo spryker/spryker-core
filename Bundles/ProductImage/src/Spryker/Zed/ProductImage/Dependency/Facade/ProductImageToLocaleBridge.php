@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductImage\Dependency\Facade;
 
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-
 class ProductImageToLocaleBridge implements ProductImageToLocaleInterface
 {
 
@@ -20,7 +18,7 @@ class ProductImageToLocaleBridge implements ProductImageToLocaleInterface
     /**
      * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
-    public function __construct(LocaleFacadeInterface $localeFacade)
+    public function __construct($localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }

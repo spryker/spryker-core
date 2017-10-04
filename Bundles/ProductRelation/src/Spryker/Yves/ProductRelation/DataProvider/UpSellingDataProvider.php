@@ -44,7 +44,7 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     /**
      * @param array $parameters , parameters can be (quote => QuoteTransfer, or array of abstract product ids [1,2,3])
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function buildTemplateData(array $parameters)
     {
@@ -87,10 +87,10 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\StorageProductRelationsTransfer[] $upSellingProducts
-     * @param array|\Generated\Shared\Transfer\StorageProductRelationsTransfer[] $compareWithProducts
+     * @param \Generated\Shared\Transfer\StorageProductRelationsTransfer[] $upSellingProducts
+     * @param \Generated\Shared\Transfer\StorageProductRelationsTransfer[] $compareWithProducts
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductRelationsTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
     protected function findNotIncludedAbstractProducts(array $upSellingProducts, array $compareWithProducts)
     {

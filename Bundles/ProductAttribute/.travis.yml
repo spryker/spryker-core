@@ -1,0 +1,37 @@
+language: php
+
+php:
+  - 5.6
+  - 7.0
+
+addons:
+  postgresql: 9.4
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+services:
+  - postgresql
+
+sudo: required
+
+env:
+  global:
+    - APPLICATION_ENV=development
+    - APPLICATION_STORE=DE
+    - ZED_DB_USERNAME=postgres
+
+install:
+  - composer self-update && composer --version
+  - composer install --no-interaction --prefer-dist
+
+script:
+  - vendor/bin/phpcs src --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml
+  - vendor/bin/codecept run --env isolated --coverage-xml
+
+after_success:
+  - vendor/bin/coveralls -vvv
+
+notifications:
+  email: false

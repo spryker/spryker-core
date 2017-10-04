@@ -9,16 +9,16 @@
         <icon>fa-list</icon>
         <pages>
             <create>
-                <label>Create Navigation</label>
-                <title>Create Navigation</title>
+                <label>Create Navigation Element</label>
+                <title>Create Navigation Element</title>
                 <bundle>navigation-gui</bundle>
                 <controller>create</controller>
                 <action>index</action>
                 <visible>0</visible>
             </create>
             <edit>
-                <label>Update Navigation</label>
-                <title>Update Navigation</title>
+                <label>Edit Navigation Element</label>
+                <title>Edit Navigation Element</title>
                 <bundle>navigation-gui</bundle>
                 <controller>update</controller>
                 <action>index</action>

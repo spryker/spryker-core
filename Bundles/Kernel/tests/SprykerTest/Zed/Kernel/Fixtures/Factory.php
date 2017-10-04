@@ -15,6 +15,7 @@ use SprykerTest\Zed\Kernel\AbstractFactoryTest;
 
 class Factory extends AbstractFactory
 {
+
     /**
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container

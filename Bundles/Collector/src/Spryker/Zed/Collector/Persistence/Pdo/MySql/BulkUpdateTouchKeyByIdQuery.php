@@ -23,10 +23,12 @@ class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements Bulk
      */
     public function addQuery($tableName, $keyValue, $idColumnName, $idValue)
     {
+        $idColumnName = str_replace($tableName . '.', '', $idColumnName);
         $this->queries[] = sprintf(
             $this->getQueryTemplate(),
             $tableName,
             $keyValue,
+            $tableName,
             $idColumnName,
             $idValue
         );
@@ -39,7 +41,7 @@ class BulkUpdateTouchKeyByIdQuery extends AbstractBulkTouchQuery implements Bulk
      */
     protected function getQueryTemplate()
     {
-        return "UPDATE `%s` SET `key` = '%s' WHERE `%s` = '%s'";
+        return "UPDATE `%s` SET `key` = '%s' WHERE `%s`.`%s` = '%s'";
     }
 
 }

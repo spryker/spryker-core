@@ -28,4 +28,18 @@ interface ProductCartConnectorToProductInterface
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
 
+    /**
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($concreteSku);
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($abstractSku);
+
 }

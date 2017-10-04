@@ -80,8 +80,14 @@ class ProductTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
 
+        $config->setSortable([
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductAbstractTableMap::COL_SKU,
+        ]);
+
         $config->addRawColumn(self::COL_CHECKBOX);
         $config->setPageLength(10);
+        $config->setDefaultSortField(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, TableConfiguration::SORT_ASC);
 
         return $config;
     }
@@ -107,7 +113,7 @@ class ProductTable extends AbstractTable
                 'name' => urlencode($product['name']),
             ];
 
-            $checkbox_html = sprintf(
+            $htmlCheckbox = sprintf(
                 "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='%s'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 $this->utilEncodingService->encodeJson($info)
@@ -117,7 +123,7 @@ class ProductTable extends AbstractTable
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 SpyProductAbstractTableMap::COL_SKU => $product[SpyProductAbstractTableMap::COL_SKU],
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $product['name'],
-                self::COL_CHECKBOX => $checkbox_html,
+                self::COL_CHECKBOX => $htmlCheckbox,
             ];
         }
         unset($queryResults);

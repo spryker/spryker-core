@@ -50,7 +50,7 @@ class AddController extends AbstractController
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
-                    ->buildProductAbstractTransfer($form);
+                    ->buildProductAbstractTransfer($form, null);
 
                 $concreteProductCollection = $this->createProductConcreteCollection(
                     $type,

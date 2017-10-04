@@ -8,7 +8,6 @@
 namespace Spryker\Service\Kernel\ClassResolver;
 
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver as SharedAbstractClassResolver;
-use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 abstract class AbstractClassResolver extends SharedAbstractClassResolver
 {
@@ -17,32 +16,6 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     const KEY_APPLICATION = '%application%';
     const KEY_BUNDLE = '%bundle%';
     const KEY_STORE = '%store%';
-
-    /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
-     */
-    private $classInfo;
-
-    /**
-     * @param object|string $callerClass
-     *
-     * @return \Spryker\Service\Kernel\ClassResolver\AbstractClassResolver
-     */
-    public function setCallerClass($callerClass)
-    {
-        $this->classInfo = new ClassInfo();
-        $this->classInfo->setClass($callerClass);
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\ClassResolver\ClassInfo
-     */
-    public function getClassInfo()
-    {
-        return $this->classInfo;
-    }
 
     /**
      * @param string $namespace

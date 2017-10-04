@@ -13,6 +13,7 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

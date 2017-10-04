@@ -15,32 +15,6 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
     const KEY_LAYER = '%layer%';
 
     /**
-     * @var \Spryker\Zed\Kernel\ClassResolver\ClassInfo
-     */
-    private $classInfo;
-
-    /**
-     * @param object|string $callerClass
-     *
-     * @return \Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver
-     */
-    public function setCallerClass($callerClass)
-    {
-        $this->classInfo = new ClassInfo();
-        $this->classInfo->setClass($callerClass);
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\ClassInfo
-     */
-    public function getClassInfo()
-    {
-        return $this->classInfo;
-    }
-
-    /**
      * @param string $namespace
      * @param string|null $store
      *

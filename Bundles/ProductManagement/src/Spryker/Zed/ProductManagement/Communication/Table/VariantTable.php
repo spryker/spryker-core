@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
@@ -201,6 +202,13 @@ class VariantTable extends AbstractProductTable
                 $this->type
             ),
             'Edit'
+        );
+
+        $urls[] = $this->generateEditButton(
+            Url::generate('/product-attribute-gui/view/product', [
+                EditController::PARAM_ID_PRODUCT => $productEntity->getIdProduct(),
+            ]),
+            'Manage Attributes'
         );
 
         return $urls;

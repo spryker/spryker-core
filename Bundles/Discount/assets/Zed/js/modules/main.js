@@ -25,10 +25,15 @@ $(document).ready(function() {
 
     var sqlCalculationBuilder = SqlFactory('#discount_discountCalculator_collector_query_string', '#builder_calculation');
     var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition', true);
+    var isQueryStringCollectorSelected = $('#discount_discountCalculator_collectorStrategyType_0').is(":checked");
 
     $('#create-discount-button').on('click', function(element) {
         element.preventDefault();
-        sqlCalculationBuilder.saveQuery();
+
+        if (isQueryStringCollectorSelected) {
+            sqlCalculationBuilder.saveQuery();
+        }
+
         sqlConditionBuilder.saveQuery();
 
         $('#discount-form').submit();
@@ -63,5 +68,20 @@ $(document).ready(function() {
         onClose: function(selectedDate) {
             $('#discount_discountGeneral_valid_from').datepicker('option', 'maxDate', selectedDate);
         }
+    });
+
+    $('#discount_discountCalculator_collectorStrategyType input').each(function(index, element) {
+        $('#collector-type-' + $(element).val()).hide();
+        if ($(element).is(":checked")) {
+            $('#collector-type-' + $(element).val()).show();
+        }
+    });
+
+    $('#discount_discountCalculator_collectorStrategyType input').on('click', function(event) {
+          $('#discount_discountCalculator_collectorStrategyType input').each(function(index, element) {
+               $('#collector-type-' + $(element).val()).hide();
+          });
+
+          $('#collector-type-' + $(event.target).val()).show();
     });
 });

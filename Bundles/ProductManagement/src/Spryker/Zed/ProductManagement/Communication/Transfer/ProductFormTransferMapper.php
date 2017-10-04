@@ -19,9 +19,8 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
@@ -40,6 +39,11 @@ use Symfony\Component\Form\FormInterface;
 
 class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 {
+
+    /**
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     */
+    protected $productQueryContainer;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
@@ -62,17 +66,20 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $utilTextService;
 
     /**
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      */
     public function __construct(
+        ProductQueryContainerInterface $productQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToLocaleInterface $localeFacade,
         ProductManagementToUtilTextInterface $utilTextService,
         LocaleProvider $localeProvider
     ) {
+        $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->utilTextService = $utilTextService;
@@ -81,30 +88,26 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function buildProductAbstractTransfer(FormInterface $form)
+    public function buildProductAbstractTransfer(FormInterface $form, $idProductAbstract)
     {
         $formData = $form->getData();
-        $attributeValues = $this->generateAbstractAttributeArrayFromData($formData);
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
-        $productAbstractTransfer = $this->createProductAbstractTransfer(
-            $formData,
-            $attributeValues[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE]
-        );
+        $productAbstractTransfer = $this->createProductAbstractTransfer($formData);
+
+        $attributes = $this->getAbstractAttributes($idProductAbstract);
+        $productAbstractTransfer->setAttributes($attributes);
 
         $localizedData = $this->generateLocalizedData($localeCollection, $formData);
 
         foreach ($localizedData as $localeCode => $data) {
             $localeTransfer = $this->localeFacade->getLocale($localeCode);
 
-            $localizedAttributesTransfer = $this->createAbstractLocalizedAttributesTransfer(
-                $form,
-                $attributeValues[$localeCode],
-                $localeTransfer
-            );
+            $localizedAttributesTransfer = $this->createAbstractLocalizedAttributesTransfer($form, $localeTransfer, $idProductAbstract);
 
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
@@ -118,9 +121,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productAbstractTransfer->setPrices(new ArrayObject($priceTransfers));
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
-        $productAbstractTransfer->setImageSets(
-            new ArrayObject($imageSetCollection)
-        );
+        $productAbstractTransfer->setImageSets(new ArrayObject($imageSetCollection));
 
         return $productAbstractTransfer;
     }
@@ -138,10 +139,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $generalFormName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
             $seoFormName = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());
 
-            $localizedData[$localeTransfer->getLocaleName()] = array_merge(
-                $formData[$generalFormName],
-                $formData[$seoFormName]
-            );
+            $localizedData[$localeTransfer->getLocaleName()] = array_merge($formData[$generalFormName], $formData[$seoFormName]);
         }
 
         return $localizedData;
@@ -154,15 +152,16 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function buildProductConcreteTransfer(ProductAbstractTransfer $productAbstractTransfer, FormInterface $form, $idProduct)
-    {
+    public function buildProductConcreteTransfer(
+        ProductAbstractTransfer $productAbstractTransfer,
+        FormInterface $form,
+        $idProduct
+    ) {
         $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
-        $attributeValues = $this->generateAbstractAttributeArrayFromData($form->getData());
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer
-            ->setIdProductConcrete($idProduct)
-            ->setAttributes($this->getAttributes($form))
+        $productConcreteTransfer->setIdProductConcrete($idProduct)
+            ->setAttributes($this->getConcreteAttributes($idProduct))
             ->setSku($sku)
             ->setAbstractSku($productAbstractTransfer->getSku())
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
@@ -174,16 +173,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         foreach ($localeCollection as $localeTransfer) {
             $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
 
-            $localizedAttributeValues = [];
-            if (isset($attributeValues[$localeTransfer->getLocaleName()])) {
-                $localizedAttributeValues = $attributeValues[$localeTransfer->getLocaleName()];
-            }
-
-            $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer(
-                $form->get($formName),
-                $localizedAttributeValues,
-                $localeTransfer
-            );
+            $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer($form->get($formName), $localeTransfer, $idProduct);
 
             $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
@@ -199,28 +189,22 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productConcreteTransfer->setStocks(new ArrayObject($stockCollection));
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
-        $productConcreteTransfer->setImageSets(
-            new ArrayObject($imageSetCollection)
-        );
+        $productConcreteTransfer->setImageSets(new ArrayObject($imageSetCollection));
 
         return $productConcreteTransfer;
     }
 
     /**
      * @param array $data
-     * @param array $attributes
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductAbstractTransfer(array $data, array $attributes)
+    protected function createProductAbstractTransfer(array $data)
     {
-        $attributes = array_filter($attributes);
-
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->fromArray($data, true)
             ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
             ->setSku($data[ProductFormAdd::FIELD_SKU])
-            ->setAttributes($attributes)
             ->setIdTaxSet($data[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
@@ -228,22 +212,26 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param \Symfony\Component\Form\FormInterface $formObject
-     * @param array $abstractLocalizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
-    protected function createAbstractLocalizedAttributesTransfer(FormInterface $formObject, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
-    {
+    protected function createAbstractLocalizedAttributesTransfer(
+        FormInterface $formObject,
+        LocaleTransfer $localeTransfer,
+        $idProductAbstract
+    ) {
         $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());
         $form = $formObject->get($formName);
 
-        $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
+        $attributes = $this->getAbstractLocalizedAttributes($idProductAbstract, $localeTransfer->getIdLocale());
+
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
         $localizedAttributesTransfer->setName($form->get(GeneralForm::FIELD_NAME)->getData());
         $localizedAttributesTransfer->setDescription($form->get(GeneralForm::FIELD_DESCRIPTION)->getData());
-        $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
+        $localizedAttributesTransfer->setAttributes($attributes);
 
         $formName = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());
         if ($formObject->has($formName)) {
@@ -259,20 +247,21 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $abstractLocalizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
-    protected function createConcreteLocalizedAttributesTransfer(FormInterface $form, array $abstractLocalizedAttributes, LocaleTransfer $localeTransfer)
+    protected function createConcreteLocalizedAttributesTransfer(FormInterface $form, LocaleTransfer $localeTransfer, $idProduct)
     {
-        $abstractLocalizedAttributes = array_filter($abstractLocalizedAttributes);
+        $localizedAttributes = $this->getConcreteLocalizedAttributes($idProduct, $localeTransfer->getIdLocale());
+
         $localizedAttributesTransfer = new LocalizedAttributesTransfer();
         $localizedAttributesTransfer->setLocale($localeTransfer);
         $localizedAttributesTransfer->setName($form->get(ConcreteGeneralForm::FIELD_NAME)->getData());
         $localizedAttributesTransfer->setDescription($form->get(ConcreteGeneralForm::FIELD_DESCRIPTION)->getData());
         $localizedAttributesTransfer->setIsSearchable($form->get(ConcreteGeneralForm::FIELD_IS_SEARCHABLE)->getData());
-        $localizedAttributesTransfer->setAttributes($abstractLocalizedAttributes);
+        $localizedAttributesTransfer->setAttributes($localizedAttributes);
 
         return $localizedAttributesTransfer;
     }
@@ -348,9 +337,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $price = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(PriceForm::FIELD_PRICE)->getData();
         $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
 
-        $priceTransfer = (new PriceProductTransfer())
-            ->setIdProductAbstract($idProductAbstract)
-            ->setPrice($price);
+        $priceTransfer = (new PriceProductTransfer())->setIdProductAbstract($idProductAbstract)->setPrice($price);
 
         return $priceTransfer;
     }
@@ -372,16 +359,14 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             foreach ($imageSetCollection as $imageSet) {
                 $imageSetData = array_filter($imageSet->getData());
 
-                $imageSetTransfer = (new ProductImageSetTransfer())
-                    ->fromArray($imageSetData, true);
+                $imageSetTransfer = (new ProductImageSetTransfer())->fromArray($imageSetData, true);
 
                 if ($this->localeFacade->hasLocale($localeTransfer->getLocaleName())) {
                     $imageSetTransfer->setLocale($localeTransfer);
                 }
 
-                $productImages = $this->buildProductImageCollection(
-                    $imageSet->get(ImageSetForm::PRODUCT_IMAGES)->getData()
-                );
+                $productImages = $this->buildProductImageCollection($imageSet->get(ImageSetForm::PRODUCT_IMAGES)
+                    ->getData());
                 $object = new ArrayObject($productImages);
                 $imageSetTransfer->setProductImages($object);
 
@@ -422,9 +407,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     {
         $price = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
 
-        $priceTransfer = (new PriceProductTransfer())
-            ->setIdProduct($idProduct)
-            ->setPrice($price);
+        $priceTransfer = (new PriceProductTransfer())->setIdProduct($idProduct)->setPrice($price);
 
         return $priceTransfer;
     }
@@ -471,8 +454,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $quantity = $stockForm->get(StockForm::FIELD_QUANTITY)->getData();
             $isNeverOutOfStock = $stockForm->get(StockForm::FIELD_IS_NEVER_OUT_OF_STOCK)->getData();
 
-            $stockTransfer = (new StockProductTransfer())
-                ->fromArray($stockData, true)
+            $stockTransfer = (new StockProductTransfer())->fromArray($stockData, true)
                 ->setSku($sku)
                 ->setQuantity($quantity)
                 ->setStockType($type)
@@ -485,23 +467,86 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param int $idProductAbstract
      *
      * @return array
      */
-    protected function getAttributes(FormInterface $form)
+    protected function getAbstractAttributes($idProductAbstract)
     {
         $attributes = [];
 
-        $defaultName = ProductFormAdd::getLocalizedPrefixName(
-            ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT,
-            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
-        );
+        $entity = $this->productQueryContainer
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->findOne();
 
-        foreach ($form->get($defaultName)->getData() as $attributeKey => $attributeData) {
-            if ($attributeData[AttributeAbstractForm::FIELD_VALUE] !== null) {
-                $attributes[$attributeKey] = $attributeData[AttributeAbstractForm::FIELD_VALUE];
-            }
+        if ($entity) {
+            $attributes = json_decode($entity->getAttributes(), true);
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    protected function getAbstractLocalizedAttributes($idProductAbstract, $idLocale)
+    {
+        $attributes = [];
+
+        $entity = $this->productQueryContainer
+            ->queryProductAbstractLocalizedAttributes($idProductAbstract)
+            ->filterByFkLocale($idLocale)
+            ->findOne();
+
+        if ($entity) {
+            $attributes = json_decode($entity->getAttributes(), true);
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    protected function getConcreteAttributes($idProduct)
+    {
+        $attributes = [];
+
+        $entity = $this->productQueryContainer
+            ->queryProduct()
+            ->filterByIdProduct($idProduct)
+            ->findOne();
+
+        if ($entity) {
+            $attributes = json_decode($entity->getAttributes(), true);
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    protected function getConcreteLocalizedAttributes($idProduct, $idLocale)
+    {
+        $attributes = [];
+
+        $entity = $this->productQueryContainer
+            ->queryProductLocalizedAttributes($idProduct)
+            ->filterByFkLocale($idLocale)
+            ->findOne();
+
+        if ($entity) {
+            $attributes = json_decode($entity->getAttributes(), true);
         }
 
         return $attributes;
@@ -540,8 +585,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function assignProductsToBeRemovedFromBundle(FormInterface $form, ProductConcreteTransfer $productConcreteTransfer)
-    {
+    protected function assignProductsToBeRemovedFromBundle(
+        FormInterface $form,
+        ProductConcreteTransfer $productConcreteTransfer
+    ) {
         if (!isset($form->getData()[ProductConcreteFormEdit::BUNDLED_PRODUCTS_TO_BE_REMOVED]) || !$form->getData()[ProductConcreteFormEdit::BUNDLED_PRODUCTS_TO_BE_REMOVED]) {
             return $productConcreteTransfer;
         }

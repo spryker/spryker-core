@@ -9,6 +9,7 @@ namespace Spryker\Client\Availability\Storage;
 
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface;
+use Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class AvailabilityStorage implements AvailabilityStorageInterface
@@ -44,14 +45,49 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @param int $idProductAbstract
      *
+     * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
+     *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
     public function getProductAvailability($idProductAbstract)
     {
         $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
         $availability = $this->storageClient->get($key);
+        if ($availability === null) {
+            throw new ProductAvailabilityNotFoundException(
+                sprintf('Product availability not found for "%d" product abstract id', $idProductAbstract)
+            );
+        }
 
         return $this->getMappedStorageAvailabilityTransferFromStorage($availability);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
+     */
+    public function findProductAvailability($idProductAbstract)
+    {
+        $availability = $this->getProductAvailabilityFromStorage($idProductAbstract);
+        if ($availability === null) {
+            return null;
+        }
+
+        return $this->getMappedStorageAvailabilityTransferFromStorage($availability);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array|null
+     */
+    protected function getProductAvailabilityFromStorage($idProductAbstract)
+    {
+        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
+        $availability = $this->storageClient->get($key);
+
+        return $availability;
     }
 
     /**

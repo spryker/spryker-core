@@ -48,7 +48,10 @@ class CountryManager implements CountryManagerInterface
      */
     public function getCountryCollection()
     {
-        $countries = $this->countryQueryContainer->queryCountries()->find();
+        $countries = $this->countryQueryContainer->queryCountries()
+            ->orderByName()
+            ->find();
+
         $countryCollectionTransfer = new CountryCollectionTransfer();
 
         foreach ($countries as $country) {

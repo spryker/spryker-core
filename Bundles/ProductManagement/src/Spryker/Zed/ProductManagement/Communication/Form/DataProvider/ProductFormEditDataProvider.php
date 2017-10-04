@@ -31,7 +31,6 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         if ($productAbstractTransfer) {
             $formData = $this->appendGeneralAndSeoData($productAbstractTransfer, $formData);
             $formData = $this->appendPriceAndTax($productAbstractTransfer, $formData);
-            $formData = $this->appendAbstractAttributes($productAbstractTransfer, $formData);
             $formData = $this->appendAbstractProductImages($productAbstractTransfer, $formData);
 
             $formData[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();

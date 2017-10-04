@@ -8,6 +8,8 @@
 namespace SprykerTest\Yves\Kernel\ClassResolver\DependencyInjector;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
@@ -72,6 +74,11 @@ class DependencyInjectorResolverTest extends Unit
     public function tearDown()
     {
         parent::tearDown();
+
+        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
+        $reflectionProperty = $reflectionResolver->getProperty('cache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
 
         $this->deleteCreatedFiles();
     }

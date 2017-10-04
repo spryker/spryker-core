@@ -51,18 +51,18 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $moneyFacade = $this->getFacade();
 
-        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true) use ($moneyFacade) {
+        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true, $isoCode = null) use ($moneyFacade) {
             if (!($money instanceof MoneyTransfer)) {
                 if (is_int($money)) {
-                    $money = $moneyFacade->fromInteger($money);
+                    $money = $moneyFacade->fromInteger($money, $isoCode);
                 }
 
                 if (is_string($money)) {
-                    $money = $moneyFacade->fromString($money);
+                    $money = $moneyFacade->fromString($money, $isoCode);
                 }
 
                 if (is_float($money)) {
-                    $money = $moneyFacade->fromFloat($money);
+                    $money = $moneyFacade->fromFloat($money, $isoCode);
                 }
             }
 

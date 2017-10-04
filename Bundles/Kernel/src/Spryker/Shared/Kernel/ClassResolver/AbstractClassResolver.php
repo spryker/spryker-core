@@ -24,6 +24,16 @@ abstract class AbstractClassResolver
     private $resolvedClassName;
 
     /**
+     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
+     */
+    protected $classInfo;
+
+    /**
+     * @var array
+     */
+    protected static $cache = [];
+
+    /**
      * @return string
      */
     abstract protected function getClassPattern();
@@ -37,21 +47,69 @@ abstract class AbstractClassResolver
     abstract protected function buildClassName($namespace, $store = null);
 
     /**
+     * @param object|string $callerClass
+     *
+     * @return \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
+     */
+    public function setCallerClass($callerClass)
+    {
+        $this->classInfo = new ClassInfo();
+        $this->classInfo->setClass($callerClass);
+
+        return $this;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ClassInfo
+     */
+    public function getClassInfo()
+    {
+        return $this->classInfo;
+    }
+
+    /**
      * @return bool
      */
     public function canResolve()
     {
+        if (isset($this->classInfo) && $this->classInfo->getCallerClassName() !== null) {
+            $cacheKey = $this->buildCacheKey();
+
+            if (isset(static::$cache[$cacheKey])) {
+                $this->resolvedClassName = static::$cache[$cacheKey];
+
+                return true;
+            }
+        }
+
         $classNames = $this->buildClassNames();
 
         foreach ($classNames as $className) {
             if ($this->classExists($className)) {
                 $this->resolvedClassName = $className;
 
+                if (isset($cacheKey)) {
+                    static::$cache[$cacheKey] = $className;
+                }
+
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * This is needed to be able to use `canResolve` in a loop for the DependencyInjectorResolver.
+     * The cache would always return the first found Injector without the reset here.
+     *
+     * @deprecated This method can be removed together with the DependencyInjectors
+     *
+     * @return void
+     */
+    protected function unsetCurrentCacheEntry()
+    {
+        unset(static::$cache[$this->buildCacheKey()]);
     }
 
     /**
@@ -145,6 +203,14 @@ abstract class AbstractClassResolver
     protected function getCoreNamespaces()
     {
         return Config::getInstance()->get(KernelConstants::CORE_NAMESPACES);
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildCacheKey()
+    {
+        return get_class($this) . '-' . $this->classInfo->getCallerClassName();
     }
 
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Form\Block;
 use DateTime;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,6 +23,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
+ */
 class CmsBlockForm extends AbstractType
 {
 
@@ -134,6 +137,24 @@ class CmsBlockForm extends AbstractType
         $builder->add(static::FIELD_FK_TEMPLATE, 'choice', [
             'label' => 'Template',
             'choices' => $choices[static::OPTION_TEMPLATE_CHOICES],
+            'constraints' => [
+                new Callback([
+                    'methods' => [
+                        function ($name, ExecutionContextInterface $context) {
+                            /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
+                            $cmsBlockTransfer = $context->getRoot()->getViewData();
+
+                            if (!$cmsBlockTransfer->getFkTemplate()) {
+                                return;
+                            }
+
+                            if (!$this->hasTemplateFile($cmsBlockTransfer->getFkTemplate())) {
+                                $context->addViolation('Chosen template is not available anymore');
+                            }
+                        },
+                    ],
+                ])
+            ],
         ]);
 
         return $this;
@@ -303,6 +324,16 @@ class CmsBlockForm extends AbstractType
         }
 
         return $blockQuery->exists();
+    }
+
+    /**
+     * @param int $idCmsBlockTemplate
+     *
+     * @return bool
+     */
+    protected function hasTemplateFile($idCmsBlockTemplate)
+    {
+        return $this->getFactory()->getCmsBlockFacade()->hasTemplateFileById($idCmsBlockTemplate);
     }
 
     /**

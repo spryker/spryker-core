@@ -62,7 +62,8 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
 
     /**
      * @param array $array
-     * @return self
+     *
+     * @return $this
      */
     public function setArray($array)
     {
@@ -81,7 +82,8 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
 
     /**
      * @param string $string
-     * @return self
+     *
+     * @return $this
      */
     public function setString($string)
     {

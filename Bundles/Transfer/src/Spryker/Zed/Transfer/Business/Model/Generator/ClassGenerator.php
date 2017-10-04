@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
-use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
@@ -70,9 +68,11 @@ class ClassGenerator implements GeneratorInterface
             'constructorDefinition' => $classDefinition->getConstructorDefinition(),
             'constants' => $classDefinition->getConstants(),
             'properties' => $classDefinition->getProperties(),
+            'propertyNameMap' => $classDefinition->getPropertyNameMap(),
             'methods' => $classDefinition->getMethods(),
             'normalizedProperties' => $classDefinition->getNormalizedProperties(),
             'deprecationDescription' => $classDefinition->getDeprecationDescription(),
+            'hasArrayObject' => $classDefinition->hasArrayObject(),
         ];
     }
 

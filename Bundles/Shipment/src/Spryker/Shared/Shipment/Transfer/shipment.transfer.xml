@@ -34,6 +34,7 @@
         <property name="shipmentDeliveryTime" type="int" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" />
+        <property name="currencyIsoCode" type="string" />
     </transfer>
 
     <transfer name="Address">

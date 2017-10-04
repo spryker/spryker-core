@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
-
 class ProductLabelGuiToLocaleBridge implements ProductLabelGuiToLocaleInterface
 {
 
@@ -20,7 +18,7 @@ class ProductLabelGuiToLocaleBridge implements ProductLabelGuiToLocaleInterface
     /**
      * @param \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
      */
-    public function __construct(LocaleFacadeInterface $localeFacade)
+    public function __construct($localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }

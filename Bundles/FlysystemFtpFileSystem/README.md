@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-composer require spryker/flysystem-ftp-filesystem
+composer require spryker/flysystem-ftp-file-system
 ```
 
 ## Documentation

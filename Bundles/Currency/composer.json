@@ -4,19 +4,23 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
+    "spryker/session": "^3.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/transfer": "*",
-    "spryker/twig": "*"
+    "spryker/twig": "*",
+    "spryker/zed-request": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider.",
-    "spryker/twig": "If you want to use currency in Twig."
+    "spryker/twig": "If you want to use currency in Twig.",
+    "spryker/zed-request": "If you want to use Zed request meta data provider plugin which adds currency to each request."
   },
   "autoload": {
     "psr-0": {

@@ -13,7 +13,7 @@ interface ProductRelationDataProviderInterface
     /**
      * @param array $parameters
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductRelationsTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
     public function buildTemplateData(array $parameters);
 

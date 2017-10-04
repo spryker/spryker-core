@@ -9,6 +9,7 @@ namespace Spryker\Zed\Price\Business\Model;
 
 use Exception;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Spryker\Zed\Price\Business\Exception\MissingPriceException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
@@ -315,18 +316,24 @@ class Reader implements ReaderInterface
      */
     protected function getPriceEntity($sku, SpyPriceType $priceType)
     {
-        if ($this->hasPriceForProductConcrete($sku, $priceType)) {
-            return $this->getPriceEntityForProductConcrete($sku, $priceType);
+        $priceProductConcreteEntity = $this->getPriceEntityForProductConcrete($sku, $priceType);
+
+        if ($priceProductConcreteEntity !== null) {
+            return $priceProductConcreteEntity;
         }
 
-        if ($this->hasPriceForProductAbstract($sku, $priceType)) {
-            return $this->getPriceEntityForProductAbstract($sku, $priceType);
+        $priceProductAbstractEntity = $this->getPriceEntityForProductAbstract($sku, $priceType);
+
+        if ($priceProductAbstractEntity !== null) {
+            return $priceProductAbstractEntity;
         }
 
         if ($this->hasProductConcrete($sku)) {
             $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-            if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
-                return $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
+            $priceProductAbstractEntity = $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
+
+            if ($priceProductAbstractEntity !== null) {
+                return $priceProductAbstractEntity;
             }
         }
 
@@ -344,11 +351,12 @@ class Reader implements ReaderInterface
      */
     protected function hasPriceForProductConcrete($sku, SpyPriceType $priceType)
     {
-        $priceProductCount = $this->queryContainer
+        $productConcrete = $this->queryContainer
             ->queryPriceEntityForProductConcrete($sku, $priceType)
-            ->count();
+            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
+            ->findOne();
 
-        return $priceProductCount > 0;
+        return $productConcrete !== null;
     }
 
     /**
@@ -359,11 +367,12 @@ class Reader implements ReaderInterface
      */
     protected function hasPriceForProductAbstract($sku, $priceType)
     {
-        $priceProductCount = $this->queryContainer
+        $productAbstract = $this->queryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceType)
-            ->count();
+            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
+            ->findOne();
 
-        return $priceProductCount > 0;
+        return $productAbstract !== null;
     }
 
     /**

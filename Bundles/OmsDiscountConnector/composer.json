@@ -8,6 +8,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
+    "spryker/sales": "*",
     "spryker/testify": "*"
   },
   "suggest": {

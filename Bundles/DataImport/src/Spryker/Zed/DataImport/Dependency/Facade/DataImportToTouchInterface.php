@@ -18,4 +18,20 @@ interface DataImportToTouchInterface
      */
     public function bulkTouchSetActive($itemType, array $itemIds);
 
+    /**
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return void
+     */
+    public function bulkTouchSetInactive($itemType, array $itemIds);
+
+    /**
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return void
+     */
+    public function bulkTouchSetDeleted($itemType, array $itemIds);
+
 }

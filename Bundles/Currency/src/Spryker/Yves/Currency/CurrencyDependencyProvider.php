@@ -9,6 +9,7 @@ namespace Spryker\Yves\Currency;
 
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Yves\Currency\Dependency\Client\CurrencyToSessionBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Symfony\Component\Intl\Intl;
@@ -18,16 +19,18 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 
     const STORE = 'store';
     const INTERNATIONALIZATION = 'internationalization';
+    const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Yves\Kernel\Container|void
+     * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container)
     {
         $container = $this->addStore($container);
         $container = $this->addInternationalization($container);
+        $container = $this->addSessionClient($container);
 
         return $container;
     }
@@ -59,6 +62,20 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
             );
 
             return $currencyToInternationalizationBridge;
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSessionClient(Container $container)
+    {
+        $container[static::CLIENT_SESSION] = function (Container $container) {
+            return new CurrencyToSessionBridge($container->getLocator()->session()->client());
         };
 
         return $container;

@@ -10,12 +10,12 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
 {
 
     /**
-     * @var \Spryker\Zed\Tax\Business\TaxFacade
+     * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
     protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\Tax\Business\TaxFacade $taxFacade
+     * @param \Spryker\Zed\Tax\Business\TaxFacadeInterface $taxFacade
      */
     public function __construct($taxFacade)
     {

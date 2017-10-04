@@ -11,6 +11,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/kernel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

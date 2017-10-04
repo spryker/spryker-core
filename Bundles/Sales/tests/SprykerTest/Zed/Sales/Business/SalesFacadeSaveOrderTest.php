@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -157,6 +158,10 @@ class SalesFacadeSaveOrderTest extends Unit
         $country->save();
 
         $quoteTransfer = new QuoteTransfer();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer->setCurrency($currencyTransfer);
+
         $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
         $billingAddress = new AddressTransfer();
 

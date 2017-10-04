@@ -1,0 +1,48 @@
+{
+  "name": "spryker/store",
+  "description": "Store module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/testify": "*",
+    "spryker/transfer": "*",
+    "spryker/twig": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/",
+      "Unit": "tests/"
+    },
+    "psr-4": {
+      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
