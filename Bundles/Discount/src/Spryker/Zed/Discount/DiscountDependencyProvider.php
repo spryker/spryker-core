@@ -20,6 +20,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\GrandTotalDecisionRul
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\ItemPriceDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\ItemQuantityDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\MonthDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\PriceModeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
@@ -130,6 +131,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         return [
             new SkuDecisionRulePlugin(),
             new CurrencyDecisionRulePlugin(),
+            new PriceModeDecisionRulePlugin(),
             new GrandTotalDecisionRulePlugin(),
             new SubTotalDecisionRulePlugin(),
             new TotalQuantityDecisionRulePlugin(),
@@ -327,7 +329,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addDiscountConfigurationExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER] = function () {
             return $this->getDiscountConfigurationExpanderPlugins();
         };
 
@@ -351,7 +353,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addDiscountFormExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER] = function () {
             return $this->getDiscountFormExpanderPlugins();
         };
 
@@ -375,7 +377,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDiscountFormDataProviderExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER] = function () {
             return $this->getDiscountFormDataProviderExpanderPlugins();
         };
 
@@ -397,7 +399,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDiscountViewBlockProviderPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER] = function () {
             return $this->getDiscountViewTemplateProviderPlugins();
         };
 
@@ -419,7 +421,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDiscountApplicableFilterPlugins(Container $container)
     {
-        $container[static::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function (Container $container) {
+        $container[static::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function () {
             return $this->getDiscountApplicableFilterPlugins();
         };
 

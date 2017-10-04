@@ -21,7 +21,7 @@ class MoneyCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyType
+     * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyType|\Symfony\Component\Form\FormTypeInterface
      */
     public function createMoneyFormType()
     {

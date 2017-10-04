@@ -23,12 +23,14 @@ use Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule;
+use Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
+use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
@@ -65,7 +67,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCalculator(),
             $this->createDecisionRuleBuilder(),
-            $this->createVoucherValidator()
+            $this->createVoucherValidator(),
+            $this->createDiscountEntityMapper()
         );
 
         $discount->setDiscountApplicableFilterPlugins($this->getDiscountApplicableFilterPlugins());
@@ -97,7 +100,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createCalculatorFixed()
     {
-        return new Fixed($this->getCurrencyFacade());
+        return new Fixed();
     }
 
     /**
@@ -306,7 +309,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountConfiguratorHydrate()
     {
-        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate($this->getQueryContainer(), $this->getCurrencyFacade());
+        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate($this->getQueryContainer(), $this->createDiscountEntityMapper());
         $discountConfiguratorHydrate->setDiscountConfigurationExpanderPlugins($this->getConfigurationExpanderPlugins());
 
         return $discountConfiguratorHydrate;
@@ -499,11 +502,27 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule|\Spryker\Zed\Discount\Business\DecisionRule\DecisionRuleInterface
+     */
+    public function createPriceModeDecisionRule()
+    {
+        return new PriceModeDecisionRule($this->createComparatorOperators());
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[]
      */
     protected function getCollectorStrategyPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
+     */
+    protected function createDiscountEntityMapper()
+    {
+        return new DiscountEntityMapper($this->getCurrencyFacade());
     }
 
     /**

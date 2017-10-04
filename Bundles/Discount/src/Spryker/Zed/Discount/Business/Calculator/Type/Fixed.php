@@ -15,22 +15,6 @@ class Fixed implements CalculatorInterface
     const PRICE_NET_MODE = 'NET_MODE';
 
     /**
-     * @deprecated use calculateDiscount instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param int $amount
-     *
-     * @return int
-     */
-    public function calculate(array $discountableItems, $amount)
-    {
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount($amount);
-
-        return $this->calculateDiscount($discountableItems, $discountTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *

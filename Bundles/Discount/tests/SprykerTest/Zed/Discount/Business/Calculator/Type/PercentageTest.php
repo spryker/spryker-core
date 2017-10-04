@@ -89,7 +89,7 @@ class PercentageTest extends Unit
         $calculator = new Percentage();
         $this->expectException(CalculatorException::class);
         $discountCalculatorTransfer = (new DiscountTransfer())->setAmount('string');
-        $calculator->calculate($items, $discountCalculatorTransfer);
+        $calculator->calculateDiscount($items, $discountCalculatorTransfer);
     }
 
     /**

@@ -11,6 +11,10 @@ interface DiscountCalculatorPluginWithAmountInputTypeInterface
 {
 
     /**
+     * Specification:
+     *  - With this interface for calculator plugin you can indicate what input type calculator expect.
+     *  - For example it could be as defined in \Spryker\Shared\Discount\DiscountConstants (CALCULATOR_DEFAULT_INPUT_TYPE, CALCULATOR_MONEY_INPUT_TYPE).
+     *
      * @api
      *
      * @return string

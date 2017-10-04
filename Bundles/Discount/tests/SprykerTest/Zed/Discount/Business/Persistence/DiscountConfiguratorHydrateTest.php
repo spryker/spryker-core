@@ -6,11 +6,12 @@
 
 namespace SprykerTest\Zed\Discount\Business\Persistence;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
-use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
+use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
@@ -102,25 +103,27 @@ class DiscountConfiguratorHydrateTest extends Unit
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface|null $currencyFacadeMock
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface|null $discountEntityMapperMock
      *
      * @return \Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate
      */
     protected function createDiscountConfiguratorHydrate(
         DiscountQueryContainerInterface $discountQueryContainerMock = null,
-        DiscountToCurrencyInterface $currencyFacadeMock = null
+        DiscountEntityMapperInterface $discountEntityMapperMock = null
     ) {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
 
-        if (!$currencyFacadeMock) {
-            $currencyFacadeMock = $this->createDiscountCurrencyFacadeMock();
+        if (!$discountEntityMapperMock) {
+            $discountEntityMapperMock = $this->createEntityMapperMock();
+            $discountEntityMapperMock->method('getMoneyValueCollectionForEntity')
+                ->willReturn(new ArrayObject());
         }
 
         return new DiscountConfiguratorHydrate(
             $discountQueryContainerMock,
-            $currencyFacadeMock
+            $discountEntityMapperMock
         );
     }
 
@@ -162,11 +165,11 @@ class DiscountConfiguratorHydrateTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
      */
-    protected function createDiscountCurrencyFacadeMock()
+    protected function createEntityMapperMock()
     {
-        return $this->getMockBuilder(DiscountToCurrencyInterface::class)->getMock();
+        return $this->getMockBuilder(DiscountEntityMapperInterface::class)->getMock();
     }
 
 }

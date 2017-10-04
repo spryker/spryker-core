@@ -493,25 +493,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @deprecated Use calculatePercentageDiscount() instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $percentage
-     *
-     * @return int
-     */
-    public function calculatePercentage(array $discountableObjects, $percentage)
-    {
-        return $this->getFactory()
-            ->createCalculatorPercentage()
-            ->calculate($discountableObjects, $percentage);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
@@ -522,26 +503,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         return $this->getFactory()
             ->createCalculatorPercentage()
             ->calculateDiscount($discountableObjects, $discountTransfer);
-    }
-
-    /**
-     *
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @deprecated Use calculateFixedDiscount() instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $amount
-     *
-     * @return int
-     */
-    public function calculateFixed(array $discountableObjects, $amount)
-    {
-        return $this->getFactory()
-            ->createCalculatorFixed()
-            ->calculate($discountableObjects, $amount);
     }
 
     /**
@@ -679,6 +640,28 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         return $this->getFactory()
             ->createCurrencyDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isPriceModeDecisionRuleSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+
+         return $this->getFactory()
+             ->createPriceModeDecisionRule()
+             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
 }

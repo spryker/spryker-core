@@ -9,13 +9,15 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class FixedPlugin extends AbstractCalculatorPlugin implements DiscountCalculatorPluginWithAmountInputTypeInterface
+class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface, DiscountCalculatorPluginWithAmountInputTypeInterface
 {
 
     /**
@@ -32,6 +34,8 @@ class FixedPlugin extends AbstractCalculatorPlugin implements DiscountCalculator
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
      */
     protected function getMoneyPlugin()
