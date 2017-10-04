@@ -105,14 +105,7 @@ class FacetExtractor implements AggregationExtractorInterface
             }
 
             foreach ($nameBucket[$valueFieldName]['buckets'] as $valueBucket) {
-                $facetResultValueTransfer = new FacetSearchResultValueTransfer();
-                $value = $this->getFacetValue($valueBucket);
-
-                $facetResultValueTransfer
-                    ->setValue($value)
-                    ->setDocCount($valueBucket['doc_count']);
-
-                $facetResultValues->append($facetResultValueTransfer);
+                $this->addBucketValueToFacetResult($valueBucket, $facetResultValues);
             }
 
             break;
@@ -136,15 +129,28 @@ class FacetExtractor implements AggregationExtractorInterface
         $valueFieldName = $this->getFieldNameWithValueSuffix($nestedFieldName);
 
         foreach ($aggregation[$nameFieldName][$valueFieldName]['buckets'] as $valueBucket) {
-            $facetResultValueTransfer = new FacetSearchResultValueTransfer();
-            $value = $this->getFacetValue($valueBucket);
-
-            $facetResultValueTransfer
-                ->setValue($value)
-                ->setDocCount($valueBucket['doc_count']);
-
-            $facetResultValues->append($facetResultValueTransfer);
+            $this->addBucketValueToFacetResult($valueBucket, $facetResultValues);
         }
+
+        return $facetResultValues;
+    }
+
+    /**
+     * @param array $valueBucket
+     * @param \ArrayObject $facetResultValues
+     *
+     * @return \ArrayObject
+     */
+    protected function addBucketValueToFacetResult(array $valueBucket, ArrayObject $facetResultValues)
+    {
+        $facetResultValueTransfer = new FacetSearchResultValueTransfer();
+        $value = $this->getFacetValue($valueBucket);
+
+        $facetResultValueTransfer
+            ->setValue($value)
+            ->setDocCount($valueBucket['doc_count']);
+
+        $facetResultValues->append($facetResultValueTransfer);
 
         return $facetResultValues;
     }
