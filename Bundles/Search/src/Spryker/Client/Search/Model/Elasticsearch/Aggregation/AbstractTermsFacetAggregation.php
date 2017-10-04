@@ -17,6 +17,8 @@ abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
     const AGGREGATION_PARAM_SIZE = 'size';
 
     /**
+     * @deprecated Use FacetConfigTransfer::setAggregationParams() instead
+     *
      * @param \Elastica\Aggregation\AbstractTermsAggregation $aggregation
      * @param int|null $size
      *
@@ -29,37 +31,6 @@ abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
         }
 
         $aggregation->setSize($size);
-    }
-
-    /**
-     * @param AbstractAggregation $aggregation
-     * @param FacetConfigTransfer $facetConfigTransfer
-     *
-     * @return AbstractAggregation
-     */
-    protected function applyAggregationParams(AbstractAggregation $aggregation, FacetConfigTransfer $facetConfigTransfer)
-    {
-        $aggregation = parent::applyAggregationParams($aggregation, $facetConfigTransfer);
-        $aggregation = $this->applyAggregationSize($aggregation, $facetConfigTransfer);
-
-        return $aggregation;
-    }
-
-    /**
-     * @deprecated Use FacetConfigTransfer::setAggregationParams() instead
-     *
-     * @param AbstractAggregation $aggregation
-     * @param FacetConfigTransfer $facetConfigTransfer
-     *
-     * @return AbstractAggregation
-     */
-    protected function applyAggregationSize(AbstractAggregation $aggregation, FacetConfigTransfer $facetConfigTransfer)
-    {
-        if ($facetConfigTransfer->getSize() !== null) {
-            $aggregation->setParam(static::AGGREGATION_PARAM_SIZE, $facetConfigTransfer->getSize());
-        }
-
-        return $aggregation;
     }
 
 }

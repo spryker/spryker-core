@@ -51,19 +51,19 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
     }
 
     /**
+     * @param string $parentFieldName
      * @param string $fieldName
-     * @param string $nestedFieldName
      *
      * @return \Elastica\Aggregation\AbstractAggregation
      */
-    protected function createStandaloneFacetNameAggregation($fieldName, $nestedFieldName)
+    protected function createStandaloneFacetNameAggregation($parentFieldName, $fieldName)
     {
-        $filterName = $this->addNestedFieldPrefix($fieldName, $nestedFieldName);
+        $filterName = $this->addNestedFieldPrefix($parentFieldName, $fieldName);
         $filterName = $filterName . static::NAME_SUFFIX;
 
         return (new Filter($filterName))
             ->setFilter(new Term([
-                $this->addNestedFieldPrefix($fieldName, static::FACET_NAME) => $nestedFieldName,
+                $this->addNestedFieldPrefix($parentFieldName, static::FACET_NAME) => $fieldName,
             ]));
     }
 
@@ -76,6 +76,25 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
     protected function addNestedFieldPrefix($nestedFieldName, $fieldName)
     {
         return $nestedFieldName . static::PATH_SEPARATOR . $fieldName;
+    }
+
+    /**
+     * @param FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return string
+     */
+    protected function getNestedFieldName(FacetConfigTransfer $facetConfigTransfer)
+    {
+        $nestedFieldName = $facetConfigTransfer->getFieldName();
+
+        if ($facetConfigTransfer->getAggregationParams()) {
+            $nestedFieldName = $this->addNestedFieldPrefix(
+                $nestedFieldName,
+                $facetConfigTransfer->getName()
+            );
+        }
+
+        return $nestedFieldName;
     }
 
     /**

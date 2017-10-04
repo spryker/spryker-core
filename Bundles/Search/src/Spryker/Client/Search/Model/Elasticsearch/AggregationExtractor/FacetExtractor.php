@@ -13,10 +13,8 @@ use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation;
 
-class FacetExtractor implements AggregationExtractorInterface
+class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
-
-    const PATH_SEPARATOR = '.';
 
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
@@ -153,17 +151,6 @@ class FacetExtractor implements AggregationExtractorInterface
         $facetResultValues->append($facetResultValueTransfer);
 
         return $facetResultValues;
-    }
-
-    /**
-     * @param string $fieldName
-     * @param string $nestedFieldName
-     *
-     * @return string
-     */
-    protected function addNestedFieldPrefix($fieldName, $nestedFieldName)
-    {
-        return $fieldName . static::PATH_SEPARATOR . $nestedFieldName;
     }
 
     /**
