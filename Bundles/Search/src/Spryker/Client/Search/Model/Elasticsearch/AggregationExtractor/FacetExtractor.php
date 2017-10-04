@@ -105,7 +105,7 @@ class FacetExtractor implements AggregationExtractorInterface
             }
 
             foreach ($nameBucket[$valueFieldName]['buckets'] as $valueBucket) {
-                $this->addBucketValueToFacetResult($valueBucket, $facetResultValues);
+                $facetResultValues = $this->addBucketValueToFacetResult($valueBucket, $facetResultValues);
             }
 
             break;
@@ -129,7 +129,7 @@ class FacetExtractor implements AggregationExtractorInterface
         $valueFieldName = $this->getFieldNameWithValueSuffix($nestedFieldName);
 
         foreach ($aggregation[$nameFieldName][$valueFieldName]['buckets'] as $valueBucket) {
-            $this->addBucketValueToFacetResult($valueBucket, $facetResultValues);
+            $facetResultValues = $this->addBucketValueToFacetResult($valueBucket, $facetResultValues);
         }
 
         return $facetResultValues;
