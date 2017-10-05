@@ -57,8 +57,10 @@ class Timeout implements TimeoutInterface
 
         $groupedOrderItems = $this->groupItemsByEvent($orderItems);
 
-        foreach ($groupedOrderItems as $event => $orderItems) {
-            $orderStateMachine->triggerEvent($event, $orderItems, []);
+        foreach ($groupedOrderItems as $orderData) {
+            foreach ($orderData as $event => $orderItems) {
+                $orderStateMachine->triggerEvent($event, $orderItems, []);
+            }
         }
 
         return $countAffectedItems;
@@ -164,10 +166,13 @@ class Timeout implements TimeoutInterface
         $groupedOrderItems = [];
         foreach ($orderItems as $orderItem) {
             $eventName = $orderItem->getEvent();
-            if (!isset($groupedOrderItems[$eventName])) {
-                $groupedOrderItems[$eventName] = [];
+            $idSalesOrder = $orderItem->getFkSalesOrder();
+
+            if (!isset($groupedOrderItems[$idSalesOrder][$eventName])) {
+                $groupedOrderItems[$idSalesOrder][$eventName] = [];
             }
-            $groupedOrderItems[$eventName][] = $orderItem;
+
+            $groupedOrderItems[$idSalesOrder][$eventName][] = $orderItem;
         }
 
         return $groupedOrderItems;
