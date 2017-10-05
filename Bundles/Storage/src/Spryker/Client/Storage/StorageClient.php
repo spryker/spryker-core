@@ -85,6 +85,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function resetCache()
