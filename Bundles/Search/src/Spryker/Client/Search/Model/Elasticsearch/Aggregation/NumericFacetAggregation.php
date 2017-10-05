@@ -56,13 +56,12 @@ class NumericFacetAggregation extends AbstractFacetAggregation
                 ->createStandaloneFacetNameAggregation(
                     $fieldName,
                     $this->facetConfigTransfer->getName()
-                )
-                ->addAggregation($facetValueStats);
+                );
         } else {
-            $facetNameAgg = $this
-                ->createFacetNameAggregation($nestedFieldName)
-                ->addAggregation($facetValueStats);
+            $facetNameAgg = $this->createFacetNameAggregation($fieldName);
         }
+
+        $facetNameAgg->addAggregation($facetValueStats);
 
         return $this->createNestedFacetAggregation($nestedFieldName, $facetNameAgg, $fieldName);
     }
