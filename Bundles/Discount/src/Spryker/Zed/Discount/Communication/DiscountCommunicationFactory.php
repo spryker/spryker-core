@@ -179,13 +179,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
-     */
-    public function getCalculatorPlugins()
-    {
-        return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
-    }
 
     /**
      * @return \Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformerInterface
@@ -283,6 +276,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getCurrencyFacade()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     */
+    public function getCalculatorPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
     }
 
 }

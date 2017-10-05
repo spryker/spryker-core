@@ -56,4 +56,9 @@ interface StoreConfigurationProviderInterface
      */
     public function getDefaultCurrencyFor($storeName);
 
+    /**
+     * @return string
+     */
+    public function getCurrentStoreSelectedCurrencyIsoCode();
+
 }

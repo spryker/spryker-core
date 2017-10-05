@@ -274,24 +274,41 @@ class DiscountsTable extends AbstractTable
             return $calculatorPlugin->getFormattedAmount($discountEntity->getAmount());
         }
 
-        $netAmounts = [];
-        $grossAmounts = [];
+        $rowTemplate = '<tr><td>GROSS</td><td>NET</td></tr>';
+        $row = '';
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
 
+            $netAmount = '-';
+            $grossAmount = '-';
             if ($discountAmountEntity->getNetAmount()) {
-                $netAmounts[] = $calculatorPlugin->getFormattedAmount(
+                $netAmount = $calculatorPlugin->getFormattedAmount(
                     $discountAmountEntity->getNetAmount(),
                     $discountAmountEntity->getCurrency()->getCode()
                 );
             }
 
             if ($discountAmountEntity->getGrossAmount()) {
-                $grossAmounts[] = $calculatorPlugin->getFormattedAmount(
+                $grossAmount = $calculatorPlugin->getFormattedAmount(
                     $discountAmountEntity->getGrossAmount(),
                     $discountAmountEntity->getCurrency()->getCode()
                 );
             }
+
+            $rowTemplate = str_replace('GROSS', $grossAmount, $rowTemplate);
+            $row .= str_replace('NET', $netAmount, $rowTemplate);
         }
+
+        $table = '
+           <table width="80%">
+           <tr>
+                <td>Gross</td>
+                <td>Net</td>
+           </tr>
+           ' . $row  .'
+           </table>
+        ';
+
+        return $table;
     }
 
 }

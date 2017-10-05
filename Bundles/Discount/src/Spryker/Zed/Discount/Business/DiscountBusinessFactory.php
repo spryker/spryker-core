@@ -171,14 +171,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStoreConfig()
-    {
-        return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
-    }
-
-    /**
      * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule|\Spryker\Zed\Discount\Business\DecisionRule\DecisionRuleInterface
      */
     public function createSkuDecisionRule()

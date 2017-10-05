@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/cart": "^4.1.0",
+    "spryker/currency": "^3.1.0",
     "spryker/kernel": "^3.0.0"
   },
   "autoload": {

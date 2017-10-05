@@ -50,6 +50,14 @@ class StoreConfigurationProvider implements StoreConfigurationProviderInterface
     }
 
     /**
+     * @return string
+     */
+    public function getCurrentStoreSelectedCurrencyIsoCode()
+    {
+        return $this->store->getCurrencyIsoCode();
+    }
+
+    /**
      * @return string[]
      */
     public function getCurrentAvailableLocaleIsoCodes()

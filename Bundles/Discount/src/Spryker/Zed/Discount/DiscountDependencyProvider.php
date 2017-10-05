@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemByPriceCollectorPlugin;
@@ -33,8 +32,6 @@ use Spryker\Zed\Kernel\Container;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const STORE_CONFIG = 'STORE_CONFIG';
 
     const FACADE_MESSENGER = 'MESSENGER_FACADE';
     const FACADE_MONEY = 'MONEY_FACADE';
@@ -62,7 +59,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->addStore($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addCalculatorPlugins($container);
         $container = $this->addDecisionRulePlugins($container);
@@ -86,7 +82,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = $this->addStore($container);
         $container = $this->addDecisionRulePlugins($container);
         $container = $this->addCalculatorPlugins($container);
         $container = $this->addCollectorPlugins($container);
@@ -166,20 +161,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             $discountToMoneyBridge = new DiscountToMoneyBridge($container->getLocator()->money()->facade());
 
             return $discountToMoneyBridge;
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container[static::STORE_CONFIG] = function () {
-            return Store::getInstance();
         };
 
         return $container;
