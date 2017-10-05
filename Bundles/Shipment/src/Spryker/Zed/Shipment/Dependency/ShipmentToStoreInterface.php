@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Dependency\Facade;
+namespace Spryker\Zed\Shipment\Dependency;
 
 interface ShipmentToStoreInterface
 {
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return string
      */
-    public function getCurrentStore();
+    public function getCurrencyIsoCode();
 
 }

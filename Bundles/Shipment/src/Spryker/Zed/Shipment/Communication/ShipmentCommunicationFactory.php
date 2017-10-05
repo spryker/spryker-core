@@ -108,7 +108,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
+     * @return \Spryker\Zed\Shipment\Dependency\ShipmentToStoreInterface
      */
     public function getStore()
     {

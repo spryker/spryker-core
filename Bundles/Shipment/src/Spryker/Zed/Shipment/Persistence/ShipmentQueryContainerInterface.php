@@ -83,7 +83,7 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    public function queryMethodsWithMethodPricesAndMethodPriceStore();
+    public function queryMethodsWithMethodPrices();
 
     /**
      * @api

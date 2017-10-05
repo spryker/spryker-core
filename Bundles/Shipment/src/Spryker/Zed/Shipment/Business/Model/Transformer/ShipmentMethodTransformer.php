@@ -11,9 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Orm\Zed\Store\Persistence\SpyStore;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
@@ -72,12 +70,7 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
                 (new MoneyValueTransfer())
                     ->fromArray($shipmentMethodPriceEntity->toArray(), true)
                     ->setIdEntity($shipmentMethodPriceEntity->getIdShipmentMethodPrice())
-                    ->setCurrency(
-                        $this->hydrateStoreEntityIntoCurrencyTransfer(
-                            $this->getCurrencyTransfer($shipmentMethodPriceEntity->getFkCurrency()),
-                            $shipmentMethodPriceEntity->getStore()
-                        )
-                    )
+                    ->setCurrency($this->getCurrencyTransfer($shipmentMethodPriceEntity->getFkCurrency()))
             );
         }
 
@@ -97,21 +90,6 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
 
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($idCurrency);
         $this->currencyCache[$idCurrency] = $currencyTransfer->toArray();
-
-        return $currencyTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
-     *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
-    protected function hydrateStoreEntityIntoCurrencyTransfer(CurrencyTransfer $currencyTransfer, SpyStore $storeEntity)
-    {
-        $currencyTransfer->setStore(
-            (new StoreTransfer())->fromArray($storeEntity->toArray(), true)
-        );
 
         return $currencyTransfer;
     }

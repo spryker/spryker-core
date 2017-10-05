@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
+use Spryker\Zed\Shipment\Dependency\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -45,7 +45,7 @@ class MethodFormDataProvider
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface|null
+     * @var \Spryker\Zed\Shipment\Dependency\ShipmentToStoreInterface|null
      */
     protected $store;
 
@@ -55,7 +55,7 @@ class MethodFormDataProvider
      * @param \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface|null $store
+     * @param \Spryker\Zed\Shipment\Dependency\ShipmentToStoreInterface|null $store
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
@@ -82,7 +82,7 @@ class MethodFormDataProvider
     {
         if ($idMethod !== null) {
             $shipmentMethodEntity = $this->shipmentQueryContainer
-                ->queryMethodsWithMethodPricesAndMethodPriceStore()
+                ->queryMethodsWithMethodPrices()
                 ->findByIdShipmentMethod($idMethod)
                 ->getFirst();
             $shipmentMethodTransfer = $this->shipmentFacade->transformShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity);

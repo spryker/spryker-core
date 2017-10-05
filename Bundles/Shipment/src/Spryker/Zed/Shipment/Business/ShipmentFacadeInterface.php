@@ -149,7 +149,6 @@ interface ShipmentFacadeInterface
      *   - Transforms provided ShipmentMethod entity into ShipmentMethod transfer object.
      *   - ShipmentMethod entity related ShipmentMethodPrice entities are transformed to MoneyValue transfer object collection.
      *   - Currency transfer object in MoneyValue transfer objects is populated using the corresponding ShipmentMethodPrice entity's currency reference.
-     *   - Store transfer object in Currency transfer object is populated using ShipmentMethodPrice entity's store reference.
      *
      * @api
      *

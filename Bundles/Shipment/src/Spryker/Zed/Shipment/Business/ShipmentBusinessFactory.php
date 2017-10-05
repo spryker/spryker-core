@@ -52,6 +52,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createMethodPrice(),
             $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
             $this->getPlugins()
         );
     }
@@ -115,6 +116,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getCurrencyFacade()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_STORE);
     }
 
     /**
