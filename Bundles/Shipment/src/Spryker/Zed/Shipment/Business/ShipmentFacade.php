@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -217,6 +218,21 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function hydrateOrderShipment(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()->createShipmentOrderHydrate()->hydrateOrderWithShipment($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity)
+    {
+        return $this->getFactory()->createShipmentMethodTransformer()
+            ->transformShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity);
     }
 
 }

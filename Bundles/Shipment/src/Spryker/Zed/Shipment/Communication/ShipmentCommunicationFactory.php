@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Communication;
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider;
@@ -18,6 +19,7 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer getQueryContainer()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
  */
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -52,8 +54,9 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     {
         return new MethodFormDataProvider(
             $this->getQueryContainer(),
-            $this->getTaxFacade(),
             $this->getPlugins(),
+            $this->getFacade(),
+            $this->getTaxFacade(),
             $this->getMoneyFacade(),
             $this->getStore()
         );
@@ -76,12 +79,12 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createMethodForm(array $data, array $options = [])
+    public function createMethodForm(ShipmentMethodTransfer $data, array $options = [])
     {
         $form = new MethodForm();
 

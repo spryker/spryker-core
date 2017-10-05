@@ -10,10 +10,12 @@ namespace Spryker\Zed\Shipment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
+use Spryker\Zed\Shipment\Business\Model\MethodPrice;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
+use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -48,7 +50,30 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new Method(
             $this->getQueryContainer(),
+            $this->createMethodPrice(),
+            $this->getCurrencyFacade(),
             $this->getPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer
+     */
+    public function createShipmentMethodTransformer()
+    {
+        return new ShipmentMethodTransformer(
+            $this->getCurrencyFacade(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface
+     */
+    protected function createMethodPrice()
+    {
+        return new MethodPrice(
+            $this->getQueryContainer()
         );
     }
 
@@ -82,6 +107,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function getTaxFacade()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
+     */
+    protected function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
     }
 
     /**

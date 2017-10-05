@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
@@ -18,14 +19,16 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const STORE = 'STORE';
+
     const PLUGINS = 'PLUGINS';
     const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
     const PRICE_PLUGINS = 'PRICE_PLUGINS';
     const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
-    const FACADE_TAX = 'facade tax';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
     const FACADE_MONEY = 'money facade';
+    const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    const FACADE_TAX = 'facade tax';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -85,6 +88,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCurrencyFacade(Container $container)
+    {
+        $container[static::FACADE_CURRENCY] = function (Container $container) {
+            return new ShipmentToCurrencyBridge($container->getLocator()->currency()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[static::PLUGINS] = function (Container $container) {
@@ -102,6 +119,8 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_TAX] = function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
         };
+
+        $container = $this->addCurrencyFacade($container);
 
         return $container;
     }

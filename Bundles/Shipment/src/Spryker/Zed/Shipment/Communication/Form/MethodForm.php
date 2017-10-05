@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -27,6 +28,7 @@ class MethodForm extends AbstractType
     const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
     const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
     const FIELD_TAX_SET_FIELD = 'fkTaxSet';
+    const FIELD_MONEY_VALUE_COLLECTION = 'moneyValueCollection';
 
     const OPTION_CARRIER_CHOICES = 'carrier_choices';
     const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
@@ -35,6 +37,7 @@ class MethodForm extends AbstractType
     const OPTION_TAX_SETS = 'option_tax_sets';
     const OPTION_MONEY_FACADE = 'money facade';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+    const OPTION_DATA_CLASS = 'data_class';
 
     /**
      * @return string
@@ -54,13 +57,13 @@ class MethodForm extends AbstractType
     {
         $this->addCarrierField($builder, $options)
             ->addNameField($builder)
-            ->addDefaultPriceField($builder, $options)
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
             ->addIsActiveField($builder)
             ->addIdField($builder)
-            ->addTaxSetField($builder, $options);
+            ->addTaxSetField($builder, $options)
+            ->addMoneyValueCollectionField($builder);
     }
 
     /**
@@ -121,46 +124,6 @@ class MethodForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addDefaultPriceField(FormBuilderInterface $builder, $options)
-    {
-        $fieldOptions = [
-            'label' => 'Default price',
-            'required' => false,
-        ];
-
-        if ($options[static::OPTION_CURRENCY_ISO_CODE] !== null) {
-            $fieldOptions['currency'] = $options[static::OPTION_CURRENCY_ISO_CODE];
-        }
-
-        $builder->add(self::FIELD_DEFAULT_PRICE, 'money', $fieldOptions);
-
-        $moneyFacade = $this->getMoneyFacade($options);
-
-        $builder->get(self::FIELD_DEFAULT_PRICE)->addModelTransformer(new CallbackTransformer(
-            function ($originalPrice) use ($moneyFacade) {
-                if ($originalPrice === null) {
-                    return $originalPrice;
-                }
-
-                return $moneyFacade->convertIntegerToDecimal($originalPrice);
-            },
-            function ($submittedPrice) use ($moneyFacade) {
-                if ($submittedPrice === null) {
-                    return $submittedPrice;
-                }
-                return $moneyFacade->convertDecimalToInteger($submittedPrice);
-            }
-        ));
-
-        return $this;
-    }
-
-    /**
      * @param array $options
      *
      * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
@@ -184,6 +147,25 @@ class MethodForm extends AbstractType
                 new Required(),
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addMoneyValueCollectionField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_MONEY_VALUE_COLLECTION,
+            MoneyCollectionType::class,
+            [
+                'property_path' => ShipmentMethodTransfer::PRICES,
+                MoneyCollectionType::OPTION_AMOUNT_PER_STORE => true,
+            ]
+        );
 
         return $this;
     }

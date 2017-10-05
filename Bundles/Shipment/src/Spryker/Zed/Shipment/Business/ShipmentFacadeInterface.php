@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
 interface ShipmentFacadeInterface
 {
@@ -142,5 +143,20 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateOrderShipment(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     *   - Transforms provided ShipmentMethod entity into ShipmentMethod transfer object.
+     *   - ShipmentMethod entity related ShipmentMethodPrice entities are transformed to MoneyValue transfer object collection.
+     *   - Currency transfer object in MoneyValue transfer objects is populated using the corresponding ShipmentMethodPrice entity's currency reference.
+     *   - Store transfer object in Currency transfer object is populated using ShipmentMethodPrice entity's store reference.
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity);
 
 }

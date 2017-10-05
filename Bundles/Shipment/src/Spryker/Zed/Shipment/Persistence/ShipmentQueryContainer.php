@@ -34,6 +34,16 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPrices()
+    {
+        return $this->getFactory()->createShipmentMethodPriceQuery();
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryActiveCarriers()
@@ -74,6 +84,37 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
         $query->filterByIdShipmentMethod($idMethod);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     * @param int $idStore
+     * @param int $idCurrency
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPriceByShipmentMethodAndStoreCurrency($idShipmentMethod, $idStore, $idCurrency)
+    {
+        return $this->queryMethodPrices()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->filterByFkStore($idStore)
+            ->filterByFkCurrency($idCurrency);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryMethodsWithMethodPricesAndMethodPriceStore()
+    {
+        return $this->queryMethods()
+            ->joinWithShipmentMethodPrice()
+            ->useShipmentMethodPriceQuery()
+                ->joinWithStore()
+            ->endUse();
     }
 
     /**

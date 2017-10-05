@@ -23,10 +23,16 @@
         <property name="deliveryTimePlugin" type="string" />
         <property name="name" type="string" />
         <property name="carrierName" type="string" />
-        <property name="defaultPrice" type="int" />
         <property name="taxRate" type="float" />
         <property name="isActive" type="bool" />
         <property name="deliveryTime" type="int" />
+        <property name="prices" type="MoneyValue[]" singular="price" />
+        <property name="storeCurrencyPrice" type="int" />
+    </transfer>
+
+    <transfer name="Price">
+        <property name="amount" type="int" />
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="Order">

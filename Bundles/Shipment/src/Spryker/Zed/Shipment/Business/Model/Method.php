@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use Spryker\Shared\Price\PriceMode;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -23,17 +25,36 @@ class Method implements MethodInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface
+     */
+    protected $methodPrice;
+
+    /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @var array
      */
     protected $plugins;
 
     /**
+     * @var array
+     */
+    protected $currencyCache = [];
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface $methodPrice
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
      * @param array $plugins
      */
-    public function __construct(ShipmentQueryContainerInterface $queryContainer, array $plugins)
+    public function __construct(ShipmentQueryContainerInterface $queryContainer, MethodPriceInterface $methodPrice, ShipmentToCurrencyInterface $currencyFacade, array $plugins)
     {
         $this->queryContainer = $queryContainer;
+        $this->methodPrice = $methodPrice;
+        $this->currencyFacade = $currencyFacade;
         $this->plugins = $plugins;
     }
 
@@ -48,7 +69,12 @@ class Method implements MethodInterface
         $methodEntity->fromArray($methodTransfer->toArray());
         $methodEntity->save();
 
-        return $methodEntity->getPrimaryKey();
+        $idMethod = $methodEntity->getPrimaryKey();
+
+        $methodTransfer->setIdShipmentMethod($idMethod);
+        $this->methodPrice->save($methodTransfer);
+
+        return $idMethod;
     }
 
     /**
@@ -67,7 +93,7 @@ class Method implements MethodInterface
             $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
 
             if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
-                $shipmentMethodTransfer->setDefaultPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
+                $shipmentMethodTransfer->setStoreCurrencyPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer));
                 $shipmentMethodTransfer->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer));
                 $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier());
 
@@ -179,8 +205,9 @@ class Method implements MethodInterface
                 $this->queryContainer->queryMethodByIdMethod($methodTransfer->getIdShipmentMethod())->findOne();
 
             $methodEntity->fromArray($methodTransfer->toArray());
-
             $methodEntity->save();
+
+            $this->methodPrice->save($methodTransfer);
 
             return $methodEntity->getPrimaryKey();
         }
@@ -226,7 +253,20 @@ class Method implements MethodInterface
      */
     protected function getPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
-        $price = $method->getDefaultPrice();
+        $currencyTransfer = $this->getCurrencyTransferByIsoCode($quoteTransfer->getCurrency()->getCode());
+
+        $methodPriceEntity = $this->queryContainer
+            ->queryMethodPriceByShipmentMethodAndStoreCurrency(
+                $method->getIdShipmentMethod(),
+                $currencyTransfer->getStore()->getIdStore(),
+                $currencyTransfer->getIdCurrency()
+            )
+            ->findOne();
+
+        $price = $quoteTransfer->getPriceMode() === PriceMode::PRICE_MODE_GROSS ?
+            $methodPriceEntity->getGrossAmount() :
+            $methodPriceEntity->getNetAmount();
+
         $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
 
         if (isset($pricePlugins[$method->getPricePlugin()])) {
@@ -235,6 +275,20 @@ class Method implements MethodInterface
         }
 
         return $price;
+    }
+
+    /**
+     * @param string $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransferByIsoCode($currencyIsoCode)
+    {
+        if (!array_key_exists($currencyIsoCode, $this->currencyCache)) {
+            $this->currencyCache[$currencyIsoCode] = $this->currencyFacade->fromIsoCode($currencyIsoCode);
+        }
+
+        return $this->currencyCache[$currencyIsoCode];
     }
 
     /**

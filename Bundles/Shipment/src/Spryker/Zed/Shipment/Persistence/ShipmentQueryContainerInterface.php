@@ -78,4 +78,29 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      */
     public function queryUniqueCarrierName($carrierName, $idCarrier = null);
 
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryMethodsWithMethodPricesAndMethodPriceStore();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPrices();
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     * @param int $idStore
+     * @param int $idCurrency
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPriceByShipmentMethodAndStoreCurrency($idShipmentMethod, $idStore, $idCurrency);
+
 }
