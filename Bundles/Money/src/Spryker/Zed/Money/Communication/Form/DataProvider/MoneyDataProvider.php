@@ -8,11 +8,30 @@
 namespace Spryker\Zed\Money\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface;
 
 class MoneyDataProvider
 {
 
     const DEFAULT_SCALE = 2;
+
+    /**
+     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected static $storeCache = [];
+
+    /**
+     * @var \Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface $storeFacade
+     */
+    public function __construct(MoneyToStoreInterface $storeFacade)
+    {
+        $this->storeFacade = $storeFacade;
+    }
 
     /**
      * @param mixed $moneyValueTransfer
@@ -63,6 +82,22 @@ class MoneyDataProvider
         }
 
         return static::DEFAULT_SCALE;
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreById($idStore)
+    {
+        if (isset(static::$storeCache[$idStore])) {
+            return static::$storeCache[$idStore];
+        }
+
+        static::$storeCache[$idStore] = $this->storeFacade->getStoreById($idStore);
+
+        return static::$storeCache[$idStore];
     }
 
 }

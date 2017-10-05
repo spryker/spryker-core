@@ -6,9 +6,8 @@
     <transfer name="Store">
         <property name="idStore" type="int" />
         <property name="name" type="string" />
-        <property name="currencyIsoCode" type="string" />
+        <property name="defaultCurrencyIsoCode" type="string" />
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" />
-        <property name="selectedLocaleIsoCode" type="string" />
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode" />
     </transfer>
 

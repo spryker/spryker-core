@@ -81,7 +81,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
     public function getCurrentStoreCurrencies()
     {

@@ -50,7 +50,7 @@ class MoneyCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMoneyDataProvider()
     {
-        return new MoneyDataProvider();
+        return new MoneyDataProvider($this->getStoreFacade());
     }
 
     /**
@@ -59,6 +59,14 @@ class MoneyCommunicationFactory extends AbstractCommunicationFactory
     protected function getCurrencyFacade()
     {
         return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_STORE);
     }
 
 }

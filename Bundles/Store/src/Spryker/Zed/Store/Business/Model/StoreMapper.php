@@ -34,11 +34,12 @@ class StoreMapper implements StoreMapperInterface
      */
     public function mapEntityToTransfer(SpyStore $storeEntity)
     {
+        $storeName = $storeEntity->getName();
+
         $currencyTransfer = (new StoreTransfer())
-            ->setCurrencyIsoCode($this->storeConfigurationProvider->getStoreName())
-            ->setAvailableCurrencyIsoCodes($this->storeConfigurationProvider->getAvailableCurrencyIsoCodes())
-            ->setSelectedLocaleIsoCode($this->storeConfigurationProvider->getSelectedLocaleIsoCode())
-            ->setAvailableLocaleIsoCodes($this->storeConfigurationProvider->getAvailableLocaleIsoCodes());
+            ->setDefaultCurrencyIsoCode($this->storeConfigurationProvider->getDefaultCurrencyFor($storeName))
+            ->setAvailableCurrencyIsoCodes($this->storeConfigurationProvider->getAvailableCurrenciesFor($storeName))
+            ->setAvailableLocaleIsoCodes($this->storeConfigurationProvider->getAvailableLocaleIsoCodesFor($storeName));
 
         return $currencyTransfer->fromArray($storeEntity->toArray(), true);
     }

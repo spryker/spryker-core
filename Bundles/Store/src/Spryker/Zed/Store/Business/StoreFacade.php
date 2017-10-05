@@ -39,4 +39,21 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
         return $this->getFactory()->createStoreReader()->getAllStores();
     }
 
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @throws \Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreById($idStore)
+    {
+        return $this->getFactory()->createStoreReader()->getStoreById($idStore);
+    }
+
 }

@@ -10,21 +10,26 @@ namespace Spryker\Zed\Money\Communication\Form\DataProvider;
 use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 class BaseMoneyCollectionDataProvider
 {
 
     /**
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer)
+    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer, StoreTransfer $storeTransfer = null)
     {
         $moneyValueTransfer = new MoneyValueTransfer();
         $moneyValueTransfer->setCurrency($currencyTransfer);
         $moneyValueTransfer->setFkCurrency($currencyTransfer->getIdCurrency());
-        $moneyValueTransfer->setFkStore($currencyTransfer->getStore()->getIdStore());
+
+        if ($storeTransfer) {
+            $moneyValueTransfer->setFkStore($storeTransfer->getIdStore());
+        }
 
         return $moneyValueTransfer;
     }
@@ -38,8 +43,7 @@ class BaseMoneyCollectionDataProvider
     {
         $currencyIndex = [];
         foreach ($submittedMoneyValueCollection as $moneyValueTransfer) {
-            $idStore = $moneyValueTransfer->getCurrency()->getStore()->getIdStore();
-            $currencyIndex[$moneyValueTransfer->getFkCurrency() . $idStore] = true;
+            $currencyIndex[$moneyValueTransfer->getFkCurrency() . $moneyValueTransfer->getFkStore()] = true;
         }
         return $currencyIndex;
     }

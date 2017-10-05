@@ -384,15 +384,9 @@ class Store
      *
      * @return array
      */
-    public function getAvailableCurrenciesForStore($storeName)
+    public function getConfigurationForStore($storeName)
     {
-        $stores = $this->getStoreSetup($storeName);
-        $storeArray = $stores[$storeName];
-
-        if (isset($storeArray['currencyIsoCodes'])) {
-            return $storeArray['currencyIsoCodes'];
-        }
-        return [];
+        return $this->getStoreSetup($storeName)[$storeName];
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Store\Business\Model;
 
 use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
+use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
 class StoreReader implements StoreReaderInterface
@@ -53,12 +54,12 @@ class StoreReader implements StoreReaderInterface
             ->queryStoresByNames($stores)
             ->find();
 
-        $activeStores = [];
+        $allStores = [];
         foreach ($storeCollection as $storeEntity) {
-            $activeStores[] = $this->storeMapper->mapEntityToTransfer($storeEntity);
+            $allStores[] = $this->storeMapper->mapEntityToTransfer($storeEntity);
         }
 
-        return $activeStores;
+        return $allStores;
     }
 
     /**
@@ -66,13 +67,35 @@ class StoreReader implements StoreReaderInterface
      */
     public function getCurrentStore()
     {
-        $currentStore = $this->storeConfigurationProvider->getStoreName();
+        $currentStore = $this->storeConfigurationProvider->getCurrentStoreName();
 
         $storeEntity = $this->storeQueryContainer
             ->queryStoreByName($currentStore)
             ->findOne();
 
         return $this->storeMapper->mapEntityToTransfer($storeEntity);
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @throws \Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreById($idStore)
+    {
+         $storeEntity = $this->storeQueryContainer
+             ->queryStoreById($idStore)
+             ->findOne();
+
+        if (!$storeEntity) {
+            throw new StoreNotFoundException(
+                sprintf('Store with id "%s" not found!', $idStore)
+            );
+        }
+
+         return $this->storeMapper->mapEntityToTransfer($storeEntity);
     }
 
 }

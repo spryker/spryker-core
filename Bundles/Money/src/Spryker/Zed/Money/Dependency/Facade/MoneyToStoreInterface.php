@@ -5,20 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Store\Business\Model;
+namespace Spryker\Zed\Money\Dependency\Facade;
 
-interface StoreReaderInterface
+interface MoneyToStoreInterface
 {
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getAllStores();
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore();
 
     /**
      * @param int $idStore

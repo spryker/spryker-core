@@ -10,10 +10,10 @@
         <property name="symbol" type="string" />
         <property name="isDefault" type="bool" />
         <property name="fractionDigits" type="int" />
-        <property name="store" type="Store" />
     </transfer>
 
     <transfer name="StoreCurrency">
+        <property name="store" type="Store" />
         <property name="currencies" type="Currency[]" singular="currency" />
     </transfer>
 

@@ -32,8 +32,8 @@ class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProv
     public function getInitialData()
     {
         $moneyValueCollection = new ArrayObject();
-        $storeCurrencyCollection = $this->currencyFacade->getStoreCurrencies();
-        foreach ($storeCurrencyCollection as $currencyTransfer) {
+        $storeCurrencyTransfer = $this->currencyFacade->getStoreCurrencies();
+        foreach ($storeCurrencyTransfer->getCurrencies() as $currencyTransfer) {
             $moneyValueCollection->append(
                 $this->mapMoneyTransfer($currencyTransfer)
             );
@@ -51,9 +51,9 @@ class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProv
     {
         $existingCurrencyMap = $this->createCurrencyIndexMap($currentFormMoneyValueCollection);
 
-        $storeCurrencyCollection = $this->currencyFacade->getStoreCurrencies();
-        foreach ($storeCurrencyCollection as $currencyTransfer) {
-            if (isset($existingCurrencyMap[$currencyTransfer->getIdCurrency() . $currencyTransfer->getStore()->getIdStore()])) {
+        $storeCurrencyTransfer = $this->currencyFacade->getStoreCurrencies();
+        foreach ($storeCurrencyTransfer->getCurrencies() as $currencyTransfer) {
+            if (isset($existingCurrencyMap[$currencyTransfer->getIdCurrency()])) {
                 continue;
             }
 

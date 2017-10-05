@@ -13,7 +13,7 @@ interface StoreConfigurationProviderInterface
     /**
      * @return string
      */
-    public function getStoreName();
+    public function getCurrentStoreName();
 
     /**
      * @return string[]
@@ -23,16 +23,37 @@ interface StoreConfigurationProviderInterface
     /**
      * @return string[]
      */
-    public function getAvailableCurrencyIsoCodes();
+    public function getCurrentStoreAvailableCurrencyIsoCodes();
 
     /**
      * @return string
      */
-    public function getSelectedLocaleIsoCode();
+    public function getCurrentStoreSelectedLocaleIsoCode();
 
     /**
      * @return string[]
      */
-    public function getAvailableLocaleIsoCodes();
+    public function getCurrentAvailableLocaleIsoCodes();
+
+    /**
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getAvailableCurrenciesFor($storeName);
+
+    /**
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getAvailableLocaleIsoCodesFor($storeName);
+
+    /**
+     * @param string $storeName
+     *
+     * @return string
+     */
+    public function getDefaultCurrencyFor($storeName);
 
 }

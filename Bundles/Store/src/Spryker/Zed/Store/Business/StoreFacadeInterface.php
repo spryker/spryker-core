@@ -33,4 +33,18 @@ interface StoreFacadeInterface
      */
     public function getAllStores();
 
+    /**
+     * Specification
+     *  - Read store by primary id from database
+     *
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @throws \Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreById($idStore);
+
 }
