@@ -15,6 +15,13 @@ class ButtonUrlGenerator
     const DEFAULT_CSS_CLASSES = 'default_css_classes';
     const BUTTON_CLASS = 'button_class';
     const ICON = 'icon';
+    const CUSTOM_OPTIONS = [
+        self::PARAM_ID,
+        self::PARAM_CLASS,
+        self::DEFAULT_CSS_CLASSES,
+        self::BUTTON_CLASS,
+        self::ICON,
+    ];
 
     /**
      * @var string
@@ -97,9 +104,28 @@ class ButtonUrlGenerator
     /**
      * @return string
      */
+    protected function getExtraAttributes()
+    {
+        $extraAttributes = array_diff_key($this->options, array_flip(static::CUSTOM_OPTIONS));
+
+        if (empty($extraAttributes)) {
+            return '';
+        }
+
+        $html = '';
+        foreach ($extraAttributes as $htmlAttributeName => $attributeValue) {
+            $html .= sprintf(' %s="%s"', $htmlAttributeName, $attributeValue);
+        }
+
+        return $html;
+    }
+
+    /**
+     * @return string
+     */
     protected function generateAnchor()
     {
-        return '<a' . $this->getClass() . $this->getId() . ' href="' . $this->url . '">';
+        return '<a' . $this->getClass() . $this->getId() . $this->getExtraAttributes() . ' href="' . $this->url . '">';
     }
 
 }

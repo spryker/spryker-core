@@ -22,7 +22,7 @@ class CurrencyDataHelper extends Module
      *
      * @return int
      */
-    public function haveCurrency($override = [])
+    public function haveCurrency(array $override = [])
     {
          $currencyTransfer = (new CurrencyBuilder($override))->build();
 

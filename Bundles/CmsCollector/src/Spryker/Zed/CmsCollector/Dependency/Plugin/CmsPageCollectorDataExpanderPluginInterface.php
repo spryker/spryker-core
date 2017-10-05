@@ -9,6 +9,9 @@ namespace Spryker\Zed\CmsCollector\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
+/**
+ * @deprecated Use CmsPageDataExpanderPluginInterface instead
+ */
 interface CmsPageCollectorDataExpanderPluginInterface
 {
 

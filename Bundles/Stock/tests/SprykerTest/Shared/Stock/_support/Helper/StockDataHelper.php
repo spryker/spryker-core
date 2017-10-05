@@ -22,7 +22,7 @@ class StockDataHelper extends Module
      *
      * @return void
      */
-    public function haveProductInStock($override = [])
+    public function haveProductInStock(array $override = [])
     {
         $stockFacade = $this->getStockFacade();
         $stockType = (new TypeBuilder())->build();
