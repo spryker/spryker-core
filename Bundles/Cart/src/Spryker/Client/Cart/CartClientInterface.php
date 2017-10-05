@@ -122,10 +122,13 @@ interface CartClientInterface
     public function storeQuote(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *
      * @api
      *
      * @return void
      */
-    public function rebuild();
+    public function reloadItems();
 
 }

@@ -28,9 +28,33 @@ class StoreConfigurationProvider implements StoreConfigurationProviderInterface
     /**
      * @return string
      */
-    public function getStoreName()
+    public function getCurrentStoreName()
     {
         return $this->store->getStoreName();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCurrentStoreAvailableCurrencyIsoCodes()
+    {
+        return $this->store->getCurrencyIsoCodes();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentStoreSelectedLocaleIsoCode()
+    {
+        return $this->store->getCurrentLocale();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCurrentAvailableLocaleIsoCodes()
+    {
+        return $this->store->getLocales();
     }
 
     /**
@@ -42,27 +66,44 @@ class StoreConfigurationProvider implements StoreConfigurationProviderInterface
     }
 
     /**
-     * @return string[]
+     * @param string $storeName
+     *
+     * @return array
      */
-    public function getAvailableCurrencyIsoCodes()
+    public function getAvailableCurrenciesFor($storeName)
     {
-        return $this->store->getCurrencyIsoCodes();
+        return $this->getConfigurationForStore($storeName)['currencyIsoCodes'];
     }
 
     /**
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getAvailableLocaleIsoCodesFor($storeName)
+    {
+        return $this->getConfigurationForStore($storeName)['locales'];
+    }
+
+    /**
+     * @param string $storeName
+     *
      * @return string
      */
-    public function getSelectedLocaleIsoCode()
+    public function getDefaultCurrencyFor($storeName)
     {
-        return $this->store->getCurrentLocale();
+        $currencyIsoCodes = $this->getAvailableCurrenciesFor($storeName);
+        return current($currencyIsoCodes);
     }
 
     /**
-     * @return string[]
+     * @param string $storeName
+     *
+     * @return array
      */
-    public function getAvailableLocaleIsoCodes()
+    protected function getConfigurationForStore($storeName)
     {
-        return $this->store->getLocales();
+        return $this->store->getConfigurationForStore($storeName);
     }
 
 }

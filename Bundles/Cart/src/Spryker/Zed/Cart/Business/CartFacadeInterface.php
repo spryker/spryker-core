@@ -51,8 +51,8 @@ interface CartFacadeInterface
     public function remove(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     * Specification
-     *  - Rebuild whole quote a new, so that new prices can be added and discounts recalculated
+     * Specification:
+     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
      *
      * @api
      *
@@ -60,6 +60,6 @@ interface CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function rebuild(QuoteTransfer $quoteTransfer);
+    public function reloadItems(QuoteTransfer $quoteTransfer);
 
 }

@@ -76,19 +76,17 @@ class MoneyCollectionType extends AbstractCollectionType
      */
     protected function setInitialMoneyValueData(FormEvent $event, array $options)
     {
-        $moneyCollectionInitialDataProvider = $this->getFactory()->createMoneyCollectionDataProvider();
+        $moneyCollectionInitialDataProvider = $this->getFormDataProvider($options);
+
         if (count($event->getData()) === 0) {
             $event->setData(
-                $moneyCollectionInitialDataProvider->getInitialData($options)
+                $moneyCollectionInitialDataProvider->getInitialData()
             );
             return;
         }
 
         $event->setData(
-            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues(
-                $event->getData(),
-                $options
-            )
+            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($event->getData())
         );
     }
 
@@ -100,6 +98,20 @@ class MoneyCollectionType extends AbstractCollectionType
         parent::buildView($view, $form, $options);
 
         $view->vars[static::OPTION_AMOUNT_PER_STORE] = $options[static::OPTION_AMOUNT_PER_STORE];
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionDataProviderInterface
+     */
+    protected function getFormDataProvider(array $options)
+    {
+        if ($options[static::OPTION_AMOUNT_PER_STORE]) {
+            return $this->getFactory()->createMoneyCollectionMultiStoreDataProvider();
+        }
+
+        return $this->getFactory()->createMoneyCollectionSingleStoreDataProvider();
     }
 
 }

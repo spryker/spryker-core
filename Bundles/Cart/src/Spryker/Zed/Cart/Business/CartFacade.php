@@ -54,9 +54,9 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function rebuild(QuoteTransfer $quoteTransfer)
+    public function reloadItems(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createCartOperation()->rebuild($quoteTransfer);
+        return $this->getFactory()->createCartOperation()->reloadItems($quoteTransfer);
     }
 
 }

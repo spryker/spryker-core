@@ -32,6 +32,6 @@ interface CartStubInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteTransfer
      */
-    public function rebuild(QuoteTransfer $quoteTransfer);
+    public function reloadItems(QuoteTransfer $quoteTransfer);
 
 }

@@ -39,9 +39,9 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteTransfer
      */
-    public function rebuild(QuoteTransfer $quoteTransfer)
+    public function reloadItems(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/cart/gateway/rebuild', $quoteTransfer);
+        return $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
     }
 
 }

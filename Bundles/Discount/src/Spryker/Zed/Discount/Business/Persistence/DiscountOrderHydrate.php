@@ -53,7 +53,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
             $calculatedDiscountTransfer = $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()];
 
-            $calculatedDiscountTransfer->setSumGrossAmount(
+            $calculatedDiscountTransfer->setSumAmount(
                 $calculatedDiscountTransfer->getSumGrossAmount() + (int)$salesOrderDiscountEntity->getAmount()
             );
 

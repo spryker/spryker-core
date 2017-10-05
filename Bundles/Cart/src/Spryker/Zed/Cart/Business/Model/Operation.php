@@ -116,7 +116,7 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function rebuild(QuoteTransfer $quoteTransfer)
+    public function reloadItems(QuoteTransfer $quoteTransfer)
     {
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setItems($quoteTransfer->getItems());

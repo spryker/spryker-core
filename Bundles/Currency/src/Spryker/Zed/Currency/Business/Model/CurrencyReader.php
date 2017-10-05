@@ -72,20 +72,23 @@ class CurrencyReader implements CurrencyReaderInterface
             );
         }
 
-        $currencyTransfer = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
-        $currencyTransfer->setStore($this->storeFacade->getCurrentStore());
-
-        return $currencyTransfer;
+        return $this->currencyMapper->mapEntityToTransfer($currencyEntity);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
     public function getCurrentStoreCurrencies()
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        return $this->getCurrenciesByIsoCodes($storeTransfer);
+        $storeCurrencyTransfer = new StoreCurrencyTransfer();
+        $storeCurrencyTransfer->setStore($storeTransfer);
+        $storeCurrencyTransfer->setCurrencies(
+            new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
+        );
+
+        return $storeCurrencyTransfer;
     }
 
     /**
@@ -97,6 +100,7 @@ class CurrencyReader implements CurrencyReaderInterface
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
 
             $storeCurrencyTransfer = new StoreCurrencyTransfer();
+            $storeCurrencyTransfer->setStore($storeTransfer);
             $storeCurrencyTransfer->setCurrencies(
                 new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
             );
@@ -131,7 +135,6 @@ class CurrencyReader implements CurrencyReaderInterface
         }
 
         $currencyTransfer = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
-        $currencyTransfer->setStore($this->storeFacade->getCurrentStore());
 
         static::$currencyCache[$isoCode] = $currencyTransfer;
 
@@ -162,9 +165,7 @@ class CurrencyReader implements CurrencyReaderInterface
 
         $currencies = [];
         foreach ($currencyCollection as $currencyEntity) {
-            $currencyTransfer = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
-            $currencyTransfer->setStore($storeTransfer);
-            $currencies[] = $currencyTransfer;
+            $currencies[] = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
         }
         return $currencies;
     }

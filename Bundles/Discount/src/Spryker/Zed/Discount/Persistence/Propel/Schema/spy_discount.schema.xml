@@ -4,6 +4,8 @@
     <table name="spy_discount" phpName="SpyDiscount">
         <column name="id_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
+        <column name="fk_store" type="INTEGER" required="false" />
+
         <column name="display_name" type="VARCHAR" size="255" required="true"/>
         <column name="description" type="VARCHAR" size="1024"/>
         <column name="amount" type="INTEGER" required="true"/>
@@ -20,6 +22,10 @@
 
         <foreign-key name="spy_discount-fk_discount_voucher_pool" foreignTable="spy_discount_voucher_pool" phpName="VoucherPool" refPhpName="Discount">
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
+        </foreign-key>
+
+        <foreign-key name="spy_discount-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="Discount">
+            <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 
         <unique name="spy_discount-unique-fk_discount_voucher_pool">

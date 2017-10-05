@@ -32,6 +32,6 @@ interface OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function rebuild(QuoteTransfer $quoteTransfer);
+    public function reloadItems(QuoteTransfer $quoteTransfer);
 
 }

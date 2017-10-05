@@ -59,8 +59,9 @@ class DiscountEntityMapper implements DiscountEntityMapperInterface
         foreach ($discountEntity->getDiscountAmounts() as $discountMoneyAmountEntity) {
             $moneyValueTransfer = new MoneyValueTransfer();
             $moneyValueTransfer->fromArray($discountMoneyAmountEntity->toArray(), true);
-
+            $moneyValueTransfer->setFkStore($discountEntity->getFkStore());
             $moneyValueTransfer->setIdEntity($discountMoneyAmountEntity->getPrimaryKey());
+
             $currencyTransfer = $this->getCurrencyByIdCurrency(
                 $discountMoneyAmountEntity->getFkCurrency()
             );

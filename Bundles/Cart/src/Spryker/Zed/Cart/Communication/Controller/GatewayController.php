@@ -42,9 +42,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function rebuildAction(QuoteTransfer $quoteTransfer)
+    public function reloadItemsAction(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->rebuild($quoteTransfer);
+        return $this->getFacade()->reloadItems($quoteTransfer);
     }
 
 }

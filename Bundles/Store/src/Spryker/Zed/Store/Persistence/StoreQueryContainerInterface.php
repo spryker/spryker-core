@@ -31,4 +31,13 @@ interface StoreQueryContainerInterface
      */
     public function queryStoresByNames(array $stores);
 
+    /**
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
+     */
+    public function queryStoreById($idStore);
+
 }

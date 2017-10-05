@@ -170,6 +170,7 @@ class MoneyType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
      * @throws \Exception
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -183,8 +184,22 @@ class MoneyType extends AbstractType
             ));
         }
 
+        $storeName = '';
+        if ($viewData->getFkStore()) {
+            $storeTransfer = $this->createMoneyDataProvider()->getStoreById($viewData->getFkStore());
+            $storeName = $storeTransfer->getName();
+        }
+
         $view->vars['currency_symbol'] = $viewData->getCurrency()->getSymbol();
-        $view->vars['store_name'] = $viewData->getCurrency()->getStore()->getName();
+        $view->vars['store_name'] = $storeName;
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Communication\Form\DataProvider\MoneyDataProvider
+     */
+    protected function createMoneyDataProvider()
+    {
+        return $this->getFactory()->createMoneyDataProvider();
     }
 
 }

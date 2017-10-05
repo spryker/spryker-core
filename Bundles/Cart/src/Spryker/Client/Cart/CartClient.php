@@ -267,10 +267,10 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return void
      */
-    public function rebuild()
+    public function reloadItems()
     {
         $quoteTransfer = $this->getQuote();
-        $quoteTransfer = $this->getZedStub()->rebuild($quoteTransfer);
+        $quoteTransfer = $this->getZedStub()->reloadItems($quoteTransfer);
         $this->storeQuote($quoteTransfer);
     }
 

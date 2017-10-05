@@ -44,4 +44,18 @@ class StoreQueryContainer extends AbstractQueryContainer implements StoreQueryCo
             ->filterByName($stores, Criteria::IN);
     }
 
+    /**
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
+     */
+    public function queryStoreById($idStore)
+    {
+        return $this->getFactory()
+            ->createStoreQuery()
+            ->filterByIdStore($idStore);
+    }
+
 }

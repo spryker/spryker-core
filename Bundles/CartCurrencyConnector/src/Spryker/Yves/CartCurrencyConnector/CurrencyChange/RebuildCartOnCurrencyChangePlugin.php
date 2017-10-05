@@ -30,7 +30,7 @@ class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements Curren
 
         $quoteTransfer = $cartClient->getQuote();
         if (count($quoteTransfer->getItems()) > 0) {
-            $cartClient->rebuild();
+            $cartClient->reloadItems();
         }
     }
 
