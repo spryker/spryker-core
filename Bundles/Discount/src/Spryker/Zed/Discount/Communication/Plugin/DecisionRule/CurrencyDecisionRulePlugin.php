@@ -85,7 +85,7 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
         $storeCurrencies = $this->getFactory()->getCurrencyFacade()->getCurrentStoreCurrencies();
 
         $currencies = [];
-        foreach ($storeCurrencies as $currencyTransfer) {
+        foreach ($storeCurrencies->getCurrencies() as $currencyTransfer) {
             $currencies[$currencyTransfer->getCode()] = $currencyTransfer->getName();
         }
 
