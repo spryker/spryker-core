@@ -32,16 +32,16 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * Pre-loaded values for this URL from Storage
      *
-     * @var array
+     * @var array|null
      */
     protected static $bufferedValues;
 
     /**
      * The Buffer for already decoded buffered values
      *
-     * @var array
+     * @var array|null
      */
-    protected static $bufferedDecodedValues = [];
+    protected static $bufferedDecodedValues;
 
     /**
      * @var \Spryker\Client\Storage\Redis\ServiceInterface
@@ -82,6 +82,16 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public function setCachedKeys($keys)
     {
         return static::$cachedKeys = $keys;
+    }
+
+    /**
+     * @return void
+     */
+    public function resetCache()
+    {
+        self::$cachedKeys = null;
+        self::$bufferedValues = null;
+        self::$bufferedDecodedValues = null;
     }
 
     /**
@@ -213,6 +223,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         // Get the rest of requested keys without a value
         $keys = array_diff($keys, array_keys($keyValues));
 
+        $keyValues = $this->prefixKeyValues($keyValues);
+
         if ($keys) {
             $keyValues += $this->getService()->getMulti($keys);
             self::$cachedKeys += array_fill_keys($keys, self::KEY_NEW);
@@ -306,6 +318,22 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @param array $keyValues
+     *
+     * @return array
+     */
+    protected function prefixKeyValues(array $keyValues)
+    {
+        $prefixedKeyValues = [];
+
+        foreach ($keyValues as $key => $value) {
+            $prefixedKeyValues[$this->getKeyPrefix() . $key] = $value;
+        }
+
+        return $prefixedKeyValues;
+    }
+
+    /**
      * Pre-Loads all values from storage with mget()
      *
      * @return void
@@ -319,11 +347,19 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
             if (!empty($values) && is_array($values)) {
                 foreach ($values as $key => $value) {
-                    $keySuffix = substr($key, strlen(Service::KV_PREFIX));
+                    $keySuffix = substr($key, strlen($this->getKeyPrefix()));
                     self::$bufferedValues[$keySuffix] = $value;
                 }
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getKeyPrefix()
+    {
+        return Service::KV_PREFIX;
     }
 
     /**
