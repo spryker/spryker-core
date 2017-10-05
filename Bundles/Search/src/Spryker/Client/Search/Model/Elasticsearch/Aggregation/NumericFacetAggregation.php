@@ -42,11 +42,11 @@ class NumericFacetAggregation extends AbstractFacetAggregation
         $fieldName = $this->facetConfigTransfer->getFieldName();
         $nestedFieldName = $this->getNestedFieldName($this->facetConfigTransfer);
 
-        $prefixedFieldName = $this->addNestedFieldPrefix($fieldName, self::FACET_VALUE);
+        $prefixedFieldName = $this->addNestedFieldPrefix($fieldName, static::FACET_VALUE);
 
         $facetValueStats = $this
             ->aggregationBuilder
-            ->createStatsAggregation($nestedFieldName . self::STATS_SUFFIX)
+            ->createStatsAggregation($nestedFieldName . static::STATS_SUFFIX)
             ->setField($prefixedFieldName);
 
         $facetValueStats = $this->applyAggregationParams($facetValueStats, $this->facetConfigTransfer);
