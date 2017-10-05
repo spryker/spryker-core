@@ -21,7 +21,7 @@ class UserDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function haveUser($override = [])
+    public function haveUser(array $override = [])
     {
         $userTransfer = (new UserBuilder($override))->build();
         $userTransfer = $this->getUserFacade()->addUser(
