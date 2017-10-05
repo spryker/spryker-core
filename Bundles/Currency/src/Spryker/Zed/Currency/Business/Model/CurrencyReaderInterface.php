@@ -24,12 +24,12 @@ interface CurrencyReaderInterface
      *
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function getCurrentStoreCurrencies();
+    public function getCurrentStoreWithCurrencies();
 
     /**
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
      */
-    public function getAvailableStoreCurrencies();
+    public function getAllStoresWithCurrencies();
 
     /**
      * @param string $isoCode

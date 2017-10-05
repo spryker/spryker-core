@@ -84,7 +84,7 @@ class DiscountsTable extends AbstractTable
             SpyDiscountTableMap::COL_IS_EXCLUSIVE,
         ]);
 
-        $config->setDefaultSortField( SpyDiscountTableMap::COL_ID_DISCOUNT);
+        $config->setDefaultSortField( SpyDiscountTableMap::COL_ID_DISCOUNT, TableConfiguration::SORT_DESC);
 
         $config->addRawColumn(self::TABLE_COL_ACTIONS);
         $config->addRawColumn(SpyDiscountTableMap::COL_AMOUNT);
@@ -280,31 +280,32 @@ class DiscountsTable extends AbstractTable
 
             $netAmount = '-';
             $grossAmount = '-';
+            $currencyCode = $discountAmountEntity->getCurrency()->getCode();
             if ($discountAmountEntity->getNetAmount()) {
                 $netAmount = $calculatorPlugin->getFormattedAmount(
                     $discountAmountEntity->getNetAmount(),
-                    $discountAmountEntity->getCurrency()->getCode()
+                    $currencyCode
                 );
             }
 
             if ($discountAmountEntity->getGrossAmount()) {
                 $grossAmount = $calculatorPlugin->getFormattedAmount(
                     $discountAmountEntity->getGrossAmount(),
-                    $discountAmountEntity->getCurrency()->getCode()
+                    $currencyCode
                 );
             }
 
-            $rowTemplate = str_replace('GROSS', $grossAmount, $rowTemplate);
-            $row .= str_replace('NET', $netAmount, $rowTemplate);
+            $template = str_replace('GROSS', $grossAmount, $rowTemplate);
+            $row .= str_replace('NET', $netAmount, $template);
         }
 
         $table = '
-           <table width="80%">
+           <table width="80%" cellspacing="2">
            <tr>
                 <td>Gross</td>
                 <td>Net</td>
            </tr>
-           ' . $row  .'
+           ' . $row . '
            </table>
         ';
 

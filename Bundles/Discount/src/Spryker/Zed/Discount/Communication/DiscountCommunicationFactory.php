@@ -179,7 +179,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-
     /**
      * @return \Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformerInterface
      */

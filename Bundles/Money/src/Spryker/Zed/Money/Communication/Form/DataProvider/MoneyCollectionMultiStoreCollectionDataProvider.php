@@ -32,7 +32,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
     public function getInitialData()
     {
         $moneyValueCollection = new ArrayObject();
-        $storeCurrencyCollection = $this->currencyFacade->getAvailableStoreCurrencies();
+        $storeCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
         foreach ($storeCurrencyCollection as $storeCurrencyTransfer) {
             foreach ($storeCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 $moneyValueCollection->append(
@@ -50,7 +50,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {
-        $storeCurrencyCollection = $this->currencyFacade->getAvailableStoreCurrencies();
+        $storeCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
 
         $existingCurrencyMap = $this->createCurrencyIndexMap($currentFormMoneyValueCollection);
 

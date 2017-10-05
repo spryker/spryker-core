@@ -36,17 +36,17 @@ class MoneyToCurrencyBridge implements MoneyToCurrencyInterface
     /**
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function getStoreCurrencies()
+    public function getStoreWithCurrencies()
     {
-        return $this->currencyFacade->getCurrentStoreCurrencies();
+        return $this->currencyFacade->getCurrentStoreWithCurrencies();
     }
 
     /**
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
      */
-    public function getAvailableStoreCurrencies()
+    public function getAllStoresWithCurrencies()
     {
-        return $this->currencyFacade->getAvailableStoreCurrencies();
+        return $this->currencyFacade->getAllStoresWithCurrencies();
     }
 
 }

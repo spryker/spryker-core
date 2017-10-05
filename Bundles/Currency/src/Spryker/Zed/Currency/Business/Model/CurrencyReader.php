@@ -78,7 +78,7 @@ class CurrencyReader implements CurrencyReaderInterface
     /**
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function getCurrentStoreCurrencies()
+    public function getCurrentStoreWithCurrencies()
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
@@ -94,7 +94,7 @@ class CurrencyReader implements CurrencyReaderInterface
     /**
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
      */
-    public function getAvailableStoreCurrencies()
+    public function getAllStoresWithCurrencies()
     {
         $currenciesPerStore = [];
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {

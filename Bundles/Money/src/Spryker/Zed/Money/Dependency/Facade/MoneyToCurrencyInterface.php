@@ -22,11 +22,11 @@ interface MoneyToCurrencyInterface
      *
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function getStoreCurrencies();
+    public function getStoreWithCurrencies();
 
     /**
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
      */
-    public function getAvailableStoreCurrencies();
+    public function getAllStoresWithCurrencies();
 
 }

@@ -73,7 +73,7 @@ interface CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function getCurrentStoreCurrencies();
+    public function getCurrentStoreWithCurrencies();
 
     /**
      * Specification:
@@ -85,6 +85,6 @@ interface CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
      */
-    public function getAvailableStoreCurrencies();
+    public function getAllStoresWithCurrencies();
 
 }

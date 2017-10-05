@@ -26,9 +26,9 @@ class DiscountToCurrencyBridge implements DiscountToCurrencyInterface
     /**
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function getCurrentStoreCurrencies()
+    public function getCurrentStoreWithCurrencies()
     {
-        return $this->currencyFacade->getCurrentStoreCurrencies();
+        return $this->currencyFacade->getCurrentStoreWithCurrencies();
     }
 
     /**

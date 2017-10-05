@@ -15,7 +15,7 @@ interface DiscountToCurrencyInterface
      *
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function getCurrentStoreCurrencies();
+    public function getCurrentStoreWithCurrencies();
 
     /**
      * @param int $idCurrency

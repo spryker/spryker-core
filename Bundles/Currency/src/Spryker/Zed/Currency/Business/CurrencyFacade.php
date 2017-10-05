@@ -83,9 +83,9 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function getCurrentStoreCurrencies()
+    public function getCurrentStoreWithCurrencies()
     {
-        return $this->getFactory()->createCurrencyReader()->getCurrentStoreCurrencies();
+        return $this->getFactory()->createCurrencyReader()->getCurrentStoreWithCurrencies();
     }
 
     /**
@@ -97,9 +97,9 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
      */
-    public function getAvailableStoreCurrencies()
+    public function getAllStoresWithCurrencies()
     {
-        return $this->getFactory()->createCurrencyReader()->getAvailableStoreCurrencies();
+        return $this->getFactory()->createCurrencyReader()->getAllStoresWithCurrencies();
     }
 
 }
