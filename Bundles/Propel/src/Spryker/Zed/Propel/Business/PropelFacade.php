@@ -57,6 +57,18 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      *
      * @return void
      */
+    public function dropDatabase()
+    {
+        $this->getFactory()->createDatabaseDropper()->execute();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
     public function convertConfig()
     {
         $this->getFactory()->createConfigConverter()->convertConfig();

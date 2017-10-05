@@ -35,6 +35,16 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
+     * - Drop database for configured driver.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function dropDatabase();
+
+    /**
+     * Specification:
      * - Convert given PHP configuration into json configuration
      * - File is placed in configured phpConfDir
      *
