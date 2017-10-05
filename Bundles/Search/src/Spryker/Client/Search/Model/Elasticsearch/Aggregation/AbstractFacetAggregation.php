@@ -79,7 +79,7 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
     }
 
     /**
-     * @param FacetConfigTransfer $facetConfigTransfer
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
      * @return string
      */
@@ -98,10 +98,10 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
     }
 
     /**
-     * @param AbstractAggregation $aggregation
-     * @param FacetConfigTransfer $facetConfigTransfer
+     * @param \Elastica\Aggregation\AbstractAggregation $aggregation
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @return AbstractAggregation
+     * @return \Elastica\Aggregation\AbstractAggregation
      */
     protected function applyAggregationParams(AbstractAggregation $aggregation, FacetConfigTransfer $facetConfigTransfer)
     {

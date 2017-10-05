@@ -7,9 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
-use Elastica\Aggregation\AbstractAggregation;
 use Elastica\Aggregation\AbstractTermsAggregation;
-use Generated\Shared\Transfer\FacetConfigTransfer;
 
 abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
 {

@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
-
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
@@ -12,15 +15,7 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
     const PATH_SEPARATOR = '.';
 
     /**
-     * @param array $aggregations
-     * @param array $requestParameters
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
-     */
-    abstract public function extractDataFromAggregations(array $aggregations, array $requestParameters);
-
-    /**
-     * @param FacetConfigTransfer $facetConfigTransfer
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
      * @return string
      */

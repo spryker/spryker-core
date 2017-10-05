@@ -78,7 +78,7 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
      */
     protected function createValueAgg($fieldName, $nestedFieldName)
     {
-        $aggregation =  $this
+        $aggregation = $this
             ->aggregationBuilder
             ->createTermsAggregation($nestedFieldName . static::VALUE_SUFFIX)
             ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_VALUE));
