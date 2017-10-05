@@ -114,4 +114,14 @@ interface PropelFacadeInterface
      * @return string
      */
     public function getCurrentDatabaseEngineName();
+
+    /**
+     * Specification:
+     * - Delete all migration files and the migration directory.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteMigrationFilesDirectory();
 }

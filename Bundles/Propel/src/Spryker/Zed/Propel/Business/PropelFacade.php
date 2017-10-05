@@ -159,4 +159,16 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     {
         return $this->getFactory()->getConfig()->getCurrentDatabaseEngineName();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteMigrationFilesDirectory()
+    {
+        $this->getFactory()->createMigrationDirectoryRemover()->execute();
+    }
 }

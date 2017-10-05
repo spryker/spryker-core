@@ -124,6 +124,16 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Propel\Business\Model\DirectoryRemoverInterface
+     */
+    public function createMigrationDirectoryRemover()
+    {
+        return new DirectoryRemover(
+            $this->getConfig()->getMigrationDirectory()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface
      */
     public function createPostgresqlCompatibilityAdjuster()
