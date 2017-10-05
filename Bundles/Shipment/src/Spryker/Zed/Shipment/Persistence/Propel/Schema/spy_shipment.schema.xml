@@ -17,6 +17,7 @@
         <column name="fk_shipment_carrier" type="INTEGER" required="true"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="shipment_method_key" required="false" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
         <column name="default_price" type="INTEGER" required="false"/>
         <column name="availability_plugin" size="255" type="VARCHAR"/>
