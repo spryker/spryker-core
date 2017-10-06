@@ -70,6 +70,8 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
                 (new MoneyValueTransfer())
                     ->fromArray($shipmentMethodPriceEntity->toArray(), true)
                     ->setIdEntity($shipmentMethodPriceEntity->getIdShipmentMethodPrice())
+                    ->setNetAmount($shipmentMethodPriceEntity->getDefaultNetPrice())
+                    ->setGrossAmount($shipmentMethodPriceEntity->getDefaultGrossPrice())
                     ->setCurrency($this->getCurrencyTransfer($shipmentMethodPriceEntity->getFkCurrency()))
             );
         }

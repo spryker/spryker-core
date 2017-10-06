@@ -42,8 +42,8 @@ class MethodPrice implements MethodPriceInterface
                 )
                 ->findOneOrCreate();
 
-            $shipmentMethodPriceEntity->setGrossAmount($moneyValueTransfer->getGrossAmount());
-            $shipmentMethodPriceEntity->setNetAmount($moneyValueTransfer->getNetAmount());
+            $shipmentMethodPriceEntity->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
+            $shipmentMethodPriceEntity->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
             $shipmentMethodPriceEntity->save();
         }
     }

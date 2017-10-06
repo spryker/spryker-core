@@ -119,11 +119,11 @@ class MigrateShipmentMethodPricesConsole extends Console
      */
     protected function setNetPrice(SpyShipmentMethodPrice $shipmentMethodPrice, SpyShipmentMethod $shipmentMethod, $isDefaultStoreCurrency)
     {
-        if ($shipmentMethodPrice->getNetAmount() !== null) {
+        if ($shipmentMethodPrice->getDefaultNetPrice() !== null) {
             return;
         }
 
-        $shipmentMethodPrice->setNetAmount($isDefaultStoreCurrency ? (int)$shipmentMethod->getDefaultPrice() : 0);
+        $shipmentMethodPrice->setDefaultNetPrice($isDefaultStoreCurrency ? (int)$shipmentMethod->getDefaultPrice() : 0);
     }
 
     /**
@@ -135,11 +135,11 @@ class MigrateShipmentMethodPricesConsole extends Console
      */
     protected function setGrossPrice(SpyShipmentMethodPrice $shipmentMethodPrice, SpyShipmentMethod $shipmentMethod, $isDefaultStoreCurrency)
     {
-        if ($shipmentMethodPrice->getGrossAmount() !== null) {
+        if ($shipmentMethodPrice->getDefaultGrossPrice() !== null) {
             return;
         }
 
-        $shipmentMethodPrice->setGrossAmount($isDefaultStoreCurrency ? (int)$shipmentMethod->getDefaultPrice() : 0);
+        $shipmentMethodPrice->setDefaultGrossPrice($isDefaultStoreCurrency ? (int)$shipmentMethod->getDefaultPrice() : 0);
     }
 
     /**

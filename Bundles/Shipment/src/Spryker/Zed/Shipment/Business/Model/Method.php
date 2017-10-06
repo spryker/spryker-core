@@ -274,8 +274,8 @@ class Method implements MethodInterface
             ->findOne();
 
         $price = $quoteTransfer->getPriceMode() === PriceMode::PRICE_MODE_GROSS ?
-            $methodPriceEntity->getGrossAmount() :
-            $methodPriceEntity->getNetAmount();
+            $methodPriceEntity->getDefaultGrossPrice() :
+            $methodPriceEntity->getDefaultNetPrice();
 
         $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
 

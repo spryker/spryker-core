@@ -129,8 +129,8 @@ class MethodTable extends AbstractTable
             SpyShipmentMethodTableMap::COL_IS_ACTIVE => '',
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => self::CARRIER,
             SpyShipmentMethodTableMap::COL_NAME => self::METHOD,
-            SpyShipmentMethodPriceTableMap::COL_GROSS_AMOUNT => static::GROSS_PRICE,
-            SpyShipmentMethodPriceTableMap::COL_NET_AMOUNT => static::NET_PRICE,
+            SpyShipmentMethodPriceTableMap::COL_DEFAULT_GROSS_PRICE => static::GROSS_PRICE,
+            SpyShipmentMethodPriceTableMap::COL_DEFAULT_NET_PRICE => static::NET_PRICE,
             SpyShipmentMethodTableMap::COL_AVAILABILITY_PLUGIN => self::AVAILABILITY_PLUGIN,
             SpyShipmentMethodTableMap::COL_PRICE_PLUGIN => self::PRICE_PLUGIN,
             SpyShipmentMethodTableMap::COL_DELIVERY_TIME_PLUGIN => self::DELIVERY_TIME_PLUGIN,
@@ -139,8 +139,8 @@ class MethodTable extends AbstractTable
         ]);
 
         $config->addRawColumn(SpyShipmentMethodTableMap::COL_IS_ACTIVE);
-        $config->addRawColumn(SpyShipmentMethodPriceTableMap::COL_NET_AMOUNT);
-        $config->addRawColumn(SpyShipmentMethodPriceTableMap::COL_GROSS_AMOUNT);
+        $config->addRawColumn(SpyShipmentMethodPriceTableMap::COL_DEFAULT_NET_PRICE);
+        $config->addRawColumn(SpyShipmentMethodPriceTableMap::COL_DEFAULT_GROSS_PRICE);
     }
 
     /**
@@ -199,8 +199,8 @@ class MethodTable extends AbstractTable
                 . (($method->isActive()) ? 'label-success">Activated' : 'label-danger">Disabled') . '</span>',
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => $method->getShipmentCarrier()->getName(),
             SpyShipmentMethodTableMap::COL_NAME => $method->getName(),
-            SpyShipmentMethodPriceTableMap::COL_GROSS_AMOUNT => $this->getPrices($grossPriceTransferCollection),
-            SpyShipmentMethodPriceTableMap::COL_NET_AMOUNT => $this->getPrices($netPriceTransferCollection),
+            SpyShipmentMethodPriceTableMap::COL_DEFAULT_GROSS_PRICE => $this->getPrices($grossPriceTransferCollection),
+            SpyShipmentMethodPriceTableMap::COL_DEFAULT_NET_PRICE => $this->getPrices($netPriceTransferCollection),
             SpyShipmentMethodTableMap::COL_AVAILABILITY_PLUGIN => $method->getAvailabilityPlugin(),
             SpyShipmentMethodTableMap::COL_PRICE_PLUGIN => $method->getPricePlugin(),
             SpyShipmentMethodTableMap::COL_DELIVERY_TIME_PLUGIN => $method->getDeliveryTimePlugin(),
@@ -218,7 +218,7 @@ class MethodTable extends AbstractTable
     protected function getGrossPriceTransfer(SpyShipmentMethodPrice $methodPriceEntity)
     {
         return (new PriceTransfer())
-            ->setAmount($methodPriceEntity->getGrossAmount())
+            ->setAmount($methodPriceEntity->getDefaultGrossPrice())
             ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
     }
 
@@ -230,7 +230,7 @@ class MethodTable extends AbstractTable
     protected function getNetPriceTransfer(SpyShipmentMethodPrice $methodPriceEntity)
     {
         return (new PriceTransfer())
-            ->setAmount($methodPriceEntity->getNetAmount())
+            ->setAmount($methodPriceEntity->getDefaultNetPrice())
             ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
     }
 
