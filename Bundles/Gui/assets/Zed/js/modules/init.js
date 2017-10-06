@@ -74,4 +74,21 @@ $(document).ready(function() {
 
     /* Init iboxes */
     new Ibox();
+
+    /* Prevent .save-submit items to be pressed twice */
+    $('.safe-submit').one('click', function () {
+        var $item = $(this);
+        var form = $item.parents('form')[0];
+        var isValid = form.checkValidity ? form.checkValidity() : true;
+
+        setTimeout(function () {
+            if (isValid) { 
+                $item
+                    .prop('disabled', true)
+                    .addClass('disabled');
+            }
+        });
+        
+        return true;
+    });
 });
