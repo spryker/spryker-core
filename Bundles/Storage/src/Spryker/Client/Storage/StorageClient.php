@@ -452,13 +452,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             return '';
         }
 
-
-        $whiteList = [
-            'page',
-            'hello'
-        ];
         $urlSegments = strtok($requestUri, '?');
-        $getParametersKey = self::filterGetParameters($whiteList);
+        $getParametersKey = static::filterGetParameters();
         $key = strtolower(Store::getInstance()->getStoreName()) . self::KEY_NAME_SEPARATOR .
             strtolower(Store::getInstance()->getCurrentLocale()) . self::KEY_NAME_SEPARATOR .
             self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
@@ -468,17 +463,18 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * @param $whiteList
-     *
      * @return string
      */
-    protected static function filterGetParameters($whiteList)
+    protected static function filterGetParameters()
     {
         $getParametersKey = '';
         $getParameters = $_GET;
+        $allowedGetParametersList = (new self)->getFactory()
+            ->getStorageClientConfig()
+            ->getAllowedGetParametersList();
 
         if (count($getParameters) > 0) {
-            $allowedGetParameters = array_intersect_key($getParameters, array_flip($whiteList));
+            $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersList));
             ksort($allowedGetParameters);
             $getParametersKey = '?' . http_build_query($allowedGetParameters);
         }
