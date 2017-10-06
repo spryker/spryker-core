@@ -10,8 +10,8 @@ namespace Spryker\Zed\Discount\Business;
 use Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolver;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
-use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
-use Spryker\Zed\Discount\Business\Calculator\Type\Percentage;
+use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
+use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
@@ -88,19 +88,19 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\Type\CalculatorInterface
+     * @return \Spryker\Zed\Discount\Business\Calculator\Type\CalculatorTypeInterface
      */
-    public function createCalculatorPercentage()
+    public function createCalculatorPercentageType()
     {
-        return new Percentage();
+        return new PercentageType();
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\Type\CalculatorInterface
+     * @return \Spryker\Zed\Discount\Business\Calculator\Type\CalculatorTypeInterface
      */
-    public function createCalculatorFixed()
+    public function createCalculatorFixedType()
     {
-        return new Fixed();
+        return new FixedType();
     }
 
     /**

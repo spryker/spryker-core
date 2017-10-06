@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 
-interface CalculatorInterface
+interface CalculatorTypeInterface
 {
 
     /**

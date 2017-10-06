@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
-class Percentage implements CalculatorInterface
+class PercentageType implements CalculatorTypeInterface
 {
 
     /**

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 
-class Fixed implements CalculatorInterface
+class FixedType implements CalculatorTypeInterface
 {
 
     const PRICE_NET_MODE = 'NET_MODE';

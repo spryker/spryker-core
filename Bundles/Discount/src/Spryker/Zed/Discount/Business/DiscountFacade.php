@@ -501,7 +501,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function calculatePercentageDiscount(array $discountableObjects, DiscountTransfer $discountTransfer)
     {
         return $this->getFactory()
-            ->createCalculatorPercentage()
+            ->createCalculatorPercentageType()
             ->calculateDiscount($discountableObjects, $discountTransfer);
     }
 
@@ -518,7 +518,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function calculateFixedDiscount(array $discountableObjects, DiscountTransfer $discountTransfer)
     {
         return $this->getFactory()
-            ->createCalculatorFixed()
+            ->createCalculatorFixedType()
             ->calculateDiscount($discountableObjects, $discountTransfer);
     }
 
