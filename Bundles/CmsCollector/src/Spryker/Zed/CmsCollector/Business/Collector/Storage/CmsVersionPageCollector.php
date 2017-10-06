@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsCollector\Business\Collector\Storage;
 
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\Cms\CmsConstants;
-use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Storage\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -17,29 +17,21 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
 {
 
     /**
-     * @var \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface
+     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface
      */
-    protected $dataExtractor;
-
-    /**
-     * @var array|\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
-     */
-    protected $collectorDataExpanderPlugins = [];
+    protected $cmsFacade;
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
-     * @param \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface $dataExtractorDataPage
-     * @param \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[] $collectorDataExpanderPlugins
+     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface $cmsFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
-        DataExtractorInterface $dataExtractorDataPage,
-        array $collectorDataExpanderPlugins = []
+        CmsCollectorToCmsInterface $cmsFacade
     ) {
         parent::__construct($utilDataReaderService);
 
-        $this->dataExtractor = $dataExtractorDataPage;
-        $this->collectorDataExpanderPlugins = $collectorDataExpanderPlugins;
+        $this->cmsFacade = $cmsFacade;
     }
 
     /**
@@ -50,43 +42,15 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
-        $cmsVersionDataTransfer = $this->dataExtractor->extractCmsVersionDataTransfer($collectItemData[CmsVersionPageCollectorQuery::COL_DATA]);
-        $localeName = $this->locale->getLocaleName();
-        $cmsPageTransfer = $cmsVersionDataTransfer->getCmsPage();
-        $cmsPageAttributeTransfer = $this->dataExtractor->extractPageAttributeByLocale($cmsPageTransfer, $localeName);
-        $cmsMetaAttributeTransfer = $this->dataExtractor->extractMetaAttributeByLocales($cmsPageTransfer, $localeName);
+        $cmsVersionDataTransfer = $this->cmsFacade->extractCmsVersionDataTransfer($collectItemData[CmsVersionPageCollectorQuery::COL_DATA]);
+        $localeCmsPageDataTransfer = $this->cmsFacade->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $this->locale);
+        $localeCmsPageDataTransfer
+            ->setValidFrom($collectItemData[CmsVersionPageCollectorQuery::COL_VALID_FROM])
+            ->setValidTo($collectItemData[CmsVersionPageCollectorQuery::COL_VALID_TO])
+            ->setUrl($collectItemData[CmsVersionPageCollectorQuery::COL_URL])
+            ->setIsActive($collectItemData[CmsVersionPageCollectorQuery::COL_IS_ACTIVE]);
 
-        $placeHolders = $this->dataExtractor->extractPlaceholdersByLocale($cmsVersionDataTransfer->getCmsGlossary(), $localeName);
-
-        $baseCollectedCmsPageData = [
-            'url' => $collectItemData[CmsVersionPageCollectorQuery::COL_URL],
-            'valid_from' => $collectItemData[CmsVersionPageCollectorQuery::COL_VALID_FROM],
-            'valid_to' => $collectItemData[CmsVersionPageCollectorQuery::COL_VALID_TO],
-            'is_active' => $collectItemData[CmsVersionPageCollectorQuery::COL_IS_ACTIVE],
-            'id' => $cmsPageTransfer->getFkPage(),
-            'template' => $cmsVersionDataTransfer->getCmsTemplate()->getTemplatePath(),
-            'placeholders' => $placeHolders,
-            'name' => $cmsPageAttributeTransfer->getName(),
-            'meta_title' => $cmsMetaAttributeTransfer->getMetaTitle(),
-            'meta_keywords' => $cmsMetaAttributeTransfer->getMetaKeywords(),
-            'meta_description' => $cmsMetaAttributeTransfer->getMetaDescription(),
-        ];
-
-        return $this->runDataExpanderPlugins($baseCollectedCmsPageData);
-    }
-
-    /**
-     * @param array $collectedItemData
-     *
-     * @return array
-     */
-    protected function runDataExpanderPlugins(array $collectedItemData)
-    {
-        foreach ($this->collectorDataExpanderPlugins as $dataExpanderPlugin) {
-            $collectedItemData = $dataExpanderPlugin->expand($collectedItemData, $this->locale);
-        }
-
-        return $collectedItemData;
+        return $this->cmsFacade->calculateFlattenedLocaleCmsPageData($localeCmsPageDataTransfer, $this->locale);
     }
 
     /**

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <acl>
+        <pages>
+            <user>
+                <pages>
+                    <assign-customers>
+                        <label>Assign Customers</label>
+                        <title>Assign Customers</title>
+                        <bundle>customer-user-connector-gui</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </assign-customers>
+                </pages>
+            </user>
+        </pages>
+    </acl>
+</config>

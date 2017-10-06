@@ -44,7 +44,8 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     {
         return new UsersTable(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER),
+            $this->getUsersTableExtenderPlugins()
         );
     }
 
@@ -96,6 +97,14 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function getGroupPlugin()
     {
         return $this->getProvidedDependency(UserDependencyProvider::PLUGIN_GROUP);
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
+     */
+    protected function getUsersTableExtenderPlugins()
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USERS_TABLE_EXTENDER);
     }
 
 }

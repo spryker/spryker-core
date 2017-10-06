@@ -23,7 +23,7 @@ class LocaleDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function haveLocale($seedData = [])
+    public function haveLocale(array $seedData = [])
     {
         $localeTransfer = $this->generateLocaleTransfer($seedData);
 
