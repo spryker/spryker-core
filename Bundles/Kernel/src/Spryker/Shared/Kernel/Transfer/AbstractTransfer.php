@@ -7,15 +7,17 @@
 
 namespace Spryker\Shared\Kernel\Transfer;
 
+use ArrayAccess;
 use ArrayObject;
 use Exception;
 use InvalidArgumentException;
 use Serializable;
 use Spryker\Service\UtilEncoding\Model\Json;
+use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
-abstract class AbstractTransfer implements TransferInterface, Serializable
+abstract class AbstractTransfer implements TransferInterface, Serializable, ArrayAccess
 {
 
     /**
@@ -40,22 +42,24 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
 
     /**
      * @param bool $isRecursive
+     * @param bool $useCamelCase
      *
      * @return array
      */
-    public function toArray($isRecursive = true)
+    public function toArray($isRecursive = true, $useCamelCase = false)
     {
-        return $this->propertiesToArray($this->getPropertyNames(), $isRecursive, 'toArray');
+        return $this->propertiesToArray($this->getPropertyNames(), $isRecursive, 'toArray', $useCamelCase);
     }
 
     /**
      * @param bool $isRecursive
+     * @param bool $useCamelCase
      *
      * @return array
      */
-    public function modifiedToArray($isRecursive = true)
+    public function modifiedToArray($isRecursive = true, $useCamelCase = false)
     {
-        return $this->propertiesToArray(array_keys($this->modifiedProperties), $isRecursive, 'modifiedToArray');
+        return $this->propertiesToArray(array_keys($this->modifiedProperties), $isRecursive, 'modifiedToArray', $useCamelCase);
     }
 
     /**
@@ -84,23 +88,28 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
      * @param array $properties
      * @param bool $isRecursive
      * @param string $childConvertMethodName
+     * @param bool $useCamelCase
      *
      * @return array
      */
-    private function propertiesToArray(array $properties, $isRecursive, $childConvertMethodName)
+    private function propertiesToArray(array $properties, $isRecursive, $childConvertMethodName, $useCamelCase = false)
     {
         $values = [];
 
         foreach ($properties as $property) {
             $value = $this->$property;
 
-            $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+            if ($useCamelCase) {
+                $arrayKey = $property;
+            } else {
+                $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+            }
 
             if (is_object($value)) {
                 if ($isRecursive && $value instanceof TransferInterface) {
-                    $values[$arrayKey] = $value->$childConvertMethodName($isRecursive);
+                    $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $useCamelCase);
                 } elseif ($isRecursive && $this->transferMetadata[$property]['is_collection'] && count($value) >= 1) {
-                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName);
+                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $useCamelCase);
                 } else {
                     $values[$arrayKey] = $value;
                 }
@@ -275,10 +284,11 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
      * @param string $arrayKey
      * @param bool $isRecursive
      * @param string $childConvertMethodName
+     * @param bool $useCamelCase
      *
      * @return array
      */
-    private function addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName)
+    private function addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $useCamelCase = false)
     {
         foreach ($value as $elementKey => $arrayElement) {
             if (is_array($arrayElement) || is_scalar($arrayElement)) {
@@ -286,7 +296,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
 
                 continue;
             }
-            $values[$arrayKey][$elementKey] = $arrayElement->$childConvertMethodName($isRecursive);
+            $values[$arrayKey][$elementKey] = $arrayElement->$childConvertMethodName($isRecursive, $useCamelCase);
         }
 
         return $values;
@@ -334,6 +344,51 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     public function __wakeup()
     {
         $this->initCollectionProperties();
+    }
+
+    /**
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->transferMetadata[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     *
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->$offset;
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException
+     *
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
+    }
+
+    /**
+     * @param mixed $offset
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException
+     *
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
     }
 
 }
