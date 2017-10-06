@@ -21,7 +21,7 @@ class CategoryDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function haveCategory($seedData = [])
+    public function haveCategory(array $seedData = [])
     {
         $seedData = $seedData + [
             'categoryNode' => $this->generateCategoryNodeTransfer(),
@@ -49,7 +49,7 @@ class CategoryDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
      */
-    public function haveCategoryTemplate($seedData = [])
+    public function haveCategoryTemplate(array $seedData = [])
     {
         $this->getCategoryFacade()->syncCategoryTemplate();
         $categoryTemplateTransfer = $this->getCategoryFacade()

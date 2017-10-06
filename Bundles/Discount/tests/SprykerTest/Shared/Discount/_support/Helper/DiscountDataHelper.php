@@ -23,7 +23,7 @@ class DiscountDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
      */
-    public function haveDiscount($override = [])
+    public function haveDiscount(array $override = [])
     {
         $discountFacade = $this->getDiscountFacade();
 

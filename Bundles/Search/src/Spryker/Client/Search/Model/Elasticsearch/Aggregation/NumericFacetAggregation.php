@@ -40,19 +40,30 @@ class NumericFacetAggregation extends AbstractFacetAggregation
     public function createAggregation()
     {
         $fieldName = $this->facetConfigTransfer->getFieldName();
+        $nestedFieldName = $this->getNestedFieldName($this->facetConfigTransfer);
 
-        $prefixedFieldName = $this->addNestedFieldPrefix($fieldName, self::FACET_VALUE);
+        $prefixedFieldName = $this->addNestedFieldPrefix($fieldName, static::FACET_VALUE);
 
         $facetValueStats = $this
             ->aggregationBuilder
-            ->createStatsAggregation($fieldName . self::STATS_SUFFIX)
+            ->createStatsAggregation($nestedFieldName . static::STATS_SUFFIX)
             ->setField($prefixedFieldName);
 
-        $facetNameAgg = $this
-            ->createFacetNameAggregation($fieldName)
-            ->addAggregation($facetValueStats);
+        $facetValueStats = $this->applyAggregationParams($facetValueStats, $this->facetConfigTransfer);
 
-        return $this->createNestedFacetAggregation($fieldName, $facetNameAgg);
+        if ($this->facetConfigTransfer->getAggregationParams()) {
+            $facetNameAgg = $this
+                ->createStandaloneFacetNameAggregation(
+                    $fieldName,
+                    $this->facetConfigTransfer->getName()
+                );
+        } else {
+            $facetNameAgg = $this->createFacetNameAggregation($fieldName);
+        }
+
+        $facetNameAgg->addAggregation($facetValueStats);
+
+        return $this->createNestedFacetAggregation($nestedFieldName, $facetNameAgg, $fieldName);
     }
 
 }
