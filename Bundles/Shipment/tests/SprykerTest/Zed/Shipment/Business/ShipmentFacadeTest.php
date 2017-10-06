@@ -81,20 +81,12 @@ class ShipmentFacadeTest extends Test
                     'fk_currency' => 2,
                     'fk_store' => 4,
                     'currency' => [
-                        'id_currency' => null,
+                        'id_currency' => 2,
                         'code' => null,
                         'name' => null,
                         'symbol' => null,
                         'is_default' => null,
                         'fraction_digits' => null,
-                        'store' => [
-                            'id_store' => 4,
-                            'name' => null,
-                            'currency_iso_code' => null,
-                            'available_currency_iso_codes' => [],
-                            'selected_locale_iso_code' => null,
-                            'available_locale_iso_codes' => [],
-                        ],
                     ],
                     'gross_amount' => 100,
                     'net_amount' => 200,
@@ -104,20 +96,12 @@ class ShipmentFacadeTest extends Test
                     'fk_currency' => 3,
                     'fk_store' => 5,
                     'currency' => [
-                        'id_currency' => null,
+                        'id_currency' => 3,
                         'code' => null,
                         'name' => null,
                         'symbol' => null,
                         'is_default' => null,
                         'fraction_digits' => null,
-                        'store' => [
-                            'id_store' => 5,
-                            'name' => null,
-                            'currency_iso_code' => null,
-                            'available_currency_iso_codes' => [],
-                            'selected_locale_iso_code' => null,
-                            'available_locale_iso_codes' => [],
-                        ],
                     ],
                     'gross_amount' => 300,
                     'net_amount' => 400,
@@ -155,8 +139,9 @@ class ShipmentFacadeTest extends Test
             ->expects($this->any())
             ->method('getByIdCurrency')
             ->willReturnCallback(
-                function () {
-                    return new CurrencyTransfer(); }
+                function ($idCurrency) {
+                    return (new CurrencyTransfer())->setIdCurrency($idCurrency);
+                }
             );
 
         $this->tester->setDependency(ShipmentDependencyProvider::FACADE_CURRENCY, $currencyFacadeMock);
