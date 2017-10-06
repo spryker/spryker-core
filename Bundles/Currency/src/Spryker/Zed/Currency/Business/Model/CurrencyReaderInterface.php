@@ -22,12 +22,12 @@ interface CurrencyReaderInterface
     /**
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
     public function getCurrentStoreWithCurrencies();
 
     /**
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies();
 

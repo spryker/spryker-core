@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-composer require spryker/cart-currency
+composer require spryker/cart-currency-connector
 ```
 
 ## Documentation

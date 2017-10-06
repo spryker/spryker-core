@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Currency\Business\Model;
 
 use ArrayObject;
-use Generated\Shared\Transfer\StoreCurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
 use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface;
 use Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface;
@@ -76,7 +76,7 @@ class CurrencyReader implements CurrencyReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
     public function getCurrentStoreWithCurrencies()
     {
@@ -86,7 +86,7 @@ class CurrencyReader implements CurrencyReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies()
     {
@@ -160,16 +160,16 @@ class CurrencyReader implements CurrencyReaderInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
     protected function mapStoreCurrency(StoreTransfer $storeTransfer)
     {
-        $storeCurrencyTransfer = new StoreCurrencyTransfer();
-        $storeCurrencyTransfer->setStore($storeTransfer);
-        $storeCurrencyTransfer->setCurrencies(
+        $storeWithCurrencyTransfer = new StoreWithCurrencyTransfer();
+        $storeWithCurrencyTransfer->setStore($storeTransfer);
+        $storeWithCurrencyTransfer->setCurrencies(
             new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
         );
-        return $storeCurrencyTransfer;
+        return $storeWithCurrencyTransfer;
     }
 
 }

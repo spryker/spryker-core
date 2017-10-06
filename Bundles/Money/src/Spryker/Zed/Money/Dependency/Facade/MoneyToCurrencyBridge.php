@@ -34,7 +34,7 @@ class MoneyToCurrencyBridge implements MoneyToCurrencyInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
     public function getStoreWithCurrencies()
     {
@@ -42,7 +42,7 @@ class MoneyToCurrencyBridge implements MoneyToCurrencyInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer[]
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies()
     {
