@@ -84,9 +84,12 @@ class DiscountsTable extends AbstractTable
             SpyDiscountTableMap::COL_IS_EXCLUSIVE,
         ]);
 
-        $config->setDefaultSortField( SpyDiscountTableMap::COL_ID_DISCOUNT, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(
+            SpyDiscountTableMap::COL_ID_DISCOUNT,
+            TableConfiguration::SORT_DESC
+        );
 
-        $config->addRawColumn(self::TABLE_COL_ACTIONS);
+        $config->addRawColumn(static::TABLE_COL_ACTIONS);
         $config->addRawColumn(SpyDiscountTableMap::COL_AMOUNT);
 
         return $config;
