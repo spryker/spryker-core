@@ -115,4 +115,20 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(ShipmentDependencyProvider::STORE);
     }
 
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
+    }
+
 }

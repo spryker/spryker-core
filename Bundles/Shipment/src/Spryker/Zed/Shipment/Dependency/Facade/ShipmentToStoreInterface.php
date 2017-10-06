@@ -15,4 +15,9 @@ interface ShipmentToStoreInterface
      */
     public function getCurrentStore();
 
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores();
+
 }

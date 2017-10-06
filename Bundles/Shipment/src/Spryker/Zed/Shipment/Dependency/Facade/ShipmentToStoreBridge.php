@@ -31,4 +31,12 @@ class ShipmentToStoreBridge implements ShipmentToStoreInterface
         return $this->storeFacade->getCurrentStore();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores()
+    {
+        return $this->storeFacade->getAllStores();
+    }
+
 }

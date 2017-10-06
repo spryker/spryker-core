@@ -49,6 +49,8 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addMoneyFacade($container);
         $container = $this->addStore($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addCurrencyFacade($container);
 
         $container[static::FACADE_TAX] = function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
