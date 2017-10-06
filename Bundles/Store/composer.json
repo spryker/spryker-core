@@ -3,7 +3,7 @@
   "description": "Store module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.11.0",
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
