@@ -7,7 +7,7 @@
                 {% embed '@Gui/Partials/localized-ibox.twig' with {
                     'id': 'localized_attributes_container-' ~ localeTransfer.localeName,
                     'localeName': localeTransfer.localeName,
-                    'collapsed': (not loop.parent.loop.first)
+                    'collapsed': false
                 } %}
                     {% block content %}
                         <div class="form-group {% if navigationNodeLocalizedAttributes.title.vars.errors|length %}has-error{% endif %}">

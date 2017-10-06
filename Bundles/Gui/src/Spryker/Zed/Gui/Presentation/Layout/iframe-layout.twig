@@ -16,7 +16,9 @@
 
     {% include '@Messenger/Partials/flash-messages.twig' %}
 
-    {% block content -%}{%- endblock %}
+    <div class="content">
+        {% block content -%}{%- endblock %}
+    </div>
 
     {% block footer_js %}
         <script src="/assets/js/spryker-zed-gui-commons.js"></script>
