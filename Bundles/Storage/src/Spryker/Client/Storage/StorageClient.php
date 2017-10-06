@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +21,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     const KEY_USED = 'used';
     const KEY_NEW = 'new';
     const KEY_INIT = 'init';
+    const KEY_NAME_PREFIX = 'storage';
+    const KEY_NAME_SEPARATOR = '.';
 
     /**
      * All keys which have been used for the last request with same URL
@@ -449,9 +452,38 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             return '';
         }
 
-        $baseRequestUrI = strtok($requestUri, '?');
 
-        return 'StorageClient_' . $serverName . $baseRequestUrI;
+        $whiteList = [
+            'page',
+            'hello'
+        ];
+        $urlSegments = strtok($requestUri, '?');
+        $getParametersKey = self::filterGetParameters($whiteList);
+        $key = strtolower(Store::getInstance()->getStoreName()) . self::KEY_NAME_SEPARATOR .
+            strtolower(Store::getInstance()->getCurrentLocale()) . self::KEY_NAME_SEPARATOR .
+            self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
+            $urlSegments . $getParametersKey;
+
+        return $key;
+    }
+
+    /**
+     * @param $whiteList
+     *
+     * @return string
+     */
+    protected static function filterGetParameters($whiteList)
+    {
+        $getParametersKey = '';
+        $getParameters = $_GET;
+
+        if (count($getParameters) > 0) {
+            $allowedGetParameters = array_intersect_key($getParameters, array_flip($whiteList));
+            ksort($allowedGetParameters);
+            $getParametersKey = '?' . http_build_query($allowedGetParameters);
+        }
+
+        return $getParametersKey;
     }
 
     /**
