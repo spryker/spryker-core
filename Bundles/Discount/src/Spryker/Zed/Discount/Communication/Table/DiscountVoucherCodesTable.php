@@ -103,8 +103,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH,
         ]);
 
-        $config->setDefaultSortColumnIndex(3);
-        $config->setDefaultSortDirection('DESC');
+        $config->setDefaultSortField(SpyDiscountVoucherTableMap::COL_CREATED_AT);
 
         $config->setSearchable([
             SpyDiscountVoucherTableMap::COL_CODE,

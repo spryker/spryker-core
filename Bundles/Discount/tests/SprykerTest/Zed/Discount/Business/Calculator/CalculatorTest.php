@@ -549,9 +549,9 @@ class CalculatorTest extends Unit
         if (!$calculatorPluginMock) {
             $calculatorPluginMock = $this->createCalculatorPluginMock();
             $calculatorPluginMock
-                ->method('calculate')
-                ->willReturnCallback(function ($discountableItems, $amount) {
-                    return $amount;
+                ->method('calculateDiscount')
+                ->willReturnCallback(function ($discountableItems, DiscountTransfer $discountTransfer) {
+                    return $discountTransfer->getAmount();
                 });
         }
 

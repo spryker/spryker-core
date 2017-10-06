@@ -128,7 +128,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
         SpySalesDiscount $salesDiscountEntity,
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
-        $salesDiscountEntity->setAmount($calculatedDiscountTransfer->getUnitGrossAmount());
+        $salesDiscountEntity->setAmount($calculatedDiscountTransfer->getUnitAmount());
         $this->persistSalesDiscount($salesDiscountEntity);
 
         if ($this->haveVoucherCode($calculatedDiscountTransfer)) {

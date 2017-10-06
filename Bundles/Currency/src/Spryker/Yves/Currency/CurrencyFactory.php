@@ -9,6 +9,7 @@ namespace Spryker\Yves\Currency;
 
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
+use Spryker\Yves\Currency\CurrencyChange\CurrencyPostChangePluginExecutor;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class CurrencyFactory extends AbstractFactory
@@ -34,6 +35,14 @@ class CurrencyFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\Currency\CurrencyChange\CurrencyPostChangePluginExecutorInterface
+     */
+    public function createCurrencyPostChangePluginExecutor()
+    {
+        return new CurrencyPostChangePluginExecutor($this->getCurrencyPostChangePlugins());
+    }
+
+    /**
      * @return \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
     protected function getInternationalization()
@@ -55,6 +64,14 @@ class CurrencyFactory extends AbstractFactory
     protected function getSessionClient()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[]
+     */
+    protected function getCurrencyPostChangePlugins()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CURRENCY_POST_CHANGE_PLUGINS);
     }
 
 }

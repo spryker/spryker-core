@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
@@ -21,7 +21,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     protected $specificationPlugins = [];
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected $comparatorOperators;
 
@@ -32,12 +32,12 @@ class MetaDataProvider implements MetaDataProviderInterface
 
     /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[] $specificationPlugins
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators $comparatorOperators
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators $logicalComparators
      */
     public function __construct(
         array $specificationPlugins,
-        ComparatorOperators $comparatorOperators,
+        ComparatorOperatorsInterface $comparatorOperators,
         LogicalComparators $logicalComparators
     ) {
         $this->specificationPlugins = $specificationPlugins;

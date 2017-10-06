@@ -39,6 +39,7 @@
     "spryker/cache": "*",
     "spryker/calculation": "*",
     "spryker/cart": "*",
+    "spryker/cart-currency-connector": "*",
     "spryker/cart-variant": "*",
     "spryker/catalog": "*",
     "spryker/category": "*",

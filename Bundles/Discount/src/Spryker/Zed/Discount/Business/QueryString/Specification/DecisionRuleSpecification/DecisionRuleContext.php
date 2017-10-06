@@ -47,11 +47,11 @@ class DecisionRuleContext implements DecisionRuleSpecificationInterface
     }
 
      /**
-      * @return $this
+      * @return void
       */
     protected function setAcceptedDataTypes()
     {
-        return $this->clauseTransfer->setAcceptedTypes($this->rulePlugin->acceptedDataTypes());
+        $this->clauseTransfer->setAcceptedTypes($this->rulePlugin->acceptedDataTypes());
     }
 
 }

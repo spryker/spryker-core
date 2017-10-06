@@ -8,13 +8,16 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Symfony\Component\Validator\Constraints\Regex;
+use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class FixedPlugin extends AbstractCalculatorPlugin
+class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface, DiscountCalculatorPluginWithAmountInputTypeInterface
 {
 
     /**
@@ -31,6 +34,8 @@ class FixedPlugin extends AbstractCalculatorPlugin
     }
 
     /**
+     * @api
+     *
      * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
      */
     protected function getMoneyPlugin()
@@ -66,12 +71,13 @@ class FixedPlugin extends AbstractCalculatorPlugin
      * @api
      *
      * @param int $amount
+     * @param string|null $isoCode
      *
      * @return string
      */
-    public function getFormattedAmount($amount)
+    public function getFormattedAmount($amount, $isoCode = null)
     {
-        $moneyTransfer = $this->getMoneyPlugin()->fromInteger($amount);
+        $moneyTransfer = $this->getMoneyPlugin()->fromInteger($amount, $isoCode);
 
         return $this->getMoneyPlugin()->formatWithSymbol($moneyTransfer);
     }
@@ -83,11 +89,15 @@ class FixedPlugin extends AbstractCalculatorPlugin
      */
     public function getAmountValidators()
     {
-        return [
-            new Regex([
-                'pattern' => '/[0-9\.\,]+/',
-            ]),
-        ];
+        return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getInputType()
+    {
+        return DiscountConstants::CALCULATOR_MONEY_INPUT_TYPE;
     }
 
 }

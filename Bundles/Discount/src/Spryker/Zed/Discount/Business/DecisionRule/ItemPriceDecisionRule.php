@@ -52,23 +52,7 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
 
         $this->moneyValueConverter->convertDecimalToCent($clauseTransfer);
 
-        $price = $this->getPrice($currentItemTransfer, $quoteTransfer->getPriceMode());
-        return $this->comparators->compare($clauseTransfer, $price);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
-     * @param string $taxMode
-     *
-     * @return int
-     */
-    protected function getPrice(ItemTransfer $currentItemTransfer, $taxMode)
-    {
-        if ($taxMode === 'NET_MODE') {
-            return $currentItemTransfer->getUnitNetPrice();
-        } else {
-            return $currentItemTransfer->getUnitGrossPrice();
-        }
+        return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitPrice());
     }
 
 }

@@ -11,29 +11,13 @@ use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
-class Percentage implements CalculatorInterface
+class PercentageType implements CalculatorTypeInterface
 {
 
     /**
      * @var float
      */
     protected static $roundingError = 0.0;
-
-    /**
-     * @deprecated use calculateDiscount instead
-     *
-     * @param array $discountableItems
-     * @param int $percentage
-     *
-     * @return int
-     */
-    public function calculate(array $discountableItems, $percentage)
-    {
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount($percentage);
-
-        return $this->calculateDiscount($discountableItems, $discountTransfer);
-    }
 
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
@@ -60,7 +44,7 @@ class Percentage implements CalculatorInterface
         }
 
         foreach ($discountableItems as $discountableItemTransfer) {
-            $itemTotalAmount = $discountableItemTransfer->getUnitGrossPrice() * $this->getDiscountableObjectQuantity($discountableItemTransfer);
+            $itemTotalAmount = $discountableItemTransfer->getUnitPrice() * $this->getDiscountableObjectQuantity($discountableItemTransfer);
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $value);
         }
 
@@ -72,14 +56,14 @@ class Percentage implements CalculatorInterface
     }
 
     /**
-     * @param int $grossPrice
+     * @param int $unitPrice
      * @param int $discountPercentage
      *
      * @return int
      */
-    protected function calculateDiscountAmount($grossPrice, $discountPercentage)
+    protected function calculateDiscountAmount($unitPrice, $discountPercentage)
     {
-        $itemDiscountAmount = ($grossPrice * $discountPercentage / 100) + static::$roundingError;
+        $itemDiscountAmount = ($unitPrice * $discountPercentage / 100) + static::$roundingError;
         $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
         static::$roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 

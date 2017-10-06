@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Communication;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatter;
 use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 use Spryker\Zed\Discount\Communication\Form\ConditionsForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
@@ -24,6 +25,8 @@ use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -177,14 +180,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
-     */
-    public function getCalculatorPlugins()
-    {
-        return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformerInterface
      */
     public function createJavascriptQueryBuilderTransformer()
@@ -197,7 +192,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createDiscountDataProvider()
     {
-        $discountFormDataProvider = new DiscountFormDataProvider();
+        $discountFormDataProvider = new DiscountFormDataProvider($this->getCurrencyFacade());
         $discountFormDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
 
         return $discountFormDataProvider;
@@ -216,6 +211,30 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
     ) {
         return new DiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyType|\Symfony\Component\Form\FormInterface
+     */
+    public function createMoneyAmountFormType()
+    {
+        return new MoneyType();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatterInterface
+     */
+    public function createDiscountAmountFormatter()
+    {
+        return new DiscountAmountFormatter($this->getCalculatorPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType
+     */
+    public function createPriceCollectionType()
+    {
+        return new MoneyCollectionType();
     }
 
     /**
@@ -248,6 +267,22 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getDiscountViewBlockProviderPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     */
+    public function getCalculatorPlugins()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
     }
 
 }

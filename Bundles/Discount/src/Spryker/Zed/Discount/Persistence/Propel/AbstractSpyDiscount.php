@@ -10,7 +10,7 @@ namespace Spryker\Zed\Discount\Persistence\Propel;
 use Orm\Zed\Discount\Persistence\Base\SpyDiscount as BaseSpyDiscount;
 
 /**
- * Skeleton subclass for representing a row from the 'pac_discount' table.
+ * Skeleton subclass for representing a row from the 'spy_discount' table.
  *
  *
  *

@@ -6,10 +6,12 @@
 
 namespace SprykerTest\Zed\Discount\Business\Persistence;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
+use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
@@ -101,18 +103,27 @@ class DiscountConfiguratorHydrateTest extends Unit
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface|null $discountEntityMapperMock
      *
      * @return \Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate
      */
     protected function createDiscountConfiguratorHydrate(
-        DiscountQueryContainerInterface $discountQueryContainerMock = null
+        DiscountQueryContainerInterface $discountQueryContainerMock = null,
+        DiscountEntityMapperInterface $discountEntityMapperMock = null
     ) {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
 
+        if (!$discountEntityMapperMock) {
+            $discountEntityMapperMock = $this->createEntityMapperMock();
+            $discountEntityMapperMock->method('getMoneyValueCollectionForEntity')
+                ->willReturn(new ArrayObject());
+        }
+
         return new DiscountConfiguratorHydrate(
-            $discountQueryContainerMock
+            $discountQueryContainerMock,
+            $discountEntityMapperMock
         );
     }
 
@@ -151,6 +162,14 @@ class DiscountConfiguratorHydrateTest extends Unit
     protected function createDiscountQueryMock()
     {
         return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['findOneByIdDiscount'])->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
+     */
+    protected function createEntityMapperMock()
+    {
+        return $this->getMockBuilder(DiscountEntityMapperInterface::class)->getMock();
     }
 
 }

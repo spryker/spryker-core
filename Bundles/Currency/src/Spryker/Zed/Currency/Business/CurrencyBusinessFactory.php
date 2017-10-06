@@ -28,7 +28,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
-            $this->getStore()->getCurrencyIsoCode()
+            $this->getStoreFacade()->getCurrentStore()->getSelectedCurrencyIsoCode()
         );
     }
 
@@ -39,7 +39,8 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     {
         return new CurrencyReader(
             $this->getQueryContainer(),
-            $this->createCurrencyMapper()
+            $this->createCurrencyMapper(),
+            $this->getStoreFacade()
         );
     }
 
@@ -52,11 +53,19 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\Currency\Business\Model\CurrencyMapperInterface
      */
-    protected function getStore()
+    protected function createCurrencyMapper()
     {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
+        return new CurrencyMapper($this->getInternationalization());
+    }
+
+    /**
+     * @return \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::FACADE_STORE);
     }
 
     /**
@@ -65,14 +74,6 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     protected function getInternationalization()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::INTERNATIONALIZATION);
-    }
-
-    /**
-     * @return \Spryker\Zed\Currency\Business\Model\CurrencyMapperInterface
-     */
-    protected function createCurrencyMapper()
-    {
-        return new CurrencyMapper($this->getInternationalization());
     }
 
 }

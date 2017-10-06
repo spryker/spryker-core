@@ -84,4 +84,18 @@ $(document).ready(function() {
 
           $('#collector-type-' + $(event.target).val()).show();
     });
+
+    $('#discount_discountCalculator_calculator_plugin').on('change', function(event) {
+
+        $('.discount-calculation-input-type').each(function(index, element) {
+            $(element).hide();
+        });
+
+        var activeCalculatorInputType = $('#discount_discountCalculator_calculator_plugin :selected').data('calculator-input-type');
+        $('#' + activeCalculatorInputType).show();
+    });
+
+    var activeCalculatorInputType = $('#discount_discountCalculator_calculator_plugin :selected').data('calculator-input-type');
+    $('#' + activeCalculatorInputType).show();
+
 });
