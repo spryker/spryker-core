@@ -82,13 +82,7 @@ class CurrencyReader implements CurrencyReaderInterface
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        $storeCurrencyTransfer = new StoreCurrencyTransfer();
-        $storeCurrencyTransfer->setStore($storeTransfer);
-        $storeCurrencyTransfer->setCurrencies(
-            new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
-        );
-
-        return $storeCurrencyTransfer;
+        return $this->mapStoreCurrency($storeTransfer);
     }
 
     /**
@@ -98,14 +92,7 @@ class CurrencyReader implements CurrencyReaderInterface
     {
         $currenciesPerStore = [];
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-
-            $storeCurrencyTransfer = new StoreCurrencyTransfer();
-            $storeCurrencyTransfer->setStore($storeTransfer);
-            $storeCurrencyTransfer->setCurrencies(
-                new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
-            );
-
-            $currenciesPerStore[] = $storeCurrencyTransfer;
+            $currenciesPerStore[] = $this->mapStoreCurrency($storeTransfer);
         }
 
         return $currenciesPerStore;
@@ -168,6 +155,21 @@ class CurrencyReader implements CurrencyReaderInterface
             $currencies[] = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
         }
         return $currencies;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     */
+    protected function mapStoreCurrency(StoreTransfer $storeTransfer)
+    {
+        $storeCurrencyTransfer = new StoreCurrencyTransfer();
+        $storeCurrencyTransfer->setStore($storeTransfer);
+        $storeCurrencyTransfer->setCurrencies(
+            new ArrayObject($this->getCurrenciesByIsoCodes($storeTransfer))
+        );
+        return $storeCurrencyTransfer;
     }
 
 }

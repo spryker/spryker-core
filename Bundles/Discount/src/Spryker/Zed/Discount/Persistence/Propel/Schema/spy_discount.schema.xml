@@ -81,6 +81,11 @@
         <column name="gross_amount" type="INTEGER" required="false"/>
         <column name="net_amount" type="INTEGER" required="false"/>
 
+        <unique name="spy_discount_amount-unique-currency-discount">
+            <unique-column name="fk_currency" />
+            <unique-column name="fk_discount" />
+        </unique>
+
         <foreign-key name="spy_discount_amount-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="DiscountAmount">
             <reference local="fk_currency" foreign="id_currency"/>
         </foreign-key>

@@ -5,9 +5,9 @@
   "require": {
     "moneyphp/money": "^3.0.0",
     "spryker/currency": "^2.0.0 || ^3.0.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/store": "^1.1.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

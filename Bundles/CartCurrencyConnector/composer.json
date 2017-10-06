@@ -7,6 +7,9 @@
     "spryker/currency": "^3.1.0",
     "spryker/kernel": "^3.0.0"
   },
+  "suggest": {
+    "spryker/currency": "If you want to use plugin to rebuild cart when currency changed"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
@@ -14,9 +17,6 @@
       "SprykerTest\\Zed\\CartCurrencyConnector\\": "tests/SprykerTest/Zed/CartCurrencyConnector/_support/",
       "CartCurrencyConnector\\Module\\": "tests/_support/Module/"
     }
-  },
-  "suggest": {
-    "spryker/currency": "If you want to use plugin to rebuild cart when currency changed"
   },
   "autoload-dev": {
     "psr-4": {
