@@ -52,6 +52,7 @@
         <column name="id_oms_state_machine_lock" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="identifier" type="VARCHAR" size="255"  required="true"/>
         <column name="expires" type="TIMESTAMP" required="true"/>
+        <column name="details" type="VARCHAR" />
 
         <behavior name="timestampable"/>
 

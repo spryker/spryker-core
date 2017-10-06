@@ -41,8 +41,8 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      */
     public function triggerEvent($eventId, array $orderItems, $data)
     {
-        $identifier = $this->buildIdentifierForOrderItemsLock($orderItems);
-        $this->triggerLocker->acquire($identifier);
+        $identifier = $this->acquireTriggerLocker($orderItems);
+
         try {
             $triggerEventResult = $this->stateMachine->triggerEvent($eventId, $orderItems, $data);
         } finally {
@@ -60,8 +60,8 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      */
     public function triggerEventForNewItem(array $orderItems, $data)
     {
-        $identifier = $this->buildIdentifierForOrderItemsLock($orderItems);
-        $this->triggerLocker->acquire($identifier);
+        $identifier = $this->acquireTriggerLocker($orderItems);
+
         try {
             $triggerEventResult = $this->stateMachine->triggerEventForNewItem($orderItems, $data);
         } finally {
@@ -141,18 +141,50 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * @param array $orderItems
+     *
+     * @return string
+     */
+    protected function acquireTriggerLocker(array $orderItems)
+    {
+        $orderItemIds = $this->collectIdentifiersForOrderItemsLock($orderItems);
+
+        $identifier = $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
+        $details = $this->buildDetails($orderItemIds);
+
+        $this->triggerLocker->acquire($identifier, $details);
+
+        return $identifier;
+    }
+
+    /**
+     * @deprecated Use collectIdentifiersForOrderItemsLock() && buildIdentifierForOrderItemIdsLock() instead
+     * Will be removed with the next major.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
      * @return string
      */
     protected function buildIdentifierForOrderItemsLock(array $orderItems)
     {
+        $orderItemIds = $this->collectIdentifiersForOrderItemsLock($orderItems);
+
+        return $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     *
+     * @return array
+     */
+    protected function collectIdentifiersForOrderItemsLock(array $orderItems)
+    {
         $orderItemIds = [];
         foreach ($orderItems as $orderItem) {
             $orderItemIds[] = $orderItem->getIdSalesOrderItem();
         }
 
-        return $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
+        return $orderItemIds;
     }
 
     /**
@@ -168,6 +200,20 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
         $identifier = hash('sha512', $identifier);
 
         return $identifier;
+    }
+
+    /**
+     * @param array $orderItemIds
+     *
+     * @return string|null
+     */
+    protected function buildDetails(array $orderItemIds)
+    {
+        if (empty($orderItemIds)) {
+            return null;
+        }
+
+        return \json_encode($orderItemIds);
     }
 
 }

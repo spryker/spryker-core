@@ -44,17 +44,20 @@ class TriggerLocker implements LockerInterface
      * throws a LockException
      *
      * @param int $identifier
+     * @param string|null $details
      *
      * @throws \Spryker\Zed\Oms\Business\Exception\LockException
      *
      * @return bool
      */
-    public function acquire($identifier)
+    public function acquire($identifier, $details = null)
     {
         $stateMachineLockEntity = $this->createStateMachineLockEntity();
 
         $stateMachineLockEntity->setIdentifier($identifier);
         $stateMachineLockEntity->setExpires($this->createExpirationDate());
+        $stateMachineLockEntity->setDetails($details);
+
         try {
             $affectedRows = $stateMachineLockEntity->save();
         } catch (PropelException $exception) {
