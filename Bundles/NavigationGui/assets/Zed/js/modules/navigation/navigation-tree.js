@@ -202,7 +202,7 @@ function resetForm()  {
  * @return {void}
  */
 function onIframeLoad() {
-    changeIframeHeight();
+    $($iframe[0].contentWindow).on('resize', changeIframeHeight);
 
     $formProgressBar.addClass('hidden');
     $iframe.removeClass('hidden');
@@ -217,8 +217,8 @@ function onIframeLoad() {
 /**
  * @return {void}
  */
-function changeIframeHeight(callback) {
-    var iframeContentHeight = $iframe.contents().find('.content').height();
+function changeIframeHeight() {
+    var iframeContentHeight = this.document.body.scrollHeight;
     $iframe.height(iframeContentHeight);
 }
 
