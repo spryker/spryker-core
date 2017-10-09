@@ -202,10 +202,11 @@ function resetForm()  {
  * @return {void}
  */
 function onIframeLoad() {
-    $($iframe[0].contentWindow).on('resize', changeIframeHeight);
-
+    changeIframeHeight();
     $formProgressBar.addClass('hidden');
     $iframe.removeClass('hidden');
+
+    $($iframe[0].contentWindow).on('resize', changeIframeHeight);
 
     // tree reloading
     var treeReloader = $iframe.contents().find('#navigation-tree-reloader');
@@ -218,7 +219,7 @@ function onIframeLoad() {
  * @return {void}
  */
 function changeIframeHeight() {
-    var iframeContentHeight = this.document.body.scrollHeight;
+    var iframeContentHeight = $iframe[0].contentWindow.document.body.scrollHeight;
     $iframe.height(iframeContentHeight);
 }
 
