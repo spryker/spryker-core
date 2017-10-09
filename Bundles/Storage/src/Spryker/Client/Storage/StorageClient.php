@@ -343,6 +343,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected function loadAllValues()
     {
         self::$bufferedValues = [];
+        self::$bufferedDecodedValues = [];
 
         if (!empty(self::$cachedKeys) && is_array(self::$cachedKeys)) {
             $values = $this->getService()->getMulti(array_keys(self::$cachedKeys));
