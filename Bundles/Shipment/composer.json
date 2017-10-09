@@ -3,7 +3,7 @@
   "description": "Shipment module",
   "license": "proprietary",
   "require": {
-    "spryker/currency": "",
+    "spryker/currency": "^3.1.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.4.0",
     "spryker/money": "^2.0.0",

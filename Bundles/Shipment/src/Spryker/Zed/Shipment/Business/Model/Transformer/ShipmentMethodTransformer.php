@@ -29,7 +29,7 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
     protected $currencyFacade;
 
     /**
-     * @var array
+     * @var array Keys are currency iso codes, values are Currency transfer objects.
      */
     protected $currencyCache = [];
 
@@ -60,20 +60,19 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $methodEntity
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
      */
     protected function getPriceCollection(SpyShipmentMethod $methodEntity)
     {
         $moneyValueCollection = new ArrayObject();
         foreach ($methodEntity->getShipmentMethodPrices() as $shipmentMethodPriceEntity) {
-            $moneyValueCollection->append(
-                (new MoneyValueTransfer())
-                    ->fromArray($shipmentMethodPriceEntity->toArray(), true)
-                    ->setIdEntity($shipmentMethodPriceEntity->getIdShipmentMethodPrice())
-                    ->setNetAmount($shipmentMethodPriceEntity->getDefaultNetPrice())
-                    ->setGrossAmount($shipmentMethodPriceEntity->getDefaultGrossPrice())
-                    ->setCurrency($this->getCurrencyTransfer($shipmentMethodPriceEntity->getFkCurrency()))
-            );
+            $moneyValueTransfer = (new MoneyValueTransfer())
+                ->fromArray($shipmentMethodPriceEntity->toArray(), true)
+                ->setIdEntity($shipmentMethodPriceEntity->getIdShipmentMethodPrice())
+                ->setNetAmount($shipmentMethodPriceEntity->getDefaultNetPrice())
+                ->setGrossAmount($shipmentMethodPriceEntity->getDefaultGrossPrice())
+                ->setCurrency($this->getCurrencyTransfer($shipmentMethodPriceEntity->getFkCurrency()));
+            $moneyValueCollection->append($moneyValueTransfer);
         }
 
         return $moneyValueCollection;
@@ -86,7 +85,7 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
      */
     protected function getCurrencyTransfer($idCurrency)
     {
-        if (array_key_exists($idCurrency, $this->currencyCache)) {
+        if (isset($this->currencyCache[$idCurrency])) {
             return (new CurrencyTransfer())->fromArray($this->currencyCache[$idCurrency]);
         }
 

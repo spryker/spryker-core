@@ -46,7 +46,7 @@ class Method implements MethodInterface
     protected $plugins;
 
     /**
-     * @var array
+     * @var array Keys are currency iso codes, values are Currency transfer objects.
      */
     protected $currencyCache = [];
 
@@ -77,12 +77,11 @@ class Method implements MethodInterface
         $methodEntity->fromArray($methodTransfer->toArray());
         $methodEntity->save();
 
-        $idMethod = $methodEntity->getPrimaryKey();
-
-        $methodTransfer->setIdShipmentMethod($idMethod);
+        $idShipmentMethod = $methodEntity->getPrimaryKey();
+        $methodTransfer->setIdShipmentMethod($idShipmentMethod);
         $this->methodPrice->save($methodTransfer);
 
-        return $idMethod;
+        return $idShipmentMethod;
     }
 
     /**
@@ -97,7 +96,7 @@ class Method implements MethodInterface
         $currentStoreId = $this->storeFacade->getCurrentStore()->getIdStore();
 
         foreach ($methods as $shipmentMethodEntity) {
-            $shipmentMethodTransfer = $this->getAvailableMethod($shipmentMethodEntity, $quoteTransfer, $currentStoreId);
+            $shipmentMethodTransfer = $this->findAvailableMethod($shipmentMethodEntity, $quoteTransfer, $currentStoreId);
             if ($shipmentMethodTransfer === null) {
                 continue;
             }
@@ -115,13 +114,13 @@ class Method implements MethodInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function getAvailableMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $currentIdStore)
+    protected function findAvailableMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $currentIdStore)
     {
         if (!$this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
             return null;
         }
 
-        $storeCurrencyPrice = $this->getStoreCurrencyPrice($shipmentMethodEntity, $quoteTransfer, $currentIdStore);
+        $storeCurrencyPrice = $this->findStoreCurrencyPrice($shipmentMethodEntity, $quoteTransfer, $currentIdStore);
         if ($storeCurrencyPrice === null) {
             return null;
         }
@@ -232,7 +231,6 @@ class Method implements MethodInterface
 
             $methodEntity->fromArray($methodTransfer->toArray());
             $methodEntity->save();
-
             $this->methodPrice->save($methodTransfer);
 
             return $methodEntity->getPrimaryKey();
@@ -278,7 +276,7 @@ class Method implements MethodInterface
      *
      * @return int|null
      */
-    protected function getStoreCurrencyPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer, $storeId)
+    protected function findStoreCurrencyPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer, $storeId)
     {
         $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
         if (isset($pricePlugins[$method->getPricePlugin()])) {
@@ -293,7 +291,6 @@ class Method implements MethodInterface
                 $this->getCurrencyTransferByIsoCode($quoteTransfer->getCurrency()->getCode())->getIdCurrency()
             )
             ->findOne();
-
         if ($methodPriceEntity === null) {
             return null;
         }
@@ -312,7 +309,7 @@ class Method implements MethodInterface
      */
     protected function getCurrencyTransferByIsoCode($currencyIsoCode)
     {
-        if (!array_key_exists($currencyIsoCode, $this->currencyCache)) {
+        if (!isset($this->currencyCache[$currencyIsoCode])) {
             $this->currencyCache[$currencyIsoCode] = $this->currencyFacade->fromIsoCode($currencyIsoCode);
         }
 

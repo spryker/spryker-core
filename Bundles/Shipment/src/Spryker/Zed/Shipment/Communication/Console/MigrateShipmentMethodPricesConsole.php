@@ -22,7 +22,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class MigrateShipmentMethodPricesConsole extends Console
 {
 
-    const COMMAND_NAME = 'shipment:migrate:shipment-price';
+    const COMMAND_NAME = 'shipment:shipment-method-price:migrate';
     const COMMAND_DESCRIPTION = 'Console command to migrate shipment prices to multi currency implementation.';
 
     /**
@@ -178,7 +178,7 @@ class MigrateShipmentMethodPricesConsole extends Console
      */
     protected function getIdCurrencyByIsoCode($currencyIsoCode)
     {
-        if (!array_key_exists($currencyIsoCode, $this->currencyCache)) {
+        if (!isset($this->currencyCache[$currencyIsoCode])) {
             $this->currencyCache[$currencyIsoCode] = $this->getFactory()
                 ->getCurrencyFacade()
                 ->fromIsoCode($currencyIsoCode)

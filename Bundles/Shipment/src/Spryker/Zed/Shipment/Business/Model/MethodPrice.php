@@ -27,16 +27,16 @@ class MethodPrice implements MethodPriceInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return void
      */
-    public function save(ShipmentMethodTransfer $methodTransfer)
+    public function save(ShipmentMethodTransfer $shipmentMethodTransfer)
     {
-        foreach ($methodTransfer->getPrices() as $moneyValueTransfer) {
+        foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {
             $shipmentMethodPriceEntity = $this->queryContainer
                 ->queryMethodPriceByShipmentMethodAndStoreCurrency(
-                    $methodTransfer->getIdShipmentMethod(),
+                    $shipmentMethodTransfer->getIdShipmentMethod(),
                     $moneyValueTransfer->getFkStore(),
                     $moneyValueTransfer->getFkCurrency()
                 )
