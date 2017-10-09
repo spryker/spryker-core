@@ -97,23 +97,40 @@ class Method implements MethodInterface
         $currentStoreId = $this->storeFacade->getCurrentStore()->getIdStore();
 
         foreach ($methods as $shipmentMethodEntity) {
-            $shipmentMethodTransfer = new ShipmentMethodTransfer();
-            $shipmentMethodTransfer->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity));
-            $shipmentMethodTransfer = $this->mapEntityToTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
-
-            if ($this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
-                $shipmentMethodTransfer->setStoreCurrencyPrice($this->getPrice($shipmentMethodEntity, $quoteTransfer, $currentStoreId));
-                $shipmentMethodTransfer->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer));
-                $shipmentMethodTransfer->setCarrierName($shipmentMethodEntity->getShipmentCarrier());
-
-                $shipmentCarrierName = $this->findShipmentCarrierName($shipmentMethodEntity);
-                $shipmentMethodTransfer->setCarrierName($shipmentCarrierName);
-
-                $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
+            $shipmentMethodTransfer = $this->getAvailableMethod($shipmentMethodEntity, $quoteTransfer, $currentStoreId);
+            if ($shipmentMethodTransfer === null) {
+                continue;
             }
+
+            $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
         }
 
         return $shipmentMethodsTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $currentIdStore
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function getAvailableMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $currentIdStore)
+    {
+        if (!$this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
+            return null;
+        }
+
+        $storeCurrencyPrice = $this->getStoreCurrencyPrice($shipmentMethodEntity, $quoteTransfer, $currentIdStore);
+        if ($storeCurrencyPrice === null) {
+            return null;
+        }
+
+        return $this->mapEntityToTransfer($shipmentMethodEntity, new ShipmentMethodTransfer())
+            ->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity))
+            ->setStoreCurrencyPrice($storeCurrencyPrice)
+            ->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer))
+            ->setCarrierName($this->findShipmentCarrierName($shipmentMethodEntity));
     }
 
     /**
@@ -259,30 +276,31 @@ class Method implements MethodInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $storeId
      *
-     * @return int
+     * @return int|null
      */
-    protected function getPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer, $storeId)
+    protected function getStoreCurrencyPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer, $storeId)
     {
-        $currencyTransfer = $this->getCurrencyTransferByIsoCode($quoteTransfer->getCurrency()->getCode());
+        $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
+        if (isset($pricePlugins[$method->getPricePlugin()])) {
+            $pricePlugin = $this->getPricePlugin($method, $pricePlugins);
+            return $pricePlugin->getPrice($quoteTransfer);
+        }
 
         $methodPriceEntity = $this->queryContainer
             ->queryMethodPriceByShipmentMethodAndStoreCurrency(
                 $method->getIdShipmentMethod(),
                 $storeId,
-                $currencyTransfer->getIdCurrency()
+                $this->getCurrencyTransferByIsoCode($quoteTransfer->getCurrency()->getCode())->getIdCurrency()
             )
             ->findOne();
+
+        if ($methodPriceEntity === null) {
+            return null;
+        }
 
         $price = $quoteTransfer->getPriceMode() === PriceMode::PRICE_MODE_GROSS ?
             $methodPriceEntity->getDefaultGrossPrice() :
             $methodPriceEntity->getDefaultNetPrice();
-
-        $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
-
-        if (isset($pricePlugins[$method->getPricePlugin()])) {
-            $pricePlugin = $this->getPricePlugin($method, $pricePlugins);
-            $price = $pricePlugin->getPrice($quoteTransfer);
-        }
 
         return $price;
     }
