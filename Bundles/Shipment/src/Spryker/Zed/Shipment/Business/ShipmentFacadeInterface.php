@@ -72,8 +72,8 @@ interface ShipmentFacadeInterface
      * Specification:
      * - Retrieves active shipment methods.
      * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
-     * - Calculates shipment method price for the provided currency and current store.
-     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin.
+     * - Selects shipment method price for the provided currency and current store.
+     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
      * - Excludes shipment methods which do not have a valid price as a result.
      * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
      *
