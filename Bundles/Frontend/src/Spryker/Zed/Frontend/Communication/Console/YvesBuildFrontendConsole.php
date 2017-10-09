@@ -5,19 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Communication\Console;
+namespace Spryker\Zed\Frontend\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 /**
- * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
+ * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
  */
-class DatabaseDropConsole extends Console
+class YvesBuildFrontendConsole extends Console
 {
 
-    const COMMAND_NAME = 'propel:database:drop';
+    const COMMAND_NAME = 'frontend:yves-build-frontend';
+    const DESCRIPTION = 'This command will build Yves frontend.';
 
     /**
      * @return void
@@ -25,7 +27,7 @@ class DatabaseDropConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Drop existing database.');
+        $this->setDescription(self::DESCRIPTION);
 
         parent::configure();
     }
@@ -38,9 +40,14 @@ class DatabaseDropConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Drop propel database');
+        $this->info('Build Yves frontend');
 
-        $this->getFacade()->dropDatabase();
+        $process = new Process('npm run yves', APPLICATION_ROOT_DIR);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
+
+        return static::CODE_SUCCESS;
     }
 
 }

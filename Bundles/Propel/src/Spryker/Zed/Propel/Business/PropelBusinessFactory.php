@@ -13,12 +13,10 @@ use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
 use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollection;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\Drop\MySqlDatabaseDropper;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\Drop\PostgreSqlDatabaseDropper;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\EngineAwareCommandCollection;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\EngineCollection;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\EngineFactory;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\PropelDatabaseEngineAwareCommandExecutor;
 use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
@@ -164,6 +162,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `createPropelDatabaseEngineCollection` instead.
+     *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabaseInterface
      */
     public function createDatabaseCreator()
@@ -174,6 +174,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `createPropelDatabaseEngineCollection` instead.
+     *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface
      */
     protected function createDatabaseCreatorCollection()
@@ -187,6 +189,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `createPropelDatabaseEngineCollection` instead.
+     *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
     protected function createMySqlDatabaseCreator()
@@ -195,51 +199,13 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `createPropelDatabaseEngineCollection` instead.
+     *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
     protected function createPostgreSqlDatabaseCreator()
     {
         return new PostgreSqlDatabaseCreator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\PropelDatabaseCommandExecutorInterface
-     */
-    public function createDatabaseDropper()
-    {
-        return new PropelDatabaseEngineAwareCommandExecutor(
-            $this->createDatabaseDropperCollection(),
-            $this->getConfig()->getCurrentDatabaseEngine()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\EngineAwareCommandCollectionInterface
-     */
-    protected function createDatabaseDropperCollection()
-    {
-        $commandCollection = new EngineAwareCommandCollection();
-        $commandCollection
-            ->add($this->createMySqlDatabaseDropper())
-            ->add($this->createPostgreSqlDatabaseDropper());
-
-        return $commandCollection;
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\EngineAwareCommandInterface|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Drop\MySqlDatabaseDropper
-     */
-    protected function createMySqlDatabaseDropper()
-    {
-        return new MySqlDatabaseDropper();
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\EngineAwareCommandInterface|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Drop\MySqlDatabaseDropper
-     */
-    protected function createPostgreSqlDatabaseDropper()
-    {
-        return new PostgreSqlDatabaseDropper();
     }
 
     /**
@@ -380,5 +346,26 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function createMigrationCheckConsole()
     {
         return new MigrationCheckConsole();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\EngineCollectionInterface
+     */
+    public function createPropelDatabaseEngineCollection()
+    {
+        $engineCollection = new EngineCollection($this->getConfig()->getCurrentDatabaseEngine());
+
+        $engineCollection->addEngine($this->createEngineFactory()->createMySqlEngine());
+        $engineCollection->addEngine($this->createEngineFactory()->createPostgreSqlEngine());
+
+        return $engineCollection;
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\EngineFactoryInterface
+     */
+    protected function createEngineFactory()
+    {
+        return new EngineFactory();
     }
 }

@@ -59,4 +59,15 @@ class LogConfig extends AbstractBundleConfig
     {
         return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH);
     }
+
+    /**
+     * @return array
+     */
+    public function getLogFileDirectories()
+    {
+        return [
+            dirname($this->get(LogConstants::LOG_FILE_PATH)),
+            dirname($this->get(LogConstants::EXCEPTION_LOG_FILE_PATH)),
+        ];
+    }
 }

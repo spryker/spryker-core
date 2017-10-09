@@ -5,63 +5,81 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Drop;
+namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\PostgreSql;
 
 use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\EngineAwareCommandInterface;
-use Spryker\Zed\Propel\PropelConfig;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
 use Symfony\Component\Process\Process;
 
-class PostgreSqlDatabaseDropper implements EngineAwareCommandInterface
+class CreatePostgreSqlDatabase implements CreateDatabaseInterface
 {
-
-    /**
-     * @return string
-     */
-    public function getEngine()
-    {
-        return PropelConfig::DB_ENGINE_PGSQL;
-    }
 
     /**
      * @return void
      */
-    public function __invoke()
+    public function createIfNotExists()
     {
-        $this->dropDatabase();
+        if (!$this->existsDatabase()) {
+            $this->createDatabase();
+        }
     }
 
     /**
      * @return bool
      */
-    protected function dropDatabase()
+    protected function existsDatabase()
+    {
+        return $this->runProcess(
+            $this->getExistsCommand()
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    protected function createDatabase()
     {
         $this->runProcess(
-            $this->getDropCommand()
+            $this->getCreateCommand()
         );
     }
 
     /**
      * @return string
      */
-    protected function getDropCommand()
+    protected function getExistsCommand()
     {
-        if ($this->useSudo()) {
-            return $this->getSudoDropCommand();
-        }
-
-        return $this->getDropCommandRemote();
+        return sprintf(
+            'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
+            Config::get(PropelConstants::ZED_DB_HOST),
+            Config::get(PropelConstants::ZED_DB_PORT),
+            Config::get(PropelConstants::ZED_DB_USERNAME),
+            Config::get(PropelConstants::ZED_DB_DATABASE),
+            Config::get(PropelConstants::ZED_DB_DATABASE)
+        );
     }
 
     /**
      * @return string
      */
-    protected function getDropCommandRemote()
+    protected function getCreateCommand()
+    {
+        if ($this->useSudo()) {
+            return $this->getSudoCreateCommand();
+        }
+
+        return $this->getCreateCommandRemote();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCreateCommandRemote()
     {
         return sprintf(
-            'psql -h %s -p %s -U %s -w -c "DROP DATABASE IF EXISTS \"%s\"; " %s',
+            'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
@@ -73,10 +91,10 @@ class PostgreSqlDatabaseDropper implements EngineAwareCommandInterface
     /**
      * @return string
      */
-    protected function getSudoDropCommand()
+    protected function getSudoCreateCommand()
     {
         return sprintf(
-            'sudo dropdb %s --if-exists',
+            'sudo createdb %s -E UTF8 -T template0',
             Config::get(PropelConstants::ZED_DB_DATABASE)
         );
     }

@@ -24,24 +24,16 @@ interface PropelFacadeInterface
     public function copySchemaFilesToTargetDirectory();
 
     /**
+     * @api
+     *
+     * @deprecated Use `createDatabase` instead.
+     *
      * Specification:
      * - Create database for configured driver if it doesn't exist
-     *
-     * @api
      *
      * @return void
      */
     public function createDatabaseIfNotExists();
-
-    /**
-     * Specification:
-     * - Drop database for configured driver.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function dropDatabase();
 
     /**
      * Specification:
@@ -124,4 +116,48 @@ interface PropelFacadeInterface
      * @return void
      */
     public function deleteMigrationFilesDirectory();
+
+    /**
+     * Specification:
+     * - Create database if not exists for configured driver.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function createDatabase();
+
+    /**
+     * Specification:
+     * - Drop database for configured driver.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function dropDatabase();
+
+    /**
+     * Specification:
+     * - Export database backup for configured driver to `$backupPath`.
+     *
+     * @api
+     *
+     * @param string $backupPath
+     *
+     * @return void
+     */
+    public function exportDatabase($backupPath);
+
+    /**
+     * Specification:
+     * - Import database backup for configured driver from `$backupPath`.
+     *
+     * @api
+     *
+     * @param string $backupPath
+     *
+     * @return void
+     */
+    public function importDatabase($backupPath);
 }

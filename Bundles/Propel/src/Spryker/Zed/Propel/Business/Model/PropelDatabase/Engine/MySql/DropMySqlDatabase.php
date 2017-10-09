@@ -5,29 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Drop;
+namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\MySql;
 
 use PDO;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\EngineAwareCommandInterface;
-use Spryker\Zed\Propel\PropelConfig;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 
-class MySqlDatabaseDropper implements EngineAwareCommandInterface
+class DropMySqlDatabase implements DropDatabaseInterface
 {
-
-    /**
-     * @return string
-     */
-    public function getEngine()
-    {
-        return PropelConfig::DB_ENGINE_MYSQL;
-    }
 
     /**
      * @return void
      */
-    public function __invoke()
+    public function dropDatabase()
     {
         $this->getConnection()->exec($this->getQuery());
     }
@@ -60,7 +51,7 @@ class MySqlDatabaseDropper implements EngineAwareCommandInterface
      */
     protected function getQuery()
     {
-        return 'DROP DATABASE IF EXISTS ' . Config::get(PropelConstants::ZED_DB_DATABASE) . ' CHARACTER SET "utf8"';
+        return 'DROP DATABASE IF EXISTS ' . Config::get(PropelConstants::ZED_DB_DATABASE);
     }
 
 }

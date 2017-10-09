@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\PropelDatabase;
+namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Command;
 
-interface PropelDatabaseCommandExecutorInterface
+interface CreateDatabaseInterface
 {
 
     /**
      * @return void
      */
-    public function execute();
+    public function createIfNotExists();
 
 }

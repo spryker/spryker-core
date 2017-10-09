@@ -5,19 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Communication\Console;
+namespace Spryker\Zed\Log\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
+ * @method \Spryker\Zed\Log\Business\LogFacade getFacade()
  */
-class DatabaseDropConsole extends Console
+class DeleteLogFilesConsole extends Console
 {
 
-    const COMMAND_NAME = 'propel:database:drop';
+    const COMMAND_NAME = 'log:delete:log-file-directories';
+    const DESCRIPTION = 'This command will delete all log files and their directory.';
 
     /**
      * @return void
@@ -25,7 +26,7 @@ class DatabaseDropConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Drop existing database.');
+        $this->setDescription(self::DESCRIPTION);
 
         parent::configure();
     }
@@ -34,13 +35,12 @@ class DatabaseDropConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Drop propel database');
-
-        $this->getFacade()->dropDatabase();
+        $this->info('Delete log files');
+        $this->getFacade()->deleteLogFileDirectories();
     }
 
 }

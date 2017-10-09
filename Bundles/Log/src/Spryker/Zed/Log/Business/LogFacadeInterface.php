@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\PropelDatabase;
+namespace Spryker\Zed\Log\Business;
 
-interface EngineAwareCommandInterface
+interface LogFacadeInterface
 {
 
     /**
+     * Specification:
+     * - Deletes all specified log directories.
+     *
+     * @api
+     *
      * @return void
      */
-    public function __invoke();
-
-    /**
-     * @return string
-     */
-    public function getEngine();
+    public function deleteLogFileDirectories();
 
 }
