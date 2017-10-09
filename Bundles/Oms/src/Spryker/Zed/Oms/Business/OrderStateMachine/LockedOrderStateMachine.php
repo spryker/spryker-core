@@ -89,8 +89,8 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, $data)
     {
-        $identifier = $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
-        $this->triggerLocker->acquire($identifier);
+        $identifier = $this->acquireTriggerLockerByOrderItemIds($orderItemIds);
+
         try {
             $triggerEventResult = $this->stateMachine->triggerEventForNewOrderItems($orderItemIds, $data);
         } finally {
@@ -109,8 +109,8 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
     {
-        $identifier = $this->buildIdentifierForOrderItemIdsLock([$orderItemId]);
-        $this->triggerLocker->acquire($identifier);
+        $identifier = $this->acquireTriggerLockerByOrderItemIds([$orderItemId]);
+
         try {
             $triggerEventResult = $this->stateMachine->triggerEventForOneOrderItem($eventId, $orderItemId, $data);
         } finally {
@@ -129,8 +129,8 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, $data)
     {
-        $identifier = $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
-        $this->triggerLocker->acquire($identifier);
+        $identifier = $this->acquireTriggerLockerByOrderItemIds($orderItemIds);
+
         try {
             $triggerEventResult = $this->stateMachine->triggerEventForOrderItems($eventId, $orderItemIds, $data);
         } finally {
@@ -149,6 +149,16 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     {
         $orderItemIds = $this->collectIdentifiersForOrderItemsLock($orderItems);
 
+        return $this->acquireTriggerLockerByOrderItemIds($orderItemIds);
+    }
+
+    /**
+     * @param array $orderItemIds
+     *
+     * @return string
+     */
+    protected function acquireTriggerLockerByOrderItemIds(array $orderItemIds)
+    {
         $identifier = $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
         $details = $this->buildDetails($orderItemIds);
 
