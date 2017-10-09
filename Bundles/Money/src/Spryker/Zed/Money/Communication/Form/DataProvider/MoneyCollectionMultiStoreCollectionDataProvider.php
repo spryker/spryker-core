@@ -32,11 +32,11 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
     public function getInitialData()
     {
         $moneyValueCollection = new ArrayObject();
-        $storeCurrencyCollection = $this->currencyFacade->getAvailableStoreCurrencies();
-        foreach ($storeCurrencyCollection as $storeCurrencyTransfer) {
-            foreach ($storeCurrencyTransfer->getCurrencies() as $currencyTransfer) {
+        $storeCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
+        foreach ($storeCurrencyCollection as $storeWithCurrencyTransfer) {
+            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 $moneyValueCollection->append(
-                    $this->mapMoneyTransfer($currencyTransfer, $storeCurrencyTransfer->getStore())
+                    $this->mapMoneyTransfer($currencyTransfer, $storeWithCurrencyTransfer->getStore())
                 );
             }
         }
@@ -50,7 +50,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {
-        $storeCurrencyCollection = $this->currencyFacade->getAvailableStoreCurrencies();
+        $storeCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
 
         $existingCurrencyMap = $this->createCurrencyIndexMap($currentFormMoneyValueCollection);
 
@@ -63,7 +63,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
 
     /**
      * @param \ArrayObject $currentFormMoneyValueCollection
-     * @param \Generated\Shared\Transfer\StoreCurrencyTransfer[] $storeCurrencyCollection
+     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer[] $storeCurrencyCollection
      * @param array $existingCurrencyMap
      *
      * @return \ArrayObject
@@ -74,9 +74,9 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
         array $existingCurrencyMap
     ) {
 
-        foreach ($storeCurrencyCollection as $storeCurrencyTransfer) {
-            $storeTransfer = $storeCurrencyTransfer->getStore();
-            foreach ($storeCurrencyTransfer->getCurrencies() as $currencyTransfer) {
+        foreach ($storeCurrencyCollection as $storeWithCurrencyTransfer) {
+            $storeTransfer = $storeWithCurrencyTransfer->getStore();
+            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 if (isset($existingCurrencyMap[$currencyTransfer->getIdCurrency() . $storeTransfer->getIdStore()])) {
                     continue;
                 }

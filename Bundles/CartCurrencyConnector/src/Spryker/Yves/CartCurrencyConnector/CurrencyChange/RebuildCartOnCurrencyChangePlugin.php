@@ -18,6 +18,8 @@ class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements Curren
 {
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $currencyIsoCode

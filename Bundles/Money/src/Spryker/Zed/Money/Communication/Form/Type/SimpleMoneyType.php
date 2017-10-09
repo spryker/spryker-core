@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Money\Communication\Form\Type;
 
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType as SymfonyMoneyType;
 
-class SimpleMoneyType extends MoneyType
+class SimpleMoneyType extends SymfonyMoneyType
 {
 
     /**

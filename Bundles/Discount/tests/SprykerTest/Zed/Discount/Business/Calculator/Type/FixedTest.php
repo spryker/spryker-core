@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Spryker\Zed\Discount\Business\Calculator\Type\Fixed;
+use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 
 /**
  * Auto-generated group annotations
@@ -45,7 +45,7 @@ class FixedTest extends Unit
             ]
         );
 
-        $calculator = new Fixed();
+        $calculator = new FixedType();
         $discountTransfer = $this->createDiscountTransfer(self::DISCOUNT_AMOUNT_FIXED_100);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
@@ -65,7 +65,7 @@ class FixedTest extends Unit
             ]
         );
 
-        $calculator = new Fixed();
+        $calculator = new FixedType();
         $discountTransfer = $this->createDiscountTransfer(-1 * self::DISCOUNT_AMOUNT_FIXED_100);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 

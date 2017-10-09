@@ -27,7 +27,7 @@ class CustomerDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function haveCustomer($override = [])
+    public function haveCustomer(array $override = [])
     {
         $customerTransfer = (new CustomerBuilder($override))
             ->withBillingAddress()

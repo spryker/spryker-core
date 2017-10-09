@@ -82,10 +82,10 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
      */
     public function getQueryStringValueOptions()
     {
-        $storeCurrencies = $this->getFactory()->getCurrencyFacade()->getCurrentStoreCurrencies();
+        $storeCurrencies = $this->getFactory()->getCurrencyFacade()->getCurrentStoreWithCurrencies();
 
         $currencies = [];
-        foreach ($storeCurrencies as $currencyTransfer) {
+        foreach ($storeCurrencies->getCurrencies() as $currencyTransfer) {
             $currencies[$currencyTransfer->getCode()] = $currencyTransfer->getName();
         }
 

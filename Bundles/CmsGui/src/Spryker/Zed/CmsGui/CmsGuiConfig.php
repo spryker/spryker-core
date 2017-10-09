@@ -7,6 +7,7 @@
 namespace Spryker\Zed\CmsGui;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\CmsGui\CmsGuiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsGuiConfig extends AbstractBundleConfig
@@ -31,6 +32,22 @@ class CmsGuiConfig extends AbstractBundleConfig
         }
 
         return null;
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return string
+     */
+    public function getPreviewPageUrl($idCmsPage)
+    {
+        $yvesHost = $this->findYvesHost();
+
+        if ($yvesHost === null) {
+            return '';
+        }
+
+        return $yvesHost . sprintf($this->getConfig()->get(CmsGuiConstants::CMS_PAGE_PREVIEW_URI), $idCmsPage);
     }
 
 }

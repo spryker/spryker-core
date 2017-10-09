@@ -121,4 +121,12 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CustomerDependencyProvider::STORE);
     }
 
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
+     */
+    public function getCustomerTransferExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
 }

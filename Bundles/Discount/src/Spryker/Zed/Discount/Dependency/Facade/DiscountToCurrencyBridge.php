@@ -24,11 +24,11 @@ class DiscountToCurrencyBridge implements DiscountToCurrencyInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
-    public function getCurrentStoreCurrencies()
+    public function getCurrentStoreWithCurrencies()
     {
-        return $this->currencyFacade->getCurrentStoreCurrencies();
+        return $this->currencyFacade->getCurrentStoreWithCurrencies();
     }
 
     /**

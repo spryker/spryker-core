@@ -29,7 +29,7 @@ class ProductReviewDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function haveProductReview($override = [])
+    public function haveProductReview(array $override = [])
     {
         $productAbstractTransfer = $this->getModule(static::NAMESPACE_ROOT . ProductDataHelper::class)->haveProductAbstract();
         $customerTransfer = $this->getModule(static::NAMESPACE_ROOT . CustomerDataHelper::class)->haveCustomer();

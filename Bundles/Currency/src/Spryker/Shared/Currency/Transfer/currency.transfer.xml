@@ -12,7 +12,7 @@
         <property name="fractionDigits" type="int" />
     </transfer>
 
-    <transfer name="StoreCurrency">
+    <transfer name="StoreWithCurrency">
         <property name="store" type="Store" />
         <property name="currencies" type="Currency[]" singular="currency" />
     </transfer>
