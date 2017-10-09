@@ -20,7 +20,7 @@ class ShipmentMethodDataHelper extends Module
     const NAMESPACE_ROOT = '\\';
 
     /**
-     * First level keys represents idStore.
+     * First level key represents idStore.
      * Second level key represents idCurrency.
      * Second level value represents the optional corresponding MoneyValue override values.
      */
