@@ -18,8 +18,6 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {
 
     /**
-     * TODO: important change in the structure
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer

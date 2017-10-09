@@ -22,11 +22,11 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class MigrateShipmentMethodPricesConsole extends Console
 {
 
-    const COMMAND_NAME = 'shipment:shipment-method-price:migrate';
+    const COMMAND_NAME = 'shipment:price:migrate';
     const COMMAND_DESCRIPTION = 'Console command to migrate shipment prices to multi currency implementation.';
 
     /**
-     * @var array
+     * @var array Keys are currency iso codes, values are Currency transfer objects.
      */
     protected $currencyCache = [];
 

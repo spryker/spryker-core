@@ -27,10 +27,11 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
-    const FACADE_MONEY = 'money facade';
+
+    const FACADE_MONEY = 'FACADE_MONEY';
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
     const FACADE_STORE = 'FACADE_STORE';
-    const FACADE_TAX = 'facade tax';
+    const FACADE_TAX = 'FACADE_TAX';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

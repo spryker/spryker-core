@@ -29,7 +29,7 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
     protected $currencyFacade;
 
     /**
-     * @var array Keys are currency iso codes, values are Currency transfer objects.
+     * @var array Keys are currency iso codes, values are Currency transfer object data in array format.
      */
     protected $currencyCache = [];
 
