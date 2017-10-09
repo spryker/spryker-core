@@ -87,9 +87,11 @@ class ShipmentFacadeTest extends Test
         $stores[4]->fromArray(['id_store' => 4]);
         $stores[5]->fromArray(['id_store' => 5]);
 
-        ($shipmentMethodEntity = new SpyShipmentMethod())->fromArray($shipmentMethod);
+        $shipmentMethodEntity = new SpyShipmentMethod();
+        $shipmentMethodEntity->fromArray($shipmentMethod);
         foreach ($shipmentMethodPrices as $shipmentMethodPrice) {
-            ($shipmentMethodPriceEntity = new SpyShipmentMethodPrice())->fromArray($shipmentMethodPrice);
+            $shipmentMethodPriceEntity = new SpyShipmentMethodPrice();
+            $shipmentMethodPriceEntity->fromArray($shipmentMethodPrice);
             $shipmentMethodPriceEntity->setStore($stores[$shipmentMethodPrice['fk_store']]);
             $shipmentMethodEntity->addShipmentMethodPrice($shipmentMethodPriceEntity);
         }
