@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Shared\Price\PriceMode;
+use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -29,6 +30,11 @@ class Method implements MethodInterface
      * @var \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface
      */
     protected $methodPrice;
+
+    /**
+     * @var \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface
+     */
+    protected $methodTransformer;
 
     /**
      * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
@@ -53,14 +59,16 @@ class Method implements MethodInterface
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface $methodPrice
+     * @param \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface $methodTransformer
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      * @param array $plugins
      */
-    public function __construct(ShipmentQueryContainerInterface $queryContainer, MethodPriceInterface $methodPrice, ShipmentToCurrencyInterface $currencyFacade, ShipmentToStoreInterface $storeFacade, array $plugins)
+    public function __construct(ShipmentQueryContainerInterface $queryContainer, MethodPriceInterface $methodPrice, ShipmentMethodTransformerInterface $methodTransformer, ShipmentToCurrencyInterface $currencyFacade, ShipmentToStoreInterface $storeFacade, array $plugins)
     {
         $this->queryContainer = $queryContainer;
         $this->methodPrice = $methodPrice;
+        $this->methodTransformer = $methodTransformer;
         $this->currencyFacade = $currencyFacade;
         $this->storeFacade = $storeFacade;
         $this->plugins = $plugins;
@@ -92,7 +100,7 @@ class Method implements MethodInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
-        $methods = $this->queryContainer->queryActiveMethods()->find();
+        $methods = $this->queryContainer->queryActiveMethodsWithMethodPricesAndCarrier()->find();
         $idStoreCurrent = $this->storeFacade->getCurrentStore()->getIdStore();
 
         foreach ($methods as $shipmentMethodEntity) {
@@ -125,11 +133,10 @@ class Method implements MethodInterface
             return null;
         }
 
-        return $this->mapEntityToTransfer($shipmentMethodEntity, new ShipmentMethodTransfer())
-            ->setTaxRate($this->getEffectiveTaxRate($shipmentMethodEntity))
+        return $this->methodTransformer
+            ->transformEntityToTransfer($shipmentMethodEntity)
             ->setStoreCurrencyPrice($storeCurrencyPrice)
-            ->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer))
-            ->setCarrierName($this->findShipmentCarrierName($shipmentMethodEntity));
+            ->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer));
     }
 
     /**
@@ -357,39 +364,6 @@ class Method implements MethodInterface
     protected function getDeliveryTimePlugin(SpyShipmentMethod $method, array $deliveryTimePlugins)
     {
         return $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
-    }
-
-    /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
-     *
-     * @return int
-     */
-    protected function getEffectiveTaxRate(SpyShipmentMethod $shipmentMethodEntity)
-    {
-        if (!$shipmentMethodEntity->getTaxSet()) {
-            return 0;
-        }
-
-        $effectiveTaxRate = 0;
-        foreach ($shipmentMethodEntity->getTaxSet()->getSpyTaxRates() as $taxRate) {
-            $effectiveTaxRate = $taxRate->getRate();
-        }
-
-        return $effectiveTaxRate;
-    }
-
-    /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
-     *
-     * @return string|null
-     */
-    protected function findShipmentCarrierName(SpyShipmentMethod $shipmentMethodEntity)
-    {
-        if (!$shipmentMethodEntity->getShipmentCarrier()) {
-            return null;
-        }
-
-        return $shipmentMethodEntity->getShipmentCarrier()->getName();
     }
 
     /**

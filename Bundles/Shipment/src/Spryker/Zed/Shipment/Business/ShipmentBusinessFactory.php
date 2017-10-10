@@ -51,6 +51,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new Method(
             $this->getQueryContainer(),
             $this->createMethodPrice(),
+            $this->createShipmentMethodTransformer(),
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
             $this->getPlugins()

@@ -73,8 +73,8 @@ class MethodFormDataProvider
     {
         if ($idMethod !== null) {
             $shipmentMethodEntity = $this->shipmentQueryContainer
-                ->queryMethodsWithMethodPrices()
-                ->findByIdShipmentMethod($idMethod)
+                ->queryMethodWithMethodPricesAndCarrierById($idMethod)
+                ->find()
                 ->getFirst();
             $shipmentMethodTransfer = $this->shipmentFacade->transformShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity);
 

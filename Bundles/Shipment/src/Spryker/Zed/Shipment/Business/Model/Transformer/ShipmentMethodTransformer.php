@@ -50,11 +50,12 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
      */
     public function transformEntityToTransfer(SpyShipmentMethod $shipmentMethodEntity)
     {
-            $shipmentMethodTransfer = (new ShipmentMethodTransfer())
-                ->fromArray($shipmentMethodEntity->toArray(), true)
-                ->setPrices($this->getPriceCollection($shipmentMethodEntity));
+        $shipmentMethodTransfer = (new ShipmentMethodTransfer())
+            ->fromArray($shipmentMethodEntity->toArray(), true)
+            ->setCarrierName($this->findShipmentCarrierName($shipmentMethodEntity))
+            ->setPrices($this->getPriceCollection($shipmentMethodEntity));
 
-            return $shipmentMethodTransfer;
+        return $shipmentMethodTransfer;
     }
 
     /**
@@ -93,6 +94,20 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
         static::$currencyCache[$idCurrency] = $currencyTransfer->toArray();
 
         return $currencyTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     *
+     * @return string|null
+     */
+    protected function findShipmentCarrierName(SpyShipmentMethod $shipmentMethodEntity)
+    {
+        if (!$shipmentMethodEntity->getShipmentCarrier()) {
+            return null;
+        }
+
+        return $shipmentMethodEntity->getShipmentCarrier()->getName();
     }
 
 }

@@ -190,7 +190,7 @@ class MethodTable extends AbstractTable
      */
     protected function getResult($method, $idShipmentMethod)
     {
-        $methodPriceCollection = $method->getShipmentMethodPricesJoinCurrency();
+        $methodPriceCollection = $method->getShipmentMethodPrices();
         $grossMoneyTransferCollection = array_map([$this, 'getGrossMoneyTransfer'], $methodPriceCollection->getArrayCopy());
         $netMoneyTransferCollection = array_map([$this, 'getNetMoneyTransfer'], $methodPriceCollection->getArrayCopy());
 
