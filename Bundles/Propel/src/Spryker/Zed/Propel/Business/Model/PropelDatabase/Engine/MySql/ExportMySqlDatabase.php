@@ -57,7 +57,7 @@ class ExportMySqlDatabase implements ExportDatabaseInterface
     protected function getCommand($backupPath)
     {
         return sprintf(
-            'mysqldump - i - u%s - p%s %s > %s',
+            'mysqldump -i -u%s -p%s %s > %s',
             Config::get(PropelConstants::ZED_DB_USERNAME),
             Config::get(PropelConstants::ZED_DB_PASSWORD),
             Config::get(PropelConstants::ZED_DB_DATABASE),

@@ -47,6 +47,14 @@ class SearchRegisterSnapshotRepositoryConsole extends Console
     {
         $snapshotRepository = $input->getArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY);
 
+        $doesSnapshotRepositoryExists = $this->existSnapshotRepository($snapshotRepository);
+
+        if ($doesSnapshotRepositoryExists) {
+            $this->info(sprintf('Snapshot repository "%s" already exists.', $snapshotRepository));
+
+            return static::CODE_SUCCESS;
+        }
+
         $body = sprintf('{"type": "fs", "settings": {"location": "%s"}}', $snapshotRepository);
 
         $client = new Client();
@@ -62,6 +70,25 @@ class SearchRegisterSnapshotRepositoryConsole extends Console
         }
 
         return static::CODE_ERROR;
+    }
+
+    /**
+     * @param string $snapshotRepository
+     *
+     * @return bool
+     */
+    protected function existSnapshotRepository($snapshotRepository)
+    {
+        $client = new Client();
+        $response = $client->get('localhost:10005/_snapshot/_all');
+        if ($response->getStatusCode() === 200) {
+            $snapshots = json_decode($response->getBody()->getContents(), true);
+            if (isset($snapshots[$snapshotRepository])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
