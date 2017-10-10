@@ -107,7 +107,7 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     public function getInitialStateEntity()
     {
-        return $this->getStateEntity(OmsConstants::INITIAL_STATUS);
+        return $this->getStateEntity($this->omsConfig->getInitialStatus());
     }
 
 }

@@ -31,6 +31,7 @@ use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
@@ -88,8 +89,10 @@ class SalesFacadeSaveOrderTest extends Unit
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 
+        $omcConfig = new OmsConfig();
+
         $initialStateEntity = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName($omcConfig->getInitialStatus())
             ->findOneOrCreate();
         $initialStateEntity->save();
 
@@ -300,9 +303,10 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testSaveOrderCreatesAndFillsOrderItems()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $omsConfig = new OmsConfig();
 
         $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName($omsConfig->getInitialStatus())
             ->findOneOrCreate();
         $initialState->save();
 
