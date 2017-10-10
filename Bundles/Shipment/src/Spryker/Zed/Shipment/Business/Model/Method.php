@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Spryker\Shared\Price\PriceMode;
+use Spryker\Shared\Money\PriceMode;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
@@ -64,8 +64,14 @@ class Method implements MethodInterface
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      * @param array $plugins
      */
-    public function __construct(ShipmentQueryContainerInterface $queryContainer, MethodPriceInterface $methodPrice, ShipmentMethodTransformerInterface $methodTransformer, ShipmentToCurrencyInterface $currencyFacade, ShipmentToStoreInterface $storeFacade, array $plugins)
-    {
+    public function __construct(
+        ShipmentQueryContainerInterface $queryContainer,
+        MethodPriceInterface $methodPrice,
+        ShipmentMethodTransformerInterface $methodTransformer,
+        ShipmentToCurrencyInterface $currencyFacade,
+        ShipmentToStoreInterface $storeFacade,
+        array $plugins
+    ) {
         $this->queryContainer = $queryContainer;
         $this->methodPrice = $methodPrice;
         $this->methodTransformer = $methodTransformer;
