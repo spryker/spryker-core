@@ -19,13 +19,12 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
      * @api
      *
      * @param string $key
-     * @param string $prefix
      *
      * @return mixed
      */
-    public function get($key, $prefix = '')
+    public function get($key)
     {
-        return $this->getFactory()->createStorage()->get($key, $prefix);
+        return $this->getFactory()->createStorage()->get($key);
     }
 
     /**

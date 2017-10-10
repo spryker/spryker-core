@@ -27,13 +27,12 @@ class Storage
 
     /**
      * @param string $key
-     * @param string $prefix
      *
      * @return mixed
      */
-    public function get($key, $prefix)
+    public function get($key)
     {
-        return $this->storageClient->get($key, $prefix);
+        return $this->storageClient->get($key);
     }
 
     /**

@@ -79,10 +79,7 @@ class MaintenanceController extends AbstractController
     public function keyAction(Request $request)
     {
         $key = $request->get('key');
-        $prefix = substr($key, 0, 3);
-        $key = str_replace($prefix, '', $key);
-
-        $value = $this->getFacade()->get($key, $prefix);
+        $value = $this->getFacade()->get($key);
 
         return $this->viewResponse([
             'value' => var_export($value, true),

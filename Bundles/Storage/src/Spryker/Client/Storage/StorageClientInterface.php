@@ -16,31 +16,30 @@ interface StorageClientInterface
      * @param string $key
      * @param mixed $value
      * @param int|null $ttl
-     * @param string $prefix
+     *
+     * @throws \Exception
      *
      * @return mixed
      */
-    public function set($key, $value, $ttl = null, $prefix = '');
+    public function set($key, $value, $ttl = null);
 
     /**
      * @api
      *
      * @param array $items
-     * @param string $prefix
      *
      * @return void
      */
-    public function setMulti(array $items, $prefix = '');
+    public function setMulti(array $items);
 
     /**
      * @api
      *
      * @param string $key
-     * @param string $prefix
      *
      * @return mixed
      */
-    public function delete($key, $prefix = '');
+    public function delete($key);
 
     /**
      * @api
@@ -62,21 +61,19 @@ interface StorageClientInterface
      * @api
      *
      * @param string $key
-     * @param string $prefix
      *
      * @return mixed
      */
-    public function get($key, $prefix = '');
+    public function get($key);
 
     /**
      * @api
      *
      * @param array $keys
-     * @param string $prefix
      *
      * @return array
      */
-    public function getMulti(array $keys, $prefix = '');
+    public function getMulti(array $keys);
 
     /**
      * @api
@@ -88,21 +85,18 @@ interface StorageClientInterface
     /**
      * @api
      *
-     * @param string $prefix
-     *
      * @return array
      */
-    public function getAllKeys($prefix = '');
+    public function getAllKeys();
 
     /**
      * @api
      *
      * @param string $pattern
-     * @param string $prefix
      *
      * @return array
      */
-    public function getKeys($pattern, $prefix = '');
+    public function getKeys($pattern);
 
     /**
      * @api
@@ -121,11 +115,9 @@ interface StorageClientInterface
     /**
      * @api
      *
-     * @param string $prefix
-     *
      * @return int
      */
-    public function getCountItems($prefix = '');
+    public function getCountItems();
 
     /**
      * @api
