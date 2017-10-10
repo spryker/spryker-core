@@ -121,7 +121,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */
-    public function getActiveProcesses(array $activeProcesses);
+    public function queryActiveProcesses(array $activeProcesses);
 
     /**
      * @api
@@ -130,7 +130,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
      */
-    public function getOrderItemStates(array $orderItemStates);
+    public function queryOrderItemStates(array $orderItemStates);
 
     /**
      * @api
