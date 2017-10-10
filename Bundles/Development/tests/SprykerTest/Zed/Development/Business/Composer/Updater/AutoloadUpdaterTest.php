@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Development\Business\Composer\Updater;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
+use StdClass;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -26,23 +27,27 @@ class AutoloadUpdaterTest extends Unit
 {
 
     /**
-     * @dataProvider autoloadKeys
-     *
-     * @param string $autoloadKey
-     *
      * @return void
      */
-    public function testWhenKeyInComposerButDirDoesNotExistRemoveFromComposer($autoloadKey)
+    public function testWhenTestsFolderExistsDefaultAutoloadDevIsAddedToComposer()
     {
-        $composerJson = $this->getComposerJson($autoloadKey);
-        $splFileInfo = $this->getSplFile();
+        $pathParts = [
+            AutoloadUpdater::BASE_TESTS_DIR,
+            AutoloadUpdater::SPRYKER_TEST_NAMESPACE,
+        ];
 
-        $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
-        $autoloadUpdaterMock->method('directoryExists')->willReturn(false);
-        $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
-        unset($composerJson['autoload']['psr-0'][$autoloadKey]);
+        $updatedJson = $this->getJsonAfterUpdate(
+            AutoloadUpdater::SPRYKER_TEST_NAMESPACE,
+            $this->getComposerJson(),
+            [
+                [
+                    $pathParts,
+                    implode($pathParts, DIRECTORY_SEPARATOR) . '/',
+                ],
+            ]
+        );
 
-        $this->assertSame($composerJson, $updatedComposerJson);
+        $this->assertSame($this->getComposerJson()['autoload-dev'], $updatedJson['autoload-dev']);
     }
 
     /**
@@ -52,47 +57,114 @@ class AutoloadUpdaterTest extends Unit
      *
      * @return void
      */
-    public function testWhenKeyInComposerAndDirExistMoveAutoloadKeyToDev($autoloadKey)
+    public function testWhenDeprecatedDirExistsAutoloadDevAddedToComposer($autoloadKey)
     {
-        $composerJson = $this->getComposerJson($autoloadKey);
-        $splFileInfo = $this->getSplFile();
-
-        $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
-        $autoloadUpdaterMock->method('directoryExists')->willReturnCallback(function ($path) use ($autoloadKey) {
-            $testPath = __DIR__ . '/tests/' . $autoloadKey;
-
-            return ($path === $testPath);
-        });
-        $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
-        $composerJson['autoload-dev']['psr-0'][$autoloadKey] = $composerJson['autoload']['psr-0'][$autoloadKey];
-        unset($composerJson['autoload']['psr-0'][$autoloadKey]);
-
-        $this->assertSame($composerJson, $updatedComposerJson);
+        $updatedJson = $this->getJsonAfterUpdate($autoloadKey, $this->getComposerJson($autoloadKey));
+        $this->assertSame($this->getComposerJson($autoloadKey)['autoload-dev'], $updatedJson['autoload-dev']);
     }
 
     /**
-     * @dataProvider autoloadKeys
-     *
-     * @param string $autoloadKey
-     *
      * @return void
      */
-    public function testWhenKeyNotInComposerButDirExistAddToComposer($autoloadKey)
+    public function testWhenTestFolderDoesNotExistNothingAddedToComposer()
+    {
+        $splFileInfo = $this->getSplFile();
+        $composerJson = $this->getComposerJson();
+        $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
+        $autoloadUpdaterMock->method('pathExists')->willReturn(false);
+
+        $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
+        $this->assertInstanceOf(StdClass::class, $updatedComposerJson['autoload']);
+        $this->assertInstanceOf(StdClass::class, $updatedComposerJson['autoload-dev']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenAutoloadDevNamespaceIsInvalidGetsRemoved()
+    {
+        $composerJson = $this->getComposerJson();
+        $composerJson['autoload-dev']['psr-4']['invalidNamespace'] = 'validDirectory/';
+
+        $updatedJson = $updatedJson = $this->updateJson($composerJson);
+
+        $this->assertSame($this->getComposerJson()['autoload-dev'], $updatedJson['autoload-dev']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenAutoloadPathIsInvalidGetsRemoved()
+    {
+        $composerJson = $this->getComposerJson();
+        $composerJson['autoload']['psr-4']['validNamespace'] = 'invalidDirectory/';
+
+        $updatedJson = $this->updateJson($composerJson);
+
+        $this->assertSame($this->getComposerJson()['autoload-dev'], $updatedJson['autoload-dev']);
+    }
+
+    /**
+     * @param array $composerJson
+     *
+     * @return array
+     */
+    protected function updateJson(array $composerJson)
+    {
+        $pathParts = [
+            AutoloadUpdater::BASE_TESTS_DIR,
+            AutoloadUpdater::SPRYKER_TEST_NAMESPACE,
+        ];
+
+        return $this->getJsonAfterUpdate(
+            AutoloadUpdater::SPRYKER_TEST_NAMESPACE,
+            $composerJson,
+            [
+                [
+                    $pathParts,
+                    implode($pathParts, DIRECTORY_SEPARATOR) . '/',
+                ],
+            ]
+        );
+    }
+
+    /**
+     * @param string $pathKey
+     * @param array $composerJson
+     * @param array $dirMapAdditions
+     *
+     * @return array
+     */
+    protected function getJsonAfterUpdate($pathKey, array $composerJson, array $dirMapAdditions = [])
     {
         $splFileInfo = $this->getSplFile();
 
-        $composerJson = $this->getComposerJson($autoloadKey);
-        unset($composerJson['autoload']['psr-0'][$autoloadKey]);
-        $composerJson['autoload-dev']['psr-0'][$autoloadKey] = 'tests/';
+        $pathParts = [
+            AutoloadUpdater::BASE_TESTS_DIR,
+            $pathKey,
+        ];
+
+        $pathExistsMap = [
+            ['pass', true],
+        ];
+
+        $dirMap = [
+            [
+                array_merge([dirname($splFileInfo->getPathname())], $pathParts),
+                'pass',
+            ],
+        ];
+
+        if (!empty($dirMapAdditions)) {
+            $dirMap = array_merge($dirMap, $dirMapAdditions);
+        }
+
         $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
-        $autoloadUpdaterMock->method('directoryExists')->willReturnCallback(function ($path) use ($autoloadKey) {
-            $testPath = __DIR__ . '/tests/' . $autoloadKey;
+        $autoloadUpdaterMock->method('pathExists')->will($this->returnValueMap($pathExistsMap));
+        $autoloadUpdaterMock->method('getDirectoryName')->will($this->returnValueMap($dirMap));
 
-            return ($path === $testPath);
-        });
-        $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
-
-        $this->assertSame($composerJson, $updatedComposerJson);
+        return $autoloadUpdaterMock->update($composerJson, $splFileInfo);
+//        $this->assertSame($composerJson['autoload-dev'], $updatedComposerJson['autoload-dev']);
     }
 
     /**
@@ -114,7 +186,7 @@ class AutoloadUpdaterTest extends Unit
     protected function getAutoloadUpdaterMock()
     {
         $autoloadUpdaterMock = $this->getMockBuilder(AutoloadUpdater::class)
-            ->setMethods(['directoryExists'])
+            ->setMethods(['pathExists', 'getDirectoryName'])
             ->getMock();
 
         return $autoloadUpdaterMock;
@@ -125,16 +197,27 @@ class AutoloadUpdaterTest extends Unit
      *
      * @return array
      */
-    protected function getComposerJson($autoloadKey)
+    protected function getComposerJson($autoloadKey = '')
     {
-        return [
+        $composerArray = [
             'autoload' => [
                 'psr-0' => [
-                    'Path' => 'should/stay',
-                    $autoloadKey => 'tests/',
+                    'Spryker' => 'src/',
+                ],
+            ],
+            'autoload-dev' => [
+                'psr-4' => [
+                    'SprykerTest\\' => 'tests/SprykerTest/',
                 ],
             ],
         ];
+
+        if (!empty($autoloadKey)) {
+            $composerArray['autoload-dev']['psr-0'] = [$autoloadKey => 'tests/'];
+            unset($composerArray['autoload-dev']['psr-4']);
+        }
+
+        return $composerArray;
     }
 
     /**

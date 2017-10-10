@@ -19,11 +19,7 @@
       "Spryker": "src/"
     }
   },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    }
-  },
+  "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

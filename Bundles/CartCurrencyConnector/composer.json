@@ -12,22 +12,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\CartCurrencyConnector\\": "tests/SprykerTest/Shared/CartCurrencyConnector/_support/",
-      "SprykerTest\\Zed\\CartCurrencyConnector\\": "tests/SprykerTest/Zed/CartCurrencyConnector/_support/",
-      "CartCurrencyConnector\\Module\\": "tests/_support/Module/"
+      "Spryker\\": "src/Spryker/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    },
-    "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
-  },
+  "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,
   "repositories": [
