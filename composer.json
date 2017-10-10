@@ -187,7 +187,6 @@
     "spryker/util-encoding": "*",
     "spryker/util-network": "*",
     "spryker/util-sanitize": "*",
-    "spryker/util-synchronization": "*",
     "spryker/util-text": "*",
     "spryker/wishlist": "*",
     "spryker/zed-navigation": "*",
