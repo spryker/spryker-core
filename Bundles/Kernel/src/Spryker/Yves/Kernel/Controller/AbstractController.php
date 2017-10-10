@@ -12,9 +12,9 @@ use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerBridge;
 use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractController
 {
@@ -105,22 +105,6 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetBuilderPluginInterface[] $controllerResponseExpanderPlugins
-     * @param mixed|null $data
-     * @param int $status
-     * @param array $headers
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    protected function extendedJsonResponse(Request $request, array $controllerResponseExpanderPlugins, $data = null, $status = 200, $headers = [])
-    {
-        $data = $this->extendResponseData($request, $controllerResponseExpanderPlugins, $data);
-
-        return $this->jsonResponse($data, $status, $headers);
-    }
-
-    /**
      * @param array $data
      *
      * @return array
@@ -128,6 +112,18 @@ abstract class AbstractController
     protected function viewResponse(array $data = [])
     {
         return $data;
+    }
+
+    /**
+     * @param array $data
+     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[] $widgetPlugins
+     * @param string|null $template
+     *
+     * @return array|\Spryker\Yves\Kernel\View\View
+     */
+    protected function view(array $data = [], array $widgetPlugins = [], $template = null)
+    {
+        return new View($data, $widgetPlugins, $template);
     }
 
     /**

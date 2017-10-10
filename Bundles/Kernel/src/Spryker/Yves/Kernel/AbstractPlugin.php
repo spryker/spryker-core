@@ -9,6 +9,7 @@ namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 
 abstract class AbstractPlugin
 {
@@ -77,6 +78,23 @@ abstract class AbstractPlugin
     private function getClientResolver()
     {
         return new ClientResolver();
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    protected function getApplication()
+    {
+        // TODO: check this later because Pimple is extending AbstractPlugin
+        return (new Pimple())->getApplication();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocale()
+    {
+        return $this->getApplication()['locale'];
     }
 
 }
