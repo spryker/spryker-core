@@ -14,7 +14,7 @@ use Symfony\Component\Process\Process;
 
 class SetupHelper extends Module
 {
-    const TEST_ENV_SCRIPT = 'setup_test';
+    const TEST_ENV_SCRIPT = 'php spryker.phar setup testing';
 
     /**
      * @param \Codeception\TestInterface $test
@@ -27,7 +27,7 @@ class SetupHelper extends Module
     {
         parent::_before($test);
 
-        $process = $this->runTestSetup('--restore');
+        $process = $this->runTestSetup('-s restore');
 
         if (!$process->isSuccessful()) {
             throw new Exception('An error in data restore occurred: ' . $process->getErrorOutput());
@@ -39,7 +39,7 @@ class SetupHelper extends Module
      */
     public function runCollectors()
     {
-        $this->runTestSetup('--collectors');
+        $this->runTestSetup('-s export-data');
 
         return $this;
     }
@@ -51,22 +51,11 @@ class SetupHelper extends Module
      */
     protected function runTestSetup($argument)
     {
-        $process = new Process(sprintf(
-            '%s' . self::TEST_ENV_SCRIPT . ' %s',
-            $this->getSetupScriptPath(),
-            $argument
-        ));
+        $command = sprintf(static::TEST_ENV_SCRIPT . ' %s', $argument);
+        $process = new Process($command, APPLICATION_ROOT_DIR);
 
         $process->run();
 
         return $process;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getSetupScriptPath()
-    {
-        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR;
     }
 }

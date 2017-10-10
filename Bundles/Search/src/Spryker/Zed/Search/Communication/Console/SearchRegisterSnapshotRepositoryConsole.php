@@ -16,14 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
  */
-class SearchReindexConsole extends Console
+class SearchRegisterSnapshotRepositoryConsole extends Console
 {
 
-    const COMMAND_NAME = 'search:reindex';
-    const DESCRIPTION = 'This command will reindex the search';
+    const COMMAND_NAME = 'search:snapshot:register-repository';
+    const DESCRIPTION = 'This command will register a snapshot repository';
 
-    const ARGUMENT_SOURCE = 'source';
-    const ARGUMENT_DESTINATION = 'destination';
+    const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
 
     /**
      * @return void
@@ -33,8 +32,7 @@ class SearchReindexConsole extends Console
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
 
-        $this->addArgument(static::ARGUMENT_SOURCE, InputArgument::REQUIRED, 'Path to source.');
-        $this->addArgument(static::ARGUMENT_DESTINATION, InputArgument::REQUIRED, 'Path to destination.');
+        $this->addArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY, InputArgument::REQUIRED, 'Name of the snapshot repository.');
 
         parent::configure();
     }
@@ -47,12 +45,12 @@ class SearchReindexConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $source = $input->getArgument(static::ARGUMENT_SOURCE);
-        $destination = $input->getArgument(static::ARGUMENT_DESTINATION);
+        $snapshotRepository = $input->getArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY);
 
-        $body = sprintf('{"source": {"index": "%s"}, "dest": {"index": "%s"}}', $source, $destination);
+        $body = sprintf('{"type": "fs", "settings": {"location": "%s"}}', $snapshotRepository);
+
         $client = new Client();
-        $response = $client->post('localhost:10005/_reindex?pretty', [
+        $response = $client->put('localhost:10005/_snapshot/' . $snapshotRepository, [
             'headers' => [
                 'Content-Type' => 'application/json',
             ],

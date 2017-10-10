@@ -45,7 +45,7 @@ class InstallNodeJsConsole extends Console
         $process = new Process('node -v');
         $process->run();
 
-        $version = $process->getOutput();
+        $version = trim(preg_replace('/\s+/', ' ', $process->getOutput()));
         $this->info(sprintf('Node.js Version "%s"', $version));
 
         if (preg_match('/^v[0-5]/', $version)) {

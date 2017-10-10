@@ -51,7 +51,7 @@ class CopyRdbFileConsole extends Console
         $destination = $input->getArgument(static::ARGUMENT_DESTINATION);
 
         if (!file_exists($source)) {
-            $this->error(sprintf('Source file "%s" does not exist!', $source));
+            $this->info(sprintf('Source file "%s" does not exist!', $source));
 
             return;
         }
