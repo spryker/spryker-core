@@ -30,11 +30,6 @@
         <property name="storeCurrencyPrice" type="int" />
     </transfer>
 
-    <transfer name="Price">
-        <property name="amount" type="int" />
-        <property name="currency" type="Currency" />
-    </transfer>
-
     <transfer name="Order">
         <property name="idShipmentMethod" type="int" />
         <property name="shipmentDeliveryTime" type="int" />

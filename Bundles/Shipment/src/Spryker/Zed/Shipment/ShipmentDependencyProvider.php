@@ -7,19 +7,15 @@
 
 namespace Spryker\Zed\Shipment;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge as ShipmentToStoreFacadeBridge;
-use Spryker\Zed\Shipment\Dependency\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
-
-    const STORE = 'STORE';
 
     const PLUGINS = 'PLUGINS';
     const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
@@ -49,7 +45,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addMoneyFacade($container);
-        $container = $this->addStore($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addCurrencyFacade($container);
 
@@ -83,20 +78,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ShipmentToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container[static::STORE] = function () {
-            return new ShipmentToStoreBridge(Store::getInstance());
         };
 
         return $container;

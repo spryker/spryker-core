@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
-use Spryker\Zed\Shipment\Dependency\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -45,32 +44,24 @@ class MethodFormDataProvider
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\Shipment\Dependency\ShipmentToStoreInterface|null
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
      * @param array $plugins
      * @param \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\Shipment\Dependency\ShipmentToStoreInterface|null $store
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
         array $plugins,
         ShipmentFacadeInterface $shipmentFacade,
         ShipmentToTaxInterface $taxFacade,
-        ShipmentToMoneyInterface $moneyFacade,
-        ShipmentToStoreInterface $store = null
+        ShipmentToMoneyInterface $moneyFacade
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
         $this->plugins = $plugins;
         $this->shipmentFacade = $shipmentFacade;
         $this->taxFacade = $taxFacade;
         $this->moneyFacade = $moneyFacade;
-        $this->store = $store;
     }
 
     /**
@@ -108,10 +99,6 @@ class MethodFormDataProvider
 
         $options[MethodForm::OPTION_MONEY_FACADE] = $this->moneyFacade;
         $options[MethodForm::OPTION_DATA_CLASS] = ShipmentMethodTransfer::class;
-
-        if ($this->store) {
-            $options[MethodForm::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
-        }
 
         return $options;
     }

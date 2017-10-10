@@ -20,15 +20,25 @@ class ShipmentMethodDataHelper extends Module
     const NAMESPACE_ROOT = '\\';
 
     /**
-     * First level key represents idStore.
-     * Second level key represents idCurrency.
+     * First level key represents store name.
+     * Second level key represents currency iso code.
      * Second level value represents the optional corresponding MoneyValue override values.
      */
     const DEFAULT_PRICE_LIST = [
-        1 => [
-            93 => [],
+        'DE' => [
+            'EUR' => [],
         ],
     ];
+
+    /**
+     * @var int[]|null Keys are store names, values are store ids.
+     */
+    protected static $idStoreCache = null;
+
+    /**
+     * @var int[] Keys are currency iso codes, values are currency ids.
+     */
+    protected static $idCurrencyCache = [];
 
     /**
      * @param array $overrideShipmentMethod
@@ -43,13 +53,13 @@ class ShipmentMethodDataHelper extends Module
         $shipmentMethodTransfer = $this->assertCarrier($shipmentMethodTransfer, $overrideCarrier);
 
         $moneyValueTransferCollection = new ArrayObject();
-        foreach ($priceList as $idStore => $currencies) {
-            foreach ($currencies as $idCurrency => $moneyValueOverride) {
+        foreach ($priceList as $storeName => $currencies) {
+            foreach ($currencies as $currencyIsoCode => $moneyValueOverride) {
                 $moneyValueTransferCollection->append(
                     (new MoneyValueBuilder($moneyValueOverride))
                         ->build()
-                        ->setFkCurrency($idCurrency)
-                        ->setFkStore($idStore)
+                        ->setFkCurrency($this->getIdCurrencyByIsoCode($currencyIsoCode))
+                        ->setFkStore($this->getIdStoreByName($storeName))
                 );
             }
         }
@@ -84,6 +94,63 @@ class ShipmentMethodDataHelper extends Module
     protected function getShipmentCarrierDataHelper()
     {
         return $this->getModule(static::NAMESPACE_ROOT . ShipmentCarrierDataHelper::class);
+    }
+
+    /**
+     * @param string $currencyIsoCode
+     *
+     * @return int
+     */
+    protected function getIdCurrencyByIsoCode($currencyIsoCode)
+    {
+        if (!isset(static::$idCurrencyCache[$currencyIsoCode])) {
+            static::$idCurrencyCache[$currencyIsoCode] = $this->getCurrencyFacade()
+                ->fromIsoCode($currencyIsoCode)
+                ->getIdCurrency();
+        }
+
+        return static::$idCurrencyCache[$currencyIsoCode];
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return int
+     */
+    protected function getIdStoreByName($storeName)
+    {
+        if (static::$idStoreCache === null) {
+            $this->loadStoreCache();
+        }
+
+        return static::$idStoreCache[$storeName];
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadStoreCache()
+    {
+        static::$idStoreCache = [];
+        foreach ($this->getStoreFacade()->getAllStores() as $storeTransfer) {
+            static::$idStoreCache[$storeTransfer->getName()] = $storeTransfer->getIdStore();
+        }
+    }
+
+    /**
+     * @return \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
+     */
+    protected function getCurrencyFacade()
+    {
+        return $this->getLocator()->currency()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getLocator()->store()->facade();
     }
 
     /**

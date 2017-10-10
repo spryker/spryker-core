@@ -22,7 +22,6 @@ class MethodForm extends AbstractType
     const FIELD_NAME_FIELD = 'name';
     const FIELD_ID_FIELD = 'idShipmentMethod';
     const FIELD_IS_ACTIVE = 'isActive';
-    const FIELD_DEFAULT_PRICE = 'defaultPrice';
     const FIELD_AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
     const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
     const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
@@ -36,7 +35,6 @@ class MethodForm extends AbstractType
     const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
     const OPTION_TAX_SETS = 'option_tax_sets';
     const OPTION_MONEY_FACADE = 'money facade';
-    const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
     const OPTION_DATA_CLASS = 'data_class';
 
     /**
@@ -84,10 +82,6 @@ class MethodForm extends AbstractType
         $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, 'array');
         $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, 'array');
         $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, 'array');
-
-        $resolver->setDefaults([
-            static::OPTION_CURRENCY_ISO_CODE => null,
-        ]);
     }
 
     /**
