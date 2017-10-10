@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
+use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Setup\SetupConstants;
@@ -45,18 +46,25 @@ class JenkinsController extends AbstractController
      * @param string $url
      * @param string $body
      *
+     * @throws \ErrorException
+     *
      * @return string
      */
     private function callJenkins($url, $body = '')
     {
-        $post_url = Config::get(SetupConstants::JENKINS_BASE_URL) . '/' . $url;//createItem?name=" . $v['name'];
+        $postUrl = Config::get(SetupConstants::JENKINS_BASE_URL) . '/' . $url;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $post_url);
+        curl_setopt($ch, CURLOPT_URL, $postUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: text/xml']);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $curlResponse = curl_exec($ch);
+        if ($curlResponse === false) {
+            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
+        }
 
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
