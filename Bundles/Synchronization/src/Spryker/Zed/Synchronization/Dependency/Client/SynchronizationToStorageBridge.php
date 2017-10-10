@@ -29,35 +29,32 @@ class SynchronizationToStorageBridge implements SynchronizationToStorageInterfac
      * @param string $key
      * @param string $value
      * @param int|null $ttl
-     * @param string $prefix
      *
      * @return int
      */
-    public function set($key, $value, $ttl = null, $prefix = '')
+    public function set($key, $value, $ttl = null)
     {
-        return $this->storageClient->set($key, $value, $ttl, $prefix);
+        return $this->storageClient->set($key, $value, $ttl);
     }
 
     /**
      * @param string $key
-     * @param string $prefix
      *
      * @return array|null
      */
-    public function get($key, $prefix = '')
+    public function get($key)
     {
-        return $this->storageClient->get($key, $prefix);
+        return $this->storageClient->get($key);
     }
 
     /**
      * @param string $key
-     * @param string $prefix
      *
      * @return void
      */
-    public function delete($key, $prefix = '')
+    public function delete($key)
     {
-        $this->storageClient->delete($key, $prefix);
+        $this->storageClient->delete($key);
     }
 
 }

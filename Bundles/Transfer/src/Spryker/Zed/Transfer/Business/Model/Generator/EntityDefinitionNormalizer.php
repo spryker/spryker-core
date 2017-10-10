@@ -65,20 +65,20 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
 
     /**
      * @param array $attributes
-     * @param string $bundle
+     * @param string $module
      *
      * @return array
      */
-    protected function normalizeAttributes(array $attributes, $bundle)
+    protected function normalizeAttributes(array $attributes, $module)
     {
         if (isset($attributes[0])) {
-            $attributes = $this->addBundleToAttributes($attributes, $bundle);
+            $attributes = $this->addBundleToAttributes($attributes, $module);
             $attributes = $this->addEntityDataToAttributes($attributes);
 
             return $attributes;
         }
 
-        $attributes = $this->addBundleToAttributes([$attributes], $bundle);
+        $attributes = $this->addBundleToAttributes([$attributes], $module);
         $attributes = $this->addEntityDataToAttributes($attributes);
 
         return $attributes;
@@ -118,27 +118,27 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     /**
      * @param array $foreignKeys
      * @param array $properties
-     * @param string $bundle
+     * @param string $module
      *
      * @return array
      */
-    private function normalizeForeignKeys(array $foreignKeys, &$properties, $bundle)
+    private function normalizeForeignKeys(array $foreignKeys, array $properties, $module)
     {
         if (isset($foreignKeys[0])) {
-            return $this->addForeignKeyTransfer($foreignKeys, $properties, $bundle);
+            return $this->addForeignKeyTransfer($foreignKeys, $properties, $module);
         }
 
-        return $this->addForeignKeyTransfer([$foreignKeys], $properties, $bundle);
+        return $this->addForeignKeyTransfer([$foreignKeys], $properties, $module);
     }
 
     /**
      * @param array $foreignKeys
      * @param array $properties
-     * @param string $bundle
+     * @param string $module
      *
      * @return mixed
      */
-    protected function addForeignKeyTransfer($foreignKeys, &$properties, $bundle)
+    protected function addForeignKeyTransfer($foreignKeys, &$properties, $module)
     {
         $filter = new UnderscoreToCamelCase();
         foreach ($foreignKeys as &$foreignKey) {
@@ -151,8 +151,8 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
             $properties[] = [
                 self::KEY_NAME => $propertyName,
                 self::KEY_TYPE => $filter->filter($foreignKey[self::FOREIGN_TABLE]),
-                self::KEY_BUNDLE => [$bundle],
-                self::KEY_BUNDLES => [$bundle],
+                self::KEY_BUNDLE => [$module],
+                self::KEY_BUNDLES => [$module],
             ];
         }
 

@@ -23,10 +23,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
      */
     protected function getBundleFromPathName($fileName)
     {
-        $filter = new UnderscoreToCamelCase();
-        $fileName = substr($fileName, self::PREFIX_LENGTH);
-
-        return $filter->filter(str_replace(static::ENTITY_SCHEMA_SUFFIX, '', $fileName));
+        return;
     }
 
     /**
