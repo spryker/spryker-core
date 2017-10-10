@@ -44,16 +44,16 @@ interface ProcessInterface
     public function addSubProcess(ProcessInterface $subProcess);
 
     /**
-     * @param bool $main
+     * @param bool $isMain
      *
      * @return void
      */
-    public function setMain($main);
+    public function setIsMain($isMain);
 
     /**
      * @return bool
      */
-    public function getMain();
+    public function getIsMain();
 
     /**
      * @param mixed $name
