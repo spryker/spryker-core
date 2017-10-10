@@ -24,15 +24,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\ProductSet\\": "tests/SprykerTest/Zed/ProductSet/_support/"
+      "Spryker\\": "src/Spryker/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
+  "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

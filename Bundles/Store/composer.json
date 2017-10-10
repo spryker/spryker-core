@@ -19,14 +19,11 @@
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
     "psr-4": {
       "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
       "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module"
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

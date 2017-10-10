@@ -27,17 +27,12 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Discount\\": "tests/SprykerTest/Shared/DiscountPromotion/_support/",
       "SprykerTest\\Zed\\Discount\\": "tests/SprykerTest/Zed/DiscountPromotion/_support/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "SprykerTest\\": "tests/SprykerTest/"
-    },
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
     }
   },
   "minimum-stability": "dev",

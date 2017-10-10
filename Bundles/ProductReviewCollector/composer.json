@@ -23,11 +23,7 @@
       "Spryker\\": "src/Spryker/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
+  "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

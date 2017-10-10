@@ -11,12 +11,7 @@
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."
   },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    }
-  },
+  "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
