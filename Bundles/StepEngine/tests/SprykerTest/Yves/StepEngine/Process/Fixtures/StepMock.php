@@ -40,26 +40,19 @@ class StepMock implements StepInterface
     private $escapeRoute;
 
     /**
-     * @var string
-     */
-    private $externalUrl;
-
-    /**
      * @param bool $preCondition
      * @param bool $postCondition
      * @param bool $requireInput
      * @param string $stepRoute
      * @param string $escapeRoute
-     * @param string $externalUrl
      */
-    public function __construct($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '', $externalUrl = '')
+    public function __construct($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '')
     {
         $this->preCondition = $preCondition;
         $this->postCondition = $postCondition;
         $this->requireInput = $requireInput;
         $this->stepRoute = $stepRoute;
         $this->escapeRoute = $escapeRoute;
-        $this->externalUrl = $externalUrl;
     }
 
     /**

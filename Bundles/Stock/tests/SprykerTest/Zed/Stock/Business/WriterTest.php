@@ -15,7 +15,6 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Stock\Business\StockFacade;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -35,11 +34,6 @@ class WriterTest extends Unit
     private $stockFacade;
 
     /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
-     */
-    private $stockQueryContainer;
-
-    /**
      * @return void
      */
     public function setUp()
@@ -47,7 +41,6 @@ class WriterTest extends Unit
         parent::setUp();
 
         $this->stockFacade = new StockFacade();
-        $this->stockQueryContainer = new StockQueryContainer();
     }
 
     /**

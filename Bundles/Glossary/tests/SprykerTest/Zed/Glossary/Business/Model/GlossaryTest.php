@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
@@ -39,11 +38,6 @@ class GlossaryTest extends Unit
     private $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
-     */
-    private $touchFacade;
-
-    /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer
      */
     private $glossaryQueryContainer;
@@ -62,7 +56,6 @@ class GlossaryTest extends Unit
 
         $this->glossaryQueryContainer = new GlossaryQueryContainer();
         $this->localeFacade = new LocaleFacade();
-        $this->touchFacade = new TouchFacade();
         $this->touchQueryContainer = new TouchQueryContainer();
         $this->glossaryFacade = new GlossaryFacade();
     }
