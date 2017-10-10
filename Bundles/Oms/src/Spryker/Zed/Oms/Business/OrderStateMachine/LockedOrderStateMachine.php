@@ -37,10 +37,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEvent($eventId, array $orderItems, $data)
     {
+        $triggerEventResult = null;
         $identifier = $this->acquireTriggerLocker($orderItems);
 
         try {
@@ -56,10 +57,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewItem(array $orderItems, $data)
     {
+        $triggerEventResult = null;
         $identifier = $this->acquireTriggerLocker($orderItems);
 
         try {
@@ -85,10 +87,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, $data)
     {
+        $triggerEventResult = null;
         $identifier = $this->acquireTriggerLockerByOrderItemIds($orderItemIds);
 
         try {
@@ -105,10 +108,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
     {
+        $triggerEventResult = null;
         $identifier = $this->acquireTriggerLockerByOrderItemIds([$orderItemId]);
 
         try {
@@ -125,10 +129,11 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, $data)
     {
+        $triggerEventResult = null;
         $identifier = $this->acquireTriggerLockerByOrderItemIds($orderItemIds);
 
         try {

@@ -239,7 +239,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
     {
