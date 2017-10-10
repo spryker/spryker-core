@@ -27,7 +27,7 @@
     "name": "synchronization",
     "class": "\\Spryker\\Zed\\SynchronizationBehavior\\Persistence\\Propel\\Behavior\\SynchronizationBehavior",
     "branch-alias": {
-      "dev-master": "0.1.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {

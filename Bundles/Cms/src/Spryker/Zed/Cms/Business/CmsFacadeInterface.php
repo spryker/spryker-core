@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
-use Generated\Shared\Transfer\CmsPageDataTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
@@ -463,19 +462,5 @@ interface CmsFacadeInterface
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
-
-    /**
-     * Specification:
-     * - Returns the CmsPageDataTransfer with expanded data
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsPageDataTransfer $cmsPageDataTransfer
-     * @param string $data
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\CmsPageDataTransfer
-     */
-    public function expandCmsPageDataTransfer(CmsPageDataTransfer $cmsPageDataTransfer, $data, $localeName);
 
 }

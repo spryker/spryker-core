@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Synchronization\Business;
 
 use Codeception\Test\Unit;
+use Elastica\Exception\NotFoundException;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Synchronization\Business\SynchronizationBusinessFactory;
 use Spryker\Zed\Synchronization\Business\SynchronizationFacade;
@@ -99,14 +100,16 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
+     * @throws \Elastica\Exception\NotFoundException
+     *
      * @return void
      */
     public function testSynchronizationWritesDataToSearch()
     {
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = function (Container $container) {
-            $storageMock = $this->createSearchClientBridge();
-            $storageMock->expects($this->once())->method('write')->will(
+            $searchMock = $this->createSearchClientBridge();
+            $searchMock->expects($this->once())->method('write')->will(
                 $this->returnCallback(
                     function ($data) {
                         $this->assertEquals(key($data), 'testKey');
@@ -114,8 +117,13 @@ class SynchronizationFacadeTest extends Unit
                     }
                 )
             );
+            $searchMock->expects($this->once())->method('read')->will($this->returnCallback(
+                function ($key) {
+                    throw new NotFoundException();
+                }
+            ));
 
-            return $storageMock;
+            return $searchMock;
         };
 
         $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
@@ -132,14 +140,16 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
+     * @throws \Elastica\Exception\NotFoundException
+     *
      * @return void
      */
     public function testSynchronizationDeleteDataToSearch()
     {
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = function (Container $container) {
-            $storageMock = $this->createSearchClientBridge();
-            $storageMock->expects($this->once())->method('delete')->will(
+            $searchMock = $this->createSearchClientBridge();
+            $searchMock->expects($this->once())->method('delete')->will(
                 $this->returnCallback(
                     function ($data) {
                         $this->assertEquals(key($data), 'testKey');
@@ -147,7 +157,13 @@ class SynchronizationFacadeTest extends Unit
                 )
             );
 
-            return $storageMock;
+            $searchMock->expects($this->once())->method('read')->will($this->returnCallback(
+                function ($key) {
+                    throw new NotFoundException();
+                }
+            ));
+
+            return $searchMock;
         };
 
         $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {

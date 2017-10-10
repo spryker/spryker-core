@@ -44,8 +44,8 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $key
-     * @param null $typeName
-     * @param null $indexName
+     * @param string|null $typeName
+     * @param string|null $indexName
      *
      * @return \Elastica\Document
      */

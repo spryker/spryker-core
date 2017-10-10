@@ -21,7 +21,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
      */
     protected function getBundleFromPathName($fileName)
     {
-        return;
+        return '';
     }
 
     /**

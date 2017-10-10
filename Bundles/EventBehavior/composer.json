@@ -41,7 +41,7 @@
     "name": "event",
     "class": "\\Spryker\\Zed\\EventBehavior\\Persistence\\Propel\\Behavior\\EventBehavior",
     "branch-alias": {
-      "dev-master": "0.1.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {

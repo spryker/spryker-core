@@ -8,13 +8,12 @@
 namespace SprykerTest\Zed\Console\Business\Model;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Console\Business\ConsoleBusinessFactory;
 use Spryker\Zed\Console\Business\ConsoleFacade;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
 use Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface;
 use Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock;
