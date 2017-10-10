@@ -31,7 +31,7 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
     /**
      * @var array Keys are currency iso codes, values are Currency transfer object data in array format.
      */
-    protected $currencyCache = [];
+    protected static $currencyCache = [];
 
     /**
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
@@ -48,7 +48,7 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity)
+    public function transformEntityToTransfer(SpyShipmentMethod $shipmentMethodEntity)
     {
             $shipmentMethodTransfer = (new ShipmentMethodTransfer())
                 ->fromArray($shipmentMethodEntity->toArray(), true)
@@ -85,12 +85,12 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
      */
     protected function getCurrencyTransfer($idCurrency)
     {
-        if (isset($this->currencyCache[$idCurrency])) {
-            return (new CurrencyTransfer())->fromArray($this->currencyCache[$idCurrency]);
+        if (isset(static::$currencyCache[$idCurrency])) {
+            return (new CurrencyTransfer())->fromArray(static::$currencyCache[$idCurrency]);
         }
 
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($idCurrency);
-        $this->currencyCache[$idCurrency] = $currencyTransfer->toArray();
+        static::$currencyCache[$idCurrency] = $currencyTransfer->toArray();
 
         return $currencyTransfer;
     }

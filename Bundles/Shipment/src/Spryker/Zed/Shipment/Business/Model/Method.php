@@ -46,9 +46,9 @@ class Method implements MethodInterface
     protected $plugins;
 
     /**
-     * @var array Keys are currency iso codes, values are Currency transfer objects.
+     * @var int[] Keys are currency iso codes, values are currency ids.
      */
-    protected $currencyCache = [];
+    protected static $idCurrencyCache = [];
 
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
@@ -93,10 +93,10 @@ class Method implements MethodInterface
     {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
-        $currentStoreId = $this->storeFacade->getCurrentStore()->getIdStore();
+        $idStoreCurrent = $this->storeFacade->getCurrentStore()->getIdStore();
 
         foreach ($methods as $shipmentMethodEntity) {
-            $shipmentMethodTransfer = $this->findAvailableMethod($shipmentMethodEntity, $quoteTransfer, $currentStoreId);
+            $shipmentMethodTransfer = $this->findAvailableMethod($shipmentMethodEntity, $quoteTransfer, $idStoreCurrent);
             if ($shipmentMethodTransfer === null) {
                 continue;
             }
@@ -110,17 +110,17 @@ class Method implements MethodInterface
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $currentIdStore
+     * @param int $idStoreCurrent
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    protected function findAvailableMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $currentIdStore)
+    protected function findAvailableMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $idStoreCurrent)
     {
         if (!$this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
             return null;
         }
 
-        $storeCurrencyPrice = $this->findStoreCurrencyPrice($shipmentMethodEntity, $quoteTransfer, $currentIdStore);
+        $storeCurrencyPrice = $this->findStoreCurrencyPrice($shipmentMethodEntity, $quoteTransfer, $idStoreCurrent);
         if ($storeCurrencyPrice === null) {
             return null;
         }
@@ -272,11 +272,11 @@ class Method implements MethodInterface
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $storeId
+     * @param int $idStore
      *
      * @return int|null
      */
-    protected function findStoreCurrencyPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer, $storeId)
+    protected function findStoreCurrencyPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer, $idStore)
     {
         $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
         if (isset($pricePlugins[$method->getPricePlugin()])) {
@@ -287,8 +287,8 @@ class Method implements MethodInterface
         $methodPriceEntity = $this->queryContainer
             ->queryMethodPriceByShipmentMethodAndStoreCurrency(
                 $method->getIdShipmentMethod(),
-                $storeId,
-                $this->getCurrencyTransferByIsoCode($quoteTransfer->getCurrency()->getCode())->getIdCurrency()
+                $idStore,
+                $this->getIdCurrencyByIsoCode($quoteTransfer->getCurrency()->getCode())
             )
             ->findOne();
         if ($methodPriceEntity === null) {
@@ -305,15 +305,17 @@ class Method implements MethodInterface
     /**
      * @param string $currencyIsoCode
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     * @return int
      */
-    protected function getCurrencyTransferByIsoCode($currencyIsoCode)
+    protected function getIdCurrencyByIsoCode($currencyIsoCode)
     {
-        if (!isset($this->currencyCache[$currencyIsoCode])) {
-            $this->currencyCache[$currencyIsoCode] = $this->currencyFacade->fromIsoCode($currencyIsoCode);
+        if (!isset(static::$idCurrencyCache[$currencyIsoCode])) {
+            static::$idCurrencyCache[$currencyIsoCode] = $this->currencyFacade
+                ->fromIsoCode($currencyIsoCode)
+                ->getIdCurrency();
         }
 
-        return $this->currencyCache[$currencyIsoCode];
+        return static::$idCurrencyCache[$currencyIsoCode];
     }
 
     /**

@@ -17,6 +17,6 @@ interface ShipmentMethodTransformerInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity);
+    public function transformEntityToTransfer(SpyShipmentMethod $shipmentMethodEntity);
 
 }

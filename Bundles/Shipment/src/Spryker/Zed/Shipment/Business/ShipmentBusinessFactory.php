@@ -58,7 +58,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer
+     * @return \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface
      */
     public function createShipmentMethodTransformer()
     {

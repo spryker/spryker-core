@@ -43,8 +43,8 @@
         <column name="fk_currency" required="true" type="INTEGER"/>
         <column name="fk_store" required="false" type="INTEGER"/>
         <column name="fk_shipment_method" required="true" type="INTEGER"/>
-        <column name="default_gross_price" required="true" type="INTEGER"/>
-        <column name="default_net_price" required="true" type="INTEGER"/>
+        <column name="default_gross_price" required="false" type="INTEGER"/>
+        <column name="default_net_price" required="false" type="INTEGER"/>
 
         <foreign-key name="spy_shipment_method_price-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="ShipmentMethodPrice">
             <reference local="fk_currency" foreign="id_currency"/>

@@ -26,9 +26,9 @@ class MigrateShipmentMethodPricesConsole extends Console
     const COMMAND_DESCRIPTION = 'Console command to migrate shipment prices to multi currency implementation.';
 
     /**
-     * @var array Keys are currency iso codes, values are Currency transfer objects.
+     * @var int[] Keys are currency iso codes, values are currency ids.
      */
-    protected $currencyCache = [];
+    protected static $idCurrencyCache = [];
 
     /**
      * @return void
@@ -103,7 +103,7 @@ class MigrateShipmentMethodPricesConsole extends Console
 
             $isDefaultStoreCurrency = $idStore === $defaultIdStore && $idCurrency === $defaultIdCurrency;
 
-            $this->setNetPrice($shipmentMethodPriceEntity, $shipmentMethodEntity, $isDefaultStoreCurrency);
+            $this->setNetPrice($shipmentMethodPriceEntity);
             $this->setGrossPrice($shipmentMethodPriceEntity, $shipmentMethodEntity, $isDefaultStoreCurrency);
 
             $shipmentMethodPriceEntity->save();
@@ -112,18 +112,16 @@ class MigrateShipmentMethodPricesConsole extends Console
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice $shipmentMethodPrice
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethod
-     * @param bool $isDefaultStoreCurrency
      *
      * @return void
      */
-    protected function setNetPrice(SpyShipmentMethodPrice $shipmentMethodPrice, SpyShipmentMethod $shipmentMethod, $isDefaultStoreCurrency)
+    protected function setNetPrice(SpyShipmentMethodPrice $shipmentMethodPrice)
     {
         if ($shipmentMethodPrice->getDefaultNetPrice() !== null) {
             return;
         }
 
-        $shipmentMethodPrice->setDefaultNetPrice($isDefaultStoreCurrency ? (int)$shipmentMethod->getDefaultPrice() : 0);
+        $shipmentMethodPrice->setDefaultNetPrice(0);
     }
 
     /**
@@ -151,7 +149,7 @@ class MigrateShipmentMethodPricesConsole extends Console
      *   Result: [
      *              [1, 5],
      *              [1, 6],
-     *              [3, 10]
+     *              [2, 10]
      *           ]
      *
      * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
@@ -178,14 +176,14 @@ class MigrateShipmentMethodPricesConsole extends Console
      */
     protected function getIdCurrencyByIsoCode($currencyIsoCode)
     {
-        if (!isset($this->currencyCache[$currencyIsoCode])) {
-            $this->currencyCache[$currencyIsoCode] = $this->getFactory()
+        if (!isset(static::$idCurrencyCache[$currencyIsoCode])) {
+            static::$idCurrencyCache[$currencyIsoCode] = $this->getFactory()
                 ->getCurrencyFacade()
                 ->fromIsoCode($currencyIsoCode)
                 ->getIdCurrency();
         }
 
-        return $this->currencyCache[$currencyIsoCode];
+        return static::$idCurrencyCache[$currencyIsoCode];
     }
 
     /**

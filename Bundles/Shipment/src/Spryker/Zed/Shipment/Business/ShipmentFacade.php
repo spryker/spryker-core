@@ -232,7 +232,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity)
     {
         return $this->getFactory()->createShipmentMethodTransformer()
-            ->transformShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity);
+            ->transformEntityToTransfer($shipmentMethodEntity);
     }
 
 }
