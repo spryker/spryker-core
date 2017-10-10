@@ -11,7 +11,6 @@ use Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface;
 use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface;
-use Spryker\Zed\Synchronization\SynchronizationConfig;
 
 class SynchronizationStorage implements SynchronizationInterface
 {
@@ -30,14 +29,14 @@ class SynchronizationStorage implements SynchronizationInterface
     protected $utilEncodingService;
 
     /**
-     * @var OutdatedValidatorInterface
+     * @var \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface
      */
     protected $outdatedValidator;
 
     /**
-     * @param SynchronizationToStorageInterface $storageClient
-     * @param SynchronizationToUtilEncodingInterface $utilEncodingService
-     * @param OutdatedValidatorInterface $outdatedValidator
+     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface $storageClient
+     * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface $outdatedValidator
      */
     public function __construct(SynchronizationToStorageInterface $storageClient, SynchronizationToUtilEncodingInterface $utilEncodingService, OutdatedValidatorInterface $outdatedValidator)
     {

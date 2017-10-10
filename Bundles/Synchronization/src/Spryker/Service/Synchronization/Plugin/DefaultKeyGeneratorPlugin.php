@@ -15,12 +15,12 @@ class DefaultKeyGeneratorPlugin extends BaseKeyGenerator implements Synchronizat
 {
 
     /**
-     * @var KeyFilterInterface
+     * @var \Spryker\Service\Synchronization\Model\KeyFilterInterface
      */
     protected $keyFilter;
 
     /**
-     * @param KeyFilterInterface $keyFilter
+     * @param \Spryker\Service\Synchronization\Model\KeyFilterInterface $keyFilter
      */
     public function __construct(KeyFilterInterface $keyFilter)
     {

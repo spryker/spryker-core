@@ -8,13 +8,9 @@
 namespace Spryker\Zed\Synchronization\Business\Model\Search;
 
 use Elastica\Exception\NotFoundException;
-use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface;
 use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface;
-use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface;
-use Spryker\Zed\Synchronization\SynchronizationConfig;
-use Throwable;
 
 class SynchronizationSearch implements SynchronizationInterface
 {
@@ -29,14 +25,15 @@ class SynchronizationSearch implements SynchronizationInterface
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface
      */
     protected $searchClient;
+
     /**
-     * @var OutdatedValidatorInterface
+     * @var \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface
      */
     protected $outdatedValidator;
 
     /**
-     * @param SynchronizationToSearchInterface $searchClient
-     * @param OutdatedValidatorInterface $outdatedValidator
+     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface $searchClient
+     * @param \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface $outdatedValidator
      */
     public function __construct(SynchronizationToSearchInterface $searchClient, OutdatedValidatorInterface $outdatedValidator)
     {

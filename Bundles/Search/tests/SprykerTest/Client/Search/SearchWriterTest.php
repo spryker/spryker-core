@@ -20,8 +20,6 @@ use Spryker\Client\Search\Model\Elasticsearch\Writer\Writer;
  * @group SprykerTest
  * @group Client
  * @group Search
- * @group Communication
- * @group Console
  * @group SearchWriterTest
  * Add your own group annotations below this line
  */
@@ -104,7 +102,7 @@ class SearchWriterTest extends Unit
     }
 
     /**
-     * @return Writer
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\Writer
      */
     protected function getElasticsearchWriter()
     {

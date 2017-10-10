@@ -17,12 +17,14 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Synchronization
  * @group Business
+ * @group Facade
  * @group SynchronizationFacadeTest
+ * Add your own group annotations below this line
  */
 class SynchronizationFacadeTest extends Unit
 {

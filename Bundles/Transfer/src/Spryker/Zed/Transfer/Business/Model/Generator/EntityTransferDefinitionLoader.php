@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Zend\Filter\Word\UnderscoreToCamelCase;
-
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
 {
 

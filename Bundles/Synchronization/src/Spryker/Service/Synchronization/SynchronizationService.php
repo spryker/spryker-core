@@ -43,5 +43,4 @@ class SynchronizationService extends AbstractService implements SynchronizationS
         return $this->getFactory()->createKeyFilter()->escapeKey($key);
     }
 
-
 }

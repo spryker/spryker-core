@@ -129,7 +129,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @return mixed
      */
-    public function read($key,  $typeName = null, $indexName = null)
+    public function read($key, $typeName = null, $indexName = null)
     {
         return $this
             ->getFactory()

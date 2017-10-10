@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\EventBehavior;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace SprykerTest\Zed\EventBehavior;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class EventBehaviorBusinessTester extends \Codeception\Actor
+ */
+class EventBehaviorBusinessTester extends Actor
 {
+
     use _generated\EventBehaviorBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

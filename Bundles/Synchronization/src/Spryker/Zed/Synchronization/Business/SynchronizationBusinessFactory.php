@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Synchronization\Business\Model\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Model\Storage\SynchronizationStorage;
 use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidator;
-use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 
 /**
@@ -44,7 +43,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OutdatedValidatorInterface
+     * @return \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface
      */
     public function createOutdatedValidator()
     {

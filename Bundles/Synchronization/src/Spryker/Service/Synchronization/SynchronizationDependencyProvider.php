@@ -28,9 +28,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Service\Kernel\Container
      */
     protected function addSynchronizationSearchKeyPlugins(Container $container)
     {
@@ -42,9 +42,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Service\Kernel\Container
      */
     protected function addSynchronizationStorageKeyPlugins(Container $container)
     {

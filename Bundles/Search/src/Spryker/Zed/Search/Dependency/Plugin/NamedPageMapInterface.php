@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Search\Dependency\Plugin;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
-
 interface NamedPageMapInterface extends PageMapInterface
 {
 
@@ -22,4 +19,5 @@ interface NamedPageMapInterface extends PageMapInterface
      * @return string
      */
     public function getName();
+
 }

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException;
 use Spryker\Zed\Search\Business\Exception\PluginNotFoundException;
-use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
@@ -58,7 +57,7 @@ class PageDataMapper implements PageDataMapperInterface
     }
 
     /**
-     * @param NamedPageMapInterface[] $namedPageMapPlugins
+     * @param \Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface[] $namedPageMapPlugins
      *
      * @return array
      */

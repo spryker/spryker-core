@@ -1,12 +1,12 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Synchronization\Business\Model\Validation;
 
-use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface;
 use Spryker\Zed\Synchronization\SynchronizationConfig;
 
 class OutdatedValidator implements OutdatedValidatorInterface
@@ -20,7 +20,7 @@ class OutdatedValidator implements OutdatedValidatorInterface
     protected $config;
 
     /**
-     * @param SynchronizationConfig $config
+     * @param \Spryker\Zed\Synchronization\SynchronizationConfig $config
      */
     public function __construct(SynchronizationConfig $config)
     {
@@ -52,8 +52,7 @@ class OutdatedValidator implements OutdatedValidatorInterface
      */
     protected function isOutdated(array $newEntry, array $existingEntry)
     {
-        if (
-            !empty($existingEntry) &&
+        if (!empty($existingEntry) &&
             array_key_exists(static::MESSAGE_TIMESTAMP, $existingEntry) &&
             $existingEntry[static::MESSAGE_TIMESTAMP] > $newEntry[static::MESSAGE_TIMESTAMP]
         ) {
@@ -62,4 +61,5 @@ class OutdatedValidator implements OutdatedValidatorInterface
 
         return false;
     }
+
 }

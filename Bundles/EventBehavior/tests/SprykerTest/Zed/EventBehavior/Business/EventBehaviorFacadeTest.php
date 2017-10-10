@@ -26,12 +26,14 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\RequestIdentifier;
 
 /**
- * @group Functional
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group EventBehavior
  * @group Business
+ * @group Facade
  * @group EventBehaviorFacadeTest
+ * Add your own group annotations below this line
  */
 class EventBehaviorFacadeTest extends Unit
 {

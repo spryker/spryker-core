@@ -34,7 +34,6 @@ interface GlossaryEvents
      */
     const ENTITY_SPY_GLOSSARY_KEY_DELETE = 'Entity.spy_glossary_key.delete';
 
-
     /**
      * Specification
      * - This events will be used for spy_glossary_translation entity creation

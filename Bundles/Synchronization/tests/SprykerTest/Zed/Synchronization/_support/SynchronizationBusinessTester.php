@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\Synchronization;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,12 +17,14 @@ namespace SprykerTest\Zed\Synchronization;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class SynchronizationBusinessTester extends \Codeception\Actor
+ */
+class SynchronizationBusinessTester extends Actor
 {
+
     use _generated\SynchronizationBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
+
 }

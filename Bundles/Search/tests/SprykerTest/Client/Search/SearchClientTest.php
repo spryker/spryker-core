@@ -22,9 +22,9 @@ use Spryker\Client\Search\SearchFactory;
 
 /**
  * Auto-generated group annotations
- * @group Functional
- * @group Spryker
+ * @group SprykerTest
  * @group Client
+ * @group Search
  * @group SearchClientTest
  * Add your own group annotations below this line
  */
