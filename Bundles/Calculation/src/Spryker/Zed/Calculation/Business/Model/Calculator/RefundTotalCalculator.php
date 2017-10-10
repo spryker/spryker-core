@@ -9,7 +9,6 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class RefundTotalCalculator implements CalculatorInterface
 {

@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Currency\Persistence;
 
 use Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface;
-use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
 use Spryker\Shared\Kernel\Store;
 
 class CurrencyPersistence implements CurrencyPersistenceInterface

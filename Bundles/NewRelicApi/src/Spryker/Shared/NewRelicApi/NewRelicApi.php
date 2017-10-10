@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\NewRelicApi;
 
-use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
-
 /**
  * The PHP API for New Relic
  *

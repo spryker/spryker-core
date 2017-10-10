@@ -10,7 +10,6 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class OrderTaxTotalCalculator implements CalculatorInterface
 {

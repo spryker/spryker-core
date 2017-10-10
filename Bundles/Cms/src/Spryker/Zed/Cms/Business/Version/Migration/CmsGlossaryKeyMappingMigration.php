@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Business\Version\Migration;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
-use Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;

@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 
 use Spryker\Service\UtilDataReader\Dependency\YamlReaderInterface;
 use Spryker\Service\UtilDataReader\Exception\ResourceNotFoundException;
-use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 
 class YamlBatchIterator implements CountableIteratorInterface
 {
