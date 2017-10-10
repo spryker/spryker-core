@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SearchDeleteIndexConsole extends Console
 {
 
-    const COMMAND_NAME = 'search:delete';
+    const COMMAND_NAME = 'search:index:delete';
     const DESCRIPTION = 'This command will delete the search index.';
 
     /**
