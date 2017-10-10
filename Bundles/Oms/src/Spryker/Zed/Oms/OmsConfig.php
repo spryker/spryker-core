@@ -60,4 +60,12 @@ class OmsConfig extends AbstractBundleConfig
         return '1 minutes';
     }
 
+    /**
+     * @return string
+     */
+    public function getSubProcessPrefixDelimiter()
+    {
+        return ' - ';
+    }
+
 }
