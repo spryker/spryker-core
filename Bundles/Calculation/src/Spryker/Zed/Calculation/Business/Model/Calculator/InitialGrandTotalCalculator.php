@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class InitialGrandTotalCalculator implements CalculatorInterface
 {

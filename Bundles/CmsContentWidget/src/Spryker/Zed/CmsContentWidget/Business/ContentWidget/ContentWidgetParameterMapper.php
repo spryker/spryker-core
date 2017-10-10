@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsContentWidget\Business\ContentWidget;
 
 use Generated\Shared\Transfer\CmsContentWidgetFunctionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetFunctionMatcherInterface;
 use Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface;
 
 class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterface

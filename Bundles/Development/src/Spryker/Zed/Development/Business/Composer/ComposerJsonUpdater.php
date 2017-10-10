@@ -126,13 +126,13 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      */
     protected function clean(array $composerJson)
     {
-        if  (!empty($composerJson[static::KEY_REQUIRE])) {
+        if (!empty($composerJson[static::KEY_REQUIRE])) {
             ksort($composerJson[static::KEY_REQUIRE]);
         } elseif (isset($composerJson[static::KEY_REQUIRE])) {
             unset($composerJson[static::KEY_REQUIRE]);
         }
 
-        if  (!empty($composerJson[static::KEY_REQUIRE_DEV])) {
+        if (!empty($composerJson[static::KEY_REQUIRE_DEV])) {
             ksort($composerJson[static::KEY_REQUIRE_DEV]);
         } elseif (isset($composerJson[static::KEY_REQUIRE_DEV])) {
             unset($composerJson[static::KEY_REQUIRE_DEV]);
@@ -169,7 +169,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
             'config',
         ];
 
-        $callable = function($a, $b) use ($map) {
+        $callable = function ($a, $b) use ($map) {
             $keyA = in_array($a, $map) ? array_search($a, $map) : 999;
             $keyB = in_array($b, $map) ? array_search($b, $map) : 999;
 

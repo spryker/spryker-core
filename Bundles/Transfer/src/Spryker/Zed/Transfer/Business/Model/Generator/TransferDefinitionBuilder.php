@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Spryker\Zed\Transfer\Business\Model\Generator\AbstractDefinitionBuilder;
-use Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface;
-use Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface;
-
 class TransferDefinitionBuilder extends AbstractDefinitionBuilder
 {
 

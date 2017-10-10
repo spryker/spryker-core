@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\Session\Model\SessionStorage;
 
-use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptionsInterface;
-
 class SessionStorageOptions implements SessionStorageOptionsInterface
 {
 

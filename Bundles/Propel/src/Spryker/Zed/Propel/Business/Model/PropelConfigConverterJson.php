@@ -57,8 +57,6 @@ class PropelConfigConverterJson implements PropelConfigConverterInterface
     }
 
     /**
-     * @throws \Exception
-     *
      * @return void
      */
     public function convertConfig()

@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\CartCurrencyConnector;
 
-use Spryker\Yves\CartCurrencyConnector\CartCurrencyConnectorDependencyProvider;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class CartCurrencyConnectorFactory extends AbstractFactory

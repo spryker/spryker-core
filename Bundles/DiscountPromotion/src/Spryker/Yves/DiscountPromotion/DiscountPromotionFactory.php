@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\DiscountPromotion;
 
-use Spryker\Yves\DiscountPromotion\DiscountPromotionDependencyProvider;
 use Spryker\Yves\DiscountPromotion\Mapper\PromotionProductMapper;
 use Spryker\Yves\Kernel\AbstractFactory;
 

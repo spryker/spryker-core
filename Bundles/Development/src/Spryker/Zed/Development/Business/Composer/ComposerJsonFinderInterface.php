@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Development\Business\Composer;
 
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
-
 interface ComposerJsonFinderInterface
 {
 
