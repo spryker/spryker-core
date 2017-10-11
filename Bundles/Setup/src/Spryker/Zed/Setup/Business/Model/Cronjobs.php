@@ -285,9 +285,9 @@ class Cronjobs
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $curl_response = curl_exec($ch);
+        $curlResponse = curl_exec($ch);
 
-        if ($curl_response === false) {
+        if ($curlResponse === false) {
             throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
         }
 
