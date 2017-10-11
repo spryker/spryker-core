@@ -80,6 +80,30 @@ class SnapshotHandler
     /**
      * @param string $repositoryName
      * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function restoreSnapshot($repositoryName, $snapshotName, $options = [])
+    {
+        return $this->elasticaSnapshot->restoreSnapshot($repositoryName, $snapshotName, $options, true)->isOk();
+    }
+
+    /**
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function restoreSnapshotAsync($repositoryName, $snapshotName, $options = [])
+    {
+        return $this->elasticaSnapshot->restoreSnapshot($repositoryName, $snapshotName, $options, false)->isOk();
+    }
+
+    /**
+     * @param string $repositoryName
+     * @param string $snapshotName
      *
      * @return bool
      */

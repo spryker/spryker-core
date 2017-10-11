@@ -46,8 +46,6 @@ class DatabaseImportConsole extends Console
     {
         $this->info(static::COMMAND_DESCRIPTION);
 
-        $this->getFacade()->dropDatabase();
-        $this->getFacade()->createDatabase();
         $this->getFacade()->importDatabase($input->getArgument(static::ARGUMENT_BACKUP_PATH));
     }
 

@@ -221,4 +221,51 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     {
         return $this->getFactory()->createSnapshotHandler()->deleteSnapshot($repositoryName, $snapshotName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @
+     * @param string $repositoryName
+     *
+     * @return bool
+     */
+    public function existsSnapshotRepository($repositoryName)
+    {
+        return $this->getFactory()->createSnapshotHandler()->existsSnapshotRepository($repositoryName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $type
+     * @param array $settings
+     *
+     * @return bool
+     */
+    public function createSnapshotRepository($repositoryName, $type = 'fs', $settings = [])
+    {
+        return $this->getFactory()->createSnapshotHandler()->registerSnapshotRepository($repositoryName, $type, $settings);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $type
+     * @param array $settings
+     *
+     * @return bool
+     */
+    public function restoreSnapshotRepository($repositoryName, $type = 'fs', $settings = [])
+    {
+        return $this->getFactory()->createSnapshotHandler()->resgisterSnapshotRepository($repositoryName, $type, $settings);
+    }
 }

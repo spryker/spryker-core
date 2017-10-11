@@ -50,8 +50,12 @@ class SearchCreateSnapshotConsole extends Console
         $snapshotName = $input->getArgument(static::ARGUMENT_SNAPSHOT_NAME);
 
         if ($this->getFacade()->createSnapshot($snapshotRepository, $snapshotName)) {
+            $this->info(sprintf('Snapshot "%s/%s" created.', $snapshotRepository, $snapshotName));
+
             return static::CODE_SUCCESS;
         }
+
+        $this->error(sprintf('Snapshot "%s/%s" could not be created.', $snapshotRepository, $snapshotName));
 
         return static::CODE_ERROR;
     }

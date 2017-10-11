@@ -55,10 +55,13 @@ class SearchDeleteSnapshotConsole extends Console
             return static::CODE_SUCCESS;
         }
 
-        $this->info(sprintf('Deleting snapshot "%s/%s"', $snapshotRepository, $snapshotName));
         if ($this->getFacade()->deleteSnapshot($snapshotRepository, $snapshotName)) {
+            $this->info(sprintf('Snapshot "%s/%s" deleted.', $snapshotRepository, $snapshotName));
+
             return static::CODE_SUCCESS;
         }
+
+        $this->error(sprintf('Snapshot "%s/%s" could not be deleted.', $snapshotRepository, $snapshotName));
 
         return static::CODE_ERROR;
     }

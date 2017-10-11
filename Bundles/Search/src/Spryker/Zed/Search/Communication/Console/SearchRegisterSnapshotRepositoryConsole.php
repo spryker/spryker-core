@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Search\Communication\Console;
 
-use GuzzleHttp\Client;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,48 +46,21 @@ class SearchRegisterSnapshotRepositoryConsole extends Console
     {
         $snapshotRepository = $input->getArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY);
 
-        $doesSnapshotRepositoryExists = $this->existSnapshotRepository($snapshotRepository);
-
-        if ($doesSnapshotRepositoryExists) {
+        if ($this->getFacade()->existsSnapshotRepository($snapshotRepository)) {
             $this->info(sprintf('Snapshot repository "%s" already exists.', $snapshotRepository));
 
             return static::CODE_SUCCESS;
         }
 
-        $body = sprintf('{"type": "fs", "settings": {"location": "%s"}}', $snapshotRepository);
+        if ($this->getFacade()->createSnapshotRepository($snapshotRepository)) {
+            $this->info(sprintf('Snapshot repository "%s" created.', $snapshotRepository));
 
-        $client = new Client();
-        $response = $client->put('localhost:10005/_snapshot/' . $snapshotRepository, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'body' => $body,
-        ]);
-
-        if ($response->getStatusCode() === 200) {
             return static::CODE_SUCCESS;
         }
 
+        $this->error(sprintf('Snapshot repository "%s" could not be created.', $snapshotRepository));
+
         return static::CODE_ERROR;
-    }
-
-    /**
-     * @param string $snapshotRepository
-     *
-     * @return bool
-     */
-    protected function existSnapshotRepository($snapshotRepository)
-    {
-        $client = new Client();
-        $response = $client->get('localhost:10005/_snapshot/_all');
-        if ($response->getStatusCode() === 200) {
-            $snapshots = json_decode($response->getBody()->getContents(), true);
-            if (isset($snapshots[$snapshotRepository])) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
 }

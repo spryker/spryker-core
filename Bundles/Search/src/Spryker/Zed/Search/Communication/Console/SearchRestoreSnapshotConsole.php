@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Search\Communication\Console;
 
-use GuzzleHttp\Client;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -50,13 +49,19 @@ class SearchRestoreSnapshotConsole extends Console
         $snapshotRepository = $input->getArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY);
         $snapshotName = $input->getArgument(static::ARGUMENT_SNAPSHOT_NAME);
 
-        $client = new Client();
-        $url = sprintf('localhost:10005/_snapshot/%s/%s/_restore', $snapshotRepository, $snapshotName);
-        $response = $client->post($url);
+        if (!$this->getFacade()->existsSnapshot($snapshotRepository, $snapshotName)) {
+            $this->info(sprintf('Snapshot "%s/%s" does not exist.', $snapshotRepository, $snapshotName));
 
-        if ($response->getStatusCode() === 200) {
             return static::CODE_SUCCESS;
         }
+
+        if ($this->getFacade()->createSnapshot($snapshotRepository, $snapshotName)) {
+            $this->info(sprintf('Snapshot "%s/%s" restored.', $snapshotRepository, $snapshotName));
+
+            return static::CODE_SUCCESS;
+        }
+
+        $this->error(sprintf('Snapshot "%s/%s" could not be restored.', $snapshotRepository, $snapshotName));
 
         return static::CODE_ERROR;
     }
