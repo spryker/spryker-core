@@ -11,7 +11,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\Exception\ProcessNotActiveException;
 use Spryker\Zed\Oms\OmsConfig;
 

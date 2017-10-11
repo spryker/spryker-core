@@ -27,7 +27,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
