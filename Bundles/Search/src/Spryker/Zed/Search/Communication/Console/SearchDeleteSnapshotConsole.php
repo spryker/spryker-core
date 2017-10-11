@@ -15,11 +15,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
  */
-class SearchCreateSnapshotConsole extends Console
+class SearchDeleteSnapshotConsole extends Console
 {
 
-    const COMMAND_NAME = 'search:snapshot:create';
-    const DESCRIPTION = 'This command will create a snapshot.';
+    const COMMAND_NAME = 'search:snapshot:delete';
+    const DESCRIPTION = 'This command will delete a snapshot if it exists.';
 
     const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
     const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
@@ -42,14 +42,21 @@ class SearchCreateSnapshotConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $snapshotRepository = $input->getArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY);
         $snapshotName = $input->getArgument(static::ARGUMENT_SNAPSHOT_NAME);
 
-        if ($this->getFacade()->createSnapshot($snapshotRepository, $snapshotName)) {
+        if (!$this->getFacade()->existsSnapshot($snapshotRepository, $snapshotName)) {
+            $this->info(sprintf('Snapshot "%s/%s" does not exist.', $snapshotRepository, $snapshotName));
+
+            return static::CODE_SUCCESS;
+        }
+
+        $this->info(sprintf('Deleting snapshot "%s/%s"', $snapshotRepository, $snapshotName));
+        if ($this->getFacade()->deleteSnapshot($snapshotRepository, $snapshotName)) {
             return static::CODE_SUCCESS;
         }
 

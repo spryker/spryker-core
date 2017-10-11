@@ -94,4 +94,15 @@ class SnapshotHandler
         }
     }
 
+    /**
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function deleteSnapshot($repositoryName, $snapshotName)
+    {
+        return $this->elasticaSnapshot->deleteSnapshot($repositoryName, $snapshotName)->isOk();
+    }
+
 }

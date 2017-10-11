@@ -175,4 +175,50 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
             ->createIndexMapInstaller($messenger)
             ->install();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function createSnapshot($repositoryName, $snapshotName, $options = [])
+    {
+        return $this->getFactory()->createSnapshotHandler()->createSnapshot($repositoryName, $snapshotName, $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function existsSnapshot($repositoryName, $snapshotName)
+    {
+        return $this->getFactory()->createSnapshotHandler()->existsSnapshot($repositoryName, $snapshotName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function deleteSnapshot($repositoryName, $snapshotName)
+    {
+        return $this->getFactory()->createSnapshotHandler()->deleteSnapshot($repositoryName, $snapshotName);
+    }
 }
