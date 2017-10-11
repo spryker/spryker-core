@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Setup\Communication\Controller;
 
+use ErrorException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Setup\SetupConstants;
@@ -45,71 +46,30 @@ class JenkinsController extends AbstractController
      * @param string $url
      * @param string $body
      *
+     * @throws \ErrorException
+     *
      * @return string
      */
     private function callJenkins($url, $body = '')
     {
-        $post_url = Config::get(SetupConstants::JENKINS_BASE_URL) . '/' . $url;//createItem?name=" . $v['name'];
+        $postUrl = Config::get(SetupConstants::JENKINS_BASE_URL) . '/' . $url;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $post_url);
+        curl_setopt($ch, CURLOPT_URL, $postUrl);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: text/xml']);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        //Log::logRaw('CURL call: ' . $post_url . "body:\n[" . $body . "]\n\n", self::LOGFILE);
-        $head = curl_exec($ch);
-        //Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
+
+        $curlResponse = curl_exec($ch);
+        if ($curlResponse === false) {
+            throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
+        }
+
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
         return $httpCode;
-    }
-
-    /**
-     * @param array $job
-     *
-     * @return string
-     */
-    private function prepareJobXml($job)
-    {
-        $disabled = ($job['enable'] === true) ? 'false' : 'true';
-        $schedule = $this->getSchedule($job);
-        $daysToKeep = $this->getDaysToKeep($job);
-        $command = $job['command'];
-        $store = $job['store'];
-
-        $xml = "<?xml version='1.0' encoding='UTF-8'?>
-<project>
-  <actions/>
-  <description></description>
-  <logRotator>
-    <daysToKeep>$daysToKeep</daysToKeep>
-    <numToKeep>-1</numToKeep>
-    <artifactDaysToKeep>$daysToKeep</artifactDaysToKeep>
-    <artifactNumToKeep>-1</artifactNumToKeep>
-  </logRotator>
-  <keepDependencies>false</keepDependencies>
-  <properties/>
-  <scm class='hudson.scm.NullSCM'/>
-  <canRoam>true</canRoam>
-  <disabled>$disabled</disabled>
-  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
-  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers class='vector'>$schedule</triggers>
-  <concurrentBuild>false</concurrentBuild>
-  <builders>
-    <hudson.tasks.Shell>";
-
-        $xml .= $this->getCommand($command, $store);
-        $xml .= "
-    </hudson.tasks.Shell>
-  </builders>\n"
-            . $this->getPublisherString($job) . "\n
-  <buildWrappers/>
-</project>\n";
-
-        return $xml;
     }
 
     /**
