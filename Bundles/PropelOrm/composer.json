@@ -7,7 +7,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\Zed\\PropelOrm\\": "src/Spryker/Zed/PropelOrm"
+      "Spryker\\Zed\\PropelOrm\\": "src/Spryker/Zed/PropelOrm",
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

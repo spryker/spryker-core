@@ -21,11 +21,8 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    },
     "psr-4": {
-      "CustomerApi\\Module\\": "tests/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

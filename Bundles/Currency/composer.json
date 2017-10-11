@@ -24,8 +24,8 @@
     "spryker/zed-request": "If you want to use Zed request meta data provider plugin which adds currency to each request."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

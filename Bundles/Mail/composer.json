@@ -15,8 +15,8 @@
     "swiftmailer/swiftmailer": "Recommended to use this package as default mailer."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

@@ -17,8 +17,8 @@
     "spryker/installer": "If you want to use Installer plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

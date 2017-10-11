@@ -20,8 +20,8 @@
     "spryker/cart": "If you want to use Cart plugins. Must be >= 4.0.2!"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

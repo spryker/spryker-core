@@ -21,8 +21,8 @@
     "spryker/symfony": "If you want to use the TwigServiceProvider."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

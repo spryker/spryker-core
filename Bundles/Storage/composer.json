@@ -22,8 +22,8 @@
     "spryker/collector-storage-connector": "If you want to use dropStorageTimestamps functionality from Collector module"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

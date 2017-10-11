@@ -31,8 +31,8 @@
     "spryker/silex": "Needed to get Twig environment for content widget service provider."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
