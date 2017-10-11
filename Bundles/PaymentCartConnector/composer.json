@@ -11,6 +11,11 @@
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."
   },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
   "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,

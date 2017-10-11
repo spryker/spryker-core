@@ -28,8 +28,8 @@
     "spryker/cms-block": "If you want to have separate content blocks on your pages."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

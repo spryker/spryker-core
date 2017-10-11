@@ -7,10 +7,11 @@
     "spryker/symfony": "^3.0.0"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
+  "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

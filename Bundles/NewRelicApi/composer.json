@@ -8,9 +8,11 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\Shared\\NewRelicApi\\": "src/Spryker/Shared/NewRelicApi"
+      "Spryker\\Shared\\NewRelicApi\\": "src/Spryker/Shared/NewRelicApi",
+      "Spryker\\": "src/Spryker/"
     }
   },
+  "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,
   "repositories": [

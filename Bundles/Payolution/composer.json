@@ -32,9 +32,8 @@
     "spryker/sales": "If you want to use Oms command plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Function": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

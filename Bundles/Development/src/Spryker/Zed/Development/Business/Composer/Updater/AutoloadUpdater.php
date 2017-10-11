@@ -17,8 +17,11 @@ class AutoloadUpdater implements UpdaterInterface
     const AUTOLOAD_DEV_KEY = 'autoload-dev';
 
     const BASE_TESTS_DIR = 'tests';
+    const BASE_SRC_DIR = 'src';
 
     const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
+    const SPRYKER_NAMESPACE = 'Spryker';
+
     /**
      * @var array
      */
@@ -47,7 +50,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
-        $composerJson = $this->updateAutoloadForTests($composerJson, $composerJsonFile);
+        $composerJson = $this->updateAutoload($composerJson, $composerJsonFile);
 
         return $composerJson;
     }
@@ -58,14 +61,17 @@ class AutoloadUpdater implements UpdaterInterface
      *
      * @return array
      */
-    protected function updateAutoloadForTests(array $composerJson, SplFileInfo $composerJsonFile)
+    protected function updateAutoload(array $composerJson, SplFileInfo $composerJsonFile)
     {
         $bundlePath = dirname($composerJsonFile->getPathname());
-        $composerJson = $this->updateAutoloadWithDefaultTestDirectory($composerJson, $bundlePath);
+
+        $composerJson = $this->updateAutoloadWithDefaultSrcDirectory($composerJson, $bundlePath);
+
+        $composerJson = $this->updateDevAutoloadWithDefaultTestDirectory($composerJson, $bundlePath);
 
         $testDirectoryKeys = $this->buildTestDirectoryKeys();
         foreach ($testDirectoryKeys as $testDirectoryKey) {
-            $composerJson = $this->updateAutoload($composerJson, $testDirectoryKey, $bundlePath);
+            $composerJson = $this->updateDevAutoloadForDeprecatedTestKeys($composerJson, $testDirectoryKey, $bundlePath);
         }
 
         $composerJson = $this->cleanupAutoload($composerJson, $bundlePath);
@@ -79,18 +85,53 @@ class AutoloadUpdater implements UpdaterInterface
      *
      * @return array
      */
-    protected function updateAutoloadWithDefaultTestDirectory(array $composerJson, $bundlePath)
+    protected function updateAutoloadWithDefaultSrcDirectory(array $composerJson, $bundlePath)
     {
-        $directoryName = $this->getTestSubDirectoryName(static::SPRYKER_TEST_NAMESPACE, $bundlePath);
+        $directoryPath = $this->getDirectoryPath(
+            [
+                rtrim($bundlePath, DIRECTORY_SEPARATOR),
+                static::BASE_SRC_DIR,
+                static::SPRYKER_NAMESPACE,
+            ]
+        );
 
-        if ($this->pathExists($directoryName)) {
+        if ($this->pathExists($directoryPath)) {
+            $pathParts = [
+                static::BASE_SRC_DIR,
+                static::SPRYKER_NAMESPACE,
+            ];
+
+            $composerJson = $this->addAutoloadDevPsr4($composerJson);
+            $composerJson[static::AUTOLOAD_KEY]['psr-4'][static::SPRYKER_NAMESPACE . '\\'] = $this->getDirectoryPath($pathParts);
+        }
+
+        return $composerJson;
+    }
+
+    /**
+     * @param array $composerJson
+     * @param string $bundlePath
+     *
+     * @return array
+     */
+    protected function updateDevAutoloadWithDefaultTestDirectory(array $composerJson, $bundlePath)
+    {
+        $directoryPath = $this->getDirectoryPath(
+            [
+                rtrim($bundlePath, DIRECTORY_SEPARATOR),
+                static::BASE_TESTS_DIR,
+                static::SPRYKER_TEST_NAMESPACE,
+            ]
+        );
+
+        if ($this->pathExists($directoryPath)) {
             $pathParts = [
                 static::BASE_TESTS_DIR,
                 static::SPRYKER_TEST_NAMESPACE,
             ];
 
             $composerJson = $this->addAutoloadDevPsr4($composerJson);
-            $composerJson[static::AUTOLOAD_DEV_KEY]['psr-4'][static::SPRYKER_TEST_NAMESPACE . '\\'] = $this->getDirectoryName($pathParts);
+            $composerJson[static::AUTOLOAD_DEV_KEY]['psr-4'][static::SPRYKER_TEST_NAMESPACE . '\\'] = $this->getDirectoryPath($pathParts);
         }
 
         return $composerJson;
@@ -103,11 +144,17 @@ class AutoloadUpdater implements UpdaterInterface
      *
      * @return array
      */
-    protected function updateAutoload(array $composerJson, $testDirectoryKey, $bundlePath)
+    protected function updateDevAutoloadForDeprecatedTestKeys(array $composerJson, $testDirectoryKey, $bundlePath)
     {
-        $directoryName = $this->getTestSubDirectoryName($testDirectoryKey, $bundlePath);
+        $directoryPath = $this->getDirectoryPath(
+            [
+                rtrim($bundlePath, DIRECTORY_SEPARATOR),
+                static::BASE_TESTS_DIR,
+                $testDirectoryKey,
+            ]
+        );
 
-        if ($this->pathExists($directoryName)) {
+        if ($this->pathExists($directoryPath)) {
             $composerJson = $this->addAutoloadDevPsr0($composerJson);
             $composerJson[static::AUTOLOAD_DEV_KEY]['psr-0'][$testDirectoryKey] = static::BASE_TESTS_DIR . '/';
         }
@@ -146,28 +193,11 @@ class AutoloadUpdater implements UpdaterInterface
     }
 
     /**
-     * @param string $testSubDirectoryKey
-     * @param string $bundlePath
-     *
-     * @return string
-     */
-    protected function getTestSubDirectoryName($testSubDirectoryKey, $bundlePath)
-    {
-        $pathParts = [
-            rtrim($bundlePath, DIRECTORY_SEPARATOR),
-            static::BASE_TESTS_DIR,
-            $testSubDirectoryKey,
-        ];
-
-        return $this->getDirectoryName($pathParts);
-    }
-
-    /**
      * @param array $pathParts
      *
      * @return string
      */
-    protected function getDirectoryName(array $pathParts)
+    protected function getDirectoryPath(array $pathParts)
     {
         return implode($pathParts, DIRECTORY_SEPARATOR) . '/';
     }
@@ -179,15 +209,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function addAutoloadDevPsr0(array $composerJson)
     {
-        if (!isset($composerJson[static::AUTOLOAD_DEV_KEY])) {
-            $composerJson[static::AUTOLOAD_DEV_KEY] = [];
-        }
-
-        if (!isset($composerJson[static::AUTOLOAD_DEV_KEY]['psr-0'])) {
-            $composerJson[static::AUTOLOAD_DEV_KEY]['psr-0'] = [];
-        }
-
-        return $composerJson;
+        return $this->addKeyToComposer($composerJson, static::AUTOLOAD_DEV_KEY, 'psr-0');
     }
 
     /**
@@ -197,12 +219,34 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function addAutoloadDevPsr4(array $composerJson)
     {
-        if (!isset($composerJson[static::AUTOLOAD_DEV_KEY])) {
-            $composerJson[static::AUTOLOAD_DEV_KEY] = [];
+        return $this->addKeyToComposer($composerJson, static::AUTOLOAD_DEV_KEY, 'psr-4');
+    }
+
+    /**
+     * @param array $composerJson
+     *
+     * @return array
+     */
+    protected function addAutoloadPsr4(array $composerJson)
+    {
+        return $this->addKeyToComposer($composerJson, static::AUTOLOAD_KEY, 'psr-4');
+    }
+
+    /**
+     * @param array $composerJson
+     * @param string $type
+     * @param string $key
+     *
+     * @return array
+     */
+    protected function addKeyToComposer(array $composerJson, $type, $key)
+    {
+        if (!isset($composerJson[$type])) {
+            $composerJson[$type] = [];
         }
 
-        if (!isset($composerJson[static::AUTOLOAD_DEV_KEY]['psr-4'])) {
-            $composerJson[static::AUTOLOAD_DEV_KEY]['psr-4'] = [];
+        if (!isset($composerJson[$type][$key])) {
+            $composerJson[$type][$key] = [];
         }
 
         return $composerJson;
@@ -216,7 +260,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function cleanupAutoload(array $composerJson, $bundlePath)
     {
-        return $this->removeAutoloadInvalidEntries(
+        $composerJson = $this->removeAutoloadInvalidEntries(
             $composerJson,
             [
                 static::AUTOLOAD_KEY => [$this, 'removeAutoloadInvalidPaths'],
@@ -224,6 +268,10 @@ class AutoloadUpdater implements UpdaterInterface
             ],
             $bundlePath
         );
+
+        $composerJson = $this->removeAutoloadDuplicates($composerJson);
+
+        return $composerJson;
     }
 
     /**
@@ -267,7 +315,7 @@ class AutoloadUpdater implements UpdaterInterface
                 $relativeDirectory,
             ];
 
-            if (!$this->pathExists($this->getDirectoryName($pathParts))) {
+            if (!$this->pathExists($this->getDirectoryPath($pathParts))) {
                 unset($autoload[$namespace]);
             }
         }
@@ -294,12 +342,35 @@ class AutoloadUpdater implements UpdaterInterface
                 rtrim($namespace, '\\'),
             ];
 
-            if (!$this->pathExists($this->getDirectoryName($pathParts))) {
+            if (!$this->pathExists($this->getDirectoryPath($pathParts))) {
                 unset($autoload[$namespace]);
             }
         }
 
         return $autoload;
+    }
+
+    /**
+     * @param array $composerJson
+     *
+     * @return array
+     */
+    protected function removeAutoloadDuplicates(array $composerJson)
+    {
+        if (isset($composerJson[static::AUTOLOAD_KEY]) && is_array($composerJson[static::AUTOLOAD_KEY]) && $composerJson[static::AUTOLOAD_KEY]['psr-4']) {
+            foreach ($composerJson[static::AUTOLOAD_KEY]['psr-4'] as $key => $autoload) {
+                $key = rtrim($key, '\\');
+                if (isset($composerJson[static::AUTOLOAD_KEY]['psr-0'][$key])) {
+                    unset($composerJson[static::AUTOLOAD_KEY]['psr-0'][$key]);
+                }
+
+                if (empty($composerJson[static::AUTOLOAD_KEY]['psr-0'])) {
+                    unset($composerJson[static::AUTOLOAD_KEY]['psr-0']);
+                }
+            }
+        }
+
+        return $composerJson;
     }
 
 }
