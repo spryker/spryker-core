@@ -77,7 +77,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = [])
     {
@@ -94,7 +94,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = [])
     {
@@ -112,7 +112,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = [])
     {
@@ -376,7 +376,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = [])
     {
@@ -396,7 +396,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = [])
     {
@@ -417,7 +417,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = [])
     {

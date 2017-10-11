@@ -257,7 +257,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */
-    public function getActiveProcesses(array $activeProcesses)
+    public function queryActiveProcesses(array $activeProcesses)
     {
         $query = $this->getFactory()
             ->createOmsOrderProcessQuery();
@@ -272,7 +272,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
      */
-    public function getOrderItemStates(array $orderItemStates)
+    public function queryOrderItemStates(array $orderItemStates)
     {
         $query = $this->getFactory()
             ->createOmsOrderItemStateQuery();

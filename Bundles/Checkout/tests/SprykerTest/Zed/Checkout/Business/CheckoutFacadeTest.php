@@ -27,7 +27,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
 use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
@@ -267,13 +266,15 @@ class CheckoutFacadeTest extends Unit
         $orderItem2Query = SpySalesOrderItemQuery::create()
             ->filterBySku('OSB1338');
 
+        $omsConfig = new OmsConfig();
+
         $orderItem1 = $orderItem1Query->findOne();
         $orderItem2 = $orderItem2Query->findOne();
 
         $this->assertNotNull($orderItem1);
         $this->assertNotNull($orderItem2);
 
-        $this->assertNotEquals(OmsConstants::INITIAL_STATUS, $orderItem1->getState()->getName());
+        $this->assertNotEquals($omsConfig->getInitialStatus(), $orderItem1->getState()->getName());
         $this->assertEquals('waiting for payment', $orderItem2->getState()->getName());
     }
 

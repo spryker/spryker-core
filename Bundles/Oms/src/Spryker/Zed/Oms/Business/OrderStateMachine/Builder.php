@@ -234,11 +234,11 @@ class Builder implements BuilderInterface
             $processName = $this->getAttributeString($xmlProcess, 'name');
             $process->setName($processName);
             $processMap[$processName] = $process;
-            $process->setMain($this->getAttributeBoolean($xmlProcess, 'main'));
+            $process->setIsMain($this->getAttributeBoolean($xmlProcess, 'main'));
 
             $process->setFile($this->getAttributeString($xmlProcess, 'file'));
 
-            if ($process->getMain()) {
+            if ($process->getIsMain()) {
                 $mainProcess = $process;
             }
         }
