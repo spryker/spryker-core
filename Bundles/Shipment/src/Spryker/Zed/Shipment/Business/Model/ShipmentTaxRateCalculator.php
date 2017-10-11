@@ -46,12 +46,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
             return;
         }
 
-        $taxRate = $this->taxFacade->getDefaultTaxRate();
-        $taxSetEntity = $this->findTaxSetByIdShipmentMethod($quoteTransfer);
-
-        if ($taxSetEntity !== null) {
-            $taxRate = (float)$taxSetEntity[ShipmentQueryContainer::COL_MAX_TAX_RATE];
-        }
+        $taxRate = $this->getTaxRate($quoteTransfer);
 
         $this->setShipmentTaxRate($quoteTransfer, $taxRate);
         $this->setQuoteExpenseTaxRate($quoteTransfer, $taxRate);
@@ -90,23 +85,45 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null
+     * @return float
      */
-    protected function findTaxSetByIdShipmentMethod(QuoteTransfer $quoteTransfer)
+    protected function getTaxRate(QuoteTransfer $quoteTransfer)
     {
-        $countryIso2Code = null;
-        if ($quoteTransfer->getShippingAddress()) {
-            $countryIso2Code = $quoteTransfer->getShippingAddress()->getIso2Code();
+        $taxSetEntity = $this->findTaxSet($quoteTransfer);
+        if ($taxSetEntity !== null) {
+            return (float)$taxSetEntity[ShipmentQueryContainer::COL_MAX_TAX_RATE];
         }
 
-        if (!$countryIso2Code) {
-            $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
-        }
+        return $this->taxFacade->getDefaultTaxRate();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null
+     */
+    protected function findTaxSet(QuoteTransfer $quoteTransfer)
+    {
+        $countryIso2Code = $this->getCountryIso2Code($quoteTransfer);
 
         return $this->shipmentQueryContainer->queryTaxSetByIdShipmentMethodAndCountryIso2Code(
             $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod(),
             $countryIso2Code
         )->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    protected function getCountryIso2Code(QuoteTransfer $quoteTransfer)
+    {
+        if ($quoteTransfer->getShippingAddress()) {
+            return $quoteTransfer->getShippingAddress()->getIso2Code();
+        }
+
+        return $this->taxFacade->getDefaultTaxCountryIso2Code();
     }
 
 }
