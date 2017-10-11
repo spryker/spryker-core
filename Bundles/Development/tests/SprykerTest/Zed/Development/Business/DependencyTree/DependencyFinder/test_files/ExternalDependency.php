@@ -3,8 +3,6 @@
 namespace SprykerTest\Zed\Development\Business\DependencyTree\DependencyFinder\Fixtures;
 
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDependency as BaseExternalDependency;
-use Company\MyClass as Something;
-use Exception;
 
 abstract class ExternalDependency
 {

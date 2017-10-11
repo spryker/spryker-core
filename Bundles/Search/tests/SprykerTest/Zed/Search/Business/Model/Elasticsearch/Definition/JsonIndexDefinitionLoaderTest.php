@@ -14,10 +14,16 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefiniti
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 
 /**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
  * @group Search
  * @group Business
+ * @group Model
  * @group Elasticsearch
- * @group JsonIndexDefinitionLoader
+ * @group Definition
+ * @group JsonIndexDefinitionLoaderTest
+ * Add your own group annotations below this line
  */
 class JsonIndexDefinitionLoaderTest extends Unit
 {
@@ -159,7 +165,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
 
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
-        $this->assertEquals($expectedMappings, $definitions['de_foo'. $suffix]->getMappings());
+        $this->assertEquals($expectedMappings, $definitions['de_foo' . $suffix]->getMappings());
     }
 
     /**
@@ -190,7 +196,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
                 'index' => [
                     'number_of_shards' => 1,
                     'number_of_replicas' => 4,
-                ]
+                ],
             ])
             ->setMappings([
                 'page' => [
@@ -307,7 +313,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
 
     /**
      * @param array $sourceDirectories
-     * @param JsonIndexDefinitionMerger $definitionMerger
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger $definitionMerger
      * @param array $stores
      * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingMock
      * @param string $suffix
@@ -360,7 +366,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
 
         $utilEncodingMock
             ->method('decodeJson')
-            ->willReturnCallback(function($json, $assoc){
+            ->willReturnCallback(function ($json, $assoc) {
                 return json_decode($json, $assoc);
             });
 

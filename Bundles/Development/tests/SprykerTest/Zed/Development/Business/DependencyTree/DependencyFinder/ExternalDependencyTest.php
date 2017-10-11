@@ -60,7 +60,7 @@ class ExternalDependencyTest extends Unit
 
         $dependencyTree = $dependencyFinder->getDependencyTree()->getDependencyTree();
 
-        $this->assertCount(6, $dependencyTree);
+        $this->assertCount(5, $dependencyTree);
     }
 
 }

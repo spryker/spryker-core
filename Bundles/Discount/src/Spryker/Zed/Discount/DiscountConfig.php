@@ -23,7 +23,7 @@ class DiscountConfig extends AbstractBundleConfig
      */
     public function getVoucherCodeLength()
     {
-        return self::DEFAULT_VOUCHER_CODE_LENGTH;
+        return static::DEFAULT_VOUCHER_CODE_LENGTH;
     }
 
     /**

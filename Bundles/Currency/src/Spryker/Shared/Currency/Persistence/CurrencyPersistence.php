@@ -8,13 +8,12 @@
 namespace Spryker\Shared\Currency\Persistence;
 
 use Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface;
-use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
 use Spryker\Shared\Kernel\Store;
 
 class CurrencyPersistence implements CurrencyPersistenceInterface
 {
 
-    const CURRENT_CURRENCY = 'current-currency';
+    const CURRENT_CURRENCY_ISO_CODE = 'current-currency-iso-code';
 
     /**
      * @var \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
@@ -37,13 +36,13 @@ class CurrencyPersistence implements CurrencyPersistenceInterface
     }
 
     /**
-     * @param string $currencyCode
+     * @param string $currencyIsoCode
      *
      * @return void
      */
-    public function setCurrentCurrencyIsoCode($currencyCode)
+    public function setCurrentCurrencyIsoCode($currencyIsoCode)
     {
-        $this->sessionClient->set(static::CURRENT_CURRENCY, $currencyCode);
+        $this->sessionClient->set(static::CURRENT_CURRENCY_ISO_CODE, $currencyIsoCode);
     }
 
     /**
@@ -51,7 +50,7 @@ class CurrencyPersistence implements CurrencyPersistenceInterface
      */
     public function getCurrentCurrencyIsoCode()
     {
-        $currentCurrencyIsoCode = $this->sessionClient->get(static::CURRENT_CURRENCY);
+        $currentCurrencyIsoCode = $this->sessionClient->get(static::CURRENT_CURRENCY_ISO_CODE);
         if (!$currentCurrencyIsoCode) {
             return $this->store->getCurrencyIsoCode();
         }

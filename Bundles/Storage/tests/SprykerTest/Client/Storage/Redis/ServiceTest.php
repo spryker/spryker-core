@@ -142,6 +142,8 @@ class ServiceTest extends Unit
     {
         $storageClient = new StorageClient();
         $storageClient->setMulti($this->fixtures['multi']);
+
+        //Check 0: Returns expected keys and values w/o cache
         $result = $storageClient->getMulti(array_keys($this->fixtures['multi']));
         $this->assertEquals($this->expected['multi'], $result);
 
@@ -150,14 +152,19 @@ class ServiceTest extends Unit
 
         //Reset cache
         $storageClient->setCachedKeys(null);
+        $storageClient->resetCache();
 
         //Warm-up cache
         $storageClient->getMulti(['non-existing-key']);
         $cachedKeys = $storageClient->getCachedKeys();
         $this->assertNotEmpty($cachedKeys);
 
+        //Check 1: Cache is used
         $cachedKeys = array_intersect_key($this->fixtures['multi'], $storageClient->getCachedKeys());
         $this->assertEquals(array_keys($this->fixtures['multi']), array_keys($cachedKeys));
+
+        //Check 2: Returns expected keys and values
+        $this->assertEquals($this->expected['multi'], $storageClient->getMulti(array_keys($this->fixtures['multi'])));
     }
 
     /**

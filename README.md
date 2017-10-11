@@ -1,6 +1,11 @@
-# Spryker Commerce Framework
+# Spryker Commerce OS
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/spryker/badges/quality-score.png?b=master&s=25d80f2c1a93b3ae4d907ea8e75800a87469f088)](https://scrutinizer-ci.com/g/spryker/spryker/?branch=master)
-[![Build Status](https://travis-ci.com/spryker/spryker.svg?token=7jVDNZFJxpvBrFetYhbF&branch=master)](https://travis-ci.com/spryker/spryker)
+## Core Modules
 
-[Documentation - https://spryker.github.io](https://spryker.github.io)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/spryker-core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/spryker-core/?branch=master)
+
+### Links
+- **[Spryker Documentation](https://academy.spryker.com/)**
+- [Spryker Architecture-Sniffer](https://github.com/spryker/architecture-sniffer)
+- [Spryker Code-Sniffer](https://github.com/spryker/code-sniffer)
+- [Spryker Code-Generator](https://github.com/spryker/code-generator)

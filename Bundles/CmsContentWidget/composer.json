@@ -11,6 +11,7 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
+    "spryker/cms": "*",
     "spryker/cms-block-collector": "*",
     "spryker/cms-block-gui": "*",
     "spryker/cms-collector": "*",
@@ -26,6 +27,7 @@
     "spryker/cms-block-gui": "If you want to use content widgets with CMS blocks.",
     "spryker/cms-collector": "If you want to expand cms pages collector with content widget mapping, provides plugin.",
     "spryker/cms-gui": "If you want to use content widgets with CMS pages.",
+    "spryker/cms": "If you want to use CmsPageParameterMapExpanderPlugin plugin.",
     "spryker/silex": "Needed to get Twig environment for content widget service provider."
   },
   "autoload": {

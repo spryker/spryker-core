@@ -18,8 +18,6 @@ class Json implements JsonInterface
      * @param int|null $options
      * @param int|null $depth
      *
-     * @throws \Exception
-     *
      * @return string|null
      */
     public function encode($value, $options = null, $depth = null)
@@ -42,8 +40,6 @@ class Json implements JsonInterface
      * @param bool $assoc
      * @param int|null $depth
      * @param int|null $options
-     *
-     * @throws \Exception
      *
      * @return mixed|null
      */

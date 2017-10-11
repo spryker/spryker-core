@@ -33,7 +33,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if (!$value || !$value->getCalculatorPlugin()) {
+        if (!$this->isValueSet($value)) {
             return null;
         }
 
@@ -51,7 +51,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (!$value || !$value->getCalculatorPlugin()) {
+        if (!$this->isValueSet($value)) {
             return null;
         }
 
@@ -80,6 +80,16 @@ class CalculatorAmountTransformer implements DataTransformerInterface
             Have you added it to DiscountDependencyProvider::getAvailableCalculatorPlugins plugin stack?',
             $pluginName
         ));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountCalculatorTransfer|null $value
+     *
+     * @return bool
+     */
+    protected function isValueSet($value)
+    {
+        return $value && $value->getCalculatorPlugin();
     }
 
 }

@@ -17,4 +17,16 @@ interface MoneyToCurrencyInterface
      */
     public function fromIsoCode($isoCode);
 
+    /**
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getStoreWithCurrencies();
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies();
+
 }

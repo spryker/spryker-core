@@ -235,4 +235,18 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
         return new SpySalesDiscountQuery();
     }
 
+    /**
+     * @api
+     *
+     * @param int $idDiscountAmount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery
+     */
+    public function queryDiscountAmountById($idDiscountAmount)
+    {
+        return $this->getFactory()
+            ->createDiscountAmountQuery()
+            ->filterByIdDiscountAmount($idDiscountAmount);
+    }
+
 }

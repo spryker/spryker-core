@@ -27,7 +27,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      */
     public function fromIsoCode($isoCode)
     {
-        return $this->getFactory()->createCurrencyBuilder()->fromIsoCode($isoCode);
+        return $this->getFactory()->createCurrencyReader()->getByIsoCode($isoCode);
     }
 
     /**
@@ -72,6 +72,34 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
     public function getByIdCurrency($idCurrency)
     {
         return $this->getFactory()->createCurrencyReader()->getByIdCurrency($idCurrency);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getCurrentStoreWithCurrencies()
+    {
+        return $this->getFactory()->createCurrencyReader()->getCurrentStoreWithCurrencies();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies()
+    {
+        return $this->getFactory()->createCurrencyReader()->getAllStoresWithCurrencies();
     }
 
 }

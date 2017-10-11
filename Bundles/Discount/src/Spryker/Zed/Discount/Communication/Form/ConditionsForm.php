@@ -51,7 +51,7 @@ class ConditionsForm extends AbstractType
     {
         $label = 'Apply when';
 
-        $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
+        $builder->add(static::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
             'label' => $label,
             'constraints' => [
                 new QueryString([

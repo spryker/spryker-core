@@ -7,6 +7,8 @@
 
 namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 
+use Exception;
+
 class XmlBatchIterator implements CountableIteratorInterface
 {
 
@@ -75,7 +77,7 @@ class XmlBatchIterator implements CountableIteratorInterface
                 );
 
                 $this->batchData = $this->batchData[$this->rootNodeName];
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $this->batchData = [];
             }
         }

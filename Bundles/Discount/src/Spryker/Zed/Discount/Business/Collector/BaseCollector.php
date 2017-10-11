@@ -14,19 +14,19 @@ class BaseCollector
 {
 
     /**
-     * @param int $grossPrice
+     * @param int $unitPrice
      * @param int $quantity
      * @param \ArrayObject $originalItemCalculatedDiscounts
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
     protected function createDiscountableItemTransfer(
-        $grossPrice,
+        $unitPrice,
         $quantity,
         ArrayObject $originalItemCalculatedDiscounts
     ) {
         $discountableItemTransfer = new DiscountableItemTransfer();
-        $discountableItemTransfer->setUnitGrossPrice($grossPrice);
+        $discountableItemTransfer->setUnitPrice($unitPrice);
         $discountableItemTransfer->setQuantity($quantity);
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($originalItemCalculatedDiscounts);
 
@@ -34,38 +34,20 @@ class BaseCollector
     }
 
     /**
-     * @param string $priceMode
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
-    protected function createDiscountableItemForItemTransfer($priceMode, ItemTransfer $itemTransfer)
+    protected function createDiscountableItemForItemTransfer(ItemTransfer $itemTransfer)
     {
         $discountableItemTransfer = $this->createDiscountableItemTransfer(
-            $this->getPrice($itemTransfer, $priceMode),
+            $itemTransfer->getUnitPrice(),
             $itemTransfer->getQuantity(),
             $itemTransfer->getCalculatedDiscounts()
         );
         $discountableItemTransfer->setOriginalItem($itemTransfer);
 
         return $discountableItemTransfer;
-    }
-
-    /**
-     * @deprecated This method calculated gross price when in tax mode, because discounts currently working with gross mode, will be removed in the future
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $priceMode
-     *
-     * @return int
-     */
-    protected function getPrice(ItemTransfer $itemTransfer, $priceMode)
-    {
-        if ($priceMode === 'NET_MODE') {
-            return $itemTransfer->getUnitNetPrice() + (int)round($itemTransfer->getUnitNetPrice() * $itemTransfer->getTaxRate() / 100);
-        } else {
-            return $itemTransfer->getUnitGrossPrice();
-        }
     }
 
 }

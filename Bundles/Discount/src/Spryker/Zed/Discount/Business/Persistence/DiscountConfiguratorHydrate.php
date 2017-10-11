@@ -29,11 +29,20 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected $discountConfigurationExpanderPlugins = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
      */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
+    protected $discountEntityMapper;
+
+    /**
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
+     */
+    public function __construct(
+        DiscountQueryContainerInterface $discountQueryContainer,
+        DiscountEntityMapperInterface $discountEntityMapper
+    ) {
         $this->discountQueryContainer = $discountQueryContainer;
+        $this->discountEntityMapper = $discountEntityMapper;
     }
 
     /**
@@ -91,6 +100,9 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->fromArray($discountEntity->toArray(), true);
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
+        $discountCalculatorTransfer->setMoneyValueCollection(
+            $this->discountEntityMapper->getMoneyValueCollectionForEntity($discountEntity)
+        );
 
         return $discountCalculatorTransfer;
     }
@@ -144,7 +156,6 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected function executeDiscountConfigurationExpanderPlugins(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
     ) {
-
         foreach ($this->discountConfigurationExpanderPlugins as $discountConfigurationExpanderPlugin) {
             $discountConfiguratorTransfer = $discountConfigurationExpanderPlugin->expand($discountConfiguratorTransfer);
         }

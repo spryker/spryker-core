@@ -36,7 +36,8 @@ class QueryStringValidator extends ConstraintValidator
 
         if (count($validationMessages) > 0) {
             foreach ($validationMessages as $validationMessage) {
-                $this->buildViolation($validationMessage)
+                $this->context
+                    ->buildViolation($validationMessage)
                     ->addViolation();
             }
         }

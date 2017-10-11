@@ -13,6 +13,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -86,6 +87,8 @@ class DiscountPersist implements DiscountPersistInterface
 
         $discountEntity->save();
 
+        $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
 
         $this->executePostCreatePlugins($discountConfiguratorTransfer);
@@ -141,6 +144,8 @@ class DiscountPersist implements DiscountPersistInterface
         $this->updateVoucherPool($discountConfiguratorTransfer, $discountEntity);
 
         $affectedRows = $discountEntity->save();
+
+        $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
 
@@ -367,6 +372,30 @@ class DiscountPersist implements DiscountPersistInterface
     public function setDiscountPostUpdatePlugins(array $discountPostUpdatePlugins)
     {
         $this->discountPostUpdatePlugins = $discountPostUpdatePlugins;
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return void
+     */
+    protected function saveDiscountMoneyValues(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    {
+        $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
+        if ($discountCalculatorTransfer->getCalculatorPlugin() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED) {
+            return;
+        }
+
+        foreach ($discountCalculatorTransfer->getMoneyValueCollection() as $moneyValueTransfer) {
+            $discountAmountEntity = $this->discountQueryContainer
+                ->queryDiscountAmountById($moneyValueTransfer->getIdEntity())
+                ->findOneOrCreate();
+
+            $discountAmountEntity->fromArray($moneyValueTransfer->modifiedToArray());
+            $discountAmountEntity->setFkDiscount($discountEntity->getIdDiscount());
+            $discountAmountEntity->save();
+        }
     }
 
 }

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\MySql;
 
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
-use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\JsonMapperInterface;
+use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface;
 
 class JsonMapper implements JsonMapperInterface
 {

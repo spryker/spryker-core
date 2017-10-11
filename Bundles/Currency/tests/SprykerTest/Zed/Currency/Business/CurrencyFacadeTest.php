@@ -8,6 +8,7 @@ namespace SprykerTest\Zed\Currency\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 
 /**
@@ -49,6 +50,16 @@ class CurrencyFacadeTest extends Unit
         $idCurrency = $this->createCurrencyFacade()->createCurrency($currencyTransfer);
 
         $this->assertNotNull($idCurrency);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetByIdCurrencyShouldReturnCurrencyFromPersistence()
+    {
+        $currencyTransfer = $this->createCurrencyFacade()->getByIdCurrency(1);
+
+        $this->assertInstanceOf(CurrencyTransfer::class, $currencyTransfer);
     }
 
     /**

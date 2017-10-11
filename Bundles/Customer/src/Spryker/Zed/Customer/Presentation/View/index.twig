@@ -67,6 +67,12 @@
                         <th>{{ 'Registered at' | trans }}</th>
                         <td>{{ customer.createdAt | formatDateTime }}</td>
                     </tr>
+                    {% if customer.username is defined %}
+                        <tr>
+                            <th>{{ 'Zed Account Reference' | trans }}</th>
+                            <td><a href="{{ url('/user/edit/update', {'id-user': customer.fkUser}) }}">{{ customer.username }}</a></td>
+                        </tr>
+                    {% endif %}
                     </tbody>
                     <tfoot>
                 </table>

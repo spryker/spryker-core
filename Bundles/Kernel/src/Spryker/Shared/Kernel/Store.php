@@ -380,6 +380,16 @@ class Store
     }
 
     /**
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getConfigurationForStore($storeName)
+    {
+        return $this->getStoreSetup($storeName)[$storeName];
+    }
+
+    /**
      * @return string
      */
     protected function getDefaultCurrencyCode()

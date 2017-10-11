@@ -15,12 +15,16 @@ use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyBridge;
+use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreBridge;
 
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const STORE = 'store';
+
     const FACADE_CURRENCY = 'currency facade';
+    const FACADE_STORE = 'store facade';
+
     const MONEY_PARSER = 'money parser';
 
     /**
@@ -33,6 +37,19 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyParser($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->addCurrencyFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -122,6 +139,20 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
         $isoCurrencies = new ISOCurrencies();
 
         return $isoCurrencies;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new MoneyToStoreBridge($container->getLocator()->store()->facade());
+        };
+
+        return $container;
     }
 
 }

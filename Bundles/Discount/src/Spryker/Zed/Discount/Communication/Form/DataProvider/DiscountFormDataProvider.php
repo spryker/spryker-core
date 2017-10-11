@@ -11,10 +11,24 @@ use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFormDataProvider extends BaseDiscountFormDataProvider
 {
+
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
+     */
+    protected $currencyFacade;
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface $currencyFacade
+     */
+    public function __construct(DiscountToCurrencyInterface $currencyFacade)
+    {
+        $this->currencyFacade = $currencyFacade;
+    }
 
     /**
      * @param int|null $idDiscount
@@ -55,11 +69,11 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
      */
     protected function createDiscountCalculatorTransfer()
     {
-        $calculatedDiscountTransfer = new DiscountCalculatorTransfer();
-        $calculatedDiscountTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
-        $calculatedDiscountTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
+        $discountCalculatorTransfer = new DiscountCalculatorTransfer();
+        $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
+        $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
 
-        return $calculatedDiscountTransfer;
+        return $discountCalculatorTransfer;
     }
 
 }

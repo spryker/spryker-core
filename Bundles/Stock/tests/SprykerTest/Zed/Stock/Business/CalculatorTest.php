@@ -13,7 +13,6 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Stock\Business\StockFacade;
-use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -33,11 +32,6 @@ class CalculatorTest extends Unit
     private $stockFacade;
 
     /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
-     */
-    private $stockQueryContainer;
-
-    /**
      * @var \Orm\Zed\Product\Persistence\SpyProduct
      */
     private $productEntity;
@@ -50,7 +44,6 @@ class CalculatorTest extends Unit
         parent::setUp();
 
         $this->stockFacade = new StockFacade();
-        $this->stockQueryContainer = new StockQueryContainer();
 
         $this->setupProductEntity();
         $this->setupStockProductEntity();
@@ -62,7 +55,7 @@ class CalculatorTest extends Unit
     public function testCalculateStock()
     {
         $stock = $this->stockFacade->calculateStockForProduct($this->productEntity->getSku());
-        $this->assertEquals(30, $stock);
+        $this->assertSame(30, $stock);
     }
 
     /**
