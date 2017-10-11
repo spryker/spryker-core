@@ -13,7 +13,6 @@ use Countable;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataReaderException;
 use Spryker\Zed\DataImport\Business\Exception\DataSetWithHeaderCombineFailedException;
-use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfiguration;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 

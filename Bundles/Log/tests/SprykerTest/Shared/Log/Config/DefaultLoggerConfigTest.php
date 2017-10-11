@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\Log\Config;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 
 /**

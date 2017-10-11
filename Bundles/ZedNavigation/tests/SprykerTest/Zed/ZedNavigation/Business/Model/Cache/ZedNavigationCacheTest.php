@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business\Model\Cache;
 
-use Application\Module\Zed;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationCacheEmptyException;
