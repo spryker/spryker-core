@@ -259,13 +259,13 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @api
      *
      * @param string $repositoryName
-     * @param string $type
-     * @param array $settings
+     * @param string $snapshotName
+     * @param array $options
      *
      * @return bool
      */
-    public function restoreSnapshotRepository($repositoryName, $type = 'fs', $settings = [])
+    public function restoreSnapshot($repositoryName, $snapshotName, $options = [])
     {
-        return $this->getFactory()->createSnapshotHandler()->resgisterSnapshotRepository($repositoryName, $type, $settings);
+        return $this->getFactory()->createSnapshotHandler()->restoreSnapshot($repositoryName, $snapshotName, $options);
     }
 }
