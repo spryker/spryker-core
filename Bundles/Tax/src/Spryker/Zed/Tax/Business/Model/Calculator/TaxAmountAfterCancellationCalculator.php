@@ -46,7 +46,6 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
     protected function calculateItemTaxAmountAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer)
     {
         foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
-
             if (!$itemTransfer->getCanceledAmount()) {
                 continue;
             }
@@ -75,7 +74,6 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
     protected function calculateOrderExpenseTaxAmountAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer)
     {
         foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
-
             if (!$expenseTransfer->getCanceledAmount()) {
                 continue;
             }

@@ -40,7 +40,6 @@ class AutocompleteDataProvider implements AutocompleteDataProviderInterface
 
         $result = [];
         foreach ($glossaryKeys as $glossaryKeyEntity) {
-
             $translations = [];
             foreach ($glossaryKeyEntity->getSpyGlossaryTranslations() as $glossaryTranslationEntity) {
                 $translations[$glossaryTranslationEntity->getFkLocale()] = $glossaryTranslationEntity->toArray();

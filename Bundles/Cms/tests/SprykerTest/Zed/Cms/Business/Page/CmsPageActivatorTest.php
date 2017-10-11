@@ -82,7 +82,6 @@ class CmsPageActivatorTest extends CmsMocks
 
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
-
         }
 
         if ($touchFacadeMock === null) {
@@ -98,7 +97,6 @@ class CmsPageActivatorTest extends CmsMocks
             ->willReturn($cmsPageEntity);
 
         return $cmsPageActivatorMock;
-
     }
 
 }

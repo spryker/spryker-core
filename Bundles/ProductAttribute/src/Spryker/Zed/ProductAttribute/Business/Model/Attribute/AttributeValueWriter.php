@@ -61,7 +61,6 @@ class AttributeValueWriter implements AttributeValueWriterInterface
             $this->productAttributeQueryContainer
                 ->getConnection()
                 ->commit();
-
         } catch (Exception $e) {
             $this->productAttributeQueryContainer
                 ->getConnection()

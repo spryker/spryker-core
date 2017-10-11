@@ -126,7 +126,7 @@ class DiscountCreatePage
         $data = array_merge($this->discountData[$discountName], $dynamicData, $override);
         !$data['type'] ?: $i->selectOption('#discount_discountGeneral_discount_type', $data['type']);
         !$data['name'] ?: $i->fillField('#discount_discountGeneral_display_name', $data['name']);
-        !$data['description'] ?: $i->fillField('#discount_discountGeneral_description',  $data['description']);
+        !$data['description'] ?: $i->fillField('#discount_discountGeneral_description', $data['description']);
         !$data['excl'] ?: $i->click('#discount_discountGeneral_is_exclusive_' . $data['excl']);
         !$data['validFrom'] ?: $i->fillField('#discount_discountGeneral_valid_from', $data['validFrom']);
         !$data['validTo'] ?: $i->fillField('#discount_discountGeneral_valid_to', $data['validTo']);

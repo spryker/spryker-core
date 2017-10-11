@@ -82,7 +82,6 @@ class CreateBlockController extends AbstractController
                 ->createCmsBlock($cmsBlockForm->getData());
 
             $this->addSuccessMessage(static::MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED);
-
         } catch (CmsBlockTemplateNotFoundException $exception) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
 

@@ -138,7 +138,6 @@ class CodeTester
                 if ($options[static::OPTION_VERBOSE]) {
                     echo $buffer;
                 }
-
             });
             echo 'Test classes generated.';
         }

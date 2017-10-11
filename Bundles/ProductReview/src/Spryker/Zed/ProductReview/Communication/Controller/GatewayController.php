@@ -38,7 +38,6 @@ class GatewayController extends AbstractGatewayController
             return (new ProductReviewResponseTransfer())
                 ->setIsSuccess(true)
                 ->setProductReview($productReviewTransfer);
-
         } catch (RatingOutOfRangeException $exception) {
             return (new ProductReviewResponseTransfer())
                 ->setIsSuccess(false)

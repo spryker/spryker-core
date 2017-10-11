@@ -275,7 +275,6 @@ class TriggerTest extends StateMachineMocks
         }
 
         if ($handlerResolverMock === null) {
-
             $handlerResolverMock = $this->createHandlerResolverMock();
 
             $commandMock = $this->createCommandMock();

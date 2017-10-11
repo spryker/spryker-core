@@ -118,7 +118,6 @@ class AbstractProductOptionSaverTest extends MockProvider
                 'getOptionGroupById',
             ])
             ->getMock();
-
     }
 
     /**

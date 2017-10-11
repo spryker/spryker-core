@@ -172,7 +172,6 @@ class ProductOptionGroupSaverTest extends MockProvider
                 'createProductOptionGroupEntity',
             ])
             ->getMock();
-
     }
 
     /**

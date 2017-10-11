@@ -77,7 +77,6 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
     {
         $bundleItemsSaved = [];
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-
             $salesOrderItemBundleEntity = $this->mapSalesOrderItemBundleEntity($itemTransfer);
             $salesOrderItemBundleEntity->save();
 

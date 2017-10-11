@@ -75,7 +75,6 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
         foreach ($availableLocales as $localeTransfer) {
-
             $localizedAttributeKeyTransfer = new LocalizedProductSearchAttributeKeyTransfer();
             $localizedAttributeKeyTransfer
                 ->setLocaleName($localeTransfer->getLocaleName())

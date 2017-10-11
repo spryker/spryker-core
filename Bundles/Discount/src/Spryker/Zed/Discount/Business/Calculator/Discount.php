@@ -136,7 +136,6 @@ class Discount implements DiscountInterface
             foreach ($voucherDiscounts as $discountEntity) {
                 $discounts->append($discountEntity);
             }
-
         }
 
         return $discounts;
@@ -261,7 +260,6 @@ class Discount implements DiscountInterface
                     return true;
                 }
             }
-
         } catch (QueryStringException $exception) {
             $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
         }

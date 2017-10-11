@@ -34,7 +34,6 @@ class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterf
             $cmsContentWidgetFunction->setParameters($this->extractFunctionParameters($functionMatch));
 
             $cmsContentWidgetFunctions->addCmsContentWidgetFunction($cmsContentWidgetFunction);
-
         }
 
         return $cmsContentWidgetFunctions;

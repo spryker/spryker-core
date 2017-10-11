@@ -72,7 +72,6 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
             $this->relationSorter->sort($productsToAdd);
 
             $upSellingProducts = array_merge($upSellingProducts, $productsToAdd);
-
         }
 
         return $upSellingProducts;

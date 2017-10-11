@@ -115,7 +115,6 @@ class ProductQuery implements QueryInterface
             ]);
 
             $attributeMap[] = $propelQueryBuilderCriteriaMappingTransfer;
-
         }
 
         return $attributeMap;

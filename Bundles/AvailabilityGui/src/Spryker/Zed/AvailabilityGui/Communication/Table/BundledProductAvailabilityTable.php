@@ -155,7 +155,6 @@ class BundledProductAvailabilityTable extends AbstractTable
 
         $result = [];
         foreach ($queryResult as $productItem) {
-
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],

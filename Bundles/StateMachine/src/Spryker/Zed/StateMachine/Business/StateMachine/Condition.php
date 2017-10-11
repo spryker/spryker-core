@@ -99,7 +99,6 @@ class Condition implements ConditionInterface
                 if ($isValidCondition) {
                     array_push($possibleTransitions, $transition);
                 }
-
             } else {
                 array_push($possibleTransitions, $transition);
             }

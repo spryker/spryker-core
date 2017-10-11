@@ -77,7 +77,6 @@ class StateUpdater implements StateUpdaterInterface
                 $this->executeUpdateItemStateTransaction($processes, $sourceStates, $stateMachineItemTransfer);
             });
         }
-
     }
 
     /**

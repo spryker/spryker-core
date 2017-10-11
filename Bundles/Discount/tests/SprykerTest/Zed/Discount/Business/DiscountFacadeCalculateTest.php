@@ -193,7 +193,6 @@ class DiscountFacadeCalculateTest extends Unit
                 $collectedDiscountTransfer->setDiscountableItems($discountableItems);
 
                 return $collectedDiscountTransfer;
-
             });
 
         $discountFacade = $this->createMockedDiscountFacade($filterPluginMock);

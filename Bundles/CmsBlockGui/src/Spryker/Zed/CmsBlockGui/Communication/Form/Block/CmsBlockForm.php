@@ -262,7 +262,6 @@ class CmsBlockForm extends AbstractType
                         $context->addViolation('Date "Valid from" is the same as "Valid to".');
                     }
                 }
-
             },
         ]);
     }

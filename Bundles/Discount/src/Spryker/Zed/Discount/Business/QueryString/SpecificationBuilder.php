@@ -104,7 +104,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
         $countTokens = count($tokens);
 
         while ($countTokens > $currentTokenIndex) {
-
             $token = $this->cleanToken($tokens[$currentTokenIndex]);
 
             switch (true) {

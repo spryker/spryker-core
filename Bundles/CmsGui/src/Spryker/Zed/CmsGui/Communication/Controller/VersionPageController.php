@@ -47,7 +47,6 @@ class VersionPageController extends AbstractController
                 ->publishWithVersion($idCmsPage);
 
             $this->addSuccessMessage(sprintf('Page with version %d successfully published.', $cmsVersionTransfer->getVersion()));
-
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
 

@@ -97,7 +97,8 @@ class CustomerUserConnectorFacadeTest extends Unit
 
         $idCustomers = array_map(
             function (CustomerTransfer $customer) {
-                return $customer->getIdCustomer(); },
+                return $customer->getIdCustomer();
+            },
             $customers
         );
 

@@ -68,7 +68,6 @@ class AddController extends AbstractController
                 ));
 
                 return $this->createRedirectResponseAfterAdd($idProductAbstract);
-
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }

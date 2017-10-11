@@ -66,7 +66,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $this->checkPreConditions($quoteTransfer, $checkoutResponse);
 
         if (!$this->hasErrors($checkoutResponse)) {
-
             $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponse);
             if ($this->hasErrors($checkoutResponse)) {
                 return $checkoutResponse;

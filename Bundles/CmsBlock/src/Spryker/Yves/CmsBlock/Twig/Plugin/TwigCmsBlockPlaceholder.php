@@ -47,7 +47,6 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
                 }
 
                 return $this->renderCmsTwigContent($translation, $identifier, $context);
-
             }, ['needs_context' => true]),
         ];
     }

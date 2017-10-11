@@ -72,7 +72,6 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
 
         $skuMap = $this->getProductAbstractSkuMap($cmsContent);
         if (is_array($productAbstractSkuList)) {
-
             $products = $this->collectProductAbstractList($productAbstractSkuList, $skuMap);
             $numberOfCollectedProducts = count($products);
             if ($numberOfCollectedProducts > 1) {

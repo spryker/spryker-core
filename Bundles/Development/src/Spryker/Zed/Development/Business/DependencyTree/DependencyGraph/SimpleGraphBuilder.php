@@ -59,7 +59,6 @@ class SimpleGraphBuilder implements GraphBuilderInterface
         if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
             $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
             $attributes[static::LABEL] = $dependency[DependencyTree::META_BUNDLE] . static::ENGINE_BUNDLE_INFO_TEXT;
-
         }
 
         return $attributes;

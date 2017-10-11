@@ -64,7 +64,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         $bundleProducts = $this->getBundlesUsingProductBySku($bundledProductSku);
 
         foreach ($bundleProducts as $productBundleEntity) {
-
             $bundleItems = $this->getBundleItemsByIdProduct($productBundleEntity->getFkProduct());
 
             $bundleProductSku = $productBundleEntity->getSpyProductRelatedByFkProduct()
@@ -142,7 +141,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     {
         $bundleAvailabilityQuantity = 0;
         foreach ($bundleItems as $bundleItemEntity) {
-
             $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
                 ->getSku();
 

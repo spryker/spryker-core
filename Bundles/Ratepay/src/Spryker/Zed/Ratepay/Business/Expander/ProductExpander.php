@@ -44,7 +44,6 @@ class ProductExpander implements ProductExpanderInterface
                     $cartItem->setDescription($attr['long_description']);
                 }
             }
-
         }
 
         return $change;

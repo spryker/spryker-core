@@ -82,7 +82,6 @@ class CmsPageTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
-
             $results[] = [
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
                 CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],

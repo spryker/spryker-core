@@ -128,7 +128,6 @@ class AllBundleFinder implements AllBundleFinderInterface
     protected function loadOtherCoreBundles(array $allBundles)
     {
         foreach ($this->coreNamespaces as $coreNamespace) {
-
             $namespaceDir = $this->filter->filter($coreNamespace);
             $namespaceDir = strtolower($namespaceDir);
 

@@ -63,7 +63,6 @@ class ItemDiscountAmountFullAggregator implements CalculatorInterface
     protected function calculateDiscountAmountFullAggregationForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
-
             $unitProductOptionDiscountAmountAggregation = $this->calculateUnitProductOptionDiscountAmountAggregation($itemTransfer);
             $itemTransfer->setUnitDiscountAmountFullAggregation(
                 $itemTransfer->getUnitDiscountAmountAggregation() + $unitProductOptionDiscountAmountAggregation

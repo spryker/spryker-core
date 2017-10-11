@@ -112,7 +112,6 @@ class CacheDataProvider
             case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS:
                 $cacheData = self::generateOverLimitCacheInput(self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS);
                 break;
-
         }
 
         return $cacheData;

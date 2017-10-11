@@ -108,7 +108,6 @@ class DiscountsTable extends AbstractTable
 
         /** @var \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity */
         foreach ($queryResult as $discountEntity) {
-
             $result[] = [
                 SpyDiscountTableMap::COL_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $discountEntity->getDisplayName(),
@@ -280,7 +279,6 @@ class DiscountsTable extends AbstractTable
         $rowTemplate = '<tr><td>GROSS</td><td>NET</td></tr>';
         $row = '';
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
-
             $netAmount = '-';
             $grossAmount = '-';
             $currencyCode = $discountAmountEntity->getCurrency()->getCode();

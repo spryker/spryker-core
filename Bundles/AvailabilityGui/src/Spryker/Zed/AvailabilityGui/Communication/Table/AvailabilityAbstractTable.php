@@ -94,7 +94,6 @@ class AvailabilityAbstractTable extends AbstractTable
         $queryResult = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
 
         foreach ($queryResult as $productAbstractEntity) {
-
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
             $isNeverOutOfStock = $this->isAllConcreteIsNeverOutOfStock($productAbstractEntity);

@@ -66,7 +66,6 @@ class CreateGlossaryController extends AbstractController
                 )->build();
 
                 return $this->redirectResponse($redirectUrl);
-
             } else {
                 $this->addErrorMessage('Invalid data provided.');
             }

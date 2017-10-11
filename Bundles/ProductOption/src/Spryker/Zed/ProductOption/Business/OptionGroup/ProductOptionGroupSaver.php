@@ -143,7 +143,6 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
         if ($productOptionGroupTransfer->getName() &&
             strpos($productOptionGroupTransfer->getName(), ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX) === false) {
-
             $productOptionGroupTransfer->setName(
                 ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $productOptionGroupTransfer->getName()
             );

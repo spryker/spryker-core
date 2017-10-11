@@ -55,7 +55,6 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
         $attributes = [];
 
         foreach ($items as $item) {
-
             $attributeMap = $this->getAttributesMapByProductAbstract($item);
             $attributes[$item->getSku()] = $this->getAttributesWithAvailability(
                 $item,

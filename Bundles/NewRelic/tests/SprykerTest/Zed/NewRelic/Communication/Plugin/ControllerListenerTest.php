@@ -43,7 +43,8 @@ class ControllerListenerTest extends Unit
         $request->attributes->set('controller', 'bar');
         $request->attributes->set('action', 'baz');
 
-        $controller = function () {};
+        $controller = function () {
+        };
         $filterControllerEvent = new FilterControllerEvent(
             $this->getKernelMock(),
             $controller,

@@ -141,7 +141,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $productOptions = $itemTransfer->getProductOptions();
         $priceMode = $quoteTransfer->getPriceMode();
         for ($i = 0; $i < $quantity; $i++) {
-
             $bundleItemTransfer = new ItemTransfer();
             $bundleItemTransfer->fromArray($itemTransfer->toArray(), true);
             $bundleItemTransfer->setQuantity(1);
@@ -252,7 +251,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $roundingError = 0;
         $priceRatio = $bundleUnitPrice / $totalBundledItemUnitGrossPrice;
         foreach ($bundledProducts as $itemTransfer) {
-
             $this->requirePriceByMode($itemTransfer, $priceMode);
 
             $unitPrice = $this->getPriceByPriceMode($itemTransfer, $priceMode);
@@ -354,7 +352,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         }
 
         return static::$localizedProductNameCache[$localeMapKey];
-
     }
 
     /**
