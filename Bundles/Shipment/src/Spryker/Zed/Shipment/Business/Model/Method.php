@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Spryker\Shared\Money\PriceMode;
+use Spryker\Shared\Shipment\PriceMode;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;

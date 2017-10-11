@@ -13,7 +13,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Money\PriceMode;
+use Spryker\Shared\Shipment\PriceMode;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface;
