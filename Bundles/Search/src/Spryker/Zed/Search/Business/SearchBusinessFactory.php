@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Elastica\Snapshot;
 use Psr\Log\LoggerInterface;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
@@ -21,6 +22,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
@@ -203,5 +205,21 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function getSearchPageMapPlugins()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::PLUGIN_SEARCH_PAGE_MAPS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler
+     */
+    public function createSnapshotHandler()
+    {
+        return new SnapshotHandler($this->createElasticsearchSnapshot());
+    }
+
+    /**
+     * @return \Elastica\Snapshot
+     */
+    protected function createElasticsearchSnapshot()
+    {
+        return new Snapshot($this->getElasticsearchClient());
     }
 }
