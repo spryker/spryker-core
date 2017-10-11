@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\DataImport\Business\Model\DataSet;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 
 /**
  * Auto-generated group annotations

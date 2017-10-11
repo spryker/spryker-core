@@ -159,7 +159,7 @@ class BundledProductTable extends AbstractTable
             ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), 'stockQuantity')
             ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, self::IS_NEVER_OUT_OF_STOCK)
             ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
-            ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, CRITERIA::ISNULL)
+            ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, Criteria::ISNULL)
             ->groupBy(SpyProductTableMap::COL_ID_PRODUCT)
             ->addGroupByColumn(self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
             ->addGroupByColumn(self::IS_NEVER_OUT_OF_STOCK);
