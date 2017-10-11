@@ -58,7 +58,7 @@ class Builder implements BuilderInterface
     /**
      * @var string
      */
-    protected $subProcessDelimiter;
+    protected $subProcessPrefixDelimiter;
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
@@ -66,7 +66,7 @@ class Builder implements BuilderInterface
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|array $processDefinitionLocation
-     * @param string $subProcessDelimiter
+     * @param string $subProcessPrefixDelimiter
      */
     public function __construct(
         EventInterface $event,
@@ -74,13 +74,13 @@ class Builder implements BuilderInterface
         TransitionInterface $transition,
         ProcessInterface $process,
         $processDefinitionLocation,
-        $subProcessDelimiter = ' - '
+        $subProcessPrefixDelimiter = ' - '
     ) {
         $this->event = $event;
         $this->state = $state;
         $this->transition = $transition;
         $this->process = $process;
-        $this->subProcessDelimiter = $subProcessDelimiter;
+        $this->subProcessPrefixDelimiter = $subProcessPrefixDelimiter;
 
         $this->setProcessDefinitionLocation($processDefinitionLocation);
     }
@@ -130,7 +130,7 @@ class Builder implements BuilderInterface
                 $xmlSubProcess = $this->loadXmlFromFileName(str_replace(' ', '_', $processFile));
 
                 if ($processName) {
-                    $xmlSubProcess->children()->process->attributes()['name'] = $processName;
+                    $xmlSubProcess->children()->process[0]['name'] = $processName;
                 }
 
                 $this->recursiveMerge($xmlSubProcess, $this->rootElement, $processPrefix);
@@ -182,7 +182,7 @@ class Builder implements BuilderInterface
         $namespaceDependentElementNames = ['source', 'target', 'event'];
 
         if (in_array($xmlElement->getName(), $namespaceDependentElementNames)) {
-            $xmlElement[0] = $prefix . $this->subProcessDelimiter . $xmlElement[0];
+            $xmlElement[0] = $prefix . $this->subProcessPrefixDelimiter . $xmlElement[0];
         }
 
         return $xmlElement;
@@ -203,7 +203,7 @@ class Builder implements BuilderInterface
         $namespaceDependentElementNames = ['state', 'event'];
 
         if (in_array($xmlElement->getName(), $namespaceDependentElementNames)) {
-            $xmlElement->attributes()['name'] = $prefix . $this->subProcessDelimiter . $xmlElement->attributes()['name'];
+            $xmlElement->attributes()['name'] = $prefix . $this->subProcessPrefixDelimiter . $xmlElement->attributes()['name'];
         }
 
         return $xmlElement;
