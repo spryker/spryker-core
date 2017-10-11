@@ -41,7 +41,6 @@ class File implements StorageInterface
             if (function_exists('opcache_invalidate')) {
                 opcache_invalidate($this->getCacheFilename(), true);
             }
-
         } catch (Exception $exception) {
             ErrorLogger::getInstance()->log($exception);
         }

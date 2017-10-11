@@ -63,13 +63,11 @@ class ItemTaxAmountFullAggregator implements CalculatorInterface
     protected function calculateTaxAmountFullAggregationForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
-
             $productOptionUnitTaxAmount = $this->calculateProductOptionUnitTaxAmount($itemTransfer);
             $itemTransfer->setUnitTaxAmountFullAggregation($itemTransfer->getUnitTaxAmount() + $productOptionUnitTaxAmount);
 
             $productOptionSumTaxAmount = $this->calculateProductOptionSumTaxAmount($itemTransfer);
             $itemTransfer->setSumTaxAmountFullAggregation($itemTransfer->getSumTaxAmount() + $productOptionSumTaxAmount);
-
         }
     }
 

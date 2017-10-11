@@ -55,7 +55,6 @@ class PriceToPayAggregator implements CalculatorInterface
                     $itemTransfer->getSumTaxAmountFullAggregation()
                 )
             );
-
         }
     }
 
@@ -68,7 +67,6 @@ class PriceToPayAggregator implements CalculatorInterface
     protected function calculatePriceToPayAggregationForExpenses(ArrayObject $expenses, $priceMode)
     {
         foreach ($expenses as $expenseTransfer) {
-
             $expenseTransfer->setUnitPriceToPayAggregation(
                 $this->calculatePriceToPayAggregation(
                     $expenseTransfer->getUnitPrice(),

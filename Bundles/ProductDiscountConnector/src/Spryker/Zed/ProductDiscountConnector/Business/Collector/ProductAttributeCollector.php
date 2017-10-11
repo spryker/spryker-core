@@ -39,7 +39,6 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
     {
         $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-
             $isSatisfied = $this->productAttributeDecisionRule
                 ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
 

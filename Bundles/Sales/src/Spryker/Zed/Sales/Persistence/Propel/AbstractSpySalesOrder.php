@@ -149,7 +149,6 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
         }
 
         return $array;
-
     }
 
 }

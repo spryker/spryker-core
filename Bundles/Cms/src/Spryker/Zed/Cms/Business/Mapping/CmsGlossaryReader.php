@@ -189,7 +189,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
                 continue;
             }
             return $glossaryTranslationEntity->getValue();
-
         }
         return null;
     }
@@ -225,7 +224,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         foreach ($availableLocales as $idLocale => $localeName) {
-
             $cmsPlaceholderTranslationTransfer = new CmsPlaceholderTranslationTransfer();
             $cmsPlaceholderTranslationTransfer->setFkLocale($idLocale);
             $cmsPlaceholderTranslationTransfer->setLocaleName($localeName);
@@ -245,7 +243,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             $glossaryAttributeTransfer->setTranslationKey($glossaryKeyEntity->getKey());
 
             $glossaryAttributeTransfer->addTranslation($cmsPlaceholderTranslationTransfer);
-
         }
     }
 

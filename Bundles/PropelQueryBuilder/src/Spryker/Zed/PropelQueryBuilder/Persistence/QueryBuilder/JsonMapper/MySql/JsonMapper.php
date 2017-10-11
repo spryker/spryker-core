@@ -47,7 +47,8 @@ class JsonMapper implements JsonMapperInterface
      */
     public function getOperator(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer, OperatorInterface $operator, $attributeName)
     {
-        $operatorValue = sprintf("->'$.%s' %s",
+        $operatorValue = sprintf(
+            "->'$.%s' %s",
             $attributeName,
             $operator->getOperator()
         );

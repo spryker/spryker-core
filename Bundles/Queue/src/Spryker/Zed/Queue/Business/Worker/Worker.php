@@ -142,7 +142,7 @@ class Worker implements WorkerInterface
         foreach ($this->queueNames as $queue) {
             $processCommand = sprintf('%s %s >> %s', $command, $queue, $this->queueConfig->getQueueWorkerOutputFileName());
             $queueProcesses = $this->startProcesses($processCommand, $queue);
-            $processes = array_merge($processes,  $queueProcesses[self::PROCESSES_INTSTANCES]);
+            $processes = array_merge($processes, $queueProcesses[self::PROCESSES_INTSTANCES]);
 
             $this
                 ->workerProgressBar

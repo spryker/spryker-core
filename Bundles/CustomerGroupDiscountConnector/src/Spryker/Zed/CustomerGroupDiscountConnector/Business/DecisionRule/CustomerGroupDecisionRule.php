@@ -66,7 +66,6 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
         $customerGroupTransfer->requireName();
 
         return $this->discountFacade->queryStringCompare($clauseTransfer, $customerGroupTransfer->getName());
-
     }
 
     /**

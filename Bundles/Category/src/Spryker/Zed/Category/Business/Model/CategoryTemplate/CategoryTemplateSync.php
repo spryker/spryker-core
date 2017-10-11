@@ -44,7 +44,6 @@ class CategoryTemplateSync implements CategoryTemplateSyncInterface
         $templateList = $this->categoryConfig->getTemplateList();
 
         foreach ($templateList as $templateName => $templatePath) {
-
             $spyCategoryTemplate = $this->categoryQueryContainer
                 ->queryCategoryTemplateByName($templateName)
                 ->findOne();

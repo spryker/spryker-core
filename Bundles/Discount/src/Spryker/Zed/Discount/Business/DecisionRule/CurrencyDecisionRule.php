@@ -41,7 +41,6 @@ class CurrencyDecisionRule implements DecisionRuleInterface
         ClauseTransfer $clauseTransfer
     ) {
         return $this->comparators->compare($clauseTransfer, $quoteTransfer->getCurrency()->getCode());
-
     }
 
 }

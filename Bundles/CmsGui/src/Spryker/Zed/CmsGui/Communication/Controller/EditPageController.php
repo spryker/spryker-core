@@ -121,7 +121,6 @@ class EditPageController extends AbstractController
                 ->activatePage($idCmsPage);
 
             $this->addSuccessMessage('Page successfully activated.');
-
         } catch (CannotActivatePageException $exception) {
              $this->addErrorMessage($exception->getMessage());
         } finally {

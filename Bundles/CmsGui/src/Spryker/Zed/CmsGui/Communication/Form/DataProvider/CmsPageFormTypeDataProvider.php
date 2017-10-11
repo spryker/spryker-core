@@ -113,7 +113,6 @@ class CmsPageFormTypeDataProvider
         $cmsPageTransfer = new CmsPageTransfer();
 
         foreach ($this->getAvailableLocales() as $localeTransfer) {
-
             $cmsPageAttributeTransfer = $this->createInitialCmsPageAttributesTransfer($localeTransfer);
             $cmsPageTransfer->addPageAttribute($cmsPageAttributeTransfer);
 

@@ -79,7 +79,6 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
 
             $this->productBundleQueryContainer->getConnection()->commit();
-
         } catch (Exception $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;

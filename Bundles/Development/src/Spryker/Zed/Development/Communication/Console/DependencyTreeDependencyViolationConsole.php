@@ -63,7 +63,6 @@ class DependencyTreeDependencyViolationConsole extends Console
             $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($module);
             $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
             foreach ($composerDependencies as $composerDependency) {
-
                 if (!$composerDependency['tests'] && !$composerDependency['src'] && ($composerDependency['composerRequire'] || $composerDependency['composerRequireDev'])) {
                     if ($composerDependency['composerRequire']) {
                         $violations[] = 'src: - / require: ' . $composerDependency['composerRequire'];
@@ -105,7 +104,6 @@ class DependencyTreeDependencyViolationConsole extends Console
                 if ($composerDependency['src'] && $composerDependency['isOptional'] && !$composerDependency['suggested']) {
                     $violations[] = $composerDependency['src'] . ' is optional but missing in composer suggest';
                 }
-
             }
 
             if (!$violations) {

@@ -63,7 +63,6 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                     $bundleGroupKey
                 );
             }
-
         }
 
         $groupedBundleItems = $this->updateGroupedBundleItemsAggregatedSubtotal($groupedBundleItems, $bundleItems);
@@ -145,7 +144,6 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     {
         $groupedBundleQuantity = [];
         foreach ($bundleItems as $bundleItemTransfer) {
-
             $bundleGroupKey = $this->getBundleItemGroupKey($bundleItemTransfer, $items);
             if (!isset($groupedBundleQuantity[$bundleGroupKey])) {
                 $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();

@@ -52,7 +52,6 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
 
         $transformed = [];
         foreach ($ruleFields as $ruleField) {
-
             $fieldTransformed = [];
             $fieldTransformed['id'] = $ruleField;
             $fieldTransformed['label'] = $ruleField;

@@ -88,7 +88,6 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     protected function saveOptions(ItemTransfer $itemTransfer)
     {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-
             $this->translateOption($productOptionTransfer);
 
             $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity();

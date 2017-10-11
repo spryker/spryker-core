@@ -212,7 +212,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $itemTransfer->setRelatedBundleItemIdentifier($salesOrderItemEntity->getFkSalesOrderItemBundle());
 
             $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
-
         }
 
         return $bundledProducts;
@@ -226,7 +225,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function resetBundlePriceAmounts(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-
             $bundleItemTransfer->setUnitGrossPrice(0);
             $bundleItemTransfer->setSumGrossPrice(0);
             $bundleItemTransfer->setUnitPrice(0);

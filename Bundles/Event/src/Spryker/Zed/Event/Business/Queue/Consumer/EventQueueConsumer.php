@@ -47,7 +47,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     public function processMessages(array $queueMessageTransfers)
     {
         foreach ($queueMessageTransfers as $queueMessageTransfer) {
-
             $eventQueueSentMessageBodyTransfer = $this->createEventQueueSentMessageBodyTransfer(
                 $queueMessageTransfer->getQueueMessage()->getBody()
             );
@@ -72,7 +71,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 );
 
                 $queueMessageTransfer->setAcknowledge(true);
-
             } catch (Exception $exception) {
                 $this->logConsumerAction(
                     sprintf(

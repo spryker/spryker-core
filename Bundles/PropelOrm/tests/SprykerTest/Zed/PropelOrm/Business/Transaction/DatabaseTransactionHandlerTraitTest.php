@@ -43,7 +43,8 @@ class DatabaseTransactionHandlerTraitTest extends Unit
      */
     public function testShouldCommitWhenNoErrors()
     {
-        $callback = function () {};
+        $callback = function () {
+        };
 
         $this->connection
             ->expects($this->once())

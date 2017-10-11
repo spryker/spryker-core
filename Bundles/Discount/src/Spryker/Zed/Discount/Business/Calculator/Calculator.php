@@ -130,7 +130,6 @@ class Calculator implements CalculatorInterface
         $nonExclusiveDiscounts = [];
         $exclusiveFound = false;
         foreach ($collectedDiscounts as $collectedDiscountTransfer) {
-
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
             if (!$discountTransfer->getCollectorQueryString()) {
                 $applicableDiscounts[] = $collectedDiscountTransfer;

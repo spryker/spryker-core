@@ -80,7 +80,6 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
             $this->touchFacade->touchActive(ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION, $idProductAbstract);
         }
-
     }
 
     /**

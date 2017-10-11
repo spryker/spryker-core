@@ -94,7 +94,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
      */
     public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy, $orderByDirection)
     {
-        return $this->getFactory()->createPdoBatchIterator($criteriaBuilder, $connection, $chunkSize, $orderBy,  $orderByDirection);
+        return $this->getFactory()->createPdoBatchIterator($criteriaBuilder, $connection, $chunkSize, $orderBy, $orderByDirection);
     }
 
     /**

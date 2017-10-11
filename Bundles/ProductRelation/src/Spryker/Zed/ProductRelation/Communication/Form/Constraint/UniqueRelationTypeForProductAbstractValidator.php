@@ -68,7 +68,6 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
         }
 
         return true;
-
     }
 
     /**

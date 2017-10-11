@@ -108,7 +108,6 @@ class RefundSaver implements RefundSaverInterface
     protected function updateOrderItems(RefundTransfer $refundTransfer)
     {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
-
             $salesOrderItemEntity = $this->getSalesOrderItemEntity($itemTransfer);
             $salesOrderItemEntity->setCanceledAmount($itemTransfer->getCanceledAmount());
             $salesOrderItemEntity->save();

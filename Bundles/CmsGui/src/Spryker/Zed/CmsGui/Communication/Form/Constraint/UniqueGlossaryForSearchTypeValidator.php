@@ -84,7 +84,6 @@ class UniqueGlossaryForSearchTypeValidator extends ConstraintValidator
         }
 
         return true;
-
     }
 
     /**

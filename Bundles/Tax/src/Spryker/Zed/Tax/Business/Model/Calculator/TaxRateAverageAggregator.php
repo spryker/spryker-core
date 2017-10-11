@@ -51,12 +51,10 @@ class TaxRateAverageAggregator implements CalculatorInterface
     protected function calculateTaxAverageAggregationForItems(ArrayObject $items, $priceMode)
     {
         foreach ($items as $itemTransfer) {
-
             $unitPriceToPayAggregationNetPrice = $this->getUnitNetPriceToPayAggregationNetPrice($itemTransfer, $priceMode);
             $taxRateAverageAggregation = $this->calculateTaxRateAverage($itemTransfer, $unitPriceToPayAggregationNetPrice);
 
             $itemTransfer->setTaxRateAverageAggregation($taxRateAverageAggregation);
-
         }
     }
 

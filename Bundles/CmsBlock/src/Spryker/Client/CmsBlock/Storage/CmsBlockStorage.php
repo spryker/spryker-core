@@ -84,7 +84,6 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $availableBlockNames = null;
 
         foreach ($options as $optionKey => $resources) {
-
             $resources = (array)$resources;
             $blockNames = $this->getBlockNamesForOption($optionKey, $resources, $localeName);
 

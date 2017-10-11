@@ -174,7 +174,6 @@ class VariantGenerator implements VariantGeneratorInterface
 
         $result = [];
         foreach ($tokenCollection as $token) {
-
             $attributeTokens = $this->convertTokensIntoAttributes($token);
 
             $productConcreteTransfer = $this->createProductConcreteTransfer($productAbstractTransfer, $attributeTokens);

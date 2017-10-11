@@ -89,7 +89,6 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
     protected function checkForErrors(RatepayResponseTransfer $ratepayResponseTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         if (!$ratepayResponseTransfer->getSuccessful()) {
-
             $errorMessage = $ratepayResponseTransfer->getCustomerMessage() != '' ? $ratepayResponseTransfer->getCustomerMessage() :
                 $ratepayResponseTransfer->getResultText();
 

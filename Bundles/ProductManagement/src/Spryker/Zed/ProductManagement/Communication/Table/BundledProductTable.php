@@ -168,7 +168,6 @@ class BundledProductTable extends AbstractTable
 
         $productAbstractCollection = [];
         foreach ($queryResults as $item) {
-
             $productAbstractCollection[] = [
                 static::COL_SELECT => $this->addCheckBox($item),
                 static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),

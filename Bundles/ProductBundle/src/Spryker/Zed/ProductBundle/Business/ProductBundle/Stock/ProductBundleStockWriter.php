@@ -82,7 +82,6 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $this->updateBundleStock($productConcreteTransfer, $bundleTotalStockPerWarehouse);
             $this->productBundleQueryContainer->getConnection()->commit();
-
         } catch (Exception $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -113,7 +112,6 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         );
 
         foreach ($bundleTotalStockPerWarehouse as $idStock => $bundleStock) {
-
             $stockEntity = $this->findOrCreateProductStockEntity($productConcreteTransfer, $idStock);
 
             $stockEntity->setQuantity($bundleStock[static::QUANTITY]);
@@ -123,7 +121,6 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $stockTransfer = $this->mapStockTransfer($productConcreteTransfer, $stockEntity);
 
             $productConcreteTransfer->addStock($stockTransfer);
-
         }
     }
 
@@ -187,7 +184,6 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $bundleStock = 0;
             $isAllNeverOutOfStock = true;
             foreach ($warehouseStock as $idProduct => $productStockQuantity) {
-
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
                 $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 

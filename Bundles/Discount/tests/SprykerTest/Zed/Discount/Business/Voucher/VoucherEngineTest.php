@@ -232,7 +232,6 @@ class VoucherEngineTest extends Unit
             ->willReturn($discountVoucherEntity);
 
         return $voucherEngineMock;
-
     }
 
     /**

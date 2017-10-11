@@ -37,7 +37,6 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         $calculableObjectTransfer = $this->mapCalculableObjectTransfer($quoteTransfer);
 
         foreach ($this->quoteCalculators as $calculator) {
-
             if ($calculator instanceof CalculatorPluginInterface) {
                 $calculableObjectTransfer = $this->recalculateWithLegacyCalculator(
                     $quoteTransfer,

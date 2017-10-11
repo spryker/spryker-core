@@ -184,13 +184,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function formatMultiFileResults(array $results, array $fileViolations)
     {
         foreach ($results['file'] as $file) {
-
             if (!is_array($file)) {
                 continue;
             }
 
             if (array_key_exists('violation', $file)) {
-
                 if (!array_key_exists($file['name'], $fileViolations)) {
                     $fileViolations[$file['name']] = [];
                 }

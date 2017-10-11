@@ -707,7 +707,6 @@ class ProductFormAdd extends AbstractType
                         $context->addViolation('Date "New from" is the same as "New to".');
                     }
                 }
-
             },
         ]);
     }

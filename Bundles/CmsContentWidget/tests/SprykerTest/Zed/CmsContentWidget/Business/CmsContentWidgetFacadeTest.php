@@ -71,7 +71,7 @@ class CmsContentWidgetFacadeTest extends Unit
         $parameterMap = $cmsFacade->mapContentWidgetParameters("cms content {{ function(['sku1', 'sku2']) }} twig functions.");
 
         $this->assertArrayHasKey('function', $parameterMap);
-        $this->assertCount(2,  $parameterMap['function']);
+        $this->assertCount(2, $parameterMap['function']);
     }
 
     /**

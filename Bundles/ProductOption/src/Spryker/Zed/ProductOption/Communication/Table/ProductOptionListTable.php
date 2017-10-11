@@ -109,7 +109,6 @@ class ProductOptionListTable extends AbstractTable
 
         /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity */
         foreach ($queryResult as $productOptionGroupEntity) {
-
             $result[] = [
                 SpyProductOptionGroupTableMap::COL_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
                 SpyProductOptionGroupTableMap::COL_NAME => $productOptionGroupEntity->getName(),
@@ -161,7 +160,6 @@ class ProductOptionListTable extends AbstractTable
     {
         $names = '';
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
-
             $moneyTransfer = $this->moneyFacade->fromInteger($productOptionValueEntity->getPrice());
 
             $names .= $this->wrapInlineCellItem(

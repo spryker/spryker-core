@@ -57,7 +57,7 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU,  ['quantity' => 0]);
+        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
 
         $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, 1);
 

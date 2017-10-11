@@ -439,7 +439,6 @@ class SpecificationBuilderTest extends Unit
             $metaDataProviderMock = $this->createMetaDataProviderMock();
             $metaDataProviderMock->method('getAvailableFields')
                 ->willReturn(['quantity', 'sku', 'color', 'attribute.value']);
-
         }
 
         return new SpecificationBuilder(

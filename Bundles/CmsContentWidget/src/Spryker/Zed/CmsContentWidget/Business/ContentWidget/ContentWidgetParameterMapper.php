@@ -67,7 +67,6 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
 
         $contentWidgetParameterMap = [];
         foreach ($cmsContentWidgetFunctions->getCmsContentWidgetFunctionList() as $cmsContentWidgetFunctionTransfer) {
-
             $this->updateMapCacheWithUnprocessedItems($cmsContentWidgetFunctionTransfer);
             $mappedParameters = $this->getMappedParameters($cmsContentWidgetFunctionTransfer);
 
@@ -77,7 +76,6 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
             }
 
             $contentWidgetParameterMap[$functionName] = $contentWidgetParameterMap[$functionName] + $mappedParameters;
-
         }
 
         return $contentWidgetParameterMap;

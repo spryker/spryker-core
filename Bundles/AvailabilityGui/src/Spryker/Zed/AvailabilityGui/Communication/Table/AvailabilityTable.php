@@ -116,7 +116,6 @@ class AvailabilityTable extends AbstractTable
         $queryResult = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
 
         foreach ($queryResult as $productItem) {
-
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
             $result[] = [

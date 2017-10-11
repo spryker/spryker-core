@@ -53,7 +53,6 @@ class ProductOptionPresentationTester extends Actor
     public function fillOptionValues(array $values)
     {
         foreach ($values as $index => $value) {
-
             $elementNr = $index + 1;
 
             if ($index > 0) {

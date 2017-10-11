@@ -518,7 +518,6 @@ class OrderStateMachine implements OrderStateMachineInterface
                     $returnData = $command->run($orderItemEntity, $data);
                     $this->returnData = array_merge($this->returnData, $returnData);
                     $processedOrderItems[] = $orderItemEntity;
-
                 } else {
                     $returnData = $command->run($orderItems, $orderEntity, $data);
                     if (is_array($returnData)) {
@@ -786,7 +785,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         $timeoutModel = clone $this->timeout;
 
         foreach ($orderItems as $orderItem) {
-
             $this->handleDatabaseTransaction(function () use ($orderItem, $processes, $sourceStateBuffer, $timeoutModel, $log, $currentTime) {
                 $this->executeSaveOrderItemTransaction(
                     $orderItem,

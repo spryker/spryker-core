@@ -230,7 +230,6 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         foreach ($availableLocales as $idLocale => $localeName) {
-
             $translationTransfer = new CmsBlockGlossaryPlaceholderTranslationTransfer();
             $translationTransfer->setFkLocale($idLocale);
             $translationTransfer->setLocaleName($localeName);
