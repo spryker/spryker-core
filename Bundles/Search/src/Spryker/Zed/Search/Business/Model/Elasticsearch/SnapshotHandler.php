@@ -9,7 +9,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use RuntimeException;
 
-class SnapshotHandler
+class SnapshotHandler implements SnapshotHandlerInterface
 {
 
     /**

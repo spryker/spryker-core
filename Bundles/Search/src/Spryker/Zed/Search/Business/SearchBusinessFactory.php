@@ -50,6 +50,14 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManagerInterface
+     */
+    public function createSearchIndicesManager()
+    {
+        return new SearchIndexManager($this->getElasticsearchIndex('_all'));
+    }
+
+    /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
     protected function createJsonIndexDefinitionLoader()
@@ -139,13 +147,15 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param null|string $index
+     *
      * @return \Elastica\Index
      */
-    protected function getElasticsearchIndex()
+    protected function getElasticsearchIndex($index = null)
     {
         return $this
             ->createIndexProvider()
-            ->getClient();
+            ->getClient($index);
     }
 
     /**
@@ -208,7 +218,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandlerInterface
      */
     public function createSnapshotHandler()
     {

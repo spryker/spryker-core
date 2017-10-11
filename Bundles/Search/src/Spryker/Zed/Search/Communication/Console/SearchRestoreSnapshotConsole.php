@@ -55,7 +55,7 @@ class SearchRestoreSnapshotConsole extends Console
             return static::CODE_SUCCESS;
         }
 
-        if ($this->getFacade()->createSnapshot($snapshotRepository, $snapshotName)) {
+        if ($this->getFacade()->restoreSnapshot($snapshotRepository, $snapshotName)) {
             $this->info(sprintf('Snapshot "%s/%s" restored.', $snapshotRepository, $snapshotName));
 
             return static::CODE_SUCCESS;

@@ -268,4 +268,28 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     {
         return $this->getFactory()->createSnapshotHandler()->restoreSnapshot($repositoryName, $snapshotName, $options);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeIndex()
+    {
+        return $this->getFactory()->createSearchIndexManager()->close();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeAllIndices()
+    {
+        return $this->getFactory()->createSearchIndicesManager()->close();
+    }
 }

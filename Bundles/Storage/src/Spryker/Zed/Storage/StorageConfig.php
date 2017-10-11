@@ -7,9 +7,26 @@
 
 namespace Spryker\Zed\Storage;
 
+use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StorageConfig extends AbstractBundleConfig
 {
     const DEFAULT_REDIS_DATABASE = 0;
+
+    /**
+     * @return int
+     */
+    public function getRedisPort()
+    {
+        return $this->get(StorageConstants::STORAGE_REDIS_PORT);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRdbDumpPath()
+    {
+        return '/var/lib/redis/dump.rdb';
+    }
 }

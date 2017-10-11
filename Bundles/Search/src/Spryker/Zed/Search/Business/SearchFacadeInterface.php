@@ -220,4 +220,24 @@ interface SearchFacadeInterface
      * @return bool
      */
     public function restoreSnapshot($repositoryName, $snapshotName, $options = []);
+
+    /**
+     * Specification:
+     * - Closes an Index.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeIndex();
+
+    /**
+     * Specification:
+     * - Closes all indices.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeAllIndices();
 }
