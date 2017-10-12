@@ -42,24 +42,24 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
     /**
      * @param bool $isRecursive
-     * @param bool $useCamelCase Set to true for camelCased keys, defaults to under_scored keys.
+     * @param bool $camelCasedKeys Set to true for camelCased keys, defaults to under_scored keys.
      *
      * @return array
      */
-    public function toArray($isRecursive = true, $useCamelCase = false)
+    public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
-        return $this->propertiesToArray($this->getPropertyNames(), $isRecursive, 'toArray', $useCamelCase);
+        return $this->propertiesToArray($this->getPropertyNames(), $isRecursive, 'toArray', $camelCasedKeys);
     }
 
     /**
      * @param bool $isRecursive
-     * @param bool $useCamelCase
+     * @param bool $camelCasedKeys
      *
      * @return array
      */
-    public function modifiedToArray($isRecursive = true, $useCamelCase = false)
+    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
-        return $this->propertiesToArray(array_keys($this->modifiedProperties), $isRecursive, 'modifiedToArray', $useCamelCase);
+        return $this->propertiesToArray(array_keys($this->modifiedProperties), $isRecursive, 'modifiedToArray', $camelCasedKeys);
     }
 
     /**
@@ -88,18 +88,18 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param array $properties
      * @param bool $isRecursive
      * @param string $childConvertMethodName
-     * @param bool $useCamelCase
+     * @param bool $camelCasedKeys
      *
      * @return array
      */
-    private function propertiesToArray(array $properties, $isRecursive, $childConvertMethodName, $useCamelCase = false)
+    private function propertiesToArray(array $properties, $isRecursive, $childConvertMethodName, $camelCasedKeys = false)
     {
         $values = [];
 
         foreach ($properties as $property) {
             $value = $this->$property;
 
-            if ($useCamelCase) {
+            if ($camelCasedKeys) {
                 $arrayKey = $property;
             } else {
                 $arrayKey = $this->transferMetadata[$property]['name_underscore'];
@@ -107,9 +107,9 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
             if (is_object($value)) {
                 if ($isRecursive && $value instanceof TransferInterface) {
-                    $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $useCamelCase);
+                    $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $camelCasedKeys);
                 } elseif ($isRecursive && $this->transferMetadata[$property]['is_collection'] && count($value) >= 1) {
-                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $useCamelCase);
+                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys);
                 } else {
                     $values[$arrayKey] = $value;
                 }
@@ -284,11 +284,11 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param string $arrayKey
      * @param bool $isRecursive
      * @param string $childConvertMethodName
-     * @param bool $useCamelCase
+     * @param bool $camelCasedKeys
      *
      * @return array
      */
-    private function addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $useCamelCase = false)
+    private function addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys = false)
     {
         foreach ($value as $elementKey => $arrayElement) {
             if (is_array($arrayElement) || is_scalar($arrayElement)) {
@@ -296,7 +296,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
                 continue;
             }
-            $values[$arrayKey][$elementKey] = $arrayElement->$childConvertMethodName($isRecursive, $useCamelCase);
+            $values[$arrayKey][$elementKey] = $arrayElement->$childConvertMethodName($isRecursive, $camelCasedKeys);
         }
 
         return $values;
