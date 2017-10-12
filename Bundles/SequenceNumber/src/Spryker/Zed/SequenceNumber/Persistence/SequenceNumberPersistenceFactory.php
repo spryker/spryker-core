@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class SequenceNumberPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
      */
@@ -24,5 +23,4 @@ class SequenceNumberPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpySequenceNumberQuery::create();
     }
-
 }

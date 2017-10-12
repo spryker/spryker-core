@@ -23,7 +23,6 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationTreeReader implements NavigationTreeReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
      */
@@ -250,5 +249,4 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
             ->queryNavigationNodesByFkParentNavigationNode($navigationNodeTransfer->getIdNavigationNode())
             ->find();
     }
-
 }

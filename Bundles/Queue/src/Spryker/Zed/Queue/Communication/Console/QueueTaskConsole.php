@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueTaskConsole extends Console
 {
-
     const COMMAND_NAME = 'queue:task:start';
     const DESCRIPTION = 'Start queue task for specific queue';
 
@@ -45,5 +44,4 @@ class QueueTaskConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

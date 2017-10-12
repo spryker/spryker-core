@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 abstract class AbstractForm implements FormTypeInterface
 {
-
     /**
      * Builds the form.
      *
@@ -125,5 +124,4 @@ abstract class AbstractForm implements FormTypeInterface
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
     }
-
 }

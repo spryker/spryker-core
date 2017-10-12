@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductOptionToGlossaryInterface
 {
-
     /**
      * @param string $keyName
      * @param array $data
@@ -81,5 +80,4 @@ interface ProductOptionToGlossaryInterface
      * @return bool
      */
     public function deleteKey($keyName);
-
 }

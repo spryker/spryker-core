@@ -21,7 +21,6 @@ use Spryker\Yves\Twig\TwigDependencyProvider;
  */
 class TwigDependencyProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -33,5 +32,4 @@ class TwigDependencyProviderTest extends Unit
 
         $this->assertArrayHasKey(TwigDependencyProvider::SERVICE_UTIL_TEXT, $container);
     }
-
 }

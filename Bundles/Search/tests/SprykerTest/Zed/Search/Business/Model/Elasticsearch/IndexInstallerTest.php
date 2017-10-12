@@ -28,7 +28,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
  */
 class IndexInstallerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -150,5 +149,4 @@ class IndexInstallerTest extends Unit
 
         return $indexDefinition;
     }
-
 }

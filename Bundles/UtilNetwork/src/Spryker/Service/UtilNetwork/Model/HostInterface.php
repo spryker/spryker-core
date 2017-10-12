@@ -7,10 +7,8 @@ namespace Spryker\Service\UtilNetwork\Model;
 
 interface HostInterface
 {
-
     /**
      * @return string
      */
     public function getHostname();
-
 }

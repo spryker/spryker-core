@@ -15,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProductTable
 {
-
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
@@ -174,5 +173,4 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
      * @return string
      */
     abstract protected function getCheckboxCheckedAttribute();
-
 }

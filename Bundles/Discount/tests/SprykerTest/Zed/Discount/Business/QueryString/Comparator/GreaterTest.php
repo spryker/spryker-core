@@ -24,7 +24,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Greater;
  */
 class GreaterTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -91,5 +90,4 @@ class GreaterTest extends Unit
     {
         return new Greater();
     }
-
 }

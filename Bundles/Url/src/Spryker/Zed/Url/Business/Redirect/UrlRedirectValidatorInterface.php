@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\UrlRedirectTransfer;
 
 interface UrlRedirectValidatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
      * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
      */
     public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
-
 }

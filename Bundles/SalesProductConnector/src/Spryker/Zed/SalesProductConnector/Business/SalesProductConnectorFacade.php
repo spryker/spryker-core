@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SalesProductConnectorFacade extends AbstractFacade implements SalesProductConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -60,5 +59,4 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
     {
         return $this->getFactory()->createProductIdHydrator()->hydrateProductIds($orderTransfer);
     }
-
 }

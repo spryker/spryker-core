@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Container as KernelContainer;
 
 class Container extends KernelContainer implements TestifyContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Testify\Locator\Business\BusinessLocator
      */
@@ -48,5 +47,4 @@ class Container extends KernelContainer implements TestifyContainerInterface
 
         return $this;
     }
-
 }

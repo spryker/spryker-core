@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -65,5 +64,4 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
             return $app->redirect($config->getLoginPageUrl());
         });
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 
 interface NodeWriterInterface
 {
-
     /**
      * @deprecated Will be removed with next major release
      *
@@ -46,5 +45,4 @@ interface NodeWriterInterface
      * @return void
      */
     public function updateOrder($idCategoryNode, $position);
-
 }

@@ -23,7 +23,6 @@ use SprykerTest\Zed\Auth\PageObject\LoginPage;
  */
 class AuthPresentationTester extends Actor
 {
-
     use _generated\AuthPresentationTesterActions;
 
     /**
@@ -54,5 +53,4 @@ class AuthPresentationTester extends Actor
 
         return $this;
     }
-
 }

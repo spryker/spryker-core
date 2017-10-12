@@ -9,7 +9,5 @@ namespace Spryker\Shared\SequenceNumber;
 
 interface SequenceNumberConstants
 {
-
     const ENVIRONMENT_PREFIX = 'environmentPrefix';
-
 }

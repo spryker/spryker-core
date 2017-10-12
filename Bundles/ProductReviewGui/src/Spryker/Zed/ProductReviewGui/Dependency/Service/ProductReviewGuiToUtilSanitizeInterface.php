@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewGui\Dependency\Service;
 
 interface ProductReviewGuiToUtilSanitizeInterface
 {
-
     /**
      * @param string $text
      * @param bool $double
@@ -18,5 +17,4 @@ interface ProductReviewGuiToUtilSanitizeInterface
      * @return string
      */
     public function escapeHtml($text, $double = true, $charset = null);
-
 }

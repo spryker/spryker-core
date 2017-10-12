@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueName extends SymfonyConstraint
 {
-
     const OPTION_CMS_QUERY_CONTAINER = 'cmsQueryContainer';
 
     /**
@@ -34,5 +33,4 @@ class UniqueName extends SymfonyConstraint
     {
         return static::CLASS_CONSTRAINT;
     }
-
 }

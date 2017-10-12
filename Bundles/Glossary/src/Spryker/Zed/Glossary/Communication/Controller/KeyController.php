@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class KeyController extends AbstractController
 {
-
     const TERM = 'term';
 
     /**
@@ -83,5 +82,4 @@ class KeyController extends AbstractController
 
         return $this->jsonResponse($result);
     }
-
 }

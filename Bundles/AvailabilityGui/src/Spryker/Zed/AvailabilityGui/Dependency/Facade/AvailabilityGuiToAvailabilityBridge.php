@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
 class AvailabilityGuiToAvailabilityBridge implements AvailabilityGuiToAvailabilityInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
@@ -33,5 +32,4 @@ class AvailabilityGuiToAvailabilityBridge implements AvailabilityGuiToAvailabili
     {
         return $this->availabilityFacade->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
-
 }

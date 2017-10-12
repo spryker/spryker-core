@@ -15,7 +15,6 @@ use Spryker\Zed\Search\Communication\Controller\MaintenanceController as SearchM
  */
 class MaintenanceController extends AbstractController
 {
-
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -25,5 +24,4 @@ class MaintenanceController extends AbstractController
 
         return $this->redirectResponse(SearchMaintenanceController::URL_SEARCH_MAINTENANCE);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT_SET = 'PRODUCT SET QUERY CONTAINER';
 
     /**
@@ -29,5 +28,4 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBund
             );
         };
     }
-
 }

@@ -28,7 +28,6 @@ use Twig_Environment;
  */
 class TwigMoneyServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -133,5 +132,4 @@ class TwigMoneyServiceProviderTest extends Unit
 
         return $moneyTransfer;
     }
-
 }

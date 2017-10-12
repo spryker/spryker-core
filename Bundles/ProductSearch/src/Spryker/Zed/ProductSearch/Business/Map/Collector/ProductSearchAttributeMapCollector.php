@@ -12,7 +12,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class ProductSearchAttributeMapCollector implements ProductSearchAttributeMapCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -83,5 +82,4 @@ class ProductSearchAttributeMapCollector implements ProductSearchAttributeMapCol
 
         return $result;
     }
-
 }

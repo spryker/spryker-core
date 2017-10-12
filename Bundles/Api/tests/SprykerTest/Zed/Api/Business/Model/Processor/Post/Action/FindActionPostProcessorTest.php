@@ -30,7 +30,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor
  */
 class FindActionPostProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -80,5 +79,4 @@ class FindActionPostProcessorTest extends Unit
         ];
         $this->assertSame($expected, $apiMetaTransfer->getData());
     }
-
 }

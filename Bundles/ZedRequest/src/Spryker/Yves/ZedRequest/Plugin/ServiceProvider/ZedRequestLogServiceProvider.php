@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class ZedRequestLogServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -37,5 +36,4 @@ class ZedRequestLogServiceProvider extends AbstractPlugin implements ServiceProv
         $handlerStackContainer->addMiddleware($this->getFactory()->createRequestLogPlugin());
         $handlerStackContainer->addMiddleware($this->getFactory()->createResponseLogPlugin());
     }
-
 }

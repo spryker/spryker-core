@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class StockProductTransferMapper implements StockProductTransferMapperInterface
 {
-
     /**
      * @param \Orm\Zed\Stock\Persistence\SpyStockProduct $stockProductEntity
      *
@@ -42,5 +41,4 @@ class StockProductTransferMapper implements StockProductTransferMapperInterface
 
         return $transferList;
     }
-
 }

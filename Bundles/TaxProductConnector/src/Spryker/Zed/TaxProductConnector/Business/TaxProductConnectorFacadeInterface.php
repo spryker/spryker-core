@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface TaxProductConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Save tax set id to product abstract table
@@ -48,5 +47,4 @@ interface TaxProductConnectorFacadeInterface
      * @return void
      */
     public function calculateProductItemTaxRate(QuoteTransfer $quoteTransfer);
-
 }

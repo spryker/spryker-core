@@ -17,7 +17,6 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -80,7 +79,6 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
             $this->touchFacade->touchActive(ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION, $idProductAbstract);
         }
-
     }
 
     /**
@@ -185,5 +183,4 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
         return $productAbstractProductOptionGroupEntity;
     }
-
 }

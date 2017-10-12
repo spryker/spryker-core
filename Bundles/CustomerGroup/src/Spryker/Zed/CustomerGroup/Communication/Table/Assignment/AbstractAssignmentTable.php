@@ -16,7 +16,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class AbstractAssignmentTable extends AbstractTable
 {
-
     const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
 
     const COL_SELECT_CHECKBOX = 'select-checkbox';
@@ -227,5 +226,4 @@ abstract class AbstractAssignmentTable extends AbstractTable
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     abstract protected function getQuery();
-
 }

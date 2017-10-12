@@ -9,7 +9,6 @@ namespace Spryker\Zed\Kernel;
 
 abstract class AbstractBundleDependencyProvider implements BundleDependencyProviderInterface
 {
-
     use BundleConfigResolverAwareTrait;
 
     /**
@@ -41,5 +40,4 @@ abstract class AbstractBundleDependencyProvider implements BundleDependencyProvi
     {
         return $container;
     }
-
 }

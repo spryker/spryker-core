@@ -21,7 +21,6 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
     const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
 
@@ -132,5 +131,4 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

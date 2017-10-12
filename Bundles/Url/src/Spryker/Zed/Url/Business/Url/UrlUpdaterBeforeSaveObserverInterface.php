@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlUpdaterBeforeSaveObserverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      * @param \Generated\Shared\Transfer\UrlTransfer $originalUrlTransfer
@@ -19,5 +18,4 @@ interface UrlUpdaterBeforeSaveObserverInterface
      * @return void
      */
     public function handleUrlUpdate(UrlTransfer $urlTransfer, UrlTransfer $originalUrlTransfer);
-
 }

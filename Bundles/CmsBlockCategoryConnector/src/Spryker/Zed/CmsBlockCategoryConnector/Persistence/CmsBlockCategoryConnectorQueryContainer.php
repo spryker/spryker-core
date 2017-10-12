@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer implements CmsBlockCategoryConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -138,5 +137,4 @@ class CmsBlockCategoryConnectorQueryContainer extends AbstractQueryContainer imp
         return $this->queryCmsBlockCategoryPosition()
             ->filterByName($positionName);
     }
-
 }

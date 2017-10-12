@@ -7,10 +7,8 @@ namespace Spryker\Zed\ProductOption\Dependency\QueryContainer;
 
 interface ProductOptionToSalesInterface
 {
-
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItem();
-
 }

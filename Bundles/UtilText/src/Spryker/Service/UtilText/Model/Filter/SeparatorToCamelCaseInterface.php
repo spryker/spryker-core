@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilText\Model\Filter;
 
 interface SeparatorToCamelCaseInterface
 {
-
     /**
      * @param string $string
      * @param string $separator
@@ -18,5 +17,4 @@ interface SeparatorToCamelCaseInterface
      * @return string
      */
     public function filter($string, $separator = '-', $upperCaseFirst = false);
-
 }

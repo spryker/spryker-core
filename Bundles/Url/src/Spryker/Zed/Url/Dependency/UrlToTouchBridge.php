@@ -9,7 +9,6 @@ namespace Spryker\Zed\Url\Dependency;
 
 class UrlToTouchBridge implements UrlToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -44,5 +43,4 @@ class UrlToTouchBridge implements UrlToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
-
 }

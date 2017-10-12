@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class RemoveCustomerFromGroupPlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -27,5 +26,4 @@ class RemoveCustomerFromGroupPlugin extends AbstractPlugin implements CustomerAn
     {
         $this->getFacade()->removeCustomerFromAllGroups($customerTransfer);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductLabelQueryContainer extends AbstractQueryContainer implements ProductLabelQueryContainerInterface
 {
-
     const COL_MAX_POSITION = 'max_position';
 
     /**
@@ -238,5 +237,4 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->orderByIsExclusive(Criteria::DESC)
             ->orderByPosition(Criteria::ASC);
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToRefundInterface;
 
 class RefundTransactionHandler extends AbstractTransactionHandler
 {
-
     /**
      * @var \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToRefundInterface
      */
@@ -68,5 +67,4 @@ class RefundTransactionHandler extends AbstractTransactionHandler
     {
         return $this->refundFacade->calculateRefund($salesOrderItems, $salesOrderEntity);
     }
-
 }

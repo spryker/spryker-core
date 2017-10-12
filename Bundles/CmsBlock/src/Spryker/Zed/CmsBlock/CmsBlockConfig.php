@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockConfig extends AbstractBundleConfig
 {
-
     const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
     const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
     const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
@@ -64,5 +63,4 @@ class CmsBlockConfig extends AbstractBundleConfig
             $templateRelativePath
         );
     }
-
 }

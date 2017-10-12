@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 interface FacetValueTransformerFactoryInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
@@ -20,5 +19,4 @@ interface FacetValueTransformerFactoryInterface
      * @return \Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface|null
      */
     public function createTransformer(FacetConfigTransfer $facetConfigTransfer);
-
 }

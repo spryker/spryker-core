@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 
 interface BundleMethodBuilderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      *
@@ -22,5 +21,4 @@ interface BundleMethodBuilderInterface
      * @return string
      */
     public function getMethodName();
-
 }

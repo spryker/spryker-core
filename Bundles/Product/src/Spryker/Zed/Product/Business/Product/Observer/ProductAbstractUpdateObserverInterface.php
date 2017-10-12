@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductAbstractUpdateObserverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function update(ProductAbstractTransfer $productAbstractTransfer);
-
 }

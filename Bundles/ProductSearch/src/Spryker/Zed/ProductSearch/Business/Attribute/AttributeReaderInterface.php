@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
 interface AttributeReaderInterface
 {
-
     /**
      * @param int $idProductSearchAttribute
      *
@@ -29,5 +28,4 @@ interface AttributeReaderInterface
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
      */
     public function getAttributeList();
-
 }

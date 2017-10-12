@@ -14,7 +14,6 @@ use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToP
 
 class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
@@ -90,5 +89,4 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
 
         return $container;
     }
-
 }

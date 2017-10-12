@@ -11,7 +11,6 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class CmsProductGroupContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
-
     const FUNCTION_NAME = 'product_group';
 
     /**
@@ -39,5 +38,4 @@ class CmsProductGroupContentWidgetConfigurationProvider implements CmsContentWid
     {
         return "{{ product_group(['sku1', 'sku2']) }}, to use different template {{ product_group(['sku1', 'sku2'], 'default') }}";
     }
-
 }

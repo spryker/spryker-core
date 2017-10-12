@@ -9,10 +9,8 @@ namespace Spryker\Zed\DataImport\Business\Model\DataImportStep;
 
 interface DataImportStepBeforeExecuteInterface
 {
-
     /**
      * @return void
      */
     public function beforeExecute();
-
 }

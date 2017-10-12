@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\Container;
 
 class CartCurrencyConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_CART = 'CLIENT_CART';
 
     /**
@@ -41,5 +40,4 @@ class CartCurrencyConnectorDependencyProvider extends AbstractBundleDependencyPr
 
         return $container;
     }
-
 }

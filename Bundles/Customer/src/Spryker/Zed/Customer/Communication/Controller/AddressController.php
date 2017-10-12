@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddressController extends AbstractController
 {
-
     /**
      * @deprecated moved to Customer view page ViewController->indexAction()
      *
@@ -189,5 +188,4 @@ class AddressController extends AbstractController
     {
         return new AddressTransfer();
     }
-
 }

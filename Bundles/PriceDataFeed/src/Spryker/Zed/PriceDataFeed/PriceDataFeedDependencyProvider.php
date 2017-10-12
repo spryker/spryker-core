@@ -13,7 +13,6 @@ use Spryker\Zed\PriceDataFeed\Dependency\QueryContainer\PriceDataFeedToPriceBrid
 
 class PriceDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PRICE_QUERY_CONTAINER = 'PRICE_QUERY_CONTAINER';
 
     /**
@@ -53,5 +52,4 @@ class PriceDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

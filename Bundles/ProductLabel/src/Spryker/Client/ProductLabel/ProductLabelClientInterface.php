@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductLabel;
 
 interface ProductLabelClientInterface
 {
-
     /**
      * Specification:
      * - Finds product labels for the given abstract-product in the key-value storage
@@ -62,5 +61,4 @@ interface ProductLabelClientInterface
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
      */
     public function findLabelByName($labelName, $localeName);
-
 }

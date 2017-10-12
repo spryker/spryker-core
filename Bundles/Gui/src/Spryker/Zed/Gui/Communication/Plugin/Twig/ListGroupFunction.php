@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class ListGroupFunction extends TwigFunction
 {
-
     /**
      * @return string
      */
@@ -80,5 +79,4 @@ class ListGroupFunction extends TwigFunction
             return $html;
         };
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Discount\Business\Exception\QueryBuilderException;
 
 class MetaProviderFactory implements MetaProviderFactoryInterface
 {
-
     const TYPE_COLLECTOR = 'collector';
     const TYPE_DECISION_RULE = 'decision-rule';
 
@@ -75,5 +74,4 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
             $this->discountBusinessFactory->createLogicalComparators()
         );
     }
-
 }

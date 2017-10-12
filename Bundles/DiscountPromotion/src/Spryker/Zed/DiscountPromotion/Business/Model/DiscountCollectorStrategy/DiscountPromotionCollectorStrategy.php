@@ -20,7 +20,6 @@ use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInt
 
 class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorStrategyInterface
 {
-
     /**
      * @var \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface
      */
@@ -301,5 +300,4 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             $quoteTransfer->addUsedNotAppliedVoucherCode($discountTransfer->getVoucherCode());
         }
     }
-
 }

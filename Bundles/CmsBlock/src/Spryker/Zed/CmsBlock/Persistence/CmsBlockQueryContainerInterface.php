@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlock\Persistence;
 
 interface CmsBlockQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -96,5 +95,4 @@ interface CmsBlockQueryContainerInterface
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingById($idGlossaryKeyMapping);
-
 }

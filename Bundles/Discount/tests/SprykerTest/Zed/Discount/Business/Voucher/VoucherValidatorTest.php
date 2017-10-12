@@ -26,7 +26,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class VoucherValidatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -231,5 +230,4 @@ class VoucherValidatorTest extends Unit
     {
         return new SpyDiscountVoucherPool();
     }
-
 }

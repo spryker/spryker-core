@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface CheckoutFacadeInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface CheckoutFacadeInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer);
-
 }

@@ -25,7 +25,6 @@ use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
  */
 class BaseMethodMapperTest extends Unit
 {
-
     /**
      * @var \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -104,5 +103,4 @@ class BaseMethodMapperTest extends Unit
 
         return $paymentTransfer;
     }
-
 }

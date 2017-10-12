@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -28,5 +27,4 @@ class PaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditi
     {
         $this->getFacade()->checkoutPreCheck($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

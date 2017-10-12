@@ -26,7 +26,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductRelationQueryContainer extends AbstractQueryContainer implements ProductRelationQueryContainerInterface
 {
-
     const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
     const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
     const COL_CATEGORY_NAME = 'category_name';
@@ -368,5 +367,4 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 ->filterByFkProductRelation($idProductRelation)
             ->endUse();
     }
-
 }

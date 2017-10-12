@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer;
 
 class ProductRelationCollectorToProductRelationBridge implements ProductRelationCollectorToProductRelationInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
@@ -34,5 +33,4 @@ class ProductRelationCollectorToProductRelationBridge implements ProductRelation
         return $this->productRelationQueryContainer
             ->queryProductRelationWithProductAbstractByIdRelationAndLocale($idProductRelation, $idLocale);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
  */
 class GroupPlugin extends AbstractPlugin implements GroupPluginInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\GroupsTransfer
      */
@@ -56,5 +55,4 @@ class GroupPlugin extends AbstractPlugin implements GroupPluginInterface
     {
         $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
     }
-
 }

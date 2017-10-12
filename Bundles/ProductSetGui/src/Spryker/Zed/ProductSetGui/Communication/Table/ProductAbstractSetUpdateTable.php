@@ -18,7 +18,6 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductAbstractSetUpdateTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-abstract-set-table';
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_PREVIEW = 'preview';
@@ -179,5 +178,4 @@ class ProductAbstractSetUpdateTable extends AbstractTable
             $productAbstractEntity->getIdProductAbstract()
         );
     }
-
 }

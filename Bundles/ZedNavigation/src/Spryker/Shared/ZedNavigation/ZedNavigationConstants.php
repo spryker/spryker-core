@@ -9,7 +9,6 @@ namespace Spryker\Shared\ZedNavigation;
 
 interface ZedNavigationConstants
 {
-
     /**
      * Specification:
      * - If this is set to true, navigation will be loaded from cache.
@@ -20,5 +19,4 @@ interface ZedNavigationConstants
     const ZED_NAVIGATION_CACHE_ENABLED = 'ZED_NAVIGATION_CACHE_ENABLED';
 
     const ZED_NAVIGATION_ENABLED = 'ZED_NAVIGATION_ENABLED';
-
 }

@@ -33,7 +33,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  */
 class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param array $formData
      * @param array $formOptions
@@ -463,5 +462,4 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::STORE);
     }
-
 }

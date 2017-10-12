@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -212,5 +211,4 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
     }
-
 }

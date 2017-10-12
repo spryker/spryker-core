@@ -17,7 +17,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class AbstractCustomerTable extends AbstractTable
 {
-
     const COL_ID = 'id_customer';
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
@@ -175,5 +174,4 @@ abstract class AbstractCustomerTable extends AbstractTable
      * @return string
      */
     abstract protected function getCheckboxHeaderName();
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 abstract class AbstractCheckPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -38,5 +37,4 @@ abstract class AbstractCheckPlugin extends BaseAbstractPlugin implements Conditi
      * @return bool
      */
     abstract protected function callFacade(OrderTransfer $orderTransfer);
-
 }

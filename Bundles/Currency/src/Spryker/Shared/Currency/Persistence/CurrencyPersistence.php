@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Store;
 
 class CurrencyPersistence implements CurrencyPersistenceInterface
 {
-
     const CURRENT_CURRENCY_ISO_CODE = 'current-currency-iso-code';
 
     /**
@@ -57,5 +56,4 @@ class CurrencyPersistence implements CurrencyPersistenceInterface
 
         return $currentCurrencyIsoCode;
     }
-
 }

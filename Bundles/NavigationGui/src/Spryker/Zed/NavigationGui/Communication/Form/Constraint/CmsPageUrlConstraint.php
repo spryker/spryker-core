@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class CmsPageUrlConstraint extends SymfonyConstraint
 {
-
     const OPTION_URL_FACADE = 'urlFacade';
 
     /**
@@ -41,5 +40,4 @@ class CmsPageUrlConstraint extends SymfonyConstraint
 
         return $this->urlFacade->findUrl($urlTransfer);
     }
-
 }

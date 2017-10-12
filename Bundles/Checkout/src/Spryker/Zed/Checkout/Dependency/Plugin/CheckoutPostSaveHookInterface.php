@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutPostSaveHookInterface
 {
-
     /**
      * This plugin is called after the order is placed.
      *
@@ -24,5 +23,4 @@ interface CheckoutPostSaveHookInterface
      * @return void
      */
     public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormView;
 
 class CreditCardSubForm extends AbstractSubForm
 {
-
     const PAYMENT_METHOD = 'credit_card';
 
     /**
@@ -53,5 +52,4 @@ class CreditCardSubForm extends AbstractSubForm
 
         $view->vars[static::CLIENT_TOKEN] = $this->generateClientToken();
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
 
 class CacheWarmer implements CacheWarmerInterface
 {
-
     /**
      * @var \Spryker\Shared\Twig\Cache\CacheWriterInterface
      */
@@ -41,5 +40,4 @@ class CacheWarmer implements CacheWarmerInterface
     {
         $this->cacheWriter->write($this->templatePathMapBuilder->build());
     }
-
 }

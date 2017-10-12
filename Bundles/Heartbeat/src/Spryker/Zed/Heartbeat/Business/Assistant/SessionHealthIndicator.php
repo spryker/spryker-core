@@ -13,7 +13,6 @@ use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
-
     const HEALTH_MESSAGE_UNABLE_TO_WRITE_SESSION = 'Unable to write session';
     const HEALTH_MESSAGE_UNABLE_TO_READ_SESSION = 'Unable to read session';
     const KEY_HEARTBEAT = 'heartbeat';
@@ -52,5 +51,4 @@ class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIn
             $this->addDysfunction($e->getMessage());
         }
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MessengerConfig extends AbstractBundleConfig
 {
-
     /**
      * @var string
      */
@@ -38,5 +37,4 @@ class MessengerConfig extends AbstractBundleConfig
         }
         return self::$messageTray;
     }
-
 }

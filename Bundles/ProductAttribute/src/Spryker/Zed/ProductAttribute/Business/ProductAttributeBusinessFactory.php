@@ -28,7 +28,6 @@ use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
  */
 class ProductAttributeBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeInterface
      */
@@ -197,5 +196,4 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductAttributeDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

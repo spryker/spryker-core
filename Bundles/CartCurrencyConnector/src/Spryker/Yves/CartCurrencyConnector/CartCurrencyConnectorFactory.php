@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class CartCurrencyConnectorFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\CartCurrencyConnector\Dependency\Client\CartCurrencyConnectorToCartClientInterface
      */
@@ -19,5 +18,4 @@ class CartCurrencyConnectorFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CartCurrencyConnectorDependencyProvider::CLIENT_CART);
     }
-
 }

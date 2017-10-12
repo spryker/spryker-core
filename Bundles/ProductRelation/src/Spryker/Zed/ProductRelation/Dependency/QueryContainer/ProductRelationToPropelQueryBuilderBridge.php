@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ProductRelationToPropelQueryBuilderBridge implements ProductRelationToPropelQueryBuilderInterface
 {
-
     /**
      * @var \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface
      */
@@ -36,5 +35,4 @@ class ProductRelationToPropelQueryBuilderBridge implements ProductRelationToProp
     {
         return $this->propelQueryBuilderQueryContainer->createQuery($query, $criteriaTransfer);
     }
-
 }

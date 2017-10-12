@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class StockQueryContainer extends AbstractQueryContainer implements StockQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -163,5 +162,4 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
                 ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
             ->endUse();
     }
-
 }

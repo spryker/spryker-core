@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 interface ProductAbstractRelationUpdaterInterface
 {
-
     /**
      * @return void
      */
     public function updateProductLabelRelations();
-
 }

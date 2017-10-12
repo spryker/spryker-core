@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 
 class DiscountableItemFilter implements DiscountableItemFilterInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface[]
      */
@@ -38,5 +37,4 @@ class DiscountableItemFilter implements DiscountableItemFilterInterface
 
         return $collectedDiscountTransfer;
     }
-
 }

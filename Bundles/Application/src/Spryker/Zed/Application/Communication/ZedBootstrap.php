@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ZedBootstrap
 {
-
     use BundleDependencyProviderResolverAwareTrait;
 
     /**
@@ -252,5 +251,4 @@ class ZedBootstrap
     {
         return true;
     }
-
 }

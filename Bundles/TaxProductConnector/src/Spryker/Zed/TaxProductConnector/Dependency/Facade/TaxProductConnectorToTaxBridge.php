@@ -9,7 +9,6 @@ namespace Spryker\Zed\TaxProductConnector\Dependency\Facade;
 
 class TaxProductConnectorToTaxBridge implements TaxProductConnectorToTaxInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
@@ -38,5 +37,4 @@ class TaxProductConnectorToTaxBridge implements TaxProductConnectorToTaxInterfac
     {
         return $this->taxFacade->getDefaultTaxRate();
     }
-
 }

@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class IsPaymentRequestPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsPaymentRequestPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isPaymentRequestSuccess($orderTransfer);
     }
-
 }

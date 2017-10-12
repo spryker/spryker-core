@@ -12,7 +12,6 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
 
 class ProductSearchConfigExtensionMarker implements ProductSearchConfigExtensionMarkerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
      */
@@ -36,5 +35,4 @@ class ProductSearchConfigExtensionMarker implements ProductSearchConfigExtension
             ProductSearchConfig::PRODUCT_SEARCH_CONFIG_EXPANDER_RESOURCE_ID
         );
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Business\Relation;
 
 interface ProductRelationReaderInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
      */
@@ -21,5 +20,4 @@ interface ProductRelationReaderInterface
      * @return \Generated\Shared\Transfer\ProductRelationTransfer|null
      */
     public function findProductRelationById($idProductRelation);
-
 }

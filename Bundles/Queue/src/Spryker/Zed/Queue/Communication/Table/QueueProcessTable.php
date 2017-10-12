@@ -14,7 +14,6 @@ use Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface;
 
 class QueueProcessTable extends AbstractTable
 {
-
     /**
      * @var \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface
      */
@@ -72,5 +71,4 @@ class QueueProcessTable extends AbstractTable
 
         return $results;
     }
-
 }

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
  */
 interface ProductApiFacadeInterface
 {
-
     /**
      * Specification:
      *
@@ -72,5 +71,4 @@ interface ProductApiFacadeInterface
      * @return array
      */
     public function validate(ApiDataTransfer $apiDataTransfer);
-
 }

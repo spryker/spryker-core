@@ -12,7 +12,6 @@ namespace Spryker\Shared\EventJournal\Model\Collector;
  */
 abstract class AbstractDataCollector implements DataCollectorInterface
 {
-
     const TYPE = 'undefined';
 
     /**
@@ -35,5 +34,4 @@ abstract class AbstractDataCollector implements DataCollectorInterface
     {
         return static::TYPE;
     }
-
 }

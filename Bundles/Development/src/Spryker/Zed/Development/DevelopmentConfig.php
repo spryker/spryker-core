@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
 {
-
     const BUNDLE_PLACEHOLDER = '[BUNDLE]';
 
     /**
@@ -311,5 +310,4 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return 2;
     }
-
 }

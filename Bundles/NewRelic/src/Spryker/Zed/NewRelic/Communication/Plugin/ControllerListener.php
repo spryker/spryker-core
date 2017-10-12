@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {
-
     const PRIORITY = -255;
 
     /**
@@ -126,5 +125,4 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
             KernelEvents::CONTROLLER => ['onKernelController', static::PRIORITY],
         ];
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\DiscountPromotion\Dependency\Facade;
 
 class DiscountPromotionToAvailabilityBridge implements DiscountPromotionToAvailabilityInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
@@ -33,5 +32,4 @@ class DiscountPromotionToAvailabilityBridge implements DiscountPromotionToAvaila
     {
         return $this->availabilityFacade->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
-
 }

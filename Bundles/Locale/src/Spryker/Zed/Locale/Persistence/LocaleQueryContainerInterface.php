@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface LocaleQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -27,5 +26,4 @@ interface LocaleQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocales();
-
 }

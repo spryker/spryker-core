@@ -9,7 +9,6 @@ namespace Spryker\Client\CmsBlock\Dependency\Client;
 
 interface CmsBlockToStorageClientInterface
 {
-
     /**
      * @api
      *
@@ -18,5 +17,4 @@ interface CmsBlockToStorageClientInterface
      * @return array
      */
     public function getMulti($keys);
-
 }

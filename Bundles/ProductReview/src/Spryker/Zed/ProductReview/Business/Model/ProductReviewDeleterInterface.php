@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewDeleterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
      * @return void
      */
     public function deleteProductReview(ProductReviewTransfer $productReviewTransfer);
-
 }

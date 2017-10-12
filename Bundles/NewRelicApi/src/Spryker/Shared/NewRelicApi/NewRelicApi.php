@@ -14,7 +14,6 @@ namespace Spryker\Shared\NewRelicApi;
  */
 class NewRelicApi implements NewRelicApiInterface
 {
-
     /**
      * @var bool
      */
@@ -295,5 +294,4 @@ class NewRelicApi implements NewRelicApiInterface
 
         return $this;
     }
-
 }

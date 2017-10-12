@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RatepayRequestTransfer;
 
 class BankAccountMapper extends BaseMapper
 {
-
     /**
      * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
@@ -46,5 +45,4 @@ class BankAccountMapper extends BaseMapper
             ->setIban($this->ratepayPaymentRequestTransfer->getBankAccountIban())
             ->setBicSwift($this->ratepayPaymentRequestTransfer->getBankAccountBic());
     }
-
 }

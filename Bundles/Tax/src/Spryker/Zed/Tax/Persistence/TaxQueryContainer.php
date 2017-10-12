@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -115,5 +114,4 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
             ->filterByFkCountry($idCountry)
             ->filterByRate($rate);
     }
-
 }

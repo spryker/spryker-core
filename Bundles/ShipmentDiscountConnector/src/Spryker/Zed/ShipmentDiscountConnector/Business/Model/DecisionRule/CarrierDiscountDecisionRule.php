@@ -17,7 +17,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConn
 
 class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface
      */
@@ -105,5 +104,4 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
 
         return null;
     }
-
 }

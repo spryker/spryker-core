@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CurrencyPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
      */
@@ -24,5 +23,4 @@ class CurrencyPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCurrencyQuery::create();
     }
-
 }

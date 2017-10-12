@@ -11,12 +11,10 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 
 interface SubscriberMergerInterface
 {
-
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
     public function mergeSubscribersWith(EventCollectionInterface $eventCollection);
-
 }

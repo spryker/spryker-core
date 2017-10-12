@@ -27,7 +27,6 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
  */
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param array $formData
      * @param array $formOptions
@@ -173,5 +172,4 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getConfig()->getSalesDetailExternalBlocksUrls();
     }
-
 }

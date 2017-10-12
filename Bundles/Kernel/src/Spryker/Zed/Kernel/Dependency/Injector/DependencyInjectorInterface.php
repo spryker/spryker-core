@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Container;
 
 interface DependencyInjectorInterface
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -32,5 +31,4 @@ interface DependencyInjectorInterface
      * @return \Spryker\Zed\Kernel\Container
      */
     public function injectPersistenceLayerDependencies(Container $container);
-
 }

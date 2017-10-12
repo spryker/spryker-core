@@ -27,7 +27,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class ItemLockTest extends StateMachineMocks
 {
-
     /**
      * @return void
      */
@@ -127,5 +126,4 @@ class ItemLockTest extends StateMachineMocks
     {
         return $this->getMockBuilder(SpyStateMachineLockQuery::class)->getMock();
     }
-
 }

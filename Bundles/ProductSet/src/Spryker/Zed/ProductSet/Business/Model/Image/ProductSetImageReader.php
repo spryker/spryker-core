@@ -14,7 +14,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetImageReader implements ProductSetImageReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -75,5 +74,4 @@ class ProductSetImageReader implements ProductSetImageReaderInterface
 
         return $productImageSetTransfer;
     }
-
 }

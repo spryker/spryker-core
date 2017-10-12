@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsGlossaryKeyMappingMigration implements MigrationInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -69,5 +68,4 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
         $this->cmsGlossarySaver->deleteCmsGlossary($originVersionDataTransfer->getCmsPage()->getFkPage());
         $this->cmsGlossarySaver->saveCmsGlossary($targetVersionDataTransfer->getCmsGlossary());
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\ClassResolver\ResolverCache;
 
 abstract class AbstractProvider implements ProviderInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\ClassResolver\ResolverCacheInterface
      */
@@ -35,5 +34,4 @@ abstract class AbstractProvider implements ProviderInterface
 
         return $this->cache;
     }
-
 }

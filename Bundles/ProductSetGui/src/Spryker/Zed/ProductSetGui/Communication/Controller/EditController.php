@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractProductSetController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -121,5 +120,4 @@ class EditController extends AbstractProductSetController
             Url::generate('/product-set-gui')->build()
         );
     }
-
 }

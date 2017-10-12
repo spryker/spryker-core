@@ -11,7 +11,6 @@ use Symfony\Component\Finder\Finder;
 
 class TransferDefinitionFinder implements FinderInterface
 {
-
     /**
      * @deprecated Will be removed with next major release
      */
@@ -78,5 +77,4 @@ class TransferDefinitionFinder implements FinderInterface
             return (bool)glob($directory, GLOB_ONLYDIR);
         });
     }
-
 }

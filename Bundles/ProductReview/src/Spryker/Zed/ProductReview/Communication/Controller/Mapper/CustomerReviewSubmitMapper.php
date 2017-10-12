@@ -13,7 +13,6 @@ use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToLocaleInterface;
 
 class CustomerReviewSubmitMapper implements CustomerReviewSubmitMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToLocaleInterface
      */
@@ -67,5 +66,4 @@ class CustomerReviewSubmitMapper implements CustomerReviewSubmitMapperInterface
             ->requireIdProductAbstract()
             ->requireLocaleName();
     }
-
 }

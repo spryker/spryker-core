@@ -9,12 +9,10 @@ namespace Spryker\Yves\CmsContentWidgetProductSetConnector\Dependency\Client;
 
 interface CmsContentWidgetProductSetConnectorToProductSetInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductSetStorageTransfer|null
      */
     public function findProductSetByIdProductSet($idProductAbstract);
-
 }

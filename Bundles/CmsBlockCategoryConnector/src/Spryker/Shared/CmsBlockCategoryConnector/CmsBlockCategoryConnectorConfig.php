@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
 {
-
     /**
      * Specification:
      * - Used to define a storage key
@@ -32,5 +31,4 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
      * - Full name for storage key for CMS Block to Category relation
      */
     const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
-
 }

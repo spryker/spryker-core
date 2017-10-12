@@ -15,7 +15,6 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 
 class TaxRateAverageAggregator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
@@ -51,12 +50,10 @@ class TaxRateAverageAggregator implements CalculatorInterface
     protected function calculateTaxAverageAggregationForItems(ArrayObject $items, $priceMode)
     {
         foreach ($items as $itemTransfer) {
-
             $unitPriceToPayAggregationNetPrice = $this->getUnitNetPriceToPayAggregationNetPrice($itemTransfer, $priceMode);
             $taxRateAverageAggregation = $this->calculateTaxRateAverage($itemTransfer, $unitPriceToPayAggregationNetPrice);
 
             $itemTransfer->setTaxRateAverageAggregation($taxRateAverageAggregation);
-
         }
     }
 
@@ -115,5 +112,4 @@ class TaxRateAverageAggregator implements CalculatorInterface
         }
         return $taxAmount;
     }
-
 }

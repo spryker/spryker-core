@@ -13,7 +13,6 @@ use Spryker\Zed\Propel\Business\Exception\ConfigMissingPropertyException;
 
 class PropelConfigConverterJson implements PropelConfigConverterInterface
 {
-
     /**
      * @var array
      */
@@ -133,5 +132,4 @@ class PropelConfigConverterJson implements PropelConfigConverterInterface
             throw new ConfigFileNotCreatedException(sprintf('Could not create config file "%s"', $this->getFileName()));
         }
     }
-
 }

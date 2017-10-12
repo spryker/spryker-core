@@ -23,7 +23,6 @@ use Spryker\Yves\Ratepay\Form\DataProvider\InvoiceDataProvider;
  */
 class InvoiceDataProviderTest extends AbstractDataProviderTest
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class InvoiceDataProviderTest extends AbstractDataProviderTest
 
         return $invoiceDataProvider;
     }
-
 }

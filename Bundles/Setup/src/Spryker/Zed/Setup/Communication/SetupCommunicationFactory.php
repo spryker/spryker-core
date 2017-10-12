@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class SetupCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return array
      */
@@ -22,5 +21,4 @@ class SetupCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getConfig()->getSetupInstallCommandNames();
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CustomerGroupPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
      */
@@ -42,5 +41,4 @@ class CustomerGroupPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCustomerQuery::create();
     }
-
 }

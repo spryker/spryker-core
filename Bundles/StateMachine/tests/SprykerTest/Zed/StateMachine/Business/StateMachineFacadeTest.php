@@ -38,7 +38,6 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandler;
  */
 class StateMachineFacadeTest extends Unit
 {
-
     const TESTING_SM = 'TestingSm';
     const TEST_PROCESS_NAME = 'TestProcess';
     const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
@@ -635,5 +634,4 @@ class StateMachineFacadeTest extends Unit
 
         return $stateMachineFacade;
     }
-
 }

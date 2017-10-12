@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SearchHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
@@ -24,5 +23,4 @@ class SearchHealthIndicatorPlugin extends AbstractPlugin implements HealthIndica
     {
         return $this->getFacade()->doSearchHealthCheck();
     }
-
 }

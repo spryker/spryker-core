@@ -12,7 +12,6 @@ use Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConn
 
 class CustomerUserConnectionUpdater implements CustomerUserConnectionUpdaterInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConnectorToCustomerQueryContainerInterface
      */
@@ -70,5 +69,4 @@ class CustomerUserConnectionUpdater implements CustomerUserConnectionUpdaterInte
             $customerEntity->save();
         }
     }
-
 }

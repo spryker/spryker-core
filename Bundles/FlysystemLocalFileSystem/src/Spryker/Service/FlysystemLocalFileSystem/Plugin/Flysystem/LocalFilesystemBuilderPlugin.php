@@ -16,7 +16,6 @@ use Spryker\Service\Kernel\AbstractPlugin;
  */
 class LocalFilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFilesystemBuilderPluginInterface
 {
-
     /**
      * @param string $type
      *
@@ -39,5 +38,4 @@ class LocalFilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFi
             ->createFlysystemLocalFileSystemBuilder($configTransfer, $flysystemPluginCollection)
             ->build();
     }
-
 }

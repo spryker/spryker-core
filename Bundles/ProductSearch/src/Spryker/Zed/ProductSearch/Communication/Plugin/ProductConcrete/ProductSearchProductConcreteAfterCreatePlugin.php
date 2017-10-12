@@ -16,7 +16,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
  */
 class ProductSearchProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -26,5 +25,4 @@ class ProductSearchProductConcreteAfterCreatePlugin extends AbstractPlugin imple
     {
         return $this->getFacade()->persistProductSearch($productConcreteTransfer);
     }
-
 }

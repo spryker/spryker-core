@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class NetTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class NetTotalCalculatorPlugin extends AbstractPlugin implements CalculationPlug
     {
         $this->getFacade()->calculateNetTotal($calculableObjectTransfer);
     }
-
 }

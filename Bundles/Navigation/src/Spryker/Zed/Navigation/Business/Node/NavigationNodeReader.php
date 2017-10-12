@@ -15,7 +15,6 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationNodeReader implements NavigationNodeReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
      */
@@ -104,5 +103,4 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
 
         return $navigationNodeLocalizedAttributesTransfer;
     }
-
 }

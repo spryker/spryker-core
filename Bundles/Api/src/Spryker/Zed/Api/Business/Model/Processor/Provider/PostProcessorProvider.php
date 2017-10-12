@@ -13,7 +13,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcess
 
 class PostProcessorProvider implements PostProcessorProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\ApiConfig
      */
@@ -44,5 +43,4 @@ class PostProcessorProvider implements PostProcessorProviderInterface
     {
         return new RemoveActionPostProcessor();
     }
-
 }

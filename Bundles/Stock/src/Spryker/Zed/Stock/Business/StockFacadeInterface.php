@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\TypeTransfer;
 
 interface StockFacadeInterface
 {
-
     /**
      * Specification:
      * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
@@ -173,5 +172,4 @@ interface StockFacadeInterface
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
-
 }

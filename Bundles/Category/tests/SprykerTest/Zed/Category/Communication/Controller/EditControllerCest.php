@@ -22,7 +22,6 @@ use SprykerTest\Zed\Category\CategoryCommunicationTester;
  */
 class EditControllerCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryCommunicationTester $i
      *
@@ -61,5 +60,4 @@ class EditControllerCest
     {
         $_GET['id-category'] = $categoryTransferB->getIdCategory();
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Store\Business\Model;
 
 interface StoreReaderInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
@@ -28,5 +27,4 @@ interface StoreReaderInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreById($idStore);
-
 }

@@ -57,7 +57,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class DiscountBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Discount\Business\Calculator\DiscountInterface
      */
@@ -556,5 +555,4 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
     }
-
 }

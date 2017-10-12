@@ -39,7 +39,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class AbstractFacadeTest extends Unit
 {
-
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -220,5 +219,4 @@ class AbstractFacadeTest extends Unit
     {
         return $this->orderEntity;
     }
-
 }

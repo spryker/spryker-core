@@ -9,10 +9,8 @@ namespace Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Filesystem;
 
 interface FilesystemBuilderInterface
 {
-
     /**
      * @return \League\Flysystem\Filesystem
      */
     public function build();
-
 }

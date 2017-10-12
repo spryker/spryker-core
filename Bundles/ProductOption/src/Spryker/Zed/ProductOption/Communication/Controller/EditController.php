@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends BaseOptionController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -67,5 +66,4 @@ class EditController extends BaseOptionController
             'optionTabs' => $optionTabs->createView(),
         ];
     }
-
 }

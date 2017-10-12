@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountCalculationToDiscountInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return mixed
      */
     public function calculateDiscounts(QuoteTransfer $quoteTransfer);
-
 }

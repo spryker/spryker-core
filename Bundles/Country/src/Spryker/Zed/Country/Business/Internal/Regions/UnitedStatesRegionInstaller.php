@@ -9,7 +9,6 @@ namespace Spryker\Zed\Country\Business\Internal\Regions;
 
 class UnitedStatesRegionInstaller implements RegionInstallInterface
 {
-
     /**
      * {@inheritdoc}
      */
@@ -77,5 +76,4 @@ class UnitedStatesRegionInstaller implements RegionInstallInterface
     {
         return 'US';
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\GroupTransfer;
 
 interface GroupInterface
 {
-
     /**
      * @param string $name
      *
@@ -173,5 +172,4 @@ interface GroupInterface
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getRoles($idGroup);
-
 }

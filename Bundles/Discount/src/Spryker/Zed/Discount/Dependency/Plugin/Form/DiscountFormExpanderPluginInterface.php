@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 interface DiscountFormExpanderPluginInterface
 {
-
     /**
      * Specification:
      *
@@ -26,5 +25,4 @@ interface DiscountFormExpanderPluginInterface
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     public function expandFormType(FormBuilderInterface $builder, array $options);
-
 }

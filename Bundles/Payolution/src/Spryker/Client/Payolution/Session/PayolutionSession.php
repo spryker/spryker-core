@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PayolutionSession implements PayolutionSessionInterface
 {
-
     const PAYOLUTION_SESSION_IDENTIFIER = 'payolution session identifier';
 
     /**
@@ -75,5 +74,4 @@ class PayolutionSession implements PayolutionSessionInterface
 
         return false;
     }
-
 }

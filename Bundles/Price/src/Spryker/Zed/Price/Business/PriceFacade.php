@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceFacade extends AbstractFacade implements PriceFacadeInterface
 {
-
     /**
      * Specification:
      * - Reads all persisted price types and returns their names in an array.
@@ -321,5 +320,4 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
             ->createReaderModel()
             ->findProductConcretePrices($idProductConcrete, $idProductAbstract);
     }
-
 }

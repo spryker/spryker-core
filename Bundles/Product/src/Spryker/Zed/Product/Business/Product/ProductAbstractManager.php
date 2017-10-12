@@ -21,7 +21,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractManager extends AbstractProductAbstractManagerSubject implements ProductAbstractManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -317,5 +316,4 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
         $this->productQueryContainer->getConnection()->commit();
     }
-
 }

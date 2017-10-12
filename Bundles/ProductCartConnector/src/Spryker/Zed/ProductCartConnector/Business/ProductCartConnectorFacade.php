@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductCartConnectorFacade extends AbstractFacade implements ProductCartConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Reads a persisted concrete product from database.
@@ -52,5 +51,4 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
             ->createProductValidator()
             ->validateItems($cartChangeTransfer);
     }
-
 }

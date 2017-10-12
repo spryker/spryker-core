@@ -23,7 +23,6 @@ use Spryker\Shared\Propel\PropelConstants;
 
 class ObjectBuilder extends PropelObjectBuilder
 {
-
     /**
      * @param \Propel\Generator\Model\Table $table
      */
@@ -240,5 +239,4 @@ class ObjectBuilder extends PropelObjectBuilder
 
         return $script;
     }
-
 }

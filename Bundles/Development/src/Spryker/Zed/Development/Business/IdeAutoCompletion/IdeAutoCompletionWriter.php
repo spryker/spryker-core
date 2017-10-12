@@ -10,7 +10,6 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterf
 
 class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[]
      */
@@ -102,5 +101,4 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
             mkdir($directory, 0755, true);
         }
     }
-
 }

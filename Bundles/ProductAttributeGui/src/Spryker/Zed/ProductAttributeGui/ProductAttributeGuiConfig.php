@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductAttributeGuiConfig extends AbstractBundleConfig
 {
-
     const DEFAULT_LOCALE = '_';
 
     const KEY = 'key';
@@ -29,5 +28,4 @@ class ProductAttributeGuiConfig extends AbstractBundleConfig
     {
         return static::DEFAULT_LOCALE;
     }
-
 }

@@ -29,7 +29,6 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
  */
 class BuilderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -191,5 +190,4 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer->setStateMachineName('TestingSm');
         return $stateMachineProcessTransfer;
     }
-
 }

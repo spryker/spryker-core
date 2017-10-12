@@ -12,7 +12,6 @@ use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageBridge;
 
 class ProductOptionDependencyProvider extends AbstractDependencyProvider
 {
-
     const KV_STORAGE = 'kv storage';
 
     /**
@@ -28,5 +27,4 @@ class ProductOptionDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

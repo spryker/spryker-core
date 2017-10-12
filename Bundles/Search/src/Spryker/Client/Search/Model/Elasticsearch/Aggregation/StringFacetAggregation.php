@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class StringFacetAggregation extends AbstractTermsFacetAggregation
 {
-
     const VALUE_SUFFIX = '-value';
 
     /**
@@ -88,5 +87,4 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
 
         return $aggregation;
     }
-
 }

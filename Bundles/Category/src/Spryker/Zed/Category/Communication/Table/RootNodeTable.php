@@ -15,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RootNodeTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'root-node-table';
 
     const ID_CATEGORY_NODE = 'id_category_node';
@@ -136,5 +135,4 @@ class RootNodeTable extends AbstractTable
 
         return $urls;
     }
-
 }

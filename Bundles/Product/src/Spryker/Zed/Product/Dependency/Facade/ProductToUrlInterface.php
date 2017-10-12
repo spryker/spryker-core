@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface ProductToUrlInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -53,5 +52,4 @@ interface ProductToUrlInterface
      * @return void
      */
     public function deactivateUrl(UrlTransfer $urlTransfer);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 interface SearchStringSetterInterface
 {
-
     /**
      * @api
      *
@@ -18,5 +17,4 @@ interface SearchStringSetterInterface
      * @return void
      */
     public function setSearchString($searchString);
-
 }

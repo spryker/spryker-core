@@ -9,7 +9,6 @@ namespace Spryker\Zed\Session\Business;
 
 interface SessionFacadeInterface
 {
-
     /**
      * @api
      *
@@ -27,5 +26,4 @@ interface SessionFacadeInterface
      * @return void
      */
     public function removeZedSessionLockFor($sessionId);
-
 }

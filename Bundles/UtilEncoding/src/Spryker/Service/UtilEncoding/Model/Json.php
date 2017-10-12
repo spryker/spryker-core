@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilEncoding\Model;
 
 class Json implements JsonInterface
 {
-
     const DEFAULT_OPTIONS = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PARTIAL_OUTPUT_ON_ERROR;
     const DEFAULT_DEPTH = 512;
 
@@ -55,5 +54,4 @@ class Json implements JsonInterface
 
         return json_decode($jsonString, $assoc, $depth, $options);
     }
-
 }

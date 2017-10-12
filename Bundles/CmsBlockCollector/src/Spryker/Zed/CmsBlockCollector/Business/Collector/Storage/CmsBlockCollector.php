@@ -14,7 +14,6 @@ use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollec
 
 class CmsBlockCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
      */
@@ -121,5 +120,4 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
     {
         return true;
     }
-
 }

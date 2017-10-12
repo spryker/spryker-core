@@ -16,7 +16,6 @@ use Spryker\Zed\Queue\Communication\Table\QueueProcessTable;
  */
 class QueueCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Queue\Communication\Table\QueueProcessTable
      */
@@ -26,5 +25,4 @@ class QueueCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer()
         );
     }
-
 }

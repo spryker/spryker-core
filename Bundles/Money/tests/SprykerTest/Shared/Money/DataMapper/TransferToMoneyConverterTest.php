@@ -24,7 +24,6 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
  */
 class TransferToMoneyConverterTest extends Unit
 {
-
     const AMOUNT = 1000;
     const CURRENCY = 'EUR';
 
@@ -47,5 +46,4 @@ class TransferToMoneyConverterTest extends Unit
         $this->assertSame((string)self::AMOUNT, $money->getAmount());
         $this->assertSame(self::CURRENCY, $money->getCurrency()->getCode());
     }
-
 }

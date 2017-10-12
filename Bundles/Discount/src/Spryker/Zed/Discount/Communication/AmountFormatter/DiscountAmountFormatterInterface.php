@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
 interface DiscountAmountFormatterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function format(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
-
 }

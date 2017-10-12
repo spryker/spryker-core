@@ -31,7 +31,6 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
  */
 class PaymentPluginExecutorTest extends Unit
 {
-
     const TEST_PROVIDER = 'Test';
 
     /**
@@ -180,5 +179,4 @@ class PaymentPluginExecutorTest extends Unit
 
         return $quoteTransfer;
     }
-
 }

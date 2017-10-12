@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductOptionCartConnectorFacadeInterface
 {
-
     /**
      *
      * Specification:
@@ -54,5 +53,4 @@ interface ProductOptionCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function changeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer);
-
 }

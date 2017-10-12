@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ReorderProductSetsFormType extends AbstractType
 {
-
     const FIELD_PRODUCT_SET_WEIGHTS = 'product_set_weights';
 
     /**
@@ -52,5 +51,4 @@ class ReorderProductSetsFormType extends AbstractType
 
         return $this;
     }
-
 }

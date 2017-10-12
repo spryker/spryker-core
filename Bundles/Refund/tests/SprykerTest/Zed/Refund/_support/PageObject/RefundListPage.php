@@ -9,9 +9,7 @@ namespace SprykerTest\Zed\Refund\PageObject;
 
 class RefundListPage
 {
-
     const URL = '/refund/table';
 
     const SELECTOR_TABLE = '.dataTables_wrapper';
-
 }

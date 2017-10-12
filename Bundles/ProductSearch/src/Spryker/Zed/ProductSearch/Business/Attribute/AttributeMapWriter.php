@@ -17,7 +17,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class AttributeMapWriter implements AttributeMapWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -247,5 +246,4 @@ class AttributeMapWriter implements AttributeMapWriterInterface
 
         $entity->save();
     }
-
 }

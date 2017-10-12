@@ -11,7 +11,6 @@ use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
 
 class IntegerToDecimalConverter implements IntegerToDecimalConverterInterface
 {
-
     const PRICE_PRECISION = 100;
 
     /**
@@ -32,5 +31,4 @@ class IntegerToDecimalConverter implements IntegerToDecimalConverterInterface
 
         return (float)bcdiv($value, static::PRICE_PRECISION, 2);
     }
-
 }

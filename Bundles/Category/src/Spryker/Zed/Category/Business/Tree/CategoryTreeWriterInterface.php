@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\NodeTransfer;
  */
 interface CategoryTreeWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -45,5 +44,4 @@ interface CategoryTreeWriterInterface
      * @return void
      */
     public function rebuildClosureTable();
-
 }

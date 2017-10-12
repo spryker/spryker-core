@@ -16,7 +16,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DiscountsTable extends AbstractTable
 {
-
     const TABLE_COL_PERIOD = self::TYPE_COL_PERIOD;
     const TABLE_COL_TYPE = 'Type';
     const TYPE_COL_PERIOD = 'Period';
@@ -108,7 +107,6 @@ class DiscountsTable extends AbstractTable
 
         /** @var \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity */
         foreach ($queryResult as $discountEntity) {
-
             $result[] = [
                 SpyDiscountTableMap::COL_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $discountEntity->getDisplayName(),
@@ -280,7 +278,6 @@ class DiscountsTable extends AbstractTable
         $rowTemplate = '<tr><td>GROSS</td><td>NET</td></tr>';
         $row = '';
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
-
             $netAmount = '-';
             $grossAmount = '-';
             $currencyCode = $discountAmountEntity->getCurrency()->getCode();
@@ -314,5 +311,4 @@ class DiscountsTable extends AbstractTable
 
         return $table;
     }
-
 }

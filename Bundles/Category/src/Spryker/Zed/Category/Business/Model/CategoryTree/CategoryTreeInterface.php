@@ -8,7 +8,6 @@ namespace Spryker\Zed\Category\Business\Model\CategoryTree;
 
 interface CategoryTreeInterface
 {
-
     /**
      * @param int $idSourceCategoryNode
      * @param int $idDestinationCategoryNode
@@ -16,5 +15,4 @@ interface CategoryTreeInterface
      * @return int
      */
     public function moveSubTree($idSourceCategoryNode, $idDestinationCategoryNode);
-
 }

@@ -22,7 +22,6 @@ use SprykerTest\Zed\Glossary\PageObject\GlossaryCreatePage;
  */
 class GlossaryCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class GlossaryCreateCest
         $i->amOnPage(GlossaryCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Glossary / Create Translation');
     }
-
 }

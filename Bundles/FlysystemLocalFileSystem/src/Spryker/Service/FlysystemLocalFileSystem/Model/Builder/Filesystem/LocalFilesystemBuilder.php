@@ -12,7 +12,6 @@ use Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter\LocalAdapterB
 
 class LocalFilesystemBuilder extends AbstractFilesystemBuilder
 {
-
     /**
      * @return \Generated\Shared\Transfer\FlysystemConfigLocalTransfer
      */
@@ -44,5 +43,4 @@ class LocalFilesystemBuilder extends AbstractFilesystemBuilder
 
         return new LocalAdapterBuilder($adapterConfigTransfer);
     }
-
 }

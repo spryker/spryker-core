@@ -9,10 +9,8 @@ namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 
 interface CmsBlockToLocaleInterface
 {
-
     /**
      * @return array
      */
     public function getAvailableLocales();
-
 }

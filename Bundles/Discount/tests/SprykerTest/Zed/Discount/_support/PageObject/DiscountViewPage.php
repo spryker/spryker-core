@@ -11,7 +11,6 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountViewPage
 {
-
     const URL = '/discount/index/view';
 
     /**
@@ -51,5 +50,4 @@ class DiscountViewPage
     {
         return static::URL . "?id-discount=$identifier";
     }
-
 }

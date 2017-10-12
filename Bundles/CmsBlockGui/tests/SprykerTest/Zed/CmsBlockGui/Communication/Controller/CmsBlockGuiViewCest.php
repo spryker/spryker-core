@@ -22,7 +22,6 @@ use SprykerTest\Zed\CmsBlockGui\PageObject\CmsBlockGuiListPage;
  */
 class CmsBlockGuiViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\CmsBlockGui\CmsBlockGuiCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class CmsBlockGuiViewCest
         $i->clickDataTableButton('View Block');
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / View CMS Block');
     }
-
 }

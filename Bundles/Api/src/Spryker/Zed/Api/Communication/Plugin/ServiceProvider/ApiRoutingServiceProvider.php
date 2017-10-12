@@ -15,7 +15,6 @@ use Spryker\Zed\Api\Business\Model\Router\ApiRouter;
 
 class ApiRoutingServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -40,5 +39,4 @@ class ApiRoutingServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

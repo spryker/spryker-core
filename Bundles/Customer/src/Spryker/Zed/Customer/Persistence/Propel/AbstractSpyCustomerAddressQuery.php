@@ -21,7 +21,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
  */
 abstract class AbstractSpyCustomerAddressQuery extends BaseSpyCustomerAddressQuery
 {
-
     /**
      * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
@@ -39,5 +38,4 @@ abstract class AbstractSpyCustomerAddressQuery extends BaseSpyCustomerAddressQue
 
         return $query;
     }
-
 }

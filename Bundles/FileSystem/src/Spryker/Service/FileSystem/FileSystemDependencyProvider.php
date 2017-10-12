@@ -15,7 +15,6 @@ use Spryker\Service\Kernel\Container;
 
 class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PLUGIN_READER = 'plugin reader';
     const PLUGIN_WRITER = 'plugin writer';
     const PLUGIN_STREAM = 'plugin stream';
@@ -77,5 +76,4 @@ class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

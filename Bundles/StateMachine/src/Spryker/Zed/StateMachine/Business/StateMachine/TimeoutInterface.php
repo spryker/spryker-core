@@ -12,7 +12,6 @@ use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 
 interface TimeoutInterface
 {
-
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -37,5 +36,4 @@ interface TimeoutInterface
         $stateName,
         StateMachineItemTransfer $stateMachineItemTransfer
     );
-
 }

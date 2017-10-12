@@ -23,7 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -64,5 +63,4 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
         OutputInterface $output
     ) {
     }
-
 }

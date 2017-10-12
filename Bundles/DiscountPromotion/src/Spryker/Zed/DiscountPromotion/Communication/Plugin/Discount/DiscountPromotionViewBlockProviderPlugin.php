@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DiscountPromotionViewBlockProviderPlugin extends AbstractPlugin implements DiscountViewBlockProviderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -28,5 +27,4 @@ class DiscountPromotionViewBlockProviderPlugin extends AbstractPlugin implements
     {
         return '/discount-promotion/discount-view-block/index';
     }
-
 }

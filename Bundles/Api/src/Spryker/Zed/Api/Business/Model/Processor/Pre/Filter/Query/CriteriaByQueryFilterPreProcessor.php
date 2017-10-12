@@ -12,7 +12,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
 {
-
     const FILTER = 'filter';
 
     /**
@@ -34,5 +33,4 @@ class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

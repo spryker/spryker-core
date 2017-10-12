@@ -28,7 +28,6 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
  */
 class CustomerGroupDecisionRuleTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -168,5 +167,4 @@ class CustomerGroupDecisionRuleTest extends Unit
     {
         return new CustomerGroupTransfer();
     }
-
 }

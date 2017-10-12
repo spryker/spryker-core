@@ -40,7 +40,6 @@ use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvi
  */
 class ProductDiscountConnectorFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -237,5 +236,4 @@ class ProductDiscountConnectorFacadeTest extends Unit
         ]);
         return $clauseTransfer;
     }
-
 }

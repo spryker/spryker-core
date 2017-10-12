@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
 {
-
     /**
      * Default position
      */
@@ -46,5 +45,4 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
 
         return array_shift($list);
     }
-
 }

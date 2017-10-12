@@ -18,7 +18,6 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
  */
 class RefundableItemAmountCalculatorPlugin extends AbstractPlugin implements RefundCalculatorPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -30,5 +29,4 @@ class RefundableItemAmountCalculatorPlugin extends AbstractPlugin implements Ref
     {
         return $this->getFacade()->calculateRefundableItemAmount($refundTransfer, $orderTransfer, $salesOrderItems);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlock\Dependency\QueryContainer;
 
 class CmsBlockToGlossaryQueryContainerBridge implements CmsBlockToGlossaryQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
@@ -32,5 +31,4 @@ class CmsBlockToGlossaryQueryContainerBridge implements CmsBlockToGlossaryQueryC
     {
         return $this->glossaryQueryContainer->queryKey($keyName);
     }
-
 }

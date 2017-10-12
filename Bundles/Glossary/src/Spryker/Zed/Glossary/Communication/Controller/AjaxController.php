@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AjaxController extends AbstractController
 {
-
     const SEARCH_TERM = 'term';
 
     /**
@@ -33,5 +32,4 @@ class AjaxController extends AbstractController
 
         return new JsonResponse($keys);
     }
-
 }

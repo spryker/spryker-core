@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Exception\ExceptionInterface;
 
 class ControllerNotFoundException extends Exception implements ExceptionInterface
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
      */
@@ -43,5 +42,4 @@ class ControllerNotFoundException extends Exception implements ExceptionInterfac
 
         return $message;
     }
-
 }

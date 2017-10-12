@@ -14,7 +14,6 @@ use Symfony\Component\Process\Process;
 
 class ProcessManager implements ProcessManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface
      */
@@ -186,5 +185,4 @@ class ProcessManager implements ProcessManagerInterface
     {
         return new Process($command);
     }
-
 }

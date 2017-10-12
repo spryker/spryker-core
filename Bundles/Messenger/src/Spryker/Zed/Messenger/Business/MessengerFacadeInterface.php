@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 interface MessengerFacadeInterface
 {
-
     /**
      * @api
      *
@@ -45,5 +44,4 @@ interface MessengerFacadeInterface
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages();
-
 }

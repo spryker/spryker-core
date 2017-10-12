@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategyInterface
      */
@@ -89,5 +88,4 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_LOCALE);
     }
-
 }

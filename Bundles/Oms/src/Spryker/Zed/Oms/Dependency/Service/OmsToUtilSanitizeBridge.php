@@ -8,7 +8,6 @@ namespace Spryker\Zed\Oms\Dependency\Service;
 
 class OmsToUtilSanitizeBridge implements OmsToUtilSanitizeInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
@@ -32,5 +31,4 @@ class OmsToUtilSanitizeBridge implements OmsToUtilSanitizeInterface
     {
         return $this->utilSanitizeService->escapeHtml($text, $double);
     }
-
 }

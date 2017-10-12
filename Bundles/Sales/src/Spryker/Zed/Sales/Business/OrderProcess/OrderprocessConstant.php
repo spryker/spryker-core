@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Business\OrderProcess;
 
 interface OrderprocessConstant
 {
-
     // STATE
     const STATE_NEW = 'new';
 
@@ -38,5 +37,4 @@ interface OrderprocessConstant
 
     // CONDITION
     const RULE_ORDER_USED_CODE = 'order used code';
-
 }

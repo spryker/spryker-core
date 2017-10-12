@@ -11,7 +11,6 @@ use Exception;
 
 class UrlUniqueException extends Exception
 {
-
     const ERROR_MESSAGE = 'The URL "%s" is already used in the Menu!';
 
     /**
@@ -22,5 +21,4 @@ class UrlUniqueException extends Exception
         $errorMessage = sprintf(self::ERROR_MESSAGE, $url);
         parent::__construct($errorMessage);
     }
-
 }

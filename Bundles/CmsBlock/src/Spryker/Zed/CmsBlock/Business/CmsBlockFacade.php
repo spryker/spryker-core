@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -199,5 +198,4 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
             ->createCmsBlockTemplateManager()
             ->hasTemplateFileById($idCmsBlockTemplate);
     }
-
 }

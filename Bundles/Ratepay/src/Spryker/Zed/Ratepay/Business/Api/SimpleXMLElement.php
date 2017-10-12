@@ -11,7 +11,6 @@ use SimpleXMLElement as SimpleXMLElementSimpleXMLElement;
 
 class SimpleXMLElement extends SimpleXMLElementSimpleXMLElement
 {
-
     /**
      * @param string $sName
      * @param string $sValue
@@ -62,5 +61,4 @@ class SimpleXMLElement extends SimpleXMLElementSimpleXMLElement
 
         return str_replace(array_keys($search), array_values($search), $str);
     }
-
 }

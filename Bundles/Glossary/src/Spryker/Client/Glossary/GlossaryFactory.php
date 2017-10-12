@@ -13,7 +13,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class GlossaryFactory extends AbstractFactory
 {
-
     /**
      * @var \Spryker\Client\Glossary\Storage\GlossaryStorageInterface[]
      */
@@ -72,5 +71,4 @@ class GlossaryFactory extends AbstractFactory
     {
         return new GlossaryKeyBuilder();
     }
-
 }

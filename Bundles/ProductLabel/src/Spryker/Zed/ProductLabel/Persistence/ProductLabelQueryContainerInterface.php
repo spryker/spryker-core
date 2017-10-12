@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabel\Persistence;
 
 interface ProductLabelQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -128,5 +127,4 @@ interface ProductLabelQueryContainerInterface
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
     public function queryValidProductLabelsByIdProductAbstract($idProductAbstract);
-
 }

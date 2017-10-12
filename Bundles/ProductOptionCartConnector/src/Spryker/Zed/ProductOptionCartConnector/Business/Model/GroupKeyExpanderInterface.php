@@ -9,12 +9,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface GroupKeyExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expand(CartChangeTransfer $cartChangeTransfer);
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 
 class Guzzle extends AbstractHttpAdapter
 {
-
     const DEFAULT_TIMEOUT = 45;
 
     /**
@@ -79,5 +78,4 @@ class Guzzle extends AbstractHttpAdapter
 
         return $response->getBody();
     }
-
 }

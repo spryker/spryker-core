@@ -16,7 +16,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
 class FindActionPostProcessor implements PostProcessorInterface
 {
-
     const QUERY_PAGE = 'page';
     const QUERY_PAGES = 'pages';
 
@@ -118,5 +117,4 @@ class FindActionPostProcessor implements PostProcessorInterface
 
         return $url->build();
     }
-
 }

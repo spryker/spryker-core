@@ -13,7 +13,6 @@ use Spryker\Zed\ProductGroupCollector\Dependency\Facade\ProductGroupCollectorToC
 
 class ProductGroupCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
@@ -69,5 +68,4 @@ class ProductGroupCollectorDependencyProvider extends AbstractBundleDependencyPr
             return $container->getLocator()->touch()->queryContainer();
         };
     }
-
 }

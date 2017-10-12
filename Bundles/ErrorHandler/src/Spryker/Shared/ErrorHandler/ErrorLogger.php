@@ -14,7 +14,6 @@ use Throwable;
 
 class ErrorLogger implements ErrorLoggerInterface
 {
-
     use LoggerTrait;
     use NewRelicApiTrait;
 
@@ -68,5 +67,4 @@ class ErrorLogger implements ErrorLoggerInterface
             $exception->getLine()
         );
     }
-
 }

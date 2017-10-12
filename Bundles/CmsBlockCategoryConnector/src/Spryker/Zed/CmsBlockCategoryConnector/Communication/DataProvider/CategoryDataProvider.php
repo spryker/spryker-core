@@ -17,7 +17,6 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQ
 
 class CategoryDataProvider
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
@@ -206,5 +205,4 @@ class CategoryDataProvider
     {
         return $this->wrongCmsBlocks;
     }
-
 }

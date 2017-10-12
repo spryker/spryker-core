@@ -18,7 +18,6 @@ use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
  */
 class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\SalesProductConnector\Business\Model\ItemMetadataSaverInterface
      */
@@ -58,5 +57,4 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(SalesProductConnectorDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

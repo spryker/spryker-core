@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cache\Business\Model;
 
 interface CacheClearerInterface
 {
-
     /**
      * @return string[]
      */
@@ -19,5 +18,4 @@ interface CacheClearerInterface
      * @return string[]
      */
     public function clearAutoLoaderCache();
-
 }

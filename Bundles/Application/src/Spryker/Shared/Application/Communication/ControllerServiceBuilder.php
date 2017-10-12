@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
 
 class ControllerServiceBuilder
 {
-
     /**
      * @param \Pimple $application
      * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
@@ -42,5 +41,4 @@ class ControllerServiceBuilder
 
         return $serviceName . ':' . $bundleControllerAction->getAction() . 'Action';
     }
-
 }

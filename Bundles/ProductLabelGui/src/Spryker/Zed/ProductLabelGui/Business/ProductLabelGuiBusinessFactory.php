@@ -17,7 +17,6 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
  */
 class ProductLabelGuiBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductLabelGui\Business\Model\PositionUpdaterInterface
      */
@@ -33,5 +32,4 @@ class ProductLabelGuiBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_PRODUCT_LABEL);
     }
-
 }

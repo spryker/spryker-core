@@ -9,10 +9,8 @@ namespace Spryker\Zed\CmsContentWidgetProductSetConnector\Dependency\QueryContai
 
 interface CmsContentWidgetProductSetConnectorProductSetQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
     public function queryProductSet();
-
 }

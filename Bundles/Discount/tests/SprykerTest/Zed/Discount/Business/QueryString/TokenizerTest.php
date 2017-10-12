@@ -22,7 +22,6 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
  */
 class TokenizerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -62,5 +61,4 @@ class TokenizerTest extends Unit
     {
         return new Tokenizer();
     }
-
 }

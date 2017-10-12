@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GlossaryConfig extends AbstractBundleConfig
 {
-
     /**
      * Used as `item_type` for touch mechanism.
      */
@@ -29,5 +28,4 @@ class GlossaryConfig extends AbstractBundleConfig
 
         return $paths;
     }
-
 }

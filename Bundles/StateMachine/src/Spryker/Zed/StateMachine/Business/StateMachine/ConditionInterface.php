@@ -11,7 +11,6 @@ use Spryker\Zed\StateMachine\Business\Process\StateInterface;
 
 interface ConditionInterface
 {
-
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -36,5 +35,4 @@ interface ConditionInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName);
-
 }

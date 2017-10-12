@@ -15,7 +15,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class RatepayClient extends AbstractClient implements RatepayClientInterface
 {
-
     /**
      * @api
      *
@@ -45,5 +44,4 @@ class RatepayClient extends AbstractClient implements RatepayClientInterface
             ->createRatepayStub()
             ->installmentCalculation($quoteTransfer);
     }
-
 }

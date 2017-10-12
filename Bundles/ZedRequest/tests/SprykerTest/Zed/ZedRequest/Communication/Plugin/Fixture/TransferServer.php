@@ -12,7 +12,6 @@ use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as
 
 class TransferServer extends CoreTransferServer
 {
-
     /**
      * @var \Spryker\Zed\ZedRequest\Business\Client\Request
      */
@@ -41,5 +40,4 @@ class TransferServer extends CoreTransferServer
 
         return parent::getRequest();
     }
-
 }

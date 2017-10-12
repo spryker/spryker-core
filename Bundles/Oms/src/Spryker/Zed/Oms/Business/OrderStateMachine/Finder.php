@@ -14,7 +14,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Finder implements FinderInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -369,5 +368,4 @@ class Finder implements FinderInterface
 
         return $state->getDisplay();
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Container;
 
 class NewRelicDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const NEW_RELIC_API = 'new relic api';
     const STORE = 'store';
     const SERVICE_NETWORK = 'util network service';
@@ -74,5 +73,4 @@ class NewRelicDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

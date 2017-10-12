@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-
     const PARAM_ID = 'id';
 
     /**
@@ -73,5 +72,4 @@ class ViewController extends AbstractController
                 ->fetchData()
         );
     }
-
 }

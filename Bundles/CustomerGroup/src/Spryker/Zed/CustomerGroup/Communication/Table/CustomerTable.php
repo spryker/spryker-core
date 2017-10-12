@@ -18,7 +18,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
 
     const COL_FK_CUSTOMER = 'fk_customer';
@@ -183,5 +182,4 @@ class CustomerTable extends AbstractTable
 
         return self::GENDER_MAP[$customerRow[static::COL_GENDER]];
     }
-
 }

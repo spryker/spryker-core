@@ -12,7 +12,6 @@ use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 
 class AclGroupFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
@@ -78,5 +77,4 @@ class AclGroupFormDataProvider
 
         return array_column($roleCollection, 'Name', 'IdAclRole');
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class InvalidForeignBundleFilter implements DependencyFilterInterface
 {
-
     /**
      * @var array
      */
@@ -34,5 +33,4 @@ class InvalidForeignBundleFilter implements DependencyFilterInterface
     {
         return (!in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->allowedBundles) && !isset($dependency[DependencyTree::META_FOREIGN_IS_EXTERNAL]));
     }
-
 }

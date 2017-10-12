@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class CalendarWeekDecisionRule implements DecisionRuleInterface
 {
-
     const DATE_FORMAT = 'W';
 
     /**
@@ -66,5 +65,4 @@ class CalendarWeekDecisionRule implements DecisionRuleInterface
     {
         return new DateTime();
     }
-
 }

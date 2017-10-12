@@ -13,7 +13,6 @@ use Spryker\Client\Search\Exception\InvalidFacetSearchResultValueTransformerPlug
 
 class FacetValueTransformerFactory implements FacetValueTransformerFactoryInterface
 {
-
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface
      */
@@ -45,5 +44,4 @@ class FacetValueTransformerFactory implements FacetValueTransformerFactoryInterf
 
         return $valueTransformerPlugin;
     }
-
 }

@@ -19,7 +19,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class ConsoleBootstrap extends Application
 {
-
     /**
      * @var \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
@@ -167,5 +166,4 @@ class ConsoleBootstrap extends Application
             APPLICATION_ENV
         );
     }
-
 }

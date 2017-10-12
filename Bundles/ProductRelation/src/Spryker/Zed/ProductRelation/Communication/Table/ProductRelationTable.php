@@ -26,7 +26,6 @@ use Spryker\Zed\ProductRelation\ProductRelationConfig;
 
 class ProductRelationTable extends AbstractTable
 {
-
     const COL_ACTIONS = 'Actions';
 
     const URL_RELATION_DEACTIVATE = '/product-relation/edit/deactivate';
@@ -356,5 +355,4 @@ class ProductRelationTable extends AbstractTable
             'Delete'
         );
     }
-
 }

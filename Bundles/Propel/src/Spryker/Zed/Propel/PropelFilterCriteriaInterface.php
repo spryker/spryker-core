@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FilterTransfer;
 
 interface PropelFilterCriteriaInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\FilterTransfer
      */
@@ -28,5 +27,4 @@ interface PropelFilterCriteriaInterface
      * @return \Propel\Runtime\ActiveQuery\Criteria
      */
     public function toCriteria();
-
 }

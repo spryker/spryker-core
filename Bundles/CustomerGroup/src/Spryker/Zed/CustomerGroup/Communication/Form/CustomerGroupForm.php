@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CustomerGroupForm extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
     const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
@@ -183,5 +182,4 @@ class CustomerGroupForm extends AbstractType
 
         return $this;
     }
-
 }

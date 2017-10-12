@@ -13,7 +13,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterface
 {
-
     const FILE_EXTENSION = 'php';
 
     /**
@@ -191,5 +190,4 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
 
         return new SplFileInfo($classFileDirectory, null, null);
     }
-
 }

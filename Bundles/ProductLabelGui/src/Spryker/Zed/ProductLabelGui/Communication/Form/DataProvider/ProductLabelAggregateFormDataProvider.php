@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductLabelAggregateFormTransfer;
 
 class ProductLabelAggregateFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider\ProductLabelFormDataProvider
      */
@@ -62,5 +61,4 @@ class ProductLabelAggregateFormDataProvider
             $this->relatedProductFormDataProvider->getOptions()
         );
     }
-
 }

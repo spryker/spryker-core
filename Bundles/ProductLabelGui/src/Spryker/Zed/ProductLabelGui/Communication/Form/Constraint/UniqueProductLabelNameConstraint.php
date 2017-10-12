@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueProductLabelNameConstraint extends Constraint
 {
-
     const OPTION_QUERY_CONTAINER = 'queryContainer';
 
     /**
@@ -56,5 +55,4 @@ class UniqueProductLabelNameConstraint extends Constraint
     {
         return sprintf('A product label with name "%s" already exists', $name);
     }
-
 }

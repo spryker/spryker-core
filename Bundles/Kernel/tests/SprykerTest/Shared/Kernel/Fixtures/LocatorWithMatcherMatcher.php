@@ -10,7 +10,6 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class LocatorWithMatcherMatcher implements LocatorMatcherInterface
 {
-
     const NAME = 'locator';
 
     /**
@@ -32,5 +31,4 @@ class LocatorWithMatcherMatcher implements LocatorMatcherInterface
     {
         return substr($method, strlen(self::NAME));
     }
-
 }

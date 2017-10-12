@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductLabelGuiQueryContainer extends AbstractQueryContainer implements ProductLabelGuiQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -68,5 +67,4 @@ class ProductLabelGuiQueryContainer extends AbstractQueryContainer implements Pr
             ->getFactory()
             ->createProductLabelProductAbstractQuery();
     }
-
 }

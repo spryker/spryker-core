@@ -13,7 +13,6 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
 
 interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
 {
-
     /**
      * @param string $eventName
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
@@ -47,5 +46,4 @@ interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
      * @return \Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface[]|\SplPriorityQueue
      */
     public function get($eventName);
-
 }

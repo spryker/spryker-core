@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 
 interface CreateGlossaryExpanderPluginInterface
 {
-
     /**
      * Specification:
      * - Retrieves a collection of ButtonTransfer transfer objects.
@@ -23,5 +22,4 @@ interface CreateGlossaryExpanderPluginInterface
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
     public function getViewActionButtons(CmsPageTransfer $cmsPageTransfer);
-
 }

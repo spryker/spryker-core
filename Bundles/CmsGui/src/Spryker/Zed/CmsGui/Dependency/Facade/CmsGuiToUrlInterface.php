@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface CmsGuiToUrlInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -23,5 +22,4 @@ interface CmsGuiToUrlInterface
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
     public function findUrl(UrlTransfer $urlTransfer);
-
 }

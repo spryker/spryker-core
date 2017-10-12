@@ -29,7 +29,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class KernelLogListenerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -205,5 +204,4 @@ class KernelLogListenerTest extends Unit
 
         return $redirectResponseMock;
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface;
 
 class ProductGroupEntityReader implements ProductGroupEntityReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface
      */
@@ -49,5 +48,4 @@ class ProductGroupEntityReader implements ProductGroupEntityReaderInterface
 
         return $productGroupEntity;
     }
-
 }

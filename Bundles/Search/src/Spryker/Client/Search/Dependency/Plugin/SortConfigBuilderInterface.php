@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SortConfigTransfer;
 
 interface SortConfigBuilderInterface
 {
-
     /**
      * @api
      *
@@ -54,5 +53,4 @@ interface SortConfigBuilderInterface
      * @return string|null
      */
     public function getSortDirection($sortParamName);
-
 }

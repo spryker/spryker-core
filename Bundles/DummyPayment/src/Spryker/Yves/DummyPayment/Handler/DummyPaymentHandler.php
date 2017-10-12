@@ -14,7 +14,6 @@ use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 
 class DummyPaymentHandler
 {
-
     const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**
@@ -94,5 +93,4 @@ class DummyPaymentHandler
 
         return $dummyPaymentTransfer;
     }
-
 }

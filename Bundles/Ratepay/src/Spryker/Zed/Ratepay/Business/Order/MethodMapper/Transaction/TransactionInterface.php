@@ -12,7 +12,6 @@ use Spryker\Zed\Ratepay\Business\Order\MethodMapper\PaymentMethodMapperInterface
 
 interface TransactionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -26,5 +25,4 @@ interface TransactionInterface
      * @return void
      */
     public function registerMethodMapper(PaymentMethodMapperInterface $mapper);
-
 }

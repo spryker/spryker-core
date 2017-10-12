@@ -15,7 +15,6 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 
 class OutgoingGraphBuilder
 {
-
     /**
      * @var string
      */
@@ -177,5 +176,4 @@ class OutgoingGraphBuilder
 
         return array_filter($dependencies, $callback);
     }
-
 }

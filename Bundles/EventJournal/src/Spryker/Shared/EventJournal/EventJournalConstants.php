@@ -12,7 +12,6 @@ namespace Spryker\Shared\EventJournal;
  */
 interface EventJournalConstants
 {
-
     const TYPE = 'file';
 
     const OPTION_LOG_PATH = 'log_path';
@@ -29,5 +28,4 @@ interface EventJournalConstants
      * @deprecated This is only used to disable EventJournal in all new Shops until it gets removed from ZedRequest bundle
      */
     const DISABLE_EVENT_JOURNAL = 'DISABLE_EVENT_JOURNAL';
-
 }

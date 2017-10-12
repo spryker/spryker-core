@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface AclFacadeInterface
 {
-
     /**
      * Main Installer Method
      *
@@ -313,5 +312,4 @@ interface AclFacadeInterface
      * @return bool
      */
     public function isIgnorable($bundle, $controller, $action);
-
 }

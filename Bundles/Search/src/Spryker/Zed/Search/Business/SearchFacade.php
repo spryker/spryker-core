@@ -17,7 +17,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
  */
 class SearchFacade extends AbstractFacade implements SearchFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -176,5 +175,4 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
             ->createIndexMapInstaller($messenger)
             ->install();
     }
-
 }

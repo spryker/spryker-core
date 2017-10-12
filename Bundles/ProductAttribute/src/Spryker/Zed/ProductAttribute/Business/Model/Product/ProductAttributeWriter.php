@@ -15,7 +15,6 @@ use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 class ProductAttributeWriter implements ProductAttributeWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface
      */
@@ -164,5 +163,4 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
 
         return $productAbstractAttributes;
     }
-
 }

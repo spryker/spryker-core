@@ -18,7 +18,6 @@ use Spryker\Zed\ProductReviewGui\ProductReviewGuiDependencyProvider;
  */
 class ProductReviewGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -60,5 +59,4 @@ class ProductReviewGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductReviewGuiDependencyProvider::FACADE_LOCALE);
     }
-
 }

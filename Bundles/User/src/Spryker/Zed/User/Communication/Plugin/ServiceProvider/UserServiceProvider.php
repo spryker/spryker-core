@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class UserServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
@@ -71,5 +70,4 @@ class UserServiceProvider extends AbstractPlugin implements ServiceProviderInter
     public function boot(Application $app)
     {
     }
-
 }

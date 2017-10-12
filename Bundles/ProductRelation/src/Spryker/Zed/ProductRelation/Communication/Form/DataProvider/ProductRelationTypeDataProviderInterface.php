@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Communication\Form\DataProvider;
 
 interface ProductRelationTypeDataProviderInterface
 {
-
     /**
      * @return array
      */
@@ -21,5 +20,4 @@ interface ProductRelationTypeDataProviderInterface
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
     public function getData($idProductRelation = null);
-
 }

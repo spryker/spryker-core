@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductOptionClient extends AbstractClient implements ProductOptionClientInterface
 {
-
     /**
      * Specification:
      *   - Reads product option from Yves store
@@ -32,5 +31,4 @@ class ProductOptionClient extends AbstractClient implements ProductOptionClientI
             ->createProductOptionStorage($localeName)
             ->get($idAbstractProduct);
     }
-
 }

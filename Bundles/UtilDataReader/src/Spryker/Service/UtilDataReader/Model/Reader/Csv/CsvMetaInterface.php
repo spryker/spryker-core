@@ -7,7 +7,6 @@ namespace Spryker\Service\UtilDataReader\Model\Reader\Csv;
 
 interface CsvMetaInterface
 {
-
     /**
      * @return \SplFileObject
      */
@@ -42,5 +41,4 @@ interface CsvMetaInterface
      * @return int
      */
     public function getColumnsOffset();
-
 }

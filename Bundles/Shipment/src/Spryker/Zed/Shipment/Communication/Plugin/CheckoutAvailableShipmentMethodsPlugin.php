@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -26,5 +25,4 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
     {
         return $this->getFacade()->getAvailableMethods($quoteTransfer);
     }
-
 }

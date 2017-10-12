@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class ProfileController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -28,5 +27,4 @@ class ProfileController extends AbstractController
             'installmentConfigurationResult' => $profileResponse->getInstallmentConfigurationResult(),
         ]);
     }
-
 }

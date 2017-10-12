@@ -13,12 +13,10 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 
 interface EventSubscriberCollectionInterface extends ArrayAccess, IteratorAggregate
 {
-
     /**
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface $eventSubscriber
      *
      * @return void
      */
     public function add(EventSubscriberInterface $eventSubscriber);
-
 }

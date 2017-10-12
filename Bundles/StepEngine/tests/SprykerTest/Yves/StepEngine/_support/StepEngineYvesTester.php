@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class StepEngineYvesTester extends Actor
 {
-
     use _generated\StepEngineYvesTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

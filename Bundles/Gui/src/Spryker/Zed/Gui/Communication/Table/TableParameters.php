@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TableParameters
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -24,5 +23,4 @@ class TableParameters
 
         return (new DataTablesTransfer())->fromArray($getParameters, true);
     }
-
 }

@@ -12,7 +12,6 @@ use Zend\Filter\Word\DashToCamelCase;
 
 class BundleControllerAction implements BundleControllerActionInterface
 {
-
     /**
      * @var string
      */
@@ -90,5 +89,4 @@ class BundleControllerAction implements BundleControllerActionInterface
     {
         return $this->filter($this->action);
     }
-
 }

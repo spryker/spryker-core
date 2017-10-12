@@ -22,7 +22,6 @@ use SprykerTest\Service\Kernel\Fixtures\ServiceFactory;
  */
 class AbstractServiceFactoryTest extends Unit
 {
-
     const CONTAINER_KEY = 'key';
     const CONTAINER_VALUE = 'value';
 
@@ -88,5 +87,4 @@ class AbstractServiceFactoryTest extends Unit
 
         return $factoryMock;
     }
-
 }

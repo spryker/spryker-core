@@ -18,7 +18,6 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterfa
 
 class ProductCategoryTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-category-table';
     const COL_CHECKBOX = 'checkbox';
     const PARAM_ID_CATEGORY = 'id-category';
@@ -160,5 +159,4 @@ class ProductCategoryTable extends AbstractTable
             $this->utilEncodingService->encodeJson($info)
         );
     }
-
 }

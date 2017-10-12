@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Business\Model\CategoryNode;
 
 interface CategoryNodeDeleterInterface
 {
-
     /**
      * @param int $idCategoryNode
      * @param int $idChildrenDestinationNode
@@ -19,5 +18,4 @@ interface CategoryNodeDeleterInterface
      * @return void
      */
     public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
-
 }

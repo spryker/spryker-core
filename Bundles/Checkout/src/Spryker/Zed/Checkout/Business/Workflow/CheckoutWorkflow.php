@@ -14,7 +14,6 @@ use Propel\Runtime\Propel;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
-
     /**
      * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
      */
@@ -66,7 +65,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $this->checkPreConditions($quoteTransfer, $checkoutResponse);
 
         if (!$this->hasErrors($checkoutResponse)) {
-
             $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponse);
             if ($this->hasErrors($checkoutResponse)) {
                 return $checkoutResponse;
@@ -169,5 +167,4 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
         return $quoteTransfer;
     }
-
 }

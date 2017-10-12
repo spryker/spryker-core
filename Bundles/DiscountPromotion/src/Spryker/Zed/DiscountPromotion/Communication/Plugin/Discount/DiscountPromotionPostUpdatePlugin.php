@@ -16,7 +16,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface;
  */
 class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostUpdatePluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -38,5 +37,4 @@ class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin
 
         return $discountConfiguratorTransfer;
     }
-
 }

@@ -25,7 +25,6 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
  */
 class PropelDatabaseTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -63,5 +62,4 @@ class PropelDatabaseTest extends Unit
         $propelDatabase = new PropelDatabase($databaseCreatorCollectionMock);
         $propelDatabase->createDatabaseIfNotExists();
     }
-
 }

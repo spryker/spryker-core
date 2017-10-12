@@ -24,7 +24,6 @@ if (!class_exists(Config::class) && file_exists($manualAutoload)) {
 
 class ExternalDependency extends AbstractDependencyFinder
 {
-
     /**
      * @var array
      */
@@ -190,5 +189,4 @@ class ExternalDependency extends AbstractDependencyFinder
             spl_autoload_unregister($codeSnifferAutoloadFunction);
         }
     }
-
 }

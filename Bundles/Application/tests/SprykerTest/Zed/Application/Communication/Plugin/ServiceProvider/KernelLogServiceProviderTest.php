@@ -26,7 +26,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  */
 class KernelLogServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -51,5 +50,4 @@ class KernelLogServiceProviderTest extends Unit
         $this->assertTrue($dispatcher->hasListeners('kernel.request'));
         $this->assertTrue($dispatcher->hasListeners('kernel.response'));
     }
-
 }

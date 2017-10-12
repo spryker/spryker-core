@@ -12,7 +12,6 @@ use Elastica\Index;
 
 class SearchIndexManager implements SearchIndexManagerInterface
 {
-
     /**
      * @var \Elastica\Index
      */
@@ -76,5 +75,4 @@ class SearchIndexManager implements SearchIndexManagerInterface
     {
         return $this->index->getType($type)->getDocument($key);
     }
-
 }

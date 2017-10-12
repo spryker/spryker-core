@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 
 interface AttributeWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer $productSearchAttributeTransfer
      *
@@ -39,5 +38,4 @@ interface AttributeWriterInterface
      * @return void
      */
     public function reorder(array $productSearchAttributes);
-
 }

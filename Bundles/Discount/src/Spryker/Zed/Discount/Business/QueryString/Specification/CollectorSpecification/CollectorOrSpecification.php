@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CollectorOrSpecification implements CollectorSpecificationInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
@@ -71,5 +70,4 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
 
         return $merged;
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CalculateBundlePricePlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class CalculateBundlePricePlugin extends AbstractPlugin implements CalculatorPlu
     {
         $this->getFacade()->calculateBundlePrice($quoteTransfer);
     }
-
 }

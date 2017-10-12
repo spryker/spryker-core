@@ -22,7 +22,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 {
-
     const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
 
     /**
@@ -375,5 +374,4 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
         return $pageKeyMapping;
     }
-
 }

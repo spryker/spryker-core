@@ -14,7 +14,6 @@ use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
 
 class CmsBlockGlossaryFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface
      */
@@ -48,5 +47,4 @@ class CmsBlockGlossaryFormDataProvider
     {
         return $this->cmsBlockFacade->findGlossary($idCmsBlock);
     }
-
 }

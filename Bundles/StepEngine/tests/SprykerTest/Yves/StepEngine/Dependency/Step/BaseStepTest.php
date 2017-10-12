@@ -24,7 +24,6 @@ use SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
  */
 class BaseStepTest extends Unit
 {
-
     const STEP_ROUTE = 'stepRoute';
     const ESCAPE_ROUTE = 'escapeRoute';
 
@@ -80,5 +79,4 @@ class BaseStepTest extends Unit
     {
         return $this->getMockBuilder(AbstractTransfer::class)->getMock();
     }
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Zed\Product\Business\Product\Status;
 
 interface ProductAbstractStatusCheckerInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
      * @return bool
      */
     public function isActive($idProductAbstract);
-
 }

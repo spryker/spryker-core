@@ -17,7 +17,6 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
  */
 class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -27,5 +26,4 @@ class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterf
     {
         return $this->getFacade()->isPaid($orderItem);
     }
-
 }

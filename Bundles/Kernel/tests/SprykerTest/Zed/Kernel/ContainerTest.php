@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContainerTest extends Unit
 {
-
     const TEST_VALUE = 'foo';
     const TEST_KEY = 'test.value';
 
@@ -48,5 +47,4 @@ class ContainerTest extends Unit
 
         $this->assertSame(self::TEST_VALUE, $container[self::TEST_KEY]);
     }
-
 }

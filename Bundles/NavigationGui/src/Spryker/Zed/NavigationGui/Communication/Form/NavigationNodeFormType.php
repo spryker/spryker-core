@@ -24,7 +24,6 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 
 class NavigationNodeFormType extends AbstractType
 {
-
     const FIELD_NODE_TYPE = 'node_type';
     const FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES = 'navigation_node_localized_attributes';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -274,5 +273,4 @@ class NavigationNodeFormType extends AbstractType
 
         $event->setData($navigationNodeTransfer);
     }
-
 }

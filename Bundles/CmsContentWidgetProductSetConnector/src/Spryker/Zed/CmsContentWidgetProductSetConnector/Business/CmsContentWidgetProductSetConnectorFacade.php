@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CmsContentWidgetProductSetConnectorFacade extends AbstractFacade implements CmsContentWidgetProductSetConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -30,5 +29,4 @@ class CmsContentWidgetProductSetConnectorFacade extends AbstractFacade implement
             ->createCmsProductSkuMapper()
             ->mapProductSetKeyList($keyList);
     }
-
 }

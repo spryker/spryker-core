@@ -12,7 +12,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryToucher implements CategoryToucherInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
      */
@@ -184,5 +183,4 @@ class CategoryToucher implements CategoryToucherInterface
             ->queryClosureTableFilterByIdNodeDescendant($idCategoryNode)
             ->find();
     }
-
 }

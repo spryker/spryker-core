@@ -18,7 +18,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
 
     const COL_ZIP_CODE = 'zip_code';
@@ -199,5 +198,4 @@ class CustomerTable extends AbstractTable
 
         return $query;
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AclConfig extends AbstractBundleConfig
 {
-
     /**
      * @var array
      */
@@ -130,5 +129,4 @@ class AclConfig extends AbstractBundleConfig
 
         return [];
     }
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UrlSuggestionController extends AbstractController
 {
-
     const PARAM_TERM = 'term';
     const PARAM_ID_LOCALE = 'id-locale';
     const SUGGESTION_LIMIT = 10;
@@ -92,5 +91,4 @@ class UrlSuggestionController extends AbstractController
 
         return $this->jsonResponse($results);
     }
-
 }

@@ -21,7 +21,6 @@ use Spryker\Client\Kernel\Container;
  */
 class AbstractDependencyProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -62,5 +61,4 @@ class AbstractDependencyProviderTest extends Unit
 
         return $abstractDependencyContainerMock;
     }
-
 }

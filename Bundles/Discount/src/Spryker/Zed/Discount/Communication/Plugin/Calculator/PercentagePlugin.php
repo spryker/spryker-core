@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface, DiscountCalculatorPluginWithAmountInputTypeInterface
 {
-
     /**
      * @api
      *
@@ -100,5 +99,4 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     {
         return DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE;
     }
-
 }

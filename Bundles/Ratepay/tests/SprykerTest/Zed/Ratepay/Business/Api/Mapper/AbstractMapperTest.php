@@ -34,7 +34,6 @@ use Spryker\Zed\Ratepay\Business\Api\Mapper\QuotePaymentRequestMapper;
  */
 abstract class AbstractMapperTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory
      */
@@ -226,5 +225,4 @@ abstract class AbstractMapperTest extends Unit
 
         return $ratepayPaymentInstallmentTransfer;
     }
-
 }

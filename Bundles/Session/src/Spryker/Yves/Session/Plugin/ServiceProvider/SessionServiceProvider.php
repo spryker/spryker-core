@@ -17,7 +17,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -72,5 +71,4 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             return $this->getFactory()->createSessionStorage()->getAndRegisterHandler();
         };
     }
-
 }

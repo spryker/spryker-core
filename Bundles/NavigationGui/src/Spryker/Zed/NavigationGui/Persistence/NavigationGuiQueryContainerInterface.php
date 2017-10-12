@@ -12,7 +12,6 @@ namespace Spryker\Zed\NavigationGui\Persistence;
  */
 interface NavigationGuiQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -39,5 +38,4 @@ interface NavigationGuiQueryContainerInterface
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryNodeUrlSuggestions($searchText, $idLocale);
-
 }

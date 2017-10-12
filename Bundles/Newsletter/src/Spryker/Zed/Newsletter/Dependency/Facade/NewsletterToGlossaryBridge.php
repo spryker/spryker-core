@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -46,5 +45,4 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
     {
         return $this->glossaryFacade->getTranslation($keyName, $locale);
     }
-
 }

@@ -28,7 +28,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class DependencyInjectorResolverTest extends Unit
 {
-
     /**
      * The bundle which calls the `getProvidedDependency()`
      *
@@ -230,7 +229,7 @@ class DependencyInjectorResolverTest extends Unit
             $this->getBasePath(),
             implode(DIRECTORY_SEPARATOR, $classNameParts),
         ];
-        $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
+        $directory = implode(DIRECTORY_SEPARATOR, $directoryParts);
 
         if (!is_dir($directory)) {
             mkdir($directory, 0775, true);
@@ -255,5 +254,4 @@ class DependencyInjectorResolverTest extends Unit
 
         return $basePath;
     }
-
 }

@@ -28,7 +28,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedQueryExpander
  */
 class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
-
     /**
      * @dataProvider sortedQueryExpanderDataProvider
      *
@@ -137,5 +136,4 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         return $searchConfig;
     }
-
 }

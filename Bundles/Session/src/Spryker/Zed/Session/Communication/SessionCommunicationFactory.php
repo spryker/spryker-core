@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class SessionCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Shared\Session\Model\SessionStorageInterface
      */
@@ -90,5 +89,4 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime());
     }
-
 }

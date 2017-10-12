@@ -16,7 +16,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferDefinitionLoader implements LoaderInterface
 {
-
     const KEY_BUNDLE = 'bundle';
     const KEY_CONTAINING_BUNDLE = 'containing bundle';
     const KEY_TRANSFER = 'transfer';
@@ -178,5 +177,4 @@ class TransferDefinitionLoader implements LoaderInterface
 
         return self::$filter;
     }
-
 }

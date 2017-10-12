@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 
 class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_CURRENCY = 'currency facade';
     const FACADE_MONEY = 'money facade';
     const FACADE_REFUND = 'refund facade';
@@ -77,5 +76,4 @@ class BraintreeDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

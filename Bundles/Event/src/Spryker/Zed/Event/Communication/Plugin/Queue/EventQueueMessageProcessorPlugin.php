@@ -15,7 +15,6 @@ use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
  */
 class EventQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
 {
-
     /**
      * @api
      *
@@ -38,5 +37,4 @@ class EventQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMe
     {
         return 1000;
     }
-
 }

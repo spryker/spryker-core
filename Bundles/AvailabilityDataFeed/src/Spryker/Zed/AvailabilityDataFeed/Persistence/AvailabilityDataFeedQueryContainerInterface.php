@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface AvailabilityDataFeedQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface AvailabilityDataFeedQueryContainerInterface extends QueryContainerInte
      * @return \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
      */
     public function queryAvailabilityDataFeed(AvailabilityDataFeedTransfer $availabilityDataFeedTransfer);
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class BaseCollector
 {
-
     /**
      * @param int $unitPrice
      * @param int $quantity
@@ -49,5 +48,4 @@ class BaseCollector
 
         return $discountableItemTransfer;
     }
-
 }

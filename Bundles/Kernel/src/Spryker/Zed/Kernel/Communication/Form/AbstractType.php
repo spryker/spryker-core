@@ -17,7 +17,6 @@ use Symfony\Component\Form\AbstractType as SymfonyAbstractType;
 
 abstract class AbstractType extends SymfonyAbstractType
 {
-
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
@@ -173,5 +172,4 @@ abstract class AbstractType extends SymfonyAbstractType
     {
         return new BundleConfigResolver();
     }
-
 }

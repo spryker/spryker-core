@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 interface StateMachineHandlerInterface
 {
-
     /**
      * List of command plugins for this state machine for all processes. Array key is identifier in SM xml file.
      *
@@ -96,5 +95,4 @@ interface StateMachineHandlerInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateMachineItemsByStateIds(array $stateIds = []);
-
 }

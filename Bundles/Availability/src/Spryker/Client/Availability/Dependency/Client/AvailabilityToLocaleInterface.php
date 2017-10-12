@@ -8,10 +8,8 @@ namespace Spryker\Client\Availability\Dependency\Client;
 
 interface AvailabilityToLocaleInterface
 {
-
     /**
      * @return string
      */
     public function getCurrentLocale();
-
 }

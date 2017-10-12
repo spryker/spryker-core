@@ -12,7 +12,6 @@ use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
 
 interface DiscountPromotionMapperInterface
 {
-
     /**
      * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
      *
@@ -30,5 +29,4 @@ interface DiscountPromotionMapperInterface
         SpyDiscountPromotion $discountPromotionEntity,
         DiscountPromotionTransfer $discountPromotionTransfer
     );
-
 }

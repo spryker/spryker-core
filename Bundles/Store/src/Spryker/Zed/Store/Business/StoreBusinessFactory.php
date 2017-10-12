@@ -19,7 +19,6 @@ use Spryker\Zed\Store\Business\Model\StoreReader;
  */
 class StoreBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Store\Business\Model\StoreReaderInterface
      */
@@ -55,5 +54,4 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     {
         return Store::getInstance();
     }
-
 }

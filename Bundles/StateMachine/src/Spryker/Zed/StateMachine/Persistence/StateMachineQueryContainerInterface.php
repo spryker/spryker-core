@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface StateMachineQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -143,5 +142,4 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery
      */
     public function queryLastHistoryItem(StateMachineItemTransfer $stateMachineItemTransfer, $transitionToIdState);
-
 }

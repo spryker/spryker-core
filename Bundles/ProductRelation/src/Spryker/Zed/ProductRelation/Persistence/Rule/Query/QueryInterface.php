@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RuleQueryDataProviderTransfer;
 
 interface QueryInterface
 {
-
     /**
      * @return array
      */
@@ -23,5 +22,4 @@ interface QueryInterface
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
     public function prepareQuery(RuleQueryDataProviderTransfer $dataProviderTransfer = null);
-
 }

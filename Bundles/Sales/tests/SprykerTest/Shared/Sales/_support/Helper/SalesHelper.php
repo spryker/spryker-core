@@ -26,7 +26,6 @@ use Spryker\Shared\Shipment\ShipmentConstants;
 
 class SalesHelper extends Module
 {
-
     /**
      * @return int
      */
@@ -301,5 +300,4 @@ class SalesHelper extends Module
 
         $salesOrderTotals->save();
     }
-
 }

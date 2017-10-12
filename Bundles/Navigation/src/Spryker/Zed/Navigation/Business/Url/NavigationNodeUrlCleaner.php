@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationNodeUrlCleaner implements NavigationNodeUrlCleanerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -112,5 +111,4 @@ class NavigationNodeUrlCleaner implements NavigationNodeUrlCleanerInterface
 
         return $navigationNodeTransfer;
     }
-
 }

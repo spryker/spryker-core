@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class ExpenseTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -40,5 +39,4 @@ class ExpenseTotalCalculator implements CalculatorInterface
         }
         return $expenseTotal;
     }
-
 }

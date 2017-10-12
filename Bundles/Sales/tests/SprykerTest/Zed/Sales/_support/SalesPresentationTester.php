@@ -21,7 +21,6 @@ use Codeception\Scenario;
  */
 class SalesPresentationTester extends Actor
 {
-
     use _generated\SalesPresentationTesterActions;
 
     /**
@@ -34,5 +33,4 @@ class SalesPresentationTester extends Actor
         $this->amZed();
         $this->amLoggedInUser();
     }
-
 }

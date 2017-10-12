@@ -9,12 +9,10 @@ namespace Spryker\Yves\ProductRelation\Sorting;
 
 interface RelationSorterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $relationProducts
      *
      * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function sort(array $relationProducts);
-
 }

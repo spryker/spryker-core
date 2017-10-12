@@ -13,7 +13,6 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 interface AggregationExtractorInterface
 {
-
     /**
      * @param array $aggregations
      * @param array $requestParameters
@@ -21,5 +20,4 @@ interface AggregationExtractorInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters);
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryContainerInterface
 {
-
     const DATE_NOW = 'now';
 
     /**
@@ -241,5 +240,4 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
                 ->endUse()
             ->endUse();
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\KernelConstants;
 
 interface CmsConstants
 {
-
     const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
 
     const RESOURCE_TYPE_PAGE = 'page';
@@ -20,5 +19,4 @@ interface CmsConstants
     const RESOURCE_TYPE_STATIC = 'static';
 
     const YVES_THEME = 'YVES_THEME';
-
 }

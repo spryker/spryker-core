@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class TransferFacade extends AbstractFacade implements TransferFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -94,5 +93,4 @@ class TransferFacade extends AbstractFacade implements TransferFacadeInterface
     {
         return $this->getFactory()->createValidator($messenger)->validate($options);
     }
-
 }

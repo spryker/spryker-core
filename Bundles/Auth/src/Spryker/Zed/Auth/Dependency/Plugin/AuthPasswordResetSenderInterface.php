@@ -9,7 +9,6 @@ namespace Spryker\Zed\Auth\Dependency\Plugin;
 
 interface AuthPasswordResetSenderInterface
 {
-
     /**
      * @api
      *
@@ -19,5 +18,4 @@ interface AuthPasswordResetSenderInterface
      * @return \Generated\Shared\Transfer\SendMailResponsesTransfer
      */
     public function send($email, $token);
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
  */
 class CmsBlockCategoryConnectorFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\CmsBlockCategoryConnector\BusinessTester
      */
@@ -111,5 +110,4 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
     {
         return (new CmsBlockCategoryConnectorConfig())->getCmsBlockCategoryPositionDefault();
     }
-
 }

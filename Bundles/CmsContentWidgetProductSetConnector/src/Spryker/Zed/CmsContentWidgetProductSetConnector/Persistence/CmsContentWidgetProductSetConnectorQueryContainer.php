@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsContentWidgetProductSetConnectorQueryContainer extends AbstractQueryContainer implements CmsContentWidgetProductSetConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -35,5 +34,4 @@ class CmsContentWidgetProductSetConnectorQueryContainer extends AbstractQueryCon
             ])
             ->filterByProductSetKey($keyList, Criteria::IN);
     }
-
 }

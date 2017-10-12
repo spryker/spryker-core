@@ -54,7 +54,6 @@ use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
  */
 class SalesFacadeSaveOrderTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
@@ -382,5 +381,4 @@ class SalesFacadeSaveOrderTest extends Unit
 
         return $omsOrderProcessEntity;
     }
-
 }

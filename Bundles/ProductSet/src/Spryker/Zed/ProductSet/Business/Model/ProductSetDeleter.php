@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductSetDeleter implements ProductSetDeleterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -126,5 +125,4 @@ class ProductSetDeleter implements ProductSetDeleterInterface
     {
         $this->productSetTouch->touchProductSetDeleted($productSetTransfer);
     }
-
 }

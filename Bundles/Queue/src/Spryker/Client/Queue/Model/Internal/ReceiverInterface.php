@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 
 interface ReceiverInterface
 {
-
     /**
      * Specification
      *  - Returns messages from the queue
@@ -74,5 +73,4 @@ interface ReceiverInterface
      * @return bool
      */
     public function handleError(QueueReceiveMessageTransfer $queueReceiveMessageTransfer);
-
 }

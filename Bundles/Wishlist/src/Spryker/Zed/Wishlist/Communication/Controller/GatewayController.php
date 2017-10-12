@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
@@ -139,5 +138,4 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->getCustomerWishlistCollection($customerTransfer);
     }
-
 }

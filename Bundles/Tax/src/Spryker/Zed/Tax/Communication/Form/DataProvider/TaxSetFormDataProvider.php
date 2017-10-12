@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
 
 class TaxSetFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
@@ -61,5 +60,4 @@ class TaxSetFormDataProvider
 
         return new ObjectChoiceList($taxRateCollection->getTaxRates(), 'name', [], null, 'idTaxRate');
     }
-
 }

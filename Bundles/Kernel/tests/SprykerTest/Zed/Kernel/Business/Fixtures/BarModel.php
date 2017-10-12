@@ -8,7 +8,6 @@ namespace SprykerTest\Zed\Kernel\Business\Fixtures;
 
 class BarModel
 {
-
     /**
      * @param \SprykerTest\Zed\Kernel\Business\Fixtures\FooModel $fooModel
      */
@@ -16,5 +15,4 @@ class BarModel
     {
         unset($fooModel);
     }
-
 }

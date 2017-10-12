@@ -14,7 +14,6 @@ use Spryker\Shared\Queue\QueueConfig;
 
 class QueueProxy implements QueueProxyInterface
 {
-
     /**
      * @var \Spryker\Client\Queue\Model\Adapter\AdapterInterface[]
      */
@@ -243,5 +242,4 @@ class QueueProxy implements QueueProxyInterface
             )
         );
     }
-
 }

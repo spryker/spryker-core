@@ -12,7 +12,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class SortByQueryFilterPreProcessor implements PreProcessorInterface
 {
-
     const SORT = 'sort';
 
     /**
@@ -47,5 +46,4 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

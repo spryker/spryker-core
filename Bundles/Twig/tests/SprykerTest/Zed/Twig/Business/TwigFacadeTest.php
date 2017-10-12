@@ -24,7 +24,6 @@ use Spryker\Zed\Twig\Business\TwigFacade;
  */
 class TwigFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -60,5 +59,4 @@ class TwigFacadeTest extends Unit
 
         return $mockBuilder->getMock();
     }
-
 }

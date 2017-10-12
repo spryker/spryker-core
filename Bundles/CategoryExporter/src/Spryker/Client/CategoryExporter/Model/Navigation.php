@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class Navigation
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -48,5 +47,4 @@ class Navigation
 
         return [];
     }
-
 }

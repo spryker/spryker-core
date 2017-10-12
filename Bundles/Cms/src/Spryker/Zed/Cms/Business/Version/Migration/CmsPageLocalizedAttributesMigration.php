@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsPageLocalizedAttributesMigration implements MigrationInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -116,5 +115,4 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
             ->queryCmsPageLocalizedAttributesByFkPageAndFkLocale($idCmsPage, $localeTransfer->getIdLocale())
             ->findOneOrCreate();
     }
-
 }

@@ -15,7 +15,6 @@ use Twig_SimpleFunction;
 
 class ProductAbstractReviewTwigExtension extends TwigExtension
 {
-
     const FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW = 'spyProductAbstractReview';
     const FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW_MAXIMUM_RATING = 'spyProductAbstractReviewMaximumRating';
 
@@ -107,5 +106,4 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
     {
         return $this->productReviewClient->getMaximumRating();
     }
-
 }

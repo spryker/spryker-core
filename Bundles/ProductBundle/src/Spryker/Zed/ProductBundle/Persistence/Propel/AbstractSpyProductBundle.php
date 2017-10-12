@@ -24,7 +24,6 @@ use Spryker\Zed\ProductBundle\Persistence\Exception\BundleConnectionViolationExc
  */
 abstract class AbstractSpyProductBundle extends BaseSpyProductBundle
 {
-
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
@@ -47,5 +46,4 @@ abstract class AbstractSpyProductBundle extends BaseSpyProductBundle
 
         return true;
     }
-
 }

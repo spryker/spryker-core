@@ -9,7 +9,6 @@ namespace Spryker\Zed\Messenger\Dependency\Plugin;
 
 interface TranslationPluginInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ interface TranslationPluginInterface
      * @return string
      */
     public function translate($keyName, array $data = []);
-
 }

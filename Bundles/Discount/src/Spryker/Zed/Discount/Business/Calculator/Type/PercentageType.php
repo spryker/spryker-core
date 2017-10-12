@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
 class PercentageType implements CalculatorTypeInterface
 {
-
     /**
      * @var float
      */
@@ -99,5 +98,4 @@ class PercentageType implements CalculatorTypeInterface
 
         return $quantity;
     }
-
 }

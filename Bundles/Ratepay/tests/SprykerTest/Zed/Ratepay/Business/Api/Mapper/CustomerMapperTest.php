@@ -20,7 +20,6 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Mapper;
  */
 class CustomerMapperTest extends AbstractMapperTest
 {
-
     /**
      * @return void
      */
@@ -41,5 +40,4 @@ class CustomerMapperTest extends AbstractMapperTest
         $this->assertEquals('email@site.com', $this->requestTransfer->getCustomer()->getEmail());
         $this->assertEquals('123456789', $this->requestTransfer->getCustomer()->getPhone());
     }
-
 }

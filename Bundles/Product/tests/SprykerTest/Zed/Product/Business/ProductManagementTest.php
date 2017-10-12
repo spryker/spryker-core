@@ -21,7 +21,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
  */
 class ProductManagementTest extends FacadeTestAbstract
 {
-
     /**
      * @return void
      */
@@ -224,5 +223,4 @@ class ProductManagementTest extends FacadeTestAbstract
             ->filterByFkProductAbstract($idProductAbstract)
             ->findOne();
     }
-
 }

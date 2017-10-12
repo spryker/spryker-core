@@ -31,7 +31,6 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
  */
 class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable
      */
@@ -231,5 +230,4 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_MONEY);
     }
-
 }

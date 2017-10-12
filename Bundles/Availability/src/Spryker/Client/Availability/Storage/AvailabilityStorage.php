@@ -14,7 +14,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class AvailabilityStorage implements AvailabilityStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -102,5 +101,4 @@ class AvailabilityStorage implements AvailabilityStorageInterface
 
         return $storageAvailabilityTransfer;
     }
-
 }

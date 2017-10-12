@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class QuoteClientTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -71,5 +70,4 @@ class QuoteClientTest extends Unit
 
         $this->assertNotSame($quoteTransfer, $quoteClient->getQuote());
     }
-
 }

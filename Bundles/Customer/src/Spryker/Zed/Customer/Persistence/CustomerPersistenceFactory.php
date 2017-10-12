@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CustomerPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
@@ -33,5 +32,4 @@ class CustomerPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCustomerAddressQuery::create();
     }
-
 }

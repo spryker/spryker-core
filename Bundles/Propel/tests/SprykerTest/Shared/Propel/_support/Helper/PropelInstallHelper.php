@@ -14,7 +14,6 @@ use Symfony\Component\Process\Process;
 
 class PropelInstallHelper extends Module
 {
-
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
@@ -215,5 +214,4 @@ class PropelInstallHelper extends Module
             mkdir($pathForSchemas, 0775, true);
         }
     }
-
 }

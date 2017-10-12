@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface ValidatorInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantityToSplit
@@ -24,5 +23,4 @@ interface ValidatorInterface
      * @return array
      */
     public function getMessages();
-
 }

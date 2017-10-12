@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetCollector\Dependency\Facade;
 
 interface ProductSetCollectorToProductSetInterface
 {
-
     /**
      * @param int $idProductSet
      * @param int $idLocale
@@ -17,5 +16,4 @@ interface ProductSetCollectorToProductSetInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getCombinedProductSetImageSets($idProductSet, $idLocale);
-
 }

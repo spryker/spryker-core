@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 
 interface LabelReaderInterface
 {
-
     /**
      * @param int $idProductLabel
      *
@@ -35,5 +34,4 @@ interface LabelReaderInterface
      * @return int[]
      */
     public function findAllLabelIdsByIdProductAbstract($idProductAbstract);
-
 }

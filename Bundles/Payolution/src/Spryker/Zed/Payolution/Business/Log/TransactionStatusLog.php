@@ -13,7 +13,6 @@ use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 
 class TransactionStatusLog implements TransactionStatusLogInterface
 {
-
     /**
      * @var \Spryker\Zed\Payolution\Persistence\PayolutionQueryContainerInterface
      */
@@ -124,5 +123,4 @@ class TransactionStatusLog implements TransactionStatusLogInterface
 
         return ($expectedProcessingCode === $logEntity->getProcessingCode());
     }
-
 }

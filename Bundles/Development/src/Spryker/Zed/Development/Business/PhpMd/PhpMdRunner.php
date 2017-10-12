@@ -13,7 +13,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class PhpMdRunner
 {
-
     const CODE_SUCCESS = 0;
 
     const BUNDLE_ALL = 'all';
@@ -154,5 +153,4 @@ class PhpMdRunner
 
         return $process->getExitCode();
     }
-
 }

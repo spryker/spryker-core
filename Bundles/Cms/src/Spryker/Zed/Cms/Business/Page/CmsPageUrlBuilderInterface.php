@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 
 interface CmsPageUrlBuilderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
@@ -23,5 +22,4 @@ interface CmsPageUrlBuilderInterface
      * @return string
      */
     public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
-
 }

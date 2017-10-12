@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductReviewPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
@@ -24,5 +23,4 @@ class ProductReviewPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductReviewQuery::create();
     }
-
 }

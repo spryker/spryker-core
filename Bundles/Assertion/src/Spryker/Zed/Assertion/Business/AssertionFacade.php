@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
 {
-
     /**
      * @api
      *
@@ -79,5 +78,4 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     {
         $this->getFactory()->createAssertion()->assertAlphaNumeric($value, $message);
     }
-
 }

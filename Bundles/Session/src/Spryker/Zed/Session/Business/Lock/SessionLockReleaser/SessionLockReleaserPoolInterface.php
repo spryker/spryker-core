@@ -11,7 +11,6 @@ use Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface;
 
 interface SessionLockReleaserPoolInterface
 {
-
     /**
      * @param \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface $lockReleaser
      * @param string $handlerName
@@ -28,5 +27,4 @@ interface SessionLockReleaserPoolInterface
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
     public function getLockReleaser($handlerName);
-
 }

@@ -17,7 +17,6 @@ use Symfony\Component\Finder\Finder;
 
 class TransferGenerateHelper extends Module
 {
-
     const TARGET_DIRECTORY = 'target_directory';
 
     /**
@@ -103,5 +102,4 @@ class TransferGenerateHelper extends Module
 
         return $pathForTransferSchemas;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payolution\Dependency\Facade;
 
 class PayolutionToMoneyBridge implements PayolutionToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -42,5 +41,4 @@ class PayolutionToMoneyBridge implements PayolutionToMoneyInterface
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }
-
 }

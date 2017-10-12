@@ -9,12 +9,10 @@ namespace Spryker\Zed\Installer\Dependency\Plugin;
 
 interface InstallerPluginInterface
 {
-
     /**
      * @api
      *
      * @return void
      */
     public function install();
-
 }

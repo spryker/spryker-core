@@ -21,7 +21,6 @@ use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
 class ProductGroupTable extends AbstractProductTable
 {
-
     const COL_ID_PRODUCT_GROUP = 'id_product_group';
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_NAME = 'name';
@@ -213,5 +212,4 @@ class ProductGroupTable extends AbstractProductTable
 
         return $idProductGroups;
     }
-
 }

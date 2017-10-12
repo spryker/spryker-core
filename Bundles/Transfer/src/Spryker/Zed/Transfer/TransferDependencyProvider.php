@@ -14,7 +14,6 @@ use Symfony\Component\Finder\Finder;
 
 class TransferDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SYMFONY_FILE_SYSTEM = 'symfony_file_system';
     const SYMFONY_FINDER = 'symfony_finder';
 
@@ -37,5 +36,4 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

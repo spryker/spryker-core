@@ -11,7 +11,6 @@ use Psr\Log\LoggerInterface;
 
 interface TransferFacadeInterface
 {
-
     /**
      * Specification:
      * - Loads all *transfer.xml definitions
@@ -84,5 +83,4 @@ interface TransferFacadeInterface
      * @return bool
      */
     public function validateTransferObjects(LoggerInterface $messenger, array $options);
-
 }

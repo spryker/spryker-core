@@ -9,7 +9,6 @@ namespace Spryker\Client\Storage;
 
 interface StorageClientInterface
 {
-
     /**
      * @api
      *
@@ -157,5 +156,4 @@ interface StorageClientInterface
      * @return void
      */
     public function unsetLastCachedKey();
-
 }

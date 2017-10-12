@@ -13,7 +13,6 @@ use Spryker\Shared\Twig\TwigFilter;
 
 class DateTimeFormatterTwigExtension extends TwigExtension
 {
-
     const EXTENSION_NAME = 'DateTimeFormatterTwigExtension';
 
     /**
@@ -101,5 +100,4 @@ class DateTimeFormatterTwigExtension extends TwigExtension
     {
         return $this->utilDateTimeService->formatTime($date);
     }
-
 }

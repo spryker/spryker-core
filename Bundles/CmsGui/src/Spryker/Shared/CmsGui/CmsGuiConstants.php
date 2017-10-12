@@ -9,7 +9,6 @@ namespace Spryker\Shared\CmsGui;
 
 interface CmsGuiConstants
 {
-
     /**
      * Specification:
      * - Defines a custom URI where the CMS pages can be reviewed on Yves side.
@@ -18,5 +17,4 @@ interface CmsGuiConstants
      * @api
      */
     const CMS_PAGE_PREVIEW_URI = 'CMS_PAGE_PREVIEW_URI';
-
 }

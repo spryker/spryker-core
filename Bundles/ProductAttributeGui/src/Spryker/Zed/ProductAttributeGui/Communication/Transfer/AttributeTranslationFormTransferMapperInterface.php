@@ -11,12 +11,10 @@ use Symfony\Component\Form\FormInterface;
 
 interface AttributeTranslationFormTransferMapperInterface
 {
-
     /**
      * @param \Symfony\Component\Form\FormInterface $translationForm
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
     public function createTransfer(FormInterface $translationForm);
-
 }

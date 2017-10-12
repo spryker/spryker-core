@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CreateGlossaryController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**
@@ -66,7 +65,6 @@ class CreateGlossaryController extends AbstractController
                 )->build();
 
                 return $this->redirectResponse($redirectUrl);
-
             } else {
                 $this->addErrorMessage('Invalid data provided.');
             }
@@ -133,5 +131,4 @@ class CreateGlossaryController extends AbstractController
 
         return $this->jsonResponse($result);
     }
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodeStyleSnifferConsole extends Console
 {
-
     const COMMAND_NAME = 'code:sniff';
     const OPTION_MODULE = 'module';
     const OPTION_SNIFFS = 'sniffs';
@@ -85,5 +84,4 @@ class CodeStyleSnifferConsole extends Console
     {
         $this->setAliases(['code:sniff:style']);
     }
-
 }

@@ -23,7 +23,6 @@ use Spryker\Zed\Ratepay\Business\Order\MethodMapper\Prepayment;
  */
 class PrepaymentTest extends BaseMethodMapperTest
 {
-
     /**
      * @return void
      */
@@ -63,5 +62,4 @@ class PrepaymentTest extends BaseMethodMapperTest
 
         return $quoteTransfer;
     }
-
 }

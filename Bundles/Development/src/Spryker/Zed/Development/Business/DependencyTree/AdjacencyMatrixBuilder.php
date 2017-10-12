@@ -12,7 +12,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\Depende
 
 class AdjacencyMatrixBuilder
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
@@ -84,5 +83,4 @@ class AdjacencyMatrixBuilder
             }
         }
     }
-
 }

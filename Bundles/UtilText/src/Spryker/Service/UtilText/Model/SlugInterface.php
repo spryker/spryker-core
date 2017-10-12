@@ -9,12 +9,10 @@ namespace Spryker\Service\UtilText\Model;
 
 interface SlugInterface
 {
-
     /**
      * @param string $value
      *
      * @return string
      */
     public function generate($value);
-
 }

@@ -26,7 +26,6 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
  */
 class SalesFacadeTest extends Unit
 {
-
     const DEFAULT_OMS_PROCESS_NAME = 'test';
     const DEFAULT_ITEM_STATE = 'test';
 
@@ -124,5 +123,4 @@ class SalesFacadeTest extends Unit
 //        return new SalesFacade();
         return $this->tester->getLocator()->sales()->facade();
     }
-
 }

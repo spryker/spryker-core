@@ -26,7 +26,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class ServiceMethodBuilderTest extends Unit
 {
-
     const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
     const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/Service/';
 
@@ -103,5 +102,4 @@ class ServiceMethodBuilderTest extends Unit
 
         return $bundleTransfer;
     }
-
 }

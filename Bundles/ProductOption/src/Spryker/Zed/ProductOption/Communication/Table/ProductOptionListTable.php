@@ -17,7 +17,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionListTable extends AbstractTable
 {
-
     const TABLE_COL_PRICE = 'price';
     const TABLE_COL_SKU = 'sku';
     const TABLE_COL_NAME = 'name';
@@ -109,7 +108,6 @@ class ProductOptionListTable extends AbstractTable
 
         /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity */
         foreach ($queryResult as $productOptionGroupEntity) {
-
             $result[] = [
                 SpyProductOptionGroupTableMap::COL_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
                 SpyProductOptionGroupTableMap::COL_NAME => $productOptionGroupEntity->getName(),
@@ -161,7 +159,6 @@ class ProductOptionListTable extends AbstractTable
     {
         $names = '';
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
-
             $moneyTransfer = $this->moneyFacade->fromInteger($productOptionValueEntity->getPrice());
 
             $names .= $this->wrapInlineCellItem(
@@ -279,5 +276,4 @@ class ProductOptionListTable extends AbstractTable
 
         return $this->generateViewButton($viewDiscountUrl, 'Activate');
     }
-
 }

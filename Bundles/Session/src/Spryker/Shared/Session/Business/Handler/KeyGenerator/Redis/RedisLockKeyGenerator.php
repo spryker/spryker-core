@@ -12,7 +12,6 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInte
 
 class RedisLockKeyGenerator implements LockKeyGeneratorInterface
 {
-
     const KEY_SUFFIX = ':lock';
 
     /**
@@ -37,5 +36,4 @@ class RedisLockKeyGenerator implements LockKeyGeneratorInterface
     {
         return $this->sessionKeyGenerator->generateSessionKey($sessionId) . static::KEY_SUFFIX;
     }
-
 }

@@ -25,7 +25,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 class DiscountPromotionFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\DiscountPromotion\DiscountPromotionBusinessTester
      */
@@ -287,5 +286,4 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer->setQuantity($quantity);
         return $discountPromotionTransfer;
     }
-
 }

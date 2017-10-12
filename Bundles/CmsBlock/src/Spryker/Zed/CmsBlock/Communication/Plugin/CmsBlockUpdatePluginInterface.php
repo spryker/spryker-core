@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockUpdatePluginInterface
 {
-
     /**
      * Specification:
      * - Handles persistence of CMS block for plugins
@@ -23,5 +22,4 @@ interface CmsBlockUpdatePluginInterface
      * @return void
      */
     public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer);
-
 }

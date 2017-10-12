@@ -18,7 +18,6 @@ use Zend\Filter\Word\UnderscoreToDash;
 
 class PageDataMapper implements PageDataMapperInterface
 {
-
     const FACET_NAME = 'facet-name';
     const FACET_VALUE = 'facet-value';
     const ALL_PARENTS = 'all-parents';
@@ -314,5 +313,4 @@ class PageDataMapper implements PageDataMapperInterface
 
         return $result;
     }
-
 }

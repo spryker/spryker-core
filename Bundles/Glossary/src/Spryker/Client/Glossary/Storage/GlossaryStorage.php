@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -96,5 +95,4 @@ class GlossaryStorage implements GlossaryStorageInterface
         }
         $this->translations[$keyName] = $translation;
     }
-
 }

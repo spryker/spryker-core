@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductNew\Persistence;
 
 interface ProductNewQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -36,5 +35,4 @@ interface ProductNewQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryRelationsBecomingActive($idProductLabel);
-
 }

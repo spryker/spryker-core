@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface SalesProductConnectorQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -38,5 +37,4 @@ interface SalesProductConnectorQueryContainerInterface extends QueryContainerInt
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryMatchingSuperAttributes(array $attributeKeys);
-
 }

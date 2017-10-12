@@ -9,7 +9,6 @@ namespace Spryker\Zed\Kernel;
 
 interface BundleDependencyProviderInterface
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -30,5 +29,4 @@ interface BundleDependencyProviderInterface
      * @return \Spryker\Zed\Kernel\Container
      */
     public function providePersistenceLayerDependencies(Container $container);
-
 }

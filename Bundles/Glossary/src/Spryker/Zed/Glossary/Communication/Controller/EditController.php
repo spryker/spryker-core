@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-
     const FORM_UPDATE_TYPE = 'update';
     const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
 
@@ -67,5 +66,4 @@ class EditController extends AbstractController
             'idGlossaryKey' => $idGlossaryKey,
         ]);
     }
-
 }

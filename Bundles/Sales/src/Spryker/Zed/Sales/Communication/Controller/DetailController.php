@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -129,5 +128,4 @@ class DetailController extends AbstractController
     {
         return $this->getApplication()['sub_request'];
     }
-
 }

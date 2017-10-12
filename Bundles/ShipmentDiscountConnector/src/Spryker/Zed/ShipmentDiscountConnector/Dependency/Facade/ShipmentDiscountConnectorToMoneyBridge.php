@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade;
 
 class ShipmentDiscountConnectorToMoneyBridge implements ShipmentDiscountConnectorToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -32,5 +31,4 @@ class ShipmentDiscountConnectorToMoneyBridge implements ShipmentDiscountConnecto
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }
-
 }

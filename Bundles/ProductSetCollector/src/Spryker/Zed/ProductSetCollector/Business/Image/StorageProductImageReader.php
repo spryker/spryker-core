@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToProdu
 
 class StorageProductImageReader implements StorageProductImageReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToProductSetInterface
      */
@@ -63,5 +62,4 @@ class StorageProductImageReader implements StorageProductImageReaderInterface
 
         return $result;
     }
-
 }

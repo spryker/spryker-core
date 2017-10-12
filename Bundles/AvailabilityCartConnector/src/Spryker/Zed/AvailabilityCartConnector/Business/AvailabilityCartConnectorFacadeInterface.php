@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
  */
 interface AvailabilityCartConnectorFacadeInterface
 {
-
     /**
      * @api
      *
@@ -23,5 +22,4 @@ interface AvailabilityCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer);
-
 }
