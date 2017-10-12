@@ -151,7 +151,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     protected function getFormExtensions()
     {
         return [
-            new DoubleSubmitProtectionExtension($this->generator, $this->storage, $this->translator)
+            new DoubleSubmitProtectionExtension($this->generator, $this->storage, $this->translator),
         ];
     }
 

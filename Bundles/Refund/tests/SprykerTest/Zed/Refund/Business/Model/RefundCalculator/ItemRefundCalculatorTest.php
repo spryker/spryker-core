@@ -31,7 +31,7 @@ class ItemRefundCalculatorTest extends AbstractRefundCalculatorTest
         $refundCalculationPlugin = new ItemRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
         $salesOrderItems = [
-            $this->getSalesOrderItemOne()
+            $this->getSalesOrderItemOne(),
         ];
 
         $refundTransfer = new RefundTransfer();

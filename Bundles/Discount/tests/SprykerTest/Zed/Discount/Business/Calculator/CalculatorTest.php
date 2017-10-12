@@ -232,7 +232,7 @@ class CalculatorTest extends Unit
     protected function createDecisionRulePlugins()
     {
         return [
-            new SkuDecisionRulePlugin()
+            new SkuDecisionRulePlugin(),
         ];
     }
 
