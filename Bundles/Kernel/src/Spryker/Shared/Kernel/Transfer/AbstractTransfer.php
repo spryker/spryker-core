@@ -42,7 +42,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
     /**
      * @param bool $isRecursive
-     * @param bool $useCamelCase
+     * @param bool $useCamelCase Set to true for camelCased keys, defaults to under_scored keys.
      *
      * @return array
      */
