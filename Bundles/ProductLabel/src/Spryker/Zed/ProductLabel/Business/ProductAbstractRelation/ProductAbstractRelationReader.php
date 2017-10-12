@@ -11,7 +11,6 @@ use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
      */
@@ -53,5 +52,4 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
             ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
             ->find();
     }
-
 }

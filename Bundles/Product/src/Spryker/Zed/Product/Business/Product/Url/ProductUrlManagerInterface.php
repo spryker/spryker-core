@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductUrlManagerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -53,5 +52,4 @@ interface ProductUrlManagerInterface
      * @return void
      */
     public function touchProductAbstractUrlDeleted(ProductAbstractTransfer $productAbstractTransfer);
-
 }

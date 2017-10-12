@@ -9,7 +9,6 @@ namespace Spryker\Shared\Currency\Dependency\Client;
 
 interface CurrencyToSessionInterface
 {
-
     /**
      * @param string $name
      * @param mixed $value
@@ -25,5 +24,4 @@ interface CurrencyToSessionInterface
      * @return mixed
      */
     public function get($name, $default = null);
-
 }

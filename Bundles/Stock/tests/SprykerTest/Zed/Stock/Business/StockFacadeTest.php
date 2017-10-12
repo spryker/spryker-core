@@ -34,7 +34,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
  */
 class StockFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
@@ -181,8 +180,10 @@ class StockFacadeTest extends Unit
      *
      * @return void
      */
-    public function SKIP_testCreateStockProductShouldThrowException()
+    public function testCreateStockProductShouldThrowException()
     {
+        $this->markTestSkipped('Needs to be fixed first');
+
         $this->expectException(StockProductAlreadyExistsException::class);
         $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
 
@@ -379,5 +380,4 @@ class StockFacadeTest extends Unit
             ->setFkProduct($this->productConcreteEntity->getIdProduct())
             ->save();
     }
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductLabel\Business\Label;
 
 interface ValidityUpdaterInterface
 {
-
     /**
      * @return void
      */
     public function checkAndTouchAllLabels();
-
 }

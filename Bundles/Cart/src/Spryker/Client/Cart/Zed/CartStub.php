@@ -13,7 +13,6 @@ use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
 class CartStub extends ZedRequestStub implements CartStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -43,5 +42,4 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     {
         return $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
     }
-
 }

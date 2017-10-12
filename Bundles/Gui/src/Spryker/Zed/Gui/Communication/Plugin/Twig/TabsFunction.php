@@ -13,7 +13,6 @@ use Twig_Environment;
 
 class TabsFunction extends TwigFunction
 {
-
     /**
      * @return string
      */
@@ -55,5 +54,4 @@ class TabsFunction extends TwigFunction
 
         return $twig->render('@Gui/Tabs/tabs.twig', $context);
     }
-
 }

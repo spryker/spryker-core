@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductOptionCartConnectorFacade extends AbstractFacade implements ProductOptionCartConnectorFacadeInterface
 {
-
     /**
      *
      * Specification:
@@ -73,5 +72,4 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
             ->createProductOptionCartQuantity()
             ->changeQuantity($quoteTransfer);
     }
-
 }

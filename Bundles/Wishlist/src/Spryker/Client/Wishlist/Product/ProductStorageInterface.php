@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 
 interface ProductStorageInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistResponseTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
     public function expandProductDetails(WishlistOverviewResponseTransfer $wishlistResponseTransfer);
-
 }

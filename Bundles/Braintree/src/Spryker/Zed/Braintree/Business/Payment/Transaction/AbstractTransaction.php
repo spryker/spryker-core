@@ -16,7 +16,6 @@ use Spryker\Zed\Braintree\BraintreeConfig;
 
 abstract class AbstractTransaction implements TransactionInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\TransactionMetaTransfer
      */
@@ -231,5 +230,4 @@ abstract class AbstractTransaction implements TransactionInterface
         Configuration::publicKey($this->config->getPublicKey());
         Configuration::privateKey($this->config->getPrivateKey());
     }
-
 }

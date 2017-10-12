@@ -20,7 +20,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  */
 class CodeArchitectureSnifferConsole extends Console
 {
-
     const COMMAND_NAME = 'code:sniff:architecture';
     const OPTION_MODULE = 'module';
     const OPTION_CORE = 'core';
@@ -191,5 +190,4 @@ class CodeArchitectureSnifferConsole extends Console
 
         return $normalized;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilText\Model\Filter;
 
 class SeparatorToCamelCase implements SeparatorToCamelCaseInterface
 {
-
     /**
      * @param string $string
      * @param string $separator
@@ -31,5 +30,4 @@ class SeparatorToCamelCase implements SeparatorToCamelCaseInterface
 
         return $result;
     }
-
 }

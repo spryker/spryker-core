@@ -13,7 +13,6 @@ use Spryker\Shared\Navigation\KeyBuilder\NavigationKeyBuilder;
 
 class NavigationFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Navigation\Storage\NavigationReaderInterface
      */
@@ -37,5 +36,4 @@ class NavigationFactory extends AbstractFactory
     {
         return new NavigationKeyBuilder();
     }
-
 }

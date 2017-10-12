@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class EventFacade extends AbstractFacade implements EventFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -48,5 +47,4 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
             ->createEventQueueConsumer()
             ->processMessages($queueMessageTransfers);
     }
-
 }

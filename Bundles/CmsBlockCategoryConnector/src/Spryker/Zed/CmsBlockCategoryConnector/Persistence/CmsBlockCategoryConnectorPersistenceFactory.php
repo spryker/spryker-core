@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CmsBlockCategoryConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
@@ -33,5 +32,4 @@ class CmsBlockCategoryConnectorPersistenceFactory extends AbstractPersistenceFac
     {
         return SpyCmsBlockCategoryPositionQuery::create();
     }
-
 }

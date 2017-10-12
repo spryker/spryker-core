@@ -15,7 +15,6 @@ use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
 
 class EventCollection implements EventCollectionInterface
 {
-
     /**
      * @var array|\SplPriorityQueue[]
      */
@@ -165,5 +164,4 @@ class EventCollection implements EventCollectionInterface
     {
         return new ArrayIterator($this->eventListeners);
     }
-
 }

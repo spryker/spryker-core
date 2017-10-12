@@ -15,7 +15,6 @@ use Spryker\Zed\Ratepay\Business\Request\TransactionHandlerInterface;
 
 class ProfileTransaction extends TransactionHandlerAbstract implements TransactionHandlerInterface
 {
-
     const TRANSACTION_TYPE = ApiConstants::REQUEST_MODEL_PROFILE;
 
     /**
@@ -45,5 +44,4 @@ class ProfileTransaction extends TransactionHandlerAbstract implements Transacti
     {
         return new ProfileResponse($this->executionAdapter->sendRequest($request));
     }
-
 }

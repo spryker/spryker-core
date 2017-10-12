@@ -33,7 +33,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class DiscountPersistTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -301,5 +300,4 @@ class DiscountPersistTest extends Unit
 
         return $discountVoucherPoolEntity;
     }
-
 }

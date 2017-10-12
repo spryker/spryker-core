@@ -23,7 +23,6 @@ use Spryker\Zed\Propel\PropelConfig;
  */
 class PropelFacadeTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\Propel\Business\PropelFacade
      */
@@ -62,5 +61,4 @@ class PropelFacadeTest extends Unit
         $this->getFacade()->copySchemaFilesToTargetDirectory();
         $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));
     }
-
 }

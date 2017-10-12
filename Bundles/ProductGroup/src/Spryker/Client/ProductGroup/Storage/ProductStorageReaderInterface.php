@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductGroup\Storage;
 
 interface ProductStorageReaderInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param string $localeName
@@ -17,5 +16,4 @@ interface ProductStorageReaderInterface
      * @return array
      */
     public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
-
 }

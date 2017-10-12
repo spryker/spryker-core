@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType
      */
@@ -54,5 +53,4 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     {
         return $this->getProvidedDependency(CmsBlockProductConnectorDependencyProvider::FACADE_LOCALE);
     }
-
 }

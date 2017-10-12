@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsContentWidget\Dependency\Plugin;
 
 interface CmsContentWidgetParameterMapperPluginInterface
 {
-
     /**
      * Specification:
      *  Cms content widget parameter plugins is used when collecting data to yves data store,
@@ -23,5 +22,4 @@ interface CmsContentWidgetParameterMapperPluginInterface
      * @return array
      */
     public function map(array $parameters);
-
 }

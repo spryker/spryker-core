@@ -22,7 +22,6 @@ use Spryker\Zed\Assertion\Business\Model\Assertion;
  */
 class AssertionBusinessFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -31,5 +30,4 @@ class AssertionBusinessFactoryTest extends Unit
         $factory = new AssertionBusinessFactory();
         $this->assertInstanceOf(Assertion::class, $factory->createAssertion());
     }
-
 }

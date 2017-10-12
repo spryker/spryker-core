@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\QueryContainer;
 
 class ProductBundleToProductQueryContainerBridge implements ProductBundleToProductQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -32,5 +31,4 @@ class ProductBundleToProductQueryContainerBridge implements ProductBundleToProdu
     {
         return $this->productQueryContainer->queryProductConcreteBySku($sku);
     }
-
 }

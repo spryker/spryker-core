@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class TransferController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -42,5 +41,4 @@ class TransferController extends AbstractController
 
         return $this->getApplication()->handle($request, HttpKernelInterface::SUB_REQUEST);
     }
-
 }

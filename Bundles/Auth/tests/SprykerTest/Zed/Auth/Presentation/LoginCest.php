@@ -21,7 +21,6 @@ use SprykerTest\Zed\Auth\PageObject\LoginPage;
  */
 class LoginCest
 {
-
     /**
      * @group positive
      *
@@ -118,5 +117,4 @@ class LoginCest
         $i->doLogin(LoginPage::ADMIN_USERNAME, '');
         $i->see(LoginPage::ERROR_MESSAGE_EMPTY_FIELD);
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class LogSharedTester extends Actor
 {
-
     use _generated\LogSharedTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

@@ -26,7 +26,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderP
  */
 class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
-
     /**
      * @dataProvider storeQueryExpanderDataProvider
      *
@@ -85,5 +84,4 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         return $queryExpander;
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Shared\Log\LogConstants;
 
 class DefaultLoggerConfig implements LoggerConfigInterface
 {
-
     /**
      * @return string
      */
@@ -43,5 +42,4 @@ class DefaultLoggerConfig implements LoggerConfigInterface
     {
         return [];
     }
-
 }

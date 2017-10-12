@@ -17,7 +17,6 @@ use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 class TaxReader implements TaxReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
      */
@@ -154,5 +153,4 @@ class TaxReader implements TaxReaderInterface
 
         return $taxSetQuery->count() > 0;
     }
-
 }

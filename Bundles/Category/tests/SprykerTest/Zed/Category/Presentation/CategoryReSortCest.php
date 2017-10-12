@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryReSortPage;
  */
 class CategoryReSortCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
@@ -85,5 +84,4 @@ class CategoryReSortCest
         $i->amOnPage(CategoryReSortPage::URL);
         $i->canSee($lastItemName, CategoryReSortPage::SELECTOR_FIRST_SUB_CATEGORY_NAME_CELL);
     }
-
 }

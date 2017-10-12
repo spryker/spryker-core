@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsBlock\Dependency\QueryContainer;
 
 interface CmsBlockToGlossaryQueryContainerInterface
 {
-
     /**
      * @param string $keyName
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryKey($keyName);
-
 }

@@ -14,7 +14,6 @@ use Spryker\Shared\Storage\StorageConstants;
 
 class StorageCacheStrategyFactory
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -107,5 +106,4 @@ class StorageCacheStrategyFactory
             $this->storageClientConfig
         );
     }
-
 }

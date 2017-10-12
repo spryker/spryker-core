@@ -9,12 +9,10 @@ namespace Spryker\Zed\Discount\Communication\QueryBuilderTransformer;
 
 interface JavascriptQueryBuilderTransformerInterface
 {
-
     /**
      * @param string $type
      *
      * @return string[]
      */
     public function getFilters($type);
-
 }

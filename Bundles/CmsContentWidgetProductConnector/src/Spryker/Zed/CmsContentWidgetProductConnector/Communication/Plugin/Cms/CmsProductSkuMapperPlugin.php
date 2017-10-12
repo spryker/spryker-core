@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsProductSkuMapperPlugin extends AbstractPlugin implements CmsContentWidgetParameterMapperPluginInterface
 {
-
     /**
      * @param array $parameters
      *
@@ -26,5 +25,4 @@ class CmsProductSkuMapperPlugin extends AbstractPlugin implements CmsContentWidg
         return $this->getFacade()
             ->mapProductSkuList($parameters);
     }
-
 }

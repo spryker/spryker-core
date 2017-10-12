@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetGui\Dependency\Service;
 
 class ProductSetGuiToUtilEncodingBridge implements ProductSetGuiToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -47,5 +46,4 @@ class ProductSetGuiToUtilEncodingBridge implements ProductSetGuiToUtilEncodingIn
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

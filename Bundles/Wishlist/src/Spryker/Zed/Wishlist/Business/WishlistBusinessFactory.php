@@ -19,7 +19,6 @@ use Spryker\Zed\Wishlist\WishlistDependencyProvider;
  */
 class WishlistBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Wishlist\Business\Model\ReaderInterface
      */
@@ -77,5 +76,4 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT);
     }
-
 }

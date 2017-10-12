@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -58,5 +57,4 @@ class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRul
             ComparatorOperators::TYPE_NUMBER,
         ];
     }
-
 }

@@ -21,7 +21,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  */
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Shipment\Communication\Table\MethodTable
      */
@@ -111,5 +110,4 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::STORE);
     }
-
 }

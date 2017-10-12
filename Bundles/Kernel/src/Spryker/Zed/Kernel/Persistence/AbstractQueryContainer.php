@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 abstract class AbstractQueryContainer implements QueryContainerInterface
 {
-
     use BundleDependencyProviderResolverAwareTrait;
 
     /**
@@ -102,5 +101,4 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     {
         return Propel::getConnection();
     }
-
 }

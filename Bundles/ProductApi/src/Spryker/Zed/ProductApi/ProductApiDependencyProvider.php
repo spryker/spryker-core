@@ -15,7 +15,6 @@ use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilder
 
 class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
 
     const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
@@ -119,5 +118,4 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
         };
         return $container;
     }
-
 }

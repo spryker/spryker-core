@@ -26,7 +26,6 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReaderInterface
      */
@@ -181,5 +180,4 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(SalesDependencyProvider::HYDRATE_ORDER_PLUGINS);
     }
-
 }

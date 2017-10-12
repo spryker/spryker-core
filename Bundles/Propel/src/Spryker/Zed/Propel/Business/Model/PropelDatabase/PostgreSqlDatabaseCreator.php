@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
 {
-
     /**
      * @return string
      */
@@ -150,5 +149,4 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
     }
-
 }

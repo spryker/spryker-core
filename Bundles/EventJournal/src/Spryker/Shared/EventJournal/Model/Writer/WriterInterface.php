@@ -14,7 +14,6 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
  */
 interface WriterInterface
 {
-
     /**
      * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
@@ -26,5 +25,4 @@ interface WriterInterface
      * @return string
      */
     public function getType();
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class ItemQuantityCollector extends BaseCollector implements CollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -45,5 +44,4 @@ class ItemQuantityCollector extends BaseCollector implements CollectorInterface
 
         return $discountableItems;
     }
-
 }

@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
 
 class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -63,5 +62,4 @@ class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface
 
         return $this->finder;
     }
-
 }

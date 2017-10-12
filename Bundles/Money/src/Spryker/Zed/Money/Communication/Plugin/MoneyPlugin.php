@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
 {
-
     /**
      * @param int $amount
      * @param string|null $isoCode
@@ -114,5 +113,4 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     {
         return $this->getFacade()->convertDecimalToInteger($value);
     }
-
 }

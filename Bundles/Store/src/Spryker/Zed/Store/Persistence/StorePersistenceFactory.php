@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class StorePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
      */
@@ -24,5 +23,4 @@ class StorePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyStoreQuery::create();
     }
-
 }

@@ -23,7 +23,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class DirectoryRemoverTest extends Unit
 {
-
     /**
      * @var string
      */
@@ -64,5 +63,4 @@ class DirectoryRemoverTest extends Unit
 
         $this->assertFalse(is_dir($this->fixtureDirectory));
     }
-
 }

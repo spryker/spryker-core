@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductCartConnectorToProductBridge implements ProductCartConnectorToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -66,5 +65,4 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     {
         return $this->productFacade->hasProductAbstract($abstractSku);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 
 interface DevelopmentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -248,5 +247,4 @@ interface DevelopmentFacadeInterface
      * @return array
      */
     public function getArchitectureRules();
-
 }

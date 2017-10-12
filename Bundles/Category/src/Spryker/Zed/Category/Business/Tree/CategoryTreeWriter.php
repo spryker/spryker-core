@@ -20,7 +20,6 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
  */
 class CategoryTreeWriter implements CategoryTreeWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Business\Tree\NodeWriterInterface
      */
@@ -271,5 +270,4 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
 
         $this->nodeUrlManager->removeUrl($nodeTransfer, $locale);
     }
-
 }

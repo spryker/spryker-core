@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountPromotionFacadeInterface
 {
-
     /**
      *
      * Specification:
@@ -102,5 +101,4 @@ interface DiscountPromotionFacadeInterface
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByIdDiscount($idDiscount);
-
 }

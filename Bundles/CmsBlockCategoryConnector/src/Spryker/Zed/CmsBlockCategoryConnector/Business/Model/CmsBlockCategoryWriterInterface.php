@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockCategoryWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
@@ -26,5 +25,4 @@ interface CmsBlockCategoryWriterInterface
      * @return void
      */
     public function updateCategory(CategoryTransfer $categoryTransfer);
-
 }

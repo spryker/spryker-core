@@ -44,7 +44,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\Discount\BusinessTester
      */
@@ -802,5 +801,4 @@ class DiscountFacadeTest extends Unit
 
         return $discountRulePluginMock;
     }
-
 }

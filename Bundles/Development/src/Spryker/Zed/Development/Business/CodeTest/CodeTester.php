@@ -13,7 +13,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeTester
 {
-
     const OPTION_VERBOSE = 'verbose';
 
     const OPTION_INITIALIZE = 'initialize';
@@ -138,7 +137,6 @@ class CodeTester
                 if ($options[static::OPTION_VERBOSE]) {
                     echo $buffer;
                 }
-
             });
             echo 'Test classes generated.';
         }
@@ -150,5 +148,4 @@ class CodeTester
             echo $buffer;
         });
     }
-
 }

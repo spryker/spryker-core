@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class ListController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -40,5 +39,4 @@ class ListController extends AbstractController
 
         return $this->jsonResponse($productRelationTable->fetchData());
     }
-
 }

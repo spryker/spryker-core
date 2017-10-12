@@ -16,7 +16,6 @@ use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
  */
 class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface
 {
-
     /**
      * @param string $sku
      *
@@ -26,5 +25,4 @@ class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHan
     {
         $this->getFacade()->updateAvailability($sku);
     }
-
 }

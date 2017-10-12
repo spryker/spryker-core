@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\RatepayResponseTransfer;
  */
 interface RatepayFacadeInterface
 {
-
     /**
      * Specification:
      * - Saves order payment method data according to quote and checkout response transfer data.
@@ -262,5 +261,4 @@ interface RatepayFacadeInterface
      * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
     public function requestProfile();
-
 }

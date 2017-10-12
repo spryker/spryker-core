@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
 interface ProductCategoryToCategoryInterface
 {
-
     /**
      * @param int $idCategory
      *
      * @return void
      */
     public function touchCategoryActive($idCategory);
-
 }

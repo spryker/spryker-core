@@ -12,7 +12,6 @@ use Spryker\Client\Quote\Session\QuoteSession;
 
 class QuoteFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Quote\Session\QuoteSession
      */
@@ -39,5 +38,4 @@ class QuoteFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::CURRENCY_PLUGIN);
     }
-
 }

@@ -13,7 +13,6 @@ use stdClass;
 
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @return string
      */
@@ -91,5 +90,4 @@ class GatewayController extends AbstractGatewayController
         $this->addSuccessMessage('success');
         $this->setSuccess(false);
     }
-
 }

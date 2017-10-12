@@ -13,7 +13,6 @@ use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface;
 
 class ProductStorage implements ProductStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface
      */
@@ -101,5 +100,4 @@ class ProductStorage implements ProductStorageInterface
 
         return $result;
     }
-
 }

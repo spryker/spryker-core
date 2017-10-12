@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface SpecificationProviderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -33,5 +32,4 @@ interface SpecificationProviderInterface
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
     public function createOr($leftNode, $rightNode);
-
 }

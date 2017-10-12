@@ -23,7 +23,6 @@ use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class Address implements AddressInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
@@ -619,5 +618,4 @@ class Address implements AddressInterface
 
         $customerEntity->save();
     }
-
 }

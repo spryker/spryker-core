@@ -24,7 +24,6 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemG
  */
 class ProductBundleCartItemGroupKeyExpanderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -84,5 +83,4 @@ class ProductBundleCartItemGroupKeyExpanderTest extends Unit
     {
         return new ProductBundleCartItemGroupKeyExpander();
     }
-
 }

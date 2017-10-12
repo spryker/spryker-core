@@ -9,12 +9,10 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 
 interface AvailabilityToOmsInterface
 {
-
     /**
      * @param string $sku
      *
      * @return int
      */
     public function sumReservedProductQuantitiesForSku($sku);
-
 }

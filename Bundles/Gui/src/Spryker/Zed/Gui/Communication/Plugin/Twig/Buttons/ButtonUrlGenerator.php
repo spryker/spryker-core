@@ -9,7 +9,6 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons;
 
 class ButtonUrlGenerator
 {
-
     const PARAM_ID = 'id';
     const PARAM_CLASS = 'class';
     const DEFAULT_CSS_CLASSES = 'default_css_classes';
@@ -127,5 +126,4 @@ class ButtonUrlGenerator
     {
         return '<a' . $this->getClass() . $this->getId() . $this->getExtraAttributes() . ' href="' . $this->url . '">';
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocalizedProductSetTransfer;
 
 interface ProductSetDataUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\LocalizedProductSetTransfer $localizedProductSetTransfer
      * @param int $idProductSet
@@ -19,5 +18,4 @@ interface ProductSetDataUpdaterInterface
      * @return \Generated\Shared\Transfer\LocalizedProductSetTransfer
      */
     public function updateProductSetData(LocalizedProductSetTransfer $localizedProductSetTransfer, $idProductSet);
-
 }

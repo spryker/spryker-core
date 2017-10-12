@@ -23,7 +23,6 @@ use SprykerTest\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
  */
 class BundleProxyTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -79,5 +78,4 @@ class BundleProxyTest extends Unit
 
         $bundleProxy->notMatchingTest();
     }
-
 }

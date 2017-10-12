@@ -22,7 +22,6 @@ use Twig_LoaderInterface;
  */
 class TwigCommunicationFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -33,5 +32,4 @@ class TwigCommunicationFactoryTest extends Unit
 
         $this->assertInstanceOf(Twig_LoaderInterface::class, $filesystemLoader);
     }
-
 }

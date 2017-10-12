@@ -12,7 +12,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 
 interface ProductSearchAttributeMapperInterface
 {
-
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -21,5 +20,4 @@ interface ProductSearchAttributeMapperInterface
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
     public function mapDynamicProductAttributes(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes);
-
 }

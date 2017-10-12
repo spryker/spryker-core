@@ -23,7 +23,6 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
 {
-
     /**
      * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface
      */
@@ -300,5 +299,4 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
     {
         return $this->subscriberManager->assignCustomerToExistingSubscriber($subscriber);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Search\Communication\Table\SearchTable;
  */
 class SearchCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Search\Communication\Table\SearchTable
      */
@@ -32,5 +31,4 @@ class SearchCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getConfig()->getElasticaDocumentType();
     }
-
 }

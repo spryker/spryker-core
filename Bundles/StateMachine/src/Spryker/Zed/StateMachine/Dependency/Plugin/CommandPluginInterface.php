@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 interface CommandPluginInterface
 {
-
     /**
      * This method is called when event have concrete command assigned.
      *
@@ -22,5 +21,4 @@ interface CommandPluginInterface
      * @return void
      */
     public function run(StateMachineItemTransfer $stateMachineItemTransfer);
-
 }

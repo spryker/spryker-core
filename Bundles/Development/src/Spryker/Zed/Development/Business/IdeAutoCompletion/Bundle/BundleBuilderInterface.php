@@ -10,7 +10,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 interface BundleBuilderInterface
 {
-
     /**
      * @param string $baseDirectory
      * @param \Symfony\Component\Finder\SplFileInfo $bundleDirectory
@@ -18,5 +17,4 @@ interface BundleBuilderInterface
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
     public function buildFromDirectory($baseDirectory, SplFileInfo $bundleDirectory);
-
 }

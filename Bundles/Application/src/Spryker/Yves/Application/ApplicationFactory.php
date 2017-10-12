@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApplicationFactory extends AbstractFactory
 {
-
     use LoggerTrait;
 
     /**
@@ -44,5 +43,4 @@ class ApplicationFactory extends AbstractFactory
     {
         return new KernelLogListener($this->getLogger());
     }
-
 }

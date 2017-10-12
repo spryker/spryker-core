@@ -9,7 +9,6 @@ namespace Spryker\Shared\ZedRequest;
 
 interface ZedRequestConstants
 {
-
     const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
     const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
 
@@ -42,5 +41,4 @@ interface ZedRequestConstants
     const SET_REPEAT_DATA = 'SET_REPEAT_DATA';
 
     const YVES_REQUEST_REPEAT_DATA_PATH = 'YVES_REQUEST_REPEAT_DATA_PATH';
-
 }

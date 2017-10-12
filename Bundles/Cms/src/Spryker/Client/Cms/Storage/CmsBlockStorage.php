@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
  */
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -51,5 +50,4 @@ class CmsBlockStorage implements CmsBlockStorageInterface
 
         return $block;
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface AttributeTranslationReaderInterface
 {
-
     /**
      * @param string $key
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -19,5 +18,4 @@ interface AttributeTranslationReaderInterface
      * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer|null
      */
     public function findAttributeTranslationByKey($key, LocaleTransfer $localeTransfer);
-
 }

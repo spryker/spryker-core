@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilText\Model;
 
 class Hash implements HashInterface
 {
-
     const SHA256 = 'sha256';
     const SHA512 = 'sha512';
     const MD5 = 'md5';
@@ -24,5 +23,4 @@ class Hash implements HashInterface
     {
         return hash($algorithm, $value);
     }
-
 }

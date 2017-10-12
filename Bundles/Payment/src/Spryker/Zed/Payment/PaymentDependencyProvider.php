@@ -14,7 +14,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollection;
 
 class PaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CHECKOUT_PLUGINS = 'checkout plugins';
     const CHECKOUT_PRE_CHECK_PLUGINS = 'pre check';
     const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
@@ -47,5 +46,4 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     {
          return new PaymentHydratorPluginCollection();
     }
-
 }

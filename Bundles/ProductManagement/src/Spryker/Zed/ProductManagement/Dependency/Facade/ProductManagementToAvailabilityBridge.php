@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 class ProductManagementToAvailabilityBridge implements ProductManagementToAvailabilityInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
@@ -31,5 +30,4 @@ class ProductManagementToAvailabilityBridge implements ProductManagementToAvaila
     {
         return $this->availabilityFacade->calculateStockForProduct($sku);
     }
-
 }

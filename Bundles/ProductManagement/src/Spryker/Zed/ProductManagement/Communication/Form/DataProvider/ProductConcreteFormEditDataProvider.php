@@ -33,7 +33,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface
      */
@@ -349,5 +348,4 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         return false;
     }
-
 }

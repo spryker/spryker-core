@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
 {
-
     const FIELD_FK_LOCALE = 'fkLocale';
     const FIELD_TRANSLATION = 'translation';
     const FIELD_LOCALE_NAME = 'localeName';
@@ -94,5 +93,4 @@ class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
 
         return $this;
     }
-
 }

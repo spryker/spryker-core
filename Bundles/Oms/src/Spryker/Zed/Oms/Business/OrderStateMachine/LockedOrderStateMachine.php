@@ -11,7 +11,6 @@ use Spryker\Zed\Oms\Business\Lock\LockerInterface;
 
 class LockedOrderStateMachine implements OrderStateMachineInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
      */

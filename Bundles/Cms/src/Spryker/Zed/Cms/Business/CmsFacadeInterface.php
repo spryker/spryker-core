@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\PageTransfer;
 
 interface CmsFacadeInterface
 {
-
     /**
      * @api
      *
@@ -462,5 +461,4 @@ interface CmsFacadeInterface
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
-
 }

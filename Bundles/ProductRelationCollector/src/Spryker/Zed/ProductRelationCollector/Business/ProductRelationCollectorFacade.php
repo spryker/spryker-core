@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductRelationCollectorFacade extends AbstractFacade implements ProductRelationCollectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -61,5 +60,4 @@ class ProductRelationCollectorFacade extends AbstractFacade implements ProductRe
             $output
         );
     }
-
 }

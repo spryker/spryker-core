@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Business\Model;
 
 class SearchInstaller implements SearchInstallerInterface
 {
-
     /**
      * @var \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
      */
@@ -32,5 +31,4 @@ class SearchInstaller implements SearchInstallerInterface
             $installer->install();
         }
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
 {
-
     const ROLE_ADMIN = 'admin';
     const ROLE_REPORTING = 'reporting';
     const ROLE_EMPTY = 'empty';
@@ -493,5 +492,4 @@ $command</command>";
     {
         return $this->config->getJenkinsJobsDirectory();
     }
-
 }

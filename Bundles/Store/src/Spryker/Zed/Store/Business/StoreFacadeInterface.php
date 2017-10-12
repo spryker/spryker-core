@@ -12,7 +12,6 @@ namespace Spryker\Zed\Store\Business;
  */
 interface StoreFacadeInterface
 {
-
     /**
      * Specification:
      *  - Returns currently selected store transfer
@@ -46,5 +45,4 @@ interface StoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreById($idStore);
-
 }

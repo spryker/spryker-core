@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 {
-
     /**
      * Specification:
      * - Checks if the given $localeName exists in database or not.
@@ -200,5 +199,4 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 
         return $localeManager->getLocaleCollection();
     }
-
 }

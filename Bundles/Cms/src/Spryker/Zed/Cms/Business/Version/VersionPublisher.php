@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class VersionPublisher implements VersionPublisherInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -152,5 +151,4 @@ class VersionPublisher implements VersionPublisherInterface
 
         return $this->versionDataMapper->mapToCmsVersionTransfer($cmsVersionEntity);
     }
-
 }

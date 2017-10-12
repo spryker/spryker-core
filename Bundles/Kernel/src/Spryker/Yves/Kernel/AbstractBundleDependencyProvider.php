@@ -9,7 +9,6 @@ namespace Spryker\Yves\Kernel;
 
 abstract class AbstractBundleDependencyProvider implements BundleDependencyProviderInterface
 {
-
     use BundleConfigResolverAwareTrait;
 
     /**
@@ -21,5 +20,4 @@ abstract class AbstractBundleDependencyProvider implements BundleDependencyProvi
     {
         return $container;
     }
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Client\Wishlist\Dependency\Client;
 
 interface WishlistToCustomerInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer();
-
 }

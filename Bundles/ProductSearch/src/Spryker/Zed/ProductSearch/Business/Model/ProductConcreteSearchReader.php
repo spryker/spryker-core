@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductConcreteSearchReader extends AbstractProductSearchReader implements ProductConcreteSearchReaderInterface
 {
-
     /**
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -31,5 +30,4 @@ class ProductConcreteSearchReader extends AbstractProductSearchReader implements
 
         return ($searchableCount > 0);
     }
-
 }

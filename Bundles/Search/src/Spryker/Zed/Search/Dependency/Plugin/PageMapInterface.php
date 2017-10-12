@@ -12,7 +12,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 
 interface PageMapInterface
 {
-
     /**
      * @api
      *
@@ -23,5 +22,4 @@ interface PageMapInterface
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale);
-
 }

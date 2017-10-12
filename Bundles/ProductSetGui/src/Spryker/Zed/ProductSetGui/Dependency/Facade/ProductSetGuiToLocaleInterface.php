@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
 interface ProductSetGuiToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -19,5 +18,4 @@ interface ProductSetGuiToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();
-
 }

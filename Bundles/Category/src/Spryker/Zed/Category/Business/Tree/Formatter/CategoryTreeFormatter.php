@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Business\Tree\Formatter;
 
 class CategoryTreeFormatter
 {
-
     const ID = 'id';
     const ID_PARENT = 'parent';
     const ROOT = 0;
@@ -130,5 +129,4 @@ class CategoryTreeFormatter
     {
         return $this->categories;
     }
-
 }

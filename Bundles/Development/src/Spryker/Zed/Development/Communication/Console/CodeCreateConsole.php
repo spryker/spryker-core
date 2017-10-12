@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodeCreateConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:bridge:create';
     const OPTION_BUNDLE = 'from module';
     const OPTION_TO_BUNDLE = 'to module';
@@ -54,5 +53,4 @@ class CodeCreateConsole extends Console
 
         $this->getFacade()->createBridge($bundle, $toBundle);
     }
-
 }

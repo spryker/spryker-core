@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 class ProductOptionToTaxBridge implements ProductOptionToTaxInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
@@ -66,5 +65,4 @@ class ProductOptionToTaxBridge implements ProductOptionToTaxInterface
     {
         return $this->taxFacade->getTaxSet($id);
     }
-
 }

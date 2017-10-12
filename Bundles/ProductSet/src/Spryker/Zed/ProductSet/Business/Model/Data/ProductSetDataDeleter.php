@@ -13,7 +13,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductSetDataDeleter implements ProductSetDataDeleterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -61,5 +60,4 @@ class ProductSetDataDeleter implements ProductSetDataDeleterInterface
     {
         $productSetEntity->getSpyProductSetDatas()->delete();
     }
-
 }

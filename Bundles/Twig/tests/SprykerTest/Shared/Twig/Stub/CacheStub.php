@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\Cache\CacheInterface;
 
 class CacheStub implements CacheInterface
 {
-
     /**
      * @var array
      */
@@ -67,5 +66,4 @@ class CacheStub implements CacheInterface
 
         return ($this->cache[$key] !== false);
     }
-
 }

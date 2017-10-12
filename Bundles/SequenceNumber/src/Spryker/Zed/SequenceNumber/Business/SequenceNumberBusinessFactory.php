@@ -19,7 +19,6 @@ use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
  */
 class SequenceNumberBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param int $min
      * @param int $max
@@ -51,5 +50,4 @@ class SequenceNumberBusinessFactory extends AbstractBusinessFactory
             Propel::getConnection()
         );
     }
-
 }

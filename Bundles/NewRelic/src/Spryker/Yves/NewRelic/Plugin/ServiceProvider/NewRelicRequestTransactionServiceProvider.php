@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class NewRelicRequestTransactionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -57,5 +56,4 @@ class NewRelicRequestTransactionServiceProvider extends AbstractPlugin implement
     {
         return $app['dispatcher'];
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryCont
 
 class ItemMetadataHydrator implements ItemMetadataHydratorInterface
 {
-
     /**
      * @var \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface
      */
@@ -84,5 +83,4 @@ class ItemMetadataHydrator implements ItemMetadataHydratorInterface
 
         return $metadataTransfer;
     }
-
 }

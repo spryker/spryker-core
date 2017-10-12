@@ -26,7 +26,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeInterface
 {
-
     /**
      * Specification:
      * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes.
@@ -420,5 +419,4 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             ->createProductConcreteSearchReader()
             ->isProductConcreteSearchable($idProductConcrete, $localeTransfer);
     }
-
 }

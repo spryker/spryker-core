@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -82,5 +81,4 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     {
         return CustomerApiConfig::RESOURCE_CUSTOMERS;
     }
-
 }

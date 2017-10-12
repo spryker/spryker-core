@@ -16,7 +16,6 @@ use Spryker\Service\Kernel\AbstractPlugin;
  */
 class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
@@ -77,5 +76,4 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
             $fileSystemStreamTransfer->getConfig()
         );
     }
-
 }

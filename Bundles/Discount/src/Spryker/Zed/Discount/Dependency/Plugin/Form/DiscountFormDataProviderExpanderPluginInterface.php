@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Dependency\Plugin\Form;
 
 interface DiscountFormDataProviderExpanderPluginInterface
 {
-
     /**
      * Specification:
      *
@@ -35,5 +34,4 @@ interface DiscountFormDataProviderExpanderPluginInterface
      * @return array
      */
     public function expandDataProviderData(array $data);
-
 }

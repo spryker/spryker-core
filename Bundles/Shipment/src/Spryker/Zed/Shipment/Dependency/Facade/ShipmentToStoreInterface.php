@@ -9,10 +9,8 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 interface ShipmentToStoreInterface
 {
-
     /**
      * @return string
      */
     public function getCurrencyIsoCode();
-
 }

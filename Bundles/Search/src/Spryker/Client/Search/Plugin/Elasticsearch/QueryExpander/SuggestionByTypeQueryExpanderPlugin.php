@@ -18,7 +18,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class SuggestionByTypeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     const AGGREGATION_NAME = 'suggestion-by-type';
     const NESTED_AGGREGATION_NAME = 'top-hits';
 
@@ -60,5 +59,4 @@ class SuggestionByTypeQueryExpanderPlugin extends AbstractPlugin implements Quer
 
         $query->addAggregation($termsAggregation);
     }
-
 }

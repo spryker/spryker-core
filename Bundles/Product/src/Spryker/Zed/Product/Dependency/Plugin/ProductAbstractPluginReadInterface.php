@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductAbstractPluginReadInterface
 {
-
     /**
      * Specification:
      * - Executed after a persisted abstract product is read from database.
@@ -25,5 +24,4 @@ interface ProductAbstractPluginReadInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function read(ProductAbstractTransfer $productAbstractTransfer);
-
 }

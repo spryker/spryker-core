@@ -42,7 +42,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CalculationBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutorInterface
      */
@@ -307,5 +306,4 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_TEXT);
     }
-
 }

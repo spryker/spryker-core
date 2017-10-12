@@ -18,7 +18,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherEngine implements VoucherEngineInterface
 {
-
     /**
      * @var int
      */
@@ -313,5 +312,4 @@ class VoucherEngine implements VoucherEngineInterface
         $voucherEntity->fromArray($discountVoucherTransfer->toArray());
         $voucherEntity->setIsActive(true);
     }
-
 }

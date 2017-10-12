@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductOption\ProductOptionCommunicationTester;
  */
 class ProductOptionViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductOption\ProductOptionCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class ProductOptionViewCest
         $i->clickDataTableViewButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Product Options / View Product Option');
     }
-
 }

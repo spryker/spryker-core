@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CmsPageMetaAttributesFormType extends AbstractType
 {
-
     const FIELD_META_TITLE = 'metaTitle';
     const FIELD_META_KEYWORDS = 'metaKeywords';
     const FIELD_META_DESCRIPTION = 'metaDescription';
@@ -103,5 +102,4 @@ class CmsPageMetaAttributesFormType extends AbstractType
 
         return $this;
     }
-
 }

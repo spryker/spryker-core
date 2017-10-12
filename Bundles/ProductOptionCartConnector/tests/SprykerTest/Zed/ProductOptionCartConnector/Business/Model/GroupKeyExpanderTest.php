@@ -25,7 +25,6 @@ use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
  */
 class GroupKeyExpanderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -121,5 +120,4 @@ class GroupKeyExpanderTest extends Unit
 
         return $changeTransfer;
     }
-
 }

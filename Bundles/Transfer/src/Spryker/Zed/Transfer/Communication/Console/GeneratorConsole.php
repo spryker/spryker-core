@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GeneratorConsole extends Console
 {
-
     const COMMAND_NAME = 'transfer:generate';
     const COMMAND_DESCRIPTION = 'Generates transfer objects from transfer XML definition files';
 
@@ -46,5 +45,4 @@ class GeneratorConsole extends Console
         $facade->deleteGeneratedTransferObjects();
         $facade->generateTransferObjects($messenger);
     }
-
 }

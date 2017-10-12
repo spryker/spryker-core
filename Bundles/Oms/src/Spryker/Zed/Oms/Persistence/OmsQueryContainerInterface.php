@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface OmsQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -198,5 +197,4 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
      */
     public function createOmsProductReservationQuery($sku);
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface WishlistToCartInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -33,5 +32,4 @@ interface WishlistToCartInterface
      * @return void
      */
     public function storeQuote(QuoteTransfer $quoteTransfer);
-
 }

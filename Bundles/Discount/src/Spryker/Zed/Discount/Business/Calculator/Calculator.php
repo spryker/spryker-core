@@ -22,7 +22,6 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class Calculator implements CalculatorInterface
 {
-
     use LoggerTrait;
 
     const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
@@ -130,7 +129,6 @@ class Calculator implements CalculatorInterface
         $nonExclusiveDiscounts = [];
         $exclusiveFound = false;
         foreach ($collectedDiscounts as $collectedDiscountTransfer) {
-
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
             if (!$discountTransfer->getCollectorQueryString()) {
                 $applicableDiscounts[] = $collectedDiscountTransfer;
@@ -291,5 +289,4 @@ class Calculator implements CalculatorInterface
     {
         $this->collectorStrategyResolver = $collectorStrategyResolver;
     }
-
 }

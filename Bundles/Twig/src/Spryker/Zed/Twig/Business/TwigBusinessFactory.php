@@ -21,7 +21,6 @@ use Symfony\Component\Finder\Finder;
  */
 class TwigBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Twig\Business\Model\CacheWarmerInterface
      */
@@ -118,5 +117,4 @@ class TwigBusinessFactory extends AbstractBusinessFactory
     {
         return new Finder();
     }
-
 }

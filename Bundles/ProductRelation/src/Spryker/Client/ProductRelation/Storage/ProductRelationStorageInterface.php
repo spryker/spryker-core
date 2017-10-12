@@ -9,12 +9,10 @@ namespace Spryker\Client\ProductRelation\Storage;
 
 interface ProductRelationStorageInterface
 {
-
     /**
      * @param int $idAbstractProduct
      *
      * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
     public function getAll($idAbstractProduct);
-
 }

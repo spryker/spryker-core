@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer;
 
 interface ProductRelationCollectorToProductImageInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryImageSetByProductAbstractId($idProductAbstract);
-
 }

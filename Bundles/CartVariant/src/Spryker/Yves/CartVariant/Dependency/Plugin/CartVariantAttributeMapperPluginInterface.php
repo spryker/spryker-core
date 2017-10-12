@@ -11,7 +11,6 @@ use ArrayObject;
 
 interface CartVariantAttributeMapperPluginInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface CartVariantAttributeMapperPluginInterface
      * @return array
      */
     public function buildMap(ArrayObject $items);
-
 }

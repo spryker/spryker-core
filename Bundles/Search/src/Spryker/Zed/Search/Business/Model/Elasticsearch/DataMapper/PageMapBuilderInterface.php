@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PageMapTransfer;
 
 interface PageMapBuilderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param string $fieldName
@@ -107,5 +106,4 @@ interface PageMapBuilderInterface
      * @return $this
      */
     public function addCategory(PageMapTransfer $pageMapTransfer, array $allParents, array $directParents);
-
 }

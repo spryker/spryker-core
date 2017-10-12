@@ -11,7 +11,6 @@ use Spryker\Zed\Collector\CollectorConfig;
 
 class CollectorConfigWithNotDefinedDbEngineFake extends CollectorConfig
 {
-
     const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'WrongBulkDeleteTouchByIdQuery';
     const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'WrongBulkUpdateTouchKeyByIdQuery';
 
@@ -22,5 +21,4 @@ class CollectorConfigWithNotDefinedDbEngineFake extends CollectorConfig
     {
         return $this->getMysqlEngineName();
     }
-
 }

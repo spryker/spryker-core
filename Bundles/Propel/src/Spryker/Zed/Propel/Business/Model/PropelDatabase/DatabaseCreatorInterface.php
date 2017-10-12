@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase;
 
 interface DatabaseCreatorInterface
 {
-
     /**
      * @return void
      */
@@ -19,5 +18,4 @@ interface DatabaseCreatorInterface
      * @return string
      */
     public function getEngine();
-
 }

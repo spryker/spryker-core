@@ -24,7 +24,6 @@ use Spryker\Zed\Tax\Business\TaxFacade;
  */
 class ReaderTest extends Unit
 {
-
     const DUMMY_TAX_SET_NAME = 'SalesTax';
     const DUMMY_TAX_RATE1_NAME = 'Local';
     const DUMMY_TAX_RATE1_PERCENTAGE = 25;
@@ -143,5 +142,4 @@ class ReaderTest extends Unit
 
         return $taxSetEntity;
     }
-
 }

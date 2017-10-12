@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 interface AvailabilityGuiToStockInterface
 {
-
     /**
      * @param string $sku
      *
@@ -51,5 +50,4 @@ interface AvailabilityGuiToStockInterface
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
-
 }

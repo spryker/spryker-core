@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationUpdater implements NavigationUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -137,5 +136,4 @@ class NavigationUpdater implements NavigationUpdaterInterface
 
         return $navigationTransfer;
     }
-
 }

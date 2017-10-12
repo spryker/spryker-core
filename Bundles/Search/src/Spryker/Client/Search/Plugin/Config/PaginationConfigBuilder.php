@@ -13,7 +13,6 @@ use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 
 class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfigBuilderInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\PaginationConfigTransfer
      */
@@ -80,5 +79,4 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
             in_array((int)$requestParameters[$paramName], (array)$this->paginationConfigTransfer->getValidItemsPerPageOptions())
         );
     }
-
 }

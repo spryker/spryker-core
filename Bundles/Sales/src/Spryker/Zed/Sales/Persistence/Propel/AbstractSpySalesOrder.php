@@ -28,7 +28,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
-
     const COL_FK_CUSTOMER = 'fk_customer';
 
     /**
@@ -149,7 +148,5 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
         }
 
         return $array;
-
     }
-
 }

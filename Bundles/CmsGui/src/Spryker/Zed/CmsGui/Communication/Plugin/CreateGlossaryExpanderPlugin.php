@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CreateGlossaryExpanderPlugin extends AbstractPlugin implements CreateGlossaryExpanderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -47,5 +46,4 @@ class CreateGlossaryExpanderPlugin extends AbstractPlugin implements CreateGloss
             ->setTitle('Preview')
             ->setDefaultOptions(['target' => '_blank']);
     }
-
 }

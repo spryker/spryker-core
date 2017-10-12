@@ -13,7 +13,6 @@ use Codeception\TestInterface;
 
 class ZedControllerTable extends Module implements DependsOnModule
 {
-
     /**
      * @var \SprykerTest\Shared\Testify\Helper\ZedBootstrap
      */
@@ -274,5 +273,4 @@ class ZedControllerTable extends Module implements DependsOnModule
     {
         $this->dontSeeInTable(0, $expectedRow);
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class AbstractBundleDependencyProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class AbstractBundleDependencyProviderTest extends Unit
     {
         return $this->getMockForAbstractClass('Spryker\Zed\Kernel\AbstractBundleDependencyProvider');
     }
-
 }

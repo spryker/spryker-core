@@ -10,12 +10,10 @@ use Generated\Shared\Transfer\RefundTransfer;
 
 interface RefundSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
      * @return bool
      */
     public function saveRefund(RefundTransfer $refundTransfer);
-
 }

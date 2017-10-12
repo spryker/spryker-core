@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class AvailabilityDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\AvailabilityDataFeed\Dependency\QueryContainer\AvailabilityDataFeedToAvailabilityInterface
      */
@@ -24,5 +23,4 @@ class AvailabilityDataFeedPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(AvailabilityDataFeedDependencyProvider::AVAILABILITY_QUERY_CONTAINER);
     }
-
 }

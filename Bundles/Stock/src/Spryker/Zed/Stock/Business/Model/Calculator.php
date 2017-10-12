@@ -9,7 +9,6 @@ namespace Spryker\Zed\Stock\Business\Model;
 
 class Calculator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\Model\ReaderInterface
      */
@@ -39,5 +38,4 @@ class Calculator implements CalculatorInterface
 
         return $quantity;
     }
-
 }

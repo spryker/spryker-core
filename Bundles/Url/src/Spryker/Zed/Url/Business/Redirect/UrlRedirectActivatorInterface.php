@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlRedirectTransfer;
 
 interface UrlRedirectActivatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
@@ -25,5 +24,4 @@ interface UrlRedirectActivatorInterface
      * @return void
      */
     public function deactivateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
-
 }

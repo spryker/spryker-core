@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
 interface ProductAttributeReaderInterface
 {
-
     /**
      * @param array $values
      *
@@ -24,5 +23,4 @@ interface ProductAttributeReaderInterface
      * @return array
      */
     public function suggestKeys($searchText = '', $limit = 10);
-
 }

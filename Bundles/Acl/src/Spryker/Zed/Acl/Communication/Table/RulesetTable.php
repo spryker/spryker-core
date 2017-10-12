@@ -14,7 +14,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RulesetTable extends AbstractTable
 {
-
     const PARAM_ID_RULE = 'id-rule';
     const PARAM_ID_ROLE = 'id-role';
     const REMOVE_ACL_RULESET_URL = '/acl/ruleset/delete';
@@ -114,5 +113,4 @@ class RulesetTable extends AbstractTable
 
         return $buttons;
     }
-
 }

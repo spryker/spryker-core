@@ -13,7 +13,6 @@ use Spryker\Shared\Acl\AclConstants;
 
 class RuleValidator implements RuleValidatorInterface
 {
-
     /**
      * @var array
      */
@@ -179,5 +178,4 @@ class RuleValidator implements RuleValidatorInterface
 
         return false;
     }
-
 }

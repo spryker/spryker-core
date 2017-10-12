@@ -18,7 +18,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class Reader implements ReaderInterface
 {
-
     const MESSAGE_NO_RESULT = 'no stock set for this sku';
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
@@ -288,5 +287,4 @@ class Reader implements ReaderInterface
 
         return $productConcreteTransfer;
     }
-
 }

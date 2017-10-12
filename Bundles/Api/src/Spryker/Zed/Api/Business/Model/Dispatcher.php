@@ -22,7 +22,6 @@ use Throwable;
 
 class Dispatcher implements DispatcherInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
      */
@@ -94,7 +93,6 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_VALIDATION_ERRORS);
                 $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
-
             } else {
                 $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $id, $params);
                 $apiResponseTransfer->setType(get_class($apiPluginCallResponseTransfer));
@@ -112,7 +110,6 @@ class Dispatcher implements DispatcherInterface
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
                     }
-
                 } elseif ($apiPluginCallResponseTransfer instanceof ApiItemTransfer) {
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
@@ -120,7 +117,6 @@ class Dispatcher implements DispatcherInterface
                     $apiResponseTransfer->getMeta()->setResourceId($apiPluginCallResponseTransfer->getId());
                 }
             }
-
         } catch (Exception $e) {
             $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
             $apiResponseTransfer->setMessage($e->getMessage());
@@ -189,5 +185,4 @@ class Dispatcher implements DispatcherInterface
             $apiDataTransfer
         );
     }
-
 }

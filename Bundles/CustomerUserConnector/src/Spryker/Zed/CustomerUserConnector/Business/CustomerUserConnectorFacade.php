@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CustomerUserConnectorFacade extends AbstractFacade implements CustomerUserConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -31,5 +30,4 @@ class CustomerUserConnectorFacade extends AbstractFacade implements CustomerUser
             ->createCustomerUserConnectionUpdater()
             ->updateCustomerUserConnection($customerUserConnectionUpdateTransfer);
     }
-
 }

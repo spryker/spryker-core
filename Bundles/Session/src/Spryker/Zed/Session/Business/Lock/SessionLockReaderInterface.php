@@ -9,12 +9,10 @@ namespace Spryker\Zed\Session\Business\Lock;
 
 interface SessionLockReaderInterface
 {
-
     /**
      * @param string $sessionId
      *
      * @return string
      */
     public function getTokenForSession($sessionId);
-
 }

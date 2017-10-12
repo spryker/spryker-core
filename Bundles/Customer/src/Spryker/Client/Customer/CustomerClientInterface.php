@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerClientInterface
 {
-
     /**
      * @api
      *
@@ -258,5 +257,4 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
-
 }

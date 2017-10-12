@@ -15,7 +15,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {
-
     /**
      * @api
      *
@@ -27,5 +26,4 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     {
         return $this->getFactory()->createZedStub()->getAvailableMethods($quoteTransfer);
     }
-
 }

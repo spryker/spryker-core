@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -72,5 +71,4 @@ class QueueQueryContainer extends AbstractQueryContainer implements QueueQueryCo
     {
         return $this->getFactory()->createSpyQueueProcessQuery();
     }
-
 }

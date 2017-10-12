@@ -22,7 +22,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockProductConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -127,5 +126,4 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
             $output
         );
     }
-
 }

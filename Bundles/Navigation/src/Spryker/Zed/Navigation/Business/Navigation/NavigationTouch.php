@@ -15,7 +15,6 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationTouch implements NavigationTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchInterface
      */
@@ -81,5 +80,4 @@ class NavigationTouch implements NavigationTouchInterface
             $this->touchFacade->touchActive(NavigationConfig::RESOURCE_TYPE_NAVIGATION_MENU, $navigationNodeEntity->getFkNavigation());
         }
     }
-
 }

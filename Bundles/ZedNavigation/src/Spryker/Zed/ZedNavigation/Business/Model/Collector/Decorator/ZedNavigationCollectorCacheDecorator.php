@@ -12,7 +12,6 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInt
 
 class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface
      */
@@ -44,5 +43,4 @@ class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInte
 
         return $this->navigationCollector->getNavigation();
     }
-
 }

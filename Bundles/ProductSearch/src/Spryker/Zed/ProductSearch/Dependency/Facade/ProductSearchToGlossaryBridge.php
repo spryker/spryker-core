@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductSearchToGlossaryBridge implements ProductSearchToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -103,5 +102,4 @@ class ProductSearchToGlossaryBridge implements ProductSearchToGlossaryInterface
     {
         return $this->glossaryFacade->createKey($keyName);
     }
-
 }

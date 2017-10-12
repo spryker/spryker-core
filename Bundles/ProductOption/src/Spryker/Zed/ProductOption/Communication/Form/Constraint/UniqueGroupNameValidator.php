@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueGroupNameValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed value is valid.
      *
@@ -98,5 +97,4 @@ class UniqueGroupNameValidator extends ConstraintValidator
     {
         return ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $groupName;
     }
-
 }

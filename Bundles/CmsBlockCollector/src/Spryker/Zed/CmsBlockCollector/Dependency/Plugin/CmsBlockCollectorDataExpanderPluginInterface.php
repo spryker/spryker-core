@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CmsBlockCollectorDataExpanderPluginInterface
 {
-
     /**
      *
      * Specification:
@@ -25,5 +24,4 @@ interface CmsBlockCollectorDataExpanderPluginInterface
      * @return array
      */
     public function expand(array $collectedData, LocaleTransfer $localeTransfer);
-
 }

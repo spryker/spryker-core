@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorStrategyPluginInterface
 {
-
     /**
      * Specification:
      *
@@ -41,5 +40,4 @@ interface CollectorStrategyPluginInterface
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer);
-
 }

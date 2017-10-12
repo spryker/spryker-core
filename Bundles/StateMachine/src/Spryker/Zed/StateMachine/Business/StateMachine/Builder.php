@@ -18,7 +18,6 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 
 class Builder implements BuilderInterface
 {
-
     const STATE_NAME_ATTRIBUTE = 'name';
     const STATE_DISPLAY_ATTRIBUTE = 'display';
 
@@ -584,5 +583,4 @@ class Builder implements BuilderInterface
             );
         }
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface StepWithBreadcrumbInterface extends StepInterface
 {
-
     /**
      * @return string
      */
@@ -30,5 +29,4 @@ interface StepWithBreadcrumbInterface extends StepInterface
      * @return bool
      */
     public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer);
-
 }

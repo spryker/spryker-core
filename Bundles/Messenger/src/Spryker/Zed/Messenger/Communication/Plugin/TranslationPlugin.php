@@ -11,7 +11,6 @@ use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
 
 class TranslationPlugin implements TranslationPluginInterface
 {
-
     /**
      * @param string $keyName
      *
@@ -32,5 +31,4 @@ class TranslationPlugin implements TranslationPluginInterface
     {
         return $keyName;
     }
-
 }

@@ -24,7 +24,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class SubtotalDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -85,5 +84,4 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
 
         return new SubTotalDecisionRule($comparatorMock, $currencyConverterMock);
     }
-
 }

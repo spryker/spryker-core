@@ -9,7 +9,6 @@ namespace Spryker\Yves\DiscountPromotion\Dependency;
 
 interface StorageProductMapperPluginInterface
 {
-
     /**
      * @api
      *
@@ -22,5 +21,4 @@ interface StorageProductMapperPluginInterface
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
     public function mapStorageProduct(array $productStorageData, array $selectedAttributes);
-
 }

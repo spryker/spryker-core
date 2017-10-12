@@ -9,7 +9,6 @@ namespace Spryker\Zed\User\Dependency\Plugin;
 
 interface UsersTableExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -18,5 +17,4 @@ interface UsersTableExpanderPluginInterface
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
     public function getActionButtonDefinitions(array $user);
-
 }

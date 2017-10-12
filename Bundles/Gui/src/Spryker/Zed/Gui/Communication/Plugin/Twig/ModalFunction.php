@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class ModalFunction extends TwigFunction
 {
-
     /**
      * @return string
      */
@@ -53,5 +52,4 @@ class ModalFunction extends TwigFunction
             return $html;
         };
     }
-
 }

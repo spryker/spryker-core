@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class IsCancellationConfirmedPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsCancellationConfirmedPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isCancellationConfirmed($orderTransfer);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\ZedRequest\Client;
 
 interface ObjectInterface
 {
-
     /**
      * @param array $values
      *
@@ -21,5 +20,4 @@ interface ObjectInterface
      * @return array
      */
     public function toArray();
-
 }

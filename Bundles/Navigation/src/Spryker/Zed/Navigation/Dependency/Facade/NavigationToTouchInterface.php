@@ -9,7 +9,6 @@ namespace Spryker\Zed\Navigation\Dependency\Facade;
 
 interface NavigationToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -25,5 +24,4 @@ interface NavigationToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
-
 }

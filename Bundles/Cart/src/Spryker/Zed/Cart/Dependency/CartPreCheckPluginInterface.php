@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface CartPreCheckPluginInterface
 {
-
     /**
      *
      * Specification:
@@ -25,5 +24,4 @@ interface CartPreCheckPluginInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function check(CartChangeTransfer $cartChangeTransfer);
-
 }

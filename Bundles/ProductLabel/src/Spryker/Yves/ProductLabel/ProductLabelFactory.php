@@ -15,7 +15,6 @@ use Spryker\Yves\ProductLabel\Twig\ProductLabelTwigExtension;
  */
 class ProductLabelFactory extends AbstractFactory
 {
-
     /**
      * @param string $localeName
      *
@@ -28,5 +27,4 @@ class ProductLabelFactory extends AbstractFactory
             $localeName
         );
     }
-
 }

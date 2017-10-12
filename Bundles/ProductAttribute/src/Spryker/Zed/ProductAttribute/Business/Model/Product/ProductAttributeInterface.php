@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
 interface ProductAttributeInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -37,5 +36,4 @@ interface ProductAttributeInterface
      * @return array
      */
     public function getProductAttributeValues($idProduct);
-
 }

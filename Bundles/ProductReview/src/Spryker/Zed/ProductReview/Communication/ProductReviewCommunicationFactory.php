@@ -17,7 +17,6 @@ use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
  */
 class ProductReviewCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductReview\Communication\Controller\Mapper\CustomerReviewSubmitMapperInterface
      */
@@ -33,5 +32,4 @@ class ProductReviewCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::FACADE_LOCALE);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlInterface;
 
 class ProductSetUrlCreator implements ProductSetUrlCreatorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlInterface
      */
@@ -61,5 +60,4 @@ class ProductSetUrlCreator implements ProductSetUrlCreatorInterface
 
         $localizedProductSetTransfer->getLocale()->requireIdLocale();
     }
-
 }

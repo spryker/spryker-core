@@ -8,7 +8,6 @@ namespace Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade;
 
 class CustomerGroupDiscountConnectorToCustomerGroupFacadeBridge implements CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface
      */
@@ -32,5 +31,4 @@ class CustomerGroupDiscountConnectorToCustomerGroupFacadeBridge implements Custo
         return $this->customerGroupFacade
             ->findCustomerGroupByIdCustomer($idCustomer);
     }
-
 }

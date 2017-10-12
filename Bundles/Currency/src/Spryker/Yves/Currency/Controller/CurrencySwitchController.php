@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CurrencySwitchController extends AbstractController
 {
-
     const URL_PARAM_CURRENCY_ISO_CODE = 'currency-iso-code';
     const URL_PARAM_REFERRER_URL = 'referrer-url';
 
@@ -41,5 +40,4 @@ class CurrencySwitchController extends AbstractController
             urldecode($request->get(static::URL_PARAM_REFERRER_URL))
         );
     }
-
 }

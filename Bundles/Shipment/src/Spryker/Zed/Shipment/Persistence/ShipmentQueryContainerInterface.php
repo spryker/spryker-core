@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ShipmentQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -77,5 +76,4 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryUniqueCarrierName($carrierName, $idCarrier = null);
-
 }

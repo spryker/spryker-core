@@ -12,7 +12,6 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class ShipmentStub implements ShipmentStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -35,5 +34,4 @@ class ShipmentStub implements ShipmentStubInterface
     {
         return $this->zedStub->call('/shipment/gateway/get-available-methods', $quoteTransfer);
     }
-
 }

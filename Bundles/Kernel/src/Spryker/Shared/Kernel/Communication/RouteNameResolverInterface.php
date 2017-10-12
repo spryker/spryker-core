@@ -9,10 +9,8 @@ namespace Spryker\Shared\Kernel\Communication;
 
 interface RouteNameResolverInterface
 {
-
     /**
      * @return string
      */
     public function resolve();
-
 }

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface CartFacadeInterface
 {
-
     /**
      *  Adds item(s) to the quote. Each item gets additional information (e.g. price).
      *
@@ -61,5 +60,4 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function reloadItems(QuoteTransfer $quoteTransfer);
-
 }

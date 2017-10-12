@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 class ShipmentDiscountConnectorToDiscountBridge implements ShipmentDiscountConnectorToDiscountInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
@@ -35,5 +34,4 @@ class ShipmentDiscountConnectorToDiscountBridge implements ShipmentDiscountConne
     {
         return $this->discountFacade->queryStringCompare($clauseTransfer, $compareWith);
     }
-
 }

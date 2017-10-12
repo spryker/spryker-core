@@ -14,7 +14,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class ItemTaxAmountFullAggregator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -63,14 +62,11 @@ class ItemTaxAmountFullAggregator implements CalculatorInterface
     protected function calculateTaxAmountFullAggregationForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
-
             $productOptionUnitTaxAmount = $this->calculateProductOptionUnitTaxAmount($itemTransfer);
             $itemTransfer->setUnitTaxAmountFullAggregation($itemTransfer->getUnitTaxAmount() + $productOptionUnitTaxAmount);
 
             $productOptionSumTaxAmount = $this->calculateProductOptionSumTaxAmount($itemTransfer);
             $itemTransfer->setSumTaxAmountFullAggregation($itemTransfer->getSumTaxAmount() + $productOptionSumTaxAmount);
-
         }
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
 
 class ClauseValidator implements ClauseValidatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -122,5 +121,4 @@ class ClauseValidator implements ClauseValidatorInterface
             $clauseTransfer->getField()
         ));
     }
-
 }

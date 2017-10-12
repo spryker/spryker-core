@@ -17,7 +17,6 @@ use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInter
 
 class BaseRuleTester extends Unit
 {
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -81,5 +80,4 @@ class BaseRuleTester extends Unit
 
         return $itemTransfer;
     }
-
 }

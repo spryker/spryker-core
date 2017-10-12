@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ProductLabelCollectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Collects all active and valid product-labels
@@ -71,5 +70,4 @@ interface ProductLabelCollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

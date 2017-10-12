@@ -21,7 +21,6 @@ use Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface;
  */
 class UsersTableExpanderPlugin extends AbstractPlugin implements UsersTableExpanderPluginInterface
 {
-
     /**
      * @param array $user
      *
@@ -64,5 +63,4 @@ class UsersTableExpanderPlugin extends AbstractPlugin implements UsersTableExpan
             ]
         );
     }
-
 }

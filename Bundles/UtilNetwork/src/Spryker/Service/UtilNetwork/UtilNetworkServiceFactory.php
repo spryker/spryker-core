@@ -12,7 +12,6 @@ use Spryker\Service\UtilNetwork\Model\Request\RequestId;
 
 class UtilNetworkServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\UtilNetwork\Model\HostInterface
      */
@@ -28,5 +27,4 @@ class UtilNetworkServiceFactory extends AbstractServiceFactory
     {
         return new RequestId();
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductRelationClient extends AbstractClient implements ProductRelationClientInterface
 {
-
     /**
      *
      * {@inheritdoc}
@@ -35,5 +34,4 @@ class ProductRelationClient extends AbstractClient implements ProductRelationCli
              ->createProductRelationStorage($localeName)
              ->getAll($idProductAbstract);
     }
-
 }

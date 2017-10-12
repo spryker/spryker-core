@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 interface DiscountAmountCalculatorPluginInterface
 {
-
     /**
      * Specification:
      * - Calculate discount amount on given discountable items, which are collected by configured Collectors.
@@ -25,5 +24,4 @@ interface DiscountAmountCalculatorPluginInterface
      * @return int
      */
     public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer);
-
 }

@@ -23,7 +23,6 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
  */
 class TransferDefinitionMergerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -72,5 +71,4 @@ class TransferDefinitionMergerTest extends Unit
 
         $merger->merge($transferDefinitions);
     }
-
 }

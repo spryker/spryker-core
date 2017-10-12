@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class RefundableAmountCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class RefundableAmountCalculatorPlugin extends AbstractPlugin implements Calcula
         $this->getFacade()
             ->calculateRefundableAmount($calculableObjectTransfer);
     }
-
 }

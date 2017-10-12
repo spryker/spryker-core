@@ -31,7 +31,6 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionGroupSaverTest extends MockProvider
 {
-
     /**
      * @return void
      */
@@ -172,7 +171,6 @@ class ProductOptionGroupSaverTest extends MockProvider
                 'createProductOptionGroupEntity',
             ])
             ->getMock();
-
     }
 
     /**
@@ -184,5 +182,4 @@ class ProductOptionGroupSaverTest extends MockProvider
             ->setMethods(['save'])
             ->getMock();
     }
-
 }

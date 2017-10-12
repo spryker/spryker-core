@@ -9,7 +9,6 @@ namespace Spryker\Zed\Currency\Dependency\Facade;
 
 class CurrencyToStoreBridge implements CurrencyToStoreInterface
 {
-
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
@@ -38,5 +37,4 @@ class CurrencyToStoreBridge implements CurrencyToStoreInterface
     {
         return $this->storeFacade->getCurrentStore();
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Client\Session\ServiceProvider\SessionClientServiceProvider;
 
 trait SessionClientFactoryTrait
 {
-
     /**
      * @return \Spryker\Client\Session\SessionClientInterface
      */
@@ -28,5 +27,4 @@ trait SessionClientFactoryTrait
      * @return mixed
      */
     abstract public function getProvidedDependency($key);
-
 }

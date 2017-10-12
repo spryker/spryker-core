@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 class AttributeMerger implements AttributeMergerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RawProductAttributesTransfer $rawProductAttributesTransfer
      *
@@ -28,5 +27,4 @@ class AttributeMerger implements AttributeMergerInterface
 
         return $combinedAttributes;
     }
-
 }

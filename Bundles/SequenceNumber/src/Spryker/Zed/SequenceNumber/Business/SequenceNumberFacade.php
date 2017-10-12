@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SequenceNumberFacade extends AbstractFacade implements SequenceNumberFacadeInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class SequenceNumberFacade extends AbstractFacade implements SequenceNumberFacad
 
         return $sequenceNumber->generate();
     }
-
 }

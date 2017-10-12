@@ -25,7 +25,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class StepEngineTest extends AbstractStepEngineTest
 {
-
     const FORM_NAME = 'formName';
 
     /**
@@ -186,5 +185,4 @@ class StepEngineTest extends AbstractStepEngineTest
 
         return $dataContainerMock;
     }
-
 }

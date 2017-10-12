@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class NewRelicConfig extends AbstractBundleConfig
 {
-
     /**
      * @return array
      */
@@ -19,5 +18,4 @@ class NewRelicConfig extends AbstractBundleConfig
     {
         return [];
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 abstract class NavigationKeyBuilder implements KeyBuilderInterface
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -32,5 +31,4 @@ abstract class NavigationKeyBuilder implements KeyBuilderInterface
     {
         return 'category';
     }
-
 }

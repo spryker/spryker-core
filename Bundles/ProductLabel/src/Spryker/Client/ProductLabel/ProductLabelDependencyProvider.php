@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Store;
 
 class ProductLabelDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const STORE = 'STORE';
 
@@ -58,5 +57,4 @@ class ProductLabelDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

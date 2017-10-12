@@ -8,7 +8,6 @@ namespace Spryker\Zed\Oms\Dependency\Service;
 
 class OmsToUtilNetworkBridge implements OmsToUtilNetworkInterface
 {
-
     /**
      * @var \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
@@ -29,5 +28,4 @@ class OmsToUtilNetworkBridge implements OmsToUtilNetworkInterface
     {
         return $this->utilNetworkService->getHostName();
     }
-
 }

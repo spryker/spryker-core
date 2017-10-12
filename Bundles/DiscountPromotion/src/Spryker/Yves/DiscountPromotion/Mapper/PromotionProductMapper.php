@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
-
     const URL_PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**
@@ -121,5 +120,4 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     {
         return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();
     }
-
 }

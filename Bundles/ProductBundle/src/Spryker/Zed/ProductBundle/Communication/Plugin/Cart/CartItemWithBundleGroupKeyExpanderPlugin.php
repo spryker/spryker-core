@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CartItemWithBundleGroupKeyExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class CartItemWithBundleGroupKeyExpanderPlugin extends AbstractPlugin implements
     {
         return $this->getFacade()->expandBundleCartItemGroupKey($cartChangeTransfer);
     }
-
 }

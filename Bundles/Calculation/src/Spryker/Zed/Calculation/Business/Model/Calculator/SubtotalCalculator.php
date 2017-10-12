@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class SubtotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -42,5 +41,4 @@ class SubtotalCalculator implements CalculatorInterface
         }
         return $subtotal;
     }
-
 }

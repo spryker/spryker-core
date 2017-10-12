@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class SimpleTransfer extends AbstractTransfer implements TransferInterface
 {
-
     /**
      * @var array
      */
@@ -111,5 +110,4 @@ class SimpleTransfer extends AbstractTransfer implements TransferInterface
 
         return $this;
     }
-
 }

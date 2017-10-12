@@ -30,7 +30,6 @@ use SprykerTest\Zed\Kernel\Communication\Form\Fixtures\FooType;
  */
 class AbstractTypeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -126,5 +125,4 @@ class AbstractTypeTest extends Unit
 
         return $formTypeMock;
     }
-
 }

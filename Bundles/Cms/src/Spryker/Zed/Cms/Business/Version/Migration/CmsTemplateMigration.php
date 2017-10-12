@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsTemplateMigration implements MigrationInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -73,5 +72,4 @@ class CmsTemplateMigration implements MigrationInterface
         $cmsPageEntity->setFkTemplate($idCmsTemplate);
         $cmsPageEntity->save();
     }
-
 }

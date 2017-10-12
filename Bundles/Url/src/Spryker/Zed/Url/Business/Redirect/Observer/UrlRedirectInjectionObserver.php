@@ -16,7 +16,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterface, UrlUpdaterAfterSaveObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -122,5 +121,4 @@ class UrlRedirectInjectionObserver implements UrlCreatorAfterSaveObserverInterfa
 
         $this->urlRedirectActivator->activateUrlRedirect($urlRedirectTransfer);
     }
-
 }

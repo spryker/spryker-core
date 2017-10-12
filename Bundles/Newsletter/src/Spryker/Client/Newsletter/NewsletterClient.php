@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class NewsletterClient extends AbstractClient implements NewsletterClientInterface
 {
-
     /**
      * @api
      *
@@ -81,5 +80,4 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
         return $this->getFactory()->createZedNewsletterStub()
             ->checkSubscription($newsletterUnsubscriptionRequest);
     }
-
 }

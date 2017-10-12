@@ -14,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ParagraphType extends AbstractType
 {
-
     const OPTION_TEXT = 'text';
 
     /**
@@ -54,5 +53,4 @@ class ParagraphType extends AbstractType
     {
         return 'label';
     }
-
 }

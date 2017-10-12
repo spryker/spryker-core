@@ -17,7 +17,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
  */
 class ProductBundleProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class ProductBundleProductConcreteReadPlugin extends AbstractPlugin implements P
     {
         return $this->getFacade()->assignBundledProductsToProductConcrete($productConcreteTransfer);
     }
-
 }

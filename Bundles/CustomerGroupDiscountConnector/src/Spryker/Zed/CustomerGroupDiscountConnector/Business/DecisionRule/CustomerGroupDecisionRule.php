@@ -14,7 +14,6 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
 
 class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToDiscountFacadeInterface
      */
@@ -66,7 +65,6 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
         $customerGroupTransfer->requireName();
 
         return $this->discountFacade->queryStringCompare($clauseTransfer, $customerGroupTransfer->getName());
-
     }
 
     /**
@@ -86,5 +84,4 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
 
         return true;
     }
-
 }

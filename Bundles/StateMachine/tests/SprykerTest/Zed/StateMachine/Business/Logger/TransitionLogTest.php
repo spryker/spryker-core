@@ -27,7 +27,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class TransitionLogTest extends StateMachineMocks
 {
-
     /**
      * @return void
      */
@@ -150,5 +149,4 @@ class TransitionLogTest extends StateMachineMocks
 
         return $stateMachineItemTransfer;
     }
-
 }

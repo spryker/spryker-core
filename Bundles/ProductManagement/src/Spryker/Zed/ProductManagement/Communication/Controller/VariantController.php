@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class VariantController extends AbstractController
 {
-
     const PARAM_SKU = 'sku';
     const PARAM_ATTRIBUTE_COLLECTION = 'attribute_collection';
     const PARAM_ATTRIBUTE_GROUP = 'attribute_group';
@@ -128,5 +127,4 @@ class VariantController extends AbstractController
             EditController::PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
         ])->build();
     }
-
 }

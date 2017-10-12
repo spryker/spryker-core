@@ -25,7 +25,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class ConditionTest extends StateMachineMocks
 {
-
     /**
      * @return void
      */
@@ -131,5 +130,4 @@ class ConditionTest extends StateMachineMocks
 
         return $stateMachineHandlerResolverMock;
     }
-
 }

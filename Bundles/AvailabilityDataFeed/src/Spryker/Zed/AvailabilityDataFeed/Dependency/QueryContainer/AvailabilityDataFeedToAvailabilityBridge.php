@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityDataFeed\Dependency\QueryContainer;
 
 class AvailabilityDataFeedToAvailabilityBridge implements AvailabilityDataFeedToAvailabilityInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
@@ -33,5 +32,4 @@ class AvailabilityDataFeedToAvailabilityBridge implements AvailabilityDataFeedTo
         return $this->availabilityQueryContainer
             ->queryAvailabilityWithStockByIdLocale($idLocale);
     }
-
 }

@@ -13,7 +13,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
-
     const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
 
     /**
@@ -725,5 +724,4 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         return isset($property['deprecated']) ? $property['deprecated'] : null;
     }
-
 }

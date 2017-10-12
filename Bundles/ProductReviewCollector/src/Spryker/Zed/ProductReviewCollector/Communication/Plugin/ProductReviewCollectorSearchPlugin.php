@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductReviewCollectorSearchPlugin extends AbstractCollectorPlugin
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -45,5 +44,4 @@ class ProductReviewCollectorSearchPlugin extends AbstractCollectorPlugin
         $this->getFacade()
             ->runSearchProductReviewCollector($baseQuery, $localeTransfer, $result, $dataReader, $dataWriter, $touchUpdater, $output);
     }
-
 }

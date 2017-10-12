@@ -9,7 +9,6 @@ namespace Spryker\Shared\CmsBlock;
 
 class CmsBlockConfig
 {
-
     /**
      * Specification
      * - Defines the collector resource name
@@ -17,5 +16,4 @@ class CmsBlockConfig
      * @api
      */
     const RESOURCE_TYPE_CMS_BLOCK = 'cms-block';
-
 }

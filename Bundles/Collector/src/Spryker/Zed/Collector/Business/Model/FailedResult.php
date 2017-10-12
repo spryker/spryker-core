@@ -12,7 +12,6 @@ namespace Spryker\Zed\Collector\Business\Model;
  */
 class FailedResult implements FailedResultInterface
 {
-
     /**
      * @var string
      */
@@ -132,5 +131,4 @@ class FailedResult implements FailedResultInterface
     {
         return $this->failedCount;
     }
-
 }

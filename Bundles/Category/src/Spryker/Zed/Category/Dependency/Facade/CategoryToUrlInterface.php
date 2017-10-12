@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface CategoryToUrlInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -53,5 +52,4 @@ interface CategoryToUrlInterface
      * @return void
      */
     public function deleteUrl(UrlTransfer $urlTransfer);
-
 }

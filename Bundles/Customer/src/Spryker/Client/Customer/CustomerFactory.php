@@ -13,7 +13,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CustomerFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Customer\Zed\CustomerStubInterface
      */
@@ -33,5 +32,4 @@ class CustomerFactory extends AbstractFactory
             $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_SESSION)
         );
     }
-
 }

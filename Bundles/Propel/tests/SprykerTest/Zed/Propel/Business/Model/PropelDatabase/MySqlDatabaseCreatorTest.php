@@ -25,7 +25,6 @@ use Spryker\Zed\Propel\PropelConfig;
  */
 class MySqlDatabaseCreatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -57,5 +56,4 @@ class MySqlDatabaseCreatorTest extends Unit
 
         return $mySqlDatabaseCreatorMock;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductApi\Dependency\QueryContainer;
 
 interface ProductApiToApiInterface
 {
-
     /**
      * @param array $data
      *
@@ -24,5 +23,4 @@ interface ProductApiToApiInterface
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function createApiItem($data, $id = null);
-
 }

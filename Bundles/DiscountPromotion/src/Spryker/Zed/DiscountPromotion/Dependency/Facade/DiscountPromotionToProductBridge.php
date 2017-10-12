@@ -9,7 +9,6 @@ namespace Spryker\Zed\DiscountPromotion\Dependency\Facade;
 
 class DiscountPromotionToProductBridge implements DiscountPromotionToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -42,5 +41,4 @@ class DiscountPromotionToProductBridge implements DiscountPromotionToProductInte
     {
         return $this->productFacade->hasProductAbstract($sku);
     }
-
 }

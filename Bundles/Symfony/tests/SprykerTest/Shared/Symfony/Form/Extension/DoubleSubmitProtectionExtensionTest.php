@@ -26,7 +26,6 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class DoubleSubmitProtectionExtensionTest extends Unit
 {
-
     /**
      * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\Type\DoubleSubmitFormType
      */
@@ -166,5 +165,4 @@ class DoubleSubmitProtectionExtensionTest extends Unit
             [false],
         ];
     }
-
 }

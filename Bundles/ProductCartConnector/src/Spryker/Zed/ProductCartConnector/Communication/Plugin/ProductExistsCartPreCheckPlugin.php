@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductExistsCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -45,5 +44,4 @@ class ProductExistsCartPreCheckPlugin extends AbstractPlugin implements CartPreC
     {
         return true;
     }
-
 }

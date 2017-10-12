@@ -28,7 +28,6 @@ use SprykerTest\Service\Flysystem\Stub\FlysystemConfigStub;
  */
 class FlysystemServiceTest extends Unit
 {
-
     const RESOURCE_FILE_NAME = 'fileName.jpg';
 
     const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
@@ -646,5 +645,4 @@ class FlysystemServiceTest extends Unit
     {
         return $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
     }
-
 }

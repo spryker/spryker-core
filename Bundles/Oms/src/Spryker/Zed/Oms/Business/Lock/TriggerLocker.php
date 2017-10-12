@@ -16,7 +16,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TriggerLocker implements LockerInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -117,5 +116,4 @@ class TriggerLocker implements LockerInterface
     {
         return new SpyOmsStateMachineLock();
     }
-
 }

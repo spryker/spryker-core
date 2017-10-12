@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormView;
 
 abstract class AbstractDiscountExtensionSubFormType extends AbstractType
 {
-
     const TEMPLATE_PATH = 'template_path';
 
     /**
@@ -37,5 +36,4 @@ abstract class AbstractDiscountExtensionSubFormType extends AbstractType
 
         $view->vars[static::TEMPLATE_PATH] = $this->getTemplatePath();
     }
-
 }

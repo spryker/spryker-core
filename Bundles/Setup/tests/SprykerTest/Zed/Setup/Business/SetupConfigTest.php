@@ -21,7 +21,6 @@ use Spryker\Zed\Setup\SetupConfig;
  */
 class SetupConfigTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\Setup\SetupConfig
      */
@@ -77,5 +76,4 @@ class SetupConfigTest extends Unit
     {
         $this->assertInternalType('array', $this->getConfig()->getSetupInstallCommandNames());
     }
-
 }

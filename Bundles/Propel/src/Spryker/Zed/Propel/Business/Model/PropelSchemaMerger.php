@@ -16,7 +16,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
-
     /**
      * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
@@ -274,5 +273,4 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
         return $toXmlElement;
     }
-
 }

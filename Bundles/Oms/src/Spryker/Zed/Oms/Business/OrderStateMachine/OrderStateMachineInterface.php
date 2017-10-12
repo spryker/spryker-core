@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 interface OrderStateMachineInterface
 {
-
     /**
      * @param string $eventId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
@@ -59,5 +58,4 @@ interface OrderStateMachineInterface
      * @return array|null
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, $data);
-
 }

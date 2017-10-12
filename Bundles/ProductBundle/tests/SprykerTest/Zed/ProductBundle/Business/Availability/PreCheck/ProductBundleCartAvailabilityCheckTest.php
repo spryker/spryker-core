@@ -27,7 +27,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 {
-
     /**
      * return void
      *
@@ -126,5 +125,4 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 
         return $productBundleCartAvailabilityCheckMock;
     }
-
 }

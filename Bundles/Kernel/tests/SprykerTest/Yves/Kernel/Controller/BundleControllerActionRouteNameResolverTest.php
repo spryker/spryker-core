@@ -22,7 +22,6 @@ use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
  */
 class BundleControllerActionRouteNameResolverTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -33,5 +32,4 @@ class BundleControllerActionRouteNameResolverTest extends Unit
 
         $this->assertSame('foo/bar/baz', $resolver->resolve());
     }
-
 }

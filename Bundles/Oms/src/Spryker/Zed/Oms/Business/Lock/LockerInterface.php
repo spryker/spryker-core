@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Business\Lock;
 
 interface LockerInterface
 {
-
     /**
      * @param int $identifier
      * @param string|null $details
@@ -29,5 +28,4 @@ interface LockerInterface
      * @return void
      */
     public function clearLocks();
-
 }

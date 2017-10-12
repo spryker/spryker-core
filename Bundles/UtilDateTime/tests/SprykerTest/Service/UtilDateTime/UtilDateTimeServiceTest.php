@@ -23,7 +23,6 @@ use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
  */
 class UtilDateTimeServiceTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Service\UtilDateTime\UtilDateTimeServiceTester
      */
@@ -148,5 +147,4 @@ class UtilDateTimeServiceTest extends Unit
             $this->tester->setConfig($key, $value);
         }
     }
-
 }

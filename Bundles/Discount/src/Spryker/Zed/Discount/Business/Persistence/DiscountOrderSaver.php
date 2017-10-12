@@ -17,7 +17,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountOrderSaver implements DiscountOrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
@@ -238,5 +237,4 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
             }
         }
     }
-
 }

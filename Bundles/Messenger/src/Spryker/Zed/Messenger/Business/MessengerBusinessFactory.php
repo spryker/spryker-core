@@ -18,7 +18,6 @@ use Spryker\Zed\Messenger\MessengerDependencyProvider;
  */
 class MessengerBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Messenger\Business\Model\MessageTrayInterface
      */
@@ -63,5 +62,4 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(MessengerDependencyProvider::PLUGIN_TRANSLATION);
     }
-
 }

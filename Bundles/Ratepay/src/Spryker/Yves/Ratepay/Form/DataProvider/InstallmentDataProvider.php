@@ -18,7 +18,6 @@ use Spryker\Yves\Ratepay\Form\InstallmentSubForm;
 
 class InstallmentDataProvider extends DataProviderAbstract
 {
-
     const INSTALLMENT_CONFIGURATION = 'installment_configuration';
 
     /**
@@ -107,5 +106,4 @@ class InstallmentDataProvider extends DataProviderAbstract
         $installmentTransfer = $quoteTransfer->getPayment()->getRatepayInstallment();
         $installmentTransfer->setInterestRateDefault($configurationResponseTransfer->getInterestrateDefault());
     }
-
 }

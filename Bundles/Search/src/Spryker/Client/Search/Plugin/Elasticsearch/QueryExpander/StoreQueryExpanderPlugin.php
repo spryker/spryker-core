@@ -20,7 +20,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
@@ -79,5 +78,4 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

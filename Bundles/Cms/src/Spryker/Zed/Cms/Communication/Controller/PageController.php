@@ -26,7 +26,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PageController extends AbstractController
 {
-
     const REDIRECT_ADDRESS = '/cms/glossary';
     const CMS_FOLDER_PATH = '@Cms/template/';
 
@@ -310,5 +309,4 @@ class PageController extends AbstractController
 
         return $cmsPageLocalizedAttributesTransfer;
     }
-
 }

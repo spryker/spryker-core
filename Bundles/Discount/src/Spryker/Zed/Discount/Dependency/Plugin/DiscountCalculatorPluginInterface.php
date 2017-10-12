@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 interface DiscountCalculatorPluginInterface
 {
-
     /**
      * @api
      *
@@ -56,5 +55,4 @@ interface DiscountCalculatorPluginInterface
      * @return array
      */
     public function getAmountValidators();
-
 }

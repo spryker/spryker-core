@@ -23,7 +23,6 @@ use Spryker\Zed\Oms\OmsConfig;
  */
 class PersistenceManagerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -58,5 +57,4 @@ class PersistenceManagerTest extends Unit
     {
         return $this->getMockBuilder(OmsConfig::class)->getMock();
     }
-
 }

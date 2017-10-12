@@ -18,7 +18,6 @@ use Spryker\Zed\User\UserDependencyProvider;
  */
 class UserBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\User\Business\Model\UserInterface
      */
@@ -42,5 +41,4 @@ class UserBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()
         );
     }
-
 }

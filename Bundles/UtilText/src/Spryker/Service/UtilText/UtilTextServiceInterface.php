@@ -7,7 +7,6 @@ namespace Spryker\Service\UtilText;
 
 interface UtilTextServiceInterface
 {
-
     /**
      * Specification:
      * - Generate slug based on value
@@ -91,5 +90,4 @@ interface UtilTextServiceInterface
      * @return bool
      */
     public function checkToken($rawToken, $hash);
-
 }

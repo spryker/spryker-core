@@ -15,7 +15,6 @@ use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
-
     const SERVICE_ZED = 'SERVICE_ZED';
     const CLIENT_CART = 'CLIENT_CART';
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
@@ -46,5 +45,4 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

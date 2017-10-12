@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 interface ProductGroupReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
      * @return \Generated\Shared\Transfer\ProductGroupTransfer|null
      */
     public function findProductGroup(ProductGroupTransfer $productGroupTransfer);
-
 }

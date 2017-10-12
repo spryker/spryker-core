@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payolution\Business\Payment\Method;
 
 interface ApiConstants
 {
-
     const ACCOUNT_BRAND = 'ACCOUNT.BRAND';
     const BRAND_INVOICE = 'PAYOLUTION_INVOICE';
     const BRAND_INSTALLMENT = 'PAYOLUTION_INS';
@@ -165,5 +164,4 @@ interface ApiConstants
     const CRITERION_ACCOUNT_IBAN = 'CRITERION.PAYOLUTION_ACCOUNT_IBAN';
 
     const CHECKOUT_ERROR_CODE_PAYMENT_FAILED = 'payment failed';
-
 }

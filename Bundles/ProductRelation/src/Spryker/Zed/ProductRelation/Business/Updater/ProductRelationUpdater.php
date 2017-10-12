@@ -18,7 +18,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterfa
 
 class ProductRelationUpdater implements ProductRelationUpdaterInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -115,5 +114,4 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
         );
         return $queryRuleBuilderSetTransfer;
     }
-
 }

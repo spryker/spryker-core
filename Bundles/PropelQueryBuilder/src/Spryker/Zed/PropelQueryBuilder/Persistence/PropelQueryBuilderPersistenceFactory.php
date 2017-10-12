@@ -24,7 +24,6 @@ use Spryker\Zed\PropelQueryBuilder\PropelQueryBuilderDependencyProvider;
  */
 class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\TransferMapper\RuleTransferMapperInterface
      */
@@ -115,5 +114,4 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(PropelQueryBuilderDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

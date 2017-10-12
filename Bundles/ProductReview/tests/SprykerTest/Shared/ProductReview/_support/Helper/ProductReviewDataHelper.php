@@ -18,7 +18,6 @@ use SprykerTest\Zed\Locale\Helper\LocaleDataHelper;
 
 class ProductReviewDataHelper extends Module
 {
-
     use DependencyHelperTrait;
     use LocatorHelperTrait;
 
@@ -43,5 +42,4 @@ class ProductReviewDataHelper extends Module
 
         return $productReviewTransfer;
     }
-
 }

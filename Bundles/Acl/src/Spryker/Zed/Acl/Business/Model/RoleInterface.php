@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RoleTransfer;
 
 interface RoleInterface
 {
-
     /**
      * @param string $name
      *
@@ -83,5 +82,4 @@ interface RoleInterface
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
     public function getByName($name);
-
 }

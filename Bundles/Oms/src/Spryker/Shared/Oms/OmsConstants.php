@@ -9,7 +9,6 @@ namespace Spryker\Shared\Oms;
 
 interface OmsConstants
 {
-
     /**
      * Specification:
      * - Defines paths to OMS schemas
@@ -25,5 +24,4 @@ interface OmsConstants
      * @api
      */
     const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
-
 }

@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsVersionPageCollectorStoragePlugin extends AbstractCollectorPlugin
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -45,5 +44,4 @@ class CmsVersionPageCollectorStoragePlugin extends AbstractCollectorPlugin
         $this->getFacade()
             ->runStorageCmsVersionPageCollector($baseQuery, $localeTransfer, $result, $dataReader, $dataWriter, $touchUpdater, $output);
     }
-
 }

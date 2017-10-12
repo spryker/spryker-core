@@ -9,7 +9,6 @@ namespace Spryker\Zed\User\Dependency\Plugin;
 
 interface GroupPluginInterface
 {
-
     /**
      * @api
      *
@@ -45,5 +44,4 @@ interface GroupPluginInterface
      * @return void
      */
     public function removeUserFromGroup($idUser, $idGroup);
-
 }

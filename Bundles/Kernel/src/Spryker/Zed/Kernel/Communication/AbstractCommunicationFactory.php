@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 abstract class AbstractCommunicationFactory extends AbstractFactory
 {
-
     const FORM_FACTORY = 'FORM_FACTORY';
 
     /**
@@ -86,5 +85,4 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
 
         return $container[self::FORM_FACTORY];
     }
-
 }

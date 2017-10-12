@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -375,5 +374,4 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->createOmsProductReservationQuery()
             ->filterBySku($sku);
     }
-
 }

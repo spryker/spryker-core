@@ -9,7 +9,6 @@ namespace Spryker\Shared\NewRelic;
 
 interface NewRelicConstants
 {
-
     /**
      * Specification:
      * - NewRelic api key.
@@ -32,5 +31,4 @@ interface NewRelicConstants
      * @api
      */
     const IGNORABLE_TRANSACTIONS = 'IGNORABLE_TRANSACTIONS';
-
 }

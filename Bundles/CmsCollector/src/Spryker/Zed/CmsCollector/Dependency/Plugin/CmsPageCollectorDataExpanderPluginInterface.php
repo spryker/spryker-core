@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
  */
 interface CmsPageCollectorDataExpanderPluginInterface
 {
-
     /**
      * Specification:
      *  - Allows providing additional data before exporting to Yves data store
@@ -27,5 +26,4 @@ interface CmsPageCollectorDataExpanderPluginInterface
      * @return array
      */
     public function expand(array $collectedData, LocaleTransfer $localeTransfer);
-
 }

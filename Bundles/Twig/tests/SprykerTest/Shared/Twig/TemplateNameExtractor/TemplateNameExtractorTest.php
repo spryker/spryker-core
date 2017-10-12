@@ -23,7 +23,6 @@ use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
  */
 class TemplateNameExtractorTest extends Unit
 {
-
     /**
      * @dataProvider nameDataProviderForBundle
      *
@@ -87,5 +86,4 @@ class TemplateNameExtractorTest extends Unit
     {
         return new TwigToUtilTextServiceBridge(new UtilTextService());
     }
-
 }

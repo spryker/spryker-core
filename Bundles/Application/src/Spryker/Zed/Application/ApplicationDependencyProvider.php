@@ -28,7 +28,6 @@ use Spryker\Zed\Kernel\Container;
 
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SERVICE_ENCODING = 'util encoding service';
 
     /**
@@ -87,5 +86,4 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         return $this->getServiceProviders($container);
     }
-
 }

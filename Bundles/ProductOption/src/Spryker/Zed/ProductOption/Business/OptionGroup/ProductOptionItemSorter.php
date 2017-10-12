@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class ProductOptionItemSorter implements ProductOptionItemSorterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -75,5 +74,4 @@ class ProductOptionItemSorter implements ProductOptionItemSorterInterface
 
         return $items1;
     }
-
 }

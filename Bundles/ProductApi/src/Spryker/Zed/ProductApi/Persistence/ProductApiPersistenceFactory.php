@@ -17,7 +17,6 @@ use Spryker\Zed\ProductApi\ProductApiDependencyProvider;
  */
 class ProductApiPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -33,5 +32,4 @@ class ProductApiPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_API);
     }
-
 }

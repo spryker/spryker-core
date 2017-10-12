@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Storage;
 
 class TouchUpdaterSet
 {
-
     /**
      * @var array
      */
@@ -62,5 +61,4 @@ class TouchUpdaterSet
             'data' => $data,
         ];
     }
-
 }

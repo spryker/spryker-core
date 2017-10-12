@@ -20,7 +20,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -66,5 +65,4 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $event->getResponse()->headers->addCacheControlDirective('no-store', true);
         $event->getResponse()->headers->addCacheControlDirective('must-revalidate', true);
     }
-
 }

@@ -201,11 +201,12 @@ function resetForm()  {
 /**
  * @return {void}
  */
-function onIframeLoad(){
+function onIframeLoad() {
+    changeIframeHeight();
     $formProgressBar.addClass('hidden');
     $iframe.removeClass('hidden');
 
-    changeIframeHeight();
+    $($iframe[0].contentWindow).on('resize', changeIframeHeight);
 
     // tree reloading
     var treeReloader = $iframe.contents().find('#navigation-tree-reloader');

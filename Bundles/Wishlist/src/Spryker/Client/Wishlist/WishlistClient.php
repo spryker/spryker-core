@@ -20,7 +20,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -238,5 +237,4 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
             $this
         );
     }
-
 }

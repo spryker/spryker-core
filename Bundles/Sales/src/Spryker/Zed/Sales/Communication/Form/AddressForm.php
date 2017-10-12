@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddressForm extends AbstractType
 {
-
     const FIELD_SALUTATION = 'salutation';
     const FIELD_FIRST_NAME = 'first_name';
     const FIELD_MIDDLE_NAME = 'middle_name';
@@ -329,5 +328,4 @@ class AddressForm extends AbstractType
 
         return $this;
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 
 class ProductApiValidator implements ProductApiValidatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -46,5 +45,4 @@ class ProductApiValidator implements ProductApiValidatorInterface
 
         return $errors;
     }
-
 }

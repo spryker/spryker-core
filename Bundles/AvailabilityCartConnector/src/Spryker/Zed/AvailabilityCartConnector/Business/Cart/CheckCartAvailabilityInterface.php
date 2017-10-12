@@ -9,12 +9,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface CheckCartAvailabilityInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer);
-
 }

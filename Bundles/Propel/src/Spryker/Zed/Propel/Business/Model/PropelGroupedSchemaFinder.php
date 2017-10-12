@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
 {
-
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
@@ -54,5 +53,4 @@ class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
 
         return $schemaFiles;
     }
-
 }

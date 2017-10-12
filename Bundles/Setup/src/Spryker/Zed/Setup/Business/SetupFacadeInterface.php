@@ -9,7 +9,6 @@ namespace Spryker\Zed\Setup\Business;
 
 interface SetupFacadeInterface
 {
-
     /**
      * @api
      *
@@ -60,5 +59,4 @@ interface SetupFacadeInterface
      * @return \Symfony\Component\Console\Command\Command[]
      */
     public function getConsoleCommands();
-
 }

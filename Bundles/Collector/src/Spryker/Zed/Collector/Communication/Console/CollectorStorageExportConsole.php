@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CollectorStorageExportConsole extends AbstractCollectorConsole
 {
-
     const COMMAND_NAME = 'collector:storage:export';
     const COMMAND_DESCRIPTION = 'Collector export storage';
 
@@ -57,5 +56,4 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
 
         $output->write($message);
     }
-
 }

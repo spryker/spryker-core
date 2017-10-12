@@ -22,7 +22,6 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
  */
 class PercentagePluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -44,5 +43,4 @@ class PercentagePluginTest extends Unit
         $result = $plugin->transformFromPersistence(1113);
         $this->assertSame(11, $result);
     }
-
 }

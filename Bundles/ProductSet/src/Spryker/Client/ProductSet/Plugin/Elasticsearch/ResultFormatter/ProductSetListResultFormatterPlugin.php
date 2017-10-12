@@ -16,7 +16,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class ProductSetListResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-
     const NAME = 'productSets';
 
     /**
@@ -59,5 +58,4 @@ class ProductSetListResultFormatterPlugin extends AbstractElasticsearchResultFor
             ->createProductSetStorageMapper()
             ->mapDataToTransfer($productSetStorageData);
     }
-
 }

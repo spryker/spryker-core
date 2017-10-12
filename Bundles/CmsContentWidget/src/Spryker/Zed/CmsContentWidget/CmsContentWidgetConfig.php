@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsContentWidgetConfig extends AbstractBundleConfig
 {
-
     /**
      * This is cms content widget configuration provider list, its used to get configuration when building widgets.
      * Also to display usage information in cms placeholder edit page
@@ -25,5 +24,4 @@ class CmsContentWidgetConfig extends AbstractBundleConfig
     {
         return [];
     }
-
 }

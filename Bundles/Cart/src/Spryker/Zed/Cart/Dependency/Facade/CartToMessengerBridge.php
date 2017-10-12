@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class CartToMessengerBridge implements CartToMessengerInterface
 {
-
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
      */
@@ -54,5 +53,4 @@ class CartToMessengerBridge implements CartToMessengerInterface
     {
         $this->messengerFacade->addErrorMessage($messageTransfer);
     }
-
 }

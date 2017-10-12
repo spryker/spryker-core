@@ -22,7 +22,6 @@ use SprykerTest\Zed\Acl\PageObject\AclRoleCreatePage;
  */
 class AclRoleCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Acl\AclCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class AclRoleCreateCest
         $i->amOnPage(AclRoleCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Roles / Create new Role');
     }
-
 }

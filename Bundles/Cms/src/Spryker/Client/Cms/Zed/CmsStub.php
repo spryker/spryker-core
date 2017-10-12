@@ -12,7 +12,6 @@ use Spryker\Client\Cms\Dependency\Client\CmsToZedRequestInterface;
 
 class CmsStub implements CmsStubInterface
 {
-
     /**
      * @var \Spryker\Client\Cms\Dependency\Client\CmsToZedRequestInterface
      */
@@ -35,5 +34,4 @@ class CmsStub implements CmsStubInterface
     {
         return $this->zedRequestClient->call('/cms/gateway/get-flattened-locale-cms-page-data', $flattenedLocaleCmsPageDataRequestTransfer);
     }
-
 }

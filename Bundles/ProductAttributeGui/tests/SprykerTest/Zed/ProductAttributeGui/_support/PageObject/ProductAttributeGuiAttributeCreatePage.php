@@ -9,7 +9,5 @@ namespace SprykerTest\Zed\ProductAttributeGui\PageObject;
 
 class ProductAttributeGuiAttributeCreatePage
 {
-
     const URL = '/product-attribute-gui/attribute/create';
-
 }

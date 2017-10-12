@@ -13,7 +13,6 @@ use Spryker\Shared\Kernel\Store;
 
 abstract class AbstractClassResolver
 {
-
     const KEY_NAMESPACE = '%namespace%';
     const KEY_BUNDLE = '%bundle%';
     const KEY_STORE = '%store%';
@@ -212,5 +211,4 @@ abstract class AbstractClassResolver
     {
         return get_class($this) . '-' . $this->classInfo->getCallerClassName();
     }
-
 }

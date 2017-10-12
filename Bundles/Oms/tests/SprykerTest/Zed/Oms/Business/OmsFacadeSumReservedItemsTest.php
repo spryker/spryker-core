@@ -27,7 +27,6 @@ use Spryker\Zed\Oms\Business\OmsFacade;
  */
 class OmsFacadeSumReservedItemsTest extends Unit
 {
-
     const ORDER_REFERENCE = '123';
     const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
     const RESERVER_ITEM_STATE = 'paid';
@@ -142,5 +141,4 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $salesOrderItem->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItem->save();
     }
-
 }

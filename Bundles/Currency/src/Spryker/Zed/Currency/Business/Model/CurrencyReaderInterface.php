@@ -9,7 +9,6 @@ namespace Spryker\Zed\Currency\Business\Model;
 
 interface CurrencyReaderInterface
 {
-
     /**
      * @param int $idCurrency
      *
@@ -39,5 +38,4 @@ interface CurrencyReaderInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getByIsoCode($isoCode);
-
 }

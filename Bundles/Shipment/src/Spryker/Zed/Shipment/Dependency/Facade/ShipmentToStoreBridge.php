@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 class ShipmentToStoreBridge implements ShipmentToStoreInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
@@ -30,5 +29,4 @@ class ShipmentToStoreBridge implements ShipmentToStoreInterface
     {
         return $this->store->getCurrencyIsoCode();
     }
-
 }

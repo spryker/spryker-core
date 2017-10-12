@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class GlossaryCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface
      */
@@ -100,5 +99,4 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     {
         return new UpdateTranslationForm($this->getFacade());
     }
-
 }

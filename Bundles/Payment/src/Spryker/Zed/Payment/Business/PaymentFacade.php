@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -97,5 +96,4 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
             ->createPaymentHydrator()
             ->hydrateOrderWithPayment($orderTransfer);
     }
-
 }

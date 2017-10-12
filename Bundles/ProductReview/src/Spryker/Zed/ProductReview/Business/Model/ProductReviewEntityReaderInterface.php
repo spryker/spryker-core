@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewEntityReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
@@ -20,5 +19,4 @@ interface ProductReviewEntityReaderInterface
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReview
      */
     public function getProductReviewEntity(ProductReviewTransfer $productReviewTransfer);
-
 }

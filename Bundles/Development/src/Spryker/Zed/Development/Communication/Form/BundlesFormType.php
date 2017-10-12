@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BundlesFormType extends AbstractType
 {
-
     const FORM_TYPE_NAME = 'bundlesFormType';
     const BUNDLE_NAME_CHOICES = 'bundleNames';
     const EXCLUDED_BUNDLES = 'excludedBundles';
@@ -57,5 +56,4 @@ class BundlesFormType extends AbstractType
             'required' => false,
         ]);
     }
-
 }

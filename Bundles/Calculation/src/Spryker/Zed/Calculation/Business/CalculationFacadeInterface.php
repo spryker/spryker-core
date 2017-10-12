@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface CalculationFacadeInterface
 {
-
     /**
      * Specification:
      *  - Maps Quote to CalculableObject
@@ -306,5 +305,4 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function calculateNetTotal(CalculableObjectTransfer $calculableObjectTransfer);
-
 }

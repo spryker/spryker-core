@@ -19,7 +19,6 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface;
 
 class OrderItemSplit implements OrderItemSplitInterface
 {
-
     const SPLIT_MARKER = 'split#';
 
     /**
@@ -183,5 +182,4 @@ class OrderItemSplit implements OrderItemSplitInterface
         $salesOrderItem->setQuantity($quantityAmountLeft);
         $salesOrderItem->save($this->getConnection());
     }
-
 }

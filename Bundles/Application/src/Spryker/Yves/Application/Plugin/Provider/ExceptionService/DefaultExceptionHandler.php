@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultExceptionHandler implements ExceptionHandlerInterface
 {
-
     /**
      * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
@@ -22,5 +21,4 @@ class DefaultExceptionHandler implements ExceptionHandlerInterface
     {
         return new Response($exception->getMessage());
     }
-
 }

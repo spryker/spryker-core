@@ -25,7 +25,6 @@ use Symfony\Component\Finder\Finder;
  */
 class CacheClearerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -174,5 +173,4 @@ class CacheClearerTest extends Unit
             ->getMockBuilder(Finder::class)
             ->getMock();
     }
-
 }

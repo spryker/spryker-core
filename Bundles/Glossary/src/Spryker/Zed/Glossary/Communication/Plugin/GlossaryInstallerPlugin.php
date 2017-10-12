@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GlossaryInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
-
     /**
      * @return void
      */
@@ -24,5 +23,4 @@ class GlossaryInstallerPlugin extends AbstractPlugin implements InstallerPluginI
     {
         $this->getFacade()->install();
     }
-
 }

@@ -27,7 +27,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
  */
 class CollectorAndSpecificationTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -73,5 +72,4 @@ class CollectorAndSpecificationTest extends Unit
     {
         return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }
-
 }

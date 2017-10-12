@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SslServiceProviderTest extends Unit
 {
-
     const EXPECTED_CONTENT = 'not redirected';
 
     /**
@@ -111,5 +110,4 @@ class SslServiceProviderTest extends Unit
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
     }
-
 }

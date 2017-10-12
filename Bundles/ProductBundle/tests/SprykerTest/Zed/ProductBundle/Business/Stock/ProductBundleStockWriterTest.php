@@ -33,7 +33,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleStockWriterTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -272,5 +271,4 @@ class ProductBundleStockWriterTest extends Unit
 
         $productStockWriteMock->method('findOrCreateProductStockEntity')->willReturn($stockProductEntityMock);
     }
-
 }

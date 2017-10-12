@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 class NavigationGuiToUrlBridge implements NavigationGuiToUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
@@ -34,5 +33,4 @@ class NavigationGuiToUrlBridge implements NavigationGuiToUrlInterface
     {
         return $this->urlFacade->findUrl($urlTransfer);
     }
-
 }

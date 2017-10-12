@@ -22,7 +22,6 @@ use Spryker\Zed\Twig\Business\Model\RouteResolver;
  */
 class RouteResolverTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -50,5 +49,4 @@ class RouteResolverTest extends Unit
             $routeResolver->buildRouteFromControllerServiceName($incomingString)
         );
     }
-
 }

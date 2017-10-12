@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductAttributeFacade extends AbstractFacade implements ProductAttributeFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -328,5 +327,4 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
             ->createAttributeReader()
             ->getProductAttributeCollection();
     }
-
 }

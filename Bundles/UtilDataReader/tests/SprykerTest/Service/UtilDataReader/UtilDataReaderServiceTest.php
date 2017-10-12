@@ -21,7 +21,6 @@ use Spryker\Service\UtilDataReader\UtilDataReaderService;
  */
 class UtilDataReaderServiceTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -32,5 +31,4 @@ class UtilDataReaderServiceTest extends Unit
 
         $this->assertInstanceOf(CountableIteratorInterface::class, $yamlBatchIterator);
     }
-
 }

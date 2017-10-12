@@ -11,7 +11,6 @@ use Spryker\Zed\Tax\TaxConfig;
 
 class TaxDefault implements TaxDefaultInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
@@ -47,5 +46,4 @@ class TaxDefault implements TaxDefaultInterface
     {
         return $this->config->getDefaultTaxRate();
     }
-
 }

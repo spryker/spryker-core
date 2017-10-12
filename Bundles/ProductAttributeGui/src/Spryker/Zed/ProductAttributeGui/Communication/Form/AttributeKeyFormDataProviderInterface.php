@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
 interface AttributeKeyFormDataProviderInterface
 {
-
     /**
      * @return array
      */
@@ -19,5 +18,4 @@ interface AttributeKeyFormDataProviderInterface
      * @return array
      */
     public function getOptions();
-
 }

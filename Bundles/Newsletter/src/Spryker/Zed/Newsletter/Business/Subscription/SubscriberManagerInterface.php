@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 
 interface SubscriberManagerInterface
 {
-
     /**
      * @param string $email
      *
@@ -32,5 +31,4 @@ interface SubscriberManagerInterface
      * @return bool
      */
     public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriberTransfer);
-
 }

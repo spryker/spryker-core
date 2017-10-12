@@ -37,7 +37,6 @@ use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
  */
 class ProductOptionFacadeTest extends Unit
 {
-
     const DEFAULT_LOCALE_ISO_CODE = 'en_US';
 
     /**
@@ -422,5 +421,4 @@ class ProductOptionFacadeTest extends Unit
 
         return $localeTransfer;
     }
-
 }

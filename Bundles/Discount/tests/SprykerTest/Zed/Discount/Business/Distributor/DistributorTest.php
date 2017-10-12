@@ -27,7 +27,6 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
  */
 class DistributorTest extends Unit
 {
-
     const ITEM_GROSS_PRICE_ZERO = 0;
     const ITEM_GROSS_PRICE_1000 = 1000;
     const ITEM_GROSS_PRICE_2000 = 2000;
@@ -484,5 +483,4 @@ class DistributorTest extends Unit
     {
         return new Distributor();
     }
-
 }

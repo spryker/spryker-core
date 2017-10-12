@@ -12,7 +12,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 class MailTypeCollection implements MailTypeCollectionAddInterface, MailTypeCollectionGetInterface
 {
-
     /**
      * @var array
      */
@@ -58,5 +57,4 @@ class MailTypeCollection implements MailTypeCollectionAddInterface, MailTypeColl
             $mailType
         ));
     }
-
 }

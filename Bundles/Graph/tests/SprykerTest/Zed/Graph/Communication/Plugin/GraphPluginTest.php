@@ -25,7 +25,6 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
  */
 class GraphPluginTest extends Unit
 {
-
     const GRAPH_NAME = 'graph name';
     const NODE_A = 'node A';
     const NODE_B = 'node B';
@@ -141,5 +140,4 @@ class GraphPluginTest extends Unit
 
         return $pluginMock->init(self::GRAPH_NAME);
     }
-
 }

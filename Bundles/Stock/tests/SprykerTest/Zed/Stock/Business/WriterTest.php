@@ -27,7 +27,6 @@ use Spryker\Zed\Stock\Business\StockFacade;
  */
 class WriterTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
@@ -159,5 +158,4 @@ class WriterTest extends Unit
             ->setFkProduct($product->getIdProduct())
             ->save();
     }
-
 }

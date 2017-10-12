@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class BraintreePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeQuery
      */
@@ -42,5 +41,4 @@ class BraintreePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyPaymentBraintreeTransactionRequestLogQuery::create();
     }
-
 }

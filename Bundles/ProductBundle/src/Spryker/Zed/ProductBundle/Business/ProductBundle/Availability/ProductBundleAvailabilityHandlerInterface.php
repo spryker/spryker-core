@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability;
 
 interface ProductBundleAvailabilityHandlerInterface
 {
-
     /**
      * @param string $bundledProductSku
      *
@@ -30,5 +29,4 @@ interface ProductBundleAvailabilityHandlerInterface
      * @return void
      */
     public function removeBundleAvailability($bundleProductSku);
-
 }

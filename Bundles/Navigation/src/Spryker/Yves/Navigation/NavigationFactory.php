@@ -15,7 +15,6 @@ use Spryker\Yves\Navigation\Twig\NavigationTwigExtension;
  */
 class NavigationFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\Navigation\Twig\NavigationTwigExtension
      */
@@ -31,5 +30,4 @@ class NavigationFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(NavigationDependencyProvider::PLUGIN_APPLICATION);
     }
-
 }

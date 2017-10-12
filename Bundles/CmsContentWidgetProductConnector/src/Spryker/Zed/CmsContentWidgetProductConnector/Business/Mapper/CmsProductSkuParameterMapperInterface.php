@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsContentWidgetProductConnector\Business\Mapper;
 
 interface CmsProductSkuParameterMapperInterface
 {
-
     /**
      * @param array $skuList
      *
      * @return array
      */
     public function mapProductSkuList(array $skuList);
-
 }

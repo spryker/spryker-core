@@ -33,7 +33,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class TriggerTest extends StateMachineMocks
 {
-
     const ITEM_IDENTIFIER = 1985;
     const TESTING_STATE_MACHINE = 'Testing state machine';
     const PROCESS_NAME = 'Process';
@@ -275,7 +274,6 @@ class TriggerTest extends StateMachineMocks
         }
 
         if ($handlerResolverMock === null) {
-
             $handlerResolverMock = $this->createHandlerResolverMock();
 
             $commandMock = $this->createCommandMock();
@@ -396,5 +394,4 @@ class TriggerTest extends StateMachineMocks
 
         return $stateMachineItemTransfer;
     }
-
 }

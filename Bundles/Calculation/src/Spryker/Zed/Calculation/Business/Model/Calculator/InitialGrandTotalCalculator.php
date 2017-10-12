@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class InitialGrandTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -57,5 +56,4 @@ class InitialGrandTotalCalculator implements CalculatorInterface
 
         return $grandTotal;
     }
-
 }

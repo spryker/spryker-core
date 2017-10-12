@@ -8,7 +8,6 @@ namespace SprykerTest\Zed\ProductCategory\PageObject;
 
 class ProductCategoryAssignPage
 {
-
     const ID_CATEGORY = '2';
     const URL = '/product-category/assign?id-category=' . self::ID_CATEGORY;
     const AVAILABLE_PRODUCT_CHECKBOX_SELECTOR_PREFIX = '#all_products_checkbox_';
@@ -35,5 +34,4 @@ class ProductCategoryAssignPage
             self::PRODUCT_ID => 2,
         ],
     ];
-
 }

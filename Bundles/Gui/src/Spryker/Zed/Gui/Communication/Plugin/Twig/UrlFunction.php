@@ -12,7 +12,6 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class UrlFunction extends TwigFunction
 {
-
     /**
      * @return string
      */
@@ -33,5 +32,4 @@ class UrlFunction extends TwigFunction
             return $html;
         };
     }
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\Propel\PropelConfig;
  */
 class PostgreSqlDatabaseCreatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -68,5 +67,4 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     {
         return $this->getMockBuilder(PostgreSqlDatabaseCreator::class)->setMethods($methods)->getMock();
     }
-
 }

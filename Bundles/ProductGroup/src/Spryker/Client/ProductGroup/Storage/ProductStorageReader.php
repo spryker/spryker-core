@@ -11,7 +11,6 @@ use Spryker\Client\ProductGroup\Dependency\Client\ProductGroupToProductInterface
 
 class ProductStorageReader implements ProductStorageReaderInterface
 {
-
     /**
      * @var \Spryker\Client\ProductGroup\Storage\ProductAbstractGroupStorageReaderInterface
      */
@@ -118,5 +117,4 @@ class ProductStorageReader implements ProductStorageReaderInterface
 
         return $products;
     }
-
 }

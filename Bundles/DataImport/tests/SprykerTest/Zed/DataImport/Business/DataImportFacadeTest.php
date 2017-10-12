@@ -25,7 +25,6 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
  */
 class DataImportFacadeTest extends Unit
 {
-
     const IMPORT_TYPE_FULL_IMPORT = 'full';
     const IMPORT_TYPE_SPECIFIC_A = 'specific-importer-a';
     const IMPORT_TYPE_SPECIFIC_B = 'specific-importer-b';
@@ -118,5 +117,4 @@ class DataImportFacadeTest extends Unit
 
         return $dataImportBusinessFactoryMock;
     }
-
 }

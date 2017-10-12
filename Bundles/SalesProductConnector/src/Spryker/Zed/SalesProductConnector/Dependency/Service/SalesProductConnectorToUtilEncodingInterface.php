@@ -7,7 +7,6 @@ namespace Spryker\Zed\SalesProductConnector\Dependency\Service;
 
 interface SalesProductConnectorToUtilEncodingInterface
 {
-
     /**
      * @param array $value
      * @param int|null $options
@@ -26,5 +25,4 @@ interface SalesProductConnectorToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null);
-
 }

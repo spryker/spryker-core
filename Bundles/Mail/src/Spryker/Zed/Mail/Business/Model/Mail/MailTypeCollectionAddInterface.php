@@ -11,12 +11,10 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 interface MailTypeCollectionAddInterface
 {
-
     /**
      * @param \Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface $mailType
      *
      * @return mixed
      */
     public function add(MailTypePluginInterface $mailType);
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends EditController
 {
-
     const PARAM_ID_CUSTOMER = 'id-customer';
 
     /**
@@ -61,5 +60,4 @@ class DeleteController extends EditController
 
         return $this->redirectResponse('/customer-group/view?id-customer-group=' . $idCustomerGroup);
     }
-
 }

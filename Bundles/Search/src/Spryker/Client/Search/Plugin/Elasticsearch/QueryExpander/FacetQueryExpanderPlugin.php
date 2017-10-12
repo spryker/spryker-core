@@ -22,7 +22,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     const AGGREGATION_FILTER_NAME = 'filter';
     const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
@@ -243,5 +242,4 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
         return $boolQuery;
     }
-
 }

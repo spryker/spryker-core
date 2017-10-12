@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface PayolutionFacadeInterface
 {
-
     /**
      * @api
      *
@@ -139,5 +138,4 @@ interface PayolutionFacadeInterface
      * @return bool
      */
     public function isRefundApproved(OrderTransfer $orderTransfer);
-
 }

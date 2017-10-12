@@ -9,7 +9,6 @@ namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 class GlossaryToTouchBridge implements GlossaryToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -44,5 +43,4 @@ class GlossaryToTouchBridge implements GlossaryToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $idItem);
     }
-
 }

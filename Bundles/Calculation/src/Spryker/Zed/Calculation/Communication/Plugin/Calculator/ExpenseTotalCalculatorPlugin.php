@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ExpenseTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class ExpenseTotalCalculatorPlugin extends AbstractPlugin implements Calculation
         $this->getFacade()
             ->calculateExpenseTotal($calculableObjectTransfer);
     }
-
 }

@@ -39,7 +39,6 @@ use Spryker\Zed\Payolution\Business\PayolutionFacade;
  */
 class PayolutionFacadeGatewayTest extends Unit
 {
-
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -361,5 +360,4 @@ class PayolutionFacadeGatewayTest extends Unit
         $orderTransfer->setTotals($totalsTransfer);
         return $orderTransfer;
     }
-
 }

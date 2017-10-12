@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsGuiConfig extends AbstractBundleConfig
 {
-
     const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
@@ -49,5 +48,4 @@ class CmsGuiConfig extends AbstractBundleConfig
 
         return $yvesHost . sprintf($this->getConfig()->get(CmsGuiConstants::CMS_PAGE_PREVIEW_URI), $idCmsPage);
     }
-
 }

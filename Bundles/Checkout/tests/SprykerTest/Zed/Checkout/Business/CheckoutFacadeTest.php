@@ -64,7 +64,6 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
  */
 class CheckoutFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Checkout\Business\CheckoutFacade
      */
@@ -534,5 +533,4 @@ class CheckoutFacadeTest extends Unit
 
         return $salesBusinessFactoryMock;
     }
-
 }

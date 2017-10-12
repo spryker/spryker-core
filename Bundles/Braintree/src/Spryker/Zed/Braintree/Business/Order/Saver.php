@@ -15,7 +15,6 @@ use Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeOrderItem;
 
 class Saver implements SaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -81,5 +80,4 @@ class Saver implements SaverInterface
             $paymentOrderItemEntity->save();
         }
     }
-
 }

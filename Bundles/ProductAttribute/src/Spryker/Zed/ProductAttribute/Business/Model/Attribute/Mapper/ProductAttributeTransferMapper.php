@@ -19,7 +19,6 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInter
 
 class ProductAttributeTransferMapper implements ProductAttributeTransferMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface
      */
@@ -148,7 +147,6 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
         foreach ($availableLocales as $localeTransfer) {
-
             $localizedAttributeKeyTransfer = new LocalizedProductManagementAttributeKeyTransfer();
             $localizedAttributeKeyTransfer
                 ->setLocaleName($localeTransfer->getLocaleName())
@@ -178,5 +176,4 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
         return null;
     }
-
 }

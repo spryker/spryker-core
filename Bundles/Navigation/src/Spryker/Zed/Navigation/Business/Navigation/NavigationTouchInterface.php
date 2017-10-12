@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface NavigationTouchInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
@@ -33,5 +32,4 @@ interface NavigationTouchInterface
      * @return void
      */
     public function touchActiveByUrl(UrlTransfer $urlTransfer);
-
 }

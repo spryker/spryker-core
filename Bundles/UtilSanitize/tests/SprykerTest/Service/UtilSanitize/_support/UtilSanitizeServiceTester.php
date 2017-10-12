@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class UtilSanitizeServiceTester extends Actor
 {
-
     use _generated\UtilSanitizeServiceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

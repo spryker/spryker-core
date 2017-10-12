@@ -11,7 +11,6 @@ use Exception;
 
 class XmlBatchIterator implements CountableIteratorInterface
 {
-
     /**
      * @var string
      */
@@ -73,7 +72,8 @@ class XmlBatchIterator implements CountableIteratorInterface
                 );
 
                 $this->batchData = json_decode(
-                    json_encode($xml), true
+                    json_encode($xml),
+                    true
                 );
 
                 $this->batchData = $this->batchData[$this->rootNodeName];
@@ -119,5 +119,4 @@ class XmlBatchIterator implements CountableIteratorInterface
         $this->next();
         return count($this->batchData);
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 abstract class AbstractBusinessFactory extends AbstractFactory implements BusinessFactoryInterface
 {
-
     /**
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,5 +39,4 @@ abstract class AbstractBusinessFactory extends AbstractFactory implements Busine
     ) {
         return $dependencyInjector->injectBusinessLayerDependencies($container);
     }
-
 }

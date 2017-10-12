@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface PriceFacadeInterface
 {
-
     /**
      * Specification:
      * - Reads all persisted price types and returns their names in an array.
@@ -264,5 +263,4 @@ interface PriceFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
-
 }

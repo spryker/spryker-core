@@ -20,7 +20,6 @@ use Spryker\Zed\Price\PriceDependencyProvider;
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Price\Business\Model\ReaderInterface
      */
@@ -87,5 +86,4 @@ class PriceBusinessFactory extends AbstractBusinessFactory
 
         return $installer;
     }
-
 }

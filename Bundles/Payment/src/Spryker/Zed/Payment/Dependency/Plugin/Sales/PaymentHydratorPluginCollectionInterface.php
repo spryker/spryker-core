@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payment\Dependency\Plugin\Sales;
 
 interface PaymentHydratorPluginCollectionInterface
 {
-
     /**
      * @api
      *
@@ -39,5 +38,4 @@ interface PaymentHydratorPluginCollectionInterface
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface
      */
     public function get($provider);
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsPageTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
     const REQUEST_ID_PAGE = 'id-page';
     const URL_CMS_PAGE_ACTIVATE = '/cms/page/activate';
@@ -82,7 +81,6 @@ class CmsPageTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
-
             $results[] = [
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE => $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE],
                 CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],
@@ -144,5 +142,4 @@ class CmsPageTable extends AbstractTable
             $name
         );
     }
-
 }

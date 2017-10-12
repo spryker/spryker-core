@@ -26,7 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
  */
 class DecisionRuleOrSpecificationTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -89,5 +88,4 @@ class DecisionRuleOrSpecificationTest extends Unit
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductReviewDeleter implements ProductReviewDeleterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -72,5 +71,4 @@ class ProductReviewDeleter implements ProductReviewDeleterInterface
     {
         $this->productReviewTouch->touchProductReviewDeleted($productReviewTransfer);
     }
-
 }

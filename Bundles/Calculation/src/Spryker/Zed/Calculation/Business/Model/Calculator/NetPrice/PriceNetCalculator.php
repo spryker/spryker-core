@@ -14,7 +14,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class PriceNetCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -66,5 +65,4 @@ class PriceNetCalculator implements CalculatorInterface
             $expenseTransfer->setSumPrice($expenseTransfer->getSumNetPrice());
         }
     }
-
 }

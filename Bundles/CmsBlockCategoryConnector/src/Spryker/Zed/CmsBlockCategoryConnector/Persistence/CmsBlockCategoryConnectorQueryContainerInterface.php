@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence;
 
 interface CmsBlockCategoryConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -80,5 +79,4 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
      */
     public function queryCmsBlockCategoryPositionByName($positionName);
-
 }

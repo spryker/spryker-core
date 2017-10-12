@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class NavigationCollectorFacade extends AbstractFacade implements NavigationCollectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -60,5 +59,4 @@ class NavigationCollectorFacade extends AbstractFacade implements NavigationColl
             $output
         );
     }
-
 }

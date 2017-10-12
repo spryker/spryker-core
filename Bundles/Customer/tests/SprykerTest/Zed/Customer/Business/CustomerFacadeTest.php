@@ -31,7 +31,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CustomerFacadeTest extends Unit
 {
-
     const TESTER_EMAIL = 'tester@spryker.com';
     const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
     const TESTER_PASSWORD = 'tester';
@@ -637,5 +636,4 @@ class CustomerFacadeTest extends Unit
 
         $this->assertSame($customerTransfer, $facade->updateCustomerPassword($customerTransfer));
     }
-
 }

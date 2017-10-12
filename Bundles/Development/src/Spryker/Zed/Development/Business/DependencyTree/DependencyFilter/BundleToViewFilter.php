@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class BundleToViewFilter implements DependencyFilterInterface
 {
-
     /**
      * @var string
      */
@@ -34,5 +33,4 @@ class BundleToViewFilter implements DependencyFilterInterface
     {
         return ($dependency[DependencyTree::META_BUNDLE] !== $this->bundle);
     }
-
 }

@@ -29,7 +29,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class StateUpdaterTest extends StateMachineMocks
 {
-
     const TEST_STATE_MACHINE_NAME = 'test state machine name';
 
     /**
@@ -232,5 +231,4 @@ class StateUpdaterTest extends StateMachineMocks
     {
         return $this->getMockBuilder(SpyStateMachineItemStateHistory::class)->getMock();
     }
-
 }

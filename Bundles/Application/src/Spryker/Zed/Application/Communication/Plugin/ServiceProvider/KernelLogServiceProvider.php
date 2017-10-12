@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class KernelLogServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -48,5 +47,4 @@ class KernelLogServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         return $app['dispatcher'];
     }
-
 }

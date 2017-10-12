@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractPlugin
 {
-
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
@@ -172,5 +171,4 @@ abstract class AbstractPlugin
     {
         return new BundleConfigResolver();
     }
-
 }

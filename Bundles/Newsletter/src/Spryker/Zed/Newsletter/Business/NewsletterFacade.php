@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterface
 {
-
     /**
      * @api
      *
@@ -138,5 +137,4 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
             ->createSubscriptionAnonymizer()
             ->process($newsletterUnsubscriptionRequest);
     }
-
 }

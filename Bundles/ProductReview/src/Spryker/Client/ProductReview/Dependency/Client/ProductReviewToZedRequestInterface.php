@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ProductReviewToZedRequestInterface
 {
-
     /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
@@ -20,5 +19,4 @@ interface ProductReviewToZedRequestInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function call($url, TransferInterface $object, $timeoutInSeconds = null);
-
 }

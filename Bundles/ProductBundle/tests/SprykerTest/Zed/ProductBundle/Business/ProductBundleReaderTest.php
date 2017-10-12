@@ -28,7 +28,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleReaderTest extends Unit
 {
-
     /**
      * @var array
      */
@@ -159,5 +158,4 @@ class ProductBundleReaderTest extends Unit
             ->with($fixtures['idProductConcrete'])
             ->willReturn($bundledProducts);
     }
-
 }

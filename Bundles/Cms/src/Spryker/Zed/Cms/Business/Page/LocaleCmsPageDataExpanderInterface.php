@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface LocaleCmsPageDataExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $localeCmsPageDataTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -20,5 +19,4 @@ interface LocaleCmsPageDataExpanderInterface
      * @return array
      */
     public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\Transfer;
 
 interface TransferInterface
 {
-
     /**
      * @param bool $isRecursive
      *
@@ -38,5 +37,4 @@ interface TransferInterface
      * @return bool
      */
     public function isPropertyModified($propertyName);
-
 }

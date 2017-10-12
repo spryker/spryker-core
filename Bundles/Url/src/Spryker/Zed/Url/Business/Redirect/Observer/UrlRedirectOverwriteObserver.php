@@ -17,7 +17,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectOverwriteObserver implements UrlCreatorBeforeSaveObserverInterface, UrlUpdaterBeforeSaveObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -103,5 +102,4 @@ class UrlRedirectOverwriteObserver implements UrlCreatorBeforeSaveObserverInterf
 
         $this->urlDeleter->deleteUrlRedirect($urlRedirectTransfer);
     }
-
 }

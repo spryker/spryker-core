@@ -11,7 +11,6 @@ use Symfony\Component\Form\CallbackTransformer;
 
 trait ArrayObjectTransformerTrait
 {
-
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
@@ -26,5 +25,4 @@ trait ArrayObjectTransformerTrait
             }
         );
     }
-
 }

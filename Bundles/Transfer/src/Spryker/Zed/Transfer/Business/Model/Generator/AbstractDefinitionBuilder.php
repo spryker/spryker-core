@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 abstract class AbstractDefinitionBuilder implements DefinitionBuilderInterface
 {
-
     /**
      * @param array $definitions
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface $definitionClass
@@ -26,5 +25,4 @@ abstract class AbstractDefinitionBuilder implements DefinitionBuilderInterface
 
         return $definitionInstances;
     }
-
 }

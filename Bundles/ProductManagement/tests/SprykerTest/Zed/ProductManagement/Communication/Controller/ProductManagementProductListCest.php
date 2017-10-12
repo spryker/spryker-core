@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester;
  */
 class ProductManagementProductListCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class ProductManagementProductListCest
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products');
     }
-
 }

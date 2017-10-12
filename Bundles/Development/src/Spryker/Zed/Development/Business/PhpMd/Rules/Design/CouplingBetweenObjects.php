@@ -13,7 +13,6 @@ use PHPMD\Rule\ClassAware;
 
 class CouplingBetweenObjects extends AbstractRule implements ClassAware
 {
-
     const COUPLING_BETWEEN_OBJECTS = 'cbo';
     const THRESHOLD = 'minimum';
 
@@ -47,5 +46,4 @@ class CouplingBetweenObjects extends AbstractRule implements ClassAware
             || ($node->getName() === 'YvesBootstrap')
         );
     }
-
 }

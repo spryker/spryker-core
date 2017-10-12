@@ -13,7 +13,6 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 
 class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderInterface
 {
-
     const READER_NAME = 'elastic-search-reader';
 
     /**
@@ -87,5 +86,4 @@ class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderIn
             ->getIndex($this->searchCollectorConfiguration->getIndexName())
             ->getType($this->searchCollectorConfiguration->getTypeName());
     }
-
 }

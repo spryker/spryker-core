@@ -23,7 +23,6 @@ use Spryker\Shared\Twig\TwigFilter;
  */
 class DateTimeFormatterTwigExtensionTest extends Unit
 {
-
     const DATE_TO_FORMAT = '1980-12-06 08:00:00';
 
     /**
@@ -115,5 +114,4 @@ class DateTimeFormatterTwigExtensionTest extends Unit
 
         return $utilDateTimeServiceMock;
     }
-
 }

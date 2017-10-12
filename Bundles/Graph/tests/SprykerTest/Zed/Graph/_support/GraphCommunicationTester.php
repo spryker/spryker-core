@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class GraphCommunicationTester extends Actor
 {
-
     use _generated\GraphCommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

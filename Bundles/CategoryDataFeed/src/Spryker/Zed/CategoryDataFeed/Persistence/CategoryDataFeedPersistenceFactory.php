@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CategoryDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\CategoryDataFeed\Dependency\QueryContainer\CategoryDataFeedToCategoryInterface
      */
@@ -24,5 +23,4 @@ class CategoryDataFeedPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(CategoryDataFeedDependencyProvider::CATEGORY_QUERY_CONTAINER);
     }
-
 }

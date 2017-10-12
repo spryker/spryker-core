@@ -16,7 +16,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 {
-
     const FILE_EXTENSION = '.json';
 
     /**
@@ -230,5 +229,4 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         return $this->utilEncodingService
             ->decodeJson($jsonValue, true);
     }
-
 }

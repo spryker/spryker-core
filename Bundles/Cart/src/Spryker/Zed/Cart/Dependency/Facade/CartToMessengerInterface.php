@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 interface CartToMessengerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
      *
@@ -32,5 +31,4 @@ interface CartToMessengerInterface
      * @return void
      */
     public function addInfoMessage(MessageTransfer $messageTransfer);
-
 }

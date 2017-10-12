@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class MoneyFormatter implements MoneyFormatterWithTypeInterface
 {
-
     /**
      * @var \Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface
      */
@@ -37,5 +36,4 @@ class MoneyFormatter implements MoneyFormatterWithTypeInterface
 
         return $formatter->format($moneyTransfer);
     }
-
 }

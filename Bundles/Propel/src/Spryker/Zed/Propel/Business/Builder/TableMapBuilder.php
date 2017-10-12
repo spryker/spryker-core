@@ -15,7 +15,6 @@ use Propel\Generator\Builder\Om\TableMapBuilder as PropelTableMapBuilder;
 
 class TableMapBuilder extends PropelTableMapBuilder
 {
-
     /**
      * Change default propel behaviour
      *
@@ -111,5 +110,4 @@ class TableMapBuilder extends PropelTableMapBuilder
     }
 ";
     }
-
 }

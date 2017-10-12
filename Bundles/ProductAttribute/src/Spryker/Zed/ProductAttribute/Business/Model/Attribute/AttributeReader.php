@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 class AttributeReader implements AttributeReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface
      */
@@ -157,5 +156,4 @@ class AttributeReader implements AttributeReaderInterface
 
         return $this->productAttributeTransferMapper->convertProductAttributeCollection($collection);
     }
-
 }

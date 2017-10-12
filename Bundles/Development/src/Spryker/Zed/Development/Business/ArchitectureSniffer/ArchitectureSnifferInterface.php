@@ -9,7 +9,6 @@ namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
 interface ArchitectureSnifferInterface
 {
-
     /**
      * @param string $directory
      * @param array $options
@@ -22,5 +21,4 @@ interface ArchitectureSnifferInterface
      * @return array
      */
     public function getRules();
-
 }

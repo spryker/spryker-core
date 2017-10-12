@@ -37,7 +37,6 @@ use Spryker\Zed\Url\UrlDependencyProvider;
  */
 class UrlBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Url\Business\Url\UrlCreatorInterface
      */
@@ -427,5 +426,4 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(UrlDependencyProvider::PLUGINS_URL_AFTER_DELETE);
     }
-
 }

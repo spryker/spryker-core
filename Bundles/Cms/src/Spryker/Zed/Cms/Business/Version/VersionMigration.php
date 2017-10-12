@@ -13,7 +13,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class VersionMigration implements VersionMigrationInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -67,5 +66,4 @@ class VersionMigration implements VersionMigrationInterface
             );
         }
     }
-
 }

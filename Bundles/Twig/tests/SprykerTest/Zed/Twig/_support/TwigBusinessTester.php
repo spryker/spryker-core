@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class TwigBusinessTester extends Actor
 {
-
     use _generated\TwigBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

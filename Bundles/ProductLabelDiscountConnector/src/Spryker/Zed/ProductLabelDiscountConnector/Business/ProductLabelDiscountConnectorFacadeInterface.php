@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductLabelDiscountConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Builds all product variants by abstract sku.
@@ -53,5 +52,4 @@ interface ProductLabelDiscountConnectorFacadeInterface
      * @return array
      */
     public function findAllLabels();
-
 }

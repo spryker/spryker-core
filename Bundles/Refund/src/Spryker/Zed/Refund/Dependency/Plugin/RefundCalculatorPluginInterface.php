@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RefundTransfer;
 
 interface RefundCalculatorPluginInterface
 {
-
     /**
      * @api
      *
@@ -23,5 +22,4 @@ interface RefundCalculatorPluginInterface
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function calculateRefund(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems);
-
 }

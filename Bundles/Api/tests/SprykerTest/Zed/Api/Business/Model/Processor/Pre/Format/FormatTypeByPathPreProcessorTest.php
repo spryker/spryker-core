@@ -27,7 +27,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProce
  */
 class FormatTypeByPathPreProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -64,5 +63,4 @@ class FormatTypeByPathPreProcessorTest extends Unit
         $this->assertSame('json', $apiRequestTransferAfter->getFormatType());
         $this->assertSame('resource-name/1', $apiRequestTransfer->getPath());
     }
-
 }

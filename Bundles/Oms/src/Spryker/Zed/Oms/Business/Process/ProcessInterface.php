@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Business\Process;
 
 interface ProcessInterface
 {
-
     /**
      * @param string|null $highlightState
      * @param string|null $format
@@ -189,5 +188,4 @@ interface ProcessInterface
      * @return string
      */
     public function getFile();
-
 }

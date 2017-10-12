@@ -17,7 +17,6 @@ use Spryker\Yves\Payolution\Handler\PayolutionHandler;
 
 class PayolutionFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\Payolution\Form\InvoiceSubForm
      */
@@ -73,5 +72,4 @@ class PayolutionFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(PayolutionDependencyProvider::CLIENT_PAYOLUTION);
     }
-
 }

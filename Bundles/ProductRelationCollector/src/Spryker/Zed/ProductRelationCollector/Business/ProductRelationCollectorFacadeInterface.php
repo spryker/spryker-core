@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ProductRelationCollectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Exports all touched product relation entries,
@@ -44,5 +43,4 @@ interface ProductRelationCollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

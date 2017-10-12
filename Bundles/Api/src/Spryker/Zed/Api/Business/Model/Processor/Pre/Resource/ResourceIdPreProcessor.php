@@ -12,7 +12,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class ResourceIdPreProcessor implements PreProcessorInterface
 {
-
     /**
      * Extracts the path segment responsible for building the resource action
      *
@@ -40,5 +39,4 @@ class ResourceIdPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

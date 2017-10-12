@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductRelationUpdaterConsole extends Console
 {
-
     const COMMAND_NAME = 'product-relation:update';
     const COMMAND_DESCRIPTION = 'Updates all active product relations';
 
@@ -39,5 +38,4 @@ class ProductRelationUpdaterConsole extends Console
     {
         $this->getFacade()->rebuildRelations();
     }
-
 }

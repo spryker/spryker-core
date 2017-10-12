@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 interface AttributeTranslatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
      * @return void
      */
     public function saveProductManagementAttributeTranslation(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
-
 }

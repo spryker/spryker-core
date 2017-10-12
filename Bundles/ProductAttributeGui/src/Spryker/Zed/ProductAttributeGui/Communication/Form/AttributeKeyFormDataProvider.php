@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
 class AttributeKeyFormDataProvider implements AttributeKeyFormDataProviderInterface
 {
-
     /**
      * @return array
      */
@@ -25,5 +24,4 @@ class AttributeKeyFormDataProvider implements AttributeKeyFormDataProviderInterf
     {
         return [];
     }
-
 }

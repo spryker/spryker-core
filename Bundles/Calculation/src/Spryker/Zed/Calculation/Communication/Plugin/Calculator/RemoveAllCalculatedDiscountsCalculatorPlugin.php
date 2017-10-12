@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class RemoveAllCalculatedDiscountsCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -26,5 +25,4 @@ class RemoveAllCalculatedDiscountsCalculatorPlugin extends AbstractPlugin implem
     {
         $this->getFacade()->removeAllCalculatedDiscounts($calculableObjectTransfer);
     }
-
 }

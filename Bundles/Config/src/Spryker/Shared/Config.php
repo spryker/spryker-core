@@ -14,7 +14,6 @@ use Spryker\Shared\Config\Config as SprykerConfig;
  */
 class Config extends SprykerConfig
 {
-
     /**
      * @return void
      */
@@ -32,5 +31,4 @@ class Config extends SprykerConfig
     {
         parent::init($environment);
     }
-
 }

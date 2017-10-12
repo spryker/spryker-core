@@ -9,7 +9,6 @@ namespace Spryker\Zed\StateMachine\Business\Process;
 
 interface TransitionInterface
 {
-
     /**
      * @param mixed $happy
      *
@@ -79,5 +78,4 @@ interface TransitionInterface
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
     public function getTargetState();
-
 }

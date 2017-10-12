@@ -26,7 +26,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SpellingSuggestionQ
  */
 class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
-
     /**
      * @expectedException \Spryker\Client\Search\Exception\MissingSuggestionQueryException
      *
@@ -113,5 +112,4 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
 
         return [$expectedQuery, $expectedSuggest];
     }
-
 }

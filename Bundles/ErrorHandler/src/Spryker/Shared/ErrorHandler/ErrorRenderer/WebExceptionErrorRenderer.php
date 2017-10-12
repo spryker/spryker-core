@@ -9,7 +9,6 @@ namespace Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 class WebExceptionErrorRenderer implements ErrorRendererInterface
 {
-
     /**
      * @param \Exception|\Throwable $exception
      *
@@ -50,5 +49,4 @@ class WebExceptionErrorRenderer implements ErrorRendererInterface
 
         return htmlspecialchars($uri, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
-
 }

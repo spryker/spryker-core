@@ -16,7 +16,6 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class ProductOptionValueSaver implements ProductOptionValueSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -161,5 +160,4 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     {
         return new SpyProductOptionValue();
     }
-
 }
