@@ -19,7 +19,7 @@
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="shipment_method_key" required="false" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-        <column name="default_price" type="INTEGER" required="false"/>
+        <column name="default_price" type="INTEGER" required="false" description="Deprecated"/>
         <column name="availability_plugin" size="255" type="VARCHAR"/>
         <column name="price_plugin" size="255" type="VARCHAR"/>
         <column name="delivery_time_plugin" size="255" type="VARCHAR"/>
