@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabel\Dependency;
 
 interface ProductLabelEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_product_label_product_abstract entity creation
@@ -81,5 +80,4 @@ interface ProductLabelEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_product_label_localized_attributes.delete';
-
 }

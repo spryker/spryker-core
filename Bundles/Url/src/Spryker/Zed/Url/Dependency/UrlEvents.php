@@ -9,7 +9,6 @@ namespace Spryker\Zed\Url\Dependency;
 
 interface UrlEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_url entity creation
@@ -57,5 +56,4 @@ interface UrlEvents
      * @api
      */
     const ENTITY_SPY_URL_REDIRECT_DELETE = 'Entity.spy_url_redirect.delete';
-
 }

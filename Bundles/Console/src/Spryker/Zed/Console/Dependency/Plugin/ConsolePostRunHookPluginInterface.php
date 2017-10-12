@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ConsolePostRunHookPluginInterface
 {
-
     /**
      * Specification
      *  - The post-run plugins will be executed after each console commands
@@ -25,5 +24,4 @@ interface ConsolePostRunHookPluginInterface
      * @return int
      */
     public function postRun(InputInterface $input, OutputInterface $output);
-
 }

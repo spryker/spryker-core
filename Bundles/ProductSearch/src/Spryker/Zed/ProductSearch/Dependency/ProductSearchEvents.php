@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearch\Dependency;
 
 interface ProductSearchEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_product_search_attribute entity creation
@@ -33,5 +32,4 @@ interface ProductSearchEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_SEARCH_ATTRIBUTE_DELETE = 'Entity.spy_product_search_attribute.delete';
-
 }

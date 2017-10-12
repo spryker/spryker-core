@@ -9,7 +9,6 @@ namespace Spryker\Service\Synchronization\Model;
 
 class KeyFilter implements KeyFilterInterface
 {
-
     /**
      * @param string $key
      *
@@ -21,5 +20,4 @@ class KeyFilter implements KeyFilterInterface
 
         return str_replace($charsToReplace, '-', mb_strtolower(trim($key)));
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Dependency;
 
 interface CategoryEvents
 {
-
     const CATEGORY_BEFORE_CREATE = 'Category.before.create';
     const CATEGORY_BEFORE_UPDATE = 'Category.before.update';
     const CATEGORY_BEFORE_DELETE = 'Category.before.delete';
@@ -137,5 +136,4 @@ interface CategoryEvents
      * @api
      */
     const ENTITY_SPY_CATEGORY_TEMPLATE_DELETE = 'Entity.spy_category_template.delete';
-
 }

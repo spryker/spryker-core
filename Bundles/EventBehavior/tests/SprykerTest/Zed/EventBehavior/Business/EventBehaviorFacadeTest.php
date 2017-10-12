@@ -37,7 +37,6 @@ use Spryker\Zed\Kernel\RequestIdentifier;
  */
 class EventBehaviorFacadeTest extends Unit
 {
-
     const FOREIGN_KEYS = 'foreign_keys';
     const MODIFIED_COLUMNS = 'modified_columns';
 
@@ -246,5 +245,4 @@ class EventBehaviorFacadeTest extends Unit
     {
         SpyEventBehaviorEntityChangeQuery::create()->deleteAll();
     }
-
 }

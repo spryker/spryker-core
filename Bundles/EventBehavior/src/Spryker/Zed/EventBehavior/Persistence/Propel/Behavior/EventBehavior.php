@@ -14,7 +14,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class EventBehavior extends Behavior
 {
-
     const EVENT_CHANGE_ENTITY_NAME = 'name';
     const EVENT_CHANGE_ENTITY_ID = 'id';
     const EVENT_CHANGE_ENTITY_FOREIGN_KEYS = 'foreignKeys';
@@ -527,5 +526,4 @@ protected function getPhpType(\$xmlValue, \$column)
 }
         ";
     }
-
 }

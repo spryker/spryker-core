@@ -22,7 +22,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator\Helper;
 
 class StandardEnglishPluralizer implements PluralizerInterface
 {
-
     /**
      * @var array
      */
@@ -158,5 +157,4 @@ class StandardEnglishPluralizer implements PluralizerInterface
         // fallback to naive pluralization
         return $root . 's';
     }
-
 }

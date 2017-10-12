@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
 {
-
     const KEY_TABLE = 'table';
     const ENTITY_SCHEMA_SUFFIX = '.schema.xml';
     const PREFIX_LENGTH = 4;
@@ -48,5 +47,4 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
             $this->transferDefinitions[] = $table;
         }
     }
-
 }

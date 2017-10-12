@@ -22,7 +22,6 @@ use Throwable;
 
 class TriggerManager implements TriggerManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\EventBehavior\Dependency\Facade\EventBehaviorToEventInterface
      */
@@ -76,13 +75,11 @@ class TriggerManager implements TriggerManagerInterface
             if ($triggeredRows !== 0 && count($events) === $triggeredRows) {
                 $this->queryContainer->queryEntityChange($processId)->delete();
             }
-
         } catch (Throwable $t) {
             ErrorLogger::getInstance()->log($t);
             throw new EventBehaviorDatabaseException('
                 EventBehavior requires Database tables and connection to trigger events, you can fix this by installing Database or if you want to run console commands, 
-                please add `--no-post` as an option to skip this error', $t->getCode(), $t
-            );
+                please add `--no-post` as an option to skip this error', $t->getCode(), $t);
         }
     }
 
@@ -131,5 +128,4 @@ class TriggerManager implements TriggerManagerInterface
 
         return $triggeredRows;
     }
-
 }

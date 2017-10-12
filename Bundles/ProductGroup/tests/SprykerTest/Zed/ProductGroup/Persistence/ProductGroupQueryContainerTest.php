@@ -23,7 +23,6 @@ use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainer;
  */
 class ProductGroupQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -47,5 +46,4 @@ class ProductGroupQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyProductGroupQuery::class, $query);
     }
-
 }

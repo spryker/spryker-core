@@ -9,7 +9,6 @@ namespace Spryker\Service\Synchronization\Model;
 
 interface SynchronizationKeyBuilderInterface
 {
-
     /**
      * @param string $resourceName
      *
@@ -18,5 +17,4 @@ interface SynchronizationKeyBuilderInterface
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
     public function getStorageKeyBuilder($resourceName);
-
 }

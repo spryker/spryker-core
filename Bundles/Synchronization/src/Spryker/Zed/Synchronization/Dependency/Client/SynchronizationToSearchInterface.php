@@ -9,7 +9,6 @@ namespace Spryker\Zed\Synchronization\Dependency\Client;
 
 interface SynchronizationToSearchInterface
 {
-
     /**
      * @param string $key
      * @param string|null $typeName
@@ -36,5 +35,4 @@ interface SynchronizationToSearchInterface
      * @return bool
      */
     public function delete(array $dataSet, $typeName = null, $indexName = null);
-
 }

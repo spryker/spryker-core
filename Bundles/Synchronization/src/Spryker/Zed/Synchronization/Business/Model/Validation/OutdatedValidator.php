@@ -11,7 +11,6 @@ use Spryker\Zed\Synchronization\SynchronizationConfig;
 
 class OutdatedValidator implements OutdatedValidatorInterface
 {
-
     const MESSAGE_TIMESTAMP = '_timestamp';
 
     /**
@@ -61,5 +60,4 @@ class OutdatedValidator implements OutdatedValidatorInterface
 
         return false;
     }
-
 }

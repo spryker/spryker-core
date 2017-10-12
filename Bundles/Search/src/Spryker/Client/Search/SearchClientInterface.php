@@ -11,7 +11,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 interface SearchClientInterface
 {
-
     /**
      * Specification:
      * - Connects to Elasticsearch client if possible
@@ -126,5 +125,4 @@ interface SearchClientInterface
      * @return bool
      */
     public function delete(array $dataSet, $typeName = null, $indexName = null);
-
 }

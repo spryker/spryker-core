@@ -15,7 +15,6 @@ use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
  */
 class SynchronizationCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface
      */
@@ -23,5 +22,4 @@ class SynchronizationCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

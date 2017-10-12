@@ -9,7 +9,6 @@ namespace Spryker\Zed\Synchronization\Business\Model\Validation;
 
 interface OutdatedValidatorInterface
 {
-
     /**
      * @param string $queueName
      * @param array $newEntry
@@ -18,5 +17,4 @@ interface OutdatedValidatorInterface
      * @return bool
      */
     public function isInvalid($queueName, array $newEntry, array $existingEntry);
-
 }

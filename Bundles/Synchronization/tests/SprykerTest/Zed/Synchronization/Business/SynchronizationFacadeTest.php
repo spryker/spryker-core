@@ -29,7 +29,6 @@ use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
  */
 class SynchronizationFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface
      */
@@ -236,5 +235,4 @@ class SynchronizationFacadeTest extends Unit
         $this->synchronizationFacade = new SynchronizationFacade();
         $this->synchronizationFacade->setFactory($synchronizationBusinessFactory);
     }
-
 }

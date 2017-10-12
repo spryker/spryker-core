@@ -9,7 +9,6 @@ namespace Spryker\Zed\EventBehavior\Business\Model;
 
 interface TriggerManagerInterface
 {
-
     /**
      * @return void
      */
@@ -19,5 +18,4 @@ interface TriggerManagerInterface
      * @return void
      */
     public function triggerLostEvents();
-
 }

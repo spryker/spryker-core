@@ -8,7 +8,6 @@ namespace Spryker\Zed\EventBehavior\Dependency\Service;
 
 class EventBehaviorToUtilEncodingBridge implements EventBehaviorToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class EventBehaviorToUtilEncodingBridge implements EventBehaviorToUtilEncodingIn
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

@@ -22,7 +22,6 @@ use Spryker\Zed\Price\Persistence\PriceQueryContainer;
  */
 class PriceQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class PriceQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyPriceProductQuery::class, $query);
     }
-
 }

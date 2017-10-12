@@ -29,7 +29,6 @@ use Spryker\Zed\Search\SearchDependencyProvider;
  */
 class SearchBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -205,5 +204,4 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(SearchDependencyProvider::PLUGIN_SEARCH_PAGE_MAPS);
     }
-
 }

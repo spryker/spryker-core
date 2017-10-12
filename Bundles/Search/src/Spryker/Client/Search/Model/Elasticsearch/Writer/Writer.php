@@ -14,7 +14,6 @@ use Spryker\Client\Search\Exception\InvalidDataSetException;
 
 class Writer implements WriterInterface
 {
-
     /**
      * @var \Elastica\Client
      */
@@ -169,5 +168,4 @@ class Writer implements WriterInterface
 
         return count($integerKeys) > 0;
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
  */
 class SynchronizationBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface
      */
@@ -75,5 +74,4 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

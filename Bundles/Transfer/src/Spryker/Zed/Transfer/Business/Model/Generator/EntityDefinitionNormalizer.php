@@ -12,7 +12,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
-
     const KEY_TYPE = 'type';
     const KEY_COLUMN = 'column';
     const KEY_FOREIGN_KEY = 'foreign-key';
@@ -196,5 +195,4 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
         }
         return $normalizedDefinition;
     }
-
 }

@@ -16,7 +16,6 @@ use Throwable;
 
 trait DatabaseTransactionHandlerTrait
 {
-
     /**
      * @param \Closure $callback
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
@@ -76,5 +75,4 @@ trait DatabaseTransactionHandlerTrait
     {
         Propel::enableInstancePooling();
     }
-
 }

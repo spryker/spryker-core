@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategory\Dependency;
 
 interface ProductCategoryEvents
 {
-
     const PRODUCT_CATEGORY_ASSIGNED = 'ProductCategory.product.assigned';
     const PRODUCT_CATEGORY_UNASSIGNED = 'ProductCategory.product.unassigned';
 
@@ -36,5 +35,4 @@ interface ProductCategoryEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_CATEGORY_DELETE = 'Entity.spy_product_category.delete';
-
 }

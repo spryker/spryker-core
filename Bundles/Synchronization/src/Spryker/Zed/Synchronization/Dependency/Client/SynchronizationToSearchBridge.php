@@ -9,7 +9,6 @@ namespace Spryker\Zed\Synchronization\Dependency\Client;
 
 class SynchronizationToSearchBridge implements SynchronizationToSearchInterface
 {
-
     /**
      * @var \Spryker\Client\Search\SearchClientInterface
      */
@@ -58,5 +57,4 @@ class SynchronizationToSearchBridge implements SynchronizationToSearchInterface
     {
         $this->searchClient->delete($dataSet, $typeName, $indexName);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Service\Synchronization;
 
 interface SynchronizationServiceInterface
 {
-
     /**
      * Specification:
      * - Returns resource KeyBuilder based on given resource name,
@@ -34,5 +33,4 @@ interface SynchronizationServiceInterface
      * @return string
      */
     public function escapeKey($key);
-
 }

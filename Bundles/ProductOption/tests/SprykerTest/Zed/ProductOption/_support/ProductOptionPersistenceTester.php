@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class ProductOptionPersistenceTester extends Actor
 {
-
     use _generated\ProductOptionPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

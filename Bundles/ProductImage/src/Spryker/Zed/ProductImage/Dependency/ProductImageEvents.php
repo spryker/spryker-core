@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductImage\Dependency;
 
 interface ProductImageEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_product_image entity creation
@@ -81,5 +80,4 @@ interface ProductImageEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE = 'Entity.spy_product_image_set_to_product_image.delete';
-
 }

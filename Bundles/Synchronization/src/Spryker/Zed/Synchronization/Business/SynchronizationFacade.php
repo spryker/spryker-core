@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SynchronizationFacade extends AbstractFacade implements SynchronizationFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -78,5 +77,4 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     {
         $this->getFactory()->createSearchManager()->delete($data, $queueName);
     }
-
 }

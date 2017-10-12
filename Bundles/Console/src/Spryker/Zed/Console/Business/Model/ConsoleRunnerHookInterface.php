@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ConsoleRunnerHookInterface
 {
-
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
@@ -28,5 +27,4 @@ interface ConsoleRunnerHookInterface
      * @return void
      */
     public function postRun(InputInterface $input, OutputInterface $output);
-
 }

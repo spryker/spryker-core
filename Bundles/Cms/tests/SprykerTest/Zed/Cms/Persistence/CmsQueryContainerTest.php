@@ -22,7 +22,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
  */
 class CmsQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class CmsQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyCmsVersionQuery::class, $query);
     }
-
 }

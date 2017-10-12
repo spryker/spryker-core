@@ -9,7 +9,6 @@ namespace Spryker\Zed\Synchronization\Business\Model;
 
 interface SynchronizationInterface
 {
-
     /**
      * @param array $data
      * @param string $queueName
@@ -25,5 +24,4 @@ interface SynchronizationInterface
      * @return void
      */
     public function delete(array $data, $queueName);
-
 }

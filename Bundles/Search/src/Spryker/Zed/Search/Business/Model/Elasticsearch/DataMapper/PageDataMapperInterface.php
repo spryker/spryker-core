@@ -12,7 +12,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 interface PageDataMapperInterface
 {
-
     /**
      * @deprecated use PageDataMapper::transferDataByMapperName() instead
      *
@@ -34,5 +33,4 @@ interface PageDataMapperInterface
      * @return array
      */
     public function transferDataByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
-
 }

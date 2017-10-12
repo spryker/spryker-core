@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Dependency;
 
 interface CmsEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_cms_page entity creation
@@ -57,5 +56,4 @@ interface CmsEvents
      * @api
      */
     const ENTITY_SPY_CMS_VERSION_DELETE = 'Entity.spy_cms_version.delete';
-
 }

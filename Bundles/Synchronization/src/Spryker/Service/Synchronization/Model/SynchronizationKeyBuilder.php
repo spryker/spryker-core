@@ -12,7 +12,6 @@ use Spryker\Service\Synchronization\Plugin\BaseKeyGenerator;
 
 class SynchronizationKeyBuilder implements SynchronizationKeyBuilderInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
@@ -61,5 +60,4 @@ class SynchronizationKeyBuilder implements SynchronizationKeyBuilderInterface
 
         return $keyGeneratorPlugin;
     }
-
 }

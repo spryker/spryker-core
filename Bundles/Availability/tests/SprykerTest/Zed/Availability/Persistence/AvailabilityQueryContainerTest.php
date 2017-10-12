@@ -23,7 +23,6 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
  */
 class AvailabilityQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -35,5 +34,4 @@ class AvailabilityQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyAvailabilityAbstractQuery::class, $query);
     }
-
 }

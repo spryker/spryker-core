@@ -13,7 +13,6 @@ use Spryker\Service\Synchronization\Model\KeyFilterInterface;
 
 class DefaultKeyGeneratorPlugin extends BaseKeyGenerator implements SynchronizationKeyGeneratorPluginInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\Model\KeyFilterInterface
      */
@@ -50,5 +49,4 @@ class DefaultKeyGeneratorPlugin extends BaseKeyGenerator implements Synchronizat
 
         return sprintf("%s:%s", $this->getResource(), $keySuffix);
     }
-
 }

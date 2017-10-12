@@ -15,7 +15,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class SearchClient extends AbstractClient implements SearchClientInterface
 {
-
     /**
      * Specification:
      * - Connects to Elasticsearch client if possible
@@ -174,5 +173,4 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->createWriter()
             ->delete($dataSet, $typeName, $indexName);
     }
-
 }

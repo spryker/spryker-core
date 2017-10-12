@@ -9,7 +9,6 @@ namespace Spryker\Service\EventBehavior\Model;
 
 class ArrayFilter implements ArrayFilterInterface
 {
-
     /**
      * @param array $array
      *
@@ -34,5 +33,4 @@ class ArrayFilter implements ArrayFilterInterface
 
         return $filteredArray;
     }
-
 }

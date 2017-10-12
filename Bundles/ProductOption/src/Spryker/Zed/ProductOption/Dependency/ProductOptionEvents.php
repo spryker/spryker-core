@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOption\Dependency;
 
 interface ProductOptionEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_product_abstract_product_option_group entity creation
@@ -81,5 +80,4 @@ interface ProductOptionEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE = 'Entity.spy_product_option_value.delete';
-
 }

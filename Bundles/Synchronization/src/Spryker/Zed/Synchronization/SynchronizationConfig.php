@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SynchronizationConfig extends AbstractBundleConfig
 {
-
     /**
      * @param string $queueName
      *
@@ -35,5 +34,4 @@ class SynchronizationConfig extends AbstractBundleConfig
 
         return $numberOfWorker;
     }
-
 }

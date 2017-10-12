@@ -9,7 +9,6 @@ namespace Spryker\Zed\Price\Dependency;
 
 interface PriceEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_price_product entity creation
@@ -57,5 +56,4 @@ interface PriceEvents
      * @api
      */
     const ENTITY_SPY_PRICE_TYPE_DELETE = 'Entity.spy_price_type.delete';
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 
 interface SynchronizationKeyGeneratorPluginInterface
 {
-
     /**
      * Specification:
      * - Generates storage or search key based on SynchronizationDataTransfer
@@ -24,5 +23,4 @@ interface SynchronizationKeyGeneratorPluginInterface
      * @return string
      */
     public function generateKey(SynchronizationDataTransfer $dataTransfer);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSet\Dependency;
 
 interface ProductSetEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_product_set entity creation
@@ -81,5 +80,4 @@ interface ProductSetEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_SET_DATA_DELETE = 'Entity.spy_product_set_data.delete';
-
 }

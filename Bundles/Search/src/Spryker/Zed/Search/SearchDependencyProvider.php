@@ -13,7 +13,6 @@ use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingBridge;
 
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_SEARCH = 'search client';
     const SERVICE_UTIL_ENCODING = 'util encoding service';
     const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
@@ -75,5 +74,4 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

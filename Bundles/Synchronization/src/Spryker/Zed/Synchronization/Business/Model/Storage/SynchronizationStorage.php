@@ -14,7 +14,6 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 class SynchronizationStorage implements SynchronizationInterface
 {
-
     const KEY = 'key';
     const VALUE = 'value';
 
@@ -123,5 +122,4 @@ class SynchronizationStorage implements SynchronizationInterface
     {
         return $this->utilEncodingService->encodeJson($value);
     }
-
 }

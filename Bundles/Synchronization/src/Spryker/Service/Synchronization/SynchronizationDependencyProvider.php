@@ -12,7 +12,6 @@ use Spryker\Service\Kernel\Container;
 
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS';
     const SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS = 'SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS';
 
@@ -74,5 +73,4 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

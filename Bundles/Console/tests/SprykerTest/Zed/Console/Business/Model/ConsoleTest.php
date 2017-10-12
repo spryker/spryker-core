@@ -32,7 +32,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ConsoleTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -184,5 +183,4 @@ class ConsoleTest extends Unit
 
         return $consoleFacade;
     }
-
 }

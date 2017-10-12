@@ -23,7 +23,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainer;
  */
 class ProductQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -47,5 +46,4 @@ class ProductQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyProductAbstractLocalizedAttributesQuery::class, $query);
     }
-
 }

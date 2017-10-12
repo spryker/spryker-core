@@ -9,7 +9,6 @@ namespace Spryker\Shared\Queue;
 
 interface QueueConstants
 {
-
     /**
      * Specification:
      * - Server unique id e.g spryker-vagrant
@@ -81,5 +80,4 @@ interface QueueConstants
      * @api
      */
     const QUEUE_WORKER_MESSAGE_CHECK_OPTION = 'QUEUE_WORKER_MESSAGE_CHECK_OPTION';
-
 }

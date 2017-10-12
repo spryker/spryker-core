@@ -9,7 +9,6 @@ namespace Spryker\Service\EventBehavior;
 
 interface EventBehaviorServiceInterface
 {
-
     /**
      * Specification:
      *  - Filters null elements of an array recursively
@@ -59,5 +58,4 @@ interface EventBehaviorServiceInterface
      * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */
     public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns);
-
 }

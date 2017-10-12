@@ -15,7 +15,6 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
     const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
@@ -87,5 +86,4 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

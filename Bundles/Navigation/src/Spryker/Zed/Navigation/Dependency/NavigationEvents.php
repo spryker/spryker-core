@@ -9,7 +9,6 @@ namespace Spryker\Zed\Navigation\Dependency;
 
 interface NavigationEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_navigation entity creation
@@ -81,5 +80,4 @@ interface NavigationEvents
      * @api
      */
     const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_navigation_node_localized_attributes.delete';
-
 }

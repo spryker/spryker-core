@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class CmsPersistenceTester extends Actor
 {
-
     use _generated\CmsPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\EventBehavior\Dependency\Service;
 
 interface EventBehaviorToUtilEncodingInterface
 {
-
     /**
      * @param string $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface EventBehaviorToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

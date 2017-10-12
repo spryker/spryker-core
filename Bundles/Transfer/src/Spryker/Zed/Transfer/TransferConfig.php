@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TransferConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -123,5 +122,4 @@ class TransferConfig extends AbstractBundleConfig
     {
         return [];
     }
-
 }

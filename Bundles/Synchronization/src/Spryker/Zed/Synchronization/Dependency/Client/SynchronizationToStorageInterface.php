@@ -9,7 +9,6 @@ namespace Spryker\Zed\Synchronization\Dependency\Client;
 
 interface SynchronizationToStorageInterface
 {
-
     /**
      * @param string $key
      * @param string $value
@@ -32,5 +31,4 @@ interface SynchronizationToStorageInterface
      * @return void
      */
     public function delete($key);
-
 }

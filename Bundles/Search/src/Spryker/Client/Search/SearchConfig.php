@@ -12,7 +12,6 @@ use Spryker\Shared\Search\SearchConstants;
 
 class SearchConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -57,5 +56,4 @@ class SearchConfig extends AbstractBundleConfig
 
         return $config;
     }
-
 }

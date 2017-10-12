@@ -9,12 +9,10 @@ namespace Spryker\Service\EventBehavior\Model;
 
 interface ArrayFilterInterface
 {
-
     /**
      * @param array $array
      *
      * @return array
      */
     public function arrayFilterRecursive(array $array);
-
 }

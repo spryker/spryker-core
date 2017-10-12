@@ -9,7 +9,6 @@ namespace Spryker\Zed\Synchronization\Dependency\Client;
 
 class SynchronizationToStorageBridge implements SynchronizationToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -56,5 +55,4 @@ class SynchronizationToStorageBridge implements SynchronizationToStorageInterfac
     {
         $this->storageClient->delete($key);
     }
-
 }

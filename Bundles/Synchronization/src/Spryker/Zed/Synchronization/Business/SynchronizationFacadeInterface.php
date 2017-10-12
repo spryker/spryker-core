@@ -9,7 +9,6 @@ namespace Spryker\Zed\Synchronization\Business;
 
 interface SynchronizationFacadeInterface
 {
-
     /**
      * Specification:
      * - Writes json encoded data to storage
@@ -65,5 +64,4 @@ interface SynchronizationFacadeInterface
      * @return void
      */
     public function searchDelete(array $data, $queueName);
-
 }

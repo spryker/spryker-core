@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class EventBehaviorService extends AbstractService implements EventBehaviorServiceInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -72,5 +71,4 @@ class EventBehaviorService extends AbstractService implements EventBehaviorServi
     {
         return $this->getFactory()->createEventEntity()->getEventTransfersByModifiedColumns($eventTransfers, $columns);
     }
-
 }

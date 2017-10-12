@@ -14,7 +14,6 @@ use Spryker\Service\Synchronization\Plugin\DefaultKeyGeneratorPlugin;
 
 class SynchronizationServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\Synchronization\Model\SynchronizationKeyBuilderInterface
      */
@@ -60,5 +59,4 @@ class SynchronizationServiceFactory extends AbstractServiceFactory
     {
         return new KeyFilter();
     }
-
 }

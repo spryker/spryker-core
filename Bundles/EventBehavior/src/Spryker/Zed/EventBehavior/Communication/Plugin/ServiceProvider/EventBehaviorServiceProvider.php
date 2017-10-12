@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class EventBehaviorServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -37,5 +36,4 @@ class EventBehaviorServiceProvider extends AbstractPlugin implements ServiceProv
     public function boot(Application $app)
     {
     }
-
 }

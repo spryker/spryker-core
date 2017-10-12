@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ConsoleBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Console\Business\Model\ConsoleRunnerHookInterface
      */
@@ -67,5 +66,4 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ConsoleDependencyProvider::PLUGINS_CONSOLE_POST_RUN_HOOK);
     }
-
 }

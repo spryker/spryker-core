@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class EventBehaviorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\EventBehavior\Persistence\SpyEventBehaviorEntityChangeQuery
      */
@@ -24,5 +23,4 @@ class EventBehaviorPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyEventBehaviorEntityChangeQuery::create();
     }
-
 }

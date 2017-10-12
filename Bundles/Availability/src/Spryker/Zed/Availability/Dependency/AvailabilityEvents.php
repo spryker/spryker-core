@@ -9,7 +9,6 @@ namespace Spryker\Zed\Availability\Dependency;
 
 interface AvailabilityEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_availability_abstract entity creation
@@ -33,5 +32,4 @@ interface AvailabilityEvents
      * @api
      */
     const ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE = 'Entity.spy_availability_abstract.delete';
-
 }

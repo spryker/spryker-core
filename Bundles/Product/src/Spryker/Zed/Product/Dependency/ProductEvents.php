@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Dependency;
 
 interface ProductEvents
 {
-
     const PRODUCT_ABSTRACT_BEFORE_CREATE = 'Product.product_abstract.before.create';
     const PRODUCT_ABSTRACT_BEFORE_UPDATE = 'Product.product_abstract.before.update';
 
@@ -144,5 +143,4 @@ interface ProductEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE = 'Entity.spy_product_attribute_key.delete';
-
 }

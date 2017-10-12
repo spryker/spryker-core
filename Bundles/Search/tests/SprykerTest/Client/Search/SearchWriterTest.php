@@ -25,7 +25,6 @@ use Spryker\Client\Search\Model\Elasticsearch\Writer\Writer;
  */
 class SearchWriterTest extends Unit
 {
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\Elastica\Client
      */
@@ -164,5 +163,4 @@ class SearchWriterTest extends Unit
         $mockResponse->method('isOk')->willReturn(true);
         return $mockResponse;
     }
-
 }

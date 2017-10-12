@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ConsolePreRunHookPluginInterface
 {
-
     /**
      * Specification
      *  - The pre-run plugins will be executed before each console commands
@@ -25,5 +24,4 @@ interface ConsolePreRunHookPluginInterface
      * @return int
      */
     public function preRun(InputInterface $input, OutputInterface $output);
-
 }

@@ -22,7 +22,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainer;
  */
 class ProductSetQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class ProductSetQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyProductSetDataQuery::class, $query);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Dependency;
 
 interface ProductRelationEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_product_relation_product_abstract entity creation
@@ -57,5 +56,4 @@ interface ProductRelationEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_RELATION_DELETE = 'Entity.spy_product_relation.delete';
-
 }

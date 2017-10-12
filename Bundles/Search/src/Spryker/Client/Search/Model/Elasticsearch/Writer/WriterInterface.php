@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Writer;
 
 interface WriterInterface
 {
-
     /**
      * @param array $dataSet
      * @param string|null $typeName
@@ -32,5 +31,4 @@ interface WriterInterface
      * @return string
      */
     public function getName();
-
 }

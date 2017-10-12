@@ -9,7 +9,6 @@ namespace Spryker\Service\EventBehavior\Model;
 
 interface EventEntityInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
@@ -32,5 +31,4 @@ interface EventEntityInterface
      * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */
     public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns);
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Service\Synchronization\Model;
 
 interface KeyFilterInterface
 {
-
     /**
      * @param string $key
      *
      * @return string
      */
     public function escapeKey($key);
-
 }

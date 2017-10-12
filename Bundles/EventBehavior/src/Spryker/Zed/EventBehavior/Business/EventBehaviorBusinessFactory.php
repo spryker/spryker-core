@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class EventBehaviorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\EventBehavior\Business\Model\TriggerManagerInterface
      */
@@ -46,5 +45,4 @@ class EventBehaviorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(EventBehaviorDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

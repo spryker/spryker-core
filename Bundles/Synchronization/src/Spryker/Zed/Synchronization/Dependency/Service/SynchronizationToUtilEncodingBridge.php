@@ -8,7 +8,6 @@ namespace Spryker\Zed\Synchronization\Dependency\Service;
 
 class SynchronizationToUtilEncodingBridge implements SynchronizationToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class SynchronizationToUtilEncodingBridge implements SynchronizationToUtilEncodi
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

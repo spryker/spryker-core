@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleRunnerHook implements ConsoleRunnerHookInterface
 {
-
     /**
      * @var \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
      */
@@ -58,5 +57,4 @@ class ConsoleRunnerHook implements ConsoleRunnerHookInterface
             $postHookPlugin->postRun($input, $output);
         }
     }
-
 }

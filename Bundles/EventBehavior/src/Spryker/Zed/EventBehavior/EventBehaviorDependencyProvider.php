@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Container;
 
 class EventBehaviorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_EVENT = "FACADE_EVENT";
     const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
 
@@ -35,5 +34,4 @@ class EventBehaviorDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

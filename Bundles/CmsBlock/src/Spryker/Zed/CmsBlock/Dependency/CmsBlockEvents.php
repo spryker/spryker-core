@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlock\Dependency;
 
 interface CmsBlockEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_cms_block_glossary_key_mapping entity creation
@@ -33,5 +32,4 @@ interface CmsBlockEvents
      * @api
      */
     const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE = 'Entity.spy_cms_block_glossary_key_mapping.delete';
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 
 class BaseKeyGenerator
 {
-
     /**
      * @var string
      */
@@ -60,5 +59,4 @@ class BaseKeyGenerator
 
         return $key;
     }
-
 }

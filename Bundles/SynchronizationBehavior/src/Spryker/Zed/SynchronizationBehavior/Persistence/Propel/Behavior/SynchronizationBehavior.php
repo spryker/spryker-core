@@ -15,7 +15,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class SynchronizationBehavior extends Behavior
 {
-
     /**
      * @var array
      */
@@ -494,5 +493,4 @@ public function syncUnpublishedMessage()
 
         return $params;
     }
-
 }

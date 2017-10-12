@@ -9,7 +9,6 @@ namespace Spryker\Zed\Synchronization\Dependency\Service;
 
 interface SynchronizationToUtilEncodingInterface
 {
-
     /**
      * @param string $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface SynchronizationToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

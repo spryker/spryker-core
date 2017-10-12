@@ -24,7 +24,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  */
 class ProductOptionQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -60,5 +59,4 @@ class ProductOptionQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyProductOptionValueQuery::class, $query);
     }
-
 }

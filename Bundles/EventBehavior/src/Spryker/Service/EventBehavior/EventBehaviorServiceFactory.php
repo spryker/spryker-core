@@ -13,7 +13,6 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 
 class EventBehaviorServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\EventBehavior\Model\ArrayFilterInterface
      */
@@ -29,5 +28,4 @@ class EventBehaviorServiceFactory extends AbstractServiceFactory
     {
         return new EventEntity();
     }
-
 }

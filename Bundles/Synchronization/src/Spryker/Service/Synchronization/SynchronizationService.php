@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class SynchronizationService extends AbstractService implements SynchronizationServiceInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -42,5 +41,4 @@ class SynchronizationService extends AbstractService implements SynchronizationS
     {
         return $this->getFactory()->createKeyFilter()->escapeKey($key);
     }
-
 }

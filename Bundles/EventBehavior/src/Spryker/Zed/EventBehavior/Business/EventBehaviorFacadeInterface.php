@@ -9,7 +9,6 @@ namespace Spryker\Zed\EventBehavior\Business;
 
 interface EventBehaviorFacadeInterface
 {
-
     /**
      * Specification
      *  - Will find all entity change events with current processId from
@@ -33,5 +32,4 @@ interface EventBehaviorFacadeInterface
      * @return void
      */
     public function triggerLostEvents();
-
 }

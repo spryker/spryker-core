@@ -23,7 +23,6 @@ use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainer;
  */
 class ProductLabelQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -47,5 +46,4 @@ class ProductLabelQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyProductLabelProductAbstractQuery::class, $query);
     }
-
 }

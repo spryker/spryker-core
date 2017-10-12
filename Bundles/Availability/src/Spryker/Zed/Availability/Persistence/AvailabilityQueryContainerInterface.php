@@ -9,7 +9,6 @@ namespace Spryker\Zed\Availability\Persistence;
 
 interface AvailabilityQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -113,5 +112,4 @@ interface AvailabilityQueryContainerInterface
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
     public function queryAllAvailabilityAbstracts();
-
 }

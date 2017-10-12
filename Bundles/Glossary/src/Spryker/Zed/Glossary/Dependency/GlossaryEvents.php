@@ -9,7 +9,6 @@ namespace Spryker\Zed\Glossary\Dependency;
 
 interface GlossaryEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_glossary_key entity creation
@@ -57,5 +56,4 @@ interface GlossaryEvents
      * @api
      */
     const ENTITY_SPY_GLOSSARY_TRANSLATION_DELETE = 'Entity.spy_glossary_translation.delete';
-
 }

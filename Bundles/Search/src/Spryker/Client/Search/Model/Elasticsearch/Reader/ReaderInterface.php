@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Reader;
 
 interface ReaderInterface
 {
-
     /**
      * @param string $key
      * @param string|null $typeName
@@ -23,5 +22,4 @@ interface ReaderInterface
      * @return string
      */
     public function getName();
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Service\EventBehavior\Model;
 
 class EventEntity implements EventEntityInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
@@ -82,5 +81,4 @@ class EventEntity implements EventEntityInterface
 
         return false;
     }
-
 }

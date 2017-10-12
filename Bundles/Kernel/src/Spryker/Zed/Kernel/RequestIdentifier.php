@@ -9,7 +9,6 @@ namespace Spryker\Zed\Kernel;
 
 class RequestIdentifier
 {
-
     /**
      * @var string
      */
@@ -37,5 +36,4 @@ class RequestIdentifier
 
         return sprintf('%s-%s-%d', $resource, $hostName, posix_getpid());
     }
-
 }

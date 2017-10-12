@@ -14,7 +14,6 @@ use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterfa
 
 class SynchronizationSearch implements SynchronizationInterface
 {
-
     const KEY = 'key';
     const VALUE = 'value';
     const TYPE = 'type';
@@ -135,5 +134,4 @@ class SynchronizationSearch implements SynchronizationInterface
 
         return $data;
     }
-
 }

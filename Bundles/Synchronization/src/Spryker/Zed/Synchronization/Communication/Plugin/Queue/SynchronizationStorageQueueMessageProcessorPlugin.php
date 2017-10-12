@@ -16,7 +16,6 @@ use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
  */
 class SynchronizationStorageQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
 {
-
     const WRITE_TYPE = 'write';
     const DELETE_TYPE = 'delete';
 
@@ -51,5 +50,4 @@ class SynchronizationStorageQueueMessageProcessorPlugin extends AbstractPlugin i
     {
         return 10000;
     }
-
 }

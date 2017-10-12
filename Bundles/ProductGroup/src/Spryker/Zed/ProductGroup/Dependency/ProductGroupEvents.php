@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductGroup\Dependency;
 
 interface ProductGroupEvents
 {
-
     /**
      * Specification
      * - This events will be used for spy_product_abstract_group entity creation
@@ -33,5 +32,4 @@ interface ProductGroupEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_DELETE = 'Entity.spy_product_abstract_group.delete';
-
 }

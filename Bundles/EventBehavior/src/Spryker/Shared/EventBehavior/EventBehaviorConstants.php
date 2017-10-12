@@ -9,7 +9,6 @@ namespace Spryker\Shared\EventBehavior;
 
 interface EventBehaviorConstants
 {
-
     /**
      * Specification:
      * - Is triggering activated for behavior events (true|false)
@@ -17,5 +16,4 @@ interface EventBehaviorConstants
      * @api
      */
     const EVENT_BEHAVIOR_TRIGGERING_ACTIVE = 'EVENT_BEHAVIOR_TRIGGERING_ACTIVE';
-
 }

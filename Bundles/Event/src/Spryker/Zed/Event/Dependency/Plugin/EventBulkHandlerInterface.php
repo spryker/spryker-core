@@ -9,7 +9,6 @@ namespace Spryker\Zed\Event\Dependency\Plugin;
 
 interface EventBulkHandlerInterface extends EventBaseHandlerInterface
 {
-
     /**
      * Specification
      *  - Listeners needs to implement this interface to execute the codes for more
@@ -23,5 +22,4 @@ interface EventBulkHandlerInterface extends EventBaseHandlerInterface
      * @return void
      */
     public function handleBulk(array $eventTransfers, $eventName);
-
 }

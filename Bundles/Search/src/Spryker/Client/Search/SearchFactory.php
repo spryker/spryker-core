@@ -33,7 +33,6 @@ use Spryker\Client\Search\Provider\SearchClientProvider;
  */
 class SearchFactory extends AbstractFactory
 {
-
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
@@ -275,5 +274,4 @@ class SearchFactory extends AbstractFactory
             $this->getConfig()->getElasticsearchConfig()
         );
     }
-
 }

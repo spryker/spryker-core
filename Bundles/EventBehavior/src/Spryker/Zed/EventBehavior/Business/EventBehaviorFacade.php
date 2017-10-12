@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class EventBehaviorFacade extends AbstractFacade implements EventBehaviorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -38,5 +37,4 @@ class EventBehaviorFacade extends AbstractFacade implements EventBehaviorFacadeI
     {
         $this->getFactory()->createTriggerManager()->triggerLostEvents();
     }
-
 }

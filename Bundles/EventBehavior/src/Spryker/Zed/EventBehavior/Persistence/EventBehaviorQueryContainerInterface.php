@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface EventBehaviorQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ interface EventBehaviorQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\EventBehavior\Persistence\SpyEventBehaviorEntityChangeQuery
      */
     public function queryLatestEntityChange(DateTime $date);
-
 }

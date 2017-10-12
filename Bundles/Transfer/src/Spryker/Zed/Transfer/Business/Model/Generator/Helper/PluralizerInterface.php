@@ -17,7 +17,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator\Helper;
  */
 interface PluralizerInterface
 {
-
     /**
      * Generate a plural name based on the passed in root.
      *
@@ -26,5 +25,4 @@ interface PluralizerInterface
      * @return string The plural form of $root.
      */
     public function getPluralForm($root);
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -82,5 +81,4 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     {
         $this->getFactory()->createConsoleRunnerHook()->postRun($input, $output);
     }
-
 }

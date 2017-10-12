@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Dependency\Plugin;
 
 interface NamedPageMapInterface extends PageMapInterface
 {
-
     /**
      * Specification:
      *  - This name will use for mapping specific type to a proper search plugin class
@@ -19,5 +18,4 @@ interface NamedPageMapInterface extends PageMapInterface
      * @return string
      */
     public function getName();
-
 }

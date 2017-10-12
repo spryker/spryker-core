@@ -22,7 +22,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
  */
 class ProductRelationQueryContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class ProductRelationQueryContainerTest extends Unit
 
         $this->assertInstanceOf(SpyProductRelationQuery::class, $query);
     }
-
 }

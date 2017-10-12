@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ConsoleFacadeInterface
 {
-
     /**
      * Specification
      * - Returns an array of console commands
@@ -68,5 +67,4 @@ interface ConsoleFacadeInterface
      * @return void
      */
     public function postRun(InputInterface $input, OutputInterface $output);
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class EventBehaviorQueryContainer extends AbstractQueryContainer implements EventBehaviorQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -50,5 +49,4 @@ class EventBehaviorQueryContainer extends AbstractQueryContainer implements Even
 
         return $query;
     }
-
 }

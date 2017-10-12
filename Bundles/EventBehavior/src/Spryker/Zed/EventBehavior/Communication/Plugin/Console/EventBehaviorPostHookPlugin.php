@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EventBehaviorPostHookPlugin extends AbstractPlugin implements ConsolePostRunHookPluginInterface
 {
-
     const CODE_SUCCESS = 0;
     const CODE_ERROR = 1;
 
@@ -39,5 +38,4 @@ class EventBehaviorPostHookPlugin extends AbstractPlugin implements ConsolePostR
 
         return static::CODE_SUCCESS;
     }
-
 }
