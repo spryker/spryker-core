@@ -19,9 +19,6 @@
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "SprykerTest": "tests/"
-    },
     "psr-4": {
       "SprykerTest\\": "tests/SprykerTest/"
     }

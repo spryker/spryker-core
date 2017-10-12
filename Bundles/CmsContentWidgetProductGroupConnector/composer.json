@@ -18,7 +18,6 @@
       "Spryker\\": "src/Spryker/"
     }
   },
-  "autoload-dev": {},
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

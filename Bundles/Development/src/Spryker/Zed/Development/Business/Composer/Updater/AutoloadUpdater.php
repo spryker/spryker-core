@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
-use stdClass;
 use Symfony\Component\Finder\SplFileInfo;
 
 class AutoloadUpdater implements UpdaterInterface
@@ -296,7 +295,7 @@ class AutoloadUpdater implements UpdaterInterface
                 }
 
                 if (empty($composerJson[$keyToCheck])) {
-                    $composerJson[$keyToCheck] = new stdClass();
+                    unset($composerJson[$keyToCheck]);
                 }
             }
         }
