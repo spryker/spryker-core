@@ -146,7 +146,7 @@ class CmsRedirectForm extends AbstractType
             [
                 'label' => 'Redirect status code',
                 'constraints' => [
-                    $this->createNotBlankConstraint()
+                    $this->createNotBlankConstraint(),
                 ],
                 'choices' => [
                     Response::HTTP_CREATED => Response::HTTP_CREATED,

@@ -68,7 +68,7 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ];
     }
 

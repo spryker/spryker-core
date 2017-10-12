@@ -155,7 +155,7 @@ class SearchClientTest extends Unit
             ->willReturn($this->getMockBuilder(QueryInterface::class)->getMock());
 
         $queryExpanders = [
-            $queryExpanderMock
+            $queryExpanderMock,
         ];
 
         $result = $this->searchClient->expandQuery($queryMock, $queryExpanders);

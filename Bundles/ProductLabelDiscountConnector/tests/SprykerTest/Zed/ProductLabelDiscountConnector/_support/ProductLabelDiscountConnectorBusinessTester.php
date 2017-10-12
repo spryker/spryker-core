@@ -61,7 +61,7 @@ class ProductLabelDiscountConnectorBusinessTester extends Actor
         $clauseTransfer->setField('label');
         $clauseTransfer->setValue($value);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         return $clauseTransfer;

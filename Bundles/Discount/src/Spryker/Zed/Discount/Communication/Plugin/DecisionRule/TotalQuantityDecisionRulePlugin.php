@@ -53,7 +53,7 @@ class TotalQuantityDecisionRulePlugin extends AbstractPlugin implements Decision
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 }
