@@ -39,7 +39,7 @@ class CodeArchitectureSnifferConsole extends Console
         $this
             ->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Run PHPMD for project or core');
+            ->setDescription('Check architecture rules for project or core');
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to run architecture sniffer for');
         $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Core (instead of Project)');
