@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends BaseOptionController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -56,5 +55,4 @@ class CreateController extends BaseOptionController
             'optionTabs' => $optionTabs->createView(),
         ];
     }
-
 }

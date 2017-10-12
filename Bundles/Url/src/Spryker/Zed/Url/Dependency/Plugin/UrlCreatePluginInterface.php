@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlCreatePluginInterface
 {
-
     /**
      * Specification:
      * - This plugin is executed before and/or after new URL entity creation, depending for which event was it provided.
@@ -23,5 +22,4 @@ interface UrlCreatePluginInterface
      * @return void
      */
     public function create(UrlTransfer $urlTransfer);
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
  */
 interface UtilDataReaderServiceInterface
 {
-
     /**
      * Specification:
      * - Returns a CSV Reader
@@ -135,5 +134,4 @@ interface UtilDataReaderServiceInterface
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     public function getYamlBatchIterator($fileName, $chunkSize = -1);
-
 }

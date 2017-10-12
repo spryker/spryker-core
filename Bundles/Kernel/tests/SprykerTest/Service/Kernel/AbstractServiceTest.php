@@ -22,7 +22,6 @@ use SprykerTest\Service\Kernel\Fixtures\Service;
  */
 class AbstractServiceTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -45,5 +44,4 @@ class AbstractServiceTest extends Unit
 
         $this->assertInstanceOf(AbstractServiceFactory::class, $abstractService->getFactory());
     }
-
 }

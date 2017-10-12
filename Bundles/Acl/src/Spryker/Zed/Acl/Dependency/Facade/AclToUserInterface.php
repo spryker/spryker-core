@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface AclToUserInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
@@ -35,5 +34,4 @@ interface AclToUserInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
-
 }

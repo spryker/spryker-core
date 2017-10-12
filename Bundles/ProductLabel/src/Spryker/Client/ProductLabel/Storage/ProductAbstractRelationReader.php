@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
-
     /**
      * @var \Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface
      */
@@ -84,5 +83,4 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     {
         return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName);
     }
-
 }

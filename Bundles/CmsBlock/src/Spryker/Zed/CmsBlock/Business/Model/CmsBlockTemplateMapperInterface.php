@@ -11,12 +11,10 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 
 interface CmsBlockTemplateMapperInterface
 {
-
     /**
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate $spyCmsBlockTemplate
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
     public function mapTemplateEntityToTransfer(SpyCmsBlockTemplate $spyCmsBlockTemplate);
-
 }

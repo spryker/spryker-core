@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class GatewayControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
@@ -56,5 +55,4 @@ class GatewayControllerListener extends AbstractPlugin implements EventSubscribe
             KernelEvents::CONTROLLER => ['onKernelController'],
         ];
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductOptionStorage implements ProductOptionStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -85,5 +84,4 @@ class ProductOptionStorage implements ProductOptionStorageInterface
 
         return $productOptionGroupsTransfer;
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesBridge;
 
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_MONEY = 'money facade';
     const FACADE_SALES = 'sales facade';
     const FACADE_CALCULATION = 'calculation facade';
@@ -153,5 +152,4 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

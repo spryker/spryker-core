@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -50,5 +49,4 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     {
         return $this->getFactory()->getServiceProviders();
     }
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 
 interface ProductReviewStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer);
-
 }

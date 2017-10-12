@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 
 interface IndexMapGeneratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer $indexDefinition
      *
      * @return void
      */
     public function generate(ElasticsearchIndexDefinitionTransfer $indexDefinition);
-
 }

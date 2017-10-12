@@ -27,7 +27,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Cms\Communication\Table\CmsPageTable
      */
@@ -191,5 +190,4 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
-
 }

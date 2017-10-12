@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface UserFacadeInterface
 {
-
     /**
      * @api
      *
@@ -169,5 +168,4 @@ interface UserFacadeInterface
      * @return bool
      */
     public function deactivateUser($idUser);
-
 }

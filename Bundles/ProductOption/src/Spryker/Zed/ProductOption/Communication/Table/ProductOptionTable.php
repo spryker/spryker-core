@@ -18,7 +18,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-option-table';
 
     const COL_CHECKBOX = 'checkbox';
@@ -206,5 +205,4 @@ class ProductOptionTable extends AbstractTable
             $this->utilEncodingService->encodeJson($info)
         );
     }
-
 }

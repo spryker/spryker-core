@@ -34,7 +34,6 @@ use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface;
  */
 class BraintreeFacadePreCheckTest extends AbstractFacadeTest
 {
-
     /**
      * @return void
      */
@@ -164,5 +163,4 @@ class BraintreeFacadePreCheckTest extends AbstractFacadeTest
 
         return $moneyFacadeMock;
     }
-
 }

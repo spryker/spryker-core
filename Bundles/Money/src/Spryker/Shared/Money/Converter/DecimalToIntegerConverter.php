@@ -11,7 +11,6 @@ use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
 
 class DecimalToIntegerConverter implements DecimalToIntegerConverterInterface
 {
-
     const PRICE_PRECISION = 100;
 
     /**
@@ -32,5 +31,4 @@ class DecimalToIntegerConverter implements DecimalToIntegerConverterInterface
 
         return (int)round($value * static::PRICE_PRECISION);
     }
-
 }

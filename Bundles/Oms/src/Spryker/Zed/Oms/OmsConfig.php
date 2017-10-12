@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OmsConfig extends AbstractBundleConfig
 {
-
     const DEFAULT_PROCESS_LOCATION = APPLICATION_ROOT_DIR . '/config/Zed/oms';
 
     /**
@@ -67,5 +66,4 @@ class OmsConfig extends AbstractBundleConfig
     {
         return ' - ';
     }
-
 }

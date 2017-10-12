@@ -11,7 +11,6 @@ use Spryker\Service\UtilEncoding\Model\Json;
 
 class UtilEncodingServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\UtilEncoding\Model\JsonInterface
      */
@@ -19,5 +18,4 @@ class UtilEncodingServiceFactory extends AbstractServiceFactory
     {
         return new Json();
     }
-
 }

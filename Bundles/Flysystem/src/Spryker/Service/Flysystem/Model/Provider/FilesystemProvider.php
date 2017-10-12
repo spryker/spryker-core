@@ -11,7 +11,6 @@ use Spryker\Service\Flysystem\Exception\FilesystemNotFoundException;
 
 class FilesystemProvider implements FilesystemProviderInterface
 {
-
     /**
      * @var \League\Flysystem\Filesystem[]
      */
@@ -50,5 +49,4 @@ class FilesystemProvider implements FilesystemProviderInterface
     {
         return $this->filesystemCollection;
     }
-
 }

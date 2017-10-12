@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriter
 
 class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
 {
-
     const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
     const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
     const DATE_FILTER_DAY = 'day';
@@ -134,5 +133,4 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
 
         return $query;
     }
-
 }

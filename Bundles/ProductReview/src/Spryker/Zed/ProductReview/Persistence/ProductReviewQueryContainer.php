@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductReviewQueryContainer extends AbstractQueryContainer implements ProductReviewQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -39,5 +38,4 @@ class ProductReviewQueryContainer extends AbstractQueryContainer implements Prod
         return $this->getFactory()
             ->createProductReviewQuery();
     }
-
 }

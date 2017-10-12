@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 
 interface SequenceNumberFacadeInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface SequenceNumberFacadeInterface
      * @return string
      */
     public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings);
-
 }

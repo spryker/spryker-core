@@ -11,7 +11,6 @@ use ArrayObject;
 
 interface ProductBundleGrouperInterface
 {
-
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
@@ -19,5 +18,4 @@ interface ProductBundleGrouperInterface
      * @return array
      */
     public function getGroupedBundleItems(ArrayObject $items, ArrayObject $bundleItems);
-
 }

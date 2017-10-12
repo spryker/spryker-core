@@ -17,7 +17,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
@@ -172,5 +171,4 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     {
         $this->discountConfigurationExpanderPlugins = $discountConfigurationExpanderPlugins;
     }
-
 }

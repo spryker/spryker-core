@@ -12,7 +12,6 @@ use League\Flysystem\Adapter\Ftp as FtpAdapter;
 
 class FtpAdapterBuilder implements AdapterBuilderInterface
 {
-
     /**
      * @var \League\Flysystem\Adapter\Ftp
      */
@@ -51,5 +50,4 @@ class FtpAdapterBuilder implements AdapterBuilderInterface
 
         return $this;
     }
-
 }

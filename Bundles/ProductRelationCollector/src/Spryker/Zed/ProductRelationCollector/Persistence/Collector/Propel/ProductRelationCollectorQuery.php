@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductRelationCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const PRODUCT_RELATIONS = 'product_relations';
     const IS_ACTIVE = 'is_active';
@@ -47,5 +46,4 @@ class ProductRelationCollectorQuery extends AbstractPropelCollectorQuery
 
         $this->touchQuery->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
-
 }

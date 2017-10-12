@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilEncoding\Model;
 
 interface JsonInterface
 {
-
     /**
      * @param mixed $value
      * @param int|null $options
@@ -32,5 +31,4 @@ interface JsonInterface
      * @return mixed|null
      */
     public function decode($jsonString, $assoc = false, $depth = null, $options = null);
-
 }

@@ -27,7 +27,6 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
  */
 class RefundCalculatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -87,5 +86,4 @@ class RefundCalculatorTest extends Unit
 
         return $refundCalculatorPluginMock;
     }
-
 }

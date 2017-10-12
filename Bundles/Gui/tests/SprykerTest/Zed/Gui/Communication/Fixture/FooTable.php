@@ -12,7 +12,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class FooTable extends AbstractTable
 {
-
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
@@ -48,5 +47,4 @@ class FooTable extends AbstractTable
     {
         return $this->request;
     }
-
 }

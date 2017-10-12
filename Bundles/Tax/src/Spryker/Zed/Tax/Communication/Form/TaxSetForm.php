@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TaxSetForm extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_TAX_RATES = 'taxRates';
     const FIELD_ID_TAX_SET = 'idTaxSet';
@@ -118,5 +117,4 @@ class TaxSetForm extends AbstractType
     {
         return 'tax_set';
     }
-
 }

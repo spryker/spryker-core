@@ -12,7 +12,6 @@ use Spryker\Zed\User\UserConfig;
 
 class Installer implements InstallerInterface
 {
-
     /**
      * @var \Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
@@ -73,5 +72,4 @@ class Installer implements InstallerInterface
             );
         }
     }
-
 }

@@ -7,12 +7,10 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 interface ProductManagementToAvailabilityInterface
 {
-
     /**
      * @param string $sku
      *
      * @return int
      */
     public function calculateStockForProduct($sku);
-
 }

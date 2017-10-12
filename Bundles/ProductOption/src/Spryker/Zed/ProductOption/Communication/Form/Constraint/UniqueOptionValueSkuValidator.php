@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueOptionValueSkuValidator extends ConstraintValidator
 {
-
     /**
      * @var array
      */
@@ -110,5 +109,4 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
             }
         }
     }
-
 }

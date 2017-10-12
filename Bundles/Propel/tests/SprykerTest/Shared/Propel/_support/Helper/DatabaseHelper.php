@@ -13,7 +13,6 @@ use Spryker\Shared\Propel\PropelConstants;
 
 class DatabaseHelper extends Db
 {
-
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
@@ -31,5 +30,4 @@ class DatabaseHelper extends Db
 
         parent::__construct($moduleContainer, $config);
     }
-
 }

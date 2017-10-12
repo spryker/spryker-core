@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class BuildNavigationConsole extends Console
 {
-
     const COMMAND_NAME = 'navigation:build-cache';
     const DESCRIPTION = 'Build the navigation tree and persist it';
 
@@ -53,5 +52,4 @@ class BuildNavigationConsole extends Console
     {
         $this->setAliases(['application:build-navigation-cache']);
     }
-
 }

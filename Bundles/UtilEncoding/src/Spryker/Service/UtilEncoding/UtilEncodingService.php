@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class UtilEncodingService extends AbstractService implements UtilEncodingServiceInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -51,5 +50,4 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
             ->createJsonEncoder()
             ->decode($jsonValue, $assoc, $depth, $options);
     }
-
 }

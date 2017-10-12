@@ -11,7 +11,6 @@ use Exception;
 
 class RedisReadWrite extends RedisRead implements ReadWriteInterface
 {
-
     /**
      * @param string $key
      * @param mixed $value
@@ -117,5 +116,4 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
 
         return $deleteCount;
     }
-
 }

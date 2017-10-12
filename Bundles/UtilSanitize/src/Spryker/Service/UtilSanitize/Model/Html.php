@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilSanitize\Model;
 
 class Html implements HtmInterface
 {
-
     /**
      * Convenience method for htmlspecialchars to use UTF8 by default.
      *
@@ -56,5 +55,4 @@ class Html implements HtmInterface
 
         return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, ($charset) ? $charset : $defaultCharset, $double);
     }
-
 }

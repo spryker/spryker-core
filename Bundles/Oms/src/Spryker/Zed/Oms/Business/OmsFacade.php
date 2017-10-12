@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -507,5 +506,4 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     {
         $this->getFactory()->createMailHandler()->sendOrderShippedMail($salesOrderEntity);
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductImageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -136,5 +135,4 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryImageSetById($idProductImageSet);
-
 }

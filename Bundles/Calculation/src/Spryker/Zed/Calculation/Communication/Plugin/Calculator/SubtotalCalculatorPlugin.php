@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SubtotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class SubtotalCalculatorPlugin extends AbstractPlugin implements CalculationPlug
         $this->getFacade()
             ->calculateSubtotal($calculableObjectTransfer);
     }
-
 }

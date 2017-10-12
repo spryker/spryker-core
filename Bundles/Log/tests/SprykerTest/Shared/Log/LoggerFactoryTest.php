@@ -25,7 +25,6 @@ use Spryker\Shared\Log\LoggerFactory;
  */
 class LoggerFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -61,5 +60,4 @@ class LoggerFactoryTest extends Unit
 
         $this->assertInstanceOf(LoggerInterface::class, $logger);
     }
-
 }

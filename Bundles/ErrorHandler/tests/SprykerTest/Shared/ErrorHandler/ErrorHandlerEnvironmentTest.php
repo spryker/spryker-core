@@ -20,7 +20,6 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
  */
 class ErrorHandlerEnvironmentTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -29,5 +28,4 @@ class ErrorHandlerEnvironmentTest extends Unit
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();
     }
-
 }

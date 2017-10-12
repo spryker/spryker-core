@@ -20,7 +20,6 @@ use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingBrid
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_TOUCH = 'FACADE_TOUCH';
@@ -106,5 +105,4 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

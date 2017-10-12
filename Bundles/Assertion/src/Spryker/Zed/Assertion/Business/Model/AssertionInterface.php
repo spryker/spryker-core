@@ -9,7 +9,6 @@ namespace Spryker\Zed\Assertion\Business\Model;
 
 interface AssertionInterface
 {
-
     /**
      * @param mixed $value
      * @param string|null $message
@@ -59,5 +58,4 @@ interface AssertionInterface
      * @return void
      */
     public function assertString($value, $message = null);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Validator;
 
 interface UrlUniqueValidatorInterface
 {
-
     /**
      * @param string $url
      *
@@ -25,5 +24,4 @@ interface UrlUniqueValidatorInterface
      * @return void
      */
     public function addUrl($url);
-
 }

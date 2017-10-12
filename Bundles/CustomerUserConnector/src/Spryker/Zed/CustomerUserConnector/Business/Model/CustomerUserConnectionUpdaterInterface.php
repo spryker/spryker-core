@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 
 interface CustomerUserConnectionUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer
      *
      * @return bool
      */
     public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer);
-
 }

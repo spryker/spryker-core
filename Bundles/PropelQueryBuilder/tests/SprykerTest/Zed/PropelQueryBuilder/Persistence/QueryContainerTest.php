@@ -35,7 +35,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer;
  */
 class QueryContainerTest extends Unit
 {
-
     const LIMIT = 10;
     const PAGE = 2;
 
@@ -448,5 +447,4 @@ class QueryContainerTest extends Unit
         $this->tester->haveProduct(['sku' => 'test_concrete_sku_7'], ['sku' => 'test_abstract_sku_7']);
         $this->tester->haveProduct(['sku' => 'test_concrete_sku_8'], ['sku' => 'test_abstract_sku_8']);
     }
-
 }

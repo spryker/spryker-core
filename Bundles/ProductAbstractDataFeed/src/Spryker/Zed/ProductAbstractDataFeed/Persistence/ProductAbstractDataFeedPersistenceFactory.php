@@ -16,7 +16,6 @@ use Spryker\Zed\ProductAbstractDataFeed\ProductAbstractDataFeedDependencyProvide
  */
 class ProductAbstractDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer\ProductAbstractDataFeedToProductInterface
      */
@@ -34,5 +33,4 @@ class ProductAbstractDataFeedPersistenceFactory extends AbstractPersistenceFacto
 
         return $abstractProductJoinQuery;
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
 {
-
     /**
      * @var \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
      */
@@ -300,5 +299,4 @@ class TouchRecord implements TouchRecordInterface
             ->queryTouchStorageByTouchIds($touchIds)
             ->delete();
     }
-
 }

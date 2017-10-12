@@ -11,12 +11,10 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductSearchConfigExtensionCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     /**
      * @return void
      */
     protected function prepareQuery()
     {
     }
-
 }

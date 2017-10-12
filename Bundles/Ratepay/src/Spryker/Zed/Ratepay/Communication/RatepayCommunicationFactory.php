@@ -29,7 +29,6 @@ use Spryker\Zed\Ratepay\RatepayDependencyProvider;
  */
 class RatepayCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Business\Service\PaymentMethodExtractor
      */
@@ -225,5 +224,4 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
     {
         return new OrderTransfer();
     }
-
 }

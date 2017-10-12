@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
 class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerCollectorInterface
 {
-
     const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
 
     /**
@@ -58,5 +57,4 @@ class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerC
 
         return $this->profileData;
     }
-
 }

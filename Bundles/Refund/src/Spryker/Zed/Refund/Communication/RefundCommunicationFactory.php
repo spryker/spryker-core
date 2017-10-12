@@ -17,7 +17,6 @@ use Spryker\Zed\Refund\RefundDependencyProvider;
  */
 class RefundCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Refund\Communication\Table\RefundTable
      */
@@ -47,5 +46,4 @@ class RefundCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(RefundDependencyProvider::FACADE_MONEY);
     }
-
 }

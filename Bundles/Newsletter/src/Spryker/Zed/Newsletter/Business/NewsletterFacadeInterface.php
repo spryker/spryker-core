@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 
 interface NewsletterFacadeInterface
 {
-
     /**
      * @api
      *
@@ -86,5 +85,4 @@ interface NewsletterFacadeInterface
      * @return void
      */
     public function anonymizeSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
-
 }

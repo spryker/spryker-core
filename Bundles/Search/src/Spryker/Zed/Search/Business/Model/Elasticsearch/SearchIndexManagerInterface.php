@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 interface SearchIndexManagerInterface
 {
-
     /**
      * @return int
      */
@@ -32,5 +31,4 @@ interface SearchIndexManagerInterface
      * @return \Elastica\Document
      */
     public function getDocument($key, $type);
-
 }

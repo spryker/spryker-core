@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 abstract class AbstractAggregationExtractor implements AggregationExtractorInterface
 {
-
     const PATH_SEPARATOR = '.';
 
     /**
@@ -43,5 +42,4 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
     {
         return $fieldName . static::PATH_SEPARATOR . $nestedFieldName;
     }
-
 }

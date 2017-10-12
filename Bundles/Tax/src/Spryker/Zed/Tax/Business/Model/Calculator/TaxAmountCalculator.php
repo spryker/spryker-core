@@ -14,7 +14,6 @@ use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
 class TaxAmountCalculator implements CalculatorInterface
 {
-
     const ROUNDING_ERROR_BUCKET_IDENTIFIER = 'calculable_object';
 
     /**
@@ -300,5 +299,4 @@ class TaxAmountCalculator implements CalculatorInterface
 
         return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate, true, $identifier);
     }
-
 }

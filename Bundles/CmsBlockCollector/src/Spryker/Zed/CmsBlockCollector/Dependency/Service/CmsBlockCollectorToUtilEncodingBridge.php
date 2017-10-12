@@ -8,7 +8,6 @@ namespace Spryker\Zed\CmsBlockCollector\Dependency\Service;
 
 class CmsBlockCollectorToUtilEncodingBridge implements CmsBlockCollectorToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class CmsBlockCollectorToUtilEncodingBridge implements CmsBlockCollectorToUtilEn
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

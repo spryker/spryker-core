@@ -14,7 +14,6 @@ use Spryker\Zed\Ratepay\Business\Api\Constants;
  */
 class BuilderFactory
 {
-
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
      */
@@ -109,5 +108,4 @@ class BuilderFactory
             $this->requestTransfer
         );
     }
-
 }

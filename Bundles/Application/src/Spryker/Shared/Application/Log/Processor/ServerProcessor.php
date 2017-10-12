@@ -11,7 +11,6 @@ use Spryker\Service\UtilNetwork\Model\Host;
 
 class ServerProcessor
 {
-
     const EXTRA = 'server';
 
     const URL = 'url';
@@ -128,5 +127,4 @@ class ServerProcessor
     {
         return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
     }
-
 }

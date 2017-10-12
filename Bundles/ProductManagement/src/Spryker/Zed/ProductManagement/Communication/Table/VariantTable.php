@@ -20,7 +20,6 @@ use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class VariantTable extends AbstractProductTable
 {
-
     const TABLE_IDENTIFIER = 'product-variant-table';
 
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -213,5 +212,4 @@ class VariantTable extends AbstractProductTable
 
         return $urls;
     }
-
 }

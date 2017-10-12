@@ -11,7 +11,6 @@ use Spryker\Shared\ZedRequest\Client\AbstractObject;
 
 class CommunicationObject extends AbstractObject
 {
-
     /**
      * @var array
      */
@@ -21,5 +20,4 @@ class CommunicationObject extends AbstractObject
         'test3' => [],
         'test4' => [null],
     ];
-
 }

@@ -23,7 +23,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class PropelSchemaMergerTest extends Unit
 {
-
     /**
      * @return string
      */
@@ -58,5 +57,4 @@ class PropelSchemaMergerTest extends Unit
         $expected = file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'expected.merged.schema.xml');
         $this->assertSame($expected, $content);
     }
-
 }

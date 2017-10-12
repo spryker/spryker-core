@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class NavigationClient extends AbstractClient implements NavigationClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -31,5 +30,4 @@ class NavigationClient extends AbstractClient implements NavigationClientInterfa
             ->createNavigationReader()
             ->findNavigationTreeByNavigationKey($navigationKey, $localeName);
     }
-
 }

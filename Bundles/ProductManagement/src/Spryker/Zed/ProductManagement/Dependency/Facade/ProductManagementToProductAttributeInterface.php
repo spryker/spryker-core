@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 interface ProductManagementToProductAttributeInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
@@ -37,5 +36,4 @@ interface ProductManagementToProductAttributeInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection();
-
 }

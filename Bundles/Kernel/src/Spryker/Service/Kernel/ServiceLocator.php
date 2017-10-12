@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\AbstractLocator;
 
 class ServiceLocator extends AbstractLocator
 {
-
     const SERVICE_SUFFIX = 'Service';
 
     /**
@@ -34,5 +33,4 @@ class ServiceLocator extends AbstractLocator
 
         return $service;
     }
-
 }

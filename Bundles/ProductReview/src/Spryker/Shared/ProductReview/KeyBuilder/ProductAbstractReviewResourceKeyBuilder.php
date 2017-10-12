@@ -12,7 +12,6 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 class ProductAbstractReviewResourceKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class ProductAbstractReviewResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductReviewConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_REVIEW;
     }
-
 }

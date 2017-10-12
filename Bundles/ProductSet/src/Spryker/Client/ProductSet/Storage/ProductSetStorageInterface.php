@@ -9,12 +9,10 @@ namespace Spryker\Client\ProductSet\Storage;
 
 interface ProductSetStorageInterface
 {
-
     /**
      * @param int $idProductSet
      *
      * @return \Generated\Shared\Transfer\ProductSetStorageTransfer|null
      */
     public function findProductSetByIdProductSet($idProductSet);
-
 }

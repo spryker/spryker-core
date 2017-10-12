@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
 class CmsGuiToCmsGlossaryFacadeBridge implements CmsGuiToCmsGlossaryFacadeInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -42,5 +41,4 @@ class CmsGuiToCmsGlossaryFacadeBridge implements CmsGuiToCmsGlossaryFacadeInterf
     {
         return $this->glossaryFacade->getKeyIdentifier($keyName);
     }
-
 }

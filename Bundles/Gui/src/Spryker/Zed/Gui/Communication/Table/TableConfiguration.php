@@ -9,7 +9,6 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 class TableConfiguration
 {
-
     const SORT_ASC = 'asc';
     const SORT_DESC = 'desc';
 
@@ -347,5 +346,4 @@ class TableConfiguration
     {
         $this->stateSave = $stateSave;
     }
-
 }

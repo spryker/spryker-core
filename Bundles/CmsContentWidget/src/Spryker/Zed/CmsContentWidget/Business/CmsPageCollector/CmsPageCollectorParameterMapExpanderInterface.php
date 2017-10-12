@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CmsPageCollectorParameterMapExpanderInterface
 {
-
     /**
      * @param array $collectedData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -19,5 +18,4 @@ interface CmsPageCollectorParameterMapExpanderInterface
      * @return array
      */
     public function map(array $collectedData, LocaleTransfer $localeTransfer);
-
 }

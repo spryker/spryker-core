@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
 
 interface ReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
@@ -53,5 +52,4 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer);
-
 }

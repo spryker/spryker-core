@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 
 interface CategoryUrlInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
@@ -56,5 +55,4 @@ interface CategoryUrlInterface
      * @return void
      */
     public function deleteUrlsForCategoryNode($idCategoryNode);
-
 }

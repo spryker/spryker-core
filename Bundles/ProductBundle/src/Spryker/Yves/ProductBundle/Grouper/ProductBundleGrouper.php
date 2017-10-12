@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
-
     const BUNDLE_ITEMS = 'bundleItems';
     const BUNDLE_PRODUCT = 'bundleProduct';
 
@@ -63,7 +62,6 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                     $bundleGroupKey
                 );
             }
-
         }
 
         $groupedBundleItems = $this->updateGroupedBundleItemsAggregatedSubtotal($groupedBundleItems, $bundleItems);
@@ -145,7 +143,6 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     {
         $groupedBundleQuantity = [];
         foreach ($bundleItems as $bundleItemTransfer) {
-
             $bundleGroupKey = $this->getBundleItemGroupKey($bundleItemTransfer, $items);
             if (!isset($groupedBundleQuantity[$bundleGroupKey])) {
                 $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();
@@ -281,5 +278,4 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
         return $groupedBundleItems;
     }
-
 }

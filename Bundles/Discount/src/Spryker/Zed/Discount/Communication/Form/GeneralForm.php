@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GeneralForm extends AbstractType
 {
-
     const FIELD_DISCOUNT_TYPE = 'discount_type';
     const FIELD_DISPLAY_NAME = 'display_name';
     const FIELD_DESCRIPTION = 'description';
@@ -197,5 +196,4 @@ class GeneralForm extends AbstractType
     {
         return 'discount_general';
     }
-
 }

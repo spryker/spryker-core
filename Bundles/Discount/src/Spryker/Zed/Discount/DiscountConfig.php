@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DiscountConfig extends AbstractBundleConfig
 {
-
     const DEFAULT_VOUCHER_CODE_LENGTH = 6;
 
     const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
@@ -65,5 +64,4 @@ class DiscountConfig extends AbstractBundleConfig
     {
         return '[code]';
     }
-
 }

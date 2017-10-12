@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsContentWidgetProductConnector\Dependency\QueryContainer
 
 class CmsContentWidgetProductConnectorToProductBridge implements CmsContentWidgetProductConnectorToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class CmsContentWidgetProductConnectorToProductBridge implements CmsContentWidge
     {
         return $this->productQueryContainer->queryProductAbstract();
     }
-
 }

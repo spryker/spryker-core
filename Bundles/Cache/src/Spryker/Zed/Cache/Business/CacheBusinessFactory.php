@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CacheBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @deprecated Use createCacheClearer() instead
      *
@@ -66,5 +65,4 @@ class CacheBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CacheDependencyProvider::SYMFONY_FINDER);
     }
-
 }

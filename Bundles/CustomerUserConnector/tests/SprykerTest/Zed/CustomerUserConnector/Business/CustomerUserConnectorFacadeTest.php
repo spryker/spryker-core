@@ -19,7 +19,6 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
  */
 class CustomerUserConnectorFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\CustomerUserConnector\CustomerUserConnectorBusinessTester
      */
@@ -97,7 +96,8 @@ class CustomerUserConnectorFacadeTest extends Unit
 
         $idCustomers = array_map(
             function (CustomerTransfer $customer) {
-                return $customer->getIdCustomer(); },
+                return $customer->getIdCustomer();
+            },
             $customers
         );
 
@@ -120,5 +120,4 @@ class CustomerUserConnectorFacadeTest extends Unit
 
         return $idsCustomer;
     }
-
 }

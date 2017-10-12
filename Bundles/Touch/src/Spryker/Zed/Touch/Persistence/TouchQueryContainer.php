@@ -19,7 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
  */
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {
-
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
 
@@ -73,8 +72,9 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->filterByItemType($itemType)
             ->filterByItemId($itemId);
 
-        if ($itemEvent !== null)
+        if ($itemEvent !== null) {
             $query->filterByItemEvent($itemEvent);
+        }
 
         return $query;
     }
@@ -238,5 +238,4 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 
         return $query;
     }
-
 }

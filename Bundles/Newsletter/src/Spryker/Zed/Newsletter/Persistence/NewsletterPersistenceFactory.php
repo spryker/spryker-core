@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class NewsletterPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
@@ -42,5 +41,4 @@ class NewsletterPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyNewsletterTypeQuery::create();
     }
-
 }

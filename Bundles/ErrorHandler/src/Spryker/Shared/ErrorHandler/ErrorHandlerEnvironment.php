@@ -12,7 +12,6 @@ use Spryker\Shared\Config\Config;
 
 class ErrorHandlerEnvironment
 {
-
     public function __construct()
     {
         $errorCode = error_reporting();
@@ -94,7 +93,7 @@ class ErrorHandlerEnvironment
         $shutDownFunction = function () {
             $lastError = error_get_last();
             $fatalErrors = [
-                E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR,
+            E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR,
             ];
             if ($lastError && in_array($lastError['type'], $fatalErrors)) {
                 $errorHandler = $this->getErrorHandler();
@@ -121,5 +120,4 @@ class ErrorHandlerEnvironment
 
         assert_options(ASSERT_CALLBACK, $assertHandler);
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class DiscountTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -55,5 +54,4 @@ class DiscountTotalCalculator implements CalculatorInterface
         }
         return $totalDiscountAmount;
     }
-
 }

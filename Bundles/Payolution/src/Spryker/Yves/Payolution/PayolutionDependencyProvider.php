@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Container;
 
 class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_PAYOLUTION = 'payolution client';
 
     /**
@@ -28,5 +27,4 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

@@ -12,7 +12,6 @@ use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeTableMap;
 
 class ProductSearchAttributeMarker extends AbstractAttributeMarker
 {
-
     /**
      * @return array
      */
@@ -64,5 +63,4 @@ class ProductSearchAttributeMarker extends AbstractAttributeMarker
             ->queryProductSearchAttributeArchive()
             ->deleteAll();
     }
-
 }

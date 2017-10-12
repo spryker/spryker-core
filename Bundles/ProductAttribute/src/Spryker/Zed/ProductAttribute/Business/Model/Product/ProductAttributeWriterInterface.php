@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
 interface ProductAttributeWriterInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param array $attributes
@@ -25,5 +24,4 @@ interface ProductAttributeWriterInterface
      * @return void
      */
     public function saveConcreteAttributes($idProduct, array $attributes);
-
 }

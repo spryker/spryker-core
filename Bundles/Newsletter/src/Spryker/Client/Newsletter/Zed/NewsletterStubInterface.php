@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 
 interface NewsletterStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
@@ -47,5 +46,4 @@ interface NewsletterStubInterface
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
-
 }

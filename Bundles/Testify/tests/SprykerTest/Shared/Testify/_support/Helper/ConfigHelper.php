@@ -15,7 +15,6 @@ use Spryker\Shared\Config\Config;
 
 class ConfigHelper extends Module
 {
-
     /**
      * @var array
      */
@@ -96,5 +95,4 @@ class ConfigHelper extends Module
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue(new ArrayObject($this->configCache));
     }
-
 }

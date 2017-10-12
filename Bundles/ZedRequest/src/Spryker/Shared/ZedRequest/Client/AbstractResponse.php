@@ -13,7 +13,6 @@ use Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException;
 
 abstract class AbstractResponse extends AbstractObject implements EmbeddedTransferInterface, ResponseInterface
 {
-
     /**
      * @var array
      */
@@ -284,5 +283,4 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
 
         return $this;
     }
-
 }

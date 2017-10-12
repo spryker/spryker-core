@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CustomerApiQueryContainer extends AbstractQueryContainer implements CustomerApiQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -52,5 +51,4 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
 
         return $query->filterByIdCustomer($idCustomer);
     }
-
 }

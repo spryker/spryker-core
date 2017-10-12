@@ -19,7 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 abstract class AbstractAttributeMarker implements AttributeMarkerInterface
 {
-
     const NOT_SYNCED = false;
 
     /**
@@ -139,5 +138,4 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
             ->setDistinct()
             ->find();
     }
-
 }

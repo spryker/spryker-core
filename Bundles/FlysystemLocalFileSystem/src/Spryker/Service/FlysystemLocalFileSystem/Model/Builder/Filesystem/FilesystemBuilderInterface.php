@@ -9,10 +9,8 @@ namespace Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Filesystem;
 
 interface FilesystemBuilderInterface
 {
-
     /**
      * @return \League\Flysystem\Filesystem
      */
     public function build();
-
 }

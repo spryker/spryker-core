@@ -22,7 +22,6 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
  */
 class ClassInfoTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -72,5 +71,4 @@ class ClassInfoTest extends Unit
 
         return $mock;
     }
-
 }

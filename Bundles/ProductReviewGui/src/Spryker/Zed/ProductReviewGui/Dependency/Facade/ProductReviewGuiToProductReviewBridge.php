@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductReviewTransfer;
 
 class ProductReviewGuiToProductReviewBridge implements ProductReviewGuiToProductReviewInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductReview\Business\ProductReviewFacadeInterface
      */
@@ -54,5 +53,4 @@ class ProductReviewGuiToProductReviewBridge implements ProductReviewGuiToProduct
     {
         $this->productReviewFacade->deleteProductReview($productReviewTransfer);
     }
-
 }

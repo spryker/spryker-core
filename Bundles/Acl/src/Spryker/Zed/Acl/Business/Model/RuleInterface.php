@@ -14,7 +14,6 @@ use Spryker\Shared\Acl\AclConstants;
 
 interface RuleInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
@@ -125,5 +124,4 @@ interface RuleInterface
      * @return bool
      */
     public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action);
-
 }

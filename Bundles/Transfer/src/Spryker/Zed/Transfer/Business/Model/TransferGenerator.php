@@ -13,7 +13,6 @@ use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 
 class TransferGenerator implements TransferGeneratorInterface
 {
-
     /**
      * @var \Psr\Log\LoggerInterface
      */
@@ -54,5 +53,4 @@ class TransferGenerator implements TransferGeneratorInterface
             $this->messenger->info(sprintf('<info>%s</info> was generated', $fileName));
         }
     }
-
 }

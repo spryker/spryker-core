@@ -25,7 +25,6 @@ use Twig_Loader_Filesystem;
  */
 class DateTimeFormatterServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -52,5 +51,4 @@ class DateTimeFormatterServiceProviderTest extends Unit
 
         return $application;
     }
-
 }

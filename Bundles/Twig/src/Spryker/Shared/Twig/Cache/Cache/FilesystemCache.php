@@ -13,7 +13,6 @@ use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 
 class FilesystemCache implements CacheInterface
 {
-
     /**
      * @var string
      */
@@ -115,5 +114,4 @@ class FilesystemCache implements CacheInterface
 
         $this->cacheWriter->write($this->cache);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
 class LabelReader implements LabelReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
      */
@@ -184,5 +183,4 @@ class LabelReader implements LabelReaderInterface
                 ->findAllByIdProductLabel($productLabelTransfer->getIdProductLabel())
         );
     }
-
 }

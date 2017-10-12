@@ -13,7 +13,6 @@ use Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInt
 
 class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterface
 {
-
     /**
      * @var array|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
      */
@@ -67,7 +66,6 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
 
         $contentWidgetParameterMap = [];
         foreach ($cmsContentWidgetFunctions->getCmsContentWidgetFunctionList() as $cmsContentWidgetFunctionTransfer) {
-
             $this->updateMapCacheWithUnprocessedItems($cmsContentWidgetFunctionTransfer);
             $mappedParameters = $this->getMappedParameters($cmsContentWidgetFunctionTransfer);
 
@@ -77,7 +75,6 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
             }
 
             $contentWidgetParameterMap[$functionName] = $contentWidgetParameterMap[$functionName] + $mappedParameters;
-
         }
 
         return $contentWidgetParameterMap;
@@ -182,5 +179,4 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
             $this->buildParameterMap($cmsContentWidgetFunctionTransfer->getFunctionName(), $unProcessedFunctionParameters);
         }
     }
-
 }

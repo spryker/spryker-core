@@ -13,7 +13,6 @@ use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
 
 class Refund implements RefundInterface
 {
-
     /**
      * @var \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface
      */
@@ -54,5 +53,4 @@ class Refund implements RefundInterface
     {
         return ($refundTransfer->getAmount() > 0);
     }
-
 }

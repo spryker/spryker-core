@@ -12,7 +12,6 @@ use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class Doctor
 {
-
     /**
      * @var \Generated\Shared\Transfer\HealthReportTransfer
      */
@@ -78,5 +77,4 @@ class Doctor
 
         return $patientIsAlive;
     }
-
 }

@@ -10,7 +10,6 @@ use Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound;
 
 class HandlerResolver implements HandlerResolverInterface
 {
-
     /**
      * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
      */
@@ -46,5 +45,4 @@ class HandlerResolver implements HandlerResolverInterface
             )
         );
     }
-
 }

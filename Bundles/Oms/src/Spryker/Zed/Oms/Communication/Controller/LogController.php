@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LogController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -41,5 +40,4 @@ class LogController extends AbstractController
 
         return $this->jsonResponse($transitionLogTable->fetchData());
     }
-
 }

@@ -22,7 +22,6 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
  */
 class AvailabilityListCest
 {
-
     /**
      * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester $i
      *
@@ -41,5 +40,4 @@ class AvailabilityListCest
         $i->clickDataTableViewButton();
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
     }
-
 }

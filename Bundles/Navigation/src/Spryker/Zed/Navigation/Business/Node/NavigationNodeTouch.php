@@ -13,7 +13,6 @@ use Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface;
 
 class NavigationNodeTouch implements NavigationNodeTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Business\Navigation\NavigationTouchInterface
      */
@@ -41,5 +40,4 @@ class NavigationNodeTouch implements NavigationNodeTouchInterface
 
         return $this->navigationTouch->touchActive($navigationTransfer);
     }
-
 }

@@ -27,7 +27,6 @@ use Spryker\Zed\Payolution\PayolutionConfig;
  */
 class CheckoutDependencyInjectorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -62,5 +61,4 @@ class CheckoutDependencyInjectorTest extends Unit
 
         return $container;
     }
-
 }

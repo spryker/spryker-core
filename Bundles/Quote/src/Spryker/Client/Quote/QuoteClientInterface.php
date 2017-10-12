@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteClientInterface
 {
-
     /**
      * Specification:
      * - Returns the stored quote.
@@ -43,5 +42,4 @@ interface QuoteClientInterface
      * @return void
      */
     public function clearQuote();
-
 }

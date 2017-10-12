@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer;
 
 interface ProductRelationCollectorToProductRelationInterface
 {
-
     /**
      * @param int $idProductRelation
      * @param int $idLocale
@@ -17,5 +16,4 @@ interface ProductRelationCollectorToProductRelationInterface
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryProductRelationWithProductAbstractByIdRelationAndLocale($idProductRelation, $idLocale);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
 class ProductLabelGuiToLocaleBridge implements ProductLabelGuiToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -54,5 +53,4 @@ class ProductLabelGuiToLocaleBridge implements ProductLabelGuiToLocaleInterface
             ->localeFacade
             ->getCurrentLocale();
     }
-
 }

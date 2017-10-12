@@ -19,7 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PostgresqlCompatibilityConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:pg-sql-compat';
     const OPTION_CORE = 'core';
 
@@ -59,5 +58,4 @@ class PostgresqlCompatibilityConsole extends Console
             $this->getFacade()->adjustCorePostgresqlFunctions();
         }
     }
-
 }

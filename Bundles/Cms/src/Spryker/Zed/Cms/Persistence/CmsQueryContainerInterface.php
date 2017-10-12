@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -272,5 +271,4 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys);
-
 }

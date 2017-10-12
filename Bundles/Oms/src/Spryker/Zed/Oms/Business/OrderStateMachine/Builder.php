@@ -19,7 +19,6 @@ use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Builder implements BuilderInterface
 {
-
     /**
      * @var \SimpleXMLElement
      */
@@ -555,5 +554,4 @@ class Builder implements BuilderInterface
     {
         return '/\b' . dirname($fileName) . '\b/';
     }
-
 }

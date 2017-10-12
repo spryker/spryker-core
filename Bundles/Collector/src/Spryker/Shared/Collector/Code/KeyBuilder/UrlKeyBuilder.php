@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class UrlKeyBuilder implements KeyBuilderInterface
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -32,5 +31,4 @@ class UrlKeyBuilder implements KeyBuilderInterface
     {
         return 'url';
     }
-
 }

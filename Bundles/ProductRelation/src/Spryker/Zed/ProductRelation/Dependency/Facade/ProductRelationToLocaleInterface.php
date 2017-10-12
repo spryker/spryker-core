@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductRelation\Dependency\Facade;
 
 interface ProductRelationToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
-
 }

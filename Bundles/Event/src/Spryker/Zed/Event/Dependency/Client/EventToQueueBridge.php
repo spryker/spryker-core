@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QueueSendMessageTransfer;
 
 class EventToQueueBridge implements EventToQueueInterface
 {
-
     /**
      * @var \Spryker\Client\Queue\QueueClientInterface
      */
@@ -46,5 +45,4 @@ class EventToQueueBridge implements EventToQueueInterface
     {
         $this->queueClient->sendMessages($queueName, $queueSendMessageTransfers);
     }
-
 }

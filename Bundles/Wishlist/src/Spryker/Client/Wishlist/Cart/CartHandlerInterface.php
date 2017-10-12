@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 
 interface CartHandlerInterface
 {
-
     /**
      * @deprecated Use moveCollectionToCart() instead
      *
@@ -26,5 +25,4 @@ interface CartHandlerInterface
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer);
-
 }

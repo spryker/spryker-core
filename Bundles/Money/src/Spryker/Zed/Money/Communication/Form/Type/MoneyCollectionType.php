@@ -21,7 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MoneyCollectionType extends AbstractCollectionType
 {
-
     const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     /**
@@ -113,5 +112,4 @@ class MoneyCollectionType extends AbstractCollectionType
 
         return $this->getFactory()->createMoneyCollectionSingleStoreDataProvider();
     }
-
 }

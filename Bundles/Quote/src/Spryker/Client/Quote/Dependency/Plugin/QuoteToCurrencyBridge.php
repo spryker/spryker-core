@@ -9,7 +9,6 @@ namespace Spryker\Client\Quote\Dependency\Plugin;
 
 class QuoteToCurrencyBridge implements QuoteToCurrencyInterface
 {
-
     /**
      * @var \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
      */
@@ -30,5 +29,4 @@ class QuoteToCurrencyBridge implements QuoteToCurrencyInterface
     {
         return $this->currencyPlugin->getCurrent();
     }
-
 }

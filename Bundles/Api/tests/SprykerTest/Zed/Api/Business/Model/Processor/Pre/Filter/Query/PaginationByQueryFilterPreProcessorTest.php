@@ -29,7 +29,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\PaginationByQueryF
  */
 class PaginationByQueryFilterPreProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -113,5 +112,4 @@ class PaginationByQueryFilterPreProcessorTest extends Unit
         $this->assertSame(100, $apiRequestTransferAfter->getFilter()->getLimit());
         $this->assertSame(200, $apiRequestTransferAfter->getFilter()->getOffset());
     }
-
 }

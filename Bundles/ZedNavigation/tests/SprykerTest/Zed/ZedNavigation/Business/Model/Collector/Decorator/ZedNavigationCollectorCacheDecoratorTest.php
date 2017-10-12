@@ -26,7 +26,6 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInt
  */
 class ZedNavigationCollectorCacheDecoratorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -76,5 +75,4 @@ class ZedNavigationCollectorCacheDecoratorTest extends Unit
             $navigationCollectorCacheDecorator->getNavigation()
         );
     }
-
 }

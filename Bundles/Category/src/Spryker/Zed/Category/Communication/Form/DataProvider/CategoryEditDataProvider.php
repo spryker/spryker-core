@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryEditDataProvider
 {
-
     const DATA_CLASS = 'data_class';
 
     /**
@@ -163,5 +162,4 @@ class CategoryEditDataProvider
             ->find()
             ->toKeyValue('idCategoryTemplate', 'name');
     }
-
 }

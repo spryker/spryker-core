@@ -27,7 +27,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
 
 class PreProcessorProvider implements PreProcessorProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\ApiConfig
      */
@@ -172,5 +171,4 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     {
         return new ResourcePreProcessor();
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class UserQueryContainer extends AbstractQueryContainer implements UserQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -68,5 +67,4 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     {
         return $this->getFactory()->createUserQuery();
     }
-
 }

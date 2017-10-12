@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class ProductNameRegex extends Regex
 {
-
     /**
      * @param array|null $options
      */
@@ -26,5 +25,4 @@ class ProductNameRegex extends Regex
 
         parent::__construct($options);
     }
-
 }

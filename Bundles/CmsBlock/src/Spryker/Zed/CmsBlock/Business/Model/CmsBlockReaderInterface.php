@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsBlock\Business\Model;
 
 interface CmsBlockReaderInterface
 {
-
     /**
      * @param int $idCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
     public function findCmsBlockById($idCmsBlock);
-
 }

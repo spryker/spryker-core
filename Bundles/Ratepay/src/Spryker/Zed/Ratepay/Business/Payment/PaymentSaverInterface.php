@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RatepayResponseTransfer;
 
 interface PaymentSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RatepayResponseTransfer $ratepayPaymentResponseTransfer
      * @param int $orderId
@@ -19,5 +18,4 @@ interface PaymentSaverInterface
      * @return void
      */
     public function updatePaymentMethodByPaymentResponse(RatepayResponseTransfer $ratepayPaymentResponseTransfer, $orderId);
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\User\UserDependencyProvider;
  */
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param \Spryker\Zed\User\Business\UserFacade $userFacade
      *
@@ -106,5 +105,4 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USERS_TABLE_EXTENDER);
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Shared\EventJournal\Model\Writer\WriterInterface;
  */
 abstract class AbstractEventJournal implements EventJournalInterface
 {
-
     /**
      * @var \Spryker\Shared\EventJournal\Model\Collector\DataCollectorInterface[]
      */
@@ -157,5 +156,4 @@ abstract class AbstractEventJournal implements EventJournalInterface
     {
         $this->eventFilters[$filter->getType()] = $filter;
     }
-
 }

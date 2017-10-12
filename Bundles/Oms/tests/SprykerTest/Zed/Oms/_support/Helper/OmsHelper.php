@@ -17,7 +17,6 @@ use Symfony\Component\Process\Process;
 
 class OmsHelper extends Module
 {
-
     /**
      * @param array $idSalesOrderItems
      *
@@ -100,5 +99,4 @@ class OmsHelper extends Module
         $process = new Process($command);
         $process->run();
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Ratepay\RatepayConstants;
 
 class Invoice extends AbstractMapper
 {
-
     /**
      * @return string
      */
@@ -29,5 +28,4 @@ class Invoice extends AbstractMapper
     {
         return $quoteTransfer->getPayment()->getRatepayInvoice();
     }
-
 }

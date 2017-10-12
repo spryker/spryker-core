@@ -9,10 +9,8 @@ namespace Spryker\Zed\Twig\Business\Model;
 
 interface CacheWarmerInterface
 {
-
     /**
      * @return void
      */
     public function warmUp();
-
 }

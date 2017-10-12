@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RateController extends AbstractController
 {
-
     const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
     /**
@@ -158,5 +157,4 @@ class RateController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

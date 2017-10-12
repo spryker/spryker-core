@@ -23,7 +23,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const BUNDLE = 'Propel';
 
     /**
@@ -113,5 +112,4 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
             $serviceContainer->setLogger($logger->getName(), $logger);
         }
     }
-
 }

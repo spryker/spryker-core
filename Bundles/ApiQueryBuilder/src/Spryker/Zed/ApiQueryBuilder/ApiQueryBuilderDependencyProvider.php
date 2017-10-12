@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 
 class ApiQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
     const QUERY_CONTAINER_PROPEL_QUERY_BUILDER = 'QUERY_CONTAINER_PROPEL_QUERY_BUILDER';
 
@@ -89,5 +88,4 @@ class ApiQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
         };
         return $container;
     }
-
 }

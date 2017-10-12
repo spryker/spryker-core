@@ -27,7 +27,6 @@ use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
  */
 class RedisSpinLockLockerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -75,5 +74,4 @@ class RedisSpinLockLockerTest extends Unit
             ->getMockBuilder(Client::class)
             ->getMock();
     }
-
 }

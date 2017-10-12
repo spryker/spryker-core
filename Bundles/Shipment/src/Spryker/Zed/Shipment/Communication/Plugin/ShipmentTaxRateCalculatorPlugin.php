@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ShipmentTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
-
     /**
      * This plugin makes calculations based on the given quote. The result is added to the quote.
      *
@@ -28,5 +27,4 @@ class ShipmentTaxRateCalculatorPlugin extends AbstractPlugin implements Calculat
     {
         $this->getFacade()->calculateShipmentTaxRate($quoteTransfer);
     }
-
 }

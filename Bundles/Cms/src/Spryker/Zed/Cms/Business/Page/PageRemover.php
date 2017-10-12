@@ -15,7 +15,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class PageRemover implements PageRemoverInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -100,5 +99,4 @@ class PageRemover implements PageRemoverInterface
     {
         $this->touchFacade->touchDeleted(CmsConstants::RESOURCE_TYPE_PAGE, $idCmsPage);
     }
-
 }

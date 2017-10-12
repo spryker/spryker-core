@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class RefundTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class RefundTotalCalculatorPlugin extends AbstractPlugin implements CalculationP
         $this->getFacade()
             ->calculateRefundTotal($calculableObjectTransfer);
     }
-
 }

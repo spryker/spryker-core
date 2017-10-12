@@ -28,7 +28,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
  */
 class ReaderTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
@@ -127,5 +126,4 @@ class ReaderTest extends Unit
             ->setFkProduct($product->getIdProduct())
             ->save();
     }
-
 }

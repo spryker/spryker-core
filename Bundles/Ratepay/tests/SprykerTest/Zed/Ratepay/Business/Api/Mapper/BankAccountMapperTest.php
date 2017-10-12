@@ -20,7 +20,6 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Mapper;
  */
 class BankAccountMapperTest extends AbstractMapperTest
 {
-
     /**
      * @return void
      */
@@ -36,5 +35,4 @@ class BankAccountMapperTest extends AbstractMapperTest
         $this->assertEquals('bic', $this->requestTransfer->getBankAccount()->getBicSwift());
         $this->assertEquals('fn ln', $this->requestTransfer->getBankAccount()->getOwner());
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Service\Kernel\ClassResolver\Config\BundleConfigResolver;
 
 trait BundleConfigResolverAwareTrait
 {
-
     /**
      * @var \Spryker\Service\Kernel\AbstractBundleConfig
      */
@@ -50,5 +49,4 @@ trait BundleConfigResolverAwareTrait
 
         return $resolver->resolve($this);
     }
-
 }

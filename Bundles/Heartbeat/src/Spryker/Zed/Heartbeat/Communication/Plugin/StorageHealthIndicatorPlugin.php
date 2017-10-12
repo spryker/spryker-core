@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class StorageHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
@@ -24,5 +23,4 @@ class StorageHealthIndicatorPlugin extends AbstractPlugin implements HealthIndic
     {
         return $this->getFacade()->doStorageHealthCheck();
     }
-
 }

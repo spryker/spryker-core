@@ -16,7 +16,6 @@ use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGu
 
 class AttributeTranslationFormCollectionDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
@@ -158,5 +157,4 @@ class AttributeTranslationFormCollectionDataProvider
 
         return $attributeValueEntities;
     }
-
 }

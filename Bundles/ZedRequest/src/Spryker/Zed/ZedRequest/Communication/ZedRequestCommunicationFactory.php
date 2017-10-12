@@ -15,7 +15,6 @@ use Spryker\Zed\ZedRequest\ZedRequestDependencyProvider;
  */
 class ZedRequestCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToMessengerInterface
      */
@@ -31,5 +30,4 @@ class ZedRequestCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::STORE);
     }
-
 }

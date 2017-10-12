@@ -11,7 +11,6 @@ namespace Spryker\Zed\SalesSplit\Business;
  */
 interface SalesSplitFacadeInterface
 {
-
     /**
      * Splits sales order items which have a quantity > 1 into two parts. One part with the new given quantity and
      * the other part with the rest.
@@ -36,5 +35,4 @@ interface SalesSplitFacadeInterface
      * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function splitSalesOrderItem($idSalesOrderItem, $quantity);
-
 }

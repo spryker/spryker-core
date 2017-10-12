@@ -14,7 +14,6 @@ use DateInterval;
 
 class OmsTester extends ZedAcceptanceTester
 {
-
     /**
      * This will move a braintree credit card order through all states until the order is closed
      *
@@ -91,5 +90,4 @@ class OmsTester extends ZedAcceptanceTester
         $this->checkTimeout();
         $this->reloadPage();
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 
 class DiscountEntityMapper implements DiscountEntityMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
      */
@@ -88,5 +87,4 @@ class DiscountEntityMapper implements DiscountEntityMapperInterface
 
         return static::$currencyCache[$idCurrency];
     }
-
 }

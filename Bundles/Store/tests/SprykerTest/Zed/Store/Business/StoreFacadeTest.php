@@ -27,7 +27,6 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class StoreFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\Store\StoreBusinessTester
      */
@@ -80,5 +79,4 @@ class StoreFacadeTest extends Unit
     {
         return new StoreFacade();
     }
-
 }

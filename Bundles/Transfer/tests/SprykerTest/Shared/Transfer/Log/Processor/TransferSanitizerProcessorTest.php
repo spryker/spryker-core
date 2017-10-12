@@ -24,7 +24,6 @@ use SprykerTest\Shared\Transfer\Log\Processor\Fixtures\ComplexTransfer;
  */
 class TransferSanitizerProcessorTest extends Unit
 {
-
     /**
      * @dataProvider getContext
      *
@@ -71,5 +70,4 @@ class TransferSanitizerProcessorTest extends Unit
 
         $this->assertSame($record, $result);
     }
-
 }

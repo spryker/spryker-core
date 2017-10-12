@@ -13,7 +13,6 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentCarrierReader implements ShipmentCarrierReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
@@ -58,5 +57,4 @@ class ShipmentCarrierReader implements ShipmentCarrierReaderInterface
 
         return $shipmentCarrierTransfer;
     }
-
 }

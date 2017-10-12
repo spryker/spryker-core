@@ -30,7 +30,6 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  */
 class ConsoleLogPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -108,5 +107,4 @@ class ConsoleLogPluginTest extends Unit
 
         return $consoleLogPluginMock;
     }
-
 }

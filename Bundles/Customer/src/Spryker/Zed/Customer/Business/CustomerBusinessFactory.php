@@ -23,7 +23,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CustomerBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Customer\Business\Customer\CustomerInterface
      */
@@ -156,5 +155,4 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->createCustomer()
         );
     }
-
 }

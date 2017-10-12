@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductGroupPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
      */
@@ -33,5 +32,4 @@ class ProductGroupPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductAbstractGroupQuery::create();
     }
-
 }

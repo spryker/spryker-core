@@ -20,7 +20,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryCreatePage;
 
 class CategoryHelper extends Module
 {
-
     /**
      * @return void
      */
@@ -179,5 +178,4 @@ class CategoryHelper extends Module
 
         return $categoryQuery->findOneByCategoryKey($categoryKey);
     }
-
 }

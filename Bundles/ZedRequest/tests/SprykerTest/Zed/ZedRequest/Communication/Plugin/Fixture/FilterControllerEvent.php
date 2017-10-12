@@ -13,7 +13,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class FilterControllerEvent extends SymfonyFilterControllerEvent
 {
-
     /**
      * @param \Symfony\Component\HttpKernel\HttpKernelInterface|null $kernel
      * @param callable|null $controller
@@ -28,5 +27,4 @@ class FilterControllerEvent extends SymfonyFilterControllerEvent
     ) {
         unset($kernel, $controller, $request, $requestType);
     }
-
 }

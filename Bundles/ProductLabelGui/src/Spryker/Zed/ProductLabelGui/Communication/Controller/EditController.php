@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
 
     /**
@@ -205,5 +204,4 @@ class EditController extends AbstractController
 
         return $this->jsonResponse($assignedProductTable->fetchData());
     }
-
 }

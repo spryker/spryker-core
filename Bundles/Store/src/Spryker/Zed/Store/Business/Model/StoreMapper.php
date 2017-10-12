@@ -13,7 +13,6 @@ use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInt
 
 class StoreMapper implements StoreMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
      */
@@ -57,5 +56,4 @@ class StoreMapper implements StoreMapperInterface
 
         return $storeEntity;
     }
-
 }

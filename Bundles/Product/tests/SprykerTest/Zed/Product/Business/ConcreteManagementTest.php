@@ -23,7 +23,6 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
  */
 class ConcreteManagementTest extends FacadeTestAbstract
 {
-
     /**
      * @return void
      */
@@ -401,5 +400,4 @@ class ConcreteManagementTest extends FacadeTestAbstract
             ->queryTouchEntriesByItemTypeAndItemIds($touchType, [$idProductAbstract])
             ->findOne();
     }
-
 }

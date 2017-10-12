@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AddController
 {
-
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     const PARAM_ID_PRODUCT = 'id-product';
 
@@ -275,5 +274,4 @@ class ViewController extends AddController
 
         return $productAbstractRenderedPlugins;
     }
-
 }

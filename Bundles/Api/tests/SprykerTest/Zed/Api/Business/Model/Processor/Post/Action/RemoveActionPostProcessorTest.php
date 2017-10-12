@@ -28,7 +28,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcess
  */
 class RemoveActionPostProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -53,5 +52,4 @@ class RemoveActionPostProcessorTest extends Unit
         $apiResponseTransfer = $processor->process($apiRequestTransfer, $apiResponseTransfer);
         $this->assertSame(ApiConfig::HTTP_CODE_NO_CONTENT, $apiResponseTransfer->getCode());
     }
-
 }

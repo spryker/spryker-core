@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BaseProductRelationController extends AbstractController
 {
-
     const URL_PARAM_DATA = 'data';
 
     /**
@@ -46,5 +45,4 @@ class BaseProductRelationController extends AbstractController
             $productRuleTable->fetchData()
         );
     }
-
 }

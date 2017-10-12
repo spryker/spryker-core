@@ -13,7 +13,6 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptionsInterface;
 
 class SessionStorage implements SessionStorageInterface
 {
-
     /**
      * @var \Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptionsInterface
      */
@@ -83,5 +82,4 @@ class SessionStorage implements SessionStorageInterface
             [$handler, 'gc']
         );
     }
-
 }

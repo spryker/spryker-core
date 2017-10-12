@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductLabelRelationUpdaterConsole extends Console
 {
-
     const COMMAND_NAME = 'product-label:relations:update';
 
     /**
@@ -40,5 +39,4 @@ class ProductLabelRelationUpdaterConsole extends Console
     {
         $this->getFacade()->updateDynamicProductLabelRelations($this->getMessenger());
     }
-
 }

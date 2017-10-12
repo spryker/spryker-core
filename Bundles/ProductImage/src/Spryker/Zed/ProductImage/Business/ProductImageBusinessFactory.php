@@ -20,7 +20,6 @@ use Spryker\Zed\ProductImage\ProductImageDependencyProvider;
  */
 class ProductImageBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductImage\Business\Model\ReaderInterface
      */
@@ -70,5 +69,4 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductImageDependencyProvider::FACADE_LOCALE);
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 class ProductAbstractRelationKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class ProductAbstractRelationKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS;
     }
-
 }

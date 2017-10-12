@@ -11,7 +11,6 @@ use Exception;
 
 class TransferDefinitionMerger implements MergerInterface
 {
-
     const ERROR_MESSAGE_ATTRIBUTES_NOT_IDENTICAL =
         'Value mismatch for "%1$s.%2$s" tranfer property. Value1: "%3$s"; Value2: "%4$s". ' .
         'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
@@ -184,5 +183,4 @@ class TransferDefinitionMerger implements MergerInterface
 
         return $deprecated1;
     }
-
 }

@@ -26,7 +26,6 @@ use SprykerTest\Zed\Ratepay\Business\Api\Adapter\Http\ConfigurationInstallmentAd
  */
 class InstallmentConfigurationTest extends InstallmentAbstractTest
 {
-
     /**
      * @return \SprykerTest\Zed\Ratepay\Business\Api\Adapter\Http\ConfigurationInstallmentAdapterMock
      */
@@ -93,5 +92,4 @@ class InstallmentConfigurationTest extends InstallmentAbstractTest
             ->getInstallmentConfigurationResponseConverter($expectedResponse, $this->getConfigurationRequest())
             ->convert();
     }
-
 }

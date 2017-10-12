@@ -24,7 +24,6 @@ use Spryker\Zed\ZedRequest\Business\Model\Repeater;
  */
 class RepeaterTest extends Test
 {
-
     /**
      * @return void
      */
@@ -50,5 +49,4 @@ class RepeaterTest extends Test
         $this->assertInternalType('array', $repeater->getRepeatData());
         $this->assertInternalType('array', $repeater->getRepeatData($this->tester->getBundleControllerAction()));
     }
-
 }

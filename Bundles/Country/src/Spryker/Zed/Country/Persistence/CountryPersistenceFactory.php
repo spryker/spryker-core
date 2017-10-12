@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CountryPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
@@ -33,5 +32,4 @@ class CountryPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyRegionQuery::create();
     }
-
 }

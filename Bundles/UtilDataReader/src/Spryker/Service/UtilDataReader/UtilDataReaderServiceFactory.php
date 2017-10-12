@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 class UtilDataReaderServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface
      */
@@ -101,5 +100,4 @@ class UtilDataReaderServiceFactory extends AbstractServiceFactory
     {
         return $this->getProvidedDependency(UtilDataReaderDependencyProvider::YAML_READER);
     }
-
 }

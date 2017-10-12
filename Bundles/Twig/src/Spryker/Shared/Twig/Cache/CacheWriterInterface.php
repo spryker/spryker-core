@@ -9,12 +9,10 @@ namespace Spryker\Shared\Twig\Cache;
 
 interface CacheWriterInterface
 {
-
     /**
      * @param array $data
      *
      * @return void
      */
     public function write(array $data);
-
 }

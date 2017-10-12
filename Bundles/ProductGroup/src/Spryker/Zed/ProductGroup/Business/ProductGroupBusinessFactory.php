@@ -24,7 +24,6 @@ use Spryker\Zed\ProductGroup\ProductGroupDependencyProvider;
  */
 class ProductGroupBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductGroup\Business\Model\ProductGroupCreatorInterface
      */
@@ -96,5 +95,4 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductGroupDependencyProvider::FACADE_TOUCH);
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class Category
 {
-
     /**
      * @var \Spryker\Zed\Category\Business\Model\Category\CategoryInterface
      */
@@ -240,5 +239,4 @@ class Category
 
         return $categoryTransfer;
     }
-
 }

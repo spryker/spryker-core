@@ -20,7 +20,6 @@ use Spryker\Service\UtilSanitize\UtilSanitizeService;
  */
 class UtilSanitizeServiceTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -40,5 +39,4 @@ class UtilSanitizeServiceTest extends Unit
     {
         return new UtilSanitizeService();
     }
-
 }

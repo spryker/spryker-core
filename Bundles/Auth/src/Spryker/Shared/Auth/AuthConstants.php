@@ -9,7 +9,6 @@ namespace Spryker\Shared\Auth;
 
 interface AuthConstants
 {
-
     const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
     const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
 
@@ -18,5 +17,4 @@ interface AuthConstants
     const AUTHORIZATION_WILDCARD = '*';
     const DAY_IN_SECONDS = 86400;
     const AUTH_TOKEN = 'Auth-Token';
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductNew\Dependency\QueryContainer;
 
 interface ProductNewToProductLabelInterface
 {
-
     /**
      * @param string $labelName
      *
@@ -23,5 +22,4 @@ interface ProductNewToProductLabelInterface
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductAbstractRelationsByIdProductLabel($idProductLabel);
-
 }

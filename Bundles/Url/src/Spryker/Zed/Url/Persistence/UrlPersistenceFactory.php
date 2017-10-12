@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class UrlPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
@@ -33,5 +32,4 @@ class UrlPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyUrlRedirectQuery::create();
     }
-
 }

@@ -29,7 +29,6 @@ use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
  */
 class ProductLabelBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface
      */
@@ -179,5 +178,4 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductLabelDependencyProvider::PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS);
     }
-
 }

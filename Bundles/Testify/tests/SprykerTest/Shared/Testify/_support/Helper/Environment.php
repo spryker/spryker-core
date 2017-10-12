@@ -13,7 +13,6 @@ use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
 class Environment extends Module
 {
-
     /**
      * @var string
      */
@@ -112,5 +111,4 @@ class Environment extends Module
 
         return false;
     }
-
 }

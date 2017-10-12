@@ -15,7 +15,6 @@ use Spryker\Shared\Kernel\Store;
  */
 class LocaleClient extends AbstractClient implements LocaleClientInterface
 {
-
     /**
      * @api
      *
@@ -25,5 +24,4 @@ class LocaleClient extends AbstractClient implements LocaleClientInterface
     {
         return Store::getInstance()->getCurrentLocale();
     }
-
 }

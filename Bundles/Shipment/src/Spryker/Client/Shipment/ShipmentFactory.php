@@ -12,7 +12,6 @@ use Spryker\Client\Shipment\Zed\ShipmentStub;
 
 class ShipmentFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Shipment\Zed\ShipmentStubInterface
      */
@@ -23,5 +22,4 @@ class ShipmentFactory extends AbstractFactory
 
         return $cartStub;
     }
-
 }

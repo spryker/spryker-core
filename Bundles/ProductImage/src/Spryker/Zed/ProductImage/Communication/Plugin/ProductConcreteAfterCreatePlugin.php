@@ -17,7 +17,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
  */
 class ProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -27,5 +26,4 @@ class ProductConcreteAfterCreatePlugin extends AbstractPlugin implements Product
     {
         return $this->getFacade()->createProductConcreteImageSetCollection($productConcreteTransfer);
     }
-
 }

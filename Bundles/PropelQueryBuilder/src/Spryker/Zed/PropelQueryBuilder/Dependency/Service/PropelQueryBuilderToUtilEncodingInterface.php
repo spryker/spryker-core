@@ -9,7 +9,6 @@ namespace Spryker\Zed\PropelQueryBuilder\Dependency\Service;
 
 interface PropelQueryBuilderToUtilEncodingInterface
 {
-
     /**
      * @param array $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface PropelQueryBuilderToUtilEncodingInterface
      * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

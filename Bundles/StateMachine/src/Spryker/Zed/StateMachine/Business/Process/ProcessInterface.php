@@ -9,7 +9,6 @@ namespace Spryker\Zed\StateMachine\Business\Process;
 
 interface ProcessInterface
 {
-
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $subProcesses
      *
@@ -175,5 +174,4 @@ interface ProcessInterface
      * @return mixed
      */
     public function getFile();
-
 }

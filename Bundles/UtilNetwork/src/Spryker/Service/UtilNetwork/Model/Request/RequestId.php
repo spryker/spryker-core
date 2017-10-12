@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilNetwork\Model\Request;
 
 class RequestId implements RequestIdInterface
 {
-
     const REQUEST_ID_HEADER_KEY = 'HTTP_X_REQUEST_ID';
 
     /**
@@ -59,5 +58,4 @@ class RequestId implements RequestIdInterface
 
         return $token;
     }
-
 }

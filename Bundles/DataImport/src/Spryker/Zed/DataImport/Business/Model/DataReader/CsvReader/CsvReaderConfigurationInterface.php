@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 
 interface CsvReaderConfigurationInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer
      *
@@ -58,5 +57,4 @@ interface CsvReaderConfigurationInterface
      * @return int|null
      */
     public function getLimit();
-
 }

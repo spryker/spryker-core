@@ -26,7 +26,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class DiscountConfiguratorHydrateTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -171,5 +170,4 @@ class DiscountConfiguratorHydrateTest extends Unit
     {
         return $this->getMockBuilder(DiscountEntityMapperInterface::class)->getMock();
     }
-
 }

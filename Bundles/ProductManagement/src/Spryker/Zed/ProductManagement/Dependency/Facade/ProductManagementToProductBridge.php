@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductManagementToProductBridge implements ProductManagementToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -212,5 +211,4 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     {
         $this->productFacade->touchProductConcrete($idProductConcrete);
     }
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface CollectorManagerInterface
 {
-
     /**
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -41,5 +40,4 @@ interface CollectorManagerInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

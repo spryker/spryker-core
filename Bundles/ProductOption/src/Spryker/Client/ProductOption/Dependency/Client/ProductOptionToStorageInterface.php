@@ -7,12 +7,10 @@ namespace Spryker\Client\ProductOption\Dependency\Client;
 
 interface ProductOptionToStorageInterface
 {
-
     /**
      * @param string $key
      *
      * @return array
      */
     public function get($key);
-
 }

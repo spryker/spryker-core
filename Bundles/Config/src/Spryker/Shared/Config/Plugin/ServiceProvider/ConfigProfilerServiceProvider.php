@@ -23,7 +23,6 @@ use Spryker\Shared\Twig\TwigFilesystemLoader;
  */
 class ConfigProfilerServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -145,5 +144,4 @@ class ConfigProfilerServiceProvider implements ServiceProviderInterface
     {
         return realpath(dirname(__DIR__) . '/../Theme/default');
     }
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 
 interface CurrencyWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return int
      */
     public function create(CurrencyTransfer $currencyTransfer);
-
 }

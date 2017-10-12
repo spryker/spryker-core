@@ -9,7 +9,6 @@ namespace Spryker\Yves\CartVariant\Dependency\Client;
 
 class CartVariantToProductClientBridge implements CartVariantToProductClientBridgeInterface
 {
-
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
      */
@@ -32,5 +31,4 @@ class CartVariantToProductClientBridge implements CartVariantToProductClientBrid
     {
         return $this->client->getAttributeMapByIdProductAbstractForCurrentLocale($idProductAbstract);
     }
-
 }

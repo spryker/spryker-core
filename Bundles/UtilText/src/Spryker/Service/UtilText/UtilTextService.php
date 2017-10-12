@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class UtilTextService extends AbstractService implements UtilTextServiceInterface
 {
-
     /**
      * Specification:
      * - Generate slug based on value
@@ -113,5 +112,4 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     {
         return $this->getFactory()->createToken()->check($rawToken, $hash);
     }
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer;
 
 interface ProductAbstractDataFeedToProductInterface
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstract();
-
 }

@@ -16,7 +16,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class PaginatedProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-
     const NAME = 'pagination';
 
     /**
@@ -51,5 +50,4 @@ class PaginatedProductReviewsResultFormatterPlugin extends AbstractElasticsearch
 
         return $paginationSearchResultTransfer;
     }
-
 }

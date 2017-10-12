@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface ShipmentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -142,5 +141,4 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateOrderShipment(OrderTransfer $orderTransfer);
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QueueSendMessageTransfer;
 
 interface EventToQueueInterface
 {
-
     /**
      * @param string $queueName
      * @param \Generated\Shared\Transfer\QueueSendMessageTransfer $queueSendMessageTransfer
@@ -27,5 +26,4 @@ interface EventToQueueInterface
      * @return void
      */
     public function sendMessages($queueName, array $queueSendMessageTransfers);
-
 }

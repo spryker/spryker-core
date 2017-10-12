@@ -19,7 +19,6 @@ use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInter
 
 class AttributeTranslator implements AttributeTranslatorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface
      */
@@ -180,5 +179,4 @@ class AttributeTranslator implements AttributeTranslatorInterface
     {
         return $this->localeFacade->getLocale($localeName);
     }
-
 }

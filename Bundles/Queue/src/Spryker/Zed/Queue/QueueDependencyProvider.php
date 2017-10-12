@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Container;
 
 class QueueDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_QUEUE = 'queue client';
     const QUEUE_MESSAGE_PROCESSOR_PLUGINS = 'queue message processor plugin';
 
@@ -47,5 +46,4 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

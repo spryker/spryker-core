@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
     const SERVICE_DATE_FORMATTER = 'date formatter';
     const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -86,5 +85,4 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

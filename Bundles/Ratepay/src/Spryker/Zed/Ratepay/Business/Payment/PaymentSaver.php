@@ -12,7 +12,6 @@ use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 class PaymentSaver implements PaymentSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface
      */
@@ -55,5 +54,4 @@ class PaymentSaver implements PaymentSaverInterface
             ->queryPayments()
             ->findByFkSalesOrder($orderId)->getFirst();
     }
-
 }

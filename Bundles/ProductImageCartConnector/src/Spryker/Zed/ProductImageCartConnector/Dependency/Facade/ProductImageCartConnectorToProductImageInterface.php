@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductImageCartConnector\Dependency\Facade;
 
 interface ProductImageCartConnectorToProductImageInterface
 {
-
     /**
      * @param int $productId
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getProductImagesSetCollectionByProductId($productId);
-
 }

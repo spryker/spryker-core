@@ -30,7 +30,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainer;
  */
 class RedirectManagerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -65,5 +64,4 @@ class RedirectManagerTest extends Unit
 
         $redirectedManager->deleteUrlRedirect(new RedirectTransfer());
     }
-
 }

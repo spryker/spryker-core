@@ -9,7 +9,6 @@ namespace Spryker\Zed\Mail\Business\Model\Mail;
 
 interface MailTypeCollectionGetInterface
 {
-
     /**
      * @param string $mailType
      *
@@ -25,5 +24,4 @@ interface MailTypeCollectionGetInterface
      * @return bool
      */
     public function has($mailType);
-
 }

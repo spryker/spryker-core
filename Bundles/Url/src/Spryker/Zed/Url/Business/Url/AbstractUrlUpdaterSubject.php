@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 abstract class AbstractUrlUpdaterSubject
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface[]
      */
@@ -67,5 +66,4 @@ abstract class AbstractUrlUpdaterSubject
             $observer->handleUrlUpdate($urlTransfer, $originalTransfer);
         }
     }
-
 }

@@ -25,7 +25,6 @@ use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQuery
  */
 class ProductAbstractDataFeedQueryContainerTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer
      */
@@ -391,5 +390,4 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
             ],
         ];
     }
-
 }

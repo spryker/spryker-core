@@ -32,7 +32,6 @@ use Spryker\Zed\Price\Business\PriceFacade;
  */
 class WriterTest extends Unit
 {
-
     const PRICE_TYPE_1 = 'TYPE1';
     const PRICE_TYPE_2 = 'TYPE2';
     const SKU_PRODUCT_ABSTRACT = 'ABSTRACT';
@@ -496,5 +495,4 @@ class WriterTest extends Unit
 
         return $productAbstractEntity;
     }
-
 }

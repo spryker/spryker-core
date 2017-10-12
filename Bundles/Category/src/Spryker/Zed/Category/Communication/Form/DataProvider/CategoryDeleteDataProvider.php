@@ -12,7 +12,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryDeleteDataProvider
 {
-
     const DATA_CLASS = 'data_class';
 
     /**
@@ -82,5 +81,4 @@ class CategoryDeleteDataProvider
     {
         return [];
     }
-
 }

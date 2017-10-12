@@ -12,7 +12,6 @@ use Spryker\Service\FlysystemFtpFileSystem\Model\Builder\Adapter\FtpAdapterBuild
 
 class FtpFilesystemBuilder extends AbstractFilesystemBuilder
 {
-
     /**
      * @return \Generated\Shared\Transfer\FlysystemConfigFtpTransfer
      */
@@ -45,5 +44,4 @@ class FtpFilesystemBuilder extends AbstractFilesystemBuilder
 
         return new FtpAdapterBuilder($adapterConfigTransfer);
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductConcreteNameGenerator implements ProductConcreteNameGeneratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -29,5 +28,4 @@ class ProductConcreteNameGenerator implements ProductConcreteNameGeneratorInterf
 
         return $productConcreteTransfer->getSku();
     }
-
 }

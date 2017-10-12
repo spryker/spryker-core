@@ -9,7 +9,6 @@ namespace Spryker\Zed\Url\Dependency;
 
 class UrlToLocaleBridge implements UrlToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -40,5 +39,4 @@ class UrlToLocaleBridge implements UrlToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
-
 }

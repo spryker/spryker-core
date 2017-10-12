@@ -23,7 +23,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderP
  */
 abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQueryExpanderPluginTest
 {
-
     /**
      * @dataProvider facetQueryExpanderDataProvider
      *
@@ -51,5 +50,4 @@ abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQ
      * @return array
      */
     abstract public function facetQueryExpanderDataProvider();
-
 }

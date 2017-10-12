@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface DiscountToMoneyInterface
 {
-
     /**
      * @param int $amount
      * @param string|null $isoCode
@@ -47,5 +46,4 @@ interface DiscountToMoneyInterface
      * @return float
      */
     public function convertIntegerToDecimal($value);
-
 }

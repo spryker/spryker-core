@@ -9,7 +9,6 @@ namespace Spryker\Yves\Kernel\Dependency\Messenger;
 
 class KernelToMessengerBridge implements KernelToMessengerInterface
 {
-
     /**
      * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
@@ -52,5 +51,4 @@ class KernelToMessengerBridge implements KernelToMessengerInterface
     {
         $this->messenger->addErrorMessage($message);
     }
-
 }

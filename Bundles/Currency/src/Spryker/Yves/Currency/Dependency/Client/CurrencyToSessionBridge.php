@@ -11,7 +11,6 @@ use Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface;
 
 class CurrencyToSessionBridge implements CurrencyToSessionInterface
 {
-
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
      */
@@ -46,5 +45,4 @@ class CurrencyToSessionBridge implements CurrencyToSessionInterface
     {
         return $this->sessionClient->get($name, $default);
     }
-
 }

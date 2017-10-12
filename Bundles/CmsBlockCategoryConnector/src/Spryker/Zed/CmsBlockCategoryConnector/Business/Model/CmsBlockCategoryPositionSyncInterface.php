@@ -9,10 +9,8 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 
 interface CmsBlockCategoryPositionSyncInterface
 {
-
     /**
      * @return void
      */
     public function syncFromConfig();
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilder\T
  */
 class TemplateNameBuilderZedTest extends Unit
 {
-
     /**
      * @dataProvider pathDataProvider
      *
@@ -51,5 +50,4 @@ class TemplateNameBuilderZedTest extends Unit
             ['vendor/spryker/bundle/src/Namespace/Zed/Bundle/Presentation/Controller/SubDirectory/index.twig', '@Bundle/Controller/SubDirectory/index.twig'],
         ];
     }
-
 }

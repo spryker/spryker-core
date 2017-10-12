@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
  */
 class CategoryDeleteCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
@@ -34,5 +33,4 @@ class CategoryDeleteCest
         $i->click(CategoryListPage::getDeleteButtonSelector());
         $i->seeBreadcrumbNavigation('Dashboard / Category / Delete Category');
     }
-
 }

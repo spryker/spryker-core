@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetGui\Dependency\QueryContainer;
 
 class ProductSetGuiToProductBridge implements ProductSetGuiToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class ProductSetGuiToProductBridge implements ProductSetGuiToProductInterface
     {
         return $this->productQueryContainer->queryProductAbstract();
     }
-
 }

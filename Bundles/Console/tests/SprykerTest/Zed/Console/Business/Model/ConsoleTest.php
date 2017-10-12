@@ -24,7 +24,6 @@ use SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock;
  */
 class ConsoleTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -86,5 +85,4 @@ class ConsoleTest extends Unit
     {
         return new ConsoleMock('TestCommand');
     }
-
 }

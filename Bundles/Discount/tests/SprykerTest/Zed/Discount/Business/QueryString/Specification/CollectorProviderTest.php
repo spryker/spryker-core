@@ -29,7 +29,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
  */
 class CollectorProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -127,5 +126,4 @@ class CollectorProviderTest extends Unit
     {
         return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }
-
 }

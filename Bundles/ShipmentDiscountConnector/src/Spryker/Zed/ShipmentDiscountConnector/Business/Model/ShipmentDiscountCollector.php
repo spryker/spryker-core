@@ -15,7 +15,6 @@ use Spryker\Shared\Shipment\ShipmentConstants;
 
 class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */
@@ -86,5 +85,4 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
             return $expenseTransfer->getUnitGrossPrice();
         }
     }
-
 }

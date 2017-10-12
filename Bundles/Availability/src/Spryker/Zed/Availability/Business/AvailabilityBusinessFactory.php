@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AvailabilityBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -93,5 +92,4 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductsAvailableCheckoutPreCondition($this->createSellableModel(), $this->getConfig());
     }
-
 }

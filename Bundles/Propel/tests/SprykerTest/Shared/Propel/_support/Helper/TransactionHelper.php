@@ -15,7 +15,6 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
 
 class TransactionHelper extends Module
 {
-
     /**
      * @return void
      */
@@ -57,5 +56,4 @@ class TransactionHelper extends Module
     {
         Propel::closeConnections();
     }
-
 }

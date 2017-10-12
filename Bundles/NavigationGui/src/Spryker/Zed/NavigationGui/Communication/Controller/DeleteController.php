@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class DeleteController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
@@ -53,5 +52,4 @@ class DeleteController extends AbstractController
 
         return $this->redirectResponse('/navigation-gui');
     }
-
 }

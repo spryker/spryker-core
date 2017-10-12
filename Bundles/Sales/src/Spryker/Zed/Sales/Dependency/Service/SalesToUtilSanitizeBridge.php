@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Dependency\Service;
 
 class SalesToUtilSanitizeBridge implements SalesToUtilSanitizeInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
@@ -34,5 +33,4 @@ class SalesToUtilSanitizeBridge implements SalesToUtilSanitizeInterface
     {
         return $this->utilSanitizeService->escapeHtml($text, $double, $charset);
     }
-
 }

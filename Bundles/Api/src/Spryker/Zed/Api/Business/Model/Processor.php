@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ApiResponseTransfer;
 
 class Processor implements ProcessorInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
      */
@@ -61,5 +60,4 @@ class Processor implements ProcessorInterface
 
         return $apiResponseTransfer;
     }
-
 }

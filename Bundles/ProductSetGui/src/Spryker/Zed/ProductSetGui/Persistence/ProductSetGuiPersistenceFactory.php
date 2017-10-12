@@ -16,7 +16,6 @@ use Spryker\Zed\ProductSetGui\ProductSetGuiDependencyProvider;
  */
 class ProductSetGuiPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetInterface
      */
@@ -32,5 +31,4 @@ class ProductSetGuiPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductSetGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
-
 }

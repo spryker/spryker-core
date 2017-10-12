@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormInterface;
 
 class AttributeFormTransferMapper implements AttributeFormTransferMapperInterface
 {
-
     /**
      * @param \Symfony\Component\Form\FormInterface $attributeForm
      *
@@ -52,5 +51,4 @@ class AttributeFormTransferMapper implements AttributeFormTransferMapperInterfac
 
         return $attributeTransfer;
     }
-
 }

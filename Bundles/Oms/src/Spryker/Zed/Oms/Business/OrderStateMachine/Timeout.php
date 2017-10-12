@@ -20,7 +20,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Timeout implements TimeoutInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -204,5 +203,4 @@ class Timeout implements TimeoutInterface
 
         return $vSum;
     }
-
 }

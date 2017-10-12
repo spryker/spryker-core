@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductOptionGroupForm extends AbstractType
 {
-
     const FIELD_TAX_SET_FIELD = 'fkTaxSet';
     const FIELD_VALUES = 'productOptionValues';
     const FIELD_ID_PRODUCT_OPTION_GROUP = 'idProductOptionGroup';
@@ -307,5 +306,4 @@ class ProductOptionGroupForm extends AbstractType
     {
         return 'product_option_general';
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CHECKOUT_PRE_CONDITIONS = 'checkout_pre_conditions';
     const CHECKOUT_POST_HOOKS = 'checkout_post_hooks';
     const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
@@ -83,5 +82,4 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

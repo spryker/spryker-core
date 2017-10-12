@@ -33,7 +33,6 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
  */
 class OmsBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param array $array
      *
@@ -303,5 +302,4 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
     }
-
 }

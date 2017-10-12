@@ -13,7 +13,6 @@ use Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetParameterMa
 
 class CmsBlockCollectorParameterMapExpander implements CmsBlockCollectorParameterMapExpanderInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetParameterMapperInterface
      */
@@ -61,5 +60,4 @@ class CmsBlockCollectorParameterMapExpander implements CmsBlockCollectorParamete
 
         return $contentWidgetParameterMap;
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SessionHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
@@ -24,5 +23,4 @@ class SessionHealthIndicatorPlugin extends AbstractPlugin implements HealthIndic
     {
         return $this->getFacade()->doSessionHealthCheck();
     }
-
 }

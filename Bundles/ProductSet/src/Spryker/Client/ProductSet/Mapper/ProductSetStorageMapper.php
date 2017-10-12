@@ -14,7 +14,6 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
 
 class ProductSetStorageMapper implements ProductSetStorageMapperInterface
 {
-
     /**
      * @param array $productSetStorageData
      *
@@ -95,5 +94,4 @@ class ProductSetStorageMapper implements ProductSetStorageMapperInterface
 
         return $storageImageTransfer;
     }
-
 }

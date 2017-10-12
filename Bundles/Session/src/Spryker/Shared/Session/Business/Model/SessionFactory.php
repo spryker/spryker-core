@@ -24,7 +24,6 @@ use Spryker\Shared\Session\SessionConstants;
 
 abstract class SessionFactory
 {
-
     use NewRelicApiTrait;
 
     const BUCKET_NAME_POSTFIX = 'sessions';
@@ -279,5 +278,4 @@ abstract class SessionFactory
     {
         return $this->createNewRelicApi();
     }
-
 }

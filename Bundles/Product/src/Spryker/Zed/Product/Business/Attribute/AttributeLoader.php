@@ -18,7 +18,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AttributeLoader implements AttributeLoaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -218,5 +217,4 @@ class AttributeLoader implements AttributeLoaderInterface
         }
         return $productEntity;
     }
-
 }

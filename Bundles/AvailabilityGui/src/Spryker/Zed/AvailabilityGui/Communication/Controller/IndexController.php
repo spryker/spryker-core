@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -218,5 +217,4 @@ class IndexController extends AbstractController
     {
         return $stockProductTransfer->getIdStockProduct() === null && ((int)$stockProductTransfer->getQuantity() !== 0) || $stockProductTransfer->getIsNeverOutOfStock();
     }
-
 }

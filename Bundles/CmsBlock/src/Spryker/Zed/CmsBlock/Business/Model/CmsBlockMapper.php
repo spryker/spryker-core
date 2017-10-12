@@ -16,7 +16,6 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 
 class CmsBlockMapper implements CmsBlockMapperInterface
 {
-
     /**
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
@@ -93,5 +92,4 @@ class CmsBlockMapper implements CmsBlockMapperInterface
 
         return $placeholderTransfer;
     }
-
 }

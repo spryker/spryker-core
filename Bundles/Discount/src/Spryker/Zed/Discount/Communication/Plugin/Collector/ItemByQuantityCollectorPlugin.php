@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ItemByQuantityCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -50,5 +49,4 @@ class ItemByQuantityCollectorPlugin extends AbstractPlugin implements CollectorP
             ComparatorOperators::TYPE_LIST,
         ];
     }
-
 }

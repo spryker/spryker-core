@@ -23,7 +23,6 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
  */
 class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
 {
-
     /**
      * @var \Elastica\Query
      */
@@ -107,5 +106,4 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
 
         return $productReviewTypeFilter;
     }
-
 }

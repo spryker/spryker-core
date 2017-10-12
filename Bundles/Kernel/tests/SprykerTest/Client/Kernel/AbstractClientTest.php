@@ -20,7 +20,6 @@ use SprykerTest\Client\Kernel\Fixtures\KernelClient;
  */
 class AbstractClientTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -30,5 +29,4 @@ class AbstractClientTest extends Unit
 
         $this->assertInstanceOf('SprykerTest\Client\Kernel\Fixtures\KernelClient', $abstractStub);
     }
-
 }

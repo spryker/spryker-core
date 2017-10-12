@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $idSalesOrder
@@ -19,5 +18,4 @@ interface OrderUpdaterInterface
      * @return bool
      */
     public function update(OrderTransfer $orderTransfer, $idSalesOrder);
-
 }

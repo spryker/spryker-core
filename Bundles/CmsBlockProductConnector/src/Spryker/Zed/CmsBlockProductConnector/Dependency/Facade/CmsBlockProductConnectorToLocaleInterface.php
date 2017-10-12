@@ -9,10 +9,8 @@ namespace Spryker\Zed\CmsBlockProductConnector\Dependency\Facade;
 
 interface CmsBlockProductConnectorToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
-
 }

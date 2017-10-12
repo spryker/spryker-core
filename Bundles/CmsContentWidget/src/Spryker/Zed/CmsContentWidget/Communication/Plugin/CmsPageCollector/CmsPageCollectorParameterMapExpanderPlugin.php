@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsPageCollectorParameterMapExpanderPlugin extends AbstractPlugin implements CmsPageCollectorDataExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -33,5 +32,4 @@ class CmsPageCollectorParameterMapExpanderPlugin extends AbstractPlugin implemen
         return $this->getFacade()
             ->expandCmsPageCollectorData($collectedData, $localeTransfer);
     }
-
 }

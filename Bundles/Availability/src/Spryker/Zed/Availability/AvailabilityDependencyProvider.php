@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_OMS = 'oms facade';
     const FACADE_STOCK = 'stock facade';
     const FACADE_TOUCH = 'touch facade';
@@ -76,5 +75,4 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

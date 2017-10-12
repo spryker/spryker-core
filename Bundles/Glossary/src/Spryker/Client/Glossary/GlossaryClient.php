@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class GlossaryClient extends AbstractClient implements GlossaryClientInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class GlossaryClient extends AbstractClient implements GlossaryClientInterface
             ->createTranslator($localeName)
             ->translate($id, $parameters);
     }
-
 }

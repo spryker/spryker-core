@@ -24,7 +24,6 @@ use Spryker\Yves\ZedRequest\Plugin\ServiceProvider\ZedRequestLogServiceProvider;
  */
 class ZedRequestLogServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -48,5 +47,4 @@ class ZedRequestLogServiceProviderTest extends Unit
 
         $this->assertTrue($handlerStackContainer->getHandlerStack()->hasHandler());
     }
-
 }

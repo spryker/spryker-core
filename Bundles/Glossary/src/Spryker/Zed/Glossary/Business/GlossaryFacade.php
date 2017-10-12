@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -389,5 +388,4 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
             ->createKeyManager()
             ->getKeySuggestions($keyFragment);
     }
-
 }

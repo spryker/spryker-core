@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductAttributeCollectorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -18,5 +17,4 @@ interface ProductAttributeCollectorInterface
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
-
 }

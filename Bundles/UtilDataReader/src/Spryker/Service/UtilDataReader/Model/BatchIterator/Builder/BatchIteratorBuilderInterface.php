@@ -11,12 +11,10 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface BatchIteratorBuilderInterface
 {
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\PropelBatchIterator
      */
     public function buildPropelBatchIterator(ModelCriteria $query);
-
 }

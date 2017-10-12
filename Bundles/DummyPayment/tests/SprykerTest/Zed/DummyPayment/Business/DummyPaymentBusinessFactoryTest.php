@@ -22,7 +22,6 @@ use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
  */
 class DummyPaymentBusinessFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -33,5 +32,4 @@ class DummyPaymentBusinessFactoryTest extends Unit
 
         $this->assertInstanceOf(RefundInterface::class, $refund);
     }
-
 }

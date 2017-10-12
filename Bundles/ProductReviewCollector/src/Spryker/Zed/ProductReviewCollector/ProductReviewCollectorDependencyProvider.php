@@ -15,7 +15,6 @@ use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorT
 
 class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const STORE = 'STORE';
 
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
@@ -101,5 +100,4 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
             return Store::getInstance();
         };
     }
-
 }

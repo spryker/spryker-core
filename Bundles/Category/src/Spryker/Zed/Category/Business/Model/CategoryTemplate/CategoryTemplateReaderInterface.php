@@ -9,12 +9,10 @@ namespace Spryker\Zed\Category\Business\Model\CategoryTemplate;
 
 interface CategoryTemplateReaderInterface
 {
-
     /**
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
      */
     public function findCategoryTemplateByName($name);
-
 }

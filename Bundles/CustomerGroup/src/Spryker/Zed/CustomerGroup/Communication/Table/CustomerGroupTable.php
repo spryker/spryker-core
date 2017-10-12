@@ -17,7 +17,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerGroupTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
 
     const COL_ID_CUSTOMER_GROUP = 'id_customer_group';
@@ -145,5 +144,4 @@ class CustomerGroupTable extends AbstractTable
 
         return $customerRow;
     }
-
 }

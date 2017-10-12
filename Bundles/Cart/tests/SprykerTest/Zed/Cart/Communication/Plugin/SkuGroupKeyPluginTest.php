@@ -24,7 +24,6 @@ use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
  */
 class SkuGroupKeyPluginTest extends Unit
 {
-
     const SKU = 'sku';
 
     /**
@@ -61,5 +60,4 @@ class SkuGroupKeyPluginTest extends Unit
 
         $this->assertSame(self::SKU, $changeTransfer->getItems()[0]->getGroupKey());
     }
-
 }

@@ -15,7 +15,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductDataHelper extends Module
 {
-
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
@@ -121,5 +120,4 @@ class ProductDataHelper extends Module
             ->findByIdProductAbstract($idProductAbstract)
             ->delete();
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 interface ProductGroupTouchInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
@@ -39,5 +38,4 @@ interface ProductGroupTouchInterface
      * @return void
      */
     public function touchProductAbstractGroupsDeleted(ProductGroupTransfer $productGroupTransfer);
-
 }

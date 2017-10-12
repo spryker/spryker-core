@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 
 class Store
 {
-
     const APPLICATION_ZED = 'ZED';
 
     /**
@@ -401,5 +400,4 @@ class Store
 
         return $defaultCurrencyCode;
     }
-
 }

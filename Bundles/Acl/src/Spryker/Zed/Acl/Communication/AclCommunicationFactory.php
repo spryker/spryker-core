@@ -28,7 +28,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AclCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
@@ -164,5 +163,4 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     {
         return new RulesetTable($this->getQueryContainer(), $idAclRole);
     }
-
 }

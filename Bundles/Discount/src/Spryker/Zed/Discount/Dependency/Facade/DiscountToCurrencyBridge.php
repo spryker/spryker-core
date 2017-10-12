@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Dependency\Facade;
 
 class DiscountToCurrencyBridge implements DiscountToCurrencyInterface
 {
-
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
@@ -48,5 +47,4 @@ class DiscountToCurrencyBridge implements DiscountToCurrencyInterface
     {
         return $this->currencyFacade->getCurrent();
     }
-
 }

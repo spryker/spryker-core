@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class CartVariantFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface
      */
@@ -48,5 +47,4 @@ class CartVariantFactory extends AbstractFactory
     {
         return new CartItemsAvailabilityMapper($this->getAvailabilityClient());
     }
-
 }

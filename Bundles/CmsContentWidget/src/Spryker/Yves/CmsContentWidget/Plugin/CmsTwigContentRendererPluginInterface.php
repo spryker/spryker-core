@@ -9,7 +9,6 @@ namespace Spryker\Yves\CmsContentWidget\Plugin;
 
 interface CmsTwigContentRendererPluginInterface
 {
-
     /**
      * @api
      *
@@ -19,5 +18,4 @@ interface CmsTwigContentRendererPluginInterface
      * @return array
      */
     public function render(array $contentList, array $context);
-
 }

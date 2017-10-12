@@ -20,7 +20,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin implements DiscountFormExpanderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -44,5 +43,4 @@ class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin impl
             ]
         );
     }
-
 }

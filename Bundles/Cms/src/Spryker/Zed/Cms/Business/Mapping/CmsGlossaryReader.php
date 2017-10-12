@@ -21,7 +21,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
-
     /**
      * @deprecated Use CmsConfig::getPlaceholderPattern()
      */
@@ -189,7 +188,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
                 continue;
             }
             return $glossaryTranslationEntity->getValue();
-
         }
         return null;
     }
@@ -225,7 +223,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         foreach ($availableLocales as $idLocale => $localeName) {
-
             $cmsPlaceholderTranslationTransfer = new CmsPlaceholderTranslationTransfer();
             $cmsPlaceholderTranslationTransfer->setFkLocale($idLocale);
             $cmsPlaceholderTranslationTransfer->setLocaleName($localeName);
@@ -245,7 +242,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             $glossaryAttributeTransfer->setTranslationKey($glossaryKeyEntity->getKey());
 
             $glossaryAttributeTransfer->addTranslation($cmsPlaceholderTranslationTransfer);
-
         }
     }
 
@@ -314,5 +310,4 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     {
         return file_exists($templateFile);
     }
-
 }

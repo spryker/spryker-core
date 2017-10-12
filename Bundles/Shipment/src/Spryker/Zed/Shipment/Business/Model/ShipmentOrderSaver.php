@@ -21,7 +21,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -164,7 +163,6 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 
         $salesShipmentEntity = $this->mapSalesShipmentEntity($salesOrderEntity, $shipmentMethodTransfer, $idSalesExpense);
         $salesShipmentEntity->save();
-
     }
 
     /**
@@ -202,7 +200,5 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $salesShipmentEntity->setFkSalesExpense($idSalesExpense);
 
         return $salesShipmentEntity;
-
     }
-
 }

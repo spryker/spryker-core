@@ -12,7 +12,6 @@ use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInt
 
 class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface
      */
@@ -78,5 +77,4 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
 
         return $productAbstractAvailabilityTransfer;
     }
-
 }

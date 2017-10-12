@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface CmsToUrlInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -82,5 +81,4 @@ interface CmsToUrlInterface
      * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
      */
     public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
-
 }

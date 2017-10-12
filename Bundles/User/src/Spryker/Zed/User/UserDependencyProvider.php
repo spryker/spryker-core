@@ -13,7 +13,6 @@ use Spryker\Zed\User\Dependency\Plugin\GroupPlugin;
 
 class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PLUGIN_GROUP = 'group plugin';
     const PLUGINS_USERS_TABLE_EXTENDER = 'PLUGINS_USERS_TABLE_EXTENDER';
     const CLIENT_SESSION = 'client session';
@@ -108,5 +107,4 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

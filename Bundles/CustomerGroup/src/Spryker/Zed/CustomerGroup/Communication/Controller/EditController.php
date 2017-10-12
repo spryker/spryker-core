@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-
     const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
 
     /**
@@ -87,5 +86,4 @@ class EditController extends AbstractController
 
         return $this->jsonResponse($assignedCustomerTable->fetchData());
     }
-
 }

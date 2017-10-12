@@ -8,10 +8,8 @@ namespace Spryker\Zed\Ratepay\Business\Api\Converter;
 
 interface ConverterInterface
 {
-
     /**
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function convert();
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface, DiscountCalculatorPluginWithAmountInputTypeInterface
 {
-
     /**
      * @api
      *
@@ -99,5 +98,4 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     {
         return DiscountConstants::CALCULATOR_MONEY_INPUT_TYPE;
     }
-
 }

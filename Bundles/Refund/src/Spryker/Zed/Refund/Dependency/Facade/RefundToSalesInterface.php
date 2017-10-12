@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface RefundToSalesInterface
 {
-
     /**
      * @param int $idSalesOrder
      *
@@ -26,5 +25,4 @@ interface RefundToSalesInterface
      * @return bool
      */
     public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder);
-
 }

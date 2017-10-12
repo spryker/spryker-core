@@ -11,7 +11,6 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 interface CommandByItemInterface extends CommandInterface
 {
-
     /**
      *
      * Command which is executed per order item basis
@@ -24,5 +23,4 @@ interface CommandByItemInterface extends CommandInterface
      * @return array
      */
     public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data);
-
 }

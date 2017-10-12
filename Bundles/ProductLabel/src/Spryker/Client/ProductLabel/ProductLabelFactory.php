@@ -15,7 +15,6 @@ use Spryker\Shared\ProductLabel\KeyBuilder\ProductAbstractRelationKeyBuilder;
 
 class ProductLabelFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\ProductLabel\Storage\ProductAbstractRelationReaderInterface
      */
@@ -67,5 +66,4 @@ class ProductLabelFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductLabelDependencyProvider::STORE);
     }
-
 }

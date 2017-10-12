@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormView;
 
 class NoValidateTypeExtension extends AbstractTypeExtension
 {
-
     /**
      * {@inheritdoc}
      *
@@ -33,5 +32,4 @@ class NoValidateTypeExtension extends AbstractTypeExtension
     {
         return 'form';
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class BraintreeQueryContainer extends AbstractQueryContainer implements BraintreeQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -162,5 +161,4 @@ class BraintreeQueryContainer extends AbstractQueryContainer implements Braintre
 
         return $query->filterByFkPaymentBraintree($idPayment);
     }
-
 }

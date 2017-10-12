@@ -22,7 +22,6 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
  */
 class ProductLabelDiscountConnectorFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorBusinessTester
      */
@@ -198,5 +197,4 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $collected, 'Number of collected items should match expected number.');
     }
-
 }

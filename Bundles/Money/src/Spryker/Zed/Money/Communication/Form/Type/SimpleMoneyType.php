@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType as SymfonyMoneyType;
 
 class SimpleMoneyType extends SymfonyMoneyType
 {
-
     /**
      * {@inheritdoc}
      */
@@ -19,5 +18,4 @@ class SimpleMoneyType extends SymfonyMoneyType
     {
         return '';
     }
-
 }

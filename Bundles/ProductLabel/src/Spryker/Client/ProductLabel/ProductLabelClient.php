@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductLabelClient extends AbstractClient implements ProductLabelClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -86,5 +85,4 @@ class ProductLabelClient extends AbstractClient implements ProductLabelClientInt
             ->createLabelDictionaryReader()
             ->findLabelByName($labelName, $localeName);
     }
-
 }

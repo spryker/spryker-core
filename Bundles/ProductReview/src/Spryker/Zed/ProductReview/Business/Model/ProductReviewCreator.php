@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -119,5 +118,4 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
             );
         }
     }
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\Glossary\Business\Internal;
 
 interface GlossaryInstallerInterface
 {
-
     /**
      * @return array
      */
     public function install();
-
 }

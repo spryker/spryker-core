@@ -22,7 +22,6 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
  */
 class TaxCalculatorHelperTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -66,5 +65,4 @@ class TaxCalculatorHelperTest extends Unit
     {
         return new PriceCalculationHelper();
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 class PayolutionToMailBridge implements PayolutionToMailInterface
 {
-
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
@@ -34,5 +33,4 @@ class PayolutionToMailBridge implements PayolutionToMailInterface
     {
         return $this->mailFacade->sendMail($mailTransfer);
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DiscountPromotionCollectorStrategyPlugin extends AbstractPlugin implements CollectorStrategyPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -48,5 +47,4 @@ class DiscountPromotionCollectorStrategyPlugin extends AbstractPlugin implements
     {
         return $this->getFacade()->collect($discountTransfer, $quoteTransfer);
     }
-
 }

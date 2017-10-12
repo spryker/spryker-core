@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ValidityUpdater implements ValidityUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -117,5 +116,4 @@ class ValidityUpdater implements ValidityUpdaterInterface
             $productLabelEntity->save();
         }
     }
-
 }

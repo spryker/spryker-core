@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 interface OmsFacadeInterface
 {
-
     /**
      * Specification:
      *  - Reads all manual event for given order.
@@ -461,5 +460,4 @@ interface OmsFacadeInterface
      * @return void
      */
     public function sendOrderShippedMail(SpySalesOrder $salesOrderEntity);
-
 }

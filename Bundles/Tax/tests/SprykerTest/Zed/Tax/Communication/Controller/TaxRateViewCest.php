@@ -22,7 +22,6 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
  */
 class TaxRateViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
      *
@@ -35,5 +34,4 @@ class TaxRateViewCest
 
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Rates / View Tax Rate');
     }
-
 }

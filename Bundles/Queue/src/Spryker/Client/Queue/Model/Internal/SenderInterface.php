@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QueueSendMessageTransfer;
 
 interface SenderInterface
 {
-
     /**
      * Specification:
      * - Sends message to queue
@@ -37,5 +36,4 @@ interface SenderInterface
      * @return void
      */
     public function sendMessages($queueName, array $queueSendMessageTransfers);
-
 }

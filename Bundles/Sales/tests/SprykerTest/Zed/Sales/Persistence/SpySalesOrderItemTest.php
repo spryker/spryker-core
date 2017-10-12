@@ -21,7 +21,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
  */
 class SpySalesOrderItemTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -83,5 +82,4 @@ class SpySalesOrderItemTest extends Unit
 
         return $mockedOmsOrderItemStateHistory;
     }
-
 }

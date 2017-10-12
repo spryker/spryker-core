@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 interface QueryBuilderInterface
 {
-
     /**
      * @param string $fieldName
      * @param float|null $minValue
@@ -58,5 +57,4 @@ interface QueryBuilderInterface
      * @return \Elastica\Query\MatchAll
      */
     public function createMatchAllQuery();
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class NopaymentPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery
      */
@@ -24,5 +23,4 @@ class NopaymentPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyNopaymentPaidQuery::create();
     }
-
 }

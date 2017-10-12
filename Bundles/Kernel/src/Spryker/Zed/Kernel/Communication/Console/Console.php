@@ -23,7 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Console extends SymfonyCommand
 {
-
     const CODE_SUCCESS = 0;
     const CODE_ERROR = 1;
 
@@ -461,5 +460,4 @@ class Console extends SymfonyCommand
         $width = ($width) ?: 200;
         $this->info(str_repeat('-', $width), $wrapInInfoTags);
     }
-
 }

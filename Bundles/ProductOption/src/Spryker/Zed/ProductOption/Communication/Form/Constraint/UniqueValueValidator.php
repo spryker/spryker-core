@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueValueValidator extends ConstraintValidator
 {
-
     /**
      * @var array
      */
@@ -111,5 +110,4 @@ class UniqueValueValidator extends ConstraintValidator
 
         return 0;
     }
-
 }

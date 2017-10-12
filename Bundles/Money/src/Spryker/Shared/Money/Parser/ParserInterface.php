@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 
 interface ParserInterface
 {
-
     /**
      * @param string $value
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
@@ -19,5 +18,4 @@ interface ParserInterface
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function parse($value, CurrencyTransfer $currencyTransfer);
-
 }

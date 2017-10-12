@@ -9,7 +9,6 @@ namespace Spryker\Zed\Url\Dependency;
 
 interface UrlToLocaleInterface
 {
-
     /**
      * @param string $localeName
      *
@@ -23,5 +22,4 @@ interface UrlToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
-
 }

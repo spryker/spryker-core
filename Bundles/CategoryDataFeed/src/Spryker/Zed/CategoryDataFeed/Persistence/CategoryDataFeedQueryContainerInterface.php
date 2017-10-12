@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CategoryDataFeedQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface CategoryDataFeedQueryContainerInterface extends QueryContainerInterfac
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryCategoryDataFeed(CategoryDataFeedTransfer $categoryDataFeedTransfer);
-
 }

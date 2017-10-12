@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class DummyPaymentFacade extends AbstractFacade implements DummyPaymentFacadeInterface
 {
-
     /**
      * Specification:
      * - Calculate refund amount for given order items and order entity
@@ -31,5 +30,4 @@ class DummyPaymentFacade extends AbstractFacade implements DummyPaymentFacadeInt
     {
         $this->getFactory()->createRefund()->refund($salesOrderItems, $salesOrderEntity);
     }
-
 }

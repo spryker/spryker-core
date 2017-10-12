@@ -11,7 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface QueueFacadeInterface
 {
-
     /**
      * Specification
      *  - Starts receiving and processing messages task for one specific queue
@@ -36,5 +35,4 @@ interface QueueFacadeInterface
      * @return void
      */
     public function startWorker($command, OutputInterface $output);
-
 }

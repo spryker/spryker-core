@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PayolutionConfig extends AbstractBundleConfig
 {
-
     const PROVIDER_NAME = 'payolution';
     const PAYMENT_METHOD_INVOICE = 'payolutionInvoice';
     const PAYMENT_METHOD_INSTALLMENT = 'payolutionInstallment';
@@ -211,5 +210,4 @@ class PayolutionConfig extends AbstractBundleConfig
             // @deprecated this is just for backward compatibility
             : $this->get(PayolutionConstants::HOST_YVES);
     }
-
 }

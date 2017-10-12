@@ -17,7 +17,6 @@ use Spryker\Yves\Kernel\Container;
 
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const STORE = 'store';
     const MONEY_PARSER = 'money parser';
 
@@ -106,5 +105,4 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 
         return $isoCurrencies;
     }
-
 }

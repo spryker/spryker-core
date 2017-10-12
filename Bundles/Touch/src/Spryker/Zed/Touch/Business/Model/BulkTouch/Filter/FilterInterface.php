@@ -9,7 +9,6 @@ namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Filter;
 
 interface FilterInterface
 {
-
     /**
      * @param array $ids
      * @param string $itemType
@@ -17,5 +16,4 @@ interface FilterInterface
      * @return array
      */
     public function filter(array $ids, $itemType);
-
 }

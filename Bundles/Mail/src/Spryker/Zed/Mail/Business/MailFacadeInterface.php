@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 interface MailFacadeInterface
 {
-
     /**
      * Specification:
      * - Prepares the mail before send
@@ -36,5 +35,4 @@ interface MailFacadeInterface
      * @return void
      */
     public function sendMail(MailTransfer $mailTransfer);
-
 }

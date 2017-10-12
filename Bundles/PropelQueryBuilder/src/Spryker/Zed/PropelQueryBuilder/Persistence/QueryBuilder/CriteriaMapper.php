@@ -17,7 +17,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInt
 
 class CriteriaMapper implements CriteriaMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\OperatorBuilderInterface
      */
@@ -281,5 +280,4 @@ class CriteriaMapper implements CriteriaMapperInterface
     {
         return strtoupper($value) === Criteria::LOGICAL_OR;
     }
-
 }

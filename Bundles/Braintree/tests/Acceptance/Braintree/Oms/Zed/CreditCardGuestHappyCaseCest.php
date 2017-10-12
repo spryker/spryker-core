@@ -20,7 +20,6 @@ use Acceptance\Braintree\Oms\Zed\Tester\OmsTester;
  */
 class CreditCardGuestHappyCaseCest
 {
-
     /**
      * @skip Broken because of new checkout
      *
@@ -42,5 +41,4 @@ class CreditCardGuestHappyCaseCest
         $i->amLoggedInUser();
         $i->closeCreditCardOrderHappyCase();
     }
-
 }

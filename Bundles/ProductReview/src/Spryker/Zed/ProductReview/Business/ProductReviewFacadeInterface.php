@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewFacadeInterface
 {
-
     /**
      * Specification:
      * - Stores provided product review in persistent storage with pending status.
@@ -76,5 +75,4 @@ interface ProductReviewFacadeInterface
      * @return void
      */
     public function deleteProductReview(ProductReviewTransfer $productReviewTransfer);
-
 }

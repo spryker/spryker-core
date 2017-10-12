@@ -12,7 +12,6 @@ use SprykerTest\Shared\Testify\Helper\ZedBootstrap;
 
 class DataTableActionHelper extends Module
 {
-
     /**
      * @var bool
      */
@@ -129,5 +128,4 @@ class DataTableActionHelper extends Module
 
         return $this->getModule('\\' . ZedBootstrap::class);
     }
-
 }

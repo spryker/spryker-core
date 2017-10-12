@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
 interface RelatedProductTableQueryBuilderInterface
 {
-
     /**
      * @param int|null $idProductLabel
      *
@@ -23,5 +22,4 @@ interface RelatedProductTableQueryBuilderInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function buildAssignedProductQuery($idProductLabel = null);
-
 }

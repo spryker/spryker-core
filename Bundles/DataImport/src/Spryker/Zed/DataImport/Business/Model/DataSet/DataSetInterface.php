@@ -14,7 +14,6 @@ use Serializable;
 
 interface DataSetInterface extends IteratorAggregate, ArrayAccess, Serializable, Countable
 {
-
     /**
      * This exchanges the used array inside and will return the old one.
      * Do not use the returned value, this is the old one and not the new!
@@ -31,5 +30,4 @@ interface DataSetInterface extends IteratorAggregate, ArrayAccess, Serializable,
      * @return array
      */
     public function getArrayCopy();
-
 }

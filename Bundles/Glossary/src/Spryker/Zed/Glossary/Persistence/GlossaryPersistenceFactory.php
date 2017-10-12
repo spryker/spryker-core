@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class GlossaryPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
@@ -33,5 +32,4 @@ class GlossaryPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyGlossaryKeyQuery::create();
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class NumericFacetAggregation extends AbstractFacetAggregation
 {
-
     const STATS_SUFFIX = '-stats';
 
     /**
@@ -65,5 +64,4 @@ class NumericFacetAggregation extends AbstractFacetAggregation
 
         return $this->createNestedFacetAggregation($nestedFieldName, $facetNameAgg, $fieldName);
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Shared\Storage\StorageConstants;
 
 class StorageInstanceBuilder
 {
-
     const KV_NAMESPACE = 'Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\';
     const ADAPTER_READ_WRITE = 'ReadWrite';
     const ADAPTER_READ = 'Read';
@@ -198,5 +197,4 @@ class StorageInstanceBuilder
 
         return null;
     }
-
 }

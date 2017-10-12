@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\FileSystemQueryTransfer;
 
 interface FileSystemReaderPluginInterface
 {
-
     /**
      * Specification:
      * - Get resource metadata
@@ -132,5 +131,4 @@ interface FileSystemReaderPluginInterface
      * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer);
-
 }

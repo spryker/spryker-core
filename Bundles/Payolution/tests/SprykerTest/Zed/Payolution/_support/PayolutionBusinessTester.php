@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class PayolutionBusinessTester extends Actor
 {
-
     use _generated\PayolutionBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

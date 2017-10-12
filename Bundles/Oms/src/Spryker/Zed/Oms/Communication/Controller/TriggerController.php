@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TriggerController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -73,5 +72,4 @@ class TriggerController extends AbstractController
 
         return $orderItems;
     }
-
 }

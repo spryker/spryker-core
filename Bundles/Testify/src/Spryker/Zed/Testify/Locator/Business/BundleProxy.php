@@ -20,7 +20,6 @@ use Spryker\Zed\Testify\Locator\TestifyConfigurator;
 
 class BundleProxy extends KernelBundleProxy
 {
-
     use ContainerMocker;
 
     /**
@@ -162,5 +161,4 @@ class BundleProxy extends KernelBundleProxy
 
         return $config;
     }
-
 }

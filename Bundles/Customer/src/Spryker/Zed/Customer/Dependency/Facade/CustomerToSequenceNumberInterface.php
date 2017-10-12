@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 
 interface CustomerToSequenceNumberInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return string
      */
     public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings);
-
 }

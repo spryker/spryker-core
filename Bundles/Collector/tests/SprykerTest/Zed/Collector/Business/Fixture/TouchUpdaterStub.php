@@ -11,7 +11,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
 
 class TouchUpdaterStub extends AbstractTouchUpdater
 {
-
     /**
      * @var string
      */
@@ -46,5 +45,4 @@ class TouchUpdaterStub extends AbstractTouchUpdater
     public function deleteTouchKeyEntities($keys, $idLocale)
     {
     }
-
 }

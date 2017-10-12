@@ -17,7 +17,6 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
  */
 class IsPayedPlugin extends AbstractPlugin implements ConditionInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -27,5 +26,4 @@ class IsPayedPlugin extends AbstractPlugin implements ConditionInterface
     {
         return true;
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractClient
 {
-
     /**
      * @var \Spryker\Client\Kernel\AbstractFactory
      */
@@ -58,5 +57,4 @@ abstract class AbstractClient
     {
         return new FactoryResolver();
     }
-
 }

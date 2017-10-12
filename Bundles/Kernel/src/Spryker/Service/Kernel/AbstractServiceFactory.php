@@ -13,7 +13,6 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 
 class AbstractServiceFactory
 {
-
     use BundleConfigResolverAwareTrait;
     use ContainerMocker;
 
@@ -107,5 +106,4 @@ class AbstractServiceFactory
     {
         return new DependencyProviderResolver();
     }
-
 }

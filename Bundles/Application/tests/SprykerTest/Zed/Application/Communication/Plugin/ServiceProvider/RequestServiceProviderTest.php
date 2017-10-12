@@ -26,7 +26,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RequestServiceProviderTest extends Unit
 {
-
     /**
      * @dataProvider urlStack
      *
@@ -69,5 +68,4 @@ class RequestServiceProviderTest extends Unit
             ['/foo/bar/baz?foo=bar&bar=baz', 'foo', 'bar', 'baz'],
         ];
     }
-
 }

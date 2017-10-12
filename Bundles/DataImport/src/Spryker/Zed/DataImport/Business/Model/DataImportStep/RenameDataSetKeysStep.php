@@ -11,7 +11,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class RenameDataSetKeysStep implements DataImportStepInterface
 {
-
     /**
      * @var array
      */
@@ -37,5 +36,4 @@ class RenameDataSetKeysStep implements DataImportStepInterface
             unset($dataSet[$oldKey]);
         }
     }
-
 }

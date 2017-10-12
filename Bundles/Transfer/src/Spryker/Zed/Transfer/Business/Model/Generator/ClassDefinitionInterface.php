@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 interface ClassDefinitionInterface extends DefinitionInterface
 {
-
     /**
      * @return array
      */
@@ -49,5 +48,4 @@ interface ClassDefinitionInterface extends DefinitionInterface
      * @return bool
      */
     public function hasArrayObject();
-
 }

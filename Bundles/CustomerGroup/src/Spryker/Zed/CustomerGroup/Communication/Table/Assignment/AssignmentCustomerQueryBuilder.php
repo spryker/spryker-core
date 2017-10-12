@@ -14,7 +14,6 @@ use Spryker\Zed\CustomerGroup\Dependency\QueryContainer\CustomerGroupToCustomerQ
 
 class AssignmentCustomerQueryBuilder implements AssignmentCustomerQueryBuilderInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerGroup\Dependency\QueryContainer\CustomerGroupToCustomerQueryContainerInterface
      */
@@ -64,5 +63,4 @@ class AssignmentCustomerQueryBuilder implements AssignmentCustomerQueryBuilderIn
 
         return $query;
     }
-
 }

@@ -25,7 +25,6 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentSaveOrder
  */
 class DummyPaymentSaveOrderPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -38,5 +37,4 @@ class DummyPaymentSaveOrderPluginTest extends Unit
 
         $this->assertInstanceOf(CheckoutResponseTransfer::class, $checkoutResponseTransfer);
     }
-
 }

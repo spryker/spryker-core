@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CategoryDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CATEGORY_QUERY_CONTAINER = 'CATEGORY_QUERY_CONTAINER';
 
     /**
@@ -53,5 +52,4 @@ class CategoryDataFeedDependencyProvider extends AbstractBundleDependencyProvide
 
         return $container;
     }
-
 }

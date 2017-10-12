@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 {
-
     /**
      * Specification:
      *  - Returns persisted order information stored into OrderTransfer
@@ -205,5 +204,4 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createOrderExpander()
             ->expandSalesOrder($quoteTransfer);
     }
-
 }

@@ -35,7 +35,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
  */
 class OrderStateMachineTest extends Unit
 {
-
     const CONDITION_NAME = 'conditionName';
     const COMMAND_NAME = 'commandName';
 
@@ -197,5 +196,4 @@ class OrderStateMachineTest extends Unit
         return $this->getMockBuilder(ReservationInterface::class)
             ->getMock();
     }
-
 }

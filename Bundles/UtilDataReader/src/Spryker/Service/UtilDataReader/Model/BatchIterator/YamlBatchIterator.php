@@ -12,7 +12,6 @@ use Spryker\Service\UtilDataReader\Exception\ResourceNotFoundException;
 
 class YamlBatchIterator implements CountableIteratorInterface
 {
-
     /**
      * @var \Spryker\Service\UtilDataReader\Dependency\YamlReaderInterface
      */
@@ -128,5 +127,4 @@ class YamlBatchIterator implements CountableIteratorInterface
 
         return count($this->batchData);
     }
-
 }

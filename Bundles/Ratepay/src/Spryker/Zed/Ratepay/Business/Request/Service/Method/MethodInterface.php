@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Request\Service\Method;
 
 interface MethodInterface
 {
-
     /**
      * @return string
      */
@@ -18,5 +17,4 @@ interface MethodInterface
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\Payment\Init
      */
     public function profile();
-
 }

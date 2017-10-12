@@ -15,7 +15,6 @@ use Spryker\Zed\Customer\CustomerConfig;
 
 class PreConditionChecker implements PreConditionCheckerInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Business\Customer\Customer
      */
@@ -64,5 +63,4 @@ class PreConditionChecker implements PreConditionCheckerInterface
     {
         return new CheckoutErrorTransfer();
     }
-
 }

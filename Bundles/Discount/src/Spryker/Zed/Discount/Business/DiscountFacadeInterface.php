@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface DiscountFacadeInterface
 {
-
     /**
      * Specification:
      *  - Finds all discounts with voucher
@@ -521,5 +520,4 @@ interface DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     );
-
 }

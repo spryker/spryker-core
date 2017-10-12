@@ -23,7 +23,6 @@ use Propel\Runtime\Connection\ConnectionInterface;
  */
 abstract class AbstractSpyProductSearchAttribute extends BaseSpyProductSearchAttribute
 {
-
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
@@ -78,5 +77,4 @@ abstract class AbstractSpyProductSearchAttribute extends BaseSpyProductSearchAtt
 
         return (int)$maxPosition;
     }
-
 }

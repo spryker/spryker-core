@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Container;
 
 class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const INSTALLER_PLUGINS = 'installer plugins';
 
     /**
@@ -40,5 +39,4 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FlysystemConfigTransfer;
 
 interface FlysystemFilesystemBuilderPluginInterface
 {
-
     /**
      * Specification:
      *  - Create a Filesystem with parameters from FlysystemConfigTransfer
@@ -38,5 +37,4 @@ interface FlysystemFilesystemBuilderPluginInterface
      * @return bool
      */
     public function acceptType($type);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 class ProductManagementToStoreBridge implements ProductManagementToStoreInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
@@ -30,5 +29,4 @@ class ProductManagementToStoreBridge implements ProductManagementToStoreInterfac
     {
         return $this->store->getCurrencyIsoCode();
     }
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductBundleCartPostSaveUpdateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function updateBundles(QuoteTransfer $quoteTransfer);
-
 }

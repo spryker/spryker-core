@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -348,5 +347,4 @@ class RatepayFacade extends AbstractFacade implements RatepayFacadeInterface
             ->createRequestProfileTransactionHandler()
             ->request();
     }
-
 }

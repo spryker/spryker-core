@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -55,5 +54,4 @@ class AddController extends AbstractController
     {
         return new CustomerTransfer();
     }
-
 }

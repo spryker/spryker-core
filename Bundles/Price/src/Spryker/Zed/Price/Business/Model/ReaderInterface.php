@@ -9,7 +9,6 @@ namespace Spryker\Zed\Price\Business\Model;
 
 interface ReaderInterface
 {
-
     /**
      * @return array
      */
@@ -126,5 +125,4 @@ interface ReaderInterface
      * @return string
      */
     public function handleDefaultPriceType($priceType = null);
-
 }

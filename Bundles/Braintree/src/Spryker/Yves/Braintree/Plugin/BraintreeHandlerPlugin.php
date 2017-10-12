@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BraintreeHandlerPlugin extends AbstractPlugin implements StepHandlerPluginInterface
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -28,5 +27,4 @@ class BraintreeHandlerPlugin extends AbstractPlugin implements StepHandlerPlugin
     {
         $this->getFactory()->createBraintreeHandler()->addPaymentToQuote($request, $quoteTransfer);
     }
-
 }

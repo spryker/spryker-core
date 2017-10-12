@@ -11,7 +11,6 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 
 abstract class AbstractProductTable extends AbstractTable
 {
-
     /**
      * @param string $status
      *
@@ -25,5 +24,4 @@ abstract class AbstractProductTable extends AbstractTable
 
         return '<span class="label label-info">Active</span>';
     }
-
 }

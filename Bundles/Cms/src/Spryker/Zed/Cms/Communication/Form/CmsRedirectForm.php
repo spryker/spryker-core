@@ -24,7 +24,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CmsRedirectForm extends AbstractType
 {
-
     const FIELD_ID_URL_REDIRECT = 'id_url_redirect';
     const FIELD_FROM_URL = 'from_url';
     const FIELD_TO_URL = 'to_url';
@@ -258,5 +257,4 @@ class CmsRedirectForm extends AbstractType
             $context->addViolation($validationResponse->getError());
         }
     }
-
 }
