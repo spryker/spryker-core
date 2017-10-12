@@ -24,7 +24,6 @@ use Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer;
  */
 class PriceDataFeedQueryContainerTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer
      */
@@ -151,5 +150,4 @@ class PriceDataFeedQueryContainerTest extends Unit
             'spy_price_type',
         ];
     }
-
 }

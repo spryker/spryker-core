@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class NavigationCollectorToCollectorBridge implements NavigationCollectorToCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
@@ -65,5 +64,4 @@ class NavigationCollectorToCollectorBridge implements NavigationCollectorToColle
             $output
         );
     }
-
 }

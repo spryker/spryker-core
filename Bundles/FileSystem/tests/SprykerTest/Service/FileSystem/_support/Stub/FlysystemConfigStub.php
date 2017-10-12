@@ -14,7 +14,6 @@ use SprykerTest\Service\FileSystem\FileSystemServiceTest;
 
 class FlysystemConfigStub extends SprykerFlysystemConfig
 {
-
     /**
      * @return array
      */
@@ -35,5 +34,4 @@ class FlysystemConfigStub extends SprykerFlysystemConfig
             ],
         ];
     }
-
 }

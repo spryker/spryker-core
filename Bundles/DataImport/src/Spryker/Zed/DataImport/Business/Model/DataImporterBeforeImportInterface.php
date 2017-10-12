@@ -9,10 +9,8 @@ namespace Spryker\Zed\DataImport\Business\Model;
 
 interface DataImporterBeforeImportInterface
 {
-
     /**
      * @return void
      */
     public function beforeImport();
-
 }

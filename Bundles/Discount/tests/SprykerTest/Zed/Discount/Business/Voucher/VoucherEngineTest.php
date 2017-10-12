@@ -29,7 +29,6 @@ use stdClass;
  */
 class VoucherEngineTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -329,5 +328,4 @@ class VoucherEngineTest extends Unit
 
         return $discountVoucherTransfer;
     }
-
 }

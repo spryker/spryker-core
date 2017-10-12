@@ -11,7 +11,6 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 interface DiscountEntityMapperInterface
 {
-
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
@@ -32,5 +31,4 @@ interface DiscountEntityMapperInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrencyByIdCurrency($idCurrency);
-
 }

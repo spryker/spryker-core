@@ -11,7 +11,6 @@ use Orm\Zed\Ratepay\Persistence\SpyPaymentRatepay;
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -43,5 +42,4 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
             ->setIpAddress($paymentTransfer->requireIpAddress()->getIpAddress())
             ->setCurrencyIso3($paymentTransfer->requireCurrencyIso3()->getCurrencyIso3());
     }
-
 }

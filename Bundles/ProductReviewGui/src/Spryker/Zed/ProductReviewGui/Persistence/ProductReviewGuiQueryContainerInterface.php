@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewGui\Persistence;
 
 interface ProductReviewGuiQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -18,5 +17,4 @@ interface ProductReviewGuiQueryContainerInterface
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReview($idLocale);
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
 
 interface EventListenerContextInterface extends EventListenerInterface
 {
-
     /**
      * @return bool
      */
@@ -21,5 +20,4 @@ interface EventListenerContextInterface extends EventListenerInterface
      * @return string
      */
     public function getListenerName();
-
 }

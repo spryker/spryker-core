@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class BraintreeFacade extends AbstractFacade implements BraintreeFacadeInterface
 {
-
     /**
      * Specification:
      * - Saves order payment method data according to quote and checkout response transfer data.
@@ -218,5 +217,4 @@ class BraintreeFacade extends AbstractFacade implements BraintreeFacadeInterface
             ->createPostSaveHook()
             ->postSaveHook($quoteTransfer, $checkoutResponse);
     }
-
 }

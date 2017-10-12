@@ -11,7 +11,6 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 
 interface EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface EventSubscriberInterface
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection);
-
 }

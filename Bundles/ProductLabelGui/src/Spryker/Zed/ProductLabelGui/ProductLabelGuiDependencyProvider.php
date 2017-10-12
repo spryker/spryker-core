@@ -16,7 +16,6 @@ use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProdu
 
 class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     const FACADE_MONEY = 'FACADE_MONEY';
@@ -106,5 +105,4 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

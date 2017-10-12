@@ -9,7 +9,6 @@ namespace Spryker\Yves\CartVariant\Dependency\Client;
 
 class CartVariantToAvailabilityClientBridge implements CartVariantToAvailabilityClientBridgeInterface
 {
-
     /**
      * @var \Spryker\Client\Availability\AvailabilityClientInterface
      */
@@ -32,5 +31,4 @@ class CartVariantToAvailabilityClientBridge implements CartVariantToAvailability
     {
         return $this->client->getProductAvailabilityByIdProductAbstract($idProductAbstract);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Money\Builder;
 
 interface MoneyBuilderInterface
 {
-
     /**
      * @param int $amount
      * @param null|string $isoCode
@@ -33,5 +32,4 @@ interface MoneyBuilderInterface
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function fromString($amount, $isoCode = null);
-
 }

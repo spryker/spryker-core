@@ -15,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AssignedCustomerTable extends AbstractCustomerTable
 {
-
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
@@ -74,5 +73,4 @@ class AssignedCustomerTable extends AbstractCustomerTable
     {
         return 'Assigned';
     }
-
 }

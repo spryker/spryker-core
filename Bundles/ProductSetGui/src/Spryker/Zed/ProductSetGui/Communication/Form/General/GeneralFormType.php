@@ -27,7 +27,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class GeneralFormType extends AbstractType
 {
-
     const FIELD_LOCALIZED_GENERAL_FORM_COLLECTION = 'localized_general_form_collection';
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_ID_PRODUCT_SET = 'id_product_set';
@@ -223,5 +222,4 @@ class GeneralFormType extends AbstractType
             $context->addViolation('Product Set Key already exists.');
         }
     }
-
 }

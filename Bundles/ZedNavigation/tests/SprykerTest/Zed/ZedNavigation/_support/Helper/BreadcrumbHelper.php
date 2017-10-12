@@ -12,7 +12,6 @@ use SprykerTest\Shared\Testify\Helper\ZedBootstrap;
 
 class BreadcrumbHelper extends Module
 {
-
     /**
      * @var bool
      */
@@ -90,5 +89,4 @@ class BreadcrumbHelper extends Module
             $position++;
         }
     }
-
 }

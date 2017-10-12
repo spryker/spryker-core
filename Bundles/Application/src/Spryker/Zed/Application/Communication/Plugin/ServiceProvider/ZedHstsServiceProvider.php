@@ -19,7 +19,6 @@ use Spryker\Shared\Config\Config;
  */
 class ZedHstsServiceProvider extends AbstractHstsServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @return bool
      */
@@ -40,5 +39,4 @@ class ZedHstsServiceProvider extends AbstractHstsServiceProvider implements Serv
         }
         return $config;
     }
-
 }

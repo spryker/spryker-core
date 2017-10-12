@@ -24,7 +24,6 @@ use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
  */
 class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface
      */
@@ -171,5 +170,4 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_ATTRIBUTE);
     }
-
 }

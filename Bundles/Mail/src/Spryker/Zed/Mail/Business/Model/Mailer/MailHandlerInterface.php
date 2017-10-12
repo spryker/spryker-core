@@ -10,12 +10,10 @@ use Generated\Shared\Transfer\MailTransfer;
 
 interface MailHandlerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void
      */
     public function handleMail(MailTransfer $mailTransfer);
-
 }

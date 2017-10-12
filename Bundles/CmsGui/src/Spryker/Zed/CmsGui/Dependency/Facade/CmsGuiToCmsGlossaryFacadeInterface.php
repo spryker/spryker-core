@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
 interface CmsGuiToCmsGlossaryFacadeInterface
 {
-
     /**
      * @param string $keyName
      *
@@ -23,5 +22,4 @@ interface CmsGuiToCmsGlossaryFacadeInterface
      * @return int
      */
     public function getKeyIdentifier($keyName);
-
 }

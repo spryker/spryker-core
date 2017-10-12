@@ -15,7 +15,6 @@ use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlBridge;
 
 class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_URL = 'FACADE_URL';
@@ -69,5 +68,4 @@ class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new NavigationGuiToUrlBridge($container->getLocator()->url()->facade());
         };
     }
-
 }

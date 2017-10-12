@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReSortController extends AbstractController
 {
-
     const PARAM_SORT_ORDER_DATA = 'sort-order-data';
 
     /**
@@ -83,5 +82,4 @@ class ReSortController extends AbstractController
 
         return $positionMap;
     }
-
 }

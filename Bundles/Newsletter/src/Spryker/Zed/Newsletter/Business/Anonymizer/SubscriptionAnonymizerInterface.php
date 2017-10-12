@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 
 interface SubscriptionAnonymizerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequestTransfer
      *
      * @return void
      */
     public function process(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequestTransfer);
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
 interface ProductSetGuiToProductImageInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
-
 }

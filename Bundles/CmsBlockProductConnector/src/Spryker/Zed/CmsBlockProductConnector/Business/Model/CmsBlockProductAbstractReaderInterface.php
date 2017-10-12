@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockProductAbstractReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
@@ -33,5 +32,4 @@ interface CmsBlockProductAbstractReaderInterface
      * @return string[]
      */
     public function getCmsBlockRenderedList($idProductAbstract);
-
 }

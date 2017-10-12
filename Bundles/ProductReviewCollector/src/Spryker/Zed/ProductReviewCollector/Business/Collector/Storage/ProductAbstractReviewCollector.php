@@ -13,7 +13,6 @@ use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollec
 
 class ProductAbstractReviewCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @return string
      */
@@ -49,5 +48,4 @@ class ProductAbstractReviewCollector extends AbstractStoragePropelCollector
 
         return $productAbstractReviewTransfer;
     }
-
 }

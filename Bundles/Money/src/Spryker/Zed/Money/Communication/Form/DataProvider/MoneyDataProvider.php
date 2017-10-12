@@ -12,7 +12,6 @@ use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface;
 
 class MoneyDataProvider
 {
-
     const DEFAULT_SCALE = 2;
 
     /**
@@ -99,5 +98,4 @@ class MoneyDataProvider
 
         return static::$storeCache[$idStore];
     }
-
 }

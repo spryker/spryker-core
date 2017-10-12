@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Dependency\Util;
 
 interface ZedNavigationToUtilEncodingInterface
 {
-
     /**
      * @param mixed $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface ZedNavigationToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

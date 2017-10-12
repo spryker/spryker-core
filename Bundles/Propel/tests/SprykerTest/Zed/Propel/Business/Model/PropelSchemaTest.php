@@ -27,7 +27,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PropelSchemaTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -89,5 +88,4 @@ class PropelSchemaTest extends Unit
 
         $this->assertTrue(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_bar.schema.xml'));
     }
-
 }

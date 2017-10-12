@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CmsBlockProductAbstractFormPlugin extends AbstractPlugin implements CmsBlockFormPluginInterface
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -39,5 +38,4 @@ class CmsBlockProductAbstractFormPlugin extends AbstractPlugin implements CmsBlo
             $dataProvider->getOptions()
         );
     }
-
 }

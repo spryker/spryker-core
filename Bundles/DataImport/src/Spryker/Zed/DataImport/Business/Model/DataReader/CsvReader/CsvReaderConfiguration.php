@@ -12,7 +12,6 @@ use SplFileObject;
 
 class CsvReaderConfiguration implements CsvReaderConfigurationInterface
 {
-
     const DEFAULT_HAS_HEADER = true;
     const DEFAULT_DELIMITER = ',';
     const DEFAULT_ENCLOSURE = '"';
@@ -131,5 +130,4 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
     {
         return (int)$this->dataImporterReaderConfigurationTransfer->getLimit();
     }
-
 }

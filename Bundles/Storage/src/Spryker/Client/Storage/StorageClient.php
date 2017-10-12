@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
-
     const KEY_USED = 'used';
     const KEY_NEW = 'new';
     const KEY_INIT = 'init';
@@ -470,5 +469,4 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
         return $result;
     }
-
 }

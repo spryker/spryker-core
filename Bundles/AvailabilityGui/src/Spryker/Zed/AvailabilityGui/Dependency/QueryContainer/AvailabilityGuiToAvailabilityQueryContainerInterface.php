@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityGui\Dependency\QueryContainer;
 
 interface AvailabilityGuiToAvailabilityQueryContainerInterface
 {
-
     /**
      * @param int $idLocale
      *
@@ -24,5 +23,4 @@ interface AvailabilityGuiToAvailabilityQueryContainerInterface
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
-
 }

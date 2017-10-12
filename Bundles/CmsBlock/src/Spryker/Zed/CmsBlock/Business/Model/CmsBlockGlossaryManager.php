@@ -21,7 +21,6 @@ use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 
 class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
@@ -283,5 +282,4 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
 
         return null;
     }
-
 }

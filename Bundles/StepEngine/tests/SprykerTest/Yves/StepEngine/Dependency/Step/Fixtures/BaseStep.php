@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BaseStep extends AbstractBaseStep
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
@@ -53,5 +52,4 @@ class BaseStep extends AbstractBaseStep
     {
         return true;
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductConcreteSearchReaderInterface
 {
-
     /**
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -19,5 +18,4 @@ interface ProductConcreteSearchReaderInterface
      * @return bool
      */
     public function isProductConcreteSearchable($idProductConcrete, LocaleTransfer $localeTransfer = null);
-
 }

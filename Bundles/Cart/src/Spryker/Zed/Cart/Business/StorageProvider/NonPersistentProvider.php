@@ -14,7 +14,6 @@ use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
 
 class NonPersistentProvider implements StorageProviderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -157,5 +156,4 @@ class NonPersistentProvider implements StorageProviderInterface
 
         return true;
     }
-
 }

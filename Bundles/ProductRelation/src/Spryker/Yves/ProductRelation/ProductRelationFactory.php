@@ -18,7 +18,6 @@ use Spryker\Yves\ProductRelation\Sorting\RelationSorter;
  */
 class ProductRelationFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface
      */
@@ -53,5 +52,4 @@ class ProductRelationFactory extends AbstractFactory
             $this->createUpSellingDataProvider(),
         ]);
     }
-
 }

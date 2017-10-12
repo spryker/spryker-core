@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 
 interface CmsGlossarySaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
@@ -23,5 +22,4 @@ interface CmsGlossarySaverInterface
      * @return void
      */
     public function deleteCmsGlossary($idCmsPage);
-
 }

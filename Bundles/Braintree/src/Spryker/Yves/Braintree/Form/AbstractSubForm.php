@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInterface
 {
-
     const CLIENT_TOKEN = 'clientToken';
 
     /**
@@ -77,5 +76,4 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
 
         return static::$clientToken;
     }
-
 }

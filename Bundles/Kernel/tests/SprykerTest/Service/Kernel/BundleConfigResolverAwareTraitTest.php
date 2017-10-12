@@ -21,7 +21,6 @@ use Spryker\Service\Kernel\BundleConfigResolverAwareTrait;
  */
 class BundleConfigResolverAwareTraitTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -50,5 +49,4 @@ class BundleConfigResolverAwareTraitTest extends Unit
     {
         return $this->getMockForAbstractClass(AbstractBundleConfig::class);
     }
-
 }

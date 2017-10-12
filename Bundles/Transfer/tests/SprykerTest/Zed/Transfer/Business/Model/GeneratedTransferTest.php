@@ -47,7 +47,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GeneratedTransferTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @return void
      */
@@ -418,5 +417,4 @@ class GeneratedTransferTest extends PHPUnit_Framework_TestCase
 
         return new GeneratedTransfer();
     }
-
 }

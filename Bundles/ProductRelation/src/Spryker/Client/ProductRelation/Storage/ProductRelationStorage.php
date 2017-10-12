@@ -14,7 +14,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductRelationStorage implements ProductRelationStorageInterface
 {
-
     /**
      * @var \Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageInterface
      */
@@ -127,5 +126,4 @@ class ProductRelationStorage implements ProductRelationStorageInterface
         }
         return $relations;
     }
-
 }

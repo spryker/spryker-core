@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\UrlRedirectTransfer;
 
 interface UrlRedirectUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
     public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
-
 }

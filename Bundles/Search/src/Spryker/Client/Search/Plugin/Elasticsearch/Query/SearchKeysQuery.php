@@ -18,7 +18,6 @@ use Spryker\Shared\Search\SearchConstants;
 
 class SearchKeysQuery implements QueryInterface
 {
-
     /**
      * @var string
      */
@@ -115,5 +114,4 @@ class SearchKeysQuery implements QueryInterface
             $baseQuery->setFrom($this->offset);
         }
     }
-
 }

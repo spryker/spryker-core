@@ -20,7 +20,6 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class SilexRouter implements RouterInterface
 {
-
     /**
      * @var \Pimple
      */
@@ -100,5 +99,4 @@ class SilexRouter implements RouterInterface
 
         return $matcher->match($pathinfo);
     }
-
 }

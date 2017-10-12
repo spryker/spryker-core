@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
 interface ProductLabelGuiToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
@@ -26,5 +25,4 @@ interface ProductLabelGuiToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class DetailedGraphBuilder implements GraphBuilderInterface
 {
-
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
@@ -223,5 +222,4 @@ class DetailedGraphBuilder implements GraphBuilderInterface
 
         return $mapped[$finderName];
     }
-
 }

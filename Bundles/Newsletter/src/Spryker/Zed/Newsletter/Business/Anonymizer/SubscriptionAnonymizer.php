@@ -15,7 +15,6 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
 {
-
     /**
      * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface
      */
@@ -82,5 +81,4 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
 
         return $spyNewsletterSubscriber;
     }
-
 }

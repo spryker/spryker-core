@@ -9,12 +9,10 @@ namespace Spryker\Zed\Queue\Business\Task;
 
 interface TaskManagerInterface
 {
-
     /**
      * @param string $queueName
      *
      * @return void
      */
     public function run($queueName);
-
 }

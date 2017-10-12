@@ -13,7 +13,6 @@ use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
 class TaxAmountAfterCancellationCalculator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface
      */
@@ -109,5 +108,4 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
             return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate, true);
         }
     }
-
 }

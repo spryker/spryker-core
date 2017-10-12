@@ -15,7 +15,6 @@ use Spryker\Zed\Calculation\CalculationConfig;
 
 class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionInterface
 {
-
     /**
      * @var \Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutorInterface
      */
@@ -60,5 +59,4 @@ class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionIn
     {
         return new CheckoutErrorTransfer();
     }
-
 }

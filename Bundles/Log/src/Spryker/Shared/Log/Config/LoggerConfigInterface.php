@@ -9,7 +9,6 @@ namespace Spryker\Shared\Log\Config;
 
 interface LoggerConfigInterface
 {
-
     /**
      * @return string
      */
@@ -24,5 +23,4 @@ interface LoggerConfigInterface
      * @return callable[]
      */
     public function getProcessors();
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface DatabaseCollectorInterface
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -70,5 +69,4 @@ interface DatabaseCollectorInterface
      * @return void
      */
     public function setLocale(LocaleTransfer $localeTransfer);
-
 }

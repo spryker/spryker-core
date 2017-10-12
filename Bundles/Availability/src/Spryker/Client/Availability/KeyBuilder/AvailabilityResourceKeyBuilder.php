@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
 
 class AvailabilityResourceKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class AvailabilityResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return AvailabilityConfig::RESOURCE_TYPE_AVAILABILITY_ABSTRACT;
     }
-
 }

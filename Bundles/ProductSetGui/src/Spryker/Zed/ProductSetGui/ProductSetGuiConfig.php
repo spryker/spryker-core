@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductSetGuiConfig extends AbstractBundleConfig
 {
-
     /**
      * @return bool
      */
@@ -19,5 +18,4 @@ class ProductSetGuiConfig extends AbstractBundleConfig
     {
         return true;
     }
-
 }

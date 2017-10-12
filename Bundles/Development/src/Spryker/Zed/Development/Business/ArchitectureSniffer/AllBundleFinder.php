@@ -12,7 +12,6 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class AllBundleFinder implements AllBundleFinderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -150,5 +149,4 @@ class AllBundleFinder implements AllBundleFinderInterface
         }
         return $allBundles;
     }
-
 }

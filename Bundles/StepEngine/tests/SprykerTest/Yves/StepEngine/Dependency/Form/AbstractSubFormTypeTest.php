@@ -24,7 +24,6 @@ use Symfony\Component\Form\FormView;
  */
 class AbstractSubFormTypeTest extends Unit
 {
-
     const TEMPLATE_PATH = 'abstract/sub/form/type';
 
     /**
@@ -58,5 +57,4 @@ class AbstractSubFormTypeTest extends Unit
     {
         return $this->getMockBuilder(FormInterface::class)->getMock();
     }
-
 }

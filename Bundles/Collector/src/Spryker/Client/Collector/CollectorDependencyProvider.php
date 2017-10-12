@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 
 class CollectorDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'storage client';
 
     /**
@@ -40,5 +39,4 @@ class CollectorDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

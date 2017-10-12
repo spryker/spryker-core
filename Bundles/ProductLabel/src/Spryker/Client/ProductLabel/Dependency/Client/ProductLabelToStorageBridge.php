@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductLabel\Dependency\Client;
 
 class ProductLabelToStorageBridge implements ProductLabelToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -32,5 +31,4 @@ class ProductLabelToStorageBridge implements ProductLabelToStorageInterface
     {
         return $this->storageClient->get($key);
     }
-
 }

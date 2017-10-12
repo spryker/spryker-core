@@ -21,7 +21,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -202,5 +201,4 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 
         return $salesShipmentEntity;
     }
-
 }

@@ -36,7 +36,6 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
  */
 class ProductImageFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -822,5 +821,4 @@ class ProductImageFacadeTest extends Unit
         $this->assertNotEmpty($productImageSetTransfer);
         $this->assertCount(0, $productImageSetTransfer->getProductImages());
     }
-
 }

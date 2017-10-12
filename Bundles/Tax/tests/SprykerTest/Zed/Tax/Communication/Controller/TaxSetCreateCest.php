@@ -22,7 +22,6 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
  */
 class TaxSetCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class TaxSetCreateCest
         $i->amOnPage(TaxSetCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Create Tax Set');
     }
-
 }

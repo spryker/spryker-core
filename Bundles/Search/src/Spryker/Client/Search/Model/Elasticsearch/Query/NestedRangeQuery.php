@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class NestedRangeQuery extends AbstractNestedQuery
 {
-
     const RANGE_DIVIDER = '-';
     const RANGE_MIN = 'min';
     const RANGE_MAX = 'max';
@@ -120,5 +119,4 @@ class NestedRangeQuery extends AbstractNestedQuery
             $this->maxValue = (string)(float)$this->maxValue;
         }
     }
-
 }

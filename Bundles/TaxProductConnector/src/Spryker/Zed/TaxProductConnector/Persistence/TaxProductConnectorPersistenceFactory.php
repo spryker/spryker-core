@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class TaxProductConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -33,5 +32,4 @@ class TaxProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyTaxSetQuery::create();
     }
-
 }

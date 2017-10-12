@@ -22,7 +22,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount implements DiscountInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -296,5 +295,4 @@ class Discount implements DiscountInterface
     {
         $this->discountApplicableFilterPlugins = $discountApplicableFilterPlugins;
     }
-
 }

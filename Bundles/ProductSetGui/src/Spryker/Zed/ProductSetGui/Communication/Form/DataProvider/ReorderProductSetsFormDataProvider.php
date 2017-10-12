@@ -12,7 +12,6 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ReorderProductSetsFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface
      */
@@ -47,5 +46,4 @@ class ReorderProductSetsFormDataProvider
     {
         return [];
     }
-
 }

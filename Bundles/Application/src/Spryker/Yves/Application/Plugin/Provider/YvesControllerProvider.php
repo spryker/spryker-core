@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class YvesControllerProvider implements ControllerProviderInterface
 {
-
     /**
      * @var \Silex\ControllerCollection
      */
@@ -247,5 +246,4 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
 
         return $controller;
     }
-
 }

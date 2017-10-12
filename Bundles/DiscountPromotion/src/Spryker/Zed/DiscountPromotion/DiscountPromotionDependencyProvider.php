@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 
 class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -72,5 +71,4 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         };
         return $container;
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -29,5 +28,4 @@ class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin impleme
     {
         $this->getFacade()->checkoutAvailabilityPreCondition($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

@@ -7,7 +7,6 @@ namespace Spryker\Zed\Availability\Business\Model;
 
 interface ProductReservationReaderInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -15,5 +14,4 @@ interface ProductReservationReaderInterface
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale);
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 abstract class AbstractIdFilter implements FilterInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
@@ -38,5 +37,4 @@ abstract class AbstractIdFilter implements FilterInterface
 
         return $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find()->toArray();
     }
-
 }

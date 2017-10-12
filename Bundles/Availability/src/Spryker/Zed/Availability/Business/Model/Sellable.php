@@ -12,7 +12,6 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 
 class Sellable implements SellableInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
@@ -63,5 +62,4 @@ class Sellable implements SellableInterface
 
         return $physicalItems - $reservedItems;
     }
-
 }

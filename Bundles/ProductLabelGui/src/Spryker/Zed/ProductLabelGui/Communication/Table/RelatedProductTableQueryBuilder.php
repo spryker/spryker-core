@@ -24,7 +24,6 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig;
 
 class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilderInterface
 {
-
     const RESULT_FIELD_PRODUCT_ABSTRACT_NAME = 'abstract_product_name';
     const RESULT_FIELD_PRODUCT_ABSTRACT_PRICE = 'abstract_product_price';
     const RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
@@ -258,5 +257,4 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
         );
     }
-
 }

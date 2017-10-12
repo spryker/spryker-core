@@ -9,12 +9,10 @@ namespace Spryker\Shared\ProductAttribute\Code\KeyBuilder;
 
 interface GlossaryKeyBuilderInterface
 {
-
     /**
      * @param string $attributeKey
      *
      * @return string
      */
     public function buildGlossaryKey($attributeKey);
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Ratepay\RatepayConfig;
 
 class OrderHeadMapper extends BaseMapper
 {
-
     /**
      * @var \Generated\Shared\Transfer\OrderTransfer
      */
@@ -70,5 +69,4 @@ class OrderHeadMapper extends BaseMapper
             ->setProfileId($this->config->getProfileId())
             ->setSecurityCode($this->config->getSecurityCode());
     }
-
 }

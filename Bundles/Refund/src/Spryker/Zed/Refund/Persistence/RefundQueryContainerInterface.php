@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface RefundQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * Specification:
      * - Returns SpyRefundQuery ordered by id descending.
@@ -21,5 +20,4 @@ interface RefundQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
     public function queryRefunds();
-
 }

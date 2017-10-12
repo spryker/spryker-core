@@ -9,7 +9,6 @@ namespace Spryker\Client\Availability\Storage;
 
 interface AvailabilityStorageInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -25,5 +24,4 @@ interface AvailabilityStorageInterface
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
      */
     public function findProductAvailability($idProductAbstract);
-
 }

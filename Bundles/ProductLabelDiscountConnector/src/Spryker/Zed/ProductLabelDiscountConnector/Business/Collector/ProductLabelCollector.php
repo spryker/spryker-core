@@ -15,7 +15,6 @@ use Spryker\Zed\ProductLabelDiscountConnector\Business\DecisionRule\ProductLabel
 
 class ProductLabelCollector implements ProductLabelCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabelDiscountConnector\Business\DecisionRule\ProductLabelDecisionRuleInterface
      */
@@ -82,5 +81,4 @@ class ProductLabelCollector implements ProductLabelCollectorInterface
             return $itemTransfer->getUnitGrossPrice();
         }
     }
-
 }

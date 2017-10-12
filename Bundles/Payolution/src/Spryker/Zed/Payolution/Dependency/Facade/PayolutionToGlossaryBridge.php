@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class PayolutionToGlossaryBridge implements PayolutionToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -46,5 +45,4 @@ class PayolutionToGlossaryBridge implements PayolutionToGlossaryInterface
     {
         return $this->glossaryFacade->translate($keyName, $data);
     }
-
 }

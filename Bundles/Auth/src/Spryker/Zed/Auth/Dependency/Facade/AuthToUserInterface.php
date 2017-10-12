@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface AuthToUserInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
@@ -87,5 +86,4 @@ interface AuthToUserInterface
      * @return bool
      */
     public function hasActiveUserByUsername($username);
-
 }

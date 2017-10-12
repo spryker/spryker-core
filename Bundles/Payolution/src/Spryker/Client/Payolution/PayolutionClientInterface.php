@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PayolutionClientInterface
 {
-
     /**
      * @api
      *
@@ -51,5 +50,4 @@ interface PayolutionClientInterface
      * @return bool
      */
     public function removeInstallmentPaymentsFromSession();
-
 }

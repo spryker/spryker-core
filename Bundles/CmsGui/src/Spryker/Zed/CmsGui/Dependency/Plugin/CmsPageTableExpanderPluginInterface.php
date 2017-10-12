@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsGui\Dependency\Plugin;
 
 interface CmsPageTableExpanderPluginInterface
 {
-
     /**
      * Specification:
      * - Retrieves a collection of ButtonTransfer transfer objects.
@@ -21,5 +20,4 @@ interface CmsPageTableExpanderPluginInterface
      * @return array
      */
     public function getViewButtonGroupPermanentItems(array $cmsPage);
-
 }

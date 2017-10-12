@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CmsBlockProductConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
@@ -24,5 +23,4 @@ class CmsBlockProductConnectorPersistenceFactory extends AbstractPersistenceFact
     {
         return SpyCmsBlockProductConnectorQuery::create();
     }
-
 }

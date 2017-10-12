@@ -11,7 +11,6 @@ use Spryker\Client\Storage\ServiceProvider\StorageClientServiceProvider;
 
 trait StorageClientFactoryTrait
 {
-
     /**
      * @return \Spryker\Client\Storage\StorageClientInterface
      */
@@ -28,5 +27,4 @@ trait StorageClientFactoryTrait
      * @return mixed
      */
     abstract public function getProvidedDependency($key);
-
 }

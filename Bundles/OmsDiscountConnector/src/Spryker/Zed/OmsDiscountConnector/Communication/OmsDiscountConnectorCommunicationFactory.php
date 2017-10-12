@@ -15,7 +15,6 @@ use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvider;
  */
 class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDiscountInterface
      */
@@ -23,5 +22,4 @@ class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFact
     {
         return $this->getProvidedDependency(OmsDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 class TransferDefinitionBuilder extends AbstractDefinitionBuilder
 {
-
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
      */
@@ -47,5 +46,4 @@ class TransferDefinitionBuilder extends AbstractDefinitionBuilder
 
         return $this->buildDefinitions($definitions, $this->classDefinition);
     }
-
 }

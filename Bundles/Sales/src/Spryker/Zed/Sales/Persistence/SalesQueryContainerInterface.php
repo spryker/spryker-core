@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface SalesQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -148,5 +147,4 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryCountUniqueProductsForOrder($idSalesOrder);
-
 }

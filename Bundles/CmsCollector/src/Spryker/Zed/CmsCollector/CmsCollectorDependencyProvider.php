@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_SEARCH = 'FACADE_SEARCH';
     const FACADE_CMS = 'FACADE_CMS';
@@ -65,5 +64,4 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

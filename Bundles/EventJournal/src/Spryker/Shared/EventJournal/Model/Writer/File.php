@@ -16,7 +16,6 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
  */
 class File extends AbstractWriter
 {
-
     /**
      * @var resource[]
      */
@@ -157,5 +156,4 @@ class File extends AbstractWriter
     {
         flock($handle, LOCK_UN);
     }
-
 }

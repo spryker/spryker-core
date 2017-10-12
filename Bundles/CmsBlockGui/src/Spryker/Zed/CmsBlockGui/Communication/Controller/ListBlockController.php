@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class ListBlockController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -38,5 +37,4 @@ class ListBlockController extends AbstractController
 
         return $this->jsonResponse($table->fetchData());
     }
-
 }

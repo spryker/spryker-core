@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductSetDataCreator implements ProductSetDataCreatorInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -112,5 +111,4 @@ class ProductSetDataCreator implements ProductSetDataCreatorInterface
 
         return $localizedProductSetTransfer;
     }
-
 }

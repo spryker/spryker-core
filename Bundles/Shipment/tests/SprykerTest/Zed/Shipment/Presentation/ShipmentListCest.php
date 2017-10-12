@@ -23,7 +23,6 @@ use SprykerTest\Zed\Shipment\ShipmentPresentationTester;
  */
 class ShipmentListCest
 {
-
     /**
      * @param \SprykerTest\Zed\Shipment\ShipmentPresentationTester $i
      *
@@ -58,5 +57,4 @@ class ShipmentListCest
         $i->click(ShipmentListPage::BUTTON_ADD_CARRIER);
         $i->seeCurrentUrlEquals(ShipmentCarrierAddPage::URL);
     }
-
 }

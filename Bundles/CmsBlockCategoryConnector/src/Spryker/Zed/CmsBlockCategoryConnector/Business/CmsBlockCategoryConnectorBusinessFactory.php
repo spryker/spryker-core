@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryWriterInterface
      */
@@ -128,5 +127,4 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockCategoryConnectorCollector();
     }
-
 }

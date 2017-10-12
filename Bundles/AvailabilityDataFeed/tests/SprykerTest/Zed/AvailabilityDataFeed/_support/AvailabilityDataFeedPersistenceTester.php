@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class AvailabilityDataFeedPersistenceTester extends Actor
 {
-
     use _generated\AvailabilityDataFeedPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

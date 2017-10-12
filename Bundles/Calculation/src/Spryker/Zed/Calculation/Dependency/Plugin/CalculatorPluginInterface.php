@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface CalculatorPluginInterface
 {
-
     /**
      * This plugin makes calculations based on the given quote. The result is added to the quote.
      *
@@ -25,5 +24,4 @@ interface CalculatorPluginInterface
      * @return void
      */
     public function recalculate(QuoteTransfer $quoteTransfer);
-
 }

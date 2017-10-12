@@ -19,7 +19,6 @@ use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterf
 
 class CmsPageFormTypeDataProvider
 {
-
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
      */
@@ -162,5 +161,4 @@ class CmsPageFormTypeDataProvider
         return $this->localFacade
             ->getLocaleCollection();
     }
-
 }

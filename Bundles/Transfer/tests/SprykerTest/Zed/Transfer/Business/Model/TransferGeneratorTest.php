@@ -32,7 +32,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class TransferGeneratorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -179,5 +178,4 @@ class TransferGeneratorTest extends Unit
 
         return $definitionBuilder;
     }
-
 }

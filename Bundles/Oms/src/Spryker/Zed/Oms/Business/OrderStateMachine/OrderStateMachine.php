@@ -30,7 +30,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
-
     const BY_ITEM = 'byItem';
     const BY_ORDER = 'byOrder';
     const MAX_EVENT_REPEATS = 10;
@@ -897,5 +896,4 @@ class OrderStateMachine implements OrderStateMachineInterface
             $this->reservation->updateReservationQuantity($sku);
         }
     }
-
 }

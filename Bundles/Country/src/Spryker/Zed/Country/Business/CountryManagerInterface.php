@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CountryTransfer;
 
 interface CountryManagerInterface
 {
-
     /**
      * @param string $iso2code
      *
@@ -72,5 +71,4 @@ interface CountryManagerInterface
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getCountryCollection();
-
 }

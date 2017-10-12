@@ -13,7 +13,6 @@ use Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyInterface;
 
 class MoneyToTransferMapper extends SharedMoneyToTransferMapper
 {
-
     /**
      * @var \Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyInterface
      */
@@ -36,5 +35,4 @@ class MoneyToTransferMapper extends SharedMoneyToTransferMapper
     {
         return $this->currencyFacade->fromIsoCode($money->getCurrency()->getCode());
     }
-
 }

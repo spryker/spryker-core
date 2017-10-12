@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface MailToGlossaryInterface
 {
-
     /**
      * @param string $keyName
      * @param array $data
@@ -28,5 +27,4 @@ interface MailToGlossaryInterface
      * @return bool
      */
     public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null);
-
 }

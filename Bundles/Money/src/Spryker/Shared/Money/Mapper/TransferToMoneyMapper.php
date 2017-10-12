@@ -13,7 +13,6 @@ use Money\Money;
 
 class TransferToMoneyMapper implements TransferToMoneyMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
@@ -26,5 +25,4 @@ class TransferToMoneyMapper implements TransferToMoneyMapperInterface
             new Currency($moneyTransfer->getCurrency()->getCode())
         );
     }
-
 }

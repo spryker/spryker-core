@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CustomerGroupDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerGroupDiscountConnector\Business\DecisionRule\CustomerGroupDecisionRuleInterface
      */
@@ -43,5 +42,4 @@ class CustomerGroupDiscountConnectorBusinessFactory extends AbstractBusinessFact
     {
         return $this->getProvidedDependency(CustomerGroupDiscountConnectorDependencyProvider::FACADE_CUSTOMER_GROUP);
     }
-
 }

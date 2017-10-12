@@ -16,7 +16,6 @@ use Symfony\Component\Process\Process;
 
 class BuildSqlConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:sql:build';
 
     /**
@@ -51,5 +50,4 @@ class BuildSqlConsole extends Console
             echo $buffer;
         });
     }
-
 }

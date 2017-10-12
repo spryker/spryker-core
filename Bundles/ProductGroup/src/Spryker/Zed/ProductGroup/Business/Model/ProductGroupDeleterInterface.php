@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 interface ProductGroupDeleterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
      * @return void
      */
     public function deleteProductGroup(ProductGroupTransfer $productGroupTransfer);
-
 }

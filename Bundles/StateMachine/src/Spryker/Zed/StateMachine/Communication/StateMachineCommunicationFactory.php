@@ -15,7 +15,6 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
  */
 class StateMachineCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
      */
@@ -31,5 +30,4 @@ class StateMachineCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getConfig();
     }
-
 }

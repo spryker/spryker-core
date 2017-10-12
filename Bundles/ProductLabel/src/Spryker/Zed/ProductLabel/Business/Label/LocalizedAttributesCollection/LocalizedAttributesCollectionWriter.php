@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollectionWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -155,5 +154,4 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
     ) {
         $localizedAttributesTransfer->fromArray($localizedAttributesEntity->toArray(), true);
     }
-
 }

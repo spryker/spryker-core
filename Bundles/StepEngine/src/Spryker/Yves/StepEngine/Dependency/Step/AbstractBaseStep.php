@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 abstract class AbstractBaseStep implements StepInterface
 {
-
     /**
      * @var string
      */
@@ -57,5 +56,4 @@ abstract class AbstractBaseStep implements StepInterface
     {
         return [];
     }
-
 }

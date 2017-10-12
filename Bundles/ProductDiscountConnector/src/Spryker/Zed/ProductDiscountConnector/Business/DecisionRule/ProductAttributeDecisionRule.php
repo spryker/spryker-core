@@ -17,7 +17,6 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
 
 class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface
      */
@@ -90,5 +89,4 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
 
         return $productConcreteTransfer;
     }
-
 }

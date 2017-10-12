@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class LogoutController extends AbstractController
 {
-
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -25,5 +24,4 @@ class LogoutController extends AbstractController
 
         return $this->redirectResponse('/', 302);
     }
-
 }

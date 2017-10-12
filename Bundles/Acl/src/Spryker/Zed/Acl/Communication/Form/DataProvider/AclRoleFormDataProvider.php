@@ -11,7 +11,6 @@ use Spryker\Zed\Acl\Business\AclFacade;
 
 class AclRoleFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Acl\Business\AclFacade
      */
@@ -36,5 +35,4 @@ class AclRoleFormDataProvider
 
         return $roleTransfer->toArray();
     }
-
 }

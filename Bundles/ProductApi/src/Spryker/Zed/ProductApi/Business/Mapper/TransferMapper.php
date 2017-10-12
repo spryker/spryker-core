@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductApiTransfer;
 
 class TransferMapper implements TransferMapperInterface
 {
-
     /**
      * @param array $data
      *
@@ -60,5 +59,4 @@ class TransferMapper implements TransferMapperInterface
 
         return $data;
     }
-
 }

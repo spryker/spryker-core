@@ -12,7 +12,6 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 class PriceRangeExtractor extends RangeExtractor
 {
-
     /**
      * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
@@ -62,5 +61,4 @@ class PriceRangeExtractor extends RangeExtractor
             $activeMax !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMax) : $max,
         ];
     }
-
 }

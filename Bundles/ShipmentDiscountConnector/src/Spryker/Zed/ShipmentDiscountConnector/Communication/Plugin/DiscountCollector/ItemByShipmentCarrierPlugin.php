@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ItemByShipmentCarrierPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -72,5 +71,4 @@ class ItemByShipmentCarrierPlugin extends AbstractPlugin implements CollectorPlu
     {
         return $this->getFacade()->getCarrierList();
     }
-
 }

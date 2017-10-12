@@ -9,7 +9,6 @@ namespace Spryker\Zed\Stock\Dependency\Facade;
 
 interface StockToProductInterface
 {
-
     /**
      * @param string $sku
      *
@@ -34,5 +33,4 @@ interface StockToProductInterface
      * @return bool
      */
     public function hasProductConcrete($sku);
-
 }

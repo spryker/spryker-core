@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 class ProductRelationToProductBridge implements ProductRelationToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -44,5 +43,4 @@ class ProductRelationToProductBridge implements ProductRelationToProductInterfac
     {
         return $this->productFacade->findProductAbstractById($idProductAbstract);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
 class SalesPaymentHydrator implements SalesPaymentHydratorInterface
 {
-
     /**
      * @var array
      */
@@ -113,5 +112,4 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
             ->queryPaymentMethodsByIdSalesOrder($orderTransfer->getIdSalesOrder())
             ->find();
     }
-
 }

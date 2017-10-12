@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartClientInterface
 {
-
     /**
      * @api
      *
@@ -130,5 +129,4 @@ interface CartClientInterface
      * @return void
      */
     public function reloadItems();
-
 }

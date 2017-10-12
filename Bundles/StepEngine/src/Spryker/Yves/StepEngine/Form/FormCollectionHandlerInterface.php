@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface FormCollectionHandlerInterface
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
@@ -42,5 +41,4 @@ interface FormCollectionHandlerInterface
      * @return void
      */
     public function provideDefaultFormData(AbstractTransfer $dataTransfer);
-
 }

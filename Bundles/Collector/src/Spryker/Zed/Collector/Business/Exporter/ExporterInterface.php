@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ExporterInterface
 {
-
     /**
      * @param string $type
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -26,5 +25,4 @@ interface ExporterInterface
      * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
      */
     public function getCollectorPlugins();
-
 }

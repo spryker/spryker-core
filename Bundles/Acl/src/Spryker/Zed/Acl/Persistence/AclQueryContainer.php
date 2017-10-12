@@ -25,7 +25,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class AclQueryContainer extends AbstractQueryContainer implements AclQueryContainerInterface
 {
-
     const ROLE_NAME = 'role_name';
     const TYPE = 'type';
     const BUNDLE = 'bundle';
@@ -417,5 +416,4 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
 
         return $query;
     }
-
 }

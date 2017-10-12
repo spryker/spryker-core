@@ -11,7 +11,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class PriceTransformer implements DataTransformerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface
      */
@@ -101,5 +100,4 @@ class PriceTransformer implements DataTransformerInterface
             (float)str_replace(',', '.', $value)
         );
     }
-
 }

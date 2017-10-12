@@ -22,7 +22,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class Writer implements WriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     const TOUCH_PRODUCT = 'product';
@@ -440,5 +439,4 @@ class Writer implements WriterInterface
 
         return $priceTransfer;
     }
-
 }

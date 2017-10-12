@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class UseForeignException implements ViolationFinderInterface
 {
-
     /**
      * @param array $dependency
      *
@@ -21,5 +20,4 @@ class UseForeignException implements ViolationFinderInterface
     {
         return (preg_match('/Exception/', $dependency[DependencyTree::META_FOREIGN_CLASS_NAME]));
     }
-
 }

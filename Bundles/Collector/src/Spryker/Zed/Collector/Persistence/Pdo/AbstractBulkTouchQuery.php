@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Persistence\Pdo;
 
 abstract class AbstractBulkTouchQuery
 {
-
     /**
      * @var array
      */
@@ -57,5 +56,4 @@ abstract class AbstractBulkTouchQuery
             $separator
         );
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractPlugin
 {
-
     /**
      * @var \Spryker\Yves\Kernel\FactoryInterface
      */
@@ -112,5 +111,4 @@ abstract class AbstractPlugin
     {
         return new BundleConfigResolver();
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class SalesClient extends AbstractClient implements SalesClientInterface
 {
-
     /**
      * Returns the sales orders for the given customer and filters
      *
@@ -48,5 +47,4 @@ class SalesClient extends AbstractClient implements SalesClientInterface
             ->createZedSalesStub()
             ->getOrderDetails($orderTransfer);
     }
-
 }

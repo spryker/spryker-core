@@ -14,7 +14,6 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const FIELD_ID_PRODUCT_REVIEW = 'id_product_review';
     const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
     const FIELD_FK_LOCALE = 'fk_locale';
@@ -54,5 +53,4 @@ class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
             ->withColumn(SpyProductReviewTableMap::COL_SUMMARY, static::FIELD_SUMMARY)
             ->withColumn(SpyProductReviewTableMap::COL_DESCRIPTION, static::FIELD_DESCRIPTION);
     }
-
 }

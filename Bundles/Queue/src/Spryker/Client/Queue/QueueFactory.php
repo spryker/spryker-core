@@ -15,7 +15,6 @@ use Spryker\Client\Queue\Model\Proxy\QueueProxy;
  */
 class QueueFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Queue\Model\Proxy\QueueProxyInterface
      */
@@ -34,5 +33,4 @@ class QueueFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_ADAPTERS);
     }
-
 }

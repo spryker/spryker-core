@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class QueueClientTester extends Actor
 {
-
     use _generated\QueueClientTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

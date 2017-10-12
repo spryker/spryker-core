@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class YvesFragmentControllerResolverTest extends Unit
 {
-
     /**
      * @dataProvider getController
      *
@@ -93,5 +92,4 @@ class YvesFragmentControllerResolverTest extends Unit
     {
         return new Request([], [], ['_controller' => $controller]);
     }
-
 }

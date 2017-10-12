@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductSetDataUpdater implements ProductSetDataUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -143,5 +142,4 @@ class ProductSetDataUpdater implements ProductSetDataUpdaterInterface
 
         return $productSetDataTransfer;
     }
-
 }

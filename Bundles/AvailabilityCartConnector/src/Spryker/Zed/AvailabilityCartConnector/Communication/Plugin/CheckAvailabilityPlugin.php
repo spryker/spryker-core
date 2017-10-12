@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -27,5 +26,4 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
     {
         return $this->getFacade()->checkCartAvailability($cartChangeTransfer);
     }
-
 }

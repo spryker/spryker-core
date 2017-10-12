@@ -16,7 +16,6 @@ use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGu
 
 class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
 
@@ -96,5 +95,4 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-
 }

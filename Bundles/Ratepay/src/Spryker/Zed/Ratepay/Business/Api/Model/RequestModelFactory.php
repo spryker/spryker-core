@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Api\Model;
 
 class RequestModelFactory implements RequestModelFactoryInterface
 {
-
     /**
      * @var callable[]
      */
@@ -37,5 +36,4 @@ class RequestModelFactory implements RequestModelFactoryInterface
 
         return $builder;
     }
-
 }

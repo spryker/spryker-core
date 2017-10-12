@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckConditionConsole extends Console
 {
-
     const COMMAND_NAME = 'oms:check-condition';
     const COMMAND_DESCRIPTION = 'Check conditions';
 
@@ -41,5 +40,4 @@ class CheckConditionConsole extends Console
     {
         $this->getFacade()->checkConditions();
     }
-
 }

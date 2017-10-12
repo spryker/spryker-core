@@ -10,7 +10,6 @@ namespace Spryker\Client\Availability;
  */
 interface AvailabilityClientInterface
 {
-
     /**
      * Specification:
      * - Reads product availability data for current locale, from current Yves storage provider
@@ -37,5 +36,4 @@ interface AvailabilityClientInterface
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
      */
     public function findProductAvailabilityByIdProductAbstract($idProductAbstract);
-
 }

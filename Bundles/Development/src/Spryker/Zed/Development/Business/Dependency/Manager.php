@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
 
 class Manager
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\BundleParserInterface
      */
@@ -125,5 +124,4 @@ class Manager
 
         return $bundles;
     }
-
 }

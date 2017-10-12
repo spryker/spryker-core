@@ -9,7 +9,6 @@ namespace Spryker\Zed\PropelQueryBuilder\Dependency\Service;
 
 class PropelQueryBuilderToUtilEncodingBridge implements PropelQueryBuilderToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -47,5 +46,4 @@ class PropelQueryBuilderToUtilEncodingBridge implements PropelQueryBuilderToUtil
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

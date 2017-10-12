@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductGroup\Dependency\Client;
 
 class ProductGroupToProductBridge implements ProductGroupToProductInterface
 {
-
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
      */
@@ -33,5 +32,4 @@ class ProductGroupToProductBridge implements ProductGroupToProductInterface
     {
         return $this->productClient->getProductAbstractFromStorageById($idProductAbstract, $localeName);
     }
-
 }

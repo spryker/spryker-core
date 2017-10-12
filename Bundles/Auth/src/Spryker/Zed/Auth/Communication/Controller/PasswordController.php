@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PasswordController extends AbstractController
 {
-
     const PARAM_TOKEN = 'token';
     const RESET_REDIRECT_URL = '/auth/login';
 
@@ -93,5 +92,4 @@ class PasswordController extends AbstractController
             'form' => $resetPasswordForm->createView(),
         ]);
     }
-
 }

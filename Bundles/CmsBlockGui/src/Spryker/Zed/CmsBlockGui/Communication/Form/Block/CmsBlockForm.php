@@ -28,7 +28,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsBlockForm extends AbstractType
 {
-
     const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_NAME = 'name';
@@ -348,5 +347,4 @@ class CmsBlockForm extends AbstractType
 
         return $this;
     }
-
 }

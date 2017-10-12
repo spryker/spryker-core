@@ -19,7 +19,6 @@ use InvalidArgumentException;
 
 class PageMapBuilder implements PageMapBuilderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param string $fieldName
@@ -262,5 +261,4 @@ class PageMapBuilder implements PageMapBuilderInterface
 
         return array_filter($value);
     }
-
 }

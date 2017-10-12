@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface MetaDataProviderPluginInterface
 {
-
     /**
      * Specification:
      *  - Provide additional data to zed request which will be send with which yves to zed.
@@ -25,5 +24,4 @@ interface MetaDataProviderPluginInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getRequestMetaData(TransferInterface $transfer);
-
 }

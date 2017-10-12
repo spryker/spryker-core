@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductManagementConfig extends AbstractBundleConfig
 {
-
     const PRODUCT_TYPE_BUNDLE = 'bundle';
     const PRODUCT_TYPE_REGULAR = 'regular';
 
@@ -37,5 +36,4 @@ class ProductManagementConfig extends AbstractBundleConfig
             // @deprecated this is just for backward compatibility
             : $this->get(ProductManagementConstants::HOST_YVES);
     }
-
 }

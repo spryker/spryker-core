@@ -15,7 +15,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ViewPageController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**
@@ -51,5 +50,4 @@ class ViewPageController extends AbstractController
             'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt(),
         ];
     }
-
 }

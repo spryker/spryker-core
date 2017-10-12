@@ -26,7 +26,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class RequestProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -120,5 +119,4 @@ class RequestProcessorTest extends Unit
 
         return $request;
     }
-
 }

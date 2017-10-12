@@ -26,7 +26,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class YamlBatchIteratorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -146,5 +145,4 @@ class YamlBatchIteratorTest extends Unit
 
         return $yamlBatchIterator;
     }
-
 }

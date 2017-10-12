@@ -9,7 +9,6 @@ namespace Spryker\Shared\Application\Log\Processor;
 
 class ResponseProcessor
 {
-
     const EXTRA = 'response';
     const CONTEXT_KEY = 'response';
 
@@ -28,5 +27,4 @@ class ResponseProcessor
 
         return $record;
     }
-
 }

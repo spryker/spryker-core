@@ -20,7 +20,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class BundledProductAvailabilityTable extends AbstractTable
 {
-
     const URL_PARAM_ID_PRODUCT_BUNDLE = 'id-product';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
     const URL_PARAM_SKU = 'sku';
@@ -188,5 +187,4 @@ class BundledProductAvailabilityTable extends AbstractTable
 
         return $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
     }
-
 }

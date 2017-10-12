@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class NewRelicCommunicationTester extends Actor
 {
-
     use _generated\NewRelicCommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

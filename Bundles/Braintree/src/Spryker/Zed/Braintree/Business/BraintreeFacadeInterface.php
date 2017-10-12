@@ -15,7 +15,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface BraintreeFacadeInterface
 {
-
     /**
      * Specification:
      * - Saves order payment method data according to quote and checkout response transfer data.
@@ -149,5 +148,4 @@ interface BraintreeFacadeInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function postSaveHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class BasketItemMapper extends BaseMapper
 {
-
     /**
      * @var \Generated\Shared\Transfer\ItemTransfer
      */
@@ -97,5 +96,4 @@ class BasketItemMapper extends BaseMapper
             $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
         }
     }
-
 }

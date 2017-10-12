@@ -19,7 +19,6 @@ use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class Auth implements AuthInterface
 {
-
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
      */
@@ -351,5 +350,4 @@ class Auth implements AuthInterface
 
         return false;
     }
-
 }

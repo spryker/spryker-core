@@ -15,7 +15,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
@@ -190,5 +189,4 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
         return $calculatedDiscountTransfer;
     }
-
 }

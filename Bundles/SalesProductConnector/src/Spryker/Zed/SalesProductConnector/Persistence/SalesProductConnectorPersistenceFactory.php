@@ -16,7 +16,6 @@ use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
  */
 class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery
      */
@@ -32,5 +31,4 @@ class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(SalesProductConnectorDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
-
 }

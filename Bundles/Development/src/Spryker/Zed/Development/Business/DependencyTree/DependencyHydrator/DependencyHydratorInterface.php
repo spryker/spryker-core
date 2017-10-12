@@ -9,12 +9,10 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator;
 
 interface DependencyHydratorInterface
 {
-
     /**
      * @param array $dependency
      *
      * @return void
      */
     public function hydrate(array &$dependency);
-
 }

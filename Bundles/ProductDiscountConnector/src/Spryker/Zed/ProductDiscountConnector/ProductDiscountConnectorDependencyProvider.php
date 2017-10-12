@@ -14,7 +14,6 @@ use Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnec
 
 class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
@@ -42,5 +41,4 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
 
         return $container;
     }
-
 }

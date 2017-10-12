@@ -10,7 +10,6 @@ use Spryker\Shared\Product\ProductConfig;
 
 class AttributePermutationGenerator implements AttributePermutationGeneratorInterface
 {
-
     /**
      * Generatate all possible permutations for given attribute.
      * Leaf node of a tree is concrete id.
@@ -60,5 +59,4 @@ class AttributePermutationGenerator implements AttributePermutationGeneratorInte
 
         return $result;
     }
-
 }

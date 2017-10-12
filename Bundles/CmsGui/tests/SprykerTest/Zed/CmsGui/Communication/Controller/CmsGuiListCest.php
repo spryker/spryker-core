@@ -22,7 +22,6 @@ use SprykerTest\Zed\CmsGui\PageObject\CmsGuiListPage;
  */
 class CmsGuiListCest
 {
-
     /**
      * @param \SprykerTest\Zed\CmsGui\CmsGuiCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class CmsGuiListCest
         $i->amOnPage(CmsGuiListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages');
     }
-
 }

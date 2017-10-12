@@ -13,7 +13,6 @@ use Spryker\Zed\CmsUserConnector\Dependency\QueryContainer\CmsUserConnectorToCms
 
 class CmsVersionUserUpdater implements CmsVersionUserUpdaterInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface
      */
@@ -69,5 +68,4 @@ class CmsVersionUserUpdater implements CmsVersionUserUpdaterInterface
 
         return $cmsVersionEntity;
     }
-
 }

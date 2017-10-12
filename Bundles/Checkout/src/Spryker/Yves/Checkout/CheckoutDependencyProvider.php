@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PAYMENT_METHOD_HANDLER = 'payment method handler';
     const PAYMENT_SUB_FORMS = 'payment sub forms';
 
@@ -67,5 +66,4 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

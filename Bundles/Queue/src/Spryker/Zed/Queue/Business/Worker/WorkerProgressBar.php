@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WorkerProgressBar implements WorkerProgressBarInterface
 {
-
     /**
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
@@ -138,5 +137,4 @@ class WorkerProgressBar implements WorkerProgressBarInterface
     {
         return new ProgressBar($this->output, $steps);
     }
-
 }

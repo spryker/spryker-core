@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 class BaseDiscountFormDataProvider
 {
-
     /**
      * @var array
      */
@@ -48,5 +47,4 @@ class BaseDiscountFormDataProvider
     {
         return $this->options;
     }
-
 }

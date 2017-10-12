@@ -13,7 +13,6 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQ
 
 class CmsBlockCategoryPositionReader implements CmsBlockCategoryPositionReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
@@ -70,5 +69,4 @@ class CmsBlockCategoryPositionReader implements CmsBlockCategoryPositionReaderIn
 
         return $cmsBlockCategoryPositionTransfer;
     }
-
 }

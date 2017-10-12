@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CustomerClient extends AbstractClient implements CustomerClientInterface
 {
-
     /**
      * @api
      *
@@ -420,5 +419,4 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->createZedCustomerStub()
             ->anonymizeCustomer($customerTransfer);
     }
-
 }

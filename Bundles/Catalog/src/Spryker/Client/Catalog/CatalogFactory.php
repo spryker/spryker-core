@@ -12,7 +12,6 @@ use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
 class CatalogFactory extends AbstractFactory
 {
-
     /**
      * @param string $searchString
      *
@@ -100,5 +99,4 @@ class CatalogFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_RESULT_FORMATTER_PLUGINS);
     }
-
 }

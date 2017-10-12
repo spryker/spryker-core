@@ -19,7 +19,6 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
  */
 class CustomerUserConnectorFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\CustomerUserConnector\CustomerUserConnectorBusinessTester
      */
@@ -121,5 +120,4 @@ class CustomerUserConnectorFacadeTest extends Unit
 
         return $idsCustomer;
     }
-
 }

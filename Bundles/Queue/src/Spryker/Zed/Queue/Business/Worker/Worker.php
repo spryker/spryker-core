@@ -16,7 +16,6 @@ use Spryker\Zed\Queue\QueueConfig;
  */
 class Worker implements WorkerInterface
 {
-
     const DEFAULT_MAX_QUEUE_WORKER = 1;
     const SECOND_TO_MILLISECONDS = 1000;
     const PROCESS_BUSY = 'busy';
@@ -200,5 +199,4 @@ class Worker implements WorkerInterface
 
         return $queueAdapterConfiguration[SharedConfig::CONFIG_MAX_WORKER_NUMBER];
     }
-
 }

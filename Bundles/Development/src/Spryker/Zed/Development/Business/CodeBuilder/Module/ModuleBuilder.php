@@ -13,7 +13,6 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class ModuleBuilder
 {
-
     const TEMPLATE_INTERFACE = 'interface';
     const TEMPLATE_BRIDGE = 'bridge';
 
@@ -187,5 +186,4 @@ class ModuleBuilder
             $filesystem->dumpFile($filePath, $templateContent);
         }
     }
-
 }

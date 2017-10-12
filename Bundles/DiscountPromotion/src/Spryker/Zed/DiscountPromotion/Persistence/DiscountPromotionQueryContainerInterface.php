@@ -13,7 +13,6 @@ namespace Spryker\Zed\DiscountPromotion\Persistence;
  */
 interface DiscountPromotionQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ interface DiscountPromotionQueryContainerInterface
      * @return $this|\Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery
      */
     public function queryDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);
-
 }

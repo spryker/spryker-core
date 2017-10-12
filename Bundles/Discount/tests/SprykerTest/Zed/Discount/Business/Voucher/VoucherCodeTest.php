@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class VoucherCodeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -263,5 +262,4 @@ class VoucherCodeTest extends Unit
 
         return $discountVoucherEntity;
     }
-
 }

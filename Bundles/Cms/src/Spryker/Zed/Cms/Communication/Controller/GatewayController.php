@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer
      *
@@ -32,5 +31,4 @@ class GatewayController extends AbstractGatewayController
 
         return $flattenedLocaleCmsPageDataRequestTransfer->setFlattenedLocaleCmsPageData($flattenedLocaleCmsPageData);
     }
-
 }

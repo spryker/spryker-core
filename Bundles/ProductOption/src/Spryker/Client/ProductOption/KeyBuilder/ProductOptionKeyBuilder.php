@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class ProductOptionKeyBuilder implements KeyBuilderInterface
 {
-
      use KeyBuilderTrait;
 
     /**
@@ -32,5 +31,4 @@ class ProductOptionKeyBuilder implements KeyBuilderInterface
     {
         return 'resource';
     }
-
 }

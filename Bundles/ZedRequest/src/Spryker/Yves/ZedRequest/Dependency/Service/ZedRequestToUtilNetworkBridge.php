@@ -9,7 +9,6 @@ namespace Spryker\Yves\ZedRequest\Dependency\Service;
 
 class ZedRequestToUtilNetworkBridge implements ZedRequestToUtilNetworkInterface
 {
-
     /**
      * @var \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
@@ -30,5 +29,4 @@ class ZedRequestToUtilNetworkBridge implements ZedRequestToUtilNetworkInterface
     {
         return $this->utilNetworkService->getRequestId();
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
 
 class OrdersTable extends AbstractTable
 {
-
     const URL = 'URL';
     const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
@@ -321,5 +320,4 @@ class OrdersTable extends AbstractTable
             static::NUMBER_OF_ORDER_ITEMS,
         ];
     }
-
 }

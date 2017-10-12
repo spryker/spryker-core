@@ -27,7 +27,6 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
  */
 class ProductSetBusinessTester extends Actor
 {
-
     use _generated\ProductSetBusinessTesterActions;
 
     /**
@@ -61,5 +60,4 @@ class ProductSetBusinessTester extends Actor
 
         return $productSetTransfer;
     }
-
 }

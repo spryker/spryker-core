@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const RESULT_FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const RESULT_FIELD_ID_PRODUCT_LABELS_CSV = 'id_product_labels_csv';
 
@@ -47,5 +46,4 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
         );
         $this->touchQuery->groupBy(SpyTouchTableMap::COL_ITEM_ID);
     }
-
 }

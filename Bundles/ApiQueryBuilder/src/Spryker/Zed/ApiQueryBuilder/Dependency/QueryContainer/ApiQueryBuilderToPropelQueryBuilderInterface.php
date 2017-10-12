@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ApiQueryBuilderToPropelQueryBuilderInterface
 {
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
@@ -27,5 +26,4 @@ interface ApiQueryBuilderToPropelQueryBuilderInterface
      * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
     public function createPropelQueryBuilderCriteriaFromJson($json);
-
 }

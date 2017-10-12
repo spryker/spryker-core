@@ -13,7 +13,6 @@ use Spryker\Client\Storage\StorageConfig;
 
 class StorageCacheStrategyHelper implements StorageCacheStrategyHelperInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -103,5 +102,4 @@ class StorageCacheStrategyHelper implements StorageCacheStrategyHelperInterface
     {
         return $status === StorageClient::KEY_INIT;
     }
-
 }

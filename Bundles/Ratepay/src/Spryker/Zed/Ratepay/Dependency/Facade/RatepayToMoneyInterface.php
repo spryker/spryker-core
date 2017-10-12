@@ -9,7 +9,6 @@ namespace Spryker\Zed\Ratepay\Dependency\Facade;
 
 interface RatepayToMoneyInterface
 {
-
     /**
      * @param float $value
      *
@@ -23,5 +22,4 @@ interface RatepayToMoneyInterface
      * @return float
      */
     public function convertIntegerToDecimal($value);
-
 }

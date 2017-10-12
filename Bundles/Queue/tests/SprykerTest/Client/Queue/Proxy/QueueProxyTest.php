@@ -25,7 +25,6 @@ use Spryker\Shared\Queue\QueueConfig;
  */
 class QueueProxyTest extends Unit
 {
-
     const TEST_QUEUE_NAME = 'testQueueName';
 
     /**
@@ -165,5 +164,4 @@ class QueueProxyTest extends Unit
 
         return $queueMessageTransfer;
     }
-
 }

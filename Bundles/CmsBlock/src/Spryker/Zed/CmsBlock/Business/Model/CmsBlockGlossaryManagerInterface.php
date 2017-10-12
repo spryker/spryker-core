@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsBlock\Business\Model;
 
 interface CmsBlockGlossaryManagerInterface
 {
-
     /**
      * @param int $idCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function findPlaceholders($idCmsBlock);
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInte
 
 class ProductReader implements ProductReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface
      */
@@ -68,5 +67,4 @@ class ProductReader implements ProductReaderInterface
 
         return $productConcreteTransfer;
     }
-
 }

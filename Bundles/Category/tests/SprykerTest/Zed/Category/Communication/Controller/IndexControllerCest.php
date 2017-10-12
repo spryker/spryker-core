@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\CategoryCommunicationTester;
  */
 class IndexControllerCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class IndexControllerCest
         $i->seeResponseCodeIs(200);
         $i->see('Category', 'h5');
     }
-
 }

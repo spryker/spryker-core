@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
 {
-
     /**
      * @var \Silex\Application
      */
@@ -284,5 +283,4 @@ abstract class AbstractController
     {
         return $this->application;
     }
-
 }

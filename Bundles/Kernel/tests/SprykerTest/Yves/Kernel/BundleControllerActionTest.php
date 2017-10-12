@@ -21,7 +21,6 @@ use Spryker\Yves\Kernel\BundleControllerAction;
  */
 class BundleControllerActionTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -103,5 +102,4 @@ class BundleControllerActionTest extends Unit
 
         $this->assertSame('baz', $bundleControllerAction->getAction());
     }
-
 }

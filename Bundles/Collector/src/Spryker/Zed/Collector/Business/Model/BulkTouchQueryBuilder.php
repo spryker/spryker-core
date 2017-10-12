@@ -12,7 +12,6 @@ use Spryker\Zed\Collector\CollectorConfig;
 
 class BulkTouchQueryBuilder
 {
-
     /**
      * @var \Spryker\Zed\Collector\CollectorConfig
      */
@@ -65,5 +64,4 @@ class BulkTouchQueryBuilder
 
         return $classList[$className];
     }
-
 }

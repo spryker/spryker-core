@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class RemoveProductCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationDeletePluginInterface
 {
-
     /**
      * @param int $idCategory
      *
@@ -27,5 +26,4 @@ class RemoveProductCategoryRelationPlugin extends AbstractPlugin implements Cate
             ->getFacade()
             ->removeAllProductMappingsForCategory($idCategory);
     }
-
 }

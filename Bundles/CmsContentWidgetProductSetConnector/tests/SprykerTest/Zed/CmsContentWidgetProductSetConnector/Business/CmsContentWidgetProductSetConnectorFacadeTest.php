@@ -22,7 +22,6 @@ use Spryker\Zed\CmsContentWidgetProductSetConnector\Business\CmsContentWidgetPro
  */
 class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -56,5 +55,4 @@ class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
     {
         return new CmsContentWidgetProductSetConnectorFacade();
     }
-
 }

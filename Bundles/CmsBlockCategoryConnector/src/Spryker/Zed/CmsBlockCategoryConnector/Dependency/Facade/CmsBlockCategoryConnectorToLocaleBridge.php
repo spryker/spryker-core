@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade;
 
 class CmsBlockCategoryConnectorToLocaleBridge implements CmsBlockCategoryConnectorToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -30,5 +29,4 @@ class CmsBlockCategoryConnectorToLocaleBridge implements CmsBlockCategoryConnect
     {
         return $this->localeFacade->getCurrentLocale();
     }
-
 }

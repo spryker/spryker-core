@@ -14,7 +14,6 @@ use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface;
 
 class RefundTransaction extends AbstractTransaction
 {
-
     /**
      * @var \Spryker\Zed\Braintree\Dependency\Facade\BraintreeToMoneyInterface
      */
@@ -92,5 +91,4 @@ class RefundTransaction extends AbstractTransaction
     {
         return BraintreeTransaction::find($this->getTransactionIdentifier());
     }
-
 }

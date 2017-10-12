@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInterface
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
@@ -58,5 +57,4 @@ class StockSalesConnectorToStockBridge implements StockSalesConnectorToStockInte
     {
         $this->stockFacade->incrementStockProduct($sku, $stockType, $incrementBy);
     }
-
 }

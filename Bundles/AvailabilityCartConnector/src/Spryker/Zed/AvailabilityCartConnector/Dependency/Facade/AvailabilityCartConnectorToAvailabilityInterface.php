@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
 interface AvailabilityCartConnectorToAvailabilityInterface
 {
-
     /**
      * @param string $sku
      * @param int $quantity
@@ -24,5 +23,4 @@ interface AvailabilityCartConnectorToAvailabilityInterface
      * @return int
      */
     public function calculateStockForProduct($sku);
-
 }

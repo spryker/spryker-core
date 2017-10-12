@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface;
 
 class TemplateNameExtractor implements TemplateNameExtractorInterface
 {
-
     /**
      * @var \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface
      */
@@ -100,5 +99,4 @@ class TemplateNameExtractor implements TemplateNameExtractorInterface
     {
         return strpos($nameWithoutPrefix, '/');
     }
-
 }

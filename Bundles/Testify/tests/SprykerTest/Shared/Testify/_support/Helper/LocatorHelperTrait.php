@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 trait LocatorHelperTrait
 {
-
     /**
      * @return \Generated\Service\Ide\AutoCompletion|\Generated\Zed\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
@@ -32,5 +31,4 @@ trait LocatorHelperTrait
      * @return \Codeception\Module
      */
     abstract protected function getModule($name);
-
 }

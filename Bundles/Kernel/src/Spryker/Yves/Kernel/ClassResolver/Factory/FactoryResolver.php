@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 class FactoryResolver extends AbstractClassResolver
 {
-
     const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\%2$sFactory';
 
     /**
@@ -43,5 +42,4 @@ class FactoryResolver extends AbstractClassResolver
             self::KEY_STORE
         );
     }
-
 }

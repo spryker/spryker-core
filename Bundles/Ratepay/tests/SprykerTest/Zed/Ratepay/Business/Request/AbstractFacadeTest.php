@@ -32,7 +32,6 @@ use SprykerTest\Zed\Ratepay\Business\AbstractBusinessTest;
  */
 abstract class AbstractFacadeTest extends AbstractBusinessTest
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
      */
@@ -229,5 +228,4 @@ abstract class AbstractFacadeTest extends AbstractBusinessTest
      * @return \SprykerTest\Zed\Ratepay\Business\Api\Adapter\Http\AbstractAdapterMock
      */
     abstract protected function getPaymentFailureResponseAdapterMock();
-
 }

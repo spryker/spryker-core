@@ -9,7 +9,6 @@ namespace Spryker\Yves\CartCurrencyConnector\Dependency\Client;
 
 class CartCurrencyConnectorToCartClientBridge implements CartCurrencyConnectorToCartClientInterface
 {
-
     /**
      * @var \Spryker\Client\Cart\CartClientInterface
      */
@@ -38,5 +37,4 @@ class CartCurrencyConnectorToCartClientBridge implements CartCurrencyConnectorTo
     {
         return $this->cartClient->getQuote();
     }
-
 }

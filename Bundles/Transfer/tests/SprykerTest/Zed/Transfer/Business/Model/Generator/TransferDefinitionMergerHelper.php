@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 class TransferDefinitionMergerHelper
 {
-
     /**
      * @return array
      */
@@ -82,5 +81,4 @@ class TransferDefinitionMergerHelper
             ],
         ];
     }
-
 }

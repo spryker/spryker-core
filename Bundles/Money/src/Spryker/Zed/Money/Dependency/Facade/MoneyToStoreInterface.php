@@ -9,7 +9,6 @@ namespace Spryker\Zed\Money\Dependency\Facade;
 
 interface MoneyToStoreInterface
 {
-
     /**
      * @param int $idStore
      *
@@ -18,5 +17,4 @@ interface MoneyToStoreInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreById($idStore);
-
 }

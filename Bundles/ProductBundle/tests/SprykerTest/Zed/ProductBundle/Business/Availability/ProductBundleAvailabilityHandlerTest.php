@@ -29,7 +29,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleAvailabilityHandlerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -173,5 +172,4 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleAvailabilityHandlerMock->method('findBundledItemAvailabilityEntityBySku')
             ->willReturn($availabilityEntity);
     }
-
 }

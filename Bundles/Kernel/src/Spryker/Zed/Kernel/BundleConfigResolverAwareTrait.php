@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 
 trait BundleConfigResolverAwareTrait
 {
-
     /**
      * @var \Spryker\Zed\Kernel\AbstractBundleConfig
      */
@@ -59,5 +58,4 @@ trait BundleConfigResolverAwareTrait
 
         return $config;
     }
-
 }

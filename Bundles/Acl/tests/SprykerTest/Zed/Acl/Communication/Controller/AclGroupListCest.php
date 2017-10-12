@@ -22,7 +22,6 @@ use SprykerTest\Zed\Acl\PageObject\AclGroupListPage;
  */
 class AclGroupListCest
 {
-
     /**
      * @param \SprykerTest\Zed\Acl\AclCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class AclGroupListCest
         $i->amOnPage(AclGroupListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups');
     }
-
 }

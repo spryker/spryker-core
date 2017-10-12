@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ItemByShipmentPricePlugin extends AbstractPlugin implements CollectorPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -59,5 +58,4 @@ class ItemByShipmentPricePlugin extends AbstractPlugin implements CollectorPlugi
             ComparatorOperators::TYPE_NUMBER
         ];
     }
-
 }

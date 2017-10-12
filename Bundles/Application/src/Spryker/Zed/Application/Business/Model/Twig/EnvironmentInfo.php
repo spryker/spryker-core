@@ -13,7 +13,6 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class EnvironmentInfo extends TwigFunction
 {
-
     /**
      * @return string
      */
@@ -45,5 +44,4 @@ class EnvironmentInfo extends TwigFunction
             return $html;
         };
     }
-
 }

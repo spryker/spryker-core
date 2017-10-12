@@ -26,7 +26,6 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
  */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
-
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
@@ -251,5 +250,4 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         throw new LogicException('Only transfer classes are allowed in yves action as parameter');
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlUpdatePluginInterface
 {
-
     /**
      * Specification:
      * - This plugin is executed before and/or after URL entity update, depending for which event was it provided.
@@ -23,5 +22,4 @@ interface UrlUpdatePluginInterface
      * @return void
      */
     public function update(UrlTransfer $urlTransfer);
-
 }

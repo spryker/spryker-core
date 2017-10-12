@@ -17,7 +17,6 @@ use Silex\ServiceProviderInterface;
  */
 class UrlGeneratorServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -44,5 +43,4 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Plugin;
 
 interface ProductAbstractViewPluginInterface
 {
-
     /**
      * Specification:
      * - Gives a subject name of the plugin
@@ -31,5 +30,4 @@ interface ProductAbstractViewPluginInterface
      * @return string[]
      */
     public function getRenderedList($idProductAbstract);
-
 }

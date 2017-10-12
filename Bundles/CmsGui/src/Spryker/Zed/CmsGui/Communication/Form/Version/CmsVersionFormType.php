@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class CmsVersionFormType extends AbstractType
 {
-
     const OPTION_VERSION_NAME_CHOICES = 'version_choices';
     const CMS_VERSION = 'cms_version';
 
@@ -76,5 +75,4 @@ class CmsVersionFormType extends AbstractType
     {
         return self::CMS_VERSION;
     }
-
 }

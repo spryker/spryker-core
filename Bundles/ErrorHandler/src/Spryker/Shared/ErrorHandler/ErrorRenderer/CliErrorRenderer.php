@@ -9,7 +9,6 @@ namespace Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 class CliErrorRenderer implements ErrorRendererInterface
 {
-
     /**
      * @param \Exception|\Throwable $exception
      *
@@ -46,5 +45,4 @@ class CliErrorRenderer implements ErrorRendererInterface
 
         return $uri;
     }
-
 }

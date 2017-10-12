@@ -24,7 +24,6 @@ use stdClass;
  */
 class AssertionTest extends Unit
 {
-
     /**
      * @dataProvider numeric()
      *
@@ -164,5 +163,4 @@ class AssertionTest extends Unit
         $assertion = new Assertion();
         $assertion->$method($value);
     }
-
 }

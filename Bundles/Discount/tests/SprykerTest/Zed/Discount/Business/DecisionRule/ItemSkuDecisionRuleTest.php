@@ -23,7 +23,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemSkuDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -57,5 +56,4 @@ class ItemSkuDecisionRuleTest extends BaseRuleTester
 
         return new ItemSkuDecisionRule($comparatorMock);
     }
-
 }

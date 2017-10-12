@@ -9,7 +9,6 @@ namespace Spryker\Yves\Kernel\Dependency\Messenger;
 
 interface KernelToMessengerInterface
 {
-
     /**
      * @param string $message
      *
@@ -30,5 +29,4 @@ interface KernelToMessengerInterface
      * @return void
      */
     public function addErrorMessage($message);
-
 }

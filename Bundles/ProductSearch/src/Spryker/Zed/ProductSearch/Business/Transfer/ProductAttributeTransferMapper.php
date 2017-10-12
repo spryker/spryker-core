@@ -17,7 +17,6 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
 
 class ProductAttributeTransferMapper implements ProductAttributeTransferMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface
      */
@@ -104,5 +103,4 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
             ->getTranslation($glossaryKey, $localeTransfer)
             ->getValue();
     }
-
 }

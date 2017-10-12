@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ReadCmsBlockCategoryRelationsPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
 {
-
     /**
      * @return string
      */
@@ -46,5 +45,4 @@ class ReadCmsBlockCategoryRelationsPlugin extends AbstractPlugin implements Cate
 
         return $cmsBlocks;
     }
-
 }

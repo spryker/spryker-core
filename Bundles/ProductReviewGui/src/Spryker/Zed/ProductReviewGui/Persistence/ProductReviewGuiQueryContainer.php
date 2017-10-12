@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductReviewGuiQueryContainer extends AbstractQueryContainer implements ProductReviewGuiQueryContainerInterface
 {
-
     const FIELD_PRODUCT_NAME = 'product_name';
     const FIELD_ID_CUSTOMER = 'id_customer';
     const FIELD_CUSTOMER_FIRST_NAME = 'first_name';
@@ -48,5 +47,4 @@ class ProductReviewGuiQueryContainer extends AbstractQueryContainer implements P
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_CUSTOMER_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_CUSTOMER_LAST_NAME);
     }
-
 }

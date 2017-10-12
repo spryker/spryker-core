@@ -12,7 +12,6 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 
 abstract class AbstractZedNavigationCacheException extends Exception
 {
-
     const MESSAGE = 'To create a zed-navigation cache run:' . PHP_EOL
         . PHP_EOL . '$ vendor/bin/console ' . BuildNavigationConsole::COMMAND_NAME;
 
@@ -27,5 +26,4 @@ abstract class AbstractZedNavigationCacheException extends Exception
 
         parent::__construct($message, $code, $previous);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RatepayToSalesAggregatorBridge implements RatepayToSalesAggregatorInterface
 {
-
     /**
      * @var \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacadeInterface
      */
@@ -54,5 +53,4 @@ class RatepayToSalesAggregatorBridge implements RatepayToSalesAggregatorInterfac
     {
         return $this->salesAggregatorFacade->getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutSaveOrderInterface
 {
-
     /**
      * This plugin retrieves (its) data from the quote object and saves it to the database.
      *
@@ -24,5 +23,4 @@ interface CheckoutSaveOrderInterface
      * @return void
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

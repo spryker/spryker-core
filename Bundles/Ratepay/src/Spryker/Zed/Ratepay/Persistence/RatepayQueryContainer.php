@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class RatepayQueryContainer extends AbstractQueryContainer implements RatepayQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -111,5 +110,4 @@ class RatepayQueryContainer extends AbstractQueryContainer implements RatepayQue
 
         return $logRecord;
     }
-
 }

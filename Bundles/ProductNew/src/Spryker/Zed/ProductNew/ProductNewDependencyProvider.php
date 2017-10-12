@@ -14,7 +14,6 @@ use Spryker\Zed\ProductNew\Dependency\QueryContainer\ProductNewToProductLabelBri
 
 class ProductNewDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
@@ -58,5 +57,4 @@ class ProductNewDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

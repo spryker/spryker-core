@@ -14,7 +14,6 @@ use Spryker\Yves\ZedRequest\Dependency\Service\ZedRequestToUtilNetworkInterface;
 
 class ZedRequestHeaderMiddleware implements MiddlewareInterface
 {
-
     /**
      * @var \Spryker\Yves\ZedRequest\Dependency\Service\ZedRequestToUtilNetworkInterface
      */
@@ -49,5 +48,4 @@ class ZedRequestHeaderMiddleware implements MiddlewareInterface
             return $request;
         });
     }
-
 }

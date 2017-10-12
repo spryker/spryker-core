@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 interface KernelToMessengerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
@@ -32,5 +31,4 @@ interface KernelToMessengerInterface
      * @return void
      */
     public function addErrorMessage(MessageTransfer $message);
-
 }

@@ -23,7 +23,6 @@ use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
  */
 class ClassDefinitionTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -411,5 +410,4 @@ class ClassDefinitionTest extends Unit
         $classDefinition = new ClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
     }
-
 }

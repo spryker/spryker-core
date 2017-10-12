@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductAbstractPluginUpdateInterface
 {
-
     /**
      * Specification:
      * - Executed before and after an abstract product is updated.
@@ -25,5 +24,4 @@ interface ProductAbstractPluginUpdateInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function update(ProductAbstractTransfer $productAbstractTransfer);
-
 }

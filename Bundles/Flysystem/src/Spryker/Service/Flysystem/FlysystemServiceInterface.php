@@ -12,7 +12,6 @@ namespace Spryker\Service\Flysystem;
  */
 interface FlysystemServiceInterface
 {
-
     /**
      * Specification:
      * - Select pre-configured filesystem
@@ -402,5 +401,4 @@ interface FlysystemServiceInterface
      * @return void
      */
     public function writeStream($filesystemName, $path, $resource, array $config = []);
-
 }

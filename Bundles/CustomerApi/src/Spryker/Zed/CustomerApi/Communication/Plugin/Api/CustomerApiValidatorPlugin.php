@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPluginInterface
 {
-
     /**
      * @api
      *
@@ -37,5 +36,4 @@ class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorP
     {
         return $this->getFacade()->validate($apiDataTransfer);
     }
-
 }

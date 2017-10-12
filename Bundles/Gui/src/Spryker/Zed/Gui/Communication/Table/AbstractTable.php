@@ -22,7 +22,6 @@ use Twig_Loader_Filesystem;
 
 abstract class AbstractTable
 {
-
     const TABLE_CLASS = 'gui-table-data';
     const TABLE_CLASS_NO_SEARCH_SUFFIX = '-no-search';
 
@@ -1110,5 +1109,4 @@ abstract class AbstractTable
             $this->addQueryCondition($query, $searchColumns, $column);
         }
     }
-
 }

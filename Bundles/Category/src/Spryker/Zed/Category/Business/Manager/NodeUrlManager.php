@@ -24,7 +24,6 @@ use Spryker\Zed\Url\Business\Exception\UrlExistsException;
  */
 class NodeUrlManager implements NodeUrlManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface
      */
@@ -272,5 +271,4 @@ class NodeUrlManager implements NodeUrlManagerInterface
 
         return $urlTransfer;
     }
-
 }

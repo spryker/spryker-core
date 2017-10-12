@@ -12,7 +12,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorQueryContainer extends AbstractDependencyFinder
 {
-
     const BUNDLE = 'bundle';
 
     /**
@@ -54,5 +53,4 @@ class LocatorQueryContainer extends AbstractDependencyFinder
     {
         return sprintf('Spryker\\Zed\\%1$s\\Persistence\\%1$sQueryContainer', $bundle);
     }
-
 }

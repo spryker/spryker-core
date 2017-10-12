@@ -9,10 +9,8 @@ namespace Spryker\Zed\CollectorStorageConnector\Dependency\Facade;
 
 interface CollectorStorageConnectorToStorageInterface
 {
-
     /**
      * @return array
      */
     public function getTimestamps();
-
 }

@@ -34,7 +34,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
  */
 class StockFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
@@ -381,5 +380,4 @@ class StockFacadeTest extends Unit
             ->setFkProduct($this->productConcreteEntity->getIdProduct())
             ->save();
     }
-
 }

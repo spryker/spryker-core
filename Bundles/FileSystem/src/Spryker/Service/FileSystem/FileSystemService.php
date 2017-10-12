@@ -25,7 +25,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class FileSystemService extends AbstractService implements FileSystemServiceInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -424,5 +423,4 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
             ->createFileSystemReader()
             ->has($fileSystemQueryTransfer);
     }
-
 }

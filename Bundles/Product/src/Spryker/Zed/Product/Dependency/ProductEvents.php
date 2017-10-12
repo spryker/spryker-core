@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Dependency;
 
 interface ProductEvents
 {
-
     const PRODUCT_ABSTRACT_BEFORE_CREATE = 'Product.product_abstract.before.create';
     const PRODUCT_ABSTRACT_BEFORE_UPDATE = 'Product.product_abstract.before.update';
 
@@ -24,5 +23,4 @@ interface ProductEvents
 
     const PRODUCT_ABSTRACT_READ = 'Product.product_abstract.read';
     const PRODUCT_CONCRETE_READ = 'Product.product_concrete.read';
-
 }

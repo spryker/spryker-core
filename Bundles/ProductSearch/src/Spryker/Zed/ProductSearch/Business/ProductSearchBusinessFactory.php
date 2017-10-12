@@ -34,7 +34,6 @@ use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
  */
 class ProductSearchBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
      */
@@ -294,5 +293,4 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer()
         );
     }
-
 }

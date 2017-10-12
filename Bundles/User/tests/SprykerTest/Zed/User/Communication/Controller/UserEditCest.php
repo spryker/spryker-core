@@ -22,7 +22,6 @@ use SprykerTest\Zed\User\UserCommunicationTester;
  */
 class UserEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\User\UserCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class UserEditCest
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / User / Edit User');
     }
-
 }

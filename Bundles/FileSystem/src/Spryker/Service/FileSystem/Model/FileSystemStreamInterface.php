@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FileSystemStreamTransfer;
 
 interface FileSystemStreamInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
@@ -50,5 +49,4 @@ interface FileSystemStreamInterface
      * @return void
      */
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
-
 }

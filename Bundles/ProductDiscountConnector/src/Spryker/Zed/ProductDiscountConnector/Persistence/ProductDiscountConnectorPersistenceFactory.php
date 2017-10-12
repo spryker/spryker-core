@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductDiscountConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
@@ -23,5 +22,4 @@ class ProductDiscountConnectorPersistenceFactory extends AbstractPersistenceFact
     {
         return SpyProductAttributeKeyQuery::create();
     }
-
 }

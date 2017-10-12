@@ -14,7 +14,6 @@ use SprykerTest\Service\FileSystem\FileSystemServiceTest;
 
 class FileSystemConfigStub extends SprykerFileSystemConfig
 {
-
     /**
      * @return array
      */
@@ -35,5 +34,4 @@ class FileSystemConfigStub extends SprykerFileSystemConfig
             ],
         ];
     }
-
 }

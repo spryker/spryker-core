@@ -16,7 +16,6 @@ use Zend\Config\Reader\Xml;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
-
     const OPTION_PRIORITY = 'priority';
     const OPTION_STRICT = 'strict';
     const OPTION_DRY_RUN = 'dry-run';
@@ -224,5 +223,4 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         }
         return $fileViolations;
     }
-
 }

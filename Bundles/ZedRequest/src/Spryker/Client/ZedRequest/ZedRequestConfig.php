@@ -12,7 +12,6 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 class ZedRequestConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -63,5 +62,4 @@ class ZedRequestConfig extends AbstractBundleConfig
     {
         return $this->getConfig()->get(ZedRequestConstants::AUTH_ZED_ENABLED, true);
     }
-
 }

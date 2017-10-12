@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StepMock implements StepInterface
 {
-
     /**
      * @var bool
      */
@@ -121,5 +120,4 @@ class StepMock implements StepInterface
     {
         return [];
     }
-
 }

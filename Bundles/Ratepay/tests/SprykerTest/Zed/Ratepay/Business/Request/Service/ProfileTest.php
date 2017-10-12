@@ -26,7 +26,6 @@ use SprykerTest\Zed\Ratepay\Business\Request\AbstractFacadeTest;
  */
 class ProfileTest extends AbstractFacadeTest
 {
-
     /**
      * @return void
      */
@@ -188,5 +187,4 @@ class ProfileTest extends AbstractFacadeTest
     protected function getPaymentTransferFromQuote()
     {
     }
-
 }

@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 
 interface WriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
      *
@@ -102,5 +101,4 @@ interface WriterInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function updateProductConcreteImageSetCollection(ProductConcreteTransfer $productConcreteTransfer);
-
 }

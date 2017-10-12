@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class DiscountCalculationConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToDiscountInterface
      */
@@ -23,5 +22,4 @@ class DiscountCalculationConnectorCommunicationFactory extends AbstractCommunica
     {
         return $this->getProvidedDependency(DiscountCalculationConnectorDependencyProvider::FACADE_DISCOUNT);
     }
-
 }

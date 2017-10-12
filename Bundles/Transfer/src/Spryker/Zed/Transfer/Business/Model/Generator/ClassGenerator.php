@@ -12,7 +12,6 @@ use Twig_Loader_Filesystem;
 
 class ClassGenerator implements GeneratorInterface
 {
-
     const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
     /**
@@ -75,5 +74,4 @@ class ClassGenerator implements GeneratorInterface
             'hasArrayObject' => $classDefinition->hasArrayObject(),
         ];
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
@@ -65,5 +64,4 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
 
         return $orderTransfer;
     }
-
 }

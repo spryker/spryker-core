@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class Distributor implements DistributorInterface
 {
-
     /**
      * @var float
      */
@@ -105,5 +104,4 @@ class Distributor implements DistributorInterface
 
         return $calculatedDiscountTransfer;
     }
-
 }

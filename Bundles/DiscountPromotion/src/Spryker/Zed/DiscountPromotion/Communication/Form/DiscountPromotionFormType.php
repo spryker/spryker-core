@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -82,5 +81,4 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
     {
         return 'DiscountPromotion/Form/discount_promotion';
     }
-
 }

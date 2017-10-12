@@ -7,7 +7,6 @@ namespace Spryker\Service\UtilSanitize;
 
 interface UtilSanitizeServiceInterface
 {
-
     /**
      *
      * Specification:
@@ -22,5 +21,4 @@ interface UtilSanitizeServiceInterface
      * @return string
      */
     public function escapeHtml($text, $double = true, $charset = null);
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductBundleQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -65,5 +64,4 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
     public function queryBundleWithRelatedBundledProduct($idProductConcrete);
-
 }

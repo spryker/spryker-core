@@ -19,7 +19,6 @@ use Twig_SimpleFunction;
  */
 class ProductRelationTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -91,5 +90,4 @@ class ProductRelationTwigServiceProvider extends AbstractPlugin implements Servi
     {
         // TODO: Implement boot() method.
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class MessengerServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -37,5 +36,4 @@ class MessengerServiceProvider extends AbstractPlugin implements ServiceProvider
     public function boot(Application $app)
     {
     }
-
 }

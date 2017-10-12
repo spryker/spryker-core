@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class SalesProductConnectorQueryContainer extends AbstractQueryContainer implements SalesProductConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -55,5 +54,4 @@ class SalesProductConnectorQueryContainer extends AbstractQueryContainer impleme
             ->filterByIsSuper(true)
             ->filterByKey($attributeKeys, Criteria::IN);
     }
-
 }

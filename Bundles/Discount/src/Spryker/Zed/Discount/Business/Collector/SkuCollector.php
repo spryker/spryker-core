@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class SkuCollector extends BaseCollector implements CollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -46,5 +45,4 @@ class SkuCollector extends BaseCollector implements CollectorInterface
 
         return $discountableItems;
     }
-
 }

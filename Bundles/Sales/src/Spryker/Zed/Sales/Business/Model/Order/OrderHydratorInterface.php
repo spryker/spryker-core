@@ -13,7 +13,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface OrderHydratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -53,5 +52,4 @@ interface OrderHydratorInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateBaseOrderTransfer(SpySalesOrder $orderEntity);
-
 }

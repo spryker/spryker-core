@@ -29,7 +29,6 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
  */
 class EventDispatcherTest extends Unit
 {
-
     const TEST_EVENT_NAME = 'trigger.before.save';
     const LISTENER_NAME = 'Test/Listener';
 
@@ -182,5 +181,4 @@ class EventDispatcherTest extends Unit
         return $this->getMockBuilder(EventToUtilEncodingInterface::class)
             ->getMock();
     }
-
 }

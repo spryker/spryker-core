@@ -33,7 +33,6 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
  */
 class StateMachineBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\TriggerInterface
      */
@@ -237,5 +236,4 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(StateMachineDependencyProvider::SERVICE_NETWORK);
     }
-
 }

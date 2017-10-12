@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CalculationFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Calculation\Zed\CalculationStubInterface
      */
@@ -28,5 +27,4 @@ class CalculationFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::CLIENT_ZED_REQUEST);
     }
-
 }

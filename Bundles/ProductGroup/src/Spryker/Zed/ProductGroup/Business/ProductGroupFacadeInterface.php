@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 interface ProductGroupFacadeInterface
 {
-
     /**
      * Specification:
      * - Persist new product group entity into database.
@@ -96,5 +95,4 @@ interface ProductGroupFacadeInterface
      * @return void
      */
     public function deleteProductGroup(ProductGroupTransfer $productGroupTransfer);
-
 }

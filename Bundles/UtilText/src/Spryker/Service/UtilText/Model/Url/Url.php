@@ -12,7 +12,6 @@ namespace Spryker\Service\UtilText\Model\Url;
  */
 class Url
 {
-
     const SCHEME = 'scheme';
     const HOST = 'host';
     const PORT = 'port';
@@ -474,5 +473,4 @@ class Url
 
         return $url;
     }
-
 }

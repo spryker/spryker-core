@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class VersionPageController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
     const URL_PARAM_VERSION = 'version';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
@@ -189,5 +188,4 @@ class VersionPageController extends AbstractController
 
         return $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsTargetVersionTransfer);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Customer\Code;
 
 interface Messages
 {
-
     const CUSTOMER_ALREADY_AUTHENTICATED = 'customer.already.authenticated';
     const CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
     const CUSTOMER_REGISTRATION_CONFIRMED = 'customer.registration.confirmed';
@@ -31,5 +30,4 @@ interface Messages
     const CUSTOMER_TOKEN_INVALID = 'customer.token.invalid';
     const CUSTOMER_ANONYMIZATION_SUCCESS = 'customer.anonymization.success';
     const CUSTOMER_ANONYMIZATION_FAILED = 'customer.anonymization.failed';
-
 }

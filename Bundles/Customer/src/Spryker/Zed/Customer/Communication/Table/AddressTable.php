@@ -15,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AddressTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
 
     const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
@@ -154,5 +153,4 @@ class AddressTable extends AbstractTable
 
         return implode(' ', $buttons);
     }
-
 }

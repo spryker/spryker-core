@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class CmsCommunicationTester extends Actor
 {
-
     use _generated\CmsCommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

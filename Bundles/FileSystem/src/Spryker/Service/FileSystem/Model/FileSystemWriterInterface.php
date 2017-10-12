@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
 
 interface FileSystemWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
@@ -107,5 +106,4 @@ interface FileSystemWriterInterface
      * @return void
      */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer);
-
 }

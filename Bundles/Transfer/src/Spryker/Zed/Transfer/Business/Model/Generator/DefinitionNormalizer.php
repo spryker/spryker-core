@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 class DefinitionNormalizer implements DefinitionNormalizerInterface
 {
-
     const KEY_BUNDLE = 'bundle';
     const KEY_CONTAINING_BUNDLE = 'containing bundle';
     const KEY_NAME = 'name';
@@ -69,5 +68,4 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
 
         return $attributes;
     }
-
 }

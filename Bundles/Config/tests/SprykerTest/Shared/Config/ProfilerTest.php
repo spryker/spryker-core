@@ -20,7 +20,6 @@ use Spryker\Shared\Config\Profiler;
  */
 class ProfilerTest extends Unit
 {
-
     const PROFILE_KEY = 'profile-key';
 
     /**
@@ -121,5 +120,4 @@ class ProfilerTest extends Unit
         $profileData = $profiler->getProfileData();
         $this->tester->assertProfileCount(2, $profileData[static::PROFILE_KEY]);
     }
-
 }

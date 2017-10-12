@@ -23,7 +23,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
  */
 class CategoryQueryContainerTest extends Unit
 {
-
     const ID_CATEGORY_NODE = 23;
 
     /**
@@ -37,5 +36,4 @@ class CategoryQueryContainerTest extends Unit
         $query->findOne();
         $this->assertInstanceOf(SpyCategoryClosureTableQuery::class, $query);
     }
-
 }

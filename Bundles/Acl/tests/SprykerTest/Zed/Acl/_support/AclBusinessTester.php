@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class AclBusinessTester extends Actor
 {
-
     use _generated\AclBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

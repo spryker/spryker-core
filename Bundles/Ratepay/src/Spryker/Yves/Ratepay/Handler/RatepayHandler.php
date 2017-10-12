@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RatepayHandler
 {
-
     const INSTALLMENT_CALCULATOR_ERROR_HASH = 0;
     const CHECKOUT_PARTIAL_SUMMARY_PATH = 'Ratepay/partial/summary';
 
@@ -206,5 +205,4 @@ class RatepayHandler
                 ->getReasonText()
         );
     }
-
 }

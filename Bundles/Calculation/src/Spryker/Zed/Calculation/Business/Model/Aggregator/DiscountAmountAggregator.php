@@ -15,7 +15,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class DiscountAmountAggregator implements CalculatorInterface
 {
-
     /**
      * @var array|\Generated\Shared\Transfer\DiscountTransfer[]
      */
@@ -226,5 +225,4 @@ class DiscountAmountAggregator implements CalculatorInterface
             }
         }
     }
-
 }

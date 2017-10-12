@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryCreatePage;
  */
 class CategoryCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
@@ -45,5 +44,4 @@ class CategoryCreateCest
 
         $i->waitForText(CategoryCreatePage::SUCCESS_MESSAGE, 10);
     }
-
 }

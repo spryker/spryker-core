@@ -26,7 +26,6 @@ use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface;
  */
 class CacheWarmerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -74,5 +73,4 @@ class CacheWarmerTest extends Unit
 
         return $mockBuilder->getMock();
     }
-
 }

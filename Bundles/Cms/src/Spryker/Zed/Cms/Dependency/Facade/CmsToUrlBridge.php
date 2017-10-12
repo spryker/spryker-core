@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 class CmsToUrlBridge implements CmsToUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
@@ -125,5 +124,4 @@ class CmsToUrlBridge implements CmsToUrlInterface
     {
         return $this->urlFacade->validateUrlRedirect($urlRedirectTransfer);
     }
-
 }

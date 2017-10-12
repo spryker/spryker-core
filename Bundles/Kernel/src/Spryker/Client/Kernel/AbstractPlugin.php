@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractPlugin
 {
-
     /**
      * @var \Spryker\client\Kernel\AbstractFactory
      */
@@ -90,5 +89,4 @@ abstract class AbstractPlugin
     {
         return new ClientResolver();
     }
-
 }

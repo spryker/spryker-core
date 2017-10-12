@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormView;
 
 class PayPalSubForm extends AbstractSubForm
 {
-
     const PAYMENT_METHOD = 'pay_pal';
 
     /**
@@ -53,5 +52,4 @@ class PayPalSubForm extends AbstractSubForm
 
         $view->vars[static::CLIENT_TOKEN] = $this->generateClientToken();
     }
-
 }

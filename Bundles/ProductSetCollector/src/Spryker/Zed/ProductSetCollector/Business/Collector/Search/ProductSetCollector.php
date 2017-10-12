@@ -16,7 +16,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 class ProductSetCollector extends AbstractSearchPropelCollector
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -87,5 +86,4 @@ class ProductSetCollector extends AbstractSearchPropelCollector
 
         return $result;
     }
-
 }

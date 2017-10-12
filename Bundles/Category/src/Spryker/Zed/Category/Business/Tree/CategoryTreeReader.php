@@ -18,7 +18,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
-
     const ID = 'id';
     const ID_CATEGORY = 'id_category';
     const ID_PARENT = 'parent';
@@ -507,5 +506,4 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
         return $this->treeFormatter->getCategoryTree();
     }
-
 }

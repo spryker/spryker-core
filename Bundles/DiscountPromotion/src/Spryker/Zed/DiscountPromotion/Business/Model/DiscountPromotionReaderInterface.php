@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
 interface DiscountPromotionReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
@@ -39,5 +38,4 @@ interface DiscountPromotionReaderInterface
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByIdDiscount($idDiscount);
-
 }

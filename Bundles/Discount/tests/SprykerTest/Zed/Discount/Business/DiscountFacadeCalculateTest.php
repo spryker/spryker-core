@@ -43,7 +43,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
  */
 class DiscountFacadeCalculateTest extends Unit
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -375,5 +374,4 @@ class DiscountFacadeCalculateTest extends Unit
     {
         return SpyCurrencyQuery::create()->findOneByCode('EUR');
     }
-
 }

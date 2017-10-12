@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UserConfig extends AbstractBundleConfig
 {
-
     const KEY_INSTALLER_DATA = 'installer_data';
 
     /**
@@ -54,5 +53,4 @@ class UserConfig extends AbstractBundleConfig
 
         return $users;
     }
-
 }

@@ -27,7 +27,6 @@ use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge;
  */
 class ZedNavigationCacheTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -165,5 +164,4 @@ class ZedNavigationCacheTest extends Unit
 
         return $navigationToUtilEncodingBridge;
     }
-
 }

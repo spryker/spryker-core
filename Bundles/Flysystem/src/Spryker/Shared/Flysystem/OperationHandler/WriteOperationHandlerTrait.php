@@ -14,7 +14,6 @@ use Throwable;
 
 trait WriteOperationHandlerTrait
 {
-
     /**
      * @param \Closure $callback
      *
@@ -38,5 +37,4 @@ trait WriteOperationHandlerTrait
             throw new FileSystemWriteException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
-
 }

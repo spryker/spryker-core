@@ -24,7 +24,6 @@ use SprykerTest\Shared\Application\Log\Processor\Fixtures\Entity;
  */
 class EntitySanitizerProcessorTest extends Unit
 {
-
     /**
      * @dataProvider getContext
      *
@@ -70,5 +69,4 @@ class EntitySanitizerProcessorTest extends Unit
 
         $this->assertSame($record, $result);
     }
-
 }

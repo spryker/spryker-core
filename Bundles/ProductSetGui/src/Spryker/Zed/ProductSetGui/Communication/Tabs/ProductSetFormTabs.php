@@ -13,7 +13,6 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class ProductSetFormTabs extends AbstractTabs
 {
-
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -115,5 +114,4 @@ class ProductSetFormTabs extends AbstractTabs
 
         return $this;
     }
-
 }

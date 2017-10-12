@@ -20,7 +20,6 @@ use Spryker\Zed\Price\Communication\Plugin\Twig\PriceTwigExtension;
  */
 class PriceServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -45,5 +44,4 @@ class PriceServiceProvider extends AbstractPlugin implements ServiceProviderInte
     public function boot(Application $app)
     {
     }
-
 }

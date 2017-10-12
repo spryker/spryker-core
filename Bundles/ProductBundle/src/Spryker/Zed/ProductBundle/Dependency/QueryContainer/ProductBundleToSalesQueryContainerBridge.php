@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\QueryContainer;
 
 class ProductBundleToSalesQueryContainerBridge implements ProductBundleToSalesQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class ProductBundleToSalesQueryContainerBridge implements ProductBundleToSalesQu
     {
         return $this->salesQueryContainer->querySalesOrderItem();
     }
-
 }

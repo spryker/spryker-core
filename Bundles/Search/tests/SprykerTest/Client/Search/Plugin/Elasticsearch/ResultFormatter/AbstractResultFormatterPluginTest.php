@@ -29,7 +29,6 @@ use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
  */
 abstract class AbstractResultFormatterPluginTest extends Unit
 {
-
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
@@ -172,5 +171,4 @@ abstract class AbstractResultFormatterPluginTest extends Unit
 
         return $searchConfig;
     }
-
 }

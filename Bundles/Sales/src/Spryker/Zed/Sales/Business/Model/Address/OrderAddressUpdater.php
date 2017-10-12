@@ -13,7 +13,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderAddressUpdater implements OrderAddressUpdaterInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface SalesQueryContainerInterface
      */
@@ -62,5 +61,4 @@ class OrderAddressUpdater implements OrderAddressUpdaterInterface
     ) {
         $addressEntity->fromArray($addressTransfer->modifiedToArray());
     }
-
 }

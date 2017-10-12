@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CmsFactory extends AbstractFactory
 {
-
     /**
      * @deprecated Use CMS Block module instead
      *
@@ -53,5 +52,4 @@ class CmsFactory extends AbstractFactory
     {
         return new CmsStub($this->getProvidedDependency(CmsDependencyProvider::CLIENT_ZED_REQUEST));
     }
-
 }

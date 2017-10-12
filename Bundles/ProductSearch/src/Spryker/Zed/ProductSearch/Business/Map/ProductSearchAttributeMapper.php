@@ -13,7 +13,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 
 class ProductSearchAttributeMapper implements ProductSearchAttributeMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface[]
      */
@@ -73,5 +72,4 @@ class ProductSearchAttributeMapper implements ProductSearchAttributeMapperInterf
 
         return $pageMapTransfer;
     }
-
 }

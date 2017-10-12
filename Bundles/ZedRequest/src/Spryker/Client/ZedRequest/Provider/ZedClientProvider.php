@@ -16,7 +16,6 @@ use Spryker\Shared\ZedRequest\Provider\AbstractZedClientProvider;
  */
 class ZedClientProvider extends AbstractZedClientProvider
 {
-
     /**
      * @deprecated Will be removed in the next major version. Please use ZedRequestFactory->createClient().
      *
@@ -26,5 +25,4 @@ class ZedClientProvider extends AbstractZedClientProvider
     {
         return parent::createZedClient();
     }
-
 }

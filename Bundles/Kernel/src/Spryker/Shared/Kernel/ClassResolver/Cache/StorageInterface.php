@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\ClassResolver\Cache;
 
 interface StorageInterface
 {
-
     /**
      * @param array $data
      *
@@ -21,5 +20,4 @@ interface StorageInterface
      * @return array
      */
     public function getData();
-
 }

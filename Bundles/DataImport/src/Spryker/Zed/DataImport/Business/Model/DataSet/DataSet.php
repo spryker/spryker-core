@@ -12,7 +12,6 @@ use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 
 class DataSet extends ArrayObject implements DataSetInterface
 {
-
     /**
      * @param string|int $index
      *
@@ -44,5 +43,4 @@ class DataSet extends ArrayObject implements DataSetInterface
 
         parent::offsetUnset($index);
     }
-
 }

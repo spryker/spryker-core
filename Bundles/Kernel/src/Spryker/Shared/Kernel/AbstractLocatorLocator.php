@@ -13,7 +13,6 @@ namespace Spryker\Shared\Kernel;
 
 abstract class AbstractLocatorLocator implements LocatorLocatorInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\BundleProxy
      */
@@ -71,5 +70,4 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
     abstract protected function getBundleProxy();
-
 }

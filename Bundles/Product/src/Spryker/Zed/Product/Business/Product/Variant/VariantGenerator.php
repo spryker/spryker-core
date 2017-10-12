@@ -14,7 +14,6 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 
 class VariantGenerator implements VariantGeneratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
@@ -207,5 +206,4 @@ class VariantGenerator implements VariantGeneratorInterface
             ->setAttributes($attributeTokens)
             ->setIsActive(false);
     }
-
 }

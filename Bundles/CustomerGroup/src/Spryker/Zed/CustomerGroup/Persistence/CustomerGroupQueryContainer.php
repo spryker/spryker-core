@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CustomerGroupQueryContainer extends AbstractQueryContainer implements CustomerGroupQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -79,5 +78,4 @@ class CustomerGroupQueryContainer extends AbstractQueryContainer implements Cust
         return $this->getFactory()
             ->createCustomerQuery();
     }
-
 }

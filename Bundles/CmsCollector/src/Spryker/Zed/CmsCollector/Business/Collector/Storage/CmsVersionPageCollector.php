@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollec
 
 class CmsVersionPageCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface
      */
@@ -60,5 +59,4 @@ class CmsVersionPageCollector extends AbstractStoragePropelCollector
     {
         return CmsConstants::RESOURCE_TYPE_PAGE;
     }
-
 }

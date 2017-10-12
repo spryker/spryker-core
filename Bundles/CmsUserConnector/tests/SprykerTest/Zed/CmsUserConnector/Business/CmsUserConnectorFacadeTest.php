@@ -34,7 +34,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsUserConnectorFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
@@ -244,5 +243,4 @@ class CmsUserConnectorFacadeTest extends Unit
         ];
         return $fixtures;
     }
-
 }

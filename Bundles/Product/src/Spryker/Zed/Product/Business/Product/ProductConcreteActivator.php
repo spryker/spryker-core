@@ -17,7 +17,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductConcreteActivator implements ProductConcreteActivatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface
      */
@@ -191,5 +190,4 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
             ));
         }
     }
-
 }

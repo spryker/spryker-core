@@ -26,7 +26,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
  */
 class ProductConcreteAssertionTest extends Unit
 {
-
     const SKU = 'sku-concrete';
     const ID_PRODUCT_CONCRETE = 1;
 
@@ -229,5 +228,4 @@ class ProductConcreteAssertionTest extends Unit
 
         $productConcreteAssertion->assertProductExists(self::ID_PRODUCT_CONCRETE);
     }
-
 }

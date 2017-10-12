@@ -14,7 +14,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class ItemSubtotalAggregator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -82,5 +81,4 @@ class ItemSubtotalAggregator implements CalculatorInterface
     {
         $itemTransfer->requireSumPrice()->requireUnitPrice();
     }
-
 }

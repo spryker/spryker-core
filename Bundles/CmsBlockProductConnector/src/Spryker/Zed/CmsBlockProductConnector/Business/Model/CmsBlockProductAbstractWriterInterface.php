@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockProductAbstractWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
     public function updateCmsBlockProductAbstractRelations(CmsBlockTransfer $cmsBlockTransfer);
-
 }

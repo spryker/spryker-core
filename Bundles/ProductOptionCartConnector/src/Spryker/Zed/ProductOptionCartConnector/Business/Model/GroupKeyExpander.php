@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class GroupKeyExpander implements GroupKeyExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -84,5 +83,4 @@ class GroupKeyExpander implements GroupKeyExpanderInterface
 
         return implode('-', $groupKeyPart);
     }
-
 }

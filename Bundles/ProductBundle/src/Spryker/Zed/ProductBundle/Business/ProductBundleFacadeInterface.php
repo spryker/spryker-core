@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface ProductBundleFacadeInterface
 {
-
     /**
      *
      * Specification:
@@ -236,5 +235,4 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductBundleIds(OrderTransfer $orderTransfer);
-
 }

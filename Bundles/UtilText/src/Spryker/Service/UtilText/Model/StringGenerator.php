@@ -8,7 +8,6 @@ namespace Spryker\Service\UtilText\Model;
 
 class StringGenerator implements StringGeneratorInterface
 {
-
     /**
      * @param int $length
      *
@@ -25,5 +24,4 @@ class StringGenerator implements StringGeneratorInterface
 
         return $token;
     }
-
 }

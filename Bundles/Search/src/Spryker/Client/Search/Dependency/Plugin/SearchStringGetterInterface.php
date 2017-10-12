@@ -9,12 +9,10 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 interface SearchStringGetterInterface
 {
-
     /**
      * @api
      *
      * @return string
      */
     public function getSearchString();
-
 }

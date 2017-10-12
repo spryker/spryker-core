@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class StoreFacade extends AbstractFacade implements StoreFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -55,5 +54,4 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
     {
         return $this->getFactory()->createStoreReader()->getStoreById($idStore);
     }
-
 }

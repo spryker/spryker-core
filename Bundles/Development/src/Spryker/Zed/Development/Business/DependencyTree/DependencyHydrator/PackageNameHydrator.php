@@ -13,7 +13,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class PackageNameHydrator implements DependencyHydratorInterface
 {
-
     /**
      * @param array $dependency
      *
@@ -79,5 +78,4 @@ class PackageNameHydrator implements DependencyHydratorInterface
             spl_autoload_unregister($codeSnifferAutoloadFunction);
         }
     }
-
 }

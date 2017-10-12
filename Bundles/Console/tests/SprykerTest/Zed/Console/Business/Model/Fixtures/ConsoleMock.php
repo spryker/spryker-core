@@ -10,7 +10,6 @@ use Spryker\Zed\Kernel\Communication\Console\Console;
 
 class ConsoleMock extends Console
 {
-
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
@@ -34,5 +33,4 @@ class ConsoleMock extends Console
     {
         return parent::getQueryContainer();
     }
-
 }

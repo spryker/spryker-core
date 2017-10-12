@@ -18,7 +18,6 @@ use Spryker\Zed\Collector\CollectorConfig;
 
 abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
 {
-
     /**
      * @var \Spryker\Zed\Collector\CollectorConfig|null
      */
@@ -98,5 +97,4 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
     {
         $this->config = $config;
     }
-
 }

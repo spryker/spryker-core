@@ -18,7 +18,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
  */
 class CategoryWriter implements CategoryWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -205,5 +204,4 @@ class CategoryWriter implements CategoryWriterInterface
 
         $categoryAttributeEntity->save();
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Client\ProductLabel\Storage\Dictionary\DictionaryFactory;
 
 class LabelDictionaryReader implements LabelDictionaryReaderInterface
 {
-
     /**
      * @var \Spryker\Client\ProductLabel\Storage\Dictionary\DictionaryFactory
      */
@@ -145,5 +144,4 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
 
         return $productLabelCollection;
     }
-
 }

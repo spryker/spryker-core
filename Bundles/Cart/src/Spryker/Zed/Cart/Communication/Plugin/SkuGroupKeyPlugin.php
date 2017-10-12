@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -42,5 +41,4 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
     {
         return $cartItem->getSku();
     }
-
 }

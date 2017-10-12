@@ -32,7 +32,6 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
  */
 class NavigationNodeCRUDTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Business\NavigationFacade
      */
@@ -295,5 +294,4 @@ class NavigationNodeCRUDTest extends Unit
 
         return $navigationNodeEntity;
     }
-
 }

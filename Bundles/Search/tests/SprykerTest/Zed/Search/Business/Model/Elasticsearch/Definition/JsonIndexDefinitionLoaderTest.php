@@ -27,7 +27,6 @@ use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
  */
 class JsonIndexDefinitionLoaderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -372,5 +371,4 @@ class JsonIndexDefinitionLoaderTest extends Unit
 
         return $utilEncodingMock;
     }
-
 }

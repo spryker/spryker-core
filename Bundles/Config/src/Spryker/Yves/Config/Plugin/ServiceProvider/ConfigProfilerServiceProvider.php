@@ -11,7 +11,6 @@ use Spryker\Shared\Config\Plugin\ServiceProvider\AbstractConfigProfilerServicePr
 
 class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider
 {
-
     /**
      * @return string
      */
@@ -27,5 +26,4 @@ class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider
     {
         return realpath(dirname(__DIR__) . '/../../Theme/default');
     }
-
 }

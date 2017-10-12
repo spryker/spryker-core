@@ -9,7 +9,6 @@ namespace Spryker\Client\Collector;
 
 interface CollectorClientInterface
 {
-
     /**
      * @api
      *
@@ -19,5 +18,4 @@ interface CollectorClientInterface
      * @return array|bool
      */
     public function matchUrl($url, $localeName);
-
 }

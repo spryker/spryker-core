@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerTransferExpanderPluginInterface
 {
-
     /**
      * Specification
      * - Expands the provided customer transfer object's data and returns the modified object.
@@ -23,5 +22,4 @@ interface CustomerTransferExpanderPluginInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function expandTransfer(CustomerTransfer $customerTransfer);
-
 }

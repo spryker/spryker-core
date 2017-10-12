@@ -47,7 +47,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CalculationFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -606,5 +605,4 @@ class CalculationFacadeTest extends Unit
 
         return $calculationFacade;
     }
-
 }

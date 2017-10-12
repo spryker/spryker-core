@@ -14,7 +14,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractDependencyFinder
 {
-
     const DEPENDS_LAYER = 'dependsLayer';
     const LAYER_BUSINESS = 'Business';
     const LAYER_PERSISTENCE = 'Persistence';
@@ -94,5 +93,4 @@ abstract class AbstractDependencyFinder
 
         $this->dependencyTree->addDependency($fileInfo, $to, $dependencyInformation);
     }
-
 }

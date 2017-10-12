@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem as OriginalSpySalesOrderItem;
 
 class SpySalesOrderItemMock extends OriginalSpySalesOrderItem
 {
-
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
@@ -36,5 +35,4 @@ class SpySalesOrderItemMock extends OriginalSpySalesOrderItem
     {
         return $this->propelModelCopy;
     }
-
 }

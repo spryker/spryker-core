@@ -21,7 +21,6 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
  */
 class FlysystemServiceFactory extends AbstractServiceFactory
 {
-
     const SPRYKER_ADAPTER_CLASS = 'sprykerAdapterClass';
 
     /**
@@ -186,5 +185,4 @@ class FlysystemServiceFactory extends AbstractServiceFactory
 
         return $filesystem;
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\ProductSearch\Code\KeyBuilder\ProductSearchConfigExtensionKey
 
 class ProductSearchFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
@@ -36,5 +35,4 @@ class ProductSearchFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::STORE);
     }
-
 }

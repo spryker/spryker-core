@@ -12,7 +12,6 @@ use Spryker\Zed\StockSalesConnector\StockSalesConnectorDependencyProvider;
 
 class StockSalesConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\StockSalesConnector\Dependency\Facade\StockSalesConnectorToStockInterface
      */
@@ -20,5 +19,4 @@ class StockSalesConnectorCommunicationFactory extends AbstractCommunicationFacto
     {
         return $this->getProvidedDependency(StockSalesConnectorDependencyProvider::FACADE_STOCK);
     }
-
 }

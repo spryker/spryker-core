@@ -26,7 +26,6 @@ use Spryker\Zed\User\Business\UserFacade;
  */
 class AclTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Acl\Business\AclFacade
      */
@@ -534,5 +533,4 @@ class AclTest extends Unit
             $this->assertEquals(false, $hasAccess);
         }
     }
-
 }

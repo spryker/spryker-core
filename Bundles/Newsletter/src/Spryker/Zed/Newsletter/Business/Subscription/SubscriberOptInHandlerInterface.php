@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 
 interface SubscriberOptInHandlerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
      * @return void
      */
     public function optIn(NewsletterSubscriberTransfer $subscriberTransfer);
-
 }

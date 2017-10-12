@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormInterface;
 
 class DiscountFormTabs extends AbstractTabs
 {
-
     /**
      * @var \Symfony\Component\Form\FormInterface
      */
@@ -173,5 +172,4 @@ class DiscountFormTabs extends AbstractTabs
     {
         return $this->discountConfiguratorTransfer && $this->discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() == DiscountConstants::TYPE_VOUCHER;
     }
-
 }

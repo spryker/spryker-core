@@ -12,7 +12,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class SimpleGraphBuilder implements GraphBuilderInterface
 {
-
     const FONT_COLOR = 'fontcolor';
     const LABEL = 'label';
 
@@ -94,5 +93,4 @@ class SimpleGraphBuilder implements GraphBuilderInterface
 
         return $attributes;
     }
-
 }

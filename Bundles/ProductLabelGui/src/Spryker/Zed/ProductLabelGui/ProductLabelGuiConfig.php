@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductLabelGuiConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class ProductLabelGuiConfig extends AbstractBundleConfig
     {
         return $this->get(PriceConstants::DEFAULT_PRICE_TYPE);
     }
-
 }

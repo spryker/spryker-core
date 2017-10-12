@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -91,5 +90,4 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
 
         return $currencies;
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 
 class State implements StateInterface
 {
-
     /**
      * @var string
      */
@@ -385,5 +384,4 @@ class State implements StateInterface
 
         return $this;
     }
-
 }

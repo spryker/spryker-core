@@ -17,7 +17,6 @@ use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
 {
-
     const ACTION = 'Action';
     const UPDATE_USER_URL = '/user/edit/update';
     const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
@@ -236,5 +235,4 @@ class UsersTable extends AbstractTable
 
         return $this->utilDateTimeService->formatDateTime($item[SpyUserTableMap::COL_LAST_LOGIN]);
     }
-
 }

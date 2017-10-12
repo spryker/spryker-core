@@ -14,7 +14,6 @@ use Spryker\Service\UtilNetwork\Model\Host;
  */
 class ServerDataCollector extends AbstractDataCollector
 {
-
     const TYPE = 'server';
 
     const FIELD_URL = 'url';
@@ -119,5 +118,4 @@ class ServerDataCollector extends AbstractDataCollector
     {
         return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
     }
-
 }

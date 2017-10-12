@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface PriceManagerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function addGrossPriceToItems(CartChangeTransfer $cartChangeTransfer);
-
 }

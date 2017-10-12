@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 abstract class AbstractGatewayController extends AbstractController
 {
-
     /**
      * @var bool
      */
@@ -126,5 +125,4 @@ abstract class AbstractGatewayController extends AbstractController
     {
         return $this->successMessages;
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class TwigConfig extends AbstractBundleConfig
 {
-
     /**
      * @return array
      */
@@ -100,5 +99,4 @@ class TwigConfig extends AbstractBundleConfig
     {
         return $this->get(TwigConstants::YVES_PATH_CACHE_ENABLED, true);
     }
-
 }

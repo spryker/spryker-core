@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface NopaymentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ interface NopaymentFacadeInterface
      * @return bool
      */
     public function isPaid(SpySalesOrderItem $orderItem);
-
 }

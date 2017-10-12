@@ -9,7 +9,6 @@ namespace Spryker\Zed\Braintree\Business\Payment\Method;
 
 interface ApiConstants
 {
-
     const METHOD_PAY_PAL = 'BRAINTREE_PAY_PAL';
     const METHOD_CREDIT_CARD = 'BRAINTREE_CREDIT_CARD';
 
@@ -34,5 +33,4 @@ interface ApiConstants
 
     const PAYMENT_CODE_AUTHORIZE_SUCCESS = '1000';
     const STATUS_REASON_CODE_SUCCESS = '1';
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 
 interface NavigationGuiToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -19,5 +18,4 @@ interface NavigationGuiToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();
-
 }

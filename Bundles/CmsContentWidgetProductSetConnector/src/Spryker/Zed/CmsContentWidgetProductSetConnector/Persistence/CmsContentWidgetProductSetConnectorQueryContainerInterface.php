@@ -12,7 +12,6 @@ namespace Spryker\Zed\CmsContentWidgetProductSetConnector\Persistence;
  */
 interface CmsContentWidgetProductSetConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface CmsContentWidgetProductSetConnectorQueryContainerInterface
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
     public function queryProductSetIdsByKeyList(array $keyList);
-
 }

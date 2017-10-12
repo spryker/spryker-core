@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class GlossaryToMessengerBridge implements GlossaryToMessengerInterface
 {
-
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
      */
@@ -34,5 +33,4 @@ class GlossaryToMessengerBridge implements GlossaryToMessengerInterface
     {
         $this->messengerFacade->addErrorMessage($message);
     }
-
 }

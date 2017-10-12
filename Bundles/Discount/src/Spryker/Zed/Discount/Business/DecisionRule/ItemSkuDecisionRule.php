@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class ItemSkuDecisionRule implements DecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -41,5 +40,4 @@ class ItemSkuDecisionRule implements DecisionRuleInterface
     ) {
         return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getSku());
     }
-
 }

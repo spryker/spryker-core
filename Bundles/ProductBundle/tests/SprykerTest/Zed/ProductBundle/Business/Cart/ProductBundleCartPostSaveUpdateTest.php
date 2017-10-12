@@ -24,7 +24,6 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostS
  */
 class ProductBundleCartPostSaveUpdateTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -50,5 +49,4 @@ class ProductBundleCartPostSaveUpdateTest extends Unit
 
         $this->assertCount(1, $updatedQuoteTransfer->getBundleItems());
     }
-
 }

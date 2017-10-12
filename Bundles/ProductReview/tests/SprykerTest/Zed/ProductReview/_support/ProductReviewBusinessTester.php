@@ -20,7 +20,6 @@ use Codeception\Actor;
  */
 class ProductReviewBusinessTester extends Actor
 {
-
     use _generated\ProductReviewBusinessTesterActions;
 
     /**
@@ -47,5 +46,4 @@ class ProductReviewBusinessTester extends Actor
     {
         return array_diff_key($productReview, array_flip(static::DATE_FIELDS));
     }
-
 }

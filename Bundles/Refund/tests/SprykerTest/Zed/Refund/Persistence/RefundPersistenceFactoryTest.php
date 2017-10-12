@@ -22,7 +22,6 @@ use Spryker\Zed\Refund\Persistence\RefundPersistenceFactory;
  */
 class RefundPersistenceFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -32,5 +31,4 @@ class RefundPersistenceFactoryTest extends Unit
 
         $this->assertInstanceOf(SpyRefundQuery::class, $refundPersistenceFactory->createRefundQuery());
     }
-
 }

@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ResourceActionPreProcessor implements PreProcessorInterface
 {
-
     /**
      * Extracts the path segment responsible for building the resource action
      *
@@ -51,5 +50,4 @@ class ResourceActionPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

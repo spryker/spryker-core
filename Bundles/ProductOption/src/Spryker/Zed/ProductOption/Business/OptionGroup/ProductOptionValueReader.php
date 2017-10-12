@@ -13,7 +13,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionValueReader implements ProductOptionValueReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -75,5 +74,4 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
 
         return $productOptionValueEntity;
     }
-
 }

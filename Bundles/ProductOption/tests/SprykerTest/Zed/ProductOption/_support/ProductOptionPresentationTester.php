@@ -24,7 +24,6 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
  */
 class ProductOptionPresentationTester extends Actor
 {
-
     use _generated\ProductOptionPresentationTesterActions;
 
     const LANGUAGE_SWITCH_XPATH = '//*[@id="option-value-translations"]/div[2]/div/div[1]/a';
@@ -227,5 +226,4 @@ class ProductOptionPresentationTester extends Actor
             $productOptionGroupTransfer->addGroupNameTranslation($productOptionTranslationTransfer);
         }
     }
-
 }

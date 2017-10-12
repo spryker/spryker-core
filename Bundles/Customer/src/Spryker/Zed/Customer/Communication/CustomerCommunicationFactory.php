@@ -24,7 +24,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CustomerCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Customer\Communication\Table\CustomerTable
      */
@@ -128,5 +127,4 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
     }
-
 }

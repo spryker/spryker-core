@@ -19,7 +19,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
      */
@@ -319,5 +318,4 @@ class CategoryNode implements CategoryNodeInterface, CategoryNodeDeleterInterfac
             $sourceNodeEntity->getFkParentCategoryNode()
         );
     }
-
 }

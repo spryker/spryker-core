@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsTemplateTransfer;
 
 interface TemplateManagerInterface
 {
-
     /**
      * @param string $name
      * @param string $path
@@ -76,5 +75,4 @@ interface TemplateManagerInterface
      * @return void
      */
     public function checkTemplateFileExists($path);
-
 }

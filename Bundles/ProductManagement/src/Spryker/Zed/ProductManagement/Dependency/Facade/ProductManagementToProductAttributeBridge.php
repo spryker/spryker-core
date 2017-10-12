@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 class ProductManagementToProductAttributeBridge implements ProductManagementToProductAttributeInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -62,5 +61,4 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
     {
         return $this->productAttributeFacade->getProductAttributeCollection();
     }
-
 }

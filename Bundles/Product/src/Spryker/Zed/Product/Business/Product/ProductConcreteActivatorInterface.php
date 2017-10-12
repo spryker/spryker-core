@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Business\Product;
 
 interface ProductConcreteActivatorInterface
 {
-
     /**
      * @param int $idProductConcrete
      *
@@ -23,5 +22,4 @@ interface ProductConcreteActivatorInterface
      * @return void
      */
     public function deactivateProductConcrete($idProductConcrete);
-
 }

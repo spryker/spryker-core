@@ -29,7 +29,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\AddActionPostProcessor;
  */
 class AddActionPostProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -60,5 +59,4 @@ class AddActionPostProcessorTest extends Unit
 
         $this->assertSame('/api/rest/users/1', $apiResponseTransfer->getMeta()->getSelf());
     }
-
 }

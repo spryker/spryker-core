@@ -35,7 +35,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CategoryBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @deprecated Will be removed with next major release
      *
@@ -325,5 +324,4 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer()
         );
     }
-
 }

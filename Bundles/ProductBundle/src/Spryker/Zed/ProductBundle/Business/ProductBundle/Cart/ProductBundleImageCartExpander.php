@@ -13,7 +13,6 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInter
 
 class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterface
 {
-
     const DEFAULT_IMAGE_SET_NAME = 'default';
 
     /**
@@ -74,5 +73,4 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
 
         return $imageSets[0]->getProductImages();
     }
-
 }

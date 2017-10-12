@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\NodeTransfer;
  */
 interface NodeUrlManagerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -40,5 +39,4 @@ interface NodeUrlManagerInterface
      * @return void
      */
     public function removeUrl(NodeTransfer $categoryNodeTransfer);
-
 }

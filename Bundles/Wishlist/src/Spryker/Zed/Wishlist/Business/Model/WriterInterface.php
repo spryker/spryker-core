@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
@@ -95,5 +94,4 @@ interface WriterInterface
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
-
 }

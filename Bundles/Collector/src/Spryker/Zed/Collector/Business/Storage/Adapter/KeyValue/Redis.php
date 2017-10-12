@@ -14,7 +14,6 @@ use Spryker\Shared\Storage\StorageConstants;
 
 abstract class Redis
 {
-
     /**
      * @var array
      */
@@ -261,5 +260,4 @@ abstract class Redis
             $this->resource->disconnect();
         }
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SubRequestServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -39,5 +38,4 @@ class SubRequestServiceProvider extends AbstractPlugin implements ServiceProvide
     public function boot(Application $app)
     {
     }
-
 }

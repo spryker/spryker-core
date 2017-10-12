@@ -9,7 +9,6 @@ namespace Spryker\Zed\Wishlist\Dependency\QueryContainer;
 
 class WishlistToProductBridge implements WishlistToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class WishlistToProductBridge implements WishlistToProductInterface
     {
         return $this->productQueryContainer->queryProduct();
     }
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
  */
 class DataSetTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -58,5 +57,4 @@ class DataSetTest extends Unit
         $this->assertSame($oldData, $return);
         $this->assertSame($newData, $dataSet->getArrayCopy());
     }
-
 }

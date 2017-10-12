@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 
 class ApiValidator implements ApiValidatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface[]
      */
@@ -41,5 +40,4 @@ class ApiValidator implements ApiValidatorInterface
 
         return [];
     }
-
 }
