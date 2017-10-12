@@ -23,7 +23,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Propel\\": "tests/SprykerTest/Shared/Propel/_support/"
+      "SprykerTest\\Shared\\Propel\\": "tests/SprykerTest/Shared/Propel/_support/Helper/"
     }
   },
   "autoload-dev": {

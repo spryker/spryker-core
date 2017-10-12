@@ -17,6 +17,8 @@ class AutoloadUpdater implements UpdaterInterface
 
     const BASE_TESTS_DIR = 'tests';
     const BASE_SRC_DIR = 'src';
+    const BASE_SUPPORT_DIR = '_support';
+    const BASE_HELPER_DIR = 'Helper';
 
     const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
     const SPRYKER_NAMESPACE = 'Spryker';
@@ -45,6 +47,14 @@ class AutoloadUpdater implements UpdaterInterface
     ];
 
     /**
+     * @var array
+     */
+    protected $autoloadPSR4Whitelist = [
+        'Spryker',
+        'Helper',
+    ];
+
+    /**
      * @param array $composerJson
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
@@ -69,6 +79,8 @@ class AutoloadUpdater implements UpdaterInterface
 
         $composerJson = $this->updateAutoloadWithDefaultSrcDirectory($composerJson, $bundlePath);
 
+        $composerJson = $this->updateAutoloadWithSupportTestClasses($composerJson, $bundlePath);
+
         $composerJson = $this->updateAutoloadDevWithDefaultTestDirectory($composerJson, $bundlePath);
 
         $testDirectoryKeys = $this->buildTestDirectoryKeys();
@@ -89,22 +101,15 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function updateAutoloadWithDefaultSrcDirectory(array $composerJson, $bundlePath)
     {
-        $directoryPath = $this->getDirectoryPath(
-            [
-                rtrim($bundlePath, DIRECTORY_SEPARATOR),
-                static::BASE_SRC_DIR,
-                static::SPRYKER_NAMESPACE,
-            ]
-        );
+        $pathParts = [
+            static::BASE_SRC_DIR,
+            static::SPRYKER_NAMESPACE,
+        ];
+        $directoryPath = $this->getPath(array_merge([rtrim($bundlePath, DIRECTORY_SEPARATOR)], $pathParts));
 
         if ($this->pathExists($directoryPath)) {
-            $pathParts = [
-                static::BASE_SRC_DIR,
-                static::SPRYKER_NAMESPACE,
-            ];
-
             $composerJson = $this->addAutoloadPsr4($composerJson);
-            $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_NAMESPACE . '\\'] = $this->getDirectoryPath($pathParts);
+            $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_NAMESPACE . '\\'] = $this->getPath($pathParts);
         }
 
         return $composerJson;
@@ -116,24 +121,72 @@ class AutoloadUpdater implements UpdaterInterface
      *
      * @return array
      */
-    protected function updateAutoloadDevWithDefaultTestDirectory(array $composerJson, $bundlePath)
+    protected function updateAutoloadWithSupportTestClasses(array $composerJson, $bundlePath)
     {
-        $directoryPath = $this->getDirectoryPath(
-            [
-                rtrim($bundlePath, DIRECTORY_SEPARATOR),
-                static::BASE_TESTS_DIR,
-                static::SPRYKER_TEST_NAMESPACE,
-            ]
-        );
-
-        if ($this->pathExists($directoryPath)) {
+        $bundleName = $this->getLastPartOfPath($bundlePath);
+        foreach ($this->applications as $application) {
             $pathParts = [
                 static::BASE_TESTS_DIR,
                 static::SPRYKER_TEST_NAMESPACE,
+                $application,
+                $bundleName,
+                static::BASE_SUPPORT_DIR,
+                static::BASE_HELPER_DIR,
             ];
 
+            $directoryPath = $this->getPath(array_merge([rtrim($bundlePath, DIRECTORY_SEPARATOR)], $pathParts));
+
+            if ($this->pathExists($directoryPath)) {
+                $toAdd = false;
+                $fileNames = scandir($directoryPath);
+
+                foreach ($fileNames as $fileName) {
+                    if (preg_match('/' . static::BASE_HELPER_DIR . '/', $fileName)) {
+                        $toAdd = true;
+                        break;
+                    }
+                }
+
+                if ($toAdd) {
+                    $composerJson = $this->addAutoloadPsr4($composerJson);
+                    $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\' . $application . '\\' . $bundleName . '\\']
+                        = $this->getPath($pathParts);
+                }
+            }
+        }
+
+        return $composerJson;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function getLastPartOfPath($path)
+    {
+        $pathArray = explode('/', rtrim($path, '/'));
+        return end($pathArray);
+    }
+
+    /**
+     * @param array $composerJson
+     * @param string $bundlePath
+     *
+     * @return array
+     */
+    protected function updateAutoloadDevWithDefaultTestDirectory(array $composerJson, $bundlePath)
+    {
+        $pathParts = [
+            static::BASE_TESTS_DIR,
+            static::SPRYKER_TEST_NAMESPACE,
+        ];
+
+        $directoryPath = $this->getPath(array_merge([rtrim($bundlePath, DIRECTORY_SEPARATOR)], $pathParts));
+
+        if ($this->pathExists($directoryPath)) {
             $composerJson = $this->addAutoloadDevPsr4($composerJson);
-            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\'] = $this->getDirectoryPath($pathParts);
+            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\'] = $this->getPath($pathParts);
         }
 
         return $composerJson;
@@ -148,7 +201,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function updateAutoloadDevForDeprecatedTestKeys(array $composerJson, $testDirectoryKey, $bundlePath)
     {
-        $directoryPath = $this->getDirectoryPath(
+        $directoryPath = $this->getPath(
             [
                 rtrim($bundlePath, DIRECTORY_SEPARATOR),
                 static::BASE_TESTS_DIR,
@@ -199,7 +252,7 @@ class AutoloadUpdater implements UpdaterInterface
      *
      * @return string
      */
-    protected function getDirectoryPath(array $pathParts)
+    protected function getPath(array $pathParts)
     {
         return implode($pathParts, DIRECTORY_SEPARATOR) . '/';
     }
@@ -312,12 +365,16 @@ class AutoloadUpdater implements UpdaterInterface
     protected function removeInvalidAutoloadPaths(array $autoload, $bundlePath)
     {
         foreach ($autoload as $namespace => $relativeDirectory) {
-            $pathParts = [
+            $path = $this->getPath([
                 rtrim($bundlePath, DIRECTORY_SEPARATOR),
                 $relativeDirectory,
-            ];
+            ]);
 
-            if (!$this->pathExists($this->getDirectoryPath($pathParts))) {
+            if (!$this->pathExists($path) || !in_array($this->getLastPartOfPath($relativeDirectory), $this->autoloadPSR4Whitelist)) {
+                if (is_file($path)) {
+                    continue;
+                }
+
                 unset($autoload[$namespace]);
             }
         }
@@ -344,7 +401,7 @@ class AutoloadUpdater implements UpdaterInterface
                 rtrim($namespace, '\\'),
             ];
 
-            if (!$this->pathExists($this->getDirectoryPath($pathParts))) {
+            if (!$this->pathExists($this->getPath($pathParts))) {
                 unset($autoload[$namespace]);
             }
         }

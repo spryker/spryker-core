@@ -25,7 +25,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Currency\\": "tests/SprykerTest/Shared/Currency/_support/Helper/"
     }
   },
   "autoload-dev": {

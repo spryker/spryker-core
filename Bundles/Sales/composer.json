@@ -36,8 +36,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Sales\\": "tests/SprykerTest/Shared/Sales/_support/",
-      "SprykerTest\\Zed\\Sales\\": "tests/SprykerTest/Zed/Sales/_support/"
+      "SprykerTest\\Shared\\Sales\\": "tests/SprykerTest/Shared/Sales/_support/Helper/"
     }
   },
   "autoload-dev": {

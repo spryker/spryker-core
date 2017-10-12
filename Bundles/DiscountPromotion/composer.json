@@ -26,8 +26,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Discount\\": "tests/SprykerTest/Zed/DiscountPromotion/_support/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

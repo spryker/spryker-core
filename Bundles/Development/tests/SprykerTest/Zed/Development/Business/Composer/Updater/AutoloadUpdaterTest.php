@@ -98,7 +98,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testWhenSrcFolderExistsDefaultAutoloadIsAddedToComposer()
+    public function testWhenSupportFolderExistsWithHelpersItGetsAddedToAutoload()
     {
         $pathParts = [
             AutoloadUpdater::BASE_SRC_DIR,
@@ -176,7 +176,7 @@ class AutoloadUpdaterTest extends Unit
 
         $autoloadUpdaterMock = $this->getAutoloadUpdaterMock();
         $autoloadUpdaterMock->method('pathExists')->will($this->returnValueMap($pathExistsMap));
-        $autoloadUpdaterMock->method('getDirectoryPath')->will($this->returnValueMap($dirMap));
+        $autoloadUpdaterMock->method('getPath')->will($this->returnValueMap($dirMap));
 
         return $autoloadUpdaterMock->update($composerJson, $splFileInfo);
     }
@@ -200,7 +200,7 @@ class AutoloadUpdaterTest extends Unit
     protected function getAutoloadUpdaterMock()
     {
         $autoloadUpdaterMock = $this->getMockBuilder(AutoloadUpdater::class)
-            ->setMethods(['pathExists', 'getDirectoryPath'])
+            ->setMethods(['pathExists', 'getPath'])
             ->getMock();
 
         return $autoloadUpdaterMock;
