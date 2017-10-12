@@ -17,7 +17,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class CleanUpDependenciesConsole extends Console
 {
-
     const COMMAND_NAME = 'frontend:cleanup-dependencies';
     const DESCRIPTION = 'This command will remove all frontend dependencies.';
 
@@ -56,5 +55,4 @@ class CleanUpDependenciesConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

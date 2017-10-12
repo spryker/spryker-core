@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchRestoreSnapshotConsole extends Console
 {
-
     const COMMAND_NAME = 'search:snapshot:restore';
     const DESCRIPTION = 'This command will restore a snapshot.';
 
@@ -65,5 +64,4 @@ class SearchRestoreSnapshotConsole extends Console
 
         return static::CODE_ERROR;
     }
-
 }

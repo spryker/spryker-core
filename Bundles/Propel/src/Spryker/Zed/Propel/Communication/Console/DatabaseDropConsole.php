@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DatabaseDropConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:database:drop';
 
     /**
@@ -42,5 +41,4 @@ class DatabaseDropConsole extends Console
 
         $this->getFacade()->dropDatabase();
     }
-
 }

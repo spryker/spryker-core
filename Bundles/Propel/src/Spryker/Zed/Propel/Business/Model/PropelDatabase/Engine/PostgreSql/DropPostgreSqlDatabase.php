@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class DropPostgreSqlDatabase implements DropDatabaseInterface
 {
-
     /**
      * @return bool
      */
@@ -107,5 +106,4 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
     }
-
 }

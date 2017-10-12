@@ -11,7 +11,6 @@ use Symfony\Component\Process\Process;
 
 class StorageExporter implements StorageExporterInterface
 {
-
     /**
      * @var int
      */
@@ -42,5 +41,4 @@ class StorageExporter implements StorageExporterInterface
 
         return false;
     }
-
 }

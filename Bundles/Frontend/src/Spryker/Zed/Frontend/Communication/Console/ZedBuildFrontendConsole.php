@@ -17,7 +17,6 @@ use Symfony\Component\Process\Process;
  */
 class ZedBuildFrontendConsole extends Console
 {
-
     const COMMAND_NAME = 'frontend:zed-build-frontend';
     const DESCRIPTION = 'This command will build Zed\'s frontend.';
 
@@ -49,5 +48,4 @@ class ZedBuildFrontendConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine;
 
 class EngineCollection implements EngineCollectionInterface
 {
-
     /**
      * @var array
      */
@@ -57,5 +56,4 @@ class EngineCollection implements EngineCollectionInterface
     {
         return isset($this->engines[$engine]);
     }
-
 }

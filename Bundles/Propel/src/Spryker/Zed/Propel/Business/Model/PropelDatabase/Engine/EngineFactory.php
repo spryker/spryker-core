@@ -19,7 +19,6 @@ use Spryker\Zed\Propel\PropelConfig;
 
 class EngineFactory implements EngineFactoryInterface
 {
-
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\EngineInterface
      */
@@ -115,5 +114,4 @@ class EngineFactory implements EngineFactoryInterface
     {
         return new ImportPostgreSqlDatabase();
     }
-
 }

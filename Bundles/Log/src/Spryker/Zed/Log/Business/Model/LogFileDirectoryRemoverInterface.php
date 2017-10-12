@@ -9,10 +9,8 @@ namespace Spryker\Zed\Log\Business\Model;
 
 interface LogFileDirectoryRemoverInterface
 {
-
     /**
      * @return void
      */
     public function deleteLogFileDirectories();
-
 }

@@ -17,7 +17,6 @@ use Symfony\Component\Process\Process;
  */
 class YvesBuildFrontendConsole extends Console
 {
-
     const COMMAND_NAME = 'frontend:yves-build-frontend';
     const DESCRIPTION = 'This command will build Yves frontend.';
 
@@ -49,5 +48,4 @@ class YvesBuildFrontendConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

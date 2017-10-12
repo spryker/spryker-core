@@ -17,7 +17,6 @@ use Symfony\Component\Process\Process;
  */
 class InstallProjectDependenciesConsole extends Console
 {
-
     const COMMAND_NAME = 'frontend:install-dependencies';
     const DESCRIPTION = 'This command will install project dependencies.';
 
@@ -49,5 +48,4 @@ class InstallProjectDependenciesConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

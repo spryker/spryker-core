@@ -14,10 +14,8 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInter
 
 interface EngineInterface extends CreateDatabaseInterface, DropDatabaseInterface, ExportDatabaseInterface, ImportDatabaseInterface
 {
-
     /**
      * @return string
      */
     public function getEngine();
-
 }

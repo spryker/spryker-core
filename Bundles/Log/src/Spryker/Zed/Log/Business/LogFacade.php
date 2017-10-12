@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class LogFacade extends AbstractFacade implements LogFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -26,5 +25,4 @@ class LogFacade extends AbstractFacade implements LogFacadeInterface
     {
         $this->getFactory()->createLogFileDirectoryRemover()->deleteLogFileDirectories();
     }
-
 }

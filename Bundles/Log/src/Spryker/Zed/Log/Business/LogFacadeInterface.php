@@ -9,7 +9,6 @@ namespace Spryker\Zed\Log\Business;
 
 interface LogFacadeInterface
 {
-
     /**
      * Specification:
      * - Deletes all specified log directories.
@@ -19,5 +18,4 @@ interface LogFacadeInterface
      * @return void
      */
     public function deleteLogFileDirectories();
-
 }

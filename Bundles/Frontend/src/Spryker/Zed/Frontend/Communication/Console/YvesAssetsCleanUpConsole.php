@@ -17,7 +17,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class YvesAssetsCleanUpConsole extends Console
 {
-
     const COMMAND_NAME = 'frontend:cleanup-yves-assets';
     const DESCRIPTION = 'This command will remove all yves assets.';
 
@@ -55,5 +54,4 @@ class YvesAssetsCleanUpConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

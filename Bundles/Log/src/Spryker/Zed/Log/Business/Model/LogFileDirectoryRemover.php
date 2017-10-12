@@ -11,7 +11,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class LogFileDirectoryRemover implements LogFileDirectoryRemoverInterface
 {
-
     /**
      * @var array
      */
@@ -38,5 +37,4 @@ class LogFileDirectoryRemover implements LogFileDirectoryRemoverInterface
             }
         }
     }
-
 }

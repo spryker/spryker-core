@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeleteLogFilesConsole extends Console
 {
-
     const COMMAND_NAME = 'log:delete:log-file-directories';
     const DESCRIPTION = 'This command will delete all log files and their directory.';
 
@@ -42,5 +41,4 @@ class DeleteLogFilesConsole extends Console
         $this->info('Delete log files');
         $this->getFacade()->deleteLogFileDirectories();
     }
-
 }

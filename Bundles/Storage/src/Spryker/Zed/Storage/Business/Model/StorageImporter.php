@@ -11,7 +11,6 @@ use Symfony\Component\Process\Process;
 
 class StorageImporter implements StorageImporterInterface
 {
-
     /**
      * @var string
      */
@@ -42,5 +41,4 @@ class StorageImporter implements StorageImporterInterface
 
         return false;
     }
-
 }

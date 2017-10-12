@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchCopyIndexConsole extends Console
 {
-
     const COMMAND_NAME = 'search:index:copy';
     const DESCRIPTION = 'This command will copy one index to another.';
 
@@ -66,5 +65,4 @@ class SearchCopyIndexConsole extends Console
 
         return static::CODE_ERROR;
     }
-
 }

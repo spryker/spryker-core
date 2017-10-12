@@ -20,7 +20,6 @@ use Symfony\Component\Process\Process;
  */
 class YvesInstallDependenciesConsole extends Console
 {
-
     const COMMAND_NAME = 'frontend:yves-install-dependencies';
     const DESCRIPTION = 'This command will install Yves Module dependencies.';
 
@@ -60,5 +59,4 @@ class YvesInstallDependenciesConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Command;
 
 interface DropDatabaseInterface
 {
-
     /**
      * @return void
      */
     public function dropDatabase();
-
 }

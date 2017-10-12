@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchRegisterSnapshotRepositoryConsole extends Console
 {
-
     const COMMAND_NAME = 'search:snapshot:register-repository';
     const DESCRIPTION = 'This command will register a snapshot repository';
 
@@ -62,5 +61,4 @@ class SearchRegisterSnapshotRepositoryConsole extends Console
 
         return static::CODE_ERROR;
     }
-
 }

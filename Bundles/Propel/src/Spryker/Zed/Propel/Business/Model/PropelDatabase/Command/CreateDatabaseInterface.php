@@ -9,10 +9,8 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Command;
 
 interface CreateDatabaseInterface
 {
-
     /**
      * @return void
      */
     public function createIfNotExists();
-
 }

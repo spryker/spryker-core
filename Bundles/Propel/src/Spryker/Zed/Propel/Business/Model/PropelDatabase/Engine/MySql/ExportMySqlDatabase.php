@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class ExportMySqlDatabase implements ExportDatabaseInterface
 {
-
     /**
      * @param string $backupPath
      *
@@ -64,5 +63,4 @@ class ExportMySqlDatabase implements ExportDatabaseInterface
             $backupPath
         );
     }
-
 }

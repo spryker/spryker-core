@@ -14,7 +14,6 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInter
 
 class Engine implements EngineInterface
 {
-
     /**
      * @var string
      */
@@ -104,5 +103,4 @@ class Engine implements EngineInterface
     {
         $this->importCommand->importDatabase($backupPath);
     }
-
 }

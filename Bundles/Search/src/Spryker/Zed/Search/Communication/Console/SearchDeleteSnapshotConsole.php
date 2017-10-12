@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchDeleteSnapshotConsole extends Console
 {
-
     const COMMAND_NAME = 'search:snapshot:delete';
     const DESCRIPTION = 'This command will delete a snapshot if it exists.';
 
@@ -65,5 +64,4 @@ class SearchDeleteSnapshotConsole extends Console
 
         return static::CODE_ERROR;
     }
-
 }

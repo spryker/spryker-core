@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchCreateSnapshotConsole extends Console
 {
-
     const COMMAND_NAME = 'search:snapshot:create';
     const DESCRIPTION = 'This command will create a snapshot.';
 
@@ -59,5 +58,4 @@ class SearchCreateSnapshotConsole extends Console
 
         return static::CODE_ERROR;
     }
-
 }

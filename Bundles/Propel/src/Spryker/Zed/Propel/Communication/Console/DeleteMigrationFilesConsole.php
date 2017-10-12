@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeleteMigrationFilesConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:migration:delete';
     const DESCRIPTION = 'Delete migration files directory.';
 
@@ -42,5 +41,4 @@ class DeleteMigrationFilesConsole extends Console
         $this->info(static::DESCRIPTION);
         $this->getFacade()->deleteMigrationFilesDirectory();
     }
-
 }

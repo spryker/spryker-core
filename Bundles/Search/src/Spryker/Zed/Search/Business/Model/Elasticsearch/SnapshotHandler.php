@@ -11,7 +11,6 @@ use RuntimeException;
 
 class SnapshotHandler implements SnapshotHandlerInterface
 {
-
     /**
      * @var \Elastica\Snapshot
      */
@@ -128,5 +127,4 @@ class SnapshotHandler implements SnapshotHandlerInterface
     {
         return $this->elasticaSnapshot->deleteSnapshot($repositoryName, $snapshotName)->isOk();
     }
-
 }

@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class CreatePostgreSqlDatabase implements CreateDatabaseInterface
 {
-
     /**
      * @return void
      */
@@ -142,5 +141,4 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
     }
-
 }

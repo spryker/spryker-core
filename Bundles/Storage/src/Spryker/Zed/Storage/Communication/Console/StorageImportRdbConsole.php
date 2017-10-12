@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageImportRdbConsole extends Console
 {
-
     const COMMAND_NAME = 'storage:import';
     const DESCRIPTION = 'This command will import a rdb file.';
 
@@ -56,5 +55,4 @@ class StorageImportRdbConsole extends Console
 
         return static::CODE_ERROR;
     }
-
 }

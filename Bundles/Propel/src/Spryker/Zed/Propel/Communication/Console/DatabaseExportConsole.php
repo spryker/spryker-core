@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DatabaseExportConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:database:export';
     const COMMAND_DESCRIPTION = 'Backup an existing database into a file.';
 
@@ -48,5 +47,4 @@ class DatabaseExportConsole extends Console
 
         $this->getFacade()->exportDatabase($input->getArgument(static::ARGUMENT_BACKUP_PATH));
     }
-
 }

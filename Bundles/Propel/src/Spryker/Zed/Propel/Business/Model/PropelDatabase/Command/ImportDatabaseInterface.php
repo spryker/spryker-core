@@ -9,12 +9,10 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Command;
 
 interface ImportDatabaseInterface
 {
-
     /**
      * @param string $backupPath
      *
      * @return void
      */
     public function importDatabase($backupPath);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Storage\Business\Model;
 
 interface StorageInterface
 {
-
     /**
      * @param string $key
      *
@@ -38,5 +37,4 @@ interface StorageInterface
      * @return void
      */
     public function deleteMulti(array $keys);
-
 }

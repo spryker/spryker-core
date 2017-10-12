@@ -17,7 +17,6 @@ use Symfony\Component\Process\Process;
  */
 class InstallNodeJsConsole extends Console
 {
-
     const COMMAND_NAME = 'frontend:install-node-js';
     const DESCRIPTION = 'This command will install node.js.';
 
@@ -64,5 +63,4 @@ class InstallNodeJsConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

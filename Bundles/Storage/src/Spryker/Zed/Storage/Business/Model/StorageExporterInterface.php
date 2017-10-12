@@ -9,12 +9,10 @@ namespace Spryker\Zed\Storage\Business\Model;
 
 interface StorageExporterInterface
 {
-
     /**
      * @param string $destination
      *
      * @return bool
      */
     public function export($destination);
-
 }

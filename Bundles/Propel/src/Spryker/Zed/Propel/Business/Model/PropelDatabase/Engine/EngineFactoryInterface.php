@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine;
 
 interface EngineFactoryInterface
 {
-
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\EngineInterface
      */
@@ -19,5 +18,4 @@ interface EngineFactoryInterface
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\EngineInterface
      */
     public function createPostgreSqlEngine();
-
 }

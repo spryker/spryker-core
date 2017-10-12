@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class ExportPostgreSqlDatabase implements ExportDatabaseInterface
 {
-
     /**
      * @param string $backupPath
      *
@@ -112,5 +111,4 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
     }
-
 }

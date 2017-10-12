@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageExportRdbConsole extends Console
 {
-
     const COMMAND_NAME = 'storage:export';
     const DESCRIPTION = 'This command will export the rdb file.';
 
@@ -56,5 +55,4 @@ class StorageExportRdbConsole extends Console
 
         return static::CODE_ERROR;
     }
-
 }

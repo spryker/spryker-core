@@ -14,7 +14,6 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterfa
 
 class DropMySqlDatabase implements DropDatabaseInterface
 {
-
     /**
      * @return void
      */
@@ -53,5 +52,4 @@ class DropMySqlDatabase implements DropDatabaseInterface
     {
         return 'DROP DATABASE IF EXISTS ' . Config::get(PropelConstants::ZED_DB_DATABASE);
     }
-
 }

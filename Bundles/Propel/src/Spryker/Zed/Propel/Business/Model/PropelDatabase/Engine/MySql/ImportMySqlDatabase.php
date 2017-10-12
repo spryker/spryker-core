@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class ImportMySqlDatabase implements ImportDatabaseInterface
 {
-
     /**
      * @param string $backupPath
      *
@@ -64,5 +63,4 @@ class ImportMySqlDatabase implements ImportDatabaseInterface
             $backupPath
         );
     }
-
 }

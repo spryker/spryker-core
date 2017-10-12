@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine;
 
 interface EngineCollectionInterface
 {
-
     /**
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\EngineInterface $engine
      *
@@ -28,5 +27,4 @@ interface EngineCollectionInterface
      * @return bool
      */
     public function hasEngine($engine);
-
 }

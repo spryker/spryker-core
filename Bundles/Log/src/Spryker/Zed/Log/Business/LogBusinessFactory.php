@@ -15,7 +15,6 @@ use Spryker\Zed\Log\Business\Model\LogFileDirectoryRemover;
  */
 class LogBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Log\Business\Model\LogFileDirectoryRemoverInterface
      */
@@ -25,5 +24,4 @@ class LogBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getLogFileDirectories()
         );
     }
-
 }

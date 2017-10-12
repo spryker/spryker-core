@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchCloseIndexConsole extends Console
 {
-
     const COMMAND_NAME = 'search:index:close';
     const DESCRIPTION = 'This command will close an index.';
 
@@ -83,5 +82,4 @@ class SearchCloseIndexConsole extends Console
 
         return static::CODE_ERROR;
     }
-
 }

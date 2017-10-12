@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class ImportPostgreSqlDatabase implements ImportDatabaseInterface
 {
-
     /**
      * @param string $backupPath
      *
@@ -116,5 +115,4 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
     }
-
 }

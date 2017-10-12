@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 interface SnapshotHandlerInterface
 {
-
     /**
      * @param string $repositoryName
      * @param string $type
@@ -77,5 +76,4 @@ interface SnapshotHandlerInterface
      * @return bool
      */
     public function deleteSnapshot($repositoryName, $snapshotName);
-
 }

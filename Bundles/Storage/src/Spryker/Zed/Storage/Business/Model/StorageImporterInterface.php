@@ -9,12 +9,10 @@ namespace Spryker\Zed\Storage\Business\Model;
 
 interface StorageImporterInterface
 {
-
     /**
      * @param string $source
      *
      * @return bool
      */
     public function import($source);
-
 }

@@ -20,7 +20,6 @@ use Symfony\Component\Process\Process;
  */
 class ZedInstallDependenciesConsole extends Console
 {
-
     const COMMAND_NAME = 'frontend:zed-install-dependencies';
     const DESCRIPTION = 'This command will install Zed Module dependencies.';
 
@@ -60,5 +59,4 @@ class ZedInstallDependenciesConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }
