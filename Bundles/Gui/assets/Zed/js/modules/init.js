@@ -78,8 +78,12 @@ $(document).ready(function() {
     /* Prevent .save-submit items to be pressed twice */
     $('.safe-submit').one('click', function () {
         var $item = $(this);
-        var form = $item.parents('form')[0];
-        var isValid = form.checkValidity ? form.checkValidity() : true;
+        var $forms = $item.parents('form');
+        var isValid = true;
+
+        if ($forms.length > 0) { 
+            isValid = !!$forms[0].checkValidity ? $forms[0].checkValidity() : isValid;
+        }
 
         setTimeout(function () {
             if (isValid) { 
