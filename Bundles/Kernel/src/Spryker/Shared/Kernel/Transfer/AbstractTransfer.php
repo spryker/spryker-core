@@ -347,7 +347,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      *
      * @return bool
      */
@@ -357,7 +357,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      *
      * @return mixed
      */
