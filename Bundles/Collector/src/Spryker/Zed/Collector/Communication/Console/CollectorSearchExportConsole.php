@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CollectorSearchExportConsole extends AbstractCollectorConsole
 {
-
     const COMMAND_NAME = 'collector:search:export';
     const COMMAND_DESCRIPTION = 'Collector export search';
 
@@ -46,5 +45,4 @@ class CollectorSearchExportConsole extends AbstractCollectorConsole
 
         $output->write($message);
     }
-
 }

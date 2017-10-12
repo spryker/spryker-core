@@ -22,7 +22,6 @@ use Swift_Message;
 
 class MailDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
     const MAIL_TYPE_COLLECTION = 'mail collection';
     const FACADE_GLOSSARY = 'glossary facade';
@@ -160,5 +159,4 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductReviewGui\Dependency\QueryContainer;
 
 interface ProductReviewGuiToProductReviewInterface
 {
-
     /**
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReview();
-
 }

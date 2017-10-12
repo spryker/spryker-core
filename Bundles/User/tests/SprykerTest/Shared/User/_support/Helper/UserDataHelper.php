@@ -13,7 +13,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class UserDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -41,5 +40,4 @@ class UserDataHelper extends Module
     {
         return $this->getLocatorHelper()->getLocator()->user()->facade();
     }
-
 }

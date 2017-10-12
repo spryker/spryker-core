@@ -9,12 +9,10 @@ namespace Spryker\Yves\CartVariant\Dependency\Client;
 
 interface CartVariantToProductClientBridgeInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
      * @return array
      */
     public function getAttributeMapByIdProductAbstractForCurrentLocale($idProductAbstract);
-
 }

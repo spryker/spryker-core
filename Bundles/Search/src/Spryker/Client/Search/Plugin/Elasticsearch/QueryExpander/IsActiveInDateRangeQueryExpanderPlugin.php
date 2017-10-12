@@ -22,7 +22,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -119,5 +118,4 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
 
         return $boolToQuery;
     }
-
 }

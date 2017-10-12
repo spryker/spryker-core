@@ -15,7 +15,6 @@ use Spryker\Yves\ProductReview\Twig\ProductAbstractReviewTwigExtension;
  */
 class ProductReviewFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\Twig\TwigExtension
      */
@@ -31,5 +30,4 @@ class ProductReviewFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::PLUGIN_APPLICATION);
     }
-
 }

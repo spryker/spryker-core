@@ -9,7 +9,6 @@ namespace Spryker\Zed\SequenceNumber\Business\Generator;
 
 class RandomNumberGenerator implements RandomNumberGeneratorInterface
 {
-
     /**
      * @var int
      */
@@ -41,5 +40,4 @@ class RandomNumberGenerator implements RandomNumberGeneratorInterface
 
         return rand($this->min, $this->max);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 class ProductToUrlBridge implements ProductToUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
@@ -84,5 +83,4 @@ class ProductToUrlBridge implements ProductToUrlInterface
     {
         $this->urlFacade->deactivateUrl($urlTransfer);
     }
-
 }

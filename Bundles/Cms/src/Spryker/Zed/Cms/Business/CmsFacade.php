@@ -23,7 +23,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CmsFacade extends AbstractFacade implements CmsFacadeInterface
 {
-
     /**
      * @api
      *
@@ -606,5 +605,4 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
             ->createVersionFinder()
             ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
     }
-
 }

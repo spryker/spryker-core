@@ -17,7 +17,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class NewsletterUnsubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-
     const MAIL_TYPE = 'newsletter unsubscribed mail';
 
     /**
@@ -104,5 +103,4 @@ class NewsletterUnsubscribedMailTypePlugin extends AbstractPlugin implements Mai
 
         return $this;
     }
-
 }

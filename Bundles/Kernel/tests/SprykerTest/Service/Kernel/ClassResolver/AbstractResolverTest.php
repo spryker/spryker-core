@@ -23,7 +23,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 abstract class AbstractResolverTest extends Unit
 {
-
     /**
      * @var string
      */
@@ -150,7 +149,7 @@ abstract class AbstractResolverTest extends Unit
             $this->getBasePath(),
             implode(DIRECTORY_SEPARATOR, $classNameParts),
         ];
-        $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
+        $directory = implode(DIRECTORY_SEPARATOR, $directoryParts);
 
         if (!is_dir($directory)) {
             mkdir($directory, 0775, true);
@@ -175,5 +174,4 @@ abstract class AbstractResolverTest extends Unit
 
         return $basePath;
     }
-
 }

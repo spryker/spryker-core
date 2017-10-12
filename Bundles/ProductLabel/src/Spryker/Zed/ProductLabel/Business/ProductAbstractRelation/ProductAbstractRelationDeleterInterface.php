@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 interface ProductAbstractRelationDeleterInterface
 {
-
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
@@ -17,5 +16,4 @@ interface ProductAbstractRelationDeleterInterface
      * @return void
      */
     public function removeRelations($idProductLabel, array $idsProductAbstract);
-
 }

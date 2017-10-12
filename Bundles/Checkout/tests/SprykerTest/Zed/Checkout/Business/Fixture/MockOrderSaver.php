@@ -13,7 +13,6 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class MockOrderSaver implements CheckoutSaveOrderInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -37,5 +36,4 @@ class MockOrderSaver implements CheckoutSaveOrderInterface
     {
         $checkoutResponse->fromArray($this->checkoutResponse->toArray(true), true);
     }
-
 }

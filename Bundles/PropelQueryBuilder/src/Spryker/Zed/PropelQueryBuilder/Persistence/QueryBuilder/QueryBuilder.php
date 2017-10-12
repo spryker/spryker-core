@@ -14,7 +14,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\Mapper\PaginationQueryMapperInter
 
 class QueryBuilder implements QueryBuilderInterface
 {
-
     /**
      * @var \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\CriteriaMapperInterface
      */
@@ -115,5 +114,4 @@ class QueryBuilder implements QueryBuilderInterface
     {
         return $this->criteriaMapper->toCriteria($propelQueryBuilderCriteriaTransfer);
     }
-
 }

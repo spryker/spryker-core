@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class TwigYvesTester extends Actor
 {
-
     use _generated\TwigYvesTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

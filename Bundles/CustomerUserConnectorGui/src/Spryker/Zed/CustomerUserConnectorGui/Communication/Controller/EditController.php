@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-
     const PARAM_ID_USER = 'id-user';
 
     const PAGE_EDIT = '/customer-user-connector-gui/edit';
@@ -92,5 +91,4 @@ class EditController extends AbstractController
             $this->getFactory()->createAssignedCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData()
         );
     }
-
 }

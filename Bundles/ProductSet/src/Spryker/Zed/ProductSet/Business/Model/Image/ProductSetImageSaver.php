@@ -15,7 +15,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetImageSaver implements ProductSetImageSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -91,5 +90,4 @@ class ProductSetImageSaver implements ProductSetImageSaverInterface
 
         $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
     }
-
 }

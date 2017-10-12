@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class DiscountToMoneyBridge implements DiscountToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -75,5 +74,4 @@ class DiscountToMoneyBridge implements DiscountToMoneyInterface
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }
-
 }

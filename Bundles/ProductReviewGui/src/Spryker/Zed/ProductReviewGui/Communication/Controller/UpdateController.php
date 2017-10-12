@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UpdateController extends AbstractController
 {
-
     const PARAM_ID = 'id';
 
     /**
@@ -76,5 +75,4 @@ class UpdateController extends AbstractController
             Url::generate('/product-review-gui')->build()
         );
     }
-
 }

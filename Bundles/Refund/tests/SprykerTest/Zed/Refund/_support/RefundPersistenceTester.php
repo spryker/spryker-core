@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class RefundPersistenceTester extends Actor
 {
-
     use _generated\RefundPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

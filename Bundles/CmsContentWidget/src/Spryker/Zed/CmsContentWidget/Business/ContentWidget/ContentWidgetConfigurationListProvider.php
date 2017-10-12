@@ -13,7 +13,6 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurationListProviderInterface
 {
-
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
      */
@@ -34,7 +33,6 @@ class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurati
     {
         $cmsContentConfigurationList = new CmsContentWidgetConfigurationListTransfer();
         foreach ($this->contentWidgetConfigurationProviders as $contentWidgetConfigurationProvider) {
-
             $cmsContentWidgetConfigurationTransfer = $this->mapCmsContentWidgetConfigurationTransfer(
                 $contentWidgetConfigurationProvider->getFunctionName(),
                 $contentWidgetConfigurationProvider
@@ -62,5 +60,4 @@ class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurati
 
         return $cmsContentWidgetConfigurationTransfer;
     }
-
 }

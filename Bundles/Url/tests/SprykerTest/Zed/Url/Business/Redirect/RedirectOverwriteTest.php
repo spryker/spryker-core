@@ -30,7 +30,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class RedirectOverwriteTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacade
      */
@@ -201,5 +200,4 @@ class RedirectOverwriteTest extends Unit
 
         return $urlRedirectTransfer;
     }
-
 }

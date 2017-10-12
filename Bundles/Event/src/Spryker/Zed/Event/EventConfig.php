@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class EventConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string|null
      */
@@ -36,5 +35,4 @@ class EventConfig extends AbstractBundleConfig
 
         return $this->getConfig()->get(EventConstants::LOGGER_ACTIVE, false);
     }
-
 }

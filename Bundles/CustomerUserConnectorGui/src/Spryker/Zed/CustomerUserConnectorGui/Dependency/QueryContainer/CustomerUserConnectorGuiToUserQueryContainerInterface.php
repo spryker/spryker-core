@@ -7,12 +7,10 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer;
 
 interface CustomerUserConnectorGuiToUserQueryContainerInterface
 {
-
     /**
      * @param int $id
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUserById($id);
-
 }

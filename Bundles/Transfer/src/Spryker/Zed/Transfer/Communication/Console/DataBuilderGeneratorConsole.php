@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DataBuilderGeneratorConsole extends Console
 {
-
     const COMMAND_NAME = 'transfer:databuilder:generate';
     const COMMAND_DESCRIPTION = 'Generates data builders from databuilder XML definition files';
 
@@ -46,5 +45,4 @@ class DataBuilderGeneratorConsole extends Console
         $facade->deleteGeneratedDataBuilderObjects();
         $facade->generateDataBuilders($messenger);
     }
-
 }

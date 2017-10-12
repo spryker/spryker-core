@@ -12,7 +12,6 @@ use Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface;
 
 class ItemCountPlugin implements ItemCountPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -26,5 +25,4 @@ class ItemCountPlugin implements ItemCountPluginInterface
 
         return $quantity;
     }
-
 }

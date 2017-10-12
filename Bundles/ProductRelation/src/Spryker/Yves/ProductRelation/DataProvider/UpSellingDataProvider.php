@@ -15,7 +15,6 @@ use Spryker\Yves\ProductRelation\Sorting\RelationSorterInterface;
 
 class UpSellingDataProvider implements ProductRelationDataProviderInterface
 {
-
     const PARAMETER_ABSTRACT_PRODUCT_IDS = 'abstractProductIds';
     const PARAMETER_QUOTE_TRANSFER = 'quote';
 
@@ -72,7 +71,6 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
             $this->relationSorter->sort($productsToAdd);
 
             $upSellingProducts = array_merge($upSellingProducts, $productsToAdd);
-
         }
 
         return $upSellingProducts;
@@ -186,5 +184,4 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     {
         return $productRelationTransfer !== null && $productRelationTransfer->getIsActive();
     }
-
 }

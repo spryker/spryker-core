@@ -18,7 +18,6 @@ use Spryker\Zed\Price\PriceConfig;
 
 class Reader implements ReaderInterface
 {
-
     const PRICE_TYPE_UNKNOWN = 'price type unknown: ';
     const SKU_UNKNOWN = 'sku unknown';
 
@@ -552,5 +551,4 @@ class Reader implements ReaderInterface
 
         return $this->mapPriceProductTransferCollectionForProductConcrete($productAbstractPriceEntities);
     }
-
 }

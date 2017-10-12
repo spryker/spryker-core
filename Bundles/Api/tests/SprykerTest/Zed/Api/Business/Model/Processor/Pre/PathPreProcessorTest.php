@@ -25,7 +25,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
  */
 class PathPreProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -81,5 +80,4 @@ class PathPreProcessorTest extends Unit
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $this->assertSame('resource-name', $apiRequestTransferAfter->getPath());
     }
-
 }

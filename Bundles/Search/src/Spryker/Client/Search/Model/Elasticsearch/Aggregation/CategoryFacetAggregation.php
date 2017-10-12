@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class CategoryFacetAggregation extends AbstractTermsFacetAggregation
 {
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -50,5 +49,4 @@ class CategoryFacetAggregation extends AbstractTermsFacetAggregation
 
         return $aggregation;
     }
-
 }

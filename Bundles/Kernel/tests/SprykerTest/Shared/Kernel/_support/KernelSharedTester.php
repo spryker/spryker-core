@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class KernelSharedTester extends Actor
 {
-
     use _generated\KernelSharedTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

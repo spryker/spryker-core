@@ -18,7 +18,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsPageTable extends AbstractTable
 {
-
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
      */
@@ -525,5 +524,4 @@ class CmsPageTable extends AbstractTable
     {
         return $item[CmsPageTableConstants::COL_CMS_VERSION_COUNT] > 1;
     }
-
 }

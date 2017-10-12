@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class LoginForm extends AbstractType
 {
-
     const FIELD_USERNAME = 'username';
     const FIELD_PASSWORD = 'password';
 
@@ -81,5 +80,4 @@ class LoginForm extends AbstractType
     {
         return 'auth';
     }
-
 }

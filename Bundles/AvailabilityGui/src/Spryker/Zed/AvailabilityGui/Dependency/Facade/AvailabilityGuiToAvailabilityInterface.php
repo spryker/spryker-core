@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
 interface AvailabilityGuiToAvailabilityInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -17,5 +16,4 @@ interface AvailabilityGuiToAvailabilityInterface
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale);
-
 }

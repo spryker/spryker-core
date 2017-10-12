@@ -12,7 +12,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsGlossaryFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -61,5 +60,4 @@ class CmsGlossaryFormDataProvider
 
         return $formItems;
     }
-
 }

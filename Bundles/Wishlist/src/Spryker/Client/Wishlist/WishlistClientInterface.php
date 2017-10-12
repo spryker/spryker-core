@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
  */
 interface WishlistClientInterface
 {
-
     /**
      * @api
      *
@@ -145,5 +144,4 @@ interface WishlistClientInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getCustomerWishlistCollection();
-
 }

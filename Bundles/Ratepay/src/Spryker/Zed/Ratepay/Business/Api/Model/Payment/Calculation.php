@@ -13,7 +13,6 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Base;
 
 class Calculation extends Base
 {
-
     const OPERATION = Constants::REQUEST_MODEL_CALCULATION_REQUEST;
 
     /**
@@ -63,5 +62,4 @@ class Calculation extends Base
 
         return $this;
     }
-
 }

@@ -23,7 +23,6 @@ use SprykerTest\Zed\Kernel\Communication\Fixture\FixtureGatewayController;
  */
 class AbstractGatewayControllerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -36,5 +35,4 @@ class AbstractGatewayControllerTest extends Unit
             new FixtureGatewayController($application)
         );
     }
-
 }

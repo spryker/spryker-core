@@ -17,7 +17,6 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class CmsBlockCategoryConnectorCollector extends AbstractPropelCollectorQuery
 {
-
     const COL_POSITIONS = 'positions';
 
     /**
@@ -53,5 +52,4 @@ class CmsBlockCategoryConnectorCollector extends AbstractPropelCollectorQuery
 
         $this->touchQuery->addGroupByColumn(SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY);
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Service\Kernel\ServiceLocatorMatcher;
  */
 class ServiceLocatorMatcherTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -44,5 +43,4 @@ class ServiceLocatorMatcherTest extends Unit
     {
         $this->assertFalse((new ServiceLocatorMatcher())->match('locatorService'));
     }
-
 }

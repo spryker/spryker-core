@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CmsClient extends AbstractClient implements CmsClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -56,5 +55,4 @@ class CmsClient extends AbstractClient implements CmsClientInterface
     {
         return $this->getFactory()->createCmsStub()->getFlattenedLocaleCmsPageData($flattenedLocaleCmsPageDataRequestTransfer);
     }
-
 }

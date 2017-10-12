@@ -15,7 +15,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageReader implements CmsPageReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -56,7 +55,6 @@ class CmsPageReader implements CmsPageReaderInterface
         $urlLocaleMap = $this->createUrlLocaleMap($cmsPageEntity);
 
         foreach ($cmsPageEntity->getSpyCmsPageLocalizedAttributess() as $cmsPageLocalizedAttributesEntity) {
-
             $url = $this->getLocalizedUrl($urlLocaleMap, $cmsPageLocalizedAttributesEntity);
 
             $cmsPageAttributesTransfer = $this->mapCmsLocalizedAttributesTransfer(
@@ -67,7 +65,6 @@ class CmsPageReader implements CmsPageReaderInterface
 
             $cmsCmsPageMetaAttributes = $this->mapCmsPageMetaAttributes($cmsPageLocalizedAttributesEntity);
             $cmsPageTransfer->addMetaAttribute($cmsCmsPageMetaAttributes);
-
         }
 
         return $cmsPageTransfer;
@@ -170,5 +167,4 @@ class CmsPageReader implements CmsPageReaderInterface
         }
         return $url;
     }
-
 }

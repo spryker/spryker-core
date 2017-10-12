@@ -13,7 +13,6 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class NavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
@@ -41,5 +40,4 @@ class NavigationDependencyProvider extends AbstractBundleDependencyProvider
             return $pimplePlugin->getApplication();
         };
     }
-
 }

@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueNameValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed value is valid.
      *
@@ -108,5 +107,4 @@ class UniqueNameValidator extends ConstraintValidator
             ->filterByFkCmsPage($idCmsPage)
             ->findOne();
     }
-
 }

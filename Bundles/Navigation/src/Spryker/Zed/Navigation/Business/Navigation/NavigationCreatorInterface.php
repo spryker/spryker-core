@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NavigationTransfer;
 
 interface NavigationCreatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
     public function createNavigation(NavigationTransfer $navigationTransfer);
-
 }

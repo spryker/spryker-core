@@ -17,7 +17,6 @@ use Zend\Filter\Word\CamelCaseToDash;
  */
 class TwigFileSystem extends Twig_Loader_Filesystem
 {
-
     /**
      * @param array $paths
      * @param string $namespace
@@ -166,5 +165,4 @@ class TwigFileSystem extends Twig_Loader_Filesystem
         $this->cache[$name] = false;
         throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $templateName, implode(', ', $paths)));
     }
-
 }

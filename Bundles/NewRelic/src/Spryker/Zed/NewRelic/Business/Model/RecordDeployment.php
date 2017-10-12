@@ -14,7 +14,6 @@ use Spryker\Zed\NewRelic\Business\Exception\RecordDeploymentException;
 
 class RecordDeployment implements RecordDeploymentInterface
 {
-
     const NEWRELIC_DEPLOYMENT_API_URL = 'https://api.newrelic.com/deployments.xml';
     const STATUS_CODE_OK = 200;
 
@@ -66,5 +65,4 @@ class RecordDeployment implements RecordDeploymentInterface
 
         return $request;
     }
-
 }

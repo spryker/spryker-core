@@ -25,7 +25,6 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  */
 class TransferValidatorTest extends Unit
 {
-
     /**
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
@@ -74,5 +73,4 @@ class TransferValidatorTest extends Unit
     {
         return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
     }
-
 }

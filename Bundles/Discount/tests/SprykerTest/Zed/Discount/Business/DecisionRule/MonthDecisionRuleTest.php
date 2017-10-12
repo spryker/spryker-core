@@ -24,7 +24,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class MonthDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -63,5 +62,4 @@ class MonthDecisionRuleTest extends BaseRuleTester
 
         return $calendarWeekDecisionRule;
     }
-
 }

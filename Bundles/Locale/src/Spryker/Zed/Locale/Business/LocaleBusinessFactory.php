@@ -17,7 +17,6 @@ use Spryker\Zed\Locale\Business\Manager\LocaleManager;
  */
 class LocaleBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Locale\Business\Manager\LocaleManager
      */
@@ -49,5 +48,4 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
 
         return $installer;
     }
-
 }

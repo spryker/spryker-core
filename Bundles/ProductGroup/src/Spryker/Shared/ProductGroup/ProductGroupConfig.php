@@ -9,8 +9,6 @@ namespace Spryker\Shared\ProductGroup;
 
 class ProductGroupConfig
 {
-
     const RESOURCE_TYPE_PRODUCT_GROUP = 'product_group';
     const RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS = 'product_abstract_groups';
-
 }

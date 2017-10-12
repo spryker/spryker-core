@@ -12,7 +12,6 @@ use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer;
 
 class ProductAttributeMapper implements ProductAttributeMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilEncodingInterface
      */
@@ -124,5 +123,4 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
 
         return array_unique($values);
     }
-
 }

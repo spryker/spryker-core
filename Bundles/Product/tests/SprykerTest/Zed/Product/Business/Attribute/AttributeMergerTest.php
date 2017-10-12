@@ -23,7 +23,6 @@ use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
  */
 class AttributeMergerTest extends Unit
 {
-
     const ID_LOCALE = 1;
 
     /**
@@ -176,5 +175,4 @@ class AttributeMergerTest extends Unit
 
         return [$rawProductAttributesTransfer, $expectedAttributes];
     }
-
 }

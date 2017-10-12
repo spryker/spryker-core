@@ -16,7 +16,6 @@ use Spryker\Shared\Kernel\Store;
 
 class File implements StorageInterface
 {
-
     /**
      * @param array $data
      *
@@ -41,7 +40,6 @@ class File implements StorageInterface
             if (function_exists('opcache_invalidate')) {
                 opcache_invalidate($this->getCacheFilename(), true);
             }
-
         } catch (Exception $exception) {
             ErrorLogger::getInstance()->log($exception);
         }
@@ -68,5 +66,4 @@ class File implements StorageInterface
     {
         return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/' . ucfirst(strtolower(APPLICATION)) . '/unresolvable.cache';
     }
-
 }

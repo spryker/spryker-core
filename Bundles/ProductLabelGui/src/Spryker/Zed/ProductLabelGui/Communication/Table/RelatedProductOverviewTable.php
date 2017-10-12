@@ -15,7 +15,6 @@ use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
 class RelatedProductOverviewTable extends AbstractRelatedProductTable
 {
-
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
     const TABLE_IDENTIFIER = 'related-products-table';
     const COL_PRODUCT_ABSTRACT_SKU = SpyProductAbstractTableMap::COL_SKU;
@@ -187,5 +186,4 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
             'View'
         );
     }
-
 }

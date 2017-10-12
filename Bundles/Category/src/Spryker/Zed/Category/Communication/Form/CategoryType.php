@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CategoryType extends AbstractType
 {
-
     const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
     const OPTION_CATEGORY_QUERY_CONTAINER = 'category query container';
     const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
@@ -278,5 +277,4 @@ class CategoryType extends AbstractType
 
         return $this;
     }
-
 }

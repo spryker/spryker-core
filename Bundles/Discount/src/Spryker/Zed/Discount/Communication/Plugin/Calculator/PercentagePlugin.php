@@ -8,6 +8,10 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -15,9 +19,8 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class PercentagePlugin extends AbstractCalculatorPlugin
+class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPluginInterface, DiscountCalculatorPluginWithAmountInputTypeInterface
 {
-
     /**
      * @api
      *
@@ -59,10 +62,11 @@ class PercentagePlugin extends AbstractCalculatorPlugin
      * @api
      *
      * @param int $amount
+     * @param string|null $isoCode
      *
      * @return string
      */
-    public function getFormattedAmount($amount)
+    public function getFormattedAmount($amount, $isoCode = null)
     {
         return $this->transformFromPersistence($amount) . ' %';
     }
@@ -77,12 +81,22 @@ class PercentagePlugin extends AbstractCalculatorPlugin
         return [
             new Regex([
                 'pattern' => '/[0-9\.\,]+/',
+                'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
+
             ]),
             new Range([
                 'min' => 1,
                 'max' => 100,
+                'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
             ]),
         ];
     }
 
+    /**
+     * @return string
+     */
+    public function getInputType()
+    {
+        return DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE;
+    }
 }

@@ -16,7 +16,6 @@ use Orm\Zed\Url\Persistence\SpyUrl;
  */
 interface UrlManagerInterface
 {
-
     /**
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -155,5 +154,4 @@ interface UrlManagerInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
-
 }

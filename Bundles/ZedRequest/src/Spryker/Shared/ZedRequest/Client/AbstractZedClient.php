@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 abstract class AbstractZedClient implements AbstractZedClientInterface
 {
-
     /**
      * @var \Spryker\Shared\ZedRequest\Client\HttpClientInterface
      */
@@ -105,5 +104,4 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
 
         return self::$lastResponse;
     }
-
 }

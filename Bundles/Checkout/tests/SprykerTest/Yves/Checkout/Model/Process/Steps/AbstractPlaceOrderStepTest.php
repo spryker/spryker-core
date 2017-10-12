@@ -29,7 +29,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractPlaceOrderStepTest extends Unit
 {
-
     const ORDER_REFERENCE = 'order reference';
     const ESCAPE_ROUTE = 'escapeRoute';
     const STEP_ROUTE = 'stepRoute';
@@ -213,5 +212,4 @@ class AbstractPlaceOrderStepTest extends Unit
     {
         return Request::create('foo');
     }
-
 }

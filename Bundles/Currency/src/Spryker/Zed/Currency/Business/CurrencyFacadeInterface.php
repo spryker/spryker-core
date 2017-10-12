@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CurrencyTransfer;
  */
 interface CurrencyFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns CurrencyTransfer object for given ISO code
@@ -63,4 +62,27 @@ interface CurrencyFacadeInterface
      */
     public function createCurrency(CurrencyTransfer $currencyTransfer);
 
+    /**
+     * Specification:
+     *  - Reads all active currencies for current store
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getCurrentStoreWithCurrencies();
+
+    /**
+     * Specification:
+     *  - Reads all active store currencies
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies();
 }

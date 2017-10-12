@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface RatepayStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,5 +24,4 @@ interface RatepayStubInterface
      * @return \Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer
      */
     public function installmentCalculation(QuoteTransfer $quoteTransfer);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Console\Business;
 
 interface ConsoleFacadeInterface
 {
-
     /**
      * Specification
      * - Returns an array of console commands
@@ -39,5 +38,4 @@ interface ConsoleFacadeInterface
      * @return \Silex\ServiceProviderInterface[]
      */
     public function getServiceProviders();
-
 }

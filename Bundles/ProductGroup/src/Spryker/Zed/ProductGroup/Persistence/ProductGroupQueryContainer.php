@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductGroupQueryContainer extends AbstractQueryContainer implements ProductGroupQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -66,5 +65,4 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
 
         return $query;
     }
-
 }

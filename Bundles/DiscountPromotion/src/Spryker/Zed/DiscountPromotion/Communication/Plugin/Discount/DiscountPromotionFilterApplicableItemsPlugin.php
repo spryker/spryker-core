@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DiscountPromotionFilterApplicableItemsPlugin extends AbstractPlugin implements DiscountApplicableFilterPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -41,5 +40,4 @@ class DiscountPromotionFilterApplicableItemsPlugin extends AbstractPlugin implem
 
         return $filteredItems;
     }
-
 }

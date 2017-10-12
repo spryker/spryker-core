@@ -14,7 +14,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
 {
-
     /**
      * @var \Spryker\Client\ProductGroup\Dependency\Client\ProductGroupToStorageInterface
      */
@@ -71,5 +70,4 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
 
         return $productGroupTransfer;
     }
-
 }

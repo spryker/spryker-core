@@ -9,7 +9,6 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 interface TaxReaderInterface
 {
-
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -61,5 +60,4 @@ interface TaxReaderInterface
      * @return bool
      */
     public function taxSetExists($id);
-
 }

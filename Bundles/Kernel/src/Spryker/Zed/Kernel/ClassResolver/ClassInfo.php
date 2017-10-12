@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo as SharedClassInfo;
 
 class ClassInfo extends SharedClassInfo
 {
-
     const KEY_LAYER = 3;
 
     /**
@@ -21,5 +20,4 @@ class ClassInfo extends SharedClassInfo
     {
         return $this->callerClassParts[self::KEY_LAYER];
     }
-
 }

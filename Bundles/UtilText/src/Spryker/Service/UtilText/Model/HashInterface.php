@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilText\Model;
 
 interface HashInterface
 {
-
     /**
      * @param mixed $value
      * @param string $algorithm
@@ -17,5 +16,4 @@ interface HashInterface
      * @return string
      */
     public function hashValue($value, $algorithm);
-
 }

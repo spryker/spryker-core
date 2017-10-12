@@ -21,7 +21,6 @@ use SprykerTest\Client\ZedRequest\Client\Fixture\CommunicationObject;
  */
 class AbstractObjectTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -107,5 +106,4 @@ class AbstractObjectTest extends Unit
             'test4' => [null],
         ], $object->toArray());
     }
-
 }

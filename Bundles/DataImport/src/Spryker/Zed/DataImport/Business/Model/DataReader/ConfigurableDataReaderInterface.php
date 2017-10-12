@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 
 interface ConfigurableDataReaderInterface
 {
-
     /**
      * Specification:
      * - Re-configures the DataReaderInterface.
@@ -21,5 +20,4 @@ interface ConfigurableDataReaderInterface
      * @return $this
      */
     public function configure(DataImporterReaderConfigurationTransfer $dataImportReaderConfigurationTransfer);
-
 }

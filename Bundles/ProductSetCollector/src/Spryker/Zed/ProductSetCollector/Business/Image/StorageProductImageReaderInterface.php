@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetCollector\Business\Image;
 
 interface StorageProductImageReaderInterface
 {
-
     /**
      * @param int $idProductSet
      * @param int $idLocale
@@ -17,5 +16,4 @@ interface StorageProductImageReaderInterface
      * @return \Generated\Shared\Transfer\StorageProductImageTransfer[]
      */
     public function getProductSetImageSets($idProductSet, $idLocale);
-
 }

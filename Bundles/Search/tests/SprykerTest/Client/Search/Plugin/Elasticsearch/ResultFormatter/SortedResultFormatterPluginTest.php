@@ -28,7 +28,6 @@ use Spryker\Client\Search\SearchFactory;
  */
 class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {
-
     /**
      * @dataProvider resultFormatterDataProvider
      *
@@ -123,5 +122,4 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 
         return $searchConfig;
     }
-
 }

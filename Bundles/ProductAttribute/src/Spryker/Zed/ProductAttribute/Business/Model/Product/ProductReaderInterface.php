@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Product;
 
 interface ProductReaderInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -27,5 +26,4 @@ interface ProductReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductTransfer($idProduct);
-
 }

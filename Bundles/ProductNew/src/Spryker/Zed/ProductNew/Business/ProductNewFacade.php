@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductNewFacade extends AbstractFacade implements ProductNewFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -28,5 +27,4 @@ class ProductNewFacade extends AbstractFacade implements ProductNewFacadeInterfa
             ->createProductAbstractRelationReader()
             ->findProductLabelProductAbstractRelationChanges();
     }
-
 }

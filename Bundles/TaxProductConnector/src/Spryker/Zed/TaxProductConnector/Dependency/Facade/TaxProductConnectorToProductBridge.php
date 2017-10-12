@@ -9,7 +9,6 @@ namespace Spryker\Zed\TaxProductConnector\Dependency\Facade;
 
 class TaxProductConnectorToProductBridge implements TaxProductConnectorToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -32,5 +31,4 @@ class TaxProductConnectorToProductBridge implements TaxProductConnectorToProduct
     {
         $this->productFacade->touchProductActive($idProductAbstract);
     }
-
 }

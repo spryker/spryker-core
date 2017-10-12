@@ -9,7 +9,6 @@ namespace Spryker\Shared\ZedRequest\Client\Middleware;
 
 interface MiddlewareInterface
 {
-
     /**
      * @return string
      */
@@ -19,5 +18,4 @@ interface MiddlewareInterface
      * @return callable
      */
     public function getCallable();
-
 }

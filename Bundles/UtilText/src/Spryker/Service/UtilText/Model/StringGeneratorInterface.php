@@ -7,12 +7,10 @@ namespace Spryker\Service\UtilText\Model;
 
 interface StringGeneratorInterface
 {
-
     /**
      * @param int $length
      *
      * @return string
      */
     public function generateRandomString($length);
-
 }

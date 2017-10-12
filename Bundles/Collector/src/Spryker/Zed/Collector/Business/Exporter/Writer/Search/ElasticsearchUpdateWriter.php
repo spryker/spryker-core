@@ -14,7 +14,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
-
     /**
      * @var \Elastica\Client
      */
@@ -123,5 +122,4 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
     {
         return $this->searchCollectorConfiguration;
     }
-
 }

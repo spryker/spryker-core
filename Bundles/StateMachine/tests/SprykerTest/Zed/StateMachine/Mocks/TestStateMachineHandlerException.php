@@ -8,7 +8,6 @@ namespace SprykerTest\Zed\StateMachine\Mocks;
 
 class TestStateMachineHandlerException extends TestStateMachineHandler
 {
-
     /**
      * List of command plugins for this state machine for all processes.
      *
@@ -34,5 +33,4 @@ class TestStateMachineHandlerException extends TestStateMachineHandler
             'Test/Condition' => new TestConditionPlugin(),
         ];
     }
-
 }

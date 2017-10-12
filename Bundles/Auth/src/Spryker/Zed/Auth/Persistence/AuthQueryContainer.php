@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class AuthQueryContainer extends AbstractQueryContainer implements AuthQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -39,5 +38,4 @@ class AuthQueryContainer extends AbstractQueryContainer implements AuthQueryCont
             ->filterByCode($code)
             ->filterByStatus(SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface BraintreeQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -98,5 +97,4 @@ interface BraintreeQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionRequestLogQuery
      */
     public function queryTransactionRequestLogByPaymentId($idPayment);
-
 }

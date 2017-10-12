@@ -8,7 +8,6 @@ namespace Spryker\Zed\SalesProductConnector\Dependency\Service;
 
 class SalesProductConnectorToUtilEncodingBridge implements SalesProductConnectorToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class SalesProductConnectorToUtilEncodingBridge implements SalesProductConnector
     {
         return $this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 class ProductSetGuiToUrlBridge implements ProductSetGuiToUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
@@ -44,5 +43,4 @@ class ProductSetGuiToUrlBridge implements ProductSetGuiToUrlInterface
     {
         return $this->urlFacade->hasUrl($urlTransfer);
     }
-
 }

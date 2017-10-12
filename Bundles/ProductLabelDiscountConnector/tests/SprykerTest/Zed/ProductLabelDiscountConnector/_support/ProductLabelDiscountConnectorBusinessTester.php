@@ -26,7 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
  */
 class ProductLabelDiscountConnectorBusinessTester extends Actor
 {
-
     use _generated\ProductLabelDiscountConnectorBusinessTesterActions;
 
     /**
@@ -67,5 +66,4 @@ class ProductLabelDiscountConnectorBusinessTester extends Actor
 
         return $clauseTransfer;
     }
-
 }

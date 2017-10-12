@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Container;
 
 class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_STORAGE = 'storage client';
 
     /**
@@ -50,5 +49,4 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->storage()->client();
         };
     }
-
 }

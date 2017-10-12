@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class TestTransfer extends AbstractTransfer
 {
-
     const FOO = 'foo';
 
     /**
@@ -69,5 +68,4 @@ class TestTransfer extends AbstractTransfer
 
         return $this;
     }
-
 }

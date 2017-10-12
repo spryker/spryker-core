@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CmsContentWidgetToGlossaryInterface
 {
-
     /**
      * @param string $keyName
      * @param array $data
@@ -20,5 +19,4 @@ interface CmsContentWidgetToGlossaryInterface
      * @return string
      */
     public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null);
-
 }

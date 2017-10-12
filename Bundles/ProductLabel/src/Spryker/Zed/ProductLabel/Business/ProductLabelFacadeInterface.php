@@ -12,7 +12,6 @@ use Psr\Log\LoggerInterface;
 
 interface ProductLabelFacadeInterface
 {
-
     /**
      * Specification:
      * - Finds a product label for the given ID in the database
@@ -159,5 +158,4 @@ interface ProductLabelFacadeInterface
      * @return void
      */
     public function updateDynamicProductLabelRelations(LoggerInterface $logger = null);
-
 }

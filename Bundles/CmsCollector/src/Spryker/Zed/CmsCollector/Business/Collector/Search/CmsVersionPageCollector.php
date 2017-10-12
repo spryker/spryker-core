@@ -17,7 +17,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 class CmsVersionPageCollector extends AbstractSearchPropelCollector
 {
-
     /**
      * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface
      */
@@ -83,5 +82,4 @@ class CmsVersionPageCollector extends AbstractSearchPropelCollector
 
         return $result;
     }
-
 }

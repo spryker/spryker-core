@@ -25,7 +25,6 @@ use Symfony\Component\Finder\Finder;
  */
 class CmsBlockBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockReaderInterface
      */
@@ -132,5 +131,4 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_GLOSSARY)
         );
     }
-
 }

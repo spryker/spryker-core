@@ -9,7 +9,6 @@ namespace Spryker\Zed\Queue\Dependency\Plugin;
 
 interface QueueMessageProcessorPluginInterface
 {
-
     /**
      * Specification:
      * - This plugin interface is used for message processing for the queues,
@@ -34,5 +33,4 @@ interface QueueMessageProcessorPluginInterface
      * @return int
      */
     public function getChunkSize();
-
 }

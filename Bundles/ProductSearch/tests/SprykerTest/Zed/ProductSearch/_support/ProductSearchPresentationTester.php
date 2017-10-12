@@ -23,7 +23,6 @@ use SprykerTest\Zed\ProductSearch\PageObject\SearchPreferencesPage;
  */
 class ProductSearchPresentationTester extends Actor
 {
-
     use _generated\ProductSearchPresentationTesterActions;
 
     /**
@@ -168,5 +167,4 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSee($attributeKey, SearchPreferencesPage::SELECTOR_TABLE_FIRST_CELL);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class RefundPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Refund\Persistence\SpyRefundQuery
      */
@@ -24,5 +23,4 @@ class RefundPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyRefundQuery::create();
     }
-
 }

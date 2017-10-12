@@ -14,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CmsBlockProductAbstractType extends AbstractType
 {
-
     const FIELD_ID_CMS_BLOCK = 'id_cms_block';
     const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
 
@@ -66,5 +65,4 @@ class CmsBlockProductAbstractType extends AbstractType
 
         return $this;
     }
-
 }

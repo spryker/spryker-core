@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckConditionConsole extends Console
 {
-
     const COMMAND_NAME = 'state-machine:check-condition';
     const COMMAND_DESCRIPTION = 'Check conditions';
     const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
@@ -52,5 +51,4 @@ class CheckConditionConsole extends Console
 
         $this->getFacade()->checkConditions($stateMachineName);
     }
-
 }

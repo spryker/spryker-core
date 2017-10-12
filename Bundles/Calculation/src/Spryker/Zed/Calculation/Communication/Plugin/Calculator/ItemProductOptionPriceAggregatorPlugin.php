@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ItemProductOptionPriceAggregatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class ItemProductOptionPriceAggregatorPlugin extends AbstractPlugin implements C
         $this->getFacade()
             ->calculateProductOptionPriceAggregation($calculableObjectTransfer);
     }
-
 }

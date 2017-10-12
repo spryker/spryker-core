@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\ContainerInterface;
 
 trait ContainerMocker
 {
-
     /**
      * @param \Spryker\Shared\Kernel\ContainerInterface $container
      *
@@ -36,5 +35,4 @@ trait ContainerMocker
 
         return $container;
     }
-
 }

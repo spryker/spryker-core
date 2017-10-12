@@ -9,12 +9,10 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Spryker\Service\UtilText\Model\Hash;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface;
 
 class GrandTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface
      */
@@ -84,5 +82,4 @@ class GrandTotalCalculator implements CalculatorInterface
     {
         return $this->utilTextService->hashValue($grandTotal, Hash::SHA256);
     }
-
 }

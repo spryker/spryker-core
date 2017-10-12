@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductNew\Dependency\QueryContainer;
 
 class ProductNewToProductLabelBridge implements ProductNewToProductLabelInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
      */
@@ -42,5 +41,4 @@ class ProductNewToProductLabelBridge implements ProductNewToProductLabelInterfac
     {
         return $this->productLabelQueryContainer->queryProductAbstractRelationsByIdProductLabel($idProductLabel);
     }
-
 }

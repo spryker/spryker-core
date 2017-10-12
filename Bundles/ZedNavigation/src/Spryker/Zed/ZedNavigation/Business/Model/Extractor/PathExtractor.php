@@ -11,7 +11,6 @@ use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
 
 class PathExtractor implements PathExtractorInterface
 {
-
     const URI = 'uri';
     const LABEL = 'label';
     const TITLE = 'title';
@@ -65,5 +64,4 @@ class PathExtractor implements PathExtractorInterface
             self::TITLE => $node[MenuFormatter::TITLE],
         ];
     }
-
 }

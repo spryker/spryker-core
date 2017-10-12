@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface MailToRendererInterface
 {
-
     /**
      * @param string $template
      * @param array $options
@@ -26,5 +25,4 @@ interface MailToRendererInterface
      * @return void
      */
     public function setLocaleTransfer(LocaleTransfer $localeTransfer);
-
 }

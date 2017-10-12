@@ -11,7 +11,6 @@ use Exception;
 
 class GraphNotInitializedException extends Exception
 {
-
     /**
      * @param string $message
      * @param int $code
@@ -23,5 +22,4 @@ class GraphNotInitializedException extends Exception
 
         parent::__construct($message, $code, $previous);
     }
-
 }

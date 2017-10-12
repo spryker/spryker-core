@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 interface MailBuilderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
@@ -66,5 +65,4 @@ interface MailBuilderInterface
      * @return \Generated\Shared\Transfer\MailTransfer
      */
     public function build();
-
 }

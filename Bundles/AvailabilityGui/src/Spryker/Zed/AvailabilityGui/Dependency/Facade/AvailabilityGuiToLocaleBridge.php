@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
 class AvailabilityGuiToLocaleBridge implements AvailabilityGuiToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -30,5 +29,4 @@ class AvailabilityGuiToLocaleBridge implements AvailabilityGuiToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
-
 }

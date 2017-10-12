@@ -8,7 +8,6 @@ namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
 class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -109,5 +108,4 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
     {
         return $this->cmsQueryContainer->queryCmsPageLocalizedAttributes();
     }
-
 }

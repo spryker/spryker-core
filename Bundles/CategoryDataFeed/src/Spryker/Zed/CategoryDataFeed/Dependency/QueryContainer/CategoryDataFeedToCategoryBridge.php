@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryDataFeed\Dependency\QueryContainer;
 
 class CategoryDataFeedToCategoryBridge implements CategoryDataFeedToCategoryInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -33,5 +32,4 @@ class CategoryDataFeedToCategoryBridge implements CategoryDataFeedToCategoryInte
         return $this->categoryQueryContainer
             ->queryCategory($idLocale);
     }
-
 }

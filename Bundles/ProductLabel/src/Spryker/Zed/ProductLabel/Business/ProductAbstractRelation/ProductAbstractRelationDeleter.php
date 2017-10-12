@@ -13,7 +13,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -113,5 +112,4 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
 
         return ($relationCount === 0);
     }
-
 }

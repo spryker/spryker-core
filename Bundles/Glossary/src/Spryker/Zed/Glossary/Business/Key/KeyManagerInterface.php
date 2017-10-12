@@ -9,7 +9,6 @@ namespace Spryker\Zed\Glossary\Business\Key;
 
 interface KeyManagerInterface
 {
-
     /**
      * @param string $keyName
      *
@@ -76,5 +75,4 @@ interface KeyManagerInterface
      * @return array
      */
     public function getKeySuggestions($keyFragment);
-
 }

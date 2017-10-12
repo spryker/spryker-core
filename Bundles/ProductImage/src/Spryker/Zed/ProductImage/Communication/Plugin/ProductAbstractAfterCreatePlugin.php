@@ -17,7 +17,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
  */
 class ProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -27,5 +26,4 @@ class ProductAbstractAfterCreatePlugin extends AbstractPlugin implements Product
     {
         return $this->getFacade()->createProductAbstractImageSetCollection($productAbstractTransfer);
     }
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface CollectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Runs storage exporter collectors for all available stores, locales and collector types.
@@ -140,5 +139,4 @@ interface CollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

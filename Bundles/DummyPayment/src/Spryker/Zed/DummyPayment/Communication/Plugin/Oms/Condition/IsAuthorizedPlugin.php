@@ -18,7 +18,6 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
  */
 class IsAuthorizedPlugin extends AbstractPlugin implements ConditionInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -30,5 +29,4 @@ class IsAuthorizedPlugin extends AbstractPlugin implements ConditionInterface
 
         return ($lastName !== DummyPaymentConstants::LAST_NAME_FOR_INVALID_TEST);
     }
-
 }

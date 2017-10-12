@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductOption;
  */
 interface ProductOptionClientInterface
 {
-
     /**
      *
      * Specification:
@@ -24,5 +23,4 @@ interface ProductOptionClientInterface
      * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
      */
     public function getProductOptions($idAbstractProduct, $localeName);
-
 }

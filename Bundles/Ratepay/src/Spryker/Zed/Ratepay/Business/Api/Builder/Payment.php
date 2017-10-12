@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Api\Builder;
 
 class Payment extends AbstractBuilder implements BuilderInterface
 {
-
     const ROOT_TAG = 'payment';
 
     /**
@@ -39,5 +38,4 @@ class Payment extends AbstractBuilder implements BuilderInterface
     {
         return static::ROOT_TAG;
     }
-
 }

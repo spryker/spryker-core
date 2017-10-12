@@ -16,7 +16,6 @@ use Zend\Filter\Word\SeparatorToCamelCase;
 
 class ComposerDependencyParser
 {
-
     const TYPE_INCLUDE = 'include';
     const TYPE_EXCLUDE = 'exclude';
     const TYPE_INCLUDE_DEV = 'include-dev';
@@ -359,5 +358,4 @@ class ComposerDependencyParser
 
         return $name;
     }
-
 }

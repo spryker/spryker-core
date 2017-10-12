@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @var string
      */
@@ -110,5 +109,4 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS);
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DiscountVoucherCodesTable extends AbstractTable
 {
-
     const HEADER_COL_ACTIONS = 'Actions';
 
     /**
@@ -103,8 +102,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH,
         ]);
 
-        $config->setDefaultSortColumnIndex(3);
-        $config->setDefaultSortDirection('DESC');
+        $config->setDefaultSortField(SpyDiscountVoucherTableMap::COL_CREATED_AT);
 
         $config->setSearchable([
             SpyDiscountVoucherTableMap::COL_CODE,
@@ -174,5 +172,4 @@ class DiscountVoucherCodesTable extends AbstractTable
 
         return implode(' ', $buttons);
     }
-
 }

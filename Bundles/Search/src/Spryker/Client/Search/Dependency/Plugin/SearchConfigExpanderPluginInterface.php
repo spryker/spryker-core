@@ -9,12 +9,10 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 interface SearchConfigExpanderPluginInterface
 {
-
     /**
      * @api
      *
      * @return \Generated\Shared\Transfer\SearchConfigExtensionTransfer
      */
     public function getSearchConfigExtension();
-
 }

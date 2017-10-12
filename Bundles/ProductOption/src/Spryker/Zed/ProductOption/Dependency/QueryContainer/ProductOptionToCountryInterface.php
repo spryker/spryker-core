@@ -7,10 +7,8 @@ namespace Spryker\Zed\ProductOption\Dependency\QueryContainer;
 
 interface ProductOptionToCountryInterface
 {
-
     /**
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
     public function queryCountries();
-
 }

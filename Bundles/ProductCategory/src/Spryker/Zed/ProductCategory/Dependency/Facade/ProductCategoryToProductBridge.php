@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
 class ProductCategoryToProductBridge implements ProductCategoryToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -32,5 +31,4 @@ class ProductCategoryToProductBridge implements ProductCategoryToProductInterfac
     {
         $this->productFacade->touchProductAbstract($idProductAbstract);
     }
-
 }

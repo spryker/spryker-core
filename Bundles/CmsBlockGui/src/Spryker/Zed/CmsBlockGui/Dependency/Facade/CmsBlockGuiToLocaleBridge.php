@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockGui\Dependency\Facade;
 
 class CmsBlockGuiToLocaleBridge implements CmsBlockGuiToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -38,5 +37,4 @@ class CmsBlockGuiToLocaleBridge implements CmsBlockGuiToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
-
 }

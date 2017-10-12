@@ -11,7 +11,6 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 
 class AttributeEncoder implements AttributeEncoderInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
      */
@@ -50,5 +49,4 @@ class AttributeEncoder implements AttributeEncoderInterface
 
         return $value;
     }
-
 }

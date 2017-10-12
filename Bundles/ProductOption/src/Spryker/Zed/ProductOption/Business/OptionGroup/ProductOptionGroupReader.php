@@ -19,7 +19,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -201,5 +200,4 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
 
         return $productOptionGroupEntity;
     }
-
 }

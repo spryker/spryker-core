@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductAttributeTransferMapperInterface
 {
-
     /**
      * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productAttributeEntity
      *
@@ -41,5 +40,4 @@ interface ProductAttributeTransferMapperInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
      */
     public function convertProductAttributeValueCollection(ObjectCollection $productAttributeValueEntityCollection);
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ApiQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ interface ApiQueryContainerInterface extends QueryContainerInterface
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function createApiItem($data, $id = null);
-
 }

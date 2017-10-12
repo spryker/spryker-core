@@ -19,7 +19,6 @@ use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
 abstract class AbstractTransfer implements TransferInterface, Serializable, ArrayAccess
 {
-
     /**
      * @var array
      */
@@ -390,5 +389,4 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     {
         throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
     }
-
 }

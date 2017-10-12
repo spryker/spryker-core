@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class TableController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -38,5 +37,4 @@ class TableController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

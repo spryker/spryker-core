@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business;
 
 interface PropelFacadeInterface
 {
-
     /**
      * @api
      *
@@ -105,5 +104,4 @@ interface PropelFacadeInterface
      * @return string
      */
     public function getCurrentDatabaseEngineName();
-
 }

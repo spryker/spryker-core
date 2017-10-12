@@ -14,7 +14,6 @@ use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
 class LocalizedAttributesCollectionReader implements LocalizedAttributesCollectionReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
      */
@@ -70,5 +69,4 @@ class LocalizedAttributesCollectionReader implements LocalizedAttributesCollecti
 
         return $localizedAttributesTransfer;
     }
-
 }

@@ -12,7 +12,6 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountCreatePage
 {
-
     const URL = '/discount/index/create';
 
     const MESSAGE_SUCCESSFUL_ALERT_CREATION = 'Discount successfully created, but not activated.';
@@ -126,14 +125,14 @@ class DiscountCreatePage
         $data = array_merge($this->discountData[$discountName], $dynamicData, $override);
         !$data['type'] ?: $i->selectOption('#discount_discountGeneral_discount_type', $data['type']);
         !$data['name'] ?: $i->fillField('#discount_discountGeneral_display_name', $data['name']);
-        !$data['description'] ?: $i->fillField('#discount_discountGeneral_description',  $data['description']);
+        !$data['description'] ?: $i->fillField('#discount_discountGeneral_description', $data['description']);
         !$data['excl'] ?: $i->click('#discount_discountGeneral_is_exclusive_' . $data['excl']);
         !$data['validFrom'] ?: $i->fillField('#discount_discountGeneral_valid_from', $data['validFrom']);
         !$data['validTo'] ?: $i->fillField('#discount_discountGeneral_valid_to', $data['validTo']);
 
         $this->tab('Discount calculation');
         !$data['calcType'] ?: $i->selectOption('#discount_discountCalculator_calculator_plugin', $data['calcType']);
-        !$data['amount'] ?: $i->fillField('#discount_discountCalculator_amount', $data['amount']);
+        !$data['amount'] ?: $i->fillField('#discount_discountCalculator_moneyValueCollection_0_gross_amount', $data['amount']);
         $i->click(self::BTN_CALCULATION_GET);
         !$data['applyTo'] ?: $i->fillField(self::FIELD_DISCOUNT_QUERY, $data['applyTo']);
 
@@ -187,5 +186,4 @@ class DiscountCreatePage
         $i->click(self::BTN_CALCULATION_GET);
         $i->waitForElementVisible(self::DISCOUNT_CALCULATION_GROUP);
     }
-
 }

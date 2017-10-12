@@ -25,7 +25,6 @@ use Symfony\Component\Finder\Finder;
  */
 class ZedNavigationSchemaFinderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -63,5 +62,4 @@ class ZedNavigationSchemaFinderTest extends Unit
 
         $this->assertInstanceOf(Finder::class, $schemaFinder->getSchemaFiles());
     }
-
 }

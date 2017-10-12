@@ -9,7 +9,6 @@ namespace SprykerTest\Yves\Braintree\PageObject;
 
 class CheckoutPage
 {
-
     const URL = '/checkout';
     const URL_CUSTOMER = '/checkout/customer';
     const URL_ADDRESS = '/checkout/address';
@@ -22,5 +21,4 @@ class CheckoutPage
     const BUTTON_GO_TO_PAYMENT = 'Go to Payment';
 
     const SHIPMENT_SELECTION = 'shipmentForm_idShipmentMethod_0';
-
 }

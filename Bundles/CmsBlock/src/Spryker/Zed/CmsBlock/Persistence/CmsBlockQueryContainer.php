@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQueryContainerInterface
 {
-
     const COLUMN_TEMPLATE_NAME = 'template_name';
 
     /**
@@ -188,5 +187,4 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
         return $this->getFactory()
             ->createCmsBlockGlossaryKeyMappingQuery();
     }
-
 }

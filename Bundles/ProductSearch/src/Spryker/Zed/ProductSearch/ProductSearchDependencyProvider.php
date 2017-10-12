@@ -17,7 +17,6 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
 
 class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT = 'product facade';
     const FACADE_LOCALE = 'locale facade';
     const FACADE_GLOSSARY = 'glossary facade';
@@ -150,5 +149,4 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->utilDataReader()->service();
         };
     }
-
 }

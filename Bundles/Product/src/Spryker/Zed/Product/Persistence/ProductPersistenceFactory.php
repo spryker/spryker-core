@@ -21,7 +21,6 @@ use Spryker\Zed\Product\ProductDependencyProvider;
  */
 class ProductPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -69,5 +68,4 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_URL);
     }
-
 }

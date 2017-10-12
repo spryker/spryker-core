@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class DayOfWeekDecisionRule implements DecisionRuleInterface
 {
-
     const DATE_FORMAT = 'N';
 
     /**
@@ -66,5 +65,4 @@ class DayOfWeekDecisionRule implements DecisionRuleInterface
     {
         return new DateTime();
     }
-
 }

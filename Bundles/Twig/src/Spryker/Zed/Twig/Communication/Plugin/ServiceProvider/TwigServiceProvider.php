@@ -27,7 +27,6 @@ use Twig_Loader_Chain;
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @var \Silex\Application
      */
@@ -158,5 +157,4 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             'bootstrap_3_layout.html.twig',
         ], $typeTemplates);
     }
-
 }

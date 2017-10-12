@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 class ProductBundleToProductImageBridge implements ProductBundleToProductImageInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
@@ -32,5 +31,4 @@ class ProductBundleToProductImageBridge implements ProductBundleToProductImageIn
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductId($productId);
     }
-
 }

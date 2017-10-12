@@ -27,7 +27,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\Ship
  */
 class ShipmentDiscountConnectorFacadeTest extends Test
 {
-
     /**
      * @var \SprykerTest\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorBusinessTester
      */
@@ -346,5 +345,4 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     {
         return $this->tester->getLocator()->shipmentDiscountConnector()->facade();
     }
-
 }

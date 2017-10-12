@@ -15,7 +15,6 @@ use Spryker\Shared\Shipment\ShipmentConstants;
 
 class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisionRuleInterface
      */
@@ -64,15 +63,15 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
     {
         $discountableItemTransfer = new DiscountableItemTransfer();
         $discountableItemTransfer->fromArray($expenseTransfer->toArray(), true);
-        $discountableItemTransfer->setUnitGrossPrice($this->getPrice($expenseTransfer, $priceMode));
+        $price = $this->getPrice($expenseTransfer, $priceMode);
+        $discountableItemTransfer->setUnitGrossPrice($price);
+        $discountableItemTransfer->setUnitPrice($price);
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($expenseTransfer->getCalculatedDiscounts());
 
         return $discountableItemTransfer;
     }
 
     /**
-     * @deprecated This method calculated gross price when in tax mode, because discounts currently working with gross mode, will be removed in the future
-     *
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param string $priceMode
      *
@@ -81,10 +80,9 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
     private function getPrice(ExpenseTransfer $expenseTransfer, $priceMode)
     {
         if ($priceMode === 'NET_MODE') {
-            return $expenseTransfer->getUnitNetPrice() + (int)round($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getTaxRate() / 100);
+            return $expenseTransfer->getUnitNetPrice();
         } else {
             return $expenseTransfer->getUnitGrossPrice();
         }
     }
-
 }

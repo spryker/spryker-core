@@ -18,7 +18,6 @@ use Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface;
  */
 class TouchNavigationAfterUrlUpdatePlugin extends AbstractPlugin implements UrlUpdatePluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class TouchNavigationAfterUrlUpdatePlugin extends AbstractPlugin implements UrlU
     {
         $this->getFacade()->touchNavigationByUrl($urlTransfer);
     }
-
 }

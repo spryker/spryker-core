@@ -16,7 +16,6 @@ use Orm\Zed\Url\Persistence\SpyUrlRedirect;
  */
 interface RedirectManagerInterface
 {
-
     /**
      * @param string $toUrl
      * @param int $status
@@ -95,5 +94,4 @@ interface RedirectManagerInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 class ProductApiToProductBridge implements ProductApiToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -56,5 +55,4 @@ class ProductApiToProductBridge implements ProductApiToProductInterface
     {
         return $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteCollection);
     }
-
 }

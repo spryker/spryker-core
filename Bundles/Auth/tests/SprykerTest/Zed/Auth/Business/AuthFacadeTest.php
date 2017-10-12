@@ -27,7 +27,6 @@ use Spryker\Zed\Auth\Business\AuthFacade;
  */
 class AuthFacadeTest extends Unit
 {
-
     const TEST_MAIL = 'username@example.com';
 
     /**
@@ -143,5 +142,4 @@ class AuthFacadeTest extends Unit
 
         return $userEntity;
     }
-
 }

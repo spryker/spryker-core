@@ -23,7 +23,6 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
  */
 class FixedPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -55,5 +54,4 @@ class FixedPluginTest extends Unit
     {
         Store::getInstance()->setCurrentLocale('de_DE');
     }
-
 }

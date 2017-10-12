@@ -15,7 +15,6 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -47,7 +46,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     public function processMessages(array $queueMessageTransfers)
     {
         foreach ($queueMessageTransfers as $queueMessageTransfer) {
-
             $eventQueueSentMessageBodyTransfer = $this->createEventQueueSentMessageBodyTransfer(
                 $queueMessageTransfer->getQueueMessage()->getBody()
             );
@@ -72,7 +70,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 );
 
                 $queueMessageTransfer->setAcknowledge(true);
-
             } catch (Exception $exception) {
                 $this->logConsumerAction(
                     sprintf(
@@ -201,5 +198,4 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
         return $eventTransfer;
     }
-
 }

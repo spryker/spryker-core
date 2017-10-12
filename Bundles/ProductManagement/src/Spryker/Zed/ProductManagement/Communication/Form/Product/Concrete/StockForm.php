@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class StockForm extends AbstractType
 {
-
     const FIELD_HIDDEN_STOCK_PRODUCT_ID = 'id_stock_product';
     const FIELD_HIDDEN_FK_STOCK = 'fk_stock';
 
@@ -123,5 +122,4 @@ class StockForm extends AbstractType
 
         return $this;
     }
-
 }

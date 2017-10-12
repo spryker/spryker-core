@@ -11,7 +11,6 @@ use Spryker\Shared\ProductSearch\ProductSearchConfig;
 
 class FilterGlossaryKeyBuilder implements GlossaryKeyBuilderInterface
 {
-
     /**
      * @param string $attributeKey
      *
@@ -21,5 +20,4 @@ class FilterGlossaryKeyBuilder implements GlossaryKeyBuilderInterface
     {
         return ProductSearchConfig::PRODUCT_SEARCH_FILTER_GLOSSARY_PREFIX . $attributeKey;
     }
-
 }

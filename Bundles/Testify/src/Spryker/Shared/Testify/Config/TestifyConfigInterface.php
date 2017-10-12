@@ -9,7 +9,6 @@ namespace Spryker\Shared\Testify\Config;
 
 interface TestifyConfigInterface
 {
-
     /**
      * @param string $key
      * @param string|int|float|array|bool $value
@@ -17,5 +16,4 @@ interface TestifyConfigInterface
      * @return void
      */
     public function set($key, $value);
-
 }

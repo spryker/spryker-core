@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 trait Helper
 {
-
     /**
      * @param string $message
      * @param bool $wrapInInfoTags
@@ -228,5 +227,4 @@ trait Helper
      * @return \Symfony\Component\Console\Helper\HelperSet
      */
     abstract protected function getHelperSet();
-
 }

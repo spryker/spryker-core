@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Api\Model;
 
 interface RequestInterface
 {
-
     /**
      * @return string
      */
@@ -18,5 +17,4 @@ interface RequestInterface
      * @return string
      */
     public function __toString();
-
 }

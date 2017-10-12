@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class NewRelicYvesTester extends Actor
 {
-
     use _generated\NewRelicYvesTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

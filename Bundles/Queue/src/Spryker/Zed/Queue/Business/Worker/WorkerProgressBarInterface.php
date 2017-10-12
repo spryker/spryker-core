@@ -9,7 +9,6 @@ namespace Spryker\Zed\Queue\Business\Worker;
 
 interface WorkerProgressBarInterface
 {
-
     /**
      * @param int $steps
      * @param int $round
@@ -49,5 +48,4 @@ interface WorkerProgressBarInterface
      * @return void
      */
     public function reset();
-
 }

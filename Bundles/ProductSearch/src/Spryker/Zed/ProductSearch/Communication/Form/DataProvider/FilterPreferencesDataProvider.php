@@ -18,7 +18,6 @@ use Spryker\Zed\ProductSearch\ProductSearchConfig;
 
 class FilterPreferencesDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -171,5 +170,4 @@ class FilterPreferencesDataProvider
 
         return null;
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Service\FileSystem\Model\FileSystemReaderInterface;
 
 class FileSystemReader implements FileSystemReaderInterface
 {
-
     /**
      * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface
      */
@@ -107,5 +106,4 @@ class FileSystemReader implements FileSystemReaderInterface
     {
         return $this->fileSystemReader->has($fileSystemQueryTransfer);
     }
-
 }

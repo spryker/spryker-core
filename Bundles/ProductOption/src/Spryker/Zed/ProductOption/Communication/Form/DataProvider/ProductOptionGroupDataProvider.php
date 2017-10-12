@@ -14,7 +14,6 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface;
 
 class ProductOptionGroupDataProvider
 {
-
     const NEW_GROUP_NAME = 'new_group_name';
 
     /**
@@ -120,5 +119,4 @@ class ProductOptionGroupDataProvider
 
         return $productOptionGroupTransfer;
     }
-
 }

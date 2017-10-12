@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SalesProductConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Saves product metadata information (image, super attributes) into a sales table to hydrate them later
@@ -50,5 +49,4 @@ interface SalesProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductIds(OrderTransfer $orderTransfer);
-
 }

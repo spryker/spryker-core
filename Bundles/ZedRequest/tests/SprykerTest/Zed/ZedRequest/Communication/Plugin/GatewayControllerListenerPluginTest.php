@@ -36,7 +36,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class GatewayControllerListenerPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -275,5 +274,4 @@ class GatewayControllerListenerPluginTest extends Unit
 
         return $transfer;
     }
-
 }

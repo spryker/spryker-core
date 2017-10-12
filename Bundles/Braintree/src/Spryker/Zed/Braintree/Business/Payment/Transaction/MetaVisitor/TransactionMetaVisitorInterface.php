@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\TransactionMetaTransfer;
 
 interface TransactionMetaVisitorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\TransactionMetaTransfer $transactionMetaTransfer
      *
      * @return void
      */
     public function visit(TransactionMetaTransfer $transactionMetaTransfer);
-
 }

@@ -26,7 +26,6 @@ use Spryker\Shared\ProductGroup\ProductGroupConfig;
  */
 class CreateProductGroupTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -56,5 +55,4 @@ class CreateProductGroupTest extends Unit
         $this->tester->assertTouchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $productAbstractTransfer1->getIdProductAbstract(), 'Product #1 should have been touched as active.');
         $this->tester->assertTouchActive(ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS, $productAbstractTransfer2->getIdProductAbstract(), 'Product #2 should have been touched as active.');
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsToGlossaryBridge implements CmsToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -165,5 +164,4 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
     {
         $this->glossaryFacade->deleteKeys($idKeys);
     }
-
 }

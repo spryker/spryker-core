@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class VoucherCodeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -63,7 +62,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(1,  $updated);
+        $this->assertEquals(1, $updated);
     }
 
     /**
@@ -81,7 +80,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(0,  $updated);
+        $this->assertEquals(0, $updated);
     }
 
     /**
@@ -105,7 +104,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(0,  $updated);
+        $this->assertEquals(0, $updated);
     }
 
     /**
@@ -141,7 +140,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(1,  $updated);
+        $this->assertEquals(1, $updated);
     }
 
     /**
@@ -177,7 +176,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(1,  $updated);
+        $this->assertEquals(1, $updated);
     }
 
     /**
@@ -195,7 +194,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(0,  $updated);
+        $this->assertEquals(0, $updated);
     }
 
     /**
@@ -219,7 +218,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(0,  $updated);
+        $this->assertEquals(0, $updated);
     }
 
     /**
@@ -263,5 +262,4 @@ class VoucherCodeTest extends Unit
 
         return $discountVoucherEntity;
     }
-
 }

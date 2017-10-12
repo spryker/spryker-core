@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodeTestConsole extends Console
 {
-
     const COMMAND_NAME = 'code:test';
     const OPTION_BUNDLE = 'module';
     const OPTION_BUNDLE_ALL = 'all';
@@ -66,5 +65,4 @@ class CodeTestConsole extends Console
 
         $this->getFacade()->runTest($bundle, $this->input->getOptions());
     }
-
 }

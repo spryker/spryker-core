@@ -15,7 +15,6 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
 
 class ConnectionHelper extends Module
 {
-
     /**
      * @param \Codeception\TestInterface $test
      *
@@ -36,5 +35,4 @@ class ConnectionHelper extends Module
     {
         Propel::closeConnections();
     }
-
 }

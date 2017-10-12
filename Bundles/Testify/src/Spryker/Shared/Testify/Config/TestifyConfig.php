@@ -12,7 +12,6 @@ use Spryker\Shared\Config\Config;
 
 class TestifyConfig implements TestifyConfigInterface
 {
-
     /**
      * @var array
      */
@@ -68,5 +67,4 @@ class TestifyConfig implements TestifyConfigInterface
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue($this->configCache);
     }
-
 }

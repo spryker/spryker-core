@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class FlashMessenger implements FlashMessengerInterface
 {
-
     /**
      * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
      */
@@ -71,5 +70,4 @@ class FlashMessenger implements FlashMessengerInterface
     {
         $this->flashBag->add($key, $value);
     }
-
 }

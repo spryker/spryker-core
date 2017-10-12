@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class EventJournalDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -27,5 +26,4 @@ class EventJournalDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

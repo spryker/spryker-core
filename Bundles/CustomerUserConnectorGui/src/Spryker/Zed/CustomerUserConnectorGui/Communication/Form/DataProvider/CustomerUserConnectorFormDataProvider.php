@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 
 class CustomerUserConnectorFormDataProvider
 {
-
     /**
      * @return array
      */
@@ -21,5 +20,4 @@ class CustomerUserConnectorFormDataProvider
             'data_class' => CustomerUserConnectionUpdateTransfer::class,
         ];
     }
-
 }

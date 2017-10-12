@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GraphController extends AbstractController
 {
-
     const URL_PARAM_PROCESS = 'process';
     const URL_PARAM_FORMAT = 'format';
     const URL_PARAM_FONT_SIZE = 'font';
@@ -144,5 +143,4 @@ class GraphController extends AbstractController
 
         return $headers;
     }
-
 }

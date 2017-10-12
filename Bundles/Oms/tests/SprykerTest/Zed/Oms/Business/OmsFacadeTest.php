@@ -27,7 +27,6 @@ use Spryker\Zed\Oms\OmsConfig;
  */
 class OmsFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -87,5 +86,4 @@ class OmsFacadeTest extends Unit
 
         $this->assertSame(0, $items->count());
     }
-
 }

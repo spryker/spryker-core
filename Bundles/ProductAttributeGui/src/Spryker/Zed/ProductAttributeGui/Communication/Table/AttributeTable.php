@@ -16,7 +16,6 @@ use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGu
 
 class AttributeTable extends AbstractTable
 {
-
     const COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
     const COL_INPUT_TYPE = 'input_type';
     const COL_ACTIONS = 'actions';
@@ -123,5 +122,4 @@ class AttributeTable extends AbstractTable
 
         return $urls;
     }
-
 }

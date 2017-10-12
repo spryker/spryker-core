@@ -9,7 +9,6 @@ namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTo
 
 class TokenHashGenerator implements TokenGeneratorInterface
 {
-
     /**
      * @var string $algorithm
      */
@@ -43,5 +42,4 @@ class TokenHashGenerator implements TokenGeneratorInterface
     {
         return hash_equals($expected, $actual);
     }
-
 }

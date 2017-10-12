@@ -19,7 +19,6 @@ use Spryker\Yves\Session\Model\SessionHandlerFactory;
  */
 class SessionFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\Session\Model\SessionStorageInterface
      */
@@ -91,5 +90,4 @@ class SessionFactory extends AbstractFactory
     {
         return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime());
     }
-
 }

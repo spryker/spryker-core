@@ -9,7 +9,6 @@ namespace Spryker\Zed\Development\Business\DependencyTree\ViolationFinder;
 
 class ViolationFinder implements ViolationFinderInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface[]
      */
@@ -47,5 +46,4 @@ class ViolationFinder implements ViolationFinderInterface
 
         return $isViolation;
     }
-
 }

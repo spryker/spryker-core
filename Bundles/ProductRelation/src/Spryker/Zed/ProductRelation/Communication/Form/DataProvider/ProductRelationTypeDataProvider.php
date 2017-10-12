@@ -16,7 +16,6 @@ use Spryker\Zed\ProductRelation\Communication\Form\ProductRelationFormType;
 
 class ProductRelationTypeDataProvider implements ProductRelationTypeDataProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface
      */
@@ -87,5 +86,4 @@ class ProductRelationTypeDataProvider implements ProductRelationTypeDataProvider
 
         return $productRelationTransfer;
     }
-
 }

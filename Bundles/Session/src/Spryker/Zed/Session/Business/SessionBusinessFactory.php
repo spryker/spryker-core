@@ -20,7 +20,6 @@ use Spryker\Zed\Session\Business\Model\SessionFactory;
  */
 class SessionBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
@@ -160,5 +159,4 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getConfig()->getSessionHandlerRedisDataSourceNameZed();
     }
-
 }

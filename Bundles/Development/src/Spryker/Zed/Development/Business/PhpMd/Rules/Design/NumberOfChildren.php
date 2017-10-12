@@ -13,7 +13,6 @@ use PHPMD\Rule\ClassAware;
 
 class NumberOfChildren extends AbstractRule implements ClassAware
 {
-
     const NUMBER_OF_CHILDREN = 'nocc';
     const THRESHOLD = 'minimum';
 
@@ -50,5 +49,4 @@ class NumberOfChildren extends AbstractRule implements ClassAware
 
         return preg_match('/Zed\\\\Importer\\\\Business\\\\(Importer|Installer)\\\\Abstract(Importer|Installer)/', $fullyQualifiedClassName);
     }
-
 }

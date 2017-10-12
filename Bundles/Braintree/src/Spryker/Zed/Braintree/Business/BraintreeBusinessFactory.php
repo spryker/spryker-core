@@ -31,7 +31,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class BraintreeBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Braintree\Business\Payment\Transaction\Handler\AuthorizeTransactionHandler
      */
@@ -194,5 +193,4 @@ class BraintreeBusinessFactory extends AbstractBusinessFactory
     {
         return new PostSaveHook($this->getQueryContainer());
     }
-
 }

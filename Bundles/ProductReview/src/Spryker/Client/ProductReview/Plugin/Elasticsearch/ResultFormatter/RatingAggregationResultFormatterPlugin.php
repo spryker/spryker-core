@@ -16,7 +16,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class RatingAggregationResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-
     const NAME = 'ratingAggregation';
 
     /**
@@ -69,5 +68,4 @@ class RatingAggregationResultFormatterPlugin extends AbstractElasticsearchResult
 
         return $result;
     }
-
 }

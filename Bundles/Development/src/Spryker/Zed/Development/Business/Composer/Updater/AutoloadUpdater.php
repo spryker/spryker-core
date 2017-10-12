@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class AutoloadUpdater implements UpdaterInterface
 {
-
     /**
      * @var array
      */
@@ -145,5 +144,4 @@ class AutoloadUpdater implements UpdaterInterface
 
         return $composerJson;
     }
-
 }

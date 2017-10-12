@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_URL = 'facade_url';
     const FACADE_LOCALE = 'facade_locale';
     const FACADE_GLOSSARY = 'facade glossary';
@@ -166,5 +165,4 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

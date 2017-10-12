@@ -11,7 +11,5 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonFunction;
 
 abstract class AbstractActionButtonFunction extends AbstractButtonFunction
 {
-
     const DEFAULT_CSS_CLASSES = 'btn-sm btn-outline';
-
 }

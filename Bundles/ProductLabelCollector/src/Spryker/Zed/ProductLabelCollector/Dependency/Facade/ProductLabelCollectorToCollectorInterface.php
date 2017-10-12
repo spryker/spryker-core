@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ProductLabelCollectorToCollectorInterface
 {
-
     /**
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -41,5 +40,4 @@ interface ProductLabelCollectorToCollectorInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductBundleWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer);
-
 }

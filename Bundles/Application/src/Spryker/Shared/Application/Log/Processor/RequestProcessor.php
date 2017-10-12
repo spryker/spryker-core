@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RequestProcessor
 {
-
     const EXTRA = 'request';
     const CONTEXT_KEY = 'request';
 
@@ -123,5 +122,4 @@ class RequestProcessor
     {
         return $request->getSession()->get(static::SESSION_KEY_USER);
     }
-
 }

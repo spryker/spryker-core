@@ -15,7 +15,6 @@ use Spryker\Client\Wishlist\Zed\WishlistStub;
 
 class WishlistFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Wishlist\Zed\WishlistStubInterface
      */
@@ -73,5 +72,4 @@ class WishlistFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_CUSTOMER);
     }
-
 }

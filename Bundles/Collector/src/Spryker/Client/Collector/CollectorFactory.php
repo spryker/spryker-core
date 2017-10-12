@@ -13,7 +13,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CollectorFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Collector\Matcher\UrlMatcher
      */
@@ -42,5 +41,4 @@ class CollectorFactory extends AbstractFactory
 
         return $urlKeyBuilder;
     }
-
 }

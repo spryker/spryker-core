@@ -12,7 +12,6 @@ use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternatio
 
 class CurrencyBuilder implements CurrencyBuilderInterface
 {
-
     /**
      * @var \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
@@ -57,5 +56,4 @@ class CurrencyBuilder implements CurrencyBuilderInterface
     {
         return $this->fromIsoCode($this->defaultIsoCode);
     }
-
 }

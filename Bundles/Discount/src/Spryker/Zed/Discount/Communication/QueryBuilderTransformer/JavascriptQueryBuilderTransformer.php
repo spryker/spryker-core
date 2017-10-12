@@ -11,7 +11,6 @@ use Spryker\Zed\Discount\Business\DiscountFacade;
 
 class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransformerInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
@@ -52,7 +51,6 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
 
         $transformed = [];
         foreach ($ruleFields as $ruleField) {
-
             $fieldTransformed = [];
             $fieldTransformed['id'] = $ruleField;
             $fieldTransformed['label'] = $ruleField;
@@ -94,5 +92,4 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
 
         return $comparators;
     }
-
 }

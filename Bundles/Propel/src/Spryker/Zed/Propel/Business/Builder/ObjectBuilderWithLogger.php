@@ -24,7 +24,6 @@ use Spryker\Shared\Propel\PropelConstants;
 
 class ObjectBuilderWithLogger extends PropelObjectBuilder
 {
-
     /**
      * @param \Propel\Generator\Model\Table $table
      */
@@ -331,5 +330,4 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
     }
 ";
     }
-
 }

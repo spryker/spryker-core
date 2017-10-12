@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface StockQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -97,5 +96,4 @@ interface StockQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockByIdProduct($idProduct);
-
 }

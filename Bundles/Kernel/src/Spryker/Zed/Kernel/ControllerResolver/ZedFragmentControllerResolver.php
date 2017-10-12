@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 
 class ZedFragmentControllerResolver extends SilexControllerResolver
 {
-
     /**
      * @param string $controller
      *
@@ -59,5 +58,4 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
     {
         return $this->app['request_stack']->getCurrentRequest();
     }
-
 }

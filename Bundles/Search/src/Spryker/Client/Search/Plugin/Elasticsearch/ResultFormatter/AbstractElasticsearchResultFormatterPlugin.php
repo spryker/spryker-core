@@ -14,7 +14,6 @@ use Spryker\Client\Search\Exception\InvalidSearchResultTypeException;
 
 abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin implements ResultFormatterPluginInterface
 {
-
     /**
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
@@ -53,5 +52,4 @@ abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin
      * @return mixed
      */
     abstract protected function formatSearchResult(ResultSet $searchResult, array $requestParameters);
-
 }

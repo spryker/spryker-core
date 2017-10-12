@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductItemTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,5 +24,4 @@ class ProductItemTaxRateCalculatorPlugin extends AbstractPlugin implements Calcu
     {
         $this->getFacade()->calculateProductItemTaxRate($quoteTransfer);
     }
-
 }

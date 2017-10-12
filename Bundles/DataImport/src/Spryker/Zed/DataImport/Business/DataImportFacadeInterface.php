@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
  */
 interface DataImportFacadeInterface
 {
-
     /**
      * Specification:
      * - Creates importer.
@@ -28,5 +27,4 @@ interface DataImportFacadeInterface
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function import(DataImporterConfigurationTransfer $dataImporterConfiguration = null);
-
 }

@@ -18,7 +18,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {
-
     /**
      * Returns the stored quote
      *
@@ -164,7 +163,6 @@ class CartClient extends AbstractClient implements CartClientInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
                 $itemTransfer->getGroupKey() === $groupKey) {
-
                 return $itemTransfer;
             }
         }
@@ -261,6 +259,20 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function reloadItems()
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer = $this->getZedStub()->reloadItems($quoteTransfer);
+        $this->storeQuote($quoteTransfer);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function createCartChangeTransfer()
@@ -308,5 +320,4 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         return $this->getFactory()->getQuoteClient();
     }
-
 }

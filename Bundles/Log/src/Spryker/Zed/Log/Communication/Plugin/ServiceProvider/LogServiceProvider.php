@@ -18,7 +18,6 @@ use Spryker\Shared\Log\LogConstants;
  */
 class LogServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -39,5 +38,4 @@ class LogServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

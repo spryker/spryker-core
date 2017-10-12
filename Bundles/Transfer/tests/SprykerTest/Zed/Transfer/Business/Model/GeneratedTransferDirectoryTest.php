@@ -24,7 +24,6 @@ use Symfony\Component\Finder\Finder;
  */
 class GeneratedTransferDirectoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class GeneratedTransferDirectoryTest extends Unit
             ->getMockBuilder(Finder::class)
             ->getMock();
     }
-
 }

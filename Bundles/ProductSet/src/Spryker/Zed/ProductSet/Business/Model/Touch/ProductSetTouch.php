@@ -14,7 +14,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetTouch implements ProductSetTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToTouchInterface
      */
@@ -96,5 +95,4 @@ class ProductSetTouch implements ProductSetTouchInterface
             ->requireIdProductSet()
             ->requireIsActive();
     }
-
 }

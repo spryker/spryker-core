@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerInterface
 {
-
     /**
      * @param string $email
      *
@@ -104,5 +103,4 @@ interface CustomerInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer|null
      */
     public function findByReference($customerReference);
-
 }

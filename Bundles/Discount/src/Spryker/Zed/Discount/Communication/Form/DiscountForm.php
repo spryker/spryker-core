@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormTypeInterface;
 
 class DiscountForm extends AbstractType
 {
-
     /**
      * @var \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\GeneralForm
      */
@@ -158,5 +157,4 @@ class DiscountForm extends AbstractType
     {
         return 'discount';
     }
-
 }

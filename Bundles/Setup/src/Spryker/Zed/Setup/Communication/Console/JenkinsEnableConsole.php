@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class JenkinsEnableConsole extends Console
 {
-
     const COMMAND_NAME = 'setup:jenkins:enable';
     const DESCRIPTION = 'Enable Jenkins';
 
@@ -43,5 +42,4 @@ class JenkinsEnableConsole extends Console
 
         $output->writeln($result);
     }
-
 }

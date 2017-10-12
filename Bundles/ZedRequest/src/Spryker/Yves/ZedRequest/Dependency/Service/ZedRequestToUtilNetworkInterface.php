@@ -9,10 +9,8 @@ namespace Spryker\Yves\ZedRequest\Dependency\Service;
 
 interface ZedRequestToUtilNetworkInterface
 {
-
     /**
      * @return string
      */
     public function getRequestId();
-
 }

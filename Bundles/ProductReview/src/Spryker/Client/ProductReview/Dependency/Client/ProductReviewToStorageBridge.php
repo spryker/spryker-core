@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductReview\Dependency\Client;
 
 class ProductReviewToStorageBridge implements ProductReviewToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -32,5 +31,4 @@ class ProductReviewToStorageBridge implements ProductReviewToStorageInterface
     {
         return $this->storageClient->get($key);
     }
-
 }

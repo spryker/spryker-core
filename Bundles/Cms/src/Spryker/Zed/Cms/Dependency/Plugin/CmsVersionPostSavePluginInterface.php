@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 
 interface CmsVersionPostSavePluginInterface
 {
-
     /**
      * Specification:
      * - This plugin interface is used for post hook saving when the cms page
@@ -24,5 +23,4 @@ interface CmsVersionPostSavePluginInterface
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function postSave(CmsVersionTransfer $cmsVersionTransfer);
-
 }

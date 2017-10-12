@@ -12,7 +12,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
 
 abstract class AbstractProductTable extends AbstractTable
 {
-
     /**
      * @param array $data
      *
@@ -42,5 +41,4 @@ abstract class AbstractProductTable extends AbstractTable
         }
         return false;
     }
-
 }

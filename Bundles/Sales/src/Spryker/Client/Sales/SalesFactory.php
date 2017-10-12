@@ -12,7 +12,6 @@ use Spryker\Client\Sales\Zed\SalesStub;
 
 class SalesFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Sales\Zed\SalesStubInterface
      */
@@ -22,5 +21,4 @@ class SalesFactory extends AbstractFactory
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_ZED)
         );
     }
-
 }

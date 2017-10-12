@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerReferenceGeneratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $orderTransfer
      *
      * @return string
      */
     public function generateCustomerReference(CustomerTransfer $orderTransfer);
-
 }

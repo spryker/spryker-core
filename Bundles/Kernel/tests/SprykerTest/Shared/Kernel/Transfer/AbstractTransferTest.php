@@ -23,7 +23,6 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
  */
 class AbstractTransferTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -539,5 +538,4 @@ class AbstractTransferTest extends Unit
 
         $this->assertCount(2, $transfer->getTransferCollection());
     }
-
 }

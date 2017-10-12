@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
 
 class DataBuilderCleaner implements TransferCleanerInterface
 {
-
     /**
      * @var string
      */
@@ -50,5 +49,4 @@ class DataBuilderCleaner implements TransferCleanerInterface
 
         return $finder;
     }
-
 }

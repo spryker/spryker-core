@@ -13,7 +13,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorageReaderInterface
 {
-
     /**
      * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
      */
@@ -66,5 +65,4 @@ class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorage
 
         return $productAbstractReviewTransfer;
     }
-
 }

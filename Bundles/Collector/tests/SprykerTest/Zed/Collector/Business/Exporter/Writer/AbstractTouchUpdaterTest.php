@@ -28,7 +28,6 @@ use SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub;
  */
 class AbstractTouchUpdaterTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Collector\CollectorConfig
      */
@@ -227,5 +226,4 @@ class AbstractTouchUpdaterTest extends Unit
     {
         return new CollectorConfigWithNotDefinedDbEngineFake();
     }
-
 }

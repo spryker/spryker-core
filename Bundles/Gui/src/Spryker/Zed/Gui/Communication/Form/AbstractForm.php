@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
  */
 abstract class AbstractForm extends SharedAbstractForm
 {
-
     /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
@@ -60,5 +59,4 @@ abstract class AbstractForm extends SharedAbstractForm
 
         return $this->request;
     }
-
 }

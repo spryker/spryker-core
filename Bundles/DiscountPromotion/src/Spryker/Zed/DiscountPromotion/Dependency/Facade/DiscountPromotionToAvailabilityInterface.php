@@ -9,7 +9,6 @@ namespace Spryker\Zed\DiscountPromotion\Dependency\Facade;
 
 interface DiscountPromotionToAvailabilityInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -17,5 +16,4 @@ interface DiscountPromotionToAvailabilityInterface
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale);
-
 }

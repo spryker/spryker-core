@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Currency\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -14,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -26,7 +26,7 @@ class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQ
     {
         return $this->getFactory()
             ->createCurrencyQuery()
-            ->filterByCurrencySymbol();
+            ->filterByCode($isoCode);
     }
 
     /**
@@ -43,4 +43,17 @@ class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQ
             ->filterByPrimaryKey($idCurrency);
     }
 
+    /**
+     * @api
+     *
+     * @param array $isoCodes
+     *
+     * @return $this|\Orm\Zed\Currency\Persistence\SpyCurrencyQuery
+     */
+    public function queryCurrenciesByIsoCodes(array $isoCodes)
+    {
+        return $this->getFactory()
+            ->createCurrencyQuery()
+            ->filterByCode($isoCodes, Criteria::IN);
+    }
 }

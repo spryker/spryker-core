@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
  */
 interface BatchResultInterface
 {
-
     /**
      * @return int
      */
@@ -124,5 +123,4 @@ interface BatchResultInterface
      * @return void
      */
     public function increaseDeletedCount($amount);
-
 }

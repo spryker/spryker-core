@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundToSalesBridge implements RefundToSalesInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
@@ -45,5 +44,4 @@ class RefundToSalesBridge implements RefundToSalesInterface
     {
         return $this->salesFacade->updateOrder($orderTransfer, $idSalesOrder);
     }
-
 }

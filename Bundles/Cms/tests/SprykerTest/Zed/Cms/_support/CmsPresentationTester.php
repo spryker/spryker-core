@@ -22,7 +22,6 @@ use Codeception\Scenario;
  */
 class CmsPresentationTester extends Actor
 {
-
     use _generated\CmsPresentationTesterActions;
 
     /**
@@ -35,5 +34,4 @@ class CmsPresentationTester extends Actor
         $this->amZed();
         $this->amLoggedInUser();
     }
-
 }

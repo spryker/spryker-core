@@ -22,7 +22,6 @@ use Spryker\Shared\Kernel\Store;
  */
 class CurrencyPersistenceTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -88,5 +87,4 @@ class CurrencyPersistenceTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
     }
-
 }

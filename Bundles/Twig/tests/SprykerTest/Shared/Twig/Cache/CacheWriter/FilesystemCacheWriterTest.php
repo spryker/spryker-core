@@ -23,7 +23,6 @@ use Spryker\Shared\Twig\Cache\CacheWriterInterface;
  */
 class FilesystemCacheWriterTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -77,5 +76,4 @@ class FilesystemCacheWriterTest extends Unit
 
         $this->assertTrue(is_dir($this->getCacheDirectory()), 'Cache directory was not created');
     }
-
 }

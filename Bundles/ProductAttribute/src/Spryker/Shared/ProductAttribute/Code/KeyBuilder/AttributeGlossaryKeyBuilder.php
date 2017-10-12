@@ -11,7 +11,6 @@ use Spryker\Shared\ProductAttribute\ProductAttributeConfig;
 
 class AttributeGlossaryKeyBuilder implements GlossaryKeyBuilderInterface
 {
-
     /**
      * @param string $attributeKey
      *
@@ -21,5 +20,4 @@ class AttributeGlossaryKeyBuilder implements GlossaryKeyBuilderInterface
     {
         return ProductAttributeConfig::PRODUCT_ATTRIBUTE_GLOSSARY_PREFIX . $attributeKey;
     }
-
 }

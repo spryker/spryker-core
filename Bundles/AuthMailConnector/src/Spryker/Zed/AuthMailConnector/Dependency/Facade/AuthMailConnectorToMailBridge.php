@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 class AuthMailConnectorToMailBridge implements AuthMailConnectorToMailInterface
 {
-
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
@@ -34,5 +33,4 @@ class AuthMailConnectorToMailBridge implements AuthMailConnectorToMailInterface
     {
         return $this->mailFacade->sendMail($mailTransfer);
     }
-
 }

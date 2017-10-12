@@ -11,7 +11,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderReader implements OrderReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -43,5 +42,4 @@ class OrderReader implements OrderReaderInterface
 
         return $states;
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBr
 
 class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT = 'facade product';
     const FACADE_TAX = 'facade tax';
 
@@ -58,5 +57,4 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-
 }

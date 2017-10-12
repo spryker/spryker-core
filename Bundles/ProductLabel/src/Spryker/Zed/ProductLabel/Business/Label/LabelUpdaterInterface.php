@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 
 interface LabelUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
      */
     public function update(ProductLabelTransfer $productLabelTransfer);
-
 }

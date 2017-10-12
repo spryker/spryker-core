@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 
 class Store
 {
-
     const APPLICATION_ZED = 'ZED';
 
     /**
@@ -380,6 +379,16 @@ class Store
     }
 
     /**
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getConfigurationForStore($storeName)
+    {
+        return $this->getStoreSetup($storeName)[$storeName];
+    }
+
+    /**
      * @return string
      */
     protected function getDefaultCurrencyCode()
@@ -391,5 +400,4 @@ class Store
 
         return $defaultCurrencyCode;
     }
-
 }

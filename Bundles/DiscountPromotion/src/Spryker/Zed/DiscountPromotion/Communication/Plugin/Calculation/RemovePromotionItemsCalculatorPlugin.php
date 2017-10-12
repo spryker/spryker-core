@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class RemovePromotionItemsCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class RemovePromotionItemsCalculatorPlugin extends AbstractPlugin implements Cal
     {
         $calculableObjectTransfer->setPromotionItems(new ArrayObject());
     }
-
 }

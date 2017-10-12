@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 
 class QuotePaymentRequestMapper extends BaseMapper
 {
-
     /**
      * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
@@ -281,5 +280,4 @@ class QuotePaymentRequestMapper extends BaseMapper
             $this->ratepayPaymentRequestTransfer->addItem($basketItem);
         }
     }
-
 }

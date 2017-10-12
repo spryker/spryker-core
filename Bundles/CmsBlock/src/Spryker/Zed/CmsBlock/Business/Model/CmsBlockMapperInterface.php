@@ -12,7 +12,6 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 
 interface CmsBlockMapperInterface
 {
-
     /**
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
@@ -27,5 +26,4 @@ interface CmsBlockMapperInterface
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
     public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock);
-
 }

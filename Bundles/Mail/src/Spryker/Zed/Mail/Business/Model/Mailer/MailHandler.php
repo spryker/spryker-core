@@ -14,7 +14,6 @@ use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
 
 class MailHandler implements MailHandlerInterface
 {
-
     /**
      * @var \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface
      */
@@ -125,5 +124,4 @@ class MailHandler implements MailHandlerInterface
 
         return $mailTypeName;
     }
-
 }

@@ -31,7 +31,6 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionGroupReaderTest extends MockProvider
 {
-
     /**
      * @return void
      */
@@ -114,5 +113,4 @@ class ProductOptionGroupReaderTest extends MockProvider
             ->setMethods(['queryProductGroupById'])
             ->getMock();
     }
-
 }

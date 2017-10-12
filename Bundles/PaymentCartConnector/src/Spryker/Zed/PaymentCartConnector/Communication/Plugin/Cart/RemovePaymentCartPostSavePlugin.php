@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 class RemovePaymentCartPostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,5 +24,4 @@ class RemovePaymentCartPostSavePlugin extends AbstractPlugin implements PostSave
 
         return $quoteTransfer;
     }
-
 }

@@ -28,7 +28,6 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
  */
 class CmsGlossarySaverTest extends CmsMocks
 {
-
     /**
      * @return void
      */
@@ -163,5 +162,4 @@ class CmsGlossarySaverTest extends CmsMocks
 
         return $cmsGlossaryTransfer;
     }
-
 }

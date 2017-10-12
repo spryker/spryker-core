@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class EventBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Event\Business\Dispatcher\EventDispatcherInterface
      */
@@ -109,5 +108,4 @@ class EventBusinessFactory extends AbstractBusinessFactory
     {
         return new EventLogger($this->createLoggerConfig(), $this->getConfig());
     }
-
 }

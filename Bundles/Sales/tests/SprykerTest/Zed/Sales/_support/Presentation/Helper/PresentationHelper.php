@@ -13,7 +13,6 @@ use SprykerTest\Shared\Application\Helper\ZedHelper;
 
 class PresentationHelper extends Module
 {
-
     /**
      * @param \Codeception\TestInterface $e
      *
@@ -32,5 +31,4 @@ class PresentationHelper extends Module
     {
         return $this->getModule('\\' . ZedHelper::class);
     }
-
 }

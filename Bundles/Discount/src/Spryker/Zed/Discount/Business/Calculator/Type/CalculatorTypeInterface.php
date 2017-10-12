@@ -9,19 +9,8 @@ namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 
-interface CalculatorInterface
+interface CalculatorTypeInterface
 {
-
-    /**
-     * @deprecated use calculateDiscount instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param int $value
-     *
-     * @return int
-     */
-    public function calculate(array $discountableItems, $value);
-
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
@@ -29,5 +18,4 @@ interface CalculatorInterface
      * @return int
      */
     public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer);
-
 }

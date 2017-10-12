@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class NavigationFormType extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_KEY = 'key';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -179,5 +178,4 @@ class NavigationFormType extends AbstractType
 
         return $query->count() > 0;
     }
-
 }

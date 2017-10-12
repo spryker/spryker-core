@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAttributeToProductInterface
 {
-
     /**
      * @param string $key
      *
@@ -169,5 +168,4 @@ interface ProductAttributeToProductInterface
      * @return void
      */
     public function touchProductConcrete($idProductConcrete);
-
 }

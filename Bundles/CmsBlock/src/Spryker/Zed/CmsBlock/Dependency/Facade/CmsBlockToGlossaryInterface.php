@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 interface CmsBlockToGlossaryInterface
 {
-
     /**
      * @param array $keys
      *
@@ -39,5 +38,4 @@ interface CmsBlockToGlossaryInterface
      * @return bool
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
-
 }

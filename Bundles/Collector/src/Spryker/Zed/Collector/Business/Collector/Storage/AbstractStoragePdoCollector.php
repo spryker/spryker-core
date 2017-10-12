@@ -12,7 +12,6 @@ use Spryker\Zed\Collector\CollectorConfig;
 
 abstract class AbstractStoragePdoCollector extends AbstractPdoCollector
 {
-
     /**
      * @return void
      */
@@ -27,5 +26,4 @@ abstract class AbstractStoragePdoCollector extends AbstractPdoCollector
 
         $this->criteriaBuilder->sql($sql);
     }
-
 }

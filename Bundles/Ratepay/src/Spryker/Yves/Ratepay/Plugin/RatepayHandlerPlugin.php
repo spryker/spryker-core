@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RatepayHandlerPlugin extends AbstractPlugin implements StepHandlerPluginWithMessengerInterface
 {
-
     /**
      * @var \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface
      */
@@ -46,5 +45,4 @@ class RatepayHandlerPlugin extends AbstractPlugin implements StepHandlerPluginWi
     {
         $this->getFactory()->createRatepayHandler()->addPaymentToQuote($request, $quoteTransfer, $this->flashMessenger);
     }
-
 }

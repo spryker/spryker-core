@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class NopaymentQueryContainer extends AbstractQueryContainer implements NopaymentQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ class NopaymentQueryContainer extends AbstractQueryContainer implements Nopaymen
         return $this->getFactory()->createNopaymentPaidQuery()
             ->findByFkSalesOrderItem($orderItem->getIdSalesOrderItem());
     }
-
 }

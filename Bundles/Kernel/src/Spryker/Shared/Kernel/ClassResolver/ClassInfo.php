@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 class ClassInfo
 {
-
     const KEY_NAMESPACE = 0;
     const KEY_APPLICATION = 1;
     const KEY_BUNDLE = 2;
@@ -144,5 +143,4 @@ class ClassInfo
     {
         return $this->callerClassParts[self::KEY_LAYER];
     }
-
 }

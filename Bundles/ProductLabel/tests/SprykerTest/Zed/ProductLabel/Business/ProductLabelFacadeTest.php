@@ -31,7 +31,6 @@ use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
  */
 class ProductLabelFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\ProductLabel\BusinessTester
      */
@@ -449,5 +448,4 @@ class ProductLabelFacadeTest extends Unit
 
         return $builder->build();
     }
-
 }

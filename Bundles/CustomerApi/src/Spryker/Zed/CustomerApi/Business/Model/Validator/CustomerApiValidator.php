@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Validation;
 
 class CustomerApiValidator implements CustomerApiValidatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -69,5 +68,4 @@ class CustomerApiValidator implements CustomerApiValidatorInterface
 
         return $errors;
     }
-
 }

@@ -29,7 +29,6 @@ use Spryker\Zed\Money\Business\MoneyFacade;
  */
 class MoneyValueConverterTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -97,5 +96,4 @@ class MoneyValueConverterTest extends Unit
 
         return new MoneyValueConverter($discountToMoneyBridge);
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CountryQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -52,5 +51,4 @@ interface CountryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
      */
     public function queryRegionByIsoCode($isoCode);
-
 }

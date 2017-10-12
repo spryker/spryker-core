@@ -15,7 +15,6 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 class KeyManager implements KeyManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
@@ -191,5 +190,4 @@ class KeyManager implements KeyManagerInterface
             ->find()
             ->toArray();
     }
-
 }

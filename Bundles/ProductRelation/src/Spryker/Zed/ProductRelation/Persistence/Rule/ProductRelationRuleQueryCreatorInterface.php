@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductRelationTransfer;
 
 interface ProductRelationRuleQueryCreatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function createQuery(ProductRelationTransfer $productRelationTransfer);
-
 }

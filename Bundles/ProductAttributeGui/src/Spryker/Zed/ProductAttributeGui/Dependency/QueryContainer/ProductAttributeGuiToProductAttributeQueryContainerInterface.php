@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer;
 
 interface ProductAttributeGuiToProductAttributeQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
@@ -48,5 +47,4 @@ interface ProductAttributeGuiToProductAttributeQueryContainerInterface
         $offset = null,
         $limit = 10
     );
-
 }

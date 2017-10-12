@@ -16,7 +16,6 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class CollectorProvider implements SpecificationProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
@@ -45,7 +44,7 @@ class CollectorProvider implements SpecificationProviderInterface
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $left
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $right
      *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorOrSpecification
      */
     public function createOr($left, $right)
     {
@@ -75,5 +74,4 @@ class CollectorProvider implements SpecificationProviderInterface
             )
         );
     }
-
 }

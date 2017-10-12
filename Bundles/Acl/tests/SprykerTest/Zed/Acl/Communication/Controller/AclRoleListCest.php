@@ -22,7 +22,6 @@ use SprykerTest\Zed\Acl\PageObject\AclRoleListPage;
  */
 class AclRoleListCest
 {
-
     /**
      * @param \SprykerTest\Zed\Acl\AclCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class AclRoleListCest
         $i->amOnPage(AclRoleListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Roles');
     }
-
 }

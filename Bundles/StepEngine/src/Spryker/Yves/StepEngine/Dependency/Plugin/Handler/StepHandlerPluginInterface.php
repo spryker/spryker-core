@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface StepHandlerPluginInterface
 {
-
     /**
      * @api
      *
@@ -22,5 +21,4 @@ interface StepHandlerPluginInterface
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function addToDataClass(Request $request, AbstractTransfer $dataTransfer);
-
 }

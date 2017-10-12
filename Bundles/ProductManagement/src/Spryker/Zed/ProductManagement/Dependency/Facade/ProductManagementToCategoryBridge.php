@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 class ProductManagementToCategoryBridge implements ProductManagementToCategoryInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Business\CategoryFacadeInterface
      */
@@ -22,5 +21,4 @@ class ProductManagementToCategoryBridge implements ProductManagementToCategoryIn
     {
         $this->categoryFacade = $categoryFacade;
     }
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQueryContainerInterface
 {
-
     const TRANSLATION = 'translation';
     const TRANSLATION_IS_ACTIVE = 'translation_is_active';
     const KEY_IS_ACTIVE = 'key_is_active';
@@ -476,5 +475,4 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         return $this->queryTranslations()
             ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
     }
-
 }

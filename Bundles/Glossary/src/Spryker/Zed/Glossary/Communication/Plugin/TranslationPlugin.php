@@ -16,7 +16,6 @@ use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
  */
 class TranslationPlugin extends AbstractPlugin implements TranslationPluginInterface
 {
-
     /**
      * @param string $keyName
      *
@@ -37,5 +36,4 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
     {
         return $this->getFacade()->translate($keyName, $data);
     }
-
 }

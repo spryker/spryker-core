@@ -9,7 +9,6 @@ namespace Spryker\Shared\Log;
 
 interface LogConstants
 {
-
     /**
      * Specification:
      * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
@@ -78,5 +77,4 @@ interface LogConstants
      * @api
      */
     const LOG_SANITIZED_VALUE = 'LOG_SANITIZED_VALUE';
-
 }

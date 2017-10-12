@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class RatepayPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery
      */
@@ -33,5 +32,4 @@ class RatepayPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyPaymentRatepayLogQuery::create();
     }
-
 }

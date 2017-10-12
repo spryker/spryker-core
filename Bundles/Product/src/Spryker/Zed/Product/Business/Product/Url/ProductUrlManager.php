@@ -18,7 +18,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductUrlManager implements ProductUrlManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
@@ -238,5 +237,4 @@ class ProductUrlManager implements ProductUrlManagerInterface
 
         return $urlTransfer;
     }
-
 }

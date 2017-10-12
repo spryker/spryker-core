@@ -19,7 +19,6 @@ use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewSe
 
 class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
@@ -104,5 +103,4 @@ class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
 
         return $productReviewTransfer->modifiedToArray();
     }
-
 }

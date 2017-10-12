@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface NewsletterToGlossaryInterface
 {
-
     /**
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
@@ -29,5 +28,4 @@ interface NewsletterToGlossaryInterface
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function getTranslation($keyName, LocaleTransfer $locale);
-
 }

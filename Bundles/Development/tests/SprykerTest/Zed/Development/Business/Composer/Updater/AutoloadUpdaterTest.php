@@ -24,7 +24,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class AutoloadUpdaterTest extends Unit
 {
-
     /**
      * @dataProvider autoloadKeys
      *
@@ -144,5 +143,4 @@ class AutoloadUpdaterTest extends Unit
     {
         return new SplFileInfo(__FILE__, __DIR__, __DIR__);
     }
-
 }

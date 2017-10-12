@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerUserConnectorForm extends AbstractType
 {
-
     const FIELD_ID_USER = CustomerUserConnectionUpdateTransfer::ID_USER;
     const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_ASSIGN;
     const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_DE_ASSIGN;
@@ -118,5 +117,4 @@ class CustomerUserConnectorForm extends AbstractType
                 }
             ));
     }
-
 }

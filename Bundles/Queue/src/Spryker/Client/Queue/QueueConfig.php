@@ -12,7 +12,6 @@ use Spryker\Shared\Queue\QueueConstants;
 
 class QueueConfig extends AbstractBundleConfig
 {
-
     /**
      * @return array
      */
@@ -20,5 +19,4 @@ class QueueConfig extends AbstractBundleConfig
     {
         return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION, []);
     }
-
 }

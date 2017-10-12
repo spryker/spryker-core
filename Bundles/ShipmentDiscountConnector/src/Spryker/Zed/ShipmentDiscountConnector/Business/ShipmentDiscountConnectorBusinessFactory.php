@@ -20,7 +20,6 @@ use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyPro
  */
 class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountReaderInterface
      */
@@ -116,5 +115,4 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ShipmentDiscountConnectorDependencyProvider::FACADE_MONEY);
     }
-
 }

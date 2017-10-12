@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 interface CategoryFormPluginInterface
 {
-
     /**
      * Specification:
      * - Add form parts to the main form builder
@@ -23,5 +22,4 @@ interface CategoryFormPluginInterface
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder);
-
 }

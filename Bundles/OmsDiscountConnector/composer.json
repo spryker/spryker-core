@@ -3,7 +3,7 @@
   "description": "OmsDiscountConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/discount": "^4.0.0",
+    "spryker/discount": "^4.0.0 || ^5.0.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {

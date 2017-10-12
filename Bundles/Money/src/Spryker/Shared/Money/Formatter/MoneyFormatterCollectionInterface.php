@@ -9,7 +9,6 @@ namespace Spryker\Shared\Money\Formatter;
 
 interface MoneyFormatterCollectionInterface
 {
-
     /**
      * @param \Spryker\Shared\Money\Formatter\MoneyFormatterInterface $formatter
      * @param string $type
@@ -24,5 +23,4 @@ interface MoneyFormatterCollectionInterface
      * @return \Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
     public function getFormatter($type);
-
 }

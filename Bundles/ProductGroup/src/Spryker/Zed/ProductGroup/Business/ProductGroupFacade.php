@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductGroupFacade extends AbstractFacade implements ProductGroupFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -111,5 +110,4 @@ class ProductGroupFacade extends AbstractFacade implements ProductGroupFacadeInt
             ->createProductGroupDeleter()
             ->deleteProductGroup($productGroupTransfer);
     }
-
 }

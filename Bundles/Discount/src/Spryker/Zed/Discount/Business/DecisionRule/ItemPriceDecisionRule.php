@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInter
 
 class ItemPriceDecisionRule implements DecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -52,23 +51,6 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
 
         $this->moneyValueConverter->convertDecimalToCent($clauseTransfer);
 
-        $price = $this->getPrice($currentItemTransfer, $quoteTransfer->getPriceMode());
-        return $this->comparators->compare($clauseTransfer, $price);
+        return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitPrice());
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
-     * @param string $taxMode
-     *
-     * @return int
-     */
-    protected function getPrice(ItemTransfer $currentItemTransfer, $taxMode)
-    {
-        if ($taxMode === 'NET_MODE') {
-            return $currentItemTransfer->getUnitNetPrice();
-        } else {
-            return $currentItemTransfer->getUnitGrossPrice();
-        }
-    }
-
 }

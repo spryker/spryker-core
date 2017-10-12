@@ -9,7 +9,6 @@ namespace Spryker\Zed\Price\Dependency\Facade;
 
 interface PriceToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -41,5 +40,4 @@ interface PriceToTouchInterface
      * @return int
      */
     public function bulkTouchDeleted($itemType, array $itemIds);
-
 }

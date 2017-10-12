@@ -15,7 +15,6 @@ use Spryker\Zed\Testify\Locator\AbstractLocator;
 
 class BusinessLocator extends AbstractLocator
 {
-
     /**
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
@@ -34,5 +33,4 @@ class BusinessLocator extends AbstractLocator
 
         return $bundleProxy;
     }
-
 }

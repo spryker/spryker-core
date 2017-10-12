@@ -25,7 +25,6 @@ use Symfony\Component\Finder\Finder;
  */
 class SessionHandlerFileTest extends Unit
 {
-
     const LIFETIME = 20;
 
     const SESSION_NAME = 'sessionName';
@@ -225,5 +224,4 @@ class SessionHandlerFileTest extends Unit
 
         return $mock;
     }
-
 }

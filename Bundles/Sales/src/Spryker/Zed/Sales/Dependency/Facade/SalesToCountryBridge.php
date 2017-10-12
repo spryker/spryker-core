@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 
 class SalesToCountryBridge implements SalesToCountryInterface
 {
-
     /**
      * @var \Spryker\Zed\Country\Business\CountryFacadeInterface
      */
@@ -42,5 +41,4 @@ class SalesToCountryBridge implements SalesToCountryInterface
     {
         return $this->countryFacade->getAvailableCountries();
     }
-
 }

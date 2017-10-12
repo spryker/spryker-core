@@ -21,7 +21,6 @@ use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
  */
 class ActivationTest extends FacadeTestAbstract
 {
-
     /**
      * @return void
      */
@@ -131,5 +130,4 @@ class ActivationTest extends FacadeTestAbstract
 
         return $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
     }
-
 }

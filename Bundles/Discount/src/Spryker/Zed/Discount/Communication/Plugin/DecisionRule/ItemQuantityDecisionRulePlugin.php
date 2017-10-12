@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ItemQuantityDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -51,5 +50,4 @@ class ItemQuantityDecisionRulePlugin extends AbstractPlugin implements DecisionR
             ComparatorOperators::TYPE_NUMBER,
         ];
     }
-
 }

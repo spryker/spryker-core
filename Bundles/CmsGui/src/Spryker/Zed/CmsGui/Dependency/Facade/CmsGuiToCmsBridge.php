@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 
 class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacadeInterface
      */
@@ -199,5 +198,4 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     {
         return $this->cmsFacade->syncTemplate($cmsTemplateFolderPath);
     }
-
 }

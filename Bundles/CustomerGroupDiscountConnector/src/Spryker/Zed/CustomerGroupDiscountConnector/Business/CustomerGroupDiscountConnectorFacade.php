@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CustomerGroupDiscountConnectorFacade extends AbstractFacade implements CustomerGroupDiscountConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -39,5 +38,4 @@ class CustomerGroupDiscountConnectorFacade extends AbstractFacade implements Cus
             ->createCustomerGroupDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
-
 }

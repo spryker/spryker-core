@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DiscountViewBlockController extends AbstractController
 {
-
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
 
     /**
@@ -36,5 +35,4 @@ class DiscountViewBlockController extends AbstractController
             'discountPromotion' => $discountPromotionTransfer,
         ];
     }
-
 }

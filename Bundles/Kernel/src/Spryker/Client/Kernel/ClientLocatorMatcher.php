@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class ClientLocatorMatcher implements LocatorMatcherInterface
 {
-
     const METHOD_PREFIX = 'client';
 
     /**
@@ -25,5 +24,4 @@ class ClientLocatorMatcher implements LocatorMatcherInterface
     {
         return (strpos($method, self::METHOD_PREFIX) === 0);
     }
-
 }

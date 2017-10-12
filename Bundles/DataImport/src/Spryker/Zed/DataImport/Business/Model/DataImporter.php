@@ -25,7 +25,6 @@ class DataImporter implements
     DataImporterAfterImportAwareInterface,
     DataSetStepBrokerAwareInterface
 {
-
     /**
      * @var string
      */
@@ -236,5 +235,4 @@ class DataImporter implements
 
         return $message;
     }
-
 }

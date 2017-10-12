@@ -36,7 +36,6 @@ use SprykerTest\Zed\Ratepay\Business\Api\Response\Response;
  */
 class ConverterTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory
      */
@@ -177,5 +176,4 @@ class ConverterTest extends Unit
             new InstallmentCalculation($this->requestTransfer)
         );
     }
-
 }

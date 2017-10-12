@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\Log\Config;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 
 /**
@@ -22,7 +21,6 @@ use Spryker\Shared\Log\Config\DefaultLoggerConfig;
  */
 class DefaultLoggerConfigTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -52,5 +50,4 @@ class DefaultLoggerConfigTest extends Unit
         $defaultLoggerConfig = new DefaultLoggerConfig();
         $this->assertInternalType('array', $defaultLoggerConfig->getProcessors());
     }
-
 }

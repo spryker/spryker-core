@@ -23,7 +23,6 @@ use SprykerTest\Yves\Kernel\ClassResolver\AbstractResolverTest;
  */
 class DependencyProviderResolverTest extends AbstractResolverTest
 {
-
     /**
      * @var string
      */
@@ -55,5 +54,4 @@ class DependencyProviderResolverTest extends AbstractResolverTest
 
         return $resolverMock;
     }
-
 }

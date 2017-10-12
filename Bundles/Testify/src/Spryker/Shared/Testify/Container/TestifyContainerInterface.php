@@ -9,7 +9,6 @@ namespace Spryker\Shared\Testify\Container;
 
 interface TestifyContainerInterface
 {
-
     /**
      * @param string $key
      * @param mixed $value
@@ -17,5 +16,4 @@ interface TestifyContainerInterface
      * @return $this
      */
     public function set($key, $value);
-
 }

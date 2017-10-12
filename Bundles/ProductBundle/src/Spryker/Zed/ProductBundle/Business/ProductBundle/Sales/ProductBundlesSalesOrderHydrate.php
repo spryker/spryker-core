@@ -15,7 +15,6 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQuer
 
 class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrateInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
      */
@@ -183,5 +182,4 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
 
         return $bundleGroups;
     }
-
 }

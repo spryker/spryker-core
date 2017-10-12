@@ -15,7 +15,6 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventDispatcher implements EventDispatcherInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
@@ -122,5 +121,4 @@ class EventDispatcher implements EventDispatcherInterface
 
         return '[sync] "%s" handled by "%s", event data: "%s" => "%s".';
     }
-
 }

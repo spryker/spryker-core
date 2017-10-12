@@ -19,7 +19,6 @@ use Twig_Environment;
  */
 class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -104,5 +103,4 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
             ];
         });
     }
-
 }

@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface CalculationFacadeInterface
 {
-
     /**
      * Specification:
      *  - Maps Quote to CalculableObject
@@ -294,4 +293,16 @@ interface CalculationFacadeInterface
      */
     public function removeAllCalculatedDiscounts(CalculableObjectTransfer $calculableObjectTransfer);
 
+    /**
+     *
+     * Specification:
+     *  - Calculates order total before taxes, net total.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateNetTotal(CalculableObjectTransfer $calculableObjectTransfer);
 }

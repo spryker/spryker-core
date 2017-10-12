@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGuiToProductAttributeInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface
      */
@@ -227,5 +226,4 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
     ) {
         return $this->productAttributeFacade->updateProductManagementAttribute($productManagementAttributeTransfer);
     }
-
 }

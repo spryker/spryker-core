@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class CmsContentWidgetProductConnectorFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\CmsContentWidgetProductConnector\Dependency\Client\CmsContentWidgetProductConnectorToProductInterface
      */
@@ -19,5 +18,4 @@ class CmsContentWidgetProductConnectorFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::PRODUCT_CLIENT);
     }
-
 }

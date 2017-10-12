@@ -20,7 +20,6 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Mapper;
  */
 class PaymentMapperTest extends AbstractMapperTest
 {
-
     /**
      * @return void
      */
@@ -36,5 +35,4 @@ class PaymentMapperTest extends AbstractMapperTest
         $this->assertEquals('iso3', $this->requestTransfer->getPayment()->getCurrency());
         $this->assertEquals('invoice', $this->requestTransfer->getPayment()->getMethod());
     }
-
 }

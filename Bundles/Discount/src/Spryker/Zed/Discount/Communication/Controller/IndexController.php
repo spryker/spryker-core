@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_BATCH_PARAMETER = 'batch';
     const URL_PARAM_ID_POOL = 'id-pool';
@@ -140,7 +139,10 @@ class IndexController extends AbstractController
             ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
-        $this->setFormattedCalculatorDiscountAmount($discountConfiguratorTransfer);
+
+        $discountConfiguratorTransfer = $this->getFactory()
+            ->createDiscountAmountFormatter()
+            ->format($discountConfiguratorTransfer);
 
         return [
             'discountConfigurator' => $discountConfiguratorTransfer,
@@ -353,23 +355,4 @@ class IndexController extends AbstractController
             }
         }
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
-    protected function setFormattedCalculatorDiscountAmount(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
-    {
-        $calculatorPlugins = $this->getFactory()->getCalculatorPlugins();
-        $calculatorPluginName = $discountConfiguratorTransfer->getDiscountCalculator()->getCalculatorPlugin();
-        if (!isset($calculatorPlugins[$calculatorPluginName])) {
-            return;
-        }
-        $calculatorPlugin = $calculatorPlugins[$calculatorPluginName];
-
-        $formatterAmount = $calculatorPlugin->getFormattedAmount($discountConfiguratorTransfer->getDiscountCalculator()->getAmount());
-        $discountConfiguratorTransfer->getDiscountCalculator()->setAmount($formatterAmount);
-    }
-
 }

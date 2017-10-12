@@ -15,7 +15,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class TouchAssertionHelper extends Module
 {
-
     use Asserts;
     use LocatorHelperTrait;
 
@@ -131,5 +130,4 @@ class TouchAssertionHelper extends Module
     {
         return $this->getLocator()->touch()->queryContainer();
     }
-
 }

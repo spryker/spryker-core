@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockWriter implements CmsBlockWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -247,5 +246,4 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock->setIsActive($isActive);
         $spyCmsBlock->save();
     }
-
 }

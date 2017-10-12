@@ -20,7 +20,6 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Mapper;
  */
 class PartialBasketMapperTest extends AbstractMapperTest
 {
-
     /**
      * @return void
      */
@@ -37,5 +36,4 @@ class PartialBasketMapperTest extends AbstractMapperTest
         $this->assertEquals(18, $this->requestTransfer->getShoppingBasket()->getAmount());
         $this->assertEquals('iso3', $this->requestTransfer->getShoppingBasket()->getCurrency());
     }
-
 }

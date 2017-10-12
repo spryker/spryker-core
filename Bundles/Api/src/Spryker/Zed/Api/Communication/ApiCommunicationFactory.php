@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ApiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param string $formatType
      *
@@ -61,5 +60,4 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ApiDependencyProvider::SERVICE_ENCODING);
     }
-
 }

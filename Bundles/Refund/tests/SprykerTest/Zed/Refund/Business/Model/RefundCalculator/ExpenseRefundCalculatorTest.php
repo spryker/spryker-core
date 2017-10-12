@@ -23,7 +23,6 @@ use Spryker\Zed\Refund\Business\Model\RefundCalculator\ExpenseRefundCalculator;
  */
 class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
 
         $this->assertSame(10, $refundTransfer->getAmount());
     }
-
 }

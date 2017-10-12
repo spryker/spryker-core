@@ -12,7 +12,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CategoryDataHelper extends Module
 {
-
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
@@ -102,5 +101,4 @@ class CategoryDataHelper extends Module
     {
         $this->getCategoryFacade()->delete($categoryTransfer->getIdCategory());
     }
-
 }

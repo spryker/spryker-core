@@ -14,7 +14,6 @@ use Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductBridge as Qu
 
 class WishlistDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
@@ -48,5 +47,4 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

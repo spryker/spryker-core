@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface AddressInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
@@ -113,5 +112,4 @@ interface AddressInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer);
-
 }

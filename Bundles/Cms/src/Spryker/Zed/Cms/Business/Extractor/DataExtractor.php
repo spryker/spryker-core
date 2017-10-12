@@ -19,7 +19,6 @@ use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
 
 class DataExtractor implements DataExtractorInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
      */
@@ -136,5 +135,4 @@ class DataExtractor implements DataExtractorInterface
 
         return '';
     }
-
 }

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Api\Builder;
 
 class InstallmentDetail extends AbstractBuilder implements BuilderInterface
 {
-
     const ROOT_TAG = 'installment-details';
 
     /**
@@ -34,5 +33,4 @@ class InstallmentDetail extends AbstractBuilder implements BuilderInterface
     {
         return static::ROOT_TAG;
     }
-
 }

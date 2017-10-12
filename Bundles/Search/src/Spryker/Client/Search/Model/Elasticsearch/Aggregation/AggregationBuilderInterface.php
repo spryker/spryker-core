@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 interface AggregationBuilderInterface
 {
-
     /**
      * @param string $name
      *
@@ -44,5 +43,4 @@ interface AggregationBuilderInterface
      * @return \Elastica\Aggregation\TopHits
      */
     public function createTopHitsAggregation($name);
-
 }

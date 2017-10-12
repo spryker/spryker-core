@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductCategoryManagerInterface
 {
-
     /**
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -77,5 +76,4 @@ interface ProductCategoryManagerInterface
      * @return void
      */
     public function updateProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer);
-
 }

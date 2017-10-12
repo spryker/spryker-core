@@ -15,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailableCustomerTable extends AbstractCustomerTable
 {
-
     const REDIRECT_WARNING = 'Your unsaved modification will be lost, are you sure to continue?';
 
     const IS_CHECKBOX_SET_BY_DEFAULT = false;
@@ -116,5 +115,4 @@ class AvailableCustomerTable extends AbstractCustomerTable
     {
         return 'Assign';
     }
-
 }

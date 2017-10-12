@@ -9,7 +9,6 @@ namespace Spryker\Yves\DiscountPromotion\Dependency\Client;
 
 class DiscountPromotionToProductBridge implements DiscountPromotionToProductInterface
 {
-
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
      */
@@ -32,5 +31,4 @@ class DiscountPromotionToProductBridge implements DiscountPromotionToProductInte
     {
         return $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
     }
-
 }

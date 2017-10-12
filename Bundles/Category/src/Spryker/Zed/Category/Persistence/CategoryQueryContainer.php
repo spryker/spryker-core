@@ -24,7 +24,6 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
  */
 class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -1108,5 +1107,4 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         return $this->queryCategoryTemplate()
             ->filterByName($nameCategoryTemplate);
     }
-
 }

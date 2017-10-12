@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockGuiToCmsBlockInterface
 {
-
     /**
      * @param int $idCmsBlock
      *
@@ -75,5 +74,4 @@ interface CmsBlockGuiToCmsBlockInterface
      * @return bool
      */
     public function hasTemplateFileById($idCmsBlockTemplate);
-
 }

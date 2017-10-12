@@ -26,7 +26,6 @@ use Spryker\Shared\Log\Sanitizer\Sanitizer;
 
 class SprykerLoggerConfig implements LoggerConfigInterface
 {
-
     /**
      * @return string
      */
@@ -102,5 +101,4 @@ class SprykerLoggerConfig implements LoggerConfigInterface
 
         return $filterHandler;
     }
-
 }

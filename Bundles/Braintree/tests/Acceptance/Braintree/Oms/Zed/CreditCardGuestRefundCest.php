@@ -20,7 +20,6 @@ use Acceptance\Braintree\Oms\Zed\Tester\OmsTester;
  */
 class CreditCardGuestRefundCest
 {
-
     /**
      * @skip Broken because of new checkout
      *
@@ -42,5 +41,4 @@ class CreditCardGuestRefundCest
         $i->amLoggedInUser();
         $i->refundItemAndCloseOrder();
     }
-
 }

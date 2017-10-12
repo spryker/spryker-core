@@ -26,7 +26,6 @@ use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
  */
 class CreateProductReviewTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\ProductReview\ProductReviewBusinessTester
      */
@@ -132,5 +131,4 @@ class CreateProductReviewTest extends Unit
 
         return $productReviewClientInterfaceMock;
     }
-
 }

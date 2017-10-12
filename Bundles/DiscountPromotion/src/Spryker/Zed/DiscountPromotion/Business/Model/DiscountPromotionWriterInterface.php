@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountPromotionTransfer;
 
 interface DiscountPromotionWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
      *
@@ -25,5 +24,4 @@ interface DiscountPromotionWriterInterface
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
     public function update(DiscountPromotionTransfer $discountPromotionTransfer);
-
 }

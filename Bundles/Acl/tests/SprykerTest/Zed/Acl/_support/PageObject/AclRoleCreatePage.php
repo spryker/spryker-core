@@ -9,7 +9,5 @@ namespace SprykerTest\Zed\Acl\PageObject;
 
 class AclRoleCreatePage
 {
-
     const URL = '/acl/role/create';
-
 }

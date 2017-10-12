@@ -25,7 +25,6 @@ use Spryker\Zed\ProductSetGui\ProductSetGuiConfig;
 
 class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetInterface
      */
@@ -298,5 +297,4 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
 
         return $productImageData;
     }
-
 }

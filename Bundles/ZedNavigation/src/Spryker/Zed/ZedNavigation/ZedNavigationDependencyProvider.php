@@ -14,7 +14,6 @@ use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge;
 
 class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const URL_BUILDER = 'url builder';
     const SERVICE_ENCODING = 'util encoding service';
 
@@ -62,5 +61,4 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

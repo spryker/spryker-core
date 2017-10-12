@@ -21,7 +21,6 @@ use Spryker\Yves\CartVariant\Mapper\CartItemsAvailabilityMapper;
  */
 class AvailabilityMapperTest extends CartItemsMapperBaseTest
 {
-
     /**
      * @return void
      */
@@ -55,5 +54,4 @@ class AvailabilityMapperTest extends CartItemsMapperBaseTest
 
         return $total;
     }
-
 }

@@ -8,7 +8,6 @@ namespace SprykerTest\Shared\Kernel\Fixtures;
 
 class Bar
 {
-
     /**
      * @var mixed
      */
@@ -44,5 +43,4 @@ class Bar
     {
         return $this->bar;
     }
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ViewBlockController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
 
     /**
@@ -75,5 +74,4 @@ class ViewBlockController extends AbstractController
 
         return $viewRenderedPlugins;
     }
-
 }

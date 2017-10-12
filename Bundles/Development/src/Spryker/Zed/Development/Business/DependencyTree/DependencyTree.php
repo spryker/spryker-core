@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class DependencyTree extends AbstractDependencyTree
 {
-
     const META_FINDER = 'finder';
     const META_FILE = 'file';
     const META_IN_TEST = 'in test';
@@ -101,5 +100,4 @@ class DependencyTree extends AbstractDependencyTree
     {
         return ($bundle === $to);
     }
-
 }

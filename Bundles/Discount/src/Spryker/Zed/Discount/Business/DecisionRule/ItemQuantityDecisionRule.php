@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class ItemQuantityDecisionRule implements DecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -42,5 +41,4 @@ class ItemQuantityDecisionRule implements DecisionRuleInterface
 
         return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getQuantity());
     }
-
 }

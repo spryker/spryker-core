@@ -19,7 +19,6 @@ use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
  */
 class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter
      */
@@ -51,5 +50,4 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::FACADE_TAX);
     }
-
 }

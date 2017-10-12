@@ -9,7 +9,5 @@ namespace Spryker\Shared\ProductRelation;
 
 interface ProductRelationConstants
 {
-
     const RESOURCE_TYPE_PRODUCT_RELATION = 'product_relation';
-
 }

@@ -26,7 +26,6 @@ use Spryker\Zed\Sales\SalesConfig;
 
 class OrderSaver implements OrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
@@ -421,5 +420,4 @@ class OrderSaver implements OrderSaverInterface
         $quoteTransfer->requireItems()
             ->requireTotals();
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
  */
 class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -40,5 +39,4 @@ class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductCo
 
         return $productConcreteTransfer;
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CalculationFacade extends AbstractFacade implements CalculationFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -375,4 +374,19 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
             ->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateNetTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createNetTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
 }

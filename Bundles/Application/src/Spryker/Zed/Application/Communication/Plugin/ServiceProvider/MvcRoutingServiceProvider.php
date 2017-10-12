@@ -13,7 +13,6 @@ use Spryker\Zed\Application\Business\Model\Router\MvcRouter;
 
 class MvcRoutingServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -32,5 +31,4 @@ class MvcRoutingServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
     }
-
 }

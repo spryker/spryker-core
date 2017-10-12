@@ -17,7 +17,6 @@ use Twig_ExtensionInterface;
  */
 abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twig_ExtensionInterface
 {
-
     /**
      * Initializes the runtime environment.
      *
@@ -100,5 +99,4 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     {
         return [];
     }
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SchemaCopyConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:schema:copy';
 
     /**
@@ -43,5 +42,4 @@ class SchemaCopyConsole extends Console
         $this->info('Copy and merge schema files');
         $this->getFacade()->copySchemaFilesToTargetDirectory();
     }
-
 }

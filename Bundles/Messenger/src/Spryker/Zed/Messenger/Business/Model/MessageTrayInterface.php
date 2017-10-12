@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 interface MessageTrayInterface
 {
-
     const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
     const FLASH_MESSAGES_ERROR = 'flash.messages.error';
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
@@ -41,5 +40,4 @@ interface MessageTrayInterface
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getMessages();
-
 }

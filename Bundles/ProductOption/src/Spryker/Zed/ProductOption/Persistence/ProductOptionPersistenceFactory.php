@@ -20,7 +20,6 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  */
 class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */
@@ -68,5 +67,4 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_COUNTRY);
     }
-
 }

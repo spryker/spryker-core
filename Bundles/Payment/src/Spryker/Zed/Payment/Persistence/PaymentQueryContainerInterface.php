@@ -12,7 +12,6 @@ namespace Spryker\Zed\Payment\Persistence;
  */
 interface PaymentQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -42,5 +41,4 @@ interface PaymentQueryContainerInterface
      * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
      */
     public function queryPaymentMethodsByIdSalesOrder($idSalesOrder);
-
 }

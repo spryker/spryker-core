@@ -23,7 +23,6 @@ use SprykerTest\Zed\Ratepay\Business\Request\Payment\InvoiceAbstractTest;
  */
 class InvoiceTest extends InvoiceAbstractTest
 {
-
     /**
      * @return void
      */
@@ -62,5 +61,4 @@ class InvoiceTest extends InvoiceAbstractTest
     {
         return $facade->confirmPayment($this->orderTransfer);
     }
-
 }

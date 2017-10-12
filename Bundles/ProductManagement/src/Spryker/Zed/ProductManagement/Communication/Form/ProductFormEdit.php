@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormEdit extends ProductFormAdd
 {
-
     /**
      * @return array
      */
@@ -99,5 +98,4 @@ class ProductFormEdit extends ProductFormAdd
     {
         return $this;
     }
-
 }

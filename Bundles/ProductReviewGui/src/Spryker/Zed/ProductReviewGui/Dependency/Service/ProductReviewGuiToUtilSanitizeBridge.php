@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewGui\Dependency\Service;
 
 class ProductReviewGuiToUtilSanitizeBridge implements ProductReviewGuiToUtilSanitizeInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
@@ -34,5 +33,4 @@ class ProductReviewGuiToUtilSanitizeBridge implements ProductReviewGuiToUtilSani
     {
         return $this->utilSanitizeService->escapeHtml($text, $double, $charset);
     }
-
 }

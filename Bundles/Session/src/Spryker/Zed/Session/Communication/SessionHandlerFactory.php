@@ -11,7 +11,6 @@ use Spryker\Shared\Session\Business\Model\SessionFactory;
 
 class SessionHandlerFactory extends SessionFactory
 {
-
     /**
      * @var int
      */
@@ -32,5 +31,4 @@ class SessionHandlerFactory extends SessionFactory
     {
         return $this->sessionLifeTime;
     }
-
 }

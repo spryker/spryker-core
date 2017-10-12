@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorStrategyResolverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -20,5 +19,4 @@ interface CollectorStrategyResolverInterface
      * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface|null
      */
     public function resolveCollector(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer);
-
 }

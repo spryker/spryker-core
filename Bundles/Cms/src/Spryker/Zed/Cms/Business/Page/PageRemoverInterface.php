@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Business\Page;
 
 interface PageRemoverInterface
 {
-
     /**
      * @param int $idCmsPage
      *
@@ -18,5 +17,4 @@ interface PageRemoverInterface
      * @return void
      */
     public function delete($idCmsPage);
-
 }

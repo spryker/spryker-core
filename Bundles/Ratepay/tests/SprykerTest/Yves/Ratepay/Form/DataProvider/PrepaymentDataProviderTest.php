@@ -23,7 +23,6 @@ use Spryker\Yves\Ratepay\Form\DataProvider\PrepaymentDataProvider;
  */
 class PrepaymentDataProviderTest extends AbstractDataProviderTest
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class PrepaymentDataProviderTest extends AbstractDataProviderTest
 
         return $prepaymentDataProvider;
     }
-
 }
