@@ -140,7 +140,7 @@ class MetaDataProviderTest extends Unit
 
         return new MetaDataProvider(
             [
-                $decisionRulePluginMock
+                $decisionRulePluginMock,
             ],
             $comparatorOperators,
             $logicalComparatorsMock
