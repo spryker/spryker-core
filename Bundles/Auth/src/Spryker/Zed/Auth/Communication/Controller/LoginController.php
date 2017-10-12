@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LoginController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -64,5 +63,4 @@ class LoginController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

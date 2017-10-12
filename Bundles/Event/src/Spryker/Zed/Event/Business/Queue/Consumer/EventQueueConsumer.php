@@ -15,7 +15,6 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -199,5 +198,4 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
         return $eventTransfer;
     }
-
 }

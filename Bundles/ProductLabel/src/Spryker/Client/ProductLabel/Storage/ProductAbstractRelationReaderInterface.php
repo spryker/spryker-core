@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductLabel\Storage;
 
 interface ProductAbstractRelationReaderInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param string $localeName
@@ -17,5 +16,4 @@ interface ProductAbstractRelationReaderInterface
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName);
-
 }

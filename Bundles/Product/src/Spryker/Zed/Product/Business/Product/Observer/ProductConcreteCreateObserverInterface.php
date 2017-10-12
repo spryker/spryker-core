@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcreteCreateObserverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function create(ProductConcreteTransfer $productConcreteTransfer);
-
 }

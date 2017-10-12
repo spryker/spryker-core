@@ -15,7 +15,6 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class BundleControllerActionRouteNameResolver implements RouteNameResolverInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface
      */
@@ -71,5 +70,4 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
 
         return $this->filter;
     }
-
 }

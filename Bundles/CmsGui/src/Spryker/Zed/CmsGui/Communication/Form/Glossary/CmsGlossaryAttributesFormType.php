@@ -28,7 +28,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsGlossaryAttributesFormType extends AbstractType
 {
-
     const FIELD_PLACEHOLDER = 'placeholder';
     const FIELD_FK_PAGE = 'fkPage';
     const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
@@ -213,5 +212,4 @@ class CmsGlossaryAttributesFormType extends AbstractType
 
         return $placeholderConstraints;
     }
-
 }

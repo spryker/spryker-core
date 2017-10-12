@@ -22,7 +22,6 @@ use SprykerTest\Service\Kernel\Fixtures\Plugin\FooPlugin;
  */
 class AbstractPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -58,5 +57,4 @@ class AbstractPluginTest extends Unit
 
         $this->assertInstanceOf(AbstractServiceFactory::class, $service);
     }
-
 }

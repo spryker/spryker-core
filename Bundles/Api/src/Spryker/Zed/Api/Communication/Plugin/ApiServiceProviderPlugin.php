@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
      */
@@ -63,5 +62,4 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
         $app->before(function (Request $request) {
         });
     }
-
 }

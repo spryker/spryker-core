@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SetController extends AbstractController
 {
-
     const PARAM_URL_ID_TAX_SET = 'id-tax-set';
 
     /**
@@ -148,5 +147,4 @@ class SetController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

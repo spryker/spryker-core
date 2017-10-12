@@ -20,7 +20,6 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
-
     const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
     const OPTION_KEY_TOKEN_FIELD_NAME = 'token_field_name';
 
@@ -163,5 +162,4 @@ class DoubleSubmitFormType extends AbstractTypeExtension
             $this->translationDomain
         );
     }
-
 }

@@ -12,7 +12,6 @@ namespace Spryker\Zed\ZedRequest\Business;
  */
 interface ZedRequestFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns the request data from last yves to zed request
@@ -26,5 +25,4 @@ interface ZedRequestFacadeInterface
      * @return string
      */
     public function getRepeatData($bundleControllerAction);
-
 }

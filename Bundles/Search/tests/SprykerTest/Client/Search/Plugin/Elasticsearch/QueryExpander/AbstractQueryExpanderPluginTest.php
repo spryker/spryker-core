@@ -39,7 +39,6 @@ use SprykerTest\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
  */
 abstract class AbstractQueryExpanderPluginTest extends Unit
 {
-
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
@@ -330,5 +329,4 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     {
         return new SearchFactory();
     }
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFilter;
 
 interface DependencyFilterCompositeInterface extends DependencyFilterInterface
 {
-
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface $dependencyFilter
      *
      * @return $this
      */
     public function addFilter(DependencyFilterInterface $dependencyFilter);
-
 }

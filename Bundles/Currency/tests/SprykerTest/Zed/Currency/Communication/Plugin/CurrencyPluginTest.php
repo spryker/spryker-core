@@ -23,7 +23,6 @@ use Spryker\Zed\Currency\Communication\Plugin\CurrencyPlugin;
  */
 class CurrencyPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -43,5 +42,4 @@ class CurrencyPluginTest extends Unit
         $currencyTransfer = $currencyPlugin->getCurrent();
         $this->assertInstanceOf(CurrencyTransfer::class, $currencyTransfer);
     }
-
 }

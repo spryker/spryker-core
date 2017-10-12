@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PriceForm extends AbstractType
 {
-
     const FIELD_PRICE = 'price';
     const FIELD_PRICES = 'prices';
     const FIELD_TAX_RATE = 'tax_rate';
@@ -242,5 +241,4 @@ class PriceForm extends AbstractType
             ''
         );
     }
-
 }

@@ -20,7 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DataImportConsole extends Console
 {
-
     const DEFAULT_IMPORTER_TYPE = 'full';
 
     const DEFAULT_NAME = 'data:import';
@@ -212,5 +211,4 @@ class DataImportConsole extends Console
 
         return $dataImporterReaderConfiguration;
     }
-
 }

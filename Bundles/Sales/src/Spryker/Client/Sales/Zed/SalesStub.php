@@ -13,7 +13,6 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class SalesStub implements SalesStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -46,5 +45,4 @@ class SalesStub implements SalesStubInterface
     {
         return $this->zedStub->call('/sales/gateway/get-order-details', $orderTransfer);
     }
-
 }

@@ -21,7 +21,6 @@ use Twig_SimpleFilter;
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const FUNCTION_NAME_MONEY_COLLECTION = 'form_money_collection';
     const TEMPLATE_PATH_MONEY_TABLE = '@Money/Form/Type/money_table.twig';
 
@@ -105,5 +104,4 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
             $options
         );
     }
-
 }

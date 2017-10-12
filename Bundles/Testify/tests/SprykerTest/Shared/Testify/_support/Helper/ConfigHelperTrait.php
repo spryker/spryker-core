@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 trait ConfigHelperTrait
 {
-
     /**
      * @param string $key
      * @param string|int|array|float|bool $value
@@ -45,5 +44,4 @@ trait ConfigHelperTrait
      * @return \Codeception\Module
      */
     abstract protected function getModule($name);
-
 }

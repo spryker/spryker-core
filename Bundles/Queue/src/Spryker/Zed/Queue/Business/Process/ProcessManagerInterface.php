@@ -9,7 +9,6 @@ namespace Spryker\Zed\Queue\Business\Process;
 
 interface ProcessManagerInterface
 {
-
     /**
      * @param string $command
      * @param string $queue
@@ -29,5 +28,4 @@ interface ProcessManagerInterface
      * @return void
      */
     public function flushIdleProcesses();
-
 }

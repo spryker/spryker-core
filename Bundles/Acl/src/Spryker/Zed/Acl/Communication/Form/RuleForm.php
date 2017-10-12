@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RuleForm extends AbstractType
 {
-
     const OPTION_TYPE = 'option_type';
 
     const FIELD_BUNDLE = 'bundle';
@@ -148,5 +147,4 @@ class RuleForm extends AbstractType
 
         return $this;
     }
-
 }

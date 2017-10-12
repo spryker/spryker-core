@@ -9,7 +9,6 @@ namespace Spryker\Client\CmsBlock;
 
 interface CmsBlockClientInterface
 {
-
     /**
      * Specification:
      * - Find blocks by provided array of names with a single multi request to a storage
@@ -49,5 +48,4 @@ interface CmsBlockClientInterface
      * @return string
      */
     public function generateBlockNameKey($name, $localeName);
-
 }

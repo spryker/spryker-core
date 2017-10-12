@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class TouchPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
@@ -42,5 +41,4 @@ class TouchPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyTouchStorageQuery::create();
     }
-
 }

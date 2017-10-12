@@ -16,7 +16,6 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class WishlistStub implements WishlistStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -149,5 +148,4 @@ class WishlistStub implements WishlistStubInterface
     {
         return $this->zedStub->call('/wishlist/gateway/get-customer-wishlist-collection', $customerTransfer);
     }
-
 }

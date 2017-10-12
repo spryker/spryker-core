@@ -18,7 +18,6 @@ use Spryker\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorDepen
  */
 class ProductLabelDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductLabelDiscountConnector\Business\Label\LabelProviderInterface
      */
@@ -66,5 +65,4 @@ class ProductLabelDiscountConnectorBusinessFactory extends AbstractBusinessFacto
     {
         return $this->getProvidedDependency(ProductLabelDiscountConnectorDependencyProvider::QUERY_CONTAINER_PRODUCT_LABEL);
     }
-
 }

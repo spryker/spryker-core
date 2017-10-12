@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface PromotionProductMapperPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -20,5 +19,4 @@ interface PromotionProductMapperPluginInterface
      * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function mapPromotionItemsFromProductStorage(QuoteTransfer $quoteTransfer, Request $request);
-
 }

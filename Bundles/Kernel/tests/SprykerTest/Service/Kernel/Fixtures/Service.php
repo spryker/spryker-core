@@ -11,7 +11,6 @@ use Spryker\Service\Kernel\AbstractService;
 
 class Service extends AbstractService
 {
-
     /**
      * @return \Spryker\Service\Kernel\AbstractServiceFactory
      */
@@ -19,5 +18,4 @@ class Service extends AbstractService
     {
         return parent::getFactory();
     }
-
 }

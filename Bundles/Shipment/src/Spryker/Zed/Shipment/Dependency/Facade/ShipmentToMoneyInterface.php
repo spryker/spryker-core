@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface ShipmentToMoneyInterface
 {
-
     /**
      * @param int $amount
      *
@@ -46,5 +45,4 @@ interface ShipmentToMoneyInterface
      * @return int
      */
     public function convertDecimalToInteger($value);
-
 }

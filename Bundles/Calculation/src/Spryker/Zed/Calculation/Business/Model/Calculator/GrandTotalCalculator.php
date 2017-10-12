@@ -13,7 +13,6 @@ use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface;
 
 class GrandTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface
      */
@@ -83,5 +82,4 @@ class GrandTotalCalculator implements CalculatorInterface
     {
         return $this->utilTextService->hashValue($grandTotal, Hash::SHA256);
     }
-
 }

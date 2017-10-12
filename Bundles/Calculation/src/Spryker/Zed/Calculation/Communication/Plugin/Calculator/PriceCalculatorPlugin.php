@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PriceCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class PriceCalculatorPlugin extends AbstractPlugin implements CalculationPluginI
         $this->getFacade()
             ->calculateItemPrice($calculableObjectTransfer);
     }
-
 }

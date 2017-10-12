@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 
 abstract class AbstractHealthIndicator implements HealthIndicatorInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\HealthReportTransfer
      */
@@ -62,5 +61,4 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
 
         return $this->healthIndicatorReport;
     }
-
 }

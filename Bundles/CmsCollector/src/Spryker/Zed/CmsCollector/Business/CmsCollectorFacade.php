@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInterface
 {
-
     /**
      * @api
      *
@@ -97,5 +96,4 @@ class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInt
             $output
         );
     }
-
 }

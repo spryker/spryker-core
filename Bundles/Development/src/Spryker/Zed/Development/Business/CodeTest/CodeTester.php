@@ -13,7 +13,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeTester
 {
-
     const OPTION_VERBOSE = 'verbose';
 
     const OPTION_INITIALIZE = 'initialize';
@@ -149,5 +148,4 @@ class CodeTester
             echo $buffer;
         });
     }
-
 }

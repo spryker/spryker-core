@@ -16,7 +16,6 @@ use Throwable;
 
 class CmsPageActivator implements CmsPageActivatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -150,5 +149,4 @@ class CmsPageActivator implements CmsPageActivatorInterface
     {
         return $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)->count();
     }
-
 }

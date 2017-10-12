@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface CustomerGroupDiscountConnectorFacadeInterface
 {
-
     /**
      * Specification:
      *
@@ -30,5 +29,4 @@ interface CustomerGroupDiscountConnectorFacadeInterface
      * @return bool
      */
     public function isCustomerGroupSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
-
 }

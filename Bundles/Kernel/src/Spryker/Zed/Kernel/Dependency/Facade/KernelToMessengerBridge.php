@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class KernelToMessengerBridge implements KernelToMessengerInterface
 {
-
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
      */
@@ -54,5 +53,4 @@ class KernelToMessengerBridge implements KernelToMessengerInterface
     {
         $this->messengerFacade->addErrorMessage($message);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Store\Business\Model\Configuration;
 
 interface StoreConfigurationProviderInterface
 {
-
     /**
      * @return string
      */
@@ -60,5 +59,4 @@ interface StoreConfigurationProviderInterface
      * @return string
      */
     public function getCurrentStoreSelectedCurrencyIsoCode();
-
 }

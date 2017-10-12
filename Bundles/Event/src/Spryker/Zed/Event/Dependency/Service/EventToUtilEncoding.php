@@ -9,7 +9,6 @@ namespace Spryker\Zed\Event\Dependency\Service;
 
 class EventToUtilEncoding implements EventToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -47,5 +46,4 @@ class EventToUtilEncoding implements EventToUtilEncodingInterface
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

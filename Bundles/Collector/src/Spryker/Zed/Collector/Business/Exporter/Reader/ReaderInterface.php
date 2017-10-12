@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Exporter\Reader;
 
 interface ReaderInterface
 {
-
     /**
      * @param string $key
      * @param string $type
@@ -22,5 +21,4 @@ interface ReaderInterface
      * @return string
      */
     public function getName();
-
 }

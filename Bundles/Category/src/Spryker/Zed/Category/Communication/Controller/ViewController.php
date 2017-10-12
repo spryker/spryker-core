@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-
     const QUERY_PARAM_ID_CATEGORY = 'id-category';
 
     /**
@@ -49,5 +48,4 @@ class ViewController extends AbstractController
             'renderedRelations' => $renderedRelations,
         ]);
     }
-
 }

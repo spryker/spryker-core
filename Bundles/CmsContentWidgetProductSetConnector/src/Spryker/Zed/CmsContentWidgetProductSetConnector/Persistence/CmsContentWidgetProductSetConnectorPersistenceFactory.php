@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CmsContentWidgetProductSetConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsContentWidgetProductSetConnector\Dependency\QueryContainer\CmsContentWidgetProductSetConnectorProductSetQueryContainerInterface
      */
@@ -24,5 +23,4 @@ class CmsContentWidgetProductSetConnectorPersistenceFactory extends AbstractPers
     {
         return $this->getProvidedDependency(CmsContentWidgetProductSetConnectorDependencyProvider::QUERY_CONTAINER_PRODUCT_SET);
     }
-
 }

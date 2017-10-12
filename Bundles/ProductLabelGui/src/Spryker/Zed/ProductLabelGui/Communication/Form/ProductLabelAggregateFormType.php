@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductLabelAggregateFormType extends AbstractType
 {
-
     /**
      * @var \Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType
      */
@@ -108,5 +107,4 @@ class ProductLabelAggregateFormType extends AbstractType
 
         return $this;
     }
-
 }

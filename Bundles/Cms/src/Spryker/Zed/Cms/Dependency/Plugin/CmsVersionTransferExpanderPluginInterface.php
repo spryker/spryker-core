@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 
 interface CmsVersionTransferExpanderPluginInterface
 {
-
     /**
      * Specification:
      * - This plugin interface is used for expanding additional information in
@@ -25,5 +24,4 @@ interface CmsVersionTransferExpanderPluginInterface
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function expandTransfer(CmsVersionTransfer $cmsVersionTransfer);
-
 }

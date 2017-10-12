@@ -10,7 +10,6 @@ use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterf
 
 class AutocompleteDataProvider implements AutocompleteDataProviderInterface
 {
-
     const SEARCH_LIMIT = 20;
 
     /**
@@ -81,5 +80,4 @@ class AutocompleteDataProvider implements AutocompleteDataProviderInterface
 
         return $result;
     }
-
 }

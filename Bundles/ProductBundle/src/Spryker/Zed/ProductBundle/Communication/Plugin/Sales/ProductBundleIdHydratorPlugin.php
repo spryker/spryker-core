@@ -17,7 +17,6 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
  */
 class ProductBundleIdHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
-
     /**
      * Specification:
      *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
@@ -33,5 +32,4 @@ class ProductBundleIdHydratorPlugin extends AbstractPlugin implements HydrateOrd
     {
         return $this->getFacade()->hydrateProductBundleIds($orderTransfer);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 class DataBuilderDefinition implements DataBuilderDefinitionInterface
 {
-
     /**
      * @var string
      */
@@ -122,5 +121,4 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     {
         return $this->dependencies;
     }
-
 }

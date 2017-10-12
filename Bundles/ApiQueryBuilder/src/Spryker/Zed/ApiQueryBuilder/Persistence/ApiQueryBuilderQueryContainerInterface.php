@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
  */
 interface ApiQueryBuilderQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -37,5 +36,4 @@ interface ApiQueryBuilderQueryContainerInterface extends QueryContainerInterface
     public function toPropelQueryBuilderCriteria(
         ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
     );
-
 }

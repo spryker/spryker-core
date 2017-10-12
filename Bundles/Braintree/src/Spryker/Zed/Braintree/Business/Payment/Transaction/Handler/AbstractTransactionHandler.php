@@ -12,7 +12,6 @@ use Spryker\Zed\Braintree\Business\Payment\Transaction\TransactionInterface;
 
 abstract class AbstractTransactionHandler
 {
-
     /**
      * @var \Spryker\Zed\Braintree\Business\Payment\Transaction\TransactionInterface
      */
@@ -32,5 +31,4 @@ abstract class AbstractTransactionHandler
         $this->transaction = $transaction;
         $this->transactionMetaVisitor = $transactionMetaVisitor;
     }
-
 }

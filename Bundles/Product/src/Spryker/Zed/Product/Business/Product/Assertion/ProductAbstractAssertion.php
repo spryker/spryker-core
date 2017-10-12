@@ -14,7 +14,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractAssertion implements ProductAbstractAssertionInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -93,5 +92,4 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
             ));
         }
     }
-
 }

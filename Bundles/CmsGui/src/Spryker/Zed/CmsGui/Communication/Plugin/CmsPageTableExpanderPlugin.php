@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsPageTableExpanderPlugin extends AbstractPlugin implements CmsPageTableExpanderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -38,5 +37,4 @@ class CmsPageTableExpanderPlugin extends AbstractPlugin implements CmsPageTableE
             ],
         ];
     }
-
 }

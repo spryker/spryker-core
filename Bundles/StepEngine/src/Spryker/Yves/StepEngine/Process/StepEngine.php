@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StepEngine implements StepEngineInterface
 {
-
     const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
     const TEMPLATE_VARIABLE_STEP_BREADCRUMBS = 'stepBreadcrumbs';
 
@@ -194,5 +193,4 @@ class StepEngine implements StepEngineInterface
 
         return $templateVariables;
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CollectorAndSpecification implements CollectorSpecificationInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
@@ -50,5 +49,4 @@ class CollectorAndSpecification implements CollectorSpecificationInterface
             }
         );
     }
-
 }

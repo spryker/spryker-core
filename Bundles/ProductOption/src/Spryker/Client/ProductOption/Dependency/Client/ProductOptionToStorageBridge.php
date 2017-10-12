@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductOption\Dependency\Client;
 
 class ProductOptionToStorageBridge implements ProductOptionToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -32,5 +31,4 @@ class ProductOptionToStorageBridge implements ProductOptionToStorageInterface
     {
         return $this->storageClient->get($key);
     }
-
 }

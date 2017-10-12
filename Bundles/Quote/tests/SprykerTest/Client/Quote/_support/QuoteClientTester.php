@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class QuoteClientTester extends Actor
 {
-
     use _generated\QuoteClientTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

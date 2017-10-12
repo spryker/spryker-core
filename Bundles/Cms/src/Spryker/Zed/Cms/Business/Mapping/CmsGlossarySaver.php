@@ -21,7 +21,6 @@ use Throwable;
 
 class CmsGlossarySaver implements CmsGlossarySaverInterface
 {
-
     const DEFAULT_TRANSLATION = '';
 
     /**
@@ -321,5 +320,4 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             $glossaryTranslationTransfer->setTranslation(static::DEFAULT_TRANSLATION);
         }
     }
-
 }

@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductCategory\Dependency\Service;
 
 class ProductCategoryToUtilEncodingBridge implements ProductCategoryToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -33,5 +32,4 @@ class ProductCategoryToUtilEncodingBridge implements ProductCategoryToUtilEncodi
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
-
 }

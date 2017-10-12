@@ -13,7 +13,6 @@ use Spryker\Client\Payolution\Zed\PayolutionStub;
 
 class PayolutionFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Payolution\Session\PayolutionSessionInterface
      */
@@ -45,5 +44,4 @@ class PayolutionFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(PayolutionDependencyProvider::CLIENT_ZED_REQUEST);
     }
-
 }

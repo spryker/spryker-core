@@ -30,7 +30,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class RedirectChainInjectionTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacade
      */
@@ -209,5 +208,4 @@ class RedirectChainInjectionTest extends Unit
 
         return $count > 0;
     }
-
 }

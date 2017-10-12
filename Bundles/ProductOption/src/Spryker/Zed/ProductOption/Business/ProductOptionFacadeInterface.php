@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface ProductOptionFacadeInterface
 {
-
     /**
      * Specification:
      *  - Persist new product option group, update existing group if idOptionGroup is set
@@ -164,5 +163,4 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductOptionGroupIds(OrderTransfer $orderTransfer);
-
 }

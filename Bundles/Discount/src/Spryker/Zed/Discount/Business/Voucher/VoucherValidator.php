@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherValidator implements VoucherValidatorInterface
 {
-
     const REASON_VOUCHER_CODE_NOT_ACTIVE = 'discount.voucher_code.not_active';
     const REASON_VOUCHER_CODE_POOL_MISSING = 'discount.voucher_code.pool_not_set';
     const REASON_VOUCHER_CODE_POOL_NOT_ACTIVE = 'discount.voucher_code.pool_not_active';
@@ -121,5 +120,4 @@ class VoucherValidator implements VoucherValidatorInterface
 
         return true;
     }
-
 }

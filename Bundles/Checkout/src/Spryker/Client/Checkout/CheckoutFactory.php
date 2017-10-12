@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CheckoutFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Checkout\Zed\CheckoutStubInterface
      */
@@ -20,5 +19,4 @@ class CheckoutFactory extends AbstractFactory
     {
         return new CheckoutStub($this->getProvidedDependency(CheckoutDependencyProvider::SERVICE_ZED));
     }
-
 }

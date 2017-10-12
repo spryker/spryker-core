@@ -15,7 +15,6 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface;
 
 class TaxRateAverageAggregator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\Model\PriceCalculationHelperInterface
      */
@@ -113,5 +112,4 @@ class TaxRateAverageAggregator implements CalculatorInterface
         }
         return $taxAmount;
     }
-
 }

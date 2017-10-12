@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns an CMS Block transfer by id
@@ -162,5 +161,4 @@ interface CmsBlockFacadeInterface
      * @return bool
      */
     public function hasTemplateFileById($idCmsBlockTemplate);
-
 }

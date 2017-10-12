@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DayOfTheWeekDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -58,5 +57,4 @@ class DayOfTheWeekDecisionRulePlugin extends AbstractPlugin implements DecisionR
             ComparatorOperators::TYPE_NUMBER,
         ];
     }
-
 }

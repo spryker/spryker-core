@@ -23,7 +23,6 @@ use Spryker\Shared\Log\Sanitizer\Sanitizer;
  */
 class GuzzleBodyProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -79,5 +78,4 @@ class GuzzleBodyProcessorTest extends Unit
             ['{"json":"body", "replace":"password"}', ['json' => 'body', 'replace' => '***']],
         ];
     }
-
 }

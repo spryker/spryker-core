@@ -11,7 +11,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class Equal extends AbstractOperator
 {
-
     const TYPE = 'equal';
 
     /**
@@ -21,5 +20,4 @@ class Equal extends AbstractOperator
     {
         return Criteria::EQUAL;
     }
-
 }

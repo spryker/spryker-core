@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
 {
-
     /**
      * @var array
      */
@@ -72,5 +71,4 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
 
         return $subscriptionRequestTransfer;
     }
-
 }

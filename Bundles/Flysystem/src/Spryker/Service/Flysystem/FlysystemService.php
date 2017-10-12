@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class FlysystemService extends AbstractService implements FlysystemServiceInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -448,5 +447,4 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
             ->createStream()
             ->writeStream($filesystemName, $path, $resource, $config);
     }
-
 }

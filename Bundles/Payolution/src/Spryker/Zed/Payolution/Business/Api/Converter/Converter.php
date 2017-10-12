@@ -18,7 +18,6 @@ use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface;
 
 class Converter implements ConverterInterface
 {
-
     /**
      * @var \Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyInterface
      */
@@ -274,5 +273,4 @@ class Converter implements ConverterInterface
     {
         return $this->moneyFacade->convertDecimalToInteger((float)$amount);
     }
-
 }

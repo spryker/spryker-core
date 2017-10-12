@@ -32,7 +32,6 @@ use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
  */
 class QueryContainerTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer
      */
@@ -110,5 +109,4 @@ class QueryContainerTest extends Unit
 
         return $columnSelectionTransfer;
     }
-
 }

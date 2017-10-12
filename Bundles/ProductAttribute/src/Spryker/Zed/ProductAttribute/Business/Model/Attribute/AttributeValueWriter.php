@@ -15,7 +15,6 @@ use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInter
 
 class AttributeValueWriter implements AttributeValueWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface
      */
@@ -119,5 +118,4 @@ class AttributeValueWriter implements AttributeValueWriterInterface
             $attributeValue->delete();
         }
     }
-
 }

@@ -22,7 +22,6 @@ use SprykerTest\Zed\Cms\PageObject\CmsRedirectListPage;
  */
 class CmsRedirectListCest
 {
-
     /**
      * @param \SprykerTest\Zed\Cms\CmsCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class CmsRedirectListCest
         $i->amOnPage(CmsRedirectListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects');
     }
-
 }

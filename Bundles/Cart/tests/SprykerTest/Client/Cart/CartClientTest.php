@@ -26,7 +26,6 @@ use Spryker\Client\Kernel\AbstractFactory;
  */
 class CartClientTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -263,5 +262,4 @@ class CartClientTest extends Unit
             'reloadItems',
         ])->getMock();
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class PropelQueryBuilderPersistenceTester extends Actor
 {
-
     use _generated\PropelQueryBuilderPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

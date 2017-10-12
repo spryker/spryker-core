@@ -14,7 +14,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class GroupUsersTable extends AbstractTable
 {
-
     const REMOVE = 'remove';
 
     const PARAMETER_ID_USER = 'id-user';
@@ -109,5 +108,4 @@ class GroupUsersTable extends AbstractTable
             'id-group' => $this->idGroup,
         ]);
     }
-
 }

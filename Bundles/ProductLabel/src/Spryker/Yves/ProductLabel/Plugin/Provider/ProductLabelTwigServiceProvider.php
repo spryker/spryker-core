@@ -17,7 +17,6 @@ use Twig_Environment;
  */
 class ProductLabelTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -50,5 +49,4 @@ class ProductLabelTwigServiceProvider extends AbstractPlugin implements ServiceP
     public function boot(Application $app)
     {
     }
-
 }

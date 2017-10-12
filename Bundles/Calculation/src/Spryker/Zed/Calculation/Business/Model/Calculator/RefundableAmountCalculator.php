@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class RefundableAmountCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -53,5 +52,4 @@ class RefundableAmountCalculator implements CalculatorInterface
             );
         }
     }
-
 }

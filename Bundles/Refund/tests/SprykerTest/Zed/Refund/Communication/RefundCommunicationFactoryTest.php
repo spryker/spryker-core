@@ -22,7 +22,6 @@ use Spryker\Zed\Refund\Communication\Table\RefundTable;
  */
 class RefundCommunicationFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -32,5 +31,4 @@ class RefundCommunicationFactoryTest extends Unit
 
         $this->assertInstanceOf(RefundTable::class, $refundCommunicationFactor->createRefundTable());
     }
-
 }

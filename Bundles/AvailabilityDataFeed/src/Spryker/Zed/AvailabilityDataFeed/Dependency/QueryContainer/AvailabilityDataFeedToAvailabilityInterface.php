@@ -9,12 +9,10 @@ namespace Spryker\Zed\AvailabilityDataFeed\Dependency\QueryContainer;
 
 interface AvailabilityDataFeedToAvailabilityInterface
 {
-
     /**
      * @param int $idLocale
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityWithStockByIdLocale($idLocale);
-
 }

@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\Container;
 
 class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PRODUCT_SET_CLIENT = 'PRODUCT SET CLIENT';
     const PRODUCT_CLIENT = 'PRODUCT CLIENT';
 
@@ -35,5 +34,4 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBund
 
         return $container;
     }
-
 }

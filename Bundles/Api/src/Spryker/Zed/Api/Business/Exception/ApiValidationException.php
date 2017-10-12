@@ -11,7 +11,6 @@ use Exception;
 
 class ApiValidationException extends Exception
 {
-
     /**
      * @var array
      */
@@ -44,5 +43,4 @@ class ApiValidationException extends Exception
     {
         $this->validationErrors = $validationErrors;
     }
-
 }

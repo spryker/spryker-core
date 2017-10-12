@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SeoFormType extends AbstractType
 {
-
     const FIELD_LOCALIZED_SEO_FORM_COLLECTION = 'localized_seo_form_collection';
 
     /**
@@ -40,5 +39,4 @@ class SeoFormType extends AbstractType
 
         return $this;
     }
-
 }

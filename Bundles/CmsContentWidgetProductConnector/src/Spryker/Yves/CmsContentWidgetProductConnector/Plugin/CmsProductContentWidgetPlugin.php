@@ -19,7 +19,6 @@ use Twig_Environment;
  */
 class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
-
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
@@ -175,5 +174,4 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
 
         return $productData;
     }
-
 }

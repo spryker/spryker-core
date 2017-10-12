@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Store;
 
 class EnvironmentProcessor
 {
-
     const EXTRA = 'environment';
 
     const APPLICATION = 'application';
@@ -54,5 +53,4 @@ class EnvironmentProcessor
     {
         return Store::getInstance();
     }
-
 }

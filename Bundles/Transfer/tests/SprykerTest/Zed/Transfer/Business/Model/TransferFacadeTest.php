@@ -26,7 +26,6 @@ use Symfony\Component\Finder\Finder;
  */
 class TransferFacadeTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\Transfer\Business\TransferFacade
      */
@@ -90,5 +89,4 @@ class TransferFacadeTest extends Unit
     {
         return new TransferConfig();
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductSetExpander implements ProductSetExpanderInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -146,5 +145,4 @@ class ProductSetExpander implements ProductSetExpanderInterface
 
         return $productAbstractSetEntity;
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 
 class FilteredCalculator extends Calculator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\Filter\DiscountableItemFilterInterface
      */
@@ -56,5 +55,4 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
 
         return (array)$filteredDiscountTransfer->getDiscountableItems();
     }
-
 }

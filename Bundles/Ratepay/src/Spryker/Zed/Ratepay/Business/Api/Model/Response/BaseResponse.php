@@ -11,7 +11,6 @@ use Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement;
 
 class BaseResponse implements ResponseInterface
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement
      */
@@ -126,5 +125,4 @@ class BaseResponse implements ResponseInterface
     {
         return (string)$this->xmlObject->head->processing->status;
     }
-
 }

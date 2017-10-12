@@ -9,7 +9,6 @@ namespace Spryker\Yves\Currency\CurrencyChange;
 
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {
-
     /**
      * @var \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[]
      */
@@ -34,5 +33,4 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
             $currencyPostChangePlugins->execute($currencyIsoCode);
         }
     }
-
 }

@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -111,5 +110,4 @@ class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
     {
         return $this->glossaryFacade->deleteKey($keyName);
     }
-
 }

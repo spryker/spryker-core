@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductAttributeQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -147,5 +146,4 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function queryProductManagementAttributeValueByAttributeId($idProductManagementAttribute);
-
 }

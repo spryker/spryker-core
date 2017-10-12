@@ -13,7 +13,6 @@ use Spryker\Shared\Acl\AclConstants;
 
 interface AclQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -198,5 +197,4 @@ interface AclQueryContainerInterface
      * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
      */
     public function queryRulesFromGroup($idGroup);
-
 }

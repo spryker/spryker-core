@@ -12,7 +12,6 @@ use PHPUnit_Framework_Assert;
 
 class SeeHelper extends Module
 {
-
     /**
      * @var bool
      */
@@ -78,5 +77,4 @@ class SeeHelper extends Module
 
         return $this->getModule('\\' . ZedBootstrap::class);
     }
-
 }

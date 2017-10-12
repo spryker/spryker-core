@@ -11,7 +11,6 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 class SalesListPage
 {
-
     const URL = '/sales';
 
     const SELECTOR_ID_SALES_ORDER_ROWS = '//tbody/tr/td[1]';
@@ -55,5 +54,4 @@ class SalesListPage
     {
         return $this->grabOrderIdsFromGrid()[0];
     }
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     const PARAM_ID_PRODUCT = 'id-product';
 
@@ -220,5 +219,4 @@ class ViewController extends AbstractController
 
         return $productAbstractTransfer;
     }
-
 }

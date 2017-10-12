@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReview\Dependency\Facade;
 
 interface ProductReviewToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -25,5 +24,4 @@ interface ProductReviewToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
-
 }

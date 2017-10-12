@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -654,5 +653,4 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 
         return $urlManager->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
     }
-
 }

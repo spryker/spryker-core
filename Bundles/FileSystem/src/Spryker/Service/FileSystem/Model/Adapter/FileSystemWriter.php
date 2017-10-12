@@ -19,7 +19,6 @@ use Spryker\Service\FileSystem\Model\FileSystemWriterInterface;
 
 class FileSystemWriter implements FileSystemWriterInterface
 {
-
     /**
      * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface
      */
@@ -132,5 +131,4 @@ class FileSystemWriter implements FileSystemWriterInterface
     {
         $this->fileSystemWriter->write($fileSystemContentTransfer);
     }
-
 }

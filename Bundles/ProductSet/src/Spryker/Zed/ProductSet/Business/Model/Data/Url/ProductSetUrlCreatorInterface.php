@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocalizedProductSetTransfer;
 
 interface ProductSetUrlCreatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\LocalizedProductSetTransfer $localizedProductSetTransfer
      * @param int $idProductSet
@@ -19,5 +18,4 @@ interface ProductSetUrlCreatorInterface
      * @return \Generated\Shared\Transfer\LocalizedProductSetTransfer
      */
     public function createUrl(LocalizedProductSetTransfer $localizedProductSetTransfer, $idProductSet);
-
 }

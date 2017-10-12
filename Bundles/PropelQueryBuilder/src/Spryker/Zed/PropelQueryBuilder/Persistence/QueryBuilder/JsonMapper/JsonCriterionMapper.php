@@ -14,7 +14,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInt
 
 class JsonCriterionMapper implements JsonCriterionMapperInterface
 {
-
     /**
      * @var string
      */
@@ -97,5 +96,4 @@ class JsonCriterionMapper implements JsonCriterionMapperInterface
             $operatorExpression
         );
     }
-
 }

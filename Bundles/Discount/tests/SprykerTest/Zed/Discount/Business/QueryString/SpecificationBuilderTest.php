@@ -40,7 +40,6 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
  */
 class SpecificationBuilderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -505,5 +504,4 @@ class SpecificationBuilderTest extends Unit
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
 {
-
     /**
      * Specification:
      * - Run checkout pre-condition plugins (return on error)
@@ -37,5 +36,4 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
             ->createCheckoutWorkflow()
             ->placeOrder($quoteTransfer);
     }
-
 }

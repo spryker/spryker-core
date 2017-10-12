@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SessionFacade extends AbstractFacade implements SessionFacadeInterface
 {
-
     /**
      * @api
      *
@@ -48,5 +47,4 @@ class SessionFacade extends AbstractFacade implements SessionFacadeInterface
             ->createZedSessionLockReleaser()
             ->release($sessionId);
     }
-
 }

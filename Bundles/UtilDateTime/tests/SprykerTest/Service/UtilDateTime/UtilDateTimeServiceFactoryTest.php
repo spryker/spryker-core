@@ -21,7 +21,6 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceFactory;
  */
 class UtilDateTimeServiceFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -31,5 +30,4 @@ class UtilDateTimeServiceFactoryTest extends Unit
 
         $this->assertInstanceOf(DateTimeFormatterInterface::class, $utilDateTimeServiceFactory->createDateFormatter());
     }
-
 }

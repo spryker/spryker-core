@@ -28,7 +28,6 @@ use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilText
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const STORE = 'STORE';
 
     const FACADE_CATEGORY = 'FACADE_LOCALE';
@@ -245,5 +244,4 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         return [];
     }
-
 }

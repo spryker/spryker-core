@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Dependency\Service;
 
 interface SearchToUtilEncodingInterface
 {
-
     /**
      * @param string $jsonValue
      * @param bool $assoc
@@ -19,5 +18,4 @@ interface SearchToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

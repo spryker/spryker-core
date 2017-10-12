@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class StoreQueryContainer extends AbstractQueryContainer implements StoreQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -57,5 +56,4 @@ class StoreQueryContainer extends AbstractQueryContainer implements StoreQueryCo
             ->createStoreQuery()
             ->filterByIdStore($idStore);
     }
-
 }

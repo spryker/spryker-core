@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityGui\Dependency\QueryContainer;
 
 class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityGuiToAvailabilityQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
@@ -43,5 +42,4 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
     {
         return $this->availabilityQueryContainer->queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
     }
-
 }

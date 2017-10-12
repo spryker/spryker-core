@@ -22,7 +22,6 @@ use Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade;
  */
 class ZedNavigationFacadeTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface
      */
@@ -40,5 +39,4 @@ class ZedNavigationFacadeTest extends Unit
 
         $this->assertArrayHasKey('menu', $navigation);
     }
-
 }

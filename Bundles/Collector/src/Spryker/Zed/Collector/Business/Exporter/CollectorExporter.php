@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CollectorExporter
 {
-
     /**
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
@@ -184,5 +183,4 @@ class CollectorExporter
 
         return array_unique(array_merge($types, $availableTypes));
     }
-
 }

@@ -16,7 +16,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeStyleSniffer
 {
-
     const CODE_SUCCESS = 0;
 
     const BUNDLE_ALL = 'all';
@@ -272,5 +271,4 @@ class CodeStyleSniffer
 
         return ucfirst($filter->filter($bundle));
     }
-
 }

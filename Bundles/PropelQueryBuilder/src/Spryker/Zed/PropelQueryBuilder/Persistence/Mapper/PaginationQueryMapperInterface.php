@@ -16,7 +16,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
  */
 interface PaginationQueryMapperInterface
 {
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer|null $propelQueryBuilderPaginationTransfer
@@ -27,5 +26,4 @@ interface PaginationQueryMapperInterface
         ModelCriteria $query,
         PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
     );
-
 }

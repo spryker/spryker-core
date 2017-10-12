@@ -13,7 +13,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterfa
 
 class FilterProvider implements FilterProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
@@ -158,5 +157,4 @@ class FilterProvider implements FilterProviderInterface
     {
         return 'product.json.' . $persistedAttributeKey;
     }
-
 }

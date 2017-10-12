@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -145,5 +144,4 @@ interface CustomerStubInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
-
 }

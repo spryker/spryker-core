@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerUserConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_USER = 'QUERY_CONTAINER_USER';
     const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
 
@@ -69,5 +68,4 @@ class CustomerUserConnectorDependencyProvider extends AbstractBundleDependencyPr
 
         return $container;
     }
-
 }

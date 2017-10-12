@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ConvertConfigConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:config:convert';
 
     /**
@@ -41,5 +40,4 @@ class ConvertConfigConsole extends Console
         $this->info('Write propel config');
         $this->getFacade()->convertConfig();
     }
-
 }

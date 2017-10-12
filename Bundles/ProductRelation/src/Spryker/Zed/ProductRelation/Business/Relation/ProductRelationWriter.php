@@ -21,7 +21,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductRelationWriter implements ProductRelationWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface
@@ -388,5 +387,4 @@ class ProductRelationWriter implements ProductRelationWriterInterface
                 ->toArray(true)
         );
     }
-
 }

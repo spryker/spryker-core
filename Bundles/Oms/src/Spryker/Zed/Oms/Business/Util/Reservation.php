@@ -11,7 +11,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Reservation implements ReservationInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */
@@ -126,5 +125,4 @@ class Reservation implements ReservationInterface
             $reservationHandlerPluginInterface->handle($sku);
         }
     }
-
 }

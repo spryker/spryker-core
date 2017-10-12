@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountPromotionCollectorStrategyInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -20,5 +19,4 @@ interface DiscountPromotionCollectorStrategyInterface
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer);
-
 }

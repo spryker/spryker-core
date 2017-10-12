@@ -13,7 +13,6 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
 {
-
     /**
      * @var array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]
      */
@@ -98,5 +97,4 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
 
         return $calculableObjectTransfer;
     }
-
 }

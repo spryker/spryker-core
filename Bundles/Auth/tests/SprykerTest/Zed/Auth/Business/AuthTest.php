@@ -28,7 +28,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class AuthTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Auth\Business\AuthFacade
      */
@@ -225,5 +224,4 @@ class AuthTest extends Unit
         $isAllowed = $this->authFacade->isAuthenticated($hash);
         $this->assertTrue($isAllowed);
     }
-
 }

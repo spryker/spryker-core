@@ -13,7 +13,6 @@ use Twig_Environment;
 
 class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -78,5 +77,4 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
 
         return false;
     }
-
 }

@@ -10,7 +10,6 @@ use Spryker\Client\Kernel\AbstractPlugin;
 
 class FooPlugin extends AbstractPlugin
 {
-
     /**
      * @return \Spryker\Client\Kernel\AbstractPlugin
      */
@@ -26,5 +25,4 @@ class FooPlugin extends AbstractPlugin
     {
         return parent::getClient();
     }
-
 }

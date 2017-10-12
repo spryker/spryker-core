@@ -22,7 +22,6 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
  */
 class SalesListCest
 {
-
     /**
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
@@ -68,5 +67,4 @@ class SalesListCest
         $i->amOnPage($url);
         $i->seeBreadcrumbNavigation('Dashboard / Sales / Orders / Order Overview');
     }
-
 }

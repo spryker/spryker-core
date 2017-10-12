@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductOptionQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -122,5 +121,4 @@ interface ProductOptionQueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrder();
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
 interface ProductSetGuiToPriceInterface
 {
-
     /**
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName
@@ -17,5 +16,4 @@ interface ProductSetGuiToPriceInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
-
 }

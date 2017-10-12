@@ -29,7 +29,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsContentWidgetFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacade
      */
@@ -256,5 +255,4 @@ class CmsContentWidgetFacadeTest extends Unit
     {
         return $this->getMockBuilder(CmsContentWidgetToGlossaryInterface::class)->getMock();
     }
-
 }

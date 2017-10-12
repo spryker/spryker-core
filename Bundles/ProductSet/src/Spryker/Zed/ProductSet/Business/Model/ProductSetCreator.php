@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductSetCreator implements ProductSetCreatorInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -129,5 +128,4 @@ class ProductSetCreator implements ProductSetCreatorInterface
     {
         $this->productSetTouch->touchProductSetByStatus($productSetTransfer);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Search;
 
 class AbstractIndexMap implements IndexMapInterface
 {
-
     /**
      * @var array
      */
@@ -44,5 +43,4 @@ class AbstractIndexMap implements IndexMapInterface
     {
         return $this->metadata[$propertyName];
     }
-
 }

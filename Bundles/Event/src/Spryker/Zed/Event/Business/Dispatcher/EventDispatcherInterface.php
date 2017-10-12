@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface EventDispatcherInterface
 {
-
     /**
      * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
@@ -19,5 +18,4 @@ interface EventDispatcherInterface
      * @return void
      */
     public function trigger($eventName, TransferInterface $eventTransfer);
-
 }

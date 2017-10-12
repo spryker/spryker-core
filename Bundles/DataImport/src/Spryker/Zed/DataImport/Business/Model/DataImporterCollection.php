@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 
 class DataImporterCollection implements DataImporterCollectionInterface, DataImporterInterface
 {
-
     const IMPORT_TYPE = 'full';
 
     /**
@@ -126,5 +125,4 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
 
         return $dataImporterReportTransfer;
     }
-
 }

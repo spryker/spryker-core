@@ -16,7 +16,6 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DiscountFormDataProvider extends BaseDiscountFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
      */
@@ -75,5 +74,4 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
 
         return $discountCalculatorTransfer;
     }
-
 }

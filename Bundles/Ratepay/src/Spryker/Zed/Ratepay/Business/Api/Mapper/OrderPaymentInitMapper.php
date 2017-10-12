@@ -12,7 +12,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class OrderPaymentInitMapper extends BaseMapper
 {
-
     const NO_CUSTOMER_ID = 0;
 
     /**
@@ -57,5 +56,4 @@ class OrderPaymentInitMapper extends BaseMapper
         $this->ratepayPaymentInitTransfer
             ->setCustomerId($customerId);
     }
-
 }

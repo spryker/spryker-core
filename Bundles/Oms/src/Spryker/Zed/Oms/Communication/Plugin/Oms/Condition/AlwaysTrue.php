@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class AlwaysTrue extends AbstractCondition
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -21,5 +20,4 @@ class AlwaysTrue extends AbstractCondition
     {
         return true;
     }
-
 }

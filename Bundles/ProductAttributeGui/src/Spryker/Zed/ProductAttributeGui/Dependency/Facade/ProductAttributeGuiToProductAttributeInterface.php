@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 interface ProductAttributeGuiToProductAttributeInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -157,5 +156,4 @@ interface ProductAttributeGuiToProductAttributeInterface
     public function updateProductManagementAttribute(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer
     );
-
 }

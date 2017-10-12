@@ -21,7 +21,6 @@ use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
  */
 class DiscountCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
@@ -65,5 +64,4 @@ class DiscountCreateCest
         $i->seeElement($createPage::CURRENT_TAB_ERROR);
         $i->see('This value should not be blank');
     }
-
 }

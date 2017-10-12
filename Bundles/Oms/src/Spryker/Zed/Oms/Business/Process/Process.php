@@ -12,7 +12,6 @@ use Spryker\Zed\Oms\Business\Util\DrawerInterface;
 
 class Process implements ProcessInterface
 {
-
     /**
      * @var string
      */
@@ -402,5 +401,4 @@ class Process implements ProcessInterface
     {
         return $this->file;
     }
-
 }

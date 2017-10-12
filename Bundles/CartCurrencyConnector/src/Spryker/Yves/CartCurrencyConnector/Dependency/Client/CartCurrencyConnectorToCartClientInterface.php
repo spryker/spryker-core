@@ -9,7 +9,6 @@ namespace Spryker\Yves\CartCurrencyConnector\Dependency\Client;
 
 interface CartCurrencyConnectorToCartClientInterface
 {
-
     /**
      * @return void
      */
@@ -19,5 +18,4 @@ interface CartCurrencyConnectorToCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getQuote();
-
 }

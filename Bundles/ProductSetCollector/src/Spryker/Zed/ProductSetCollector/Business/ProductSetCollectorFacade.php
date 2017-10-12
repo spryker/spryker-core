@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductSetCollectorFacade extends AbstractFacade implements ProductSetCollectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -97,5 +96,4 @@ class ProductSetCollectorFacade extends AbstractFacade implements ProductSetColl
             $output
         );
     }
-
 }

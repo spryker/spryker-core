@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ZedNavigationConfig extends AbstractBundleConfig
 {
-
     const MAX_LEVEL_COUNT = 5;
 
     /**
@@ -83,5 +82,4 @@ class ZedNavigationConfig extends AbstractBundleConfig
     {
         return APPLICATION_VENDOR_DIR . '/*';
     }
-
 }

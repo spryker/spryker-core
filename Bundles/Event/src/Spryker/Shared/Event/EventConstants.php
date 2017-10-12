@@ -9,7 +9,6 @@ namespace Spryker\Shared\Event;
 
 interface EventConstants
 {
-
     /**
      * Specification:
      * - Log file location for logging all events in system (path to file)
@@ -33,5 +32,4 @@ interface EventConstants
      * @api
      */
     const EVENT_QUEUE = 'event';
-
 }

@@ -7,7 +7,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Service;
 
 interface ProductManagementToUtilEncodingInterface
 {
-
     /**
      * @param mixed $value
      * @param int|null $options
@@ -26,5 +25,4 @@ interface ProductManagementToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

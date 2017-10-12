@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param array $data
      * @param array $options
@@ -47,5 +46,4 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
 
         return $bundleFormDataProvider;
     }
-
 }

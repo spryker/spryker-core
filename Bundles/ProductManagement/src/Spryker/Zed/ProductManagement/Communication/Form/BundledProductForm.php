@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class BundledProductForm extends AbstractType
 {
-
     const FIELD_QUANTITY = 'quantity';
     const FIELD_ID_PRODUCT_CONCRETE = 'id_product_concrete';
     const FIELD_SKU = 'sku';
@@ -97,5 +96,4 @@ class BundledProductForm extends AbstractType
     {
         return 'bundled_product';
     }
-
 }

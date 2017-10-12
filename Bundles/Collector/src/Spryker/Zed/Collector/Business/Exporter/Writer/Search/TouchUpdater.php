@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\CollectorConfig;
 
 class TouchUpdater extends AbstractTouchUpdater
 {
-
     /**
      * @var string
      */
@@ -58,5 +57,4 @@ class TouchUpdater extends AbstractTouchUpdater
             ->filterByFkLocale($idLocale)
             ->delete();
     }
-
 }

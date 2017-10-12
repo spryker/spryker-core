@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester;
  */
 class ProductManagementProductEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class ProductManagementProductEditCest
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
     }
-
 }

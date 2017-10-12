@@ -12,7 +12,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 
 interface TouchUpdaterInterface
 {
-
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
@@ -43,5 +42,4 @@ interface TouchUpdaterInterface
      * @return void
      */
     public function deleteTouchKeyEntities($keys, $idLocale);
-
 }

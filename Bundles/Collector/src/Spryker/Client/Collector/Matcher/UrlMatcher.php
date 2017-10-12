@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class UrlMatcher implements UrlMatcherInterface
 {
-
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
@@ -56,5 +55,4 @@ class UrlMatcher implements UrlMatcherInterface
 
         return false;
     }
-
 }

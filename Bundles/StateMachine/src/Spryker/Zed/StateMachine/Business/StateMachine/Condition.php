@@ -16,7 +16,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Condition implements ConditionInterface
 {
-
     /**
      * @var array
      */
@@ -340,5 +339,4 @@ class Condition implements ConditionInterface
         }
         return $sourceStates;
     }
-
 }

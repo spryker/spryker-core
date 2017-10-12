@@ -27,7 +27,6 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  */
 class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReaderInterface
      */
@@ -167,5 +166,4 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOptionGroupIdHydrator($this->getQueryContainer());
     }
-
 }

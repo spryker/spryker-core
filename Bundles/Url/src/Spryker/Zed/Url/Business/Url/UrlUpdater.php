@@ -16,7 +16,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -151,5 +150,4 @@ class UrlUpdater extends AbstractUrlUpdaterSubject implements UrlUpdaterInterfac
     {
         return $urlEntity->isColumnModified(SpyUrlTableMap::COL_URL);
     }
-
 }

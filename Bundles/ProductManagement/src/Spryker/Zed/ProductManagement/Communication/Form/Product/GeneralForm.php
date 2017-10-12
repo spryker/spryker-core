@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GeneralForm extends AbstractSubForm
 {
-
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
 
@@ -85,5 +84,4 @@ class GeneralForm extends AbstractSubForm
 
         return $this;
     }
-
 }

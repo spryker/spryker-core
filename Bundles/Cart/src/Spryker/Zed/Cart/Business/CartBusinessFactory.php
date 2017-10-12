@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CartBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Cart\Business\Model\OperationInterface
      */
@@ -80,5 +79,4 @@ class CartBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_POST_SAVE_PLUGINS);
     }
-
 }

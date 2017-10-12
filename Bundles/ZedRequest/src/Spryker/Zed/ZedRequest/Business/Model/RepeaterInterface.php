@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 interface RepeaterInterface
 {
-
     /**
      * @param string|null $moduleControllerAction
      *
@@ -27,5 +26,4 @@ interface RepeaterInterface
      * @return void
      */
     public function setRepeatData(RequestInterface $transferObject, HttpRequest $httpRequest);
-
 }

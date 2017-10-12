@@ -26,7 +26,6 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface;
  */
 class DependencyInjectorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -90,5 +89,4 @@ class DependencyInjectorTest extends Unit
     {
         return $this->getMockBuilder(AbstractDependencyInjector::class)->getMock();
     }
-
 }

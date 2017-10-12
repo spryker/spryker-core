@@ -14,7 +14,6 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryInt
 
 class AttributeTranslationReader implements AttributeTranslationReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryInterface
      */
@@ -59,5 +58,4 @@ class AttributeTranslationReader implements AttributeTranslationReaderInterface
 
         return $localizedProductAttributeKeyTransfer;
     }
-
 }

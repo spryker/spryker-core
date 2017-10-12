@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PaymentTransfer;
 
 interface PaymentHydratorPluginInterface
 {
-
     /**
      * @api
      *
@@ -22,5 +21,4 @@ interface PaymentHydratorPluginInterface
      * @return \Generated\Shared\Transfer\PaymentTransfer
      */
     public function hydrate(OrderTransfer $orderTransfer, PaymentTransfer $paymentTransfer);
-
 }

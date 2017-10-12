@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductNew\Business;
 
 interface ProductNewFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns a list of Product Label - Product Abstract relation to assign and deassign.
@@ -24,5 +23,4 @@ interface ProductNewFacadeInterface
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges();
-
 }

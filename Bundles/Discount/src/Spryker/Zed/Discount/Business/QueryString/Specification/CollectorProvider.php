@@ -16,7 +16,6 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class CollectorProvider implements SpecificationProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
@@ -75,5 +74,4 @@ class CollectorProvider implements SpecificationProviderInterface
             )
         );
     }
-
 }

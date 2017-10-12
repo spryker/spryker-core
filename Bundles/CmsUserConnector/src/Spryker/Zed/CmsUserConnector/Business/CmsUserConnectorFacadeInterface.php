@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 
 interface CmsUserConnectorFacadeInterface
 {
-
     /**
      * Specification:
      *  - Updates user_id in CmsVersion table with the logged in user
@@ -35,5 +34,4 @@ interface CmsUserConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer);
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\CmsContentWidget\Business\ContentWidget;
 
 interface ContentWidgetConfigurationListProviderInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\CmsContentWidgetConfigurationListTransfer
      */
     public function getContentWidgetConfigurationList();
-
 }

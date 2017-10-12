@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductDiscountConnector\Dependency\Facade;
 
 interface ProductDiscountConnectorToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();
-
 }

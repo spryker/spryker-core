@@ -32,7 +32,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
  */
 class FinderTest extends Unit
 {
-
     const STATE_DISPLAY_VALUE = 'name display value';
     const STATE_SUB_PROCESS_DISPLAY_VALUE = 'sub process state display value';
     const TEST_STATE_MACHINE_NAME = 'StateMachine01';
@@ -157,5 +156,4 @@ class FinderTest extends Unit
         $salesOrderItemEntity->setState($omsOrderItemStateEntity);
         return $salesOrderItemEntity;
     }
-
 }

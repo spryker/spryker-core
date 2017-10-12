@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 
 interface ApiResourcePluginInterface
 {
-
     /**
      * @api
      *
@@ -65,5 +64,4 @@ interface ApiResourcePluginInterface
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function find(ApiRequestTransfer $apiRequestTransfer);
-
 }

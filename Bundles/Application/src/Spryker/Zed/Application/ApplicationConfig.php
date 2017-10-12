@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApplicationConfig extends AbstractBundleConfig
 {
-
     /**
      * @return bool
      */
@@ -44,5 +43,4 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(ApplicationConstants::ZED_TRUSTED_HOSTS, []);
     }
-
 }

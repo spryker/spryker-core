@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class ProductReviewToZedRequestBridge implements ProductReviewToZedRequestInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
@@ -36,5 +35,4 @@ class ProductReviewToZedRequestBridge implements ProductReviewToZedRequestInterf
     {
         return $this->zedRequestClient->call($url, $object, $timeoutInSeconds);
     }
-
 }

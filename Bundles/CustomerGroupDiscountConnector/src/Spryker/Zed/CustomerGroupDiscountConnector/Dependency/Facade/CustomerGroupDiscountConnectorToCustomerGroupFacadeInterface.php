@@ -7,12 +7,10 @@ namespace Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade;
 
 interface CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface
 {
-
     /**
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerGroupTransfer|null
      */
     public function findCustomerGroupByIdCustomer($idCustomer);
-
 }

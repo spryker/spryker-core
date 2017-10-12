@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class CategoryConfig extends AbstractBundleConfig
 {
-
     /**
      * Used as `item_type` for touch mechanism.
      */
@@ -21,5 +20,4 @@ class CategoryConfig extends AbstractBundleConfig
      * Used as `item_type` for touch mechanism.
      */
     const RESOURCE_TYPE_NAVIGATION = 'navigation';
-
 }

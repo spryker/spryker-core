@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface ComparatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
@@ -44,5 +43,4 @@ interface ComparatorInterface
      * @return string[]
      */
     public function getAcceptedTypes();
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilder
 
 class DependencyGraphBuilder
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilderInterface
      */
@@ -41,5 +40,4 @@ class DependencyGraphBuilder
     {
         return $this->graphBuilder->build($this->dependencyTree);
     }
-
 }

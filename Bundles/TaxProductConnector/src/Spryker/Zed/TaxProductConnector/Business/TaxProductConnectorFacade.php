@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Save tax set id to product abstract table
@@ -67,5 +66,4 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
             ->createProductItemTaxRateCalculator()
             ->recalculate($quoteTransfer);
     }
-
 }

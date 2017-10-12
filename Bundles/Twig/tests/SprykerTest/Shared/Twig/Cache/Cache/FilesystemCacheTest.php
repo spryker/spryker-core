@@ -25,7 +25,6 @@ use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
  */
 class FilesystemCacheTest extends Unit
 {
-
     const EXISTING_CACHE_KEY = 'key';
     const EXISTING_CACHE_VALUE = 'value';
 
@@ -251,5 +250,4 @@ TXT
     {
         return new FilesystemCacheWriter($pathToCacheFile);
     }
-
 }

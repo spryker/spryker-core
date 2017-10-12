@@ -7,7 +7,6 @@ namespace Spryker\Zed\StateMachine\Business\Lock;
 
 interface ItemLockInterface
 {
-
     /**
      * @param int $identifier
      *
@@ -26,5 +25,4 @@ interface ItemLockInterface
      * @return void
      */
     public function clearLocks();
-
 }

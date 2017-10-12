@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class PaymentRedirected extends AbstractCondition
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -21,5 +20,4 @@ class PaymentRedirected extends AbstractCondition
     {
         return (microtime() * 1000000 % 2) ? true : false;
     }
-
 }

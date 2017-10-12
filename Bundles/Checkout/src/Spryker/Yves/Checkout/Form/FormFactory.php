@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class FormFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
@@ -20,5 +19,4 @@ class FormFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::PAYMENT_SUB_FORMS);
     }
-
 }

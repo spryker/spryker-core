@@ -14,7 +14,6 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionIn
 
 class PropelDatabase implements PropelDatabaseInterface
 {
-
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface
      */
@@ -53,5 +52,4 @@ class PropelDatabase implements PropelDatabaseInterface
 
         return $this->databaseCreatorCollection->get($engine);
     }
-
 }

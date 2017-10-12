@@ -18,7 +18,6 @@ use Zend\Filter\Word\DashToCamelCase;
  */
 class DependencyTreeDependencyViolationConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:dependency:find-violations';
     const ARGUMENT_MODULE = 'module';
 
@@ -172,5 +171,4 @@ class DependencyTreeDependencyViolationConsole extends Console
     {
         return (!$composerDependency['tests'] && $composerDependency['composerRequireDev']);
     }
-
 }

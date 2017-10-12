@@ -15,7 +15,6 @@ use Spryker\Yves\NewRelic\Plugin\ControllerListener;
  */
 class NewRelicFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\NewRelic\Plugin\ControllerListener
      */
@@ -43,5 +42,4 @@ class NewRelicFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(NewRelicDependencyProvider::SERVICE_NETWORK);
     }
-
 }

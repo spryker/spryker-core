@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 
 interface ProductImageFacadeInterface
 {
-
     /**
      * Specification:
      * - Creates a new product image entity or updates an existing one if the ID is provided and the entity already exists.
@@ -194,5 +193,4 @@ interface ProductImageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer|null
      */
     public function findProductImageSetById($idProductImageSet);
-
 }

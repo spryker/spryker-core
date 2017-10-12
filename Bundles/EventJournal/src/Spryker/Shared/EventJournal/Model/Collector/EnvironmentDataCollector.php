@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Store;
  */
 class EnvironmentDataCollector extends AbstractDataCollector
 {
-
     const TYPE = 'environment';
 
     const FIELD_APP = 'app';
@@ -46,5 +45,4 @@ class EnvironmentDataCollector extends AbstractDataCollector
             self::FIELD_APP_CURRENCY => Store::getInstance()->getCurrencyIsoCode(),
         ];
     }
-
 }

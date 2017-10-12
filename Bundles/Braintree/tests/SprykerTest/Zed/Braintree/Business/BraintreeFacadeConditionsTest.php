@@ -23,7 +23,6 @@ use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
  */
 class BraintreeFacadeConditionsTest extends AbstractFacadeTest
 {
-
     /**
      * @var \Orm\Zed\Braintree\Persistence\SpyPaymentBraintreeTransactionStatusLog
      */
@@ -181,5 +180,4 @@ class BraintreeFacadeConditionsTest extends AbstractFacadeTest
             ->setTransactionId('ref');
         $this->transactionStatusLogEntity->save();
     }
-
 }

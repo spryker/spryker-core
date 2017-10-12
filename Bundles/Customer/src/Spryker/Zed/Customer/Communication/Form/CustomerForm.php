@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CustomerForm extends AbstractType
 {
-
     const OPTION_SALUTATION_CHOICES = 'salutation_choices';
     const OPTION_GENDER_CHOICES = 'gender_choices';
 
@@ -243,5 +242,4 @@ class CustomerForm extends AbstractType
             new Length(['max' => 100]),
         ];
     }
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductRelation\Business\Updater;
 
 interface ProductRelationUpdaterInterface
 {
-
     /**
      * @return void
      */
     public function rebuildRelations();
-
 }

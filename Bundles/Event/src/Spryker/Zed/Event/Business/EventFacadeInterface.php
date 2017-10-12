@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
  */
 interface EventFacadeInterface
 {
-
     /**
      * Specification:
      * - Handles all events by registered by give $eventName
@@ -41,5 +40,4 @@ interface EventFacadeInterface
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function processEnqueuedMessages(array $queueMessageTransfers);
-
 }

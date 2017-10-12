@@ -14,7 +14,6 @@ use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyBridge;
 
 class QuoteDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_SESSION = 'session client';
     const CURRENCY_PLUGIN = 'currency plugin';
 
@@ -58,5 +57,4 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

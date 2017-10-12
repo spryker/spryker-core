@@ -12,7 +12,6 @@ use Spryker\Zed\Ratepay\Business\Exception\NoPaymentMethodException;
 
 class PaymentMethodExtractor implements PaymentMethodExtractorInterface
 {
-
     /**
      * @var array
      */
@@ -47,5 +46,4 @@ class PaymentMethodExtractor implements PaymentMethodExtractorInterface
 
         return $payment->$paymentMethodGet();
     }
-
 }

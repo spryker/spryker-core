@@ -9,7 +9,6 @@ namespace Spryker\Yves\Kernel\Dependency\Messenger;
 
 class NullMessenger implements KernelToMessengerInterface
 {
-
     /**
      * @param string $message
      *
@@ -36,5 +35,4 @@ class NullMessenger implements KernelToMessengerInterface
     public function addErrorMessage($message)
     {
     }
-
 }

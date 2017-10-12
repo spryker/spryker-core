@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-
     const FORM_ADD_TYPE = 'add';
 
     const MESSAGE_CREATE_SUCCESS = 'Translation %d was created successfully.';
@@ -54,5 +53,4 @@ class AddController extends AbstractController
             'form' => $glossaryForm->createView(),
         ]);
     }
-
 }

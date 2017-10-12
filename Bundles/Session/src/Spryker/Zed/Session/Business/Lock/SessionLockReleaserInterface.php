@@ -9,12 +9,10 @@ namespace Spryker\Zed\Session\Business\Lock;
 
 interface SessionLockReleaserInterface
 {
-
     /**
      * @param string $sessionId
      *
      * @return bool
      */
     public function release($sessionId);
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ZedRequestClientInterface
 {
-
     /**
      * @api
      *
@@ -43,5 +42,4 @@ interface ZedRequestClientInterface
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages();
-
 }

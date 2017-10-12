@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class UrlSharedTester extends Actor
 {
-
     use _generated\UrlSharedTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

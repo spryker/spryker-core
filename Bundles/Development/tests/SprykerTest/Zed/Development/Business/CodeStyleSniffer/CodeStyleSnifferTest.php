@@ -23,7 +23,6 @@ use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExist
  */
 class CodeStyleSnifferTest extends Unit
 {
-
     /**
      * @var string
      */
@@ -203,5 +202,4 @@ class CodeStyleSnifferTest extends Unit
 
         return $codeStyleSnifferMock;
     }
-
 }

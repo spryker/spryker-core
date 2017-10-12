@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductRelationQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -159,5 +158,4 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
     public function queryProductsWithCategoriesRelationsByFkLocaleAndIdRelation($idLocale, $idProductRelation);
-
 }

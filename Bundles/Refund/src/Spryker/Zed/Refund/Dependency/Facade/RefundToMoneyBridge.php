@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class RefundToMoneyBridge implements RefundToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -55,5 +54,4 @@ class RefundToMoneyBridge implements RefundToMoneyInterface
     {
         return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param int $idLocale
      *
@@ -139,5 +138,4 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_BUNDLE);
     }
-
 }

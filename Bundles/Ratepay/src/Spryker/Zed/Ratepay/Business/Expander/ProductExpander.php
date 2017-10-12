@@ -11,7 +11,6 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductInterface;
 
 class ProductExpander implements ProductExpanderInterface
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge
      */
@@ -48,5 +47,4 @@ class ProductExpander implements ProductExpanderInterface
 
         return $change;
     }
-
 }

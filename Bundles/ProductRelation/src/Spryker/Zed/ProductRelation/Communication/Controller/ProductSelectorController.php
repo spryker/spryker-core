@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductSelectorController extends AbstractController
 {
-
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
@@ -41,5 +40,4 @@ class ProductSelectorController extends AbstractController
 
         return new JsonResponse($productEntity);
     }
-
 }

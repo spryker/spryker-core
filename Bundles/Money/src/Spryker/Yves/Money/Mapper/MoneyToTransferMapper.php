@@ -13,7 +13,6 @@ use Spryker\Yves\Currency\Plugin\CurrencyPluginInterface;
 
 class MoneyToTransferMapper extends SharedMoneyToTransferMapper
 {
-
     /**
      * @var \Spryker\Yves\Currency\Plugin\CurrencyPlugin
      */
@@ -36,5 +35,4 @@ class MoneyToTransferMapper extends SharedMoneyToTransferMapper
     {
         return $this->currencyPlugin->fromIsoCode($money->getCurrency()->getCode());
     }
-
 }

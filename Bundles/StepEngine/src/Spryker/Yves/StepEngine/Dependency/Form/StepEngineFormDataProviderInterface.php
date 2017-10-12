@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface StepEngineFormDataProviderInterface
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
@@ -25,5 +24,4 @@ interface StepEngineFormDataProviderInterface
      * @return array
      */
     public function getOptions(AbstractTransfer $dataTransfer);
-
 }

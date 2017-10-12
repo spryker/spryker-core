@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 interface CmsBlockFormPluginInterface
 {
-
     /**
      * Specification:
      * - Add form parts to the main form builder
@@ -23,5 +22,4 @@ interface CmsBlockFormPluginInterface
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder);
-
 }

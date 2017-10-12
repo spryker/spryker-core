@@ -28,7 +28,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class ControllerListenerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -81,5 +80,4 @@ class ControllerListenerTest extends Unit
 
         return $kernelMock;
     }
-
 }

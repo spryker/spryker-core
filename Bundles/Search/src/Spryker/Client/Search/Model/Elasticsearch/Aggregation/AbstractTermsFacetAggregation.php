@@ -11,7 +11,6 @@ use Elastica\Aggregation\AbstractTermsAggregation;
 
 abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
 {
-
     const AGGREGATION_PARAM_SIZE = 'size';
 
     /**
@@ -30,5 +29,4 @@ abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
 
         $aggregation->setSize($size);
     }
-
 }

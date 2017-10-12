@@ -14,7 +14,6 @@ use Propel\Runtime\Propel;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
-
     /**
      * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
      */
@@ -168,5 +167,4 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
         return $quoteTransfer;
     }
-
 }

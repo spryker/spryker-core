@@ -21,7 +21,6 @@ use SprykerTest\Zed\CmsGui\PageObject\CmsGuiListPage;
  */
 class CmsGuiEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\CmsGui\CmsGuiPresentationTester $i
      *
@@ -33,5 +32,4 @@ class CmsGuiEditCest
         $i->clickDataTableLinkInDropDownOfButton('Edit', 'Page');
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / Edit CMS Page');
     }
-
 }

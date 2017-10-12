@@ -26,7 +26,6 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
  */
 class ErrorHandlerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -215,5 +214,4 @@ class ErrorHandlerTest extends Unit
 
         return $errorRendererMock;
     }
-
 }

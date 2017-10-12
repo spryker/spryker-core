@@ -21,7 +21,6 @@ use Spryker\Shared\Log\Config\DefaultLoggerConfig;
  */
 class DefaultLoggerConfigTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -51,5 +50,4 @@ class DefaultLoggerConfigTest extends Unit
         $defaultLoggerConfig = new DefaultLoggerConfig();
         $this->assertInternalType('array', $defaultLoggerConfig->getProcessors());
     }
-
 }

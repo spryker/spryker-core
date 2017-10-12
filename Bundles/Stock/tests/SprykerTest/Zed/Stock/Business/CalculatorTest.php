@@ -25,7 +25,6 @@ use Spryker\Zed\Stock\Business\StockFacade;
  */
 class CalculatorTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
@@ -151,5 +150,4 @@ class CalculatorTest extends Unit
             ->setFkProduct($this->productEntity->getIdProduct())
             ->save();
     }
-
 }

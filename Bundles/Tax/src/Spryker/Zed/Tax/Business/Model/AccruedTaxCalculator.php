@@ -8,7 +8,6 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 {
-
     const DEFAULT_BUCKET_NAME = 'default';
 
     /**
@@ -115,5 +114,4 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
         static::$roundingErrorBucket = [];
         static::$roundingErrorBucket[static::DEFAULT_BUCKET_NAME] = 0;
     }
-
 }

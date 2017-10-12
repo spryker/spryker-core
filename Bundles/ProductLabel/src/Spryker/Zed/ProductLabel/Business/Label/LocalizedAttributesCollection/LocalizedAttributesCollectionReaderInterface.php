@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection;
 
 interface LocalizedAttributesCollectionReaderInterface
 {
-
     /**
      * @param int $idProductLabel
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
      */
     public function findAllByIdProductLabel($idProductLabel);
-
 }

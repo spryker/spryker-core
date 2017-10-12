@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel;
 
 abstract class AbstractClientProvider
 {
-
     /**
      * @var object
      */
@@ -31,5 +30,4 @@ abstract class AbstractClientProvider
      * @return object
      */
     abstract protected function createZedClient();
-
 }

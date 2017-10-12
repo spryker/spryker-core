@@ -12,7 +12,6 @@ use Spryker\Client\ProductOption\Storage\ProductOptionStorage;
 
 class ProductOptionFactory extends AbstractFactory
 {
-
     /**
      * @param string $localeName
      *
@@ -42,5 +41,4 @@ class ProductOptionFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::KV_STORAGE);
     }
-
 }

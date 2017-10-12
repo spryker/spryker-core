@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DiscountTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class DiscountTotalCalculatorPlugin extends AbstractPlugin implements Calculatio
         $this->getFacade()
             ->calculateDiscountTotal($calculableObjectTransfer);
     }
-
 }

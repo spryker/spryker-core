@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FormCollectionHandler implements FormCollectionHandlerInterface
 {
-
     /**
      * @var \Symfony\Component\Form\FormFactoryInterface
      */
@@ -164,5 +163,4 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
         return $this->formFactory->create($formType, null, $formOptions);
     }
-
 }

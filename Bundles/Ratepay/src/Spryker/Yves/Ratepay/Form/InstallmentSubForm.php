@@ -18,7 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InstallmentSubForm extends SubFormAbstract
 {
-
     const PAYMENT_METHOD = 'installment';
 
     const OPTION_DEBIT_PAY_TYPE = 'debit_pay_type';
@@ -301,5 +300,4 @@ class InstallmentSubForm extends SubFormAbstract
 
         return $this;
     }
-
 }

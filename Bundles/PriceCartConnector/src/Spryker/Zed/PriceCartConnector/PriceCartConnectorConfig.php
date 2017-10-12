@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceCartConnectorConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -29,5 +28,4 @@ class PriceCartConnectorConfig extends AbstractBundleConfig
     {
         return PriceMode::PRICE_MODE_GROSS;
     }
-
 }

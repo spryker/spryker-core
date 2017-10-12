@@ -25,7 +25,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {
-
     const BUNDLE_IDENTIFIER_DELIMITER = '_';
 
     /**
@@ -444,5 +443,4 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             return $itemTransfer->getUnitGrossPrice();
         }
     }
-
 }

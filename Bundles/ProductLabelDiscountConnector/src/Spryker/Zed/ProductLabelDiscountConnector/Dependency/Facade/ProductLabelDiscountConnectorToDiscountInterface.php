@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface ProductLabelDiscountConnectorToDiscountInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $compareWith
@@ -19,5 +18,4 @@ interface ProductLabelDiscountConnectorToDiscountInterface
      * @return bool
      */
     public function queryStringCompare(ClauseTransfer $clauseTransfer, $compareWith);
-
 }

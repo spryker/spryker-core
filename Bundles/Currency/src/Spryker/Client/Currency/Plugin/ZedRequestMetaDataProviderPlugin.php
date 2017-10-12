@@ -16,7 +16,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
  */
 class ZedRequestMetaDataProviderPlugin extends AbstractPlugin implements MetaDataProviderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -30,5 +29,4 @@ class ZedRequestMetaDataProviderPlugin extends AbstractPlugin implements MetaDat
     {
         return $this->getFactory()->createCurrencyBuilder()->getCurrent();
     }
-
 }

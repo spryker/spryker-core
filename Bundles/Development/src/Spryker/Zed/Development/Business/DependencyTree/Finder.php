@@ -11,7 +11,6 @@ use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Finder
 {
-
     /**
      * @var string
      */
@@ -155,5 +154,4 @@ class Finder
             $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
         ];
     }
-
 }

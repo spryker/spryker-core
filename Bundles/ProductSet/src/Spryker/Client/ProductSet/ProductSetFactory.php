@@ -15,7 +15,6 @@ use Spryker\Client\ProductSet\Storage\ProductSetStorage;
 
 class ProductSetFactory extends AbstractFactory
 {
-
     /**
      * @param int|null $limit
      * @param int|null $offset
@@ -101,5 +100,4 @@ class ProductSetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductSetDependencyProvider::CLIENT_LOCALE);
     }
-
 }

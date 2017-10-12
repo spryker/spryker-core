@@ -9,7 +9,6 @@ namespace Spryker\Shared\Braintree;
 
 interface BraintreeConstants
 {
-
     const PROVIDER_NAME = 'Braintree';
 
     const PAYMENT_METHOD_PAY_PAL = 'braintreePayPal';
@@ -28,5 +27,4 @@ interface BraintreeConstants
     const IS_VAULTED = 'BRAINTREE_IS_VAULTED';
 
     const METHOD_PAY_PAL = 'BRAINTREE_PAY_PAL';
-
 }

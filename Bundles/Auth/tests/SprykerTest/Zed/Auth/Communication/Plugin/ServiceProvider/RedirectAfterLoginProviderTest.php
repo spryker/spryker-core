@@ -28,7 +28,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class RedirectAfterLoginProviderTest extends Unit
 {
-
     const REQUEST_URI = 'REQUEST_URI';
     const REDIRECT_URL_VALID = '/valid-redirect-url?query=string';
     const REDIRECT_URL_INVALID = 'http://foo/redirect-url?query=string';
@@ -196,5 +195,4 @@ class RedirectAfterLoginProviderTest extends Unit
     {
         return $this->getMockBuilder(HttpKernelInterface::class)->getMock();
     }
-
 }

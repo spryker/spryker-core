@@ -11,7 +11,6 @@ use Exception;
 
 class XmlBatchIterator implements CountableIteratorInterface
 {
-
     /**
      * @var string
      */
@@ -120,5 +119,4 @@ class XmlBatchIterator implements CountableIteratorInterface
         $this->next();
         return count($this->batchData);
     }
-
 }

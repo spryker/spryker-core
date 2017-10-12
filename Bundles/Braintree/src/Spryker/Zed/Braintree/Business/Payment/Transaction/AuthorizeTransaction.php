@@ -15,7 +15,6 @@ use Spryker\Zed\Braintree\Business\Payment\Method\ApiConstants;
 
 class AuthorizeTransaction extends AbstractTransaction
 {
-
     /**
      * @return string
      */
@@ -73,5 +72,4 @@ class AuthorizeTransaction extends AbstractTransaction
     {
         return BraintreeTransaction::find($this->getTransactionIdentifier());
     }
-
 }

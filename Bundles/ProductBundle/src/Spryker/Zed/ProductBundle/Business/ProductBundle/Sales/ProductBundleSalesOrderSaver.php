@@ -18,7 +18,6 @@ use Throwable;
 
 class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
      */
@@ -162,5 +161,4 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
     {
         return new SpySalesOrderItemBundle();
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface
 
 class SequenceNumber implements SequenceNumberInterface
 {
-
     /**
      * @var \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface
      */
@@ -116,5 +115,4 @@ class SequenceNumber implements SequenceNumberInterface
 
         return $sequence;
     }
-
 }

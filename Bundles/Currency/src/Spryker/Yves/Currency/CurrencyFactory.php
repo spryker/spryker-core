@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class CurrencyFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
@@ -73,5 +72,4 @@ class CurrencyFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::CURRENCY_POST_CHANGE_PLUGINS);
     }
-
 }

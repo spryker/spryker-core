@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CustomerApiBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerApi\Business\Model\CustomerApiInterface
      */
@@ -83,5 +82,4 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CustomerApiDependencyProvider::FACADE_CUSTOMER);
     }
-
 }

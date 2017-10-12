@@ -16,7 +16,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 class Application extends SilexApplication
 {
-
     use TranslationTrait;
     use TwigTrait;
     use UrlGeneratorTrait;
@@ -42,5 +41,4 @@ class Application extends SilexApplication
             return $chainRouter;
         }));
     }
-
 }

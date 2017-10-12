@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver as SharedAbstractC
 
 abstract class AbstractClassResolver extends SharedAbstractClassResolver
 {
-
     const KEY_LAYER = '%layer%';
 
     /**
@@ -36,5 +35,4 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
 
         return $className;
     }
-
 }

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 interface IndexDefinitionMergerInterface
 {
-
     /**
      * @param array $definition1
      * @param array $definition2
@@ -16,5 +15,4 @@ interface IndexDefinitionMergerInterface
      * @return array
      */
     public function merge(array $definition1, array $definition2);
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 abstract class AbstractRefundCalculator implements RefundCalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
@@ -28,5 +27,4 @@ abstract class AbstractRefundCalculator implements RefundCalculatorInterface
 
         return false;
     }
-
 }

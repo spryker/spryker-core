@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class NavigationQueryContainer extends AbstractQueryContainer implements NavigationQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -139,5 +138,4 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
             ->createNavigationNodeLocalizedAttributesQuery()
             ->filterByFkUrl($fkUrl);
     }
-
 }

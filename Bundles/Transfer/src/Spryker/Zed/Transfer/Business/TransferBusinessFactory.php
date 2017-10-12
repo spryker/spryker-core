@@ -31,7 +31,6 @@ use Spryker\Zed\Transfer\TransferDependencyProvider;
  */
 class TransferBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -243,5 +242,4 @@ class TransferBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getDataBuilderFileNamePattern()
         );
     }
-
 }

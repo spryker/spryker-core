@@ -12,7 +12,6 @@ use SprykerTest\Zed\Discount\DiscountPresentationTester;
 
 class DiscountCreatePage
 {
-
     const URL = '/discount/index/create';
 
     const MESSAGE_SUCCESSFUL_ALERT_CREATION = 'Discount successfully created, but not activated.';
@@ -187,5 +186,4 @@ class DiscountCreatePage
         $i->click(self::BTN_CALCULATION_GET);
         $i->waitForElementVisible(self::DISCOUNT_CALCULATION_GROUP);
     }
-
 }

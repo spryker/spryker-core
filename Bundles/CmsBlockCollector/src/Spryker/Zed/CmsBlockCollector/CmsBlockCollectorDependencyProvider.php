@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_COLLECTOR = 'CMS_BLOCK_COLLECTOR:FACADE_COLLECTOR';
 
     const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_COLLECTOR:QUERY_CONTAINER_TOUCH';
@@ -103,5 +102,4 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
     {
         return [];
     }
-
 }

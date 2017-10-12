@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsBlockProductConnector\Business\Model\CmsBlockProductAbstractWriterInterface
      */
@@ -96,5 +95,4 @@ class CmsBlockProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockProductConnectorCollectorQuery();
     }
-
 }

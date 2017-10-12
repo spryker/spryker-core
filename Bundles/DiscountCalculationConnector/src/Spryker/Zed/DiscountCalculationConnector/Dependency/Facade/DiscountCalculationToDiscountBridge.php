@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscountInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
@@ -34,5 +33,4 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     {
         return $this->discountFacade->calculateDiscounts($quoteTransfer);
     }
-
 }

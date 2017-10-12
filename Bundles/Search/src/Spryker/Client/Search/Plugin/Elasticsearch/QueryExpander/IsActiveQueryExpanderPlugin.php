@@ -20,7 +20,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class IsActiveQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
@@ -71,5 +70,4 @@ class IsActiveQueryExpanderPlugin extends AbstractPlugin implements QueryExpande
 
         return $boolQuery;
     }
-
 }

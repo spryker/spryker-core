@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class ProductToEventBridge implements ProductToEventInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\Business\EventFacadeInterface
      */
@@ -35,5 +34,4 @@ class ProductToEventBridge implements ProductToEventInterface
     {
         $this->eventFacade->trigger($eventName, $eventTransfer);
     }
-
 }

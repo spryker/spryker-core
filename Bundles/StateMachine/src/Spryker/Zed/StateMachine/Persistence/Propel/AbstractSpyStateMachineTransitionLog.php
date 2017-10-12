@@ -21,7 +21,6 @@ use Propel\Runtime\Connection\ConnectionInterface;
  */
 abstract class AbstractSpyStateMachineTransitionLog extends BaseSpyStateMachineTransitionLog
 {
-
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
@@ -39,5 +38,4 @@ abstract class AbstractSpyStateMachineTransitionLog extends BaseSpyStateMachineT
 
         return true;
     }
-
 }

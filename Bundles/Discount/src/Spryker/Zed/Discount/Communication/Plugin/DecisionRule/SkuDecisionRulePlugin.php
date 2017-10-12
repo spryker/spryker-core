@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -54,5 +53,4 @@ class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugin
             ComparatorOperators::TYPE_LIST,
         ];
     }
-
 }

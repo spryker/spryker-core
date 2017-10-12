@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SalesSplitFacade extends AbstractFacade implements SalesSplitFacadeInterface
 {
-
     /**
      * Splits sales order items which have a quantity > 1 into two parts. One part with the new given quantity and
      * the other part with the rest.
@@ -42,5 +41,4 @@ class SalesSplitFacade extends AbstractFacade implements SalesSplitFacadeInterfa
     {
         return $this->getFactory()->createOrderItemSplitter()->split($idSalesOrderItem, $quantity);
     }
-
 }

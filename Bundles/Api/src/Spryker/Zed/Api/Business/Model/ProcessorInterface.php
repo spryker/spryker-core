@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ApiResponseTransfer;
 
 interface ProcessorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -27,5 +26,4 @@ interface ProcessorInterface
      * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
     public function postProcess(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer);
-
 }

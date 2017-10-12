@@ -24,7 +24,6 @@ use SprykerTest\Zed\Sales\PageObject\SalesListPage;
  */
 class BraintreePresentationTester extends Actor
 {
-
     use _generated\BraintreePresentationTesterActions;
 
     /**
@@ -114,5 +113,4 @@ class BraintreePresentationTester extends Actor
         $this->checkTimeout();
         $this->reloadPage();
     }
-
 }

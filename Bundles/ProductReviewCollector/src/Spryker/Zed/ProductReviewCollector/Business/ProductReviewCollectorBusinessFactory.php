@@ -19,7 +19,6 @@ use Spryker\Zed\ProductReviewCollector\ProductReviewCollectorDependencyProvider;
  */
 class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductReviewCollector\Business\Collector\Search\ProductReviewCollector
      */
@@ -106,5 +105,4 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductReviewCollectorDependencyProvider::FACADE_SEARCH);
     }
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CacheWarmerConsole extends Console
 {
-
     const COMMAND_NAME = 'twig:cache:warmer';
     const DESCRIPTION = 'This command will generate a cache file for twig templates';
 
@@ -41,5 +40,4 @@ class CacheWarmerConsole extends Console
     {
         $this->getFacade()->warmUpCache();
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTemplateReader implements CategoryTemplateReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -68,5 +67,4 @@ class CategoryTemplateReader implements CategoryTemplateReaderInterface
     {
         return new CategoryTemplateTransfer();
     }
-
 }

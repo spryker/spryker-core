@@ -14,7 +14,6 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class BasketMapper extends BaseMapper
 {
-
     const DEFAULT_DISCOUNT_NODE_VALUE = 'Discount';
     const DEFAULT_DISCOUNT_TAX_RATE = 0;
     const DEFAULT_DISCOUNT_UNIT_PRICE = 0;
@@ -76,5 +75,4 @@ class BasketMapper extends BaseMapper
             ->setDiscountUnitPrice($discountTotal * self::BASKET_DISCOUNT_COEFFICIENT)
             ->setDiscountTaxRate($this->ratepayPaymentRequestTransfer->getDiscountTaxRate());
     }
-
 }

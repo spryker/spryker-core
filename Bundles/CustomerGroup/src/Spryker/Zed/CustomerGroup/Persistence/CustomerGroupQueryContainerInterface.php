@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -52,5 +51,4 @@ interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
      */
     public function queryCustomerGroupByFkCustomer($idCustomer);
-
 }

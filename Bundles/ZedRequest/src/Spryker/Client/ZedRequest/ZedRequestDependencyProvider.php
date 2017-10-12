@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 
 class ZedRequestDependencyProvider extends AbstractDependencyProvider
 {
-
     const SERVICE_NETWORK = 'util network service';
     const SERVICE_TEXT = 'util text service';
     const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
@@ -83,5 +82,4 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     {
         return [];
     }
-
 }

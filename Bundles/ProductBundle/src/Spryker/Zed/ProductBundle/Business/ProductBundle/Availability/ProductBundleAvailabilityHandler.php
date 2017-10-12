@@ -13,7 +13,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
      */
@@ -183,5 +182,4 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             ->querySpyAvailabilityBySku($bundledItemSku)
             ->findOne();
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelI
 
 class ProductLabelFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface
      */
@@ -93,5 +92,4 @@ class ProductLabelFormDataProvider
     {
         return [];
     }
-
 }

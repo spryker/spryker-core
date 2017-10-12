@@ -20,7 +20,6 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterfa
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
@@ -292,5 +291,4 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             ->queryProductCategoryChildrenMappingsByCategoryNodeId($idCategoryNode)
             ->find();
     }
-
 }

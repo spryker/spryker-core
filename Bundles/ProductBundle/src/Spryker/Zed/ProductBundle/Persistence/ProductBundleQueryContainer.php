@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductBundleQueryContainer extends AbstractQueryContainer implements ProductBundleQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -101,5 +100,4 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
         return $this->queryBundleProduct($idProductConcrete)
             ->joinWithSpyProductRelatedByFkBundledProduct();
     }
-
 }

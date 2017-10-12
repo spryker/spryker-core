@@ -32,7 +32,6 @@ use Spryker\Zed\Availability\Business\AvailabilityFacade;
  */
 class AvailabilityFacadeTest extends Unit
 {
-
     const ABSTRACT_SKU = '123_availability_test';
     const CONCRETE_SKU = '123_availability_test-concrete';
 
@@ -273,5 +272,4 @@ class AvailabilityFacadeTest extends Unit
 
         return $availabilityEntity;
     }
-
 }

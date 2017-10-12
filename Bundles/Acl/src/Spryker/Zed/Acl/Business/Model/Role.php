@@ -19,7 +19,6 @@ use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 
 class Role implements RoleInterface
 {
-
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
@@ -220,5 +219,4 @@ class Role implements RoleInterface
 
         return $roleTransfer;
     }
-
 }

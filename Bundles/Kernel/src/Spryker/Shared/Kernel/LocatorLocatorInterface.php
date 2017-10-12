@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel;
 
 interface LocatorLocatorInterface
 {
-
     /**
      * @param string $bundle
      * @param array|null $arguments
@@ -17,5 +16,4 @@ interface LocatorLocatorInterface
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
     public function __call($bundle, array $arguments = null);
-
 }

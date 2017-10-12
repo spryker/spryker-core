@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class TouchFacade extends AbstractFacade implements TouchFacadeInterface
 {
-
     /**
      * @api
      *
@@ -215,5 +214,4 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
         $touchRecordModel = $this->getFactory()->createTouchRecordModel();
         return $touchRecordModel->removeTouchEntriesMarkedAsDeleted();
     }
-
 }

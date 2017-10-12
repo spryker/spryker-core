@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodePhpMessDetectorConsole extends Console
 {
-
     const COMMAND_NAME = 'code:phpmd';
     const OPTION_BUNDLE = 'module';
     const OPTION_BUNDLE_ALL = 'all';
@@ -62,5 +61,4 @@ class CodePhpMessDetectorConsole extends Console
 
         return $this->getFacade()->runPhpMd($bundle, $this->input->getOptions());
     }
-
 }

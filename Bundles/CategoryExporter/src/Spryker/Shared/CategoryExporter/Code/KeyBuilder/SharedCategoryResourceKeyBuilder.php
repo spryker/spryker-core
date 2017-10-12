@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
 
 abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return CategoryExporterConstants::RESOURCE_TYPE_CATEGORY_NODE;
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class SubscriptionManager implements SubscriptionManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface
      */
@@ -140,5 +139,4 @@ class SubscriptionManager implements SubscriptionManagerInterface
 
         return null;
     }
-
 }

@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class RulesetController extends AbstractController
 {
-
     const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
     /**
@@ -52,5 +51,4 @@ class RulesetController extends AbstractController
 
         return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
     }
-
 }

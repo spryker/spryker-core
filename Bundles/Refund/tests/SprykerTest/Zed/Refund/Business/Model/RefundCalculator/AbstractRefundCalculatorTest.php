@@ -26,7 +26,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
  */
 class AbstractRefundCalculatorTest extends Unit
 {
-
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -96,5 +95,4 @@ class AbstractRefundCalculatorTest extends Unit
 
         return $salesOrderItem;
     }
-
 }

@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductRelationFormType extends AbstractType
 {
-
     const FIELD_RELATION_TYPE = 'productRelationType';
     const FIELD_FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
     const FIELD_ID_PRODUCT_RELATION = 'idProductRelation';
@@ -170,5 +169,4 @@ class ProductRelationFormType extends AbstractType
     {
         return 'product_relation';
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Discount\Business\DiscountFacade;
 
 class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransformerInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\DiscountFacade
      */
@@ -93,5 +92,4 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
 
         return $comparators;
     }
-
 }

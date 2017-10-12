@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ConsoleBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Symfony\Component\Console\Command\Command[]
      */
@@ -39,5 +38,4 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ConsoleDependencyProvider::SERVICE_PROVIDERS);
     }
-
 }

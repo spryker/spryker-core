@@ -26,7 +26,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\PaginatedQueryExpan
  */
 class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
-
     /**
      * @dataProvider paginatedQueryExpanderDataProvider
      *
@@ -166,5 +165,4 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         return [$searchConfig, $expectedQuery, $requestParameters];
     }
-
 }

@@ -23,7 +23,6 @@ use Spryker\Zed\Currency\Business\CurrencyFacade;
  */
 class CurrencyFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\Currency\CurrencyBusinessTester
      */
@@ -69,5 +68,4 @@ class CurrencyFacadeTest extends Unit
     {
         return new CurrencyFacade();
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 interface CmsToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -34,5 +33,4 @@ interface CmsToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
-
 }

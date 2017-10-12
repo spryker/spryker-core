@@ -9,10 +9,8 @@ namespace Spryker\Zed\Newsletter\Business\Internal;
 
 interface NewsletterTypeInstallerInterface
 {
-
     /**
      * @return void
      */
     public function install();
-
 }

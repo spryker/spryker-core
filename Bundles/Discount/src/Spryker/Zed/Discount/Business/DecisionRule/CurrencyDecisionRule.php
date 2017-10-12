@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class CurrencyDecisionRule implements DecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -42,5 +41,4 @@ class CurrencyDecisionRule implements DecisionRuleInterface
     ) {
         return $this->comparators->compare($clauseTransfer, $quoteTransfer->getCurrency()->getCode());
     }
-
 }

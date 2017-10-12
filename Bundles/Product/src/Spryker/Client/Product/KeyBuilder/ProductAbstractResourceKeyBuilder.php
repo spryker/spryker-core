@@ -12,7 +12,6 @@ use Spryker\Shared\Product\ProductConfig;
 
 class ProductAbstractResourceKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class ProductAbstractResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT;
     }
-
 }

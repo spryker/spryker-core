@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ComposerJsonUpdaterConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:dependency:update-composer-files';
     const OPTION_BUNDLE = 'module';
     const OPTION_DRY_RUN = 'dry-run';
@@ -83,5 +82,4 @@ class ComposerJsonUpdaterConsole extends Console
 
         return count($modifiedModules) < 1 ? static::CODE_SUCCESS  : static::CODE_ERROR;
     }
-
 }

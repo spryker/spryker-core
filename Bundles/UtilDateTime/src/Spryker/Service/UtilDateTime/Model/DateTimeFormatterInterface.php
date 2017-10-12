@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilDateTime\Model;
 
 interface DateTimeFormatterInterface
 {
-
     /**
      * @param string $dateTime
      *
@@ -30,5 +29,4 @@ interface DateTimeFormatterInterface
      * @return string
      */
     public function formatDateTime($dateTime);
-
 }

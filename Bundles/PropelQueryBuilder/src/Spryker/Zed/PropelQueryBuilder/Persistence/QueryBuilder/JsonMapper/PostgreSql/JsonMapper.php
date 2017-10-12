@@ -13,7 +13,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInt
 
 class JsonMapper implements JsonMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface $operator
@@ -55,5 +54,4 @@ class JsonMapper implements JsonMapperInterface
 
         return $operatorValue;
     }
-
 }

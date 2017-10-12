@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ImagesFormType extends AbstractType
 {
-
     const FIELD_IMAGE_SET_COLLECTION_PREFIX = 'image_set_collection_';
 
     /**
@@ -91,5 +90,4 @@ class ImagesFormType extends AbstractType
     {
         return static::FIELD_IMAGE_SET_COLLECTION_PREFIX . $localeName;
     }
-
 }

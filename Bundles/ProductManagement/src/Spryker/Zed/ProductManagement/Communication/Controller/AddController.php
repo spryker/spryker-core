@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
@@ -180,5 +179,4 @@ class AddController extends AbstractController
 
         return $concreteProductCollection;
     }
-
 }

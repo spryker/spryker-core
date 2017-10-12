@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class ConstantsToForeignConstantsFilter implements DependencyFilterInterface
 {
-
     /**
      * @param array $dependency
      *
@@ -25,5 +24,4 @@ class ConstantsToForeignConstantsFilter implements DependencyFilterInterface
 
         return ($isClassNameConstants && $isForeignClassNameConstants);
     }
-
 }

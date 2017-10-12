@@ -26,7 +26,6 @@ use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBui
  */
 class FlysystemLocalFileSystemTest extends Unit
 {
-
     const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
     const PATH_DOCUMENT = 'documents/';
 
@@ -84,5 +83,4 @@ class FlysystemLocalFileSystemTest extends Unit
 
         $this->assertTrue($isTypeAccepted);
     }
-
 }

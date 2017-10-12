@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface NavigationGuiToUrlInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
     public function findUrl(UrlTransfer $urlTransfer);
-
 }

@@ -18,7 +18,6 @@ use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridgeI
 
 class CartItemsAttributeMapper implements CartItemsMapperInterface
 {
-
     const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
     const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
@@ -198,5 +197,4 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     {
         return $attributeMapIterator->getSubIterator($attributeMapIterator->getDepth() - 1)->key();
     }
-
 }

@@ -28,7 +28,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class DependencyInjectorResolverTest extends Unit
 {
-
     /**
      * The bundle which calls the `getProvidedDependency()`
      *
@@ -256,5 +255,4 @@ class DependencyInjectorResolverTest extends Unit
 
         return $basePath;
     }
-
 }

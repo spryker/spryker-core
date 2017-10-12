@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface AttributeMergerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RawProductAttributesTransfer $rawProductAttributesTransfer
      *
      * @return array
      */
     public function merge(RawProductAttributesTransfer $rawProductAttributesTransfer);
-
 }

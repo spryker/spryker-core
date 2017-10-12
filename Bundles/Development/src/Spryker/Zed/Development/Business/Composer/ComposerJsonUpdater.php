@@ -14,7 +14,6 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
-
     const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
     const KEY_REQUIRE = 'require';
     const KEY_REQUIRE_DEV = 'require-dev';
@@ -202,5 +201,4 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
             throw new RuntimeException(sprintf('Invalid composer name, expected %s, got %s', $expected, $vendorName));
         }
     }
-
 }

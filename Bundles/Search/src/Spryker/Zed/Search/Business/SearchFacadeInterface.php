@@ -13,7 +13,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 interface SearchFacadeInterface
 {
-
     /**
      * Specification:
      * - Loads index definition json files from the folders
@@ -120,5 +119,4 @@ interface SearchFacadeInterface
      * @return void
      */
     public function generatePageIndexMap(LoggerInterface $messenger);
-
 }

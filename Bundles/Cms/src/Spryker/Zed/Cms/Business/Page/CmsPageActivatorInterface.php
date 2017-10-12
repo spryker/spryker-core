@@ -7,7 +7,6 @@ namespace Spryker\Zed\Cms\Business\Page;
 
 interface CmsPageActivatorInterface
 {
-
     /**
      * @param int $idCmsPage
      *
@@ -25,5 +24,4 @@ interface CmsPageActivatorInterface
      * @return void
      */
     public function deactivate($idCmsPage);
-
 }

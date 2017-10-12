@@ -26,7 +26,6 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class TranslationSaverTest extends MockProvider
 {
-
     /**
      * @return void
      */
@@ -129,5 +128,4 @@ class TranslationSaverTest extends MockProvider
 
         return $translationSaver;
     }
-
 }

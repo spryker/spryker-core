@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 
 interface CmsClientInterface
 {
-
     /**
      * @api
      *
@@ -38,5 +37,4 @@ interface CmsClientInterface
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
     public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer);
-
 }

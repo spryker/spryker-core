@@ -16,7 +16,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 interface CmsPageTableConstants
 {
-
     const ACTIONS = 'Actions';
     const URL_CMS_PAGE_ACTIVATE = '/cms-gui/edit-page/activate';
     const URL_CMS_PAGE_DEACTIVATE = '/cms-gui/edit-page/deactivate';
@@ -41,5 +40,4 @@ interface CmsPageTableConstants
     const CREATE_GLOSSARY_URL_PARAM_ID_CMS_PAGE = CreateGlossaryController::URL_PARAM_ID_CMS_PAGE;
 
     const SORT_DESC = TableConfiguration::SORT_DESC;
-
 }

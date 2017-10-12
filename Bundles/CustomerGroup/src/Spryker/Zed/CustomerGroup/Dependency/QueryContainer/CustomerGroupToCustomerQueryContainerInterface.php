@@ -9,10 +9,8 @@ namespace Spryker\Zed\CustomerGroup\Dependency\QueryContainer;
 
 interface CustomerGroupToCustomerQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomers();
-
 }

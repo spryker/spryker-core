@@ -12,7 +12,6 @@ use Spryker\Client\Ratepay\Zed\RatepayStub;
 
 class RatepayFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Ratepay\Zed\RatepayStubInterface
      */
@@ -28,5 +27,4 @@ class RatepayFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(RatepayDependencyProvider::CLIENT_ZED_REQUEST);
     }
-
 }

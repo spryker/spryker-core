@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
  */
 class ClauseValidatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -141,5 +140,4 @@ class ClauseValidatorTest extends Unit
     {
         return new ClauseTransfer();
     }
-
 }

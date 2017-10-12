@@ -21,7 +21,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
-
     /**
      * @deprecated Use CmsConfig::getPlaceholderPattern()
      */
@@ -311,5 +310,4 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     {
         return file_exists($templateFile);
     }
-
 }

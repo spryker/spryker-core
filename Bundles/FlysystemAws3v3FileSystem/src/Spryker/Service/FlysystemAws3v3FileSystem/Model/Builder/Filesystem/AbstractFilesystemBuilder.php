@@ -12,7 +12,6 @@ use League\Flysystem\Filesystem;
 
 abstract class AbstractFilesystemBuilder implements FilesystemBuilderInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\FlysystemConfigTransfer
      */
@@ -57,5 +56,4 @@ abstract class AbstractFilesystemBuilder implements FilesystemBuilderInterface
 
         return new Filesystem($adapter, $config);
     }
-
 }

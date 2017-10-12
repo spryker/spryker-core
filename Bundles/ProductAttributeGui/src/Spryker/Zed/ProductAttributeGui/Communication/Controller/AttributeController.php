@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AttributeController extends AbstractController
 {
-
     const PARAM_ID = 'id';
     const PARAM_SEARCH_TEXT = 'q';
     const PARAM_TERM = 'term';
@@ -257,5 +256,4 @@ class AttributeController extends AbstractController
             ->getLocaleFacade()
             ->getCurrentLocale();
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
-
     const TO_URL = 'toUrl';
     const STATUS = 'status';
 
@@ -213,5 +212,4 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
             ->createUrlQuery()
             ->filterByFkResourceRedirect(null, Criteria::ISNULL);
     }
-
 }

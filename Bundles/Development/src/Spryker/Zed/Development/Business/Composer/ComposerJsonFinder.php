@@ -11,7 +11,6 @@ use Symfony\Component\Finder\Finder;
 
 class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -39,5 +38,4 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     {
         return $this->finder->in($this->pathToBundles)->name('composer.json')->depth('< 2');
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductRelationTransfer;
 
 interface ProductRelationWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
@@ -41,5 +40,4 @@ interface ProductRelationWriterInterface
      * @return bool
      */
     public function deleteProductRelation($idProductRelation);
-
 }

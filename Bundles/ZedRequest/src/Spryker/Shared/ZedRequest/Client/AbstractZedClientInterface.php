@@ -9,7 +9,6 @@ namespace Spryker\Shared\ZedRequest\Client;
 
 interface AbstractZedClientInterface
 {
-
     /**
      * @param string $name
      * @param mixed $metaTransfer
@@ -29,5 +28,4 @@ interface AbstractZedClientInterface
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
      */
     public function getLastResponse();
-
 }

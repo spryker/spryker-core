@@ -11,7 +11,6 @@ use Orm\Zed\Customer\Persistence\SpyCustomer;
 
 class EntityMapper implements EntityMapperInterface
 {
-
     /**
      * @param array $data
      *
@@ -39,5 +38,4 @@ class EntityMapper implements EntityMapperInterface
 
         return $entityList;
     }
-
 }

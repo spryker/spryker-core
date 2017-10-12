@@ -16,7 +16,6 @@ use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
  */
 class NewsletterCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface
      */
@@ -32,5 +31,4 @@ class NewsletterCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(NewsletterDependencyProvider::FACADE_GLOSSARY);
     }
-
 }

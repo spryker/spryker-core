@@ -14,7 +14,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class NodeWriter implements NodeWriterInterface
 {
-
     /**
      * @deprecated This is not in use anymore
      */
@@ -118,5 +117,4 @@ class NodeWriter implements NodeWriterInterface
             $this->categoryToucher->touchCategoryNodeActive($categoryNodeEntity->getIdCategoryNode());
         }
     }
-
 }

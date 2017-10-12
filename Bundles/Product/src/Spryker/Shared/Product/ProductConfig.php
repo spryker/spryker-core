@@ -9,7 +9,6 @@ namespace Spryker\Shared\Product;
 
 interface ProductConfig
 {
-
     const RESOURCE_TYPE_PRODUCT_ABSTRACT = 'product_abstract';
 
     const RESOURCE_TYPE_PRODUCT_CONCRETE = 'product_concrete';
@@ -19,5 +18,4 @@ interface ProductConfig
     const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
 
     const VARIANT_LEAF_NODE_ID = 'id_product_concrete';
-
 }

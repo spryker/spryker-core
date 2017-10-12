@@ -25,7 +25,6 @@ use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
 
 class VersionDataMapper implements VersionDataMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
      */
@@ -191,5 +190,4 @@ class VersionDataMapper implements VersionDataMapperInterface
 
         return $pageMetaAttributeTransfer;
     }
-
 }

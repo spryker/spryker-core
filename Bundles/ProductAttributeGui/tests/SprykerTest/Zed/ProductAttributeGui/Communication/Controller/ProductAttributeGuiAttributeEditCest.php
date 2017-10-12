@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester;
  */
 class ProductAttributeGuiAttributeEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class ProductAttributeGuiAttributeEditCest
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes / Edit Product Attribute');
     }
-
 }

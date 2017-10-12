@@ -8,7 +8,6 @@ namespace Spryker\Zed\CmsGui\Dependency\Service;
 
 class CmsGuiToUtilEncodingBridge implements CmsGuiToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class CmsGuiToUtilEncodingBridge implements CmsGuiToUtilEncodingInterface
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

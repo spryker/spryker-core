@@ -25,7 +25,6 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects;
  */
 class CouplingBetweenObjectsTest extends Unit
 {
-
     const NUMBER_OF_COUPLING_BETWEEN_OBJECTS = 2;
     const THRESHOLD = 1;
 
@@ -107,5 +106,4 @@ class CouplingBetweenObjectsTest extends Unit
 
         return $nodeMock;
     }
-
 }

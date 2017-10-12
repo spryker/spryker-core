@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class ProductOptionValueForm extends AbstractType
 {
-
     const FIELD_VALUE = 'value';
     const FIELD_SKU = 'sku';
     const FIELD_PRICE = 'price';
@@ -183,5 +182,4 @@ class ProductOptionValueForm extends AbstractType
     {
         return 'product_option';
     }
-
 }

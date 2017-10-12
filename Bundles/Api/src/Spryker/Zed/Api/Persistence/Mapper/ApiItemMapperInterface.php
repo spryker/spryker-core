@@ -9,7 +9,6 @@ namespace Spryker\Zed\Api\Persistence\Mapper;
 
 interface ApiItemMapperInterface
 {
-
     /**
      * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
      * @param int|null $id
@@ -17,5 +16,4 @@ interface ApiItemMapperInterface
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function toItem($data, $id = null);
-
 }

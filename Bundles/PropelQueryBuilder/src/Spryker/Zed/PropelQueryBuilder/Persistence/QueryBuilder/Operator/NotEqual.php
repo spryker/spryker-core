@@ -11,7 +11,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotEqual extends Equal
 {
-
     const TYPE = 'not_equal';
 
     /**
@@ -21,5 +20,4 @@ class NotEqual extends Equal
     {
         return Criteria::NOT_EQUAL;
     }
-
 }

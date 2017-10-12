@@ -26,7 +26,6 @@ use Spryker\Zed\Braintree\Business\Payment\Transaction\AuthorizeTransaction;
  */
 class BraintreeFacadeAuthorizeTest extends AbstractFacadeTest
 {
-
     /**
      * @return void
      */
@@ -110,5 +109,4 @@ class BraintreeFacadeAuthorizeTest extends AbstractFacadeTest
             ]),
         ]);
     }
-
 }

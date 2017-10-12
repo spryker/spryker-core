@@ -18,7 +18,6 @@ use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 
 class MoneyDependencyProvider extends AbstractDependencyProvider
 {
-
     const STORE = 'store';
     const PLUGIN_CURRENCY = 'currency plugin';
     const MONEY_PARSER = 'money parser';
@@ -123,5 +122,4 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
 
         return $isoCurrencies;
     }
-
 }

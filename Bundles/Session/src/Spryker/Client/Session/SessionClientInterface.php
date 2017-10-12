@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 interface SessionClientInterface extends SessionInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface SessionClientInterface extends SessionInterface
      * @return \Spryker\Client\Session\SessionClientInterface
      */
     public function setContainer(SessionInterface $container);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilText\Model;
 
 class Slug implements SlugInterface
 {
-
     /**
      * @param string $value
      *
@@ -28,5 +27,4 @@ class Slug implements SlugInterface
 
         return $value;
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Service\UtilText\Model\Token\Token;
 
 class UtilTextServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\UtilText\Model\SlugInterface
      */
@@ -73,5 +72,4 @@ class UtilTextServiceFactory extends AbstractServiceFactory
     {
         return new Token();
     }
-
 }

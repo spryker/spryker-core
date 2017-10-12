@@ -18,7 +18,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {
-
     /**
      * Returns the stored quote
      *
@@ -321,5 +320,4 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         return $this->getFactory()->getQuoteClient();
     }
-
 }

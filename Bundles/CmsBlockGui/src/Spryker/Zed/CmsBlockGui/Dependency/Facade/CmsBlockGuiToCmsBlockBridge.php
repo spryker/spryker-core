@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface
      */
@@ -115,5 +114,4 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
     {
         return $this->cmsBlockFacade->hasTemplateFileById($idCmsBlockTemplate);
     }
-
 }

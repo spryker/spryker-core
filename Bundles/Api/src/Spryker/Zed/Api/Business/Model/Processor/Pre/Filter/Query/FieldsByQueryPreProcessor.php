@@ -12,7 +12,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class FieldsByQueryPreProcessor implements PreProcessorInterface
 {
-
     const FIELDS = 'fields';
 
     /**
@@ -34,5 +33,4 @@ class FieldsByQueryPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

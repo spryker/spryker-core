@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 
 interface ApiFacadeInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ interface ApiFacadeInterface
      * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
      */
     public function validate($resourceName, ApiDataTransfer $apiDataTransfer);
-
 }

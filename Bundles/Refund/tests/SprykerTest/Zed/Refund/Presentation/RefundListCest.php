@@ -20,7 +20,6 @@ use SprykerTest\Zed\Refund\RefundPresentationTester;
  */
 class RefundListCest
 {
-
     /**
      * @param \SprykerTest\Zed\Refund\RefundPresentationTester $i
      *
@@ -30,5 +29,4 @@ class RefundListCest
     {
         $i->canOpenRefundListPage();
     }
-
 }

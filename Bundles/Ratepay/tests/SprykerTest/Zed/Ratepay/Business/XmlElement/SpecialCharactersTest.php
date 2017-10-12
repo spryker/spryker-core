@@ -22,7 +22,6 @@ use Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement;
  */
 class SpecialCharactersTest extends Unit
 {
-
     /**
      * @var array
      */
@@ -58,5 +57,4 @@ class SpecialCharactersTest extends Unit
             $this->assertEquals($expected, (string)$simpleXmlElement->addCDataChild('test', $character));
         }
     }
-
 }

@@ -25,7 +25,6 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInt
  */
 class ZedNavigationCacheBuilderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -43,5 +42,4 @@ class ZedNavigationCacheBuilderTest extends Unit
         $navigationCacheBuilder = new ZedNavigationCacheBuilder($navigationCollectorMock, $navigationCacheMock);
         $navigationCacheBuilder->writeNavigationCache();
     }
-
 }

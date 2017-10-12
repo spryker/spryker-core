@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CustomerFacadeInterface
 {
-
     /**
      * @api
      *
@@ -325,5 +324,4 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateSalesOrderCustomerInformation(OrderTransfer $orderTransfer);
-
 }

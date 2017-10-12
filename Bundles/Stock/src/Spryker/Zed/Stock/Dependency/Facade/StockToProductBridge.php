@@ -9,7 +9,6 @@ namespace Spryker\Zed\Stock\Dependency\Facade;
 
 class StockToProductBridge implements StockToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -52,5 +51,4 @@ class StockToProductBridge implements StockToProductInterface
     {
         return $this->productFacade->hasProductConcrete($sku);
     }
-
 }

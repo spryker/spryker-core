@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsGui\Dependency\Service;
 
 interface CmsGuiToUtilEncodingInterface
 {
-
     /**
      * @param string $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface CmsGuiToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

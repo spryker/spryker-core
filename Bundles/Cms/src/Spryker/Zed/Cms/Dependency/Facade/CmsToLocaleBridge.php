@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 class CmsToLocaleBridge implements CmsToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
@@ -48,5 +47,4 @@ class CmsToLocaleBridge implements CmsToLocaleInterface
     {
         return $this->localeFacade->getLocale($localeName);
     }
-
 }

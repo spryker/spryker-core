@@ -12,7 +12,6 @@ use Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface;
 
 class RedisReader implements ReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface
      */
@@ -43,5 +42,4 @@ class RedisReader implements ReaderInterface
     {
         return 'redis-reader';
     }
-
 }

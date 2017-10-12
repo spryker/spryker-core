@@ -9,7 +9,6 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFilter;
 
 class DependencyFilter implements DependencyFilterCompositeInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface[]
      */
@@ -43,5 +42,4 @@ class DependencyFilter implements DependencyFilterCompositeInterface
 
         return $filterDependency;
     }
-
 }

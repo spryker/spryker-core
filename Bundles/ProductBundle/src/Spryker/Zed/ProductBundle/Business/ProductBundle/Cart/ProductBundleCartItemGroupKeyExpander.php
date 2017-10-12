@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductBundleCartItemGroupKeyExpander implements ProductBundleCartItemGroupKeyExpanderInterface
 {
-
     const GROUP_KEY_DELIMITER = '_';
 
     /**
@@ -57,5 +56,4 @@ class ProductBundleCartItemGroupKeyExpander implements ProductBundleCartItemGrou
 
         return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . $this->skuMap[$mapKey];
     }
-
 }

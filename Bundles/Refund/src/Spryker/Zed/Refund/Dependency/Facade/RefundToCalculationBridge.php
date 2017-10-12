@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundToCalculationBridge implements RefundToCalculationInterface
 {
-
     /**
      * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
      */
@@ -34,5 +33,4 @@ class RefundToCalculationBridge implements RefundToCalculationInterface
     {
         return $this->calculationFacade->recalculateOrder($orderTransfer);
     }
-
 }

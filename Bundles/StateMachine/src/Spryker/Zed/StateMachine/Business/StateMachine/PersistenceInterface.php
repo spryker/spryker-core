@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface PersistenceInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
@@ -115,5 +114,4 @@ interface PersistenceInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $expiredStateMachineItemsTransfer
      */
     public function getItemsWithExpiredTimeouts($stateMachineName);
-
 }

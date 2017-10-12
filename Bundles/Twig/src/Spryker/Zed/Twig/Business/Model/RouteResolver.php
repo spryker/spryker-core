@@ -11,7 +11,6 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class RouteResolver
 {
-
     /**
      * @param string $controllerServiceName
      *
@@ -38,5 +37,4 @@ class RouteResolver
 
         return strtolower($filter->filter($incomingString));
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class TaxTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class TaxTotalCalculatorPlugin extends AbstractPlugin implements CalculationPlug
         $this->getFacade()
             ->calculateTaxTotal($calculableObjectTransfer);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewGuiToProductReviewInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
@@ -32,5 +31,4 @@ interface ProductReviewGuiToProductReviewInterface
      * @return void
      */
     public function deleteProductReview(ProductReviewTransfer $productReviewTransfer);
-
 }

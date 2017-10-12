@@ -12,7 +12,6 @@ use Orm\Zed\Currency\Persistence\SpyCurrency;
 
 class CurrencyWriter implements CurrencyWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Currency\Business\Model\CurrencyMapperInterface
      */
@@ -48,5 +47,4 @@ class CurrencyWriter implements CurrencyWriterInterface
     {
         return new SpyCurrency();
     }
-
 }

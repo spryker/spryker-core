@@ -9,10 +9,8 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
 interface NestedQueryInterface
 {
-
     /**
      * @return \Elastica\Query\Nested
      */
     public function createNestedQuery();
-
 }

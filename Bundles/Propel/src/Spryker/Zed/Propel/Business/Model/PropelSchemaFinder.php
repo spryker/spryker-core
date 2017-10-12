@@ -11,7 +11,6 @@ use Symfony\Component\Finder\Finder;
 
 class PropelSchemaFinder implements PropelSchemaFinderInterface
 {
-
     const FILE_NAME_PATTERN = '*_*.schema.xml';
 
     /**
@@ -40,5 +39,4 @@ class PropelSchemaFinder implements PropelSchemaFinderInterface
 
         return $finder;
     }
-
 }

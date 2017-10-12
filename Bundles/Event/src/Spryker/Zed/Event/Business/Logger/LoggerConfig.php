@@ -16,7 +16,6 @@ use Spryker\Zed\Event\EventConfig;
 
 class LoggerConfig implements LoggerConfigInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\EventConfig
      */
@@ -74,5 +73,4 @@ class LoggerConfig implements LoggerConfigInterface
             Logger::INFO
         );
     }
-
 }

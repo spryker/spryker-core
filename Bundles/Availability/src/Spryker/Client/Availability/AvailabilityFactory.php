@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class AvailabilityFactory extends AbstractFactory
 {
-
     /**
      * @deprecated Use AvailabilityFactory::createCurrentLocaleAvailabilityStorage
      *
@@ -64,5 +63,4 @@ class AvailabilityFactory extends AbstractFactory
             $this->getLocaleClient()->getCurrentLocale()
         );
     }
-
 }

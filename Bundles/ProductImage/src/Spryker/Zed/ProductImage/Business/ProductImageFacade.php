@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
-
     /**
      * Specification:
      * - Creates a new product image entity or updates an existing one if the ID is provided and the entity already exists.
@@ -262,5 +261,4 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
             ->createProductImageReader()
             ->findProductImagesSetCollectionById($idProductImageSet);
     }
-
 }

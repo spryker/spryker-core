@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class ApplicationConfig extends AbstractBundleConfig
 {
-
     /**
      * @return bool
      */
@@ -44,5 +43,4 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(ApplicationConstants::YVES_TRUSTED_HOSTS, []);
     }
-
 }

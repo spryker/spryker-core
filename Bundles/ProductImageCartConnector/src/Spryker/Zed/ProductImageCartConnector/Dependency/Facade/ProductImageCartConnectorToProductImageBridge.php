@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductImageCartConnector\Dependency\Facade;
 
 class ProductImageCartConnectorToProductImageBridge implements ProductImageCartConnectorToProductImageInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
@@ -32,5 +31,4 @@ class ProductImageCartConnectorToProductImageBridge implements ProductImageCartC
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductId($productId);
     }
-
 }

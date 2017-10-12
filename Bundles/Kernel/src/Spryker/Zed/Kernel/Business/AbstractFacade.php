@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractFacade
 {
-
     /**
      * @var \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
      */
@@ -58,5 +57,4 @@ abstract class AbstractFacade
     {
         return new FactoryResolver();
     }
-
 }

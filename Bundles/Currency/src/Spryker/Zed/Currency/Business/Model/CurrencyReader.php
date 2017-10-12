@@ -16,7 +16,6 @@ use Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface;
 
 class CurrencyReader implements CurrencyReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface
      */
@@ -171,5 +170,4 @@ class CurrencyReader implements CurrencyReaderInterface
         );
         return $storeWithCurrencyTransfer;
     }
-
 }

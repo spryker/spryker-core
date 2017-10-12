@@ -19,7 +19,6 @@ use Twig_SimpleFilter;
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -110,5 +109,4 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
 
         return $money;
     }
-
 }

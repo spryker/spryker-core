@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductOptionCartConnector\Dependency\Facade;
 
 interface ProductOptionCartConnectorToProductOptionInterface
 {
-
     /**
      * @param int $idProductOptionValueUsage
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     public function getProductOptionValue($idProductOptionValueUsage);
-
 }

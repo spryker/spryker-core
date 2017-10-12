@@ -20,7 +20,6 @@ use Spryker\Zed\Refund\RefundDependencyProvider;
  */
 class RefundBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Refund\Business\Model\RefundCalculatorInterface
      */
@@ -94,5 +93,4 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
     }
-
 }

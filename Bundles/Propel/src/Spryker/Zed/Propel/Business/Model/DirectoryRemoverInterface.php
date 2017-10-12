@@ -9,10 +9,8 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 interface DirectoryRemoverInterface
 {
-
     /**
      * @return void
      */
     public function execute();
-
 }

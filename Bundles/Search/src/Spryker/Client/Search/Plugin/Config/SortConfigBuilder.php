@@ -13,7 +13,6 @@ use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
 class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {
-
     const DIRECTION_ASC = 'asc';
     const DIRECTION_DESC = 'desc';
 
@@ -117,5 +116,4 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
             ->requireParameterName()
             ->requireFieldName();
     }
-
 }

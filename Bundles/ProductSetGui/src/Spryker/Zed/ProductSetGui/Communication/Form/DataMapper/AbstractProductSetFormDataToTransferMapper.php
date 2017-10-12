@@ -24,7 +24,6 @@ use Symfony\Component\Form\FormInterface;
 
 abstract class AbstractProductSetFormDataToTransferMapper
 {
-
     /**
      * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface
      */
@@ -233,5 +232,4 @@ abstract class AbstractProductSetFormDataToTransferMapper
      * @return string
      */
     abstract protected function getIdProductAbstractFieldName();
-
 }

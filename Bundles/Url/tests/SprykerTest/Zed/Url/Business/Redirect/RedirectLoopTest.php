@@ -28,7 +28,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class RedirectLoopTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacade
      */
@@ -149,5 +148,4 @@ class RedirectLoopTest extends Unit
 
         return $urlTransfer;
     }
-
 }

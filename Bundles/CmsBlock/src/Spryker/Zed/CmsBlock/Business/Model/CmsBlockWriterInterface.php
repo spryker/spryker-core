@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockWriterInterface
 {
-
     /**
      * @param int $idCmsBlock
      *
@@ -39,5 +38,4 @@ interface CmsBlockWriterInterface
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Api\ApiConfig;
  */
 class PathPreProcessor implements PreProcessorInterface
 {
-
     const SERVER_REQUEST_URI = 'REQUEST_URI';
 
     /**
@@ -42,5 +41,4 @@ class PathPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

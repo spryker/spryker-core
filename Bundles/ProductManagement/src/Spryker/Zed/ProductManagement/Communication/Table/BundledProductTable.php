@@ -24,7 +24,6 @@ use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEnco
 
 class BundledProductTable extends AbstractTable
 {
-
     const COL_SELECT = 'select';
     const COL_PRICE = 'price';
     const COL_AVAILABILITY = 'availability';
@@ -254,5 +253,4 @@ class BundledProductTable extends AbstractTable
         }
         return $availability;
     }
-
 }

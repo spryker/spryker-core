@@ -26,7 +26,6 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToProductBridge;
  */
 class ProductExpanderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -68,5 +67,4 @@ class ProductExpanderTest extends Unit
 
         return $ratepayToProductBridge;
     }
-
 }

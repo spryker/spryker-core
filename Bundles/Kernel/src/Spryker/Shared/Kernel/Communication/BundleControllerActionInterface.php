@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\Communication;
 
 interface BundleControllerActionInterface
 {
-
     /**
      * @return string
      */
@@ -24,5 +23,4 @@ interface BundleControllerActionInterface
      * @return string
      */
     public function getAction();
-
 }

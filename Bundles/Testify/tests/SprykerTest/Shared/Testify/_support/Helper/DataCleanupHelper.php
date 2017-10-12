@@ -13,7 +13,6 @@ use Exception;
 
 class DataCleanupHelper extends Module
 {
-
     /**
      * @var array
      */
@@ -53,5 +52,4 @@ class DataCleanupHelper extends Module
         }
         $this->cleanups = [];
     }
-
 }

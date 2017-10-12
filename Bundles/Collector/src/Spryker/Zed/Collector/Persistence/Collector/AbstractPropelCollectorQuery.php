@@ -11,7 +11,6 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 abstract class AbstractPropelCollectorQuery extends AbstractCollectorQuery
 {
-
     /**
      * @var \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
@@ -34,5 +33,4 @@ abstract class AbstractPropelCollectorQuery extends AbstractCollectorQuery
     {
         $this->touchQuery = $touchQuery;
     }
-
 }

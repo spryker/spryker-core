@@ -28,7 +28,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\OptionsActionPostProces
  */
 class OptionsActionPostProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -54,5 +53,4 @@ class OptionsActionPostProcessorTest extends Unit
         $apiResponseTransfer = $processor->process($apiRequestTransfer, $apiResponseTransfer);
         $this->assertSame(ApiConfig::HTTP_CODE_SUCCESS, $apiResponseTransfer->getCode());
     }
-
 }

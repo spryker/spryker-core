@@ -11,7 +11,6 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 
 interface ProductOptionValueSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
      *
@@ -34,5 +33,4 @@ interface ProductOptionValueSaverInterface
      * @return void
      */
     public function removeOptionValues(ProductOptionGroupTransfer $productOptionGroupTransfer, SpyProductOptionGroup $productOptionGroupEntity);
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\PriceDataFeed\Dependency\QueryContainer;
 
 interface PriceDataFeedToPriceInterface
 {
-
     /**
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function queryPriceProduct();
-
 }

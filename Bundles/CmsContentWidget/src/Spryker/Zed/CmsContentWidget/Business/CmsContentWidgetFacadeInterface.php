@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
  */
 interface CmsContentWidgetFacadeInterface
 {
-
     /**
      * Specification:
      *  - Extracts twig functions arguments and maps to values which can be used when reading from yves store.
@@ -76,5 +75,4 @@ interface CmsContentWidgetFacadeInterface
      * @return array
      */
     public function expandCmsPageCollectorData(array $collectedData, LocaleTransfer $localeTransfer);
-
 }
