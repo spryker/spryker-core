@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge as ShipmentToStoreFacadeBridge;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
@@ -77,7 +77,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStoreFacade(Container $container)
     {
         $container[static::FACADE_STORE] = function (Container $container) {
-            return new ShipmentToStoreFacadeBridge($container->getLocator()->store()->facade());
+            return new ShipmentToStoreBridge($container->getLocator()->store()->facade());
         };
 
         return $container;
