@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
+
     const KEY_USED = 'used';
     const KEY_NEW = 'new';
     const KEY_INIT = 'init';
@@ -455,6 +456,19 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         $urlSegments = strtok($requestUri, '?');
         $getParametersKey = static::filterGetParameters($getParameters);
 
+        $cacheKey = self::assembleCacheKey($urlSegments, $getParametersKey);
+
+        return $cacheKey;
+    }
+
+    /**
+     * @param string $urlSegments
+     * @param string $getParametersKey
+     *
+     * @return string
+     */
+    protected static function assembleCacheKey($urlSegments, $getParametersKey)
+    {
         $cacheKey = strtolower(Store::getInstance()->getStoreName()) . self::KEY_NAME_SEPARATOR .
             strtolower(Store::getInstance()->getCurrentLocale()) . self::KEY_NAME_SEPARATOR .
             self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
@@ -468,7 +482,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return string
      */
-    protected static function filterGetParameters($getParameters)
+    protected static function filterGetParameters(array $getParameters)
     {
         $allowedGetParametersList = self::getAllowedGetParametersList();
 
@@ -526,4 +540,5 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
         return $result;
     }
+
 }
