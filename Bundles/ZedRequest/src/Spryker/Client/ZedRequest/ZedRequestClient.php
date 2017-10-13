@@ -17,7 +17,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
  */
 class ZedRequestClient extends AbstractClient implements ZedRequestClientInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\Client\ZedClient
      */
@@ -115,5 +114,4 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
             );
         }
     }
-
 }

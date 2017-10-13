@@ -9,12 +9,10 @@ namespace Spryker\Yves\StepEngine\Dependency\Step;
 
 interface StepWithExternalRedirectInterface extends StepInterface
 {
-
     /**
      * Return external redirect url, when redirect occurs not within same application. Used after execute.
      *
      * @return string
      */
     public function getExternalRedirectUrl();
-
 }

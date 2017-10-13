@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 
 interface SubscriptionRequestHandlerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface $optInHandler
@@ -33,5 +32,4 @@ interface SubscriptionRequestHandlerInterface
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function processNewsletterUnsubscriptions(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
-
 }

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductDiscountConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Builds all product variants by abstract sku
@@ -53,5 +52,4 @@ interface ProductDiscountConnectorFacadeInterface
      * @return string[]
      */
     public function getAttributeTypes();
-
 }

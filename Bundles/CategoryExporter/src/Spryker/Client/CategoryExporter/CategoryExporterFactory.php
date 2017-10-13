@@ -15,7 +15,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CategoryExporterFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\CategoryExporter\Model\Navigation
      */
@@ -61,5 +60,4 @@ class CategoryExporterFactory extends AbstractFactory
     {
         return new CategoryResourceKeyBuilder();
     }
-
 }

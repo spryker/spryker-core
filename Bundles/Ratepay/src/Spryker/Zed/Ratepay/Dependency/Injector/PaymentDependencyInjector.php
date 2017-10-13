@@ -17,7 +17,6 @@ use Spryker\Zed\Ratepay\Communication\Plugin\Checkout\RatepaySaveOrderPlugin;
 
 class PaymentDependencyInjector extends AbstractDependencyInjector
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -46,5 +45,4 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
 
         return $container;
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CategoryTransfer;
 
 interface CategoryRelationUpdatePluginInterface
 {
-
     /**
      * Specification:
      * - Update relations on category update
@@ -23,5 +22,4 @@ interface CategoryRelationUpdatePluginInterface
      * @return void
      */
     public function update(CategoryTransfer $categoryTransfer);
-
 }

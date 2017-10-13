@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\Dependency\Injector;
 
 class DependencyInjectorCollection implements DependencyInjectorCollectionInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface[]
      */
@@ -42,5 +41,4 @@ class DependencyInjectorCollection implements DependencyInjectorCollectionInterf
     {
         return count($this->dependencyInjector);
     }
-
 }

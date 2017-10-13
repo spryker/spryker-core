@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -29,5 +28,4 @@ class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInte
 
         return $cartChangeTransfer;
     }
-
 }

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentDiscountConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Finds carriers in a database
@@ -116,5 +115,4 @@ interface ShipmentDiscountConnectorFacadeInterface
      * @return bool
      */
     public function isPriceSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer);
-
 }

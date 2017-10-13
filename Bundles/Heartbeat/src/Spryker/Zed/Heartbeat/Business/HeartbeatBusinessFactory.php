@@ -26,7 +26,6 @@ use Spryker\Zed\Storage\StorageConfig;
  */
 class HeartbeatBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Heartbeat\Business\Ambulance\Doctor
      */
@@ -146,5 +145,4 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
 
         return null;
     }
-
 }

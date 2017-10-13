@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class AuthPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Auth\Persistence\SpyResetPasswordQuery
      */
@@ -24,5 +23,4 @@ class AuthPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyResetPasswordQuery::create();
     }
-
 }

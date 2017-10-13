@@ -12,7 +12,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorFacade extends AbstractDependencyFinder
 {
-
     const BUNDLE = 'bundle';
 
     /**
@@ -55,5 +54,4 @@ class LocatorFacade extends AbstractDependencyFinder
     {
         return sprintf('Spryker\\Zed\\%1$s\\Business\\%1$sFacade', $bundle);
     }
-
 }

@@ -29,7 +29,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeade
  */
 class PaginationByHeaderFilterPreProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -114,5 +113,4 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
 
         $processor->process($apiRequestTransfer);
     }
-
 }

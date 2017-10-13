@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
 
 class GeneratedDirectory implements GeneratedDirectoryInterface
 {
-
     /**
      * @var string
      */
@@ -64,5 +63,4 @@ class GeneratedDirectory implements GeneratedDirectoryInterface
 
         return $finder;
     }
-
 }

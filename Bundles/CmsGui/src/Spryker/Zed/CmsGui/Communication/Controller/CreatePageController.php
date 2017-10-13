@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
-
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
 
     /**
@@ -99,5 +98,4 @@ class CreatePageController extends AbstractController
     {
         return new FormError("Selected template doesn't exist anymore");
     }
-
 }

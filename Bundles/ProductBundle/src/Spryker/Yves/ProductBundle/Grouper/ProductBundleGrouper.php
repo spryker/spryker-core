@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
-
     const BUNDLE_ITEMS = 'bundleItems';
     const BUNDLE_PRODUCT = 'bundleProduct';
 
@@ -279,5 +278,4 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
         return $groupedBundleItems;
     }
-
 }

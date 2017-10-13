@@ -21,7 +21,6 @@ use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
  */
 class BundleNameResolverTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -51,5 +50,4 @@ class BundleNameResolverTest extends Unit
 
         return $mock;
     }
-
 }

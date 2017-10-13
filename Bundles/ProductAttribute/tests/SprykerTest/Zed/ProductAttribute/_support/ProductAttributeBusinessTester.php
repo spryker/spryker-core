@@ -31,7 +31,6 @@ use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
  */
 class ProductAttributeBusinessTester extends Actor
 {
-
     use _generated\ProductAttributeBusinessTesterActions;
 
     const ABSTRACT_SKU = 'testFooBarAbstract';
@@ -279,5 +278,4 @@ class ProductAttributeBusinessTester extends Actor
 
         return $data;
     }
-
 }

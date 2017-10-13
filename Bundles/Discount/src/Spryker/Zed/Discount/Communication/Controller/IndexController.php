@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_BATCH_PARAMETER = 'batch';
     const URL_PARAM_ID_POOL = 'id-pool';
@@ -356,5 +355,4 @@ class IndexController extends AbstractController
             }
         }
     }
-
 }

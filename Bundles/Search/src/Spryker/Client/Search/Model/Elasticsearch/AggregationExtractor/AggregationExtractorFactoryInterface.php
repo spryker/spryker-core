@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 interface AggregationExtractorFactoryInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
      * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
      */
     public function create(FacetConfigTransfer $facetConfigTransfer);
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Money\MoneyDependencyProvider;
  */
 class MoneyCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyType|\Symfony\Component\Form\FormTypeInterface
      */
@@ -68,5 +67,4 @@ class MoneyCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_STORE);
     }
-
 }

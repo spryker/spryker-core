@@ -27,7 +27,6 @@ use Spryker\Zed\Tax\Business\TaxFacade;
  */
 class WriterTest extends Unit
 {
-
     const DUMMY_TAX_SET_NAME = 'SalesTax';
     const DUMMY_TAX_RATE1_NAME = 'Local';
     const DUMMY_TAX_RATE1_PERCENTAGE = 25;
@@ -312,5 +311,4 @@ class WriterTest extends Unit
         $taxSetEntity = $taxSetQuery->findOne();
         $this->assertEmpty($taxSetEntity);
     }
-
 }

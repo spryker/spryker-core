@@ -25,7 +25,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class AutoloadUpdaterTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -241,5 +240,4 @@ class AutoloadUpdaterTest extends Unit
     {
         return new SplFileInfo(__FILE__, __DIR__, __DIR__);
     }
-
 }

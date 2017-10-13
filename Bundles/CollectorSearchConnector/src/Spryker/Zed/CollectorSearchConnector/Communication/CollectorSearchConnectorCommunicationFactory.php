@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CollectorSearchConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CollectorSearchConnector\Dependency\Facade\CollectorSearchConnectorToCollectorInterface
      */
@@ -20,5 +19,4 @@ class CollectorSearchConnectorCommunicationFactory extends AbstractCommunication
     {
         return $this->getProvidedDependency(CollectorSearchConnectorDependencyProvider::FACADE_COLLECTOR);
     }
-
 }

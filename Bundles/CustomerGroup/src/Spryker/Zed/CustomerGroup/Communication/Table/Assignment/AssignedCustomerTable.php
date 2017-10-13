@@ -9,7 +9,6 @@ namespace Spryker\Zed\CustomerGroup\Communication\Table\Assignment;
 
 class AssignedCustomerTable extends AbstractAssignmentTable
 {
-
     /**
      * @var string
      */
@@ -30,5 +29,4 @@ class AssignedCustomerTable extends AbstractAssignmentTable
     {
         return 'checked="checked"';
     }
-
 }

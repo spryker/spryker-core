@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 interface ResolverCacheInterface
 {
-
     /**
      * @param string $className
      *
@@ -26,5 +25,4 @@ interface ResolverCacheInterface
      * @return array
      */
     public function getData();
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 
 abstract class AbstractTouchUpdater implements TouchUpdaterInterface
 {
-
     const FK_TOUCH = 'fk_touch';
 
     /**
@@ -166,5 +165,4 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     {
         return $this->touchKeyColumnName;
     }
-
 }

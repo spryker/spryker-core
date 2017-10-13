@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotionFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -131,5 +130,4 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
             ->createDiscountPromotionReader()
             ->findDiscountPromotionByIdDiscount($idDiscount);
     }
-
 }

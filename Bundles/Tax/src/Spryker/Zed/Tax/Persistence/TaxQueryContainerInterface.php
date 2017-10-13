@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface TaxQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -66,5 +65,4 @@ interface TaxQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     public function queryTaxRateWithCountryAndRate($name, $idCountry, $rate);
-
 }

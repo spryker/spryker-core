@@ -13,7 +13,6 @@ use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
 
 class AssignHelper extends Module
 {
-
     /**
      * @param \Codeception\TestInterface $test
      * @param bool $fail
@@ -38,5 +37,4 @@ class AssignHelper extends Module
             ->findByFkCategory($idCategory)
             ->delete();
     }
-
 }

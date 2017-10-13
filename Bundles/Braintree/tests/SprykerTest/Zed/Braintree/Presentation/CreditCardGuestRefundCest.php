@@ -22,7 +22,6 @@ use SprykerTest\Zed\Braintree\BraintreePresentationTester;
  */
 class CreditCardGuestRefundCest
 {
-
     /**
      * @skip Broken because of new checkout
      *
@@ -44,5 +43,4 @@ class CreditCardGuestRefundCest
         $i->amLoggedInUser();
         $i->refundItemAndCloseOrder();
     }
-
 }

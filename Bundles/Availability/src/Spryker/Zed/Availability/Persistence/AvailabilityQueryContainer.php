@@ -23,7 +23,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class AvailabilityQueryContainer extends AbstractQueryContainer implements AvailabilityQueryContainerInterface
 {
-
     const SUM_QUANTITY = 'sumQuantity';
     const ABSTRACT_SKU = 'abstractSku';
     const AVAILABILITY_QUANTITY = 'availabilityQuantity';
@@ -210,5 +209,4 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->select([static::CONCRETE_SKU])
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
-
 }

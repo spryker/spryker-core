@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CustomerTransferUsernameExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -50,5 +49,4 @@ class CustomerTransferUsernameExpanderPlugin extends AbstractPlugin implements C
 
         return $customerTransfer->setUsername($userEntity->getUsername());
     }
-
 }

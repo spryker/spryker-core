@@ -13,7 +13,6 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 
 abstract class AbstractProductConcreteManagerSubject
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\Product\Observer\ProductConcreteCreateObserverInterface[]
      */
@@ -197,5 +196,4 @@ abstract class AbstractProductConcreteManagerSubject
     {
         $this->eventFacade = $eventFacade;
     }
-
 }

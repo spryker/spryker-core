@@ -12,7 +12,6 @@ use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberExcepti
 
 class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptInHandlerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $subscriberTransfer
      *
@@ -36,5 +35,4 @@ class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
             $subscriberEntity->save();
         }
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 
 class CustomerToSequenceNumberBridge implements CustomerToSequenceNumberInterface
 {
-
     /**
      * @var \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacadeInterface
      */
@@ -34,5 +33,4 @@ class CustomerToSequenceNumberBridge implements CustomerToSequenceNumberInterfac
     {
         return $this->sequenceNumberFacade->generate($sequenceNumberSettings);
     }
-
 }

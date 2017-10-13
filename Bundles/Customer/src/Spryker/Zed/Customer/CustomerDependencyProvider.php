@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_SEQUENCE_NUMBER = 'sequence number facade';
     const FACADE_COUNTRY = 'country facade';
     const FACADE_LOCALE = 'locale facade';
@@ -139,5 +138,4 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

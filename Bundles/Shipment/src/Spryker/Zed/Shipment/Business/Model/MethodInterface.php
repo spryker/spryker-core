@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface MethodInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
@@ -66,5 +65,4 @@ interface MethodInterface
      * @return int|bool
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer);
-
 }

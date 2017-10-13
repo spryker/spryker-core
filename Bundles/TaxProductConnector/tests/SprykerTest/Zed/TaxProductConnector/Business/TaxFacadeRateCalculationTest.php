@@ -30,7 +30,6 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
  */
 class TaxFacadeRateCalculationTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -131,5 +130,4 @@ class TaxFacadeRateCalculationTest extends Unit
     {
         return new TaxProductConnectorFacade();
     }
-
 }

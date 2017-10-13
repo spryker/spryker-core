@@ -12,7 +12,6 @@ use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface;
 
 class ProductGroupReader implements ProductGroupReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface
      */
@@ -62,5 +61,4 @@ class ProductGroupReader implements ProductGroupReaderInterface
     {
         $productGroupTransfer->requireIdProductGroup();
     }
-
 }

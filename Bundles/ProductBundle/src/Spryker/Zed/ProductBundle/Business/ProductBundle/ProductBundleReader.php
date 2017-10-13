@@ -16,7 +16,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
@@ -117,5 +116,4 @@ class ProductBundleReader implements ProductBundleReaderInterface
             ->querySpyAvailabilityBySku($productConcreteTransfer->getSku())
             ->findOneOrCreate();
     }
-
 }

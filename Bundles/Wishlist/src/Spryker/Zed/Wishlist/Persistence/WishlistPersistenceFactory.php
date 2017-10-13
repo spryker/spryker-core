@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class WishlistPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
      */
@@ -42,5 +41,4 @@ class WishlistPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductQuery::create();
     }
-
 }

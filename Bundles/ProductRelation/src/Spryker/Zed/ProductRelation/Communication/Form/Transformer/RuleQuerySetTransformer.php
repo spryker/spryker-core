@@ -13,7 +13,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class RuleQuerySetTransformer implements DataTransformerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface
      */
@@ -96,5 +95,4 @@ class RuleQuerySetTransformer implements DataTransformerInterface
 
         return $querySetTransfer;
     }
-
 }

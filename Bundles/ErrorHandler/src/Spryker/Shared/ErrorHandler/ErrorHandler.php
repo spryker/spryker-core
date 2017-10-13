@@ -14,7 +14,6 @@ use Throwable;
 
 class ErrorHandler
 {
-
     const ZED = 'ZED';
     const EXIT_CODE_ERROR = -1;
 
@@ -112,5 +111,4 @@ class ErrorHandler
     {
         exit(self::EXIT_CODE_ERROR);
     }
-
 }

@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class QuoteSession implements QuoteSessionInterface
 {
-
     const QUOTE_SESSION_IDENTIFIER = 'quote session identifier';
 
     /**
@@ -84,5 +83,4 @@ class QuoteSession implements QuoteSessionInterface
 
         $quoteTransfer->setCurrency($this->currencyPlugin->getCurrent());
     }
-
 }

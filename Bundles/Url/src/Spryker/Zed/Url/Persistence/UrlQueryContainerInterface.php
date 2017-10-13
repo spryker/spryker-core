@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface UrlQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -116,5 +115,4 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIgnoringRedirects();
-
 }

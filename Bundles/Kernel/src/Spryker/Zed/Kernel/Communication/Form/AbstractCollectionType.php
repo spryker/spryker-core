@@ -17,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 abstract class AbstractCollectionType extends CollectionType
 {
-
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
@@ -173,5 +172,4 @@ abstract class AbstractCollectionType extends CollectionType
     {
         return new BundleConfigResolver();
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Price\Dependency\Facade\PriceToTouchBridge;
 
 class PriceDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'facade touch';
     const FACADE_PRODUCT = 'product facade';
 
@@ -35,5 +34,4 @@ class PriceDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

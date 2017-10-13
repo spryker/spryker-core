@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\TaxTotalTransfer;
 
 class TaxTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -59,5 +58,4 @@ class TaxTotalCalculator implements CalculatorInterface
         }
         return $totalTaxAmount;
     }
-
 }

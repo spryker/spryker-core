@@ -14,7 +14,6 @@ use Spryker\Zed\Propel\PropelConfig;
 
 class MySqlDatabaseCreator implements DatabaseCreatorInterface
 {
-
     /**
      * @return string
      */
@@ -61,5 +60,4 @@ class MySqlDatabaseCreator implements DatabaseCreatorInterface
     {
         return 'CREATE DATABASE IF NOT EXISTS ' . Config::get(PropelConstants::ZED_DB_DATABASE) . ' CHARACTER SET "utf8"';
     }
-
 }

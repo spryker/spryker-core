@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AssertionBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Assertion\Business\Model\Assertion
      */
@@ -23,5 +22,4 @@ class AssertionBusinessFactory extends AbstractBusinessFactory
     {
         return new Assertion();
     }
-
 }

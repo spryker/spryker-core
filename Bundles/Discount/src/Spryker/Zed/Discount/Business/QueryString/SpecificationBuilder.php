@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProvide
 
 class SpecificationBuilder implements SpecificationBuilderInterface
 {
-
     const OPEN_PARENTHESIS = '(';
     const CLOSE_PARENTHESIS = ')';
 
@@ -320,5 +319,4 @@ class SpecificationBuilder implements SpecificationBuilderInterface
 
          return false;
     }
-
 }

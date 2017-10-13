@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ImageSetForm extends AbstractSubForm
 {
-
     const FIELD_SET_ID = 'id_product_image_set';
     const FIELD_SET_NAME = 'name';
     const FIELD_SET_FK_LOCALE = 'fk_locale';
@@ -189,5 +188,4 @@ class ImageSetForm extends AbstractSubForm
 
         return $this;
     }
-
 }

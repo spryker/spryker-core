@@ -9,10 +9,8 @@ namespace Spryker\Shared\Session\Model\SessionStorage;
 
 interface SessionStorageOptionsInterface
 {
-
     /**
      * @return array
      */
     public function getOptions();
-
 }

@@ -22,7 +22,6 @@ use Throwable;
 
 class Dispatcher implements DispatcherInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
      */
@@ -186,5 +185,4 @@ class Dispatcher implements DispatcherInterface
             $apiDataTransfer
         );
     }
-
 }

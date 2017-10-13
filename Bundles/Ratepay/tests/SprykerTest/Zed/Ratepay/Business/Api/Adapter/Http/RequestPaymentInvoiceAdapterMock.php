@@ -8,7 +8,6 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Adapter\Http;
 
 class RequestPaymentInvoiceAdapterMock extends AbstractAdapterMock
 {
-
     /**
      * @return array
      */
@@ -74,5 +73,4 @@ class RequestPaymentInvoiceAdapterMock extends AbstractAdapterMock
             </head>
         </response>';
     }
-
 }

@@ -31,7 +31,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductApi implements ProductApiInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface
      */
@@ -270,5 +269,4 @@ class ProductApi implements ProductApiInterface
 
         return $columnSelectionTransfer;
     }
-
 }

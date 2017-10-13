@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsContentWidgetProductConnector\Business;
 
 interface CmsContentWidgetProductConnectorFacadeInterface
 {
-
     /**
      * Specification:
      *  - maps given abstract sku list to corresponding primary keys
@@ -21,5 +20,4 @@ interface CmsContentWidgetProductConnectorFacadeInterface
      * @return array
      */
     public function mapProductSkuList(array $skuList);
-
 }

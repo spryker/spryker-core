@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -41,5 +40,4 @@ class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQuery
 
         return $query;
     }
-
 }

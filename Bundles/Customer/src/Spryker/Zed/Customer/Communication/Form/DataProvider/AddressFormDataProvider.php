@@ -14,7 +14,6 @@ use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class AddressFormDataProvider extends AbstractCustomerDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
      */
@@ -82,5 +81,4 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
 
         return $result;
     }
-
 }

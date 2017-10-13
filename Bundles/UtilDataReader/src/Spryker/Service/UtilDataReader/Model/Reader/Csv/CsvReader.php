@@ -13,7 +13,6 @@ use UnexpectedValueException;
 
 class CsvReader implements CsvReaderInterface
 {
-
     /**
      * @var \SplFileObject
      */
@@ -248,5 +247,4 @@ class CsvReader implements CsvReaderInterface
 
         return $data;
     }
-
 }

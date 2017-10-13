@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper;
 
 interface ProductAttributeMapperInterface
 {
-
     /**
      * @param array $attributes
      *
@@ -69,5 +68,4 @@ interface ProductAttributeMapperInterface
      * @return array
      */
     public function extractValuesFromAttributes(array $productAttributes);
-
 }

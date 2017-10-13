@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -785,5 +784,4 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
             ->createAttributeEncoder()
             ->decodeAttributes($attributes);
     }
-
 }

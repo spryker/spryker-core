@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\NavigationTransfer;
 
 class NavigationCollectorToNavigationBridge implements NavigationCollectorToNavigationInterface
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Business\NavigationFacadeInterface
      */
@@ -36,5 +35,4 @@ class NavigationCollectorToNavigationBridge implements NavigationCollectorToNavi
     {
         return $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
     }
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
  */
 class LocaleFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
@@ -87,5 +86,4 @@ class LocaleFacadeTest extends Unit
             array_keys($this->localeNames)
         );
     }
-
 }

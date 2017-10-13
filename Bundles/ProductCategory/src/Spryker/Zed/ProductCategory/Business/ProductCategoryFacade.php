@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFacadeInterface
 {
-
     /**
      * Specification:
      * - Creates and persists new category mapping entries to database.
@@ -134,5 +133,4 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
             ->createProductCategoryManager()
             ->updateProductMappingsForUpdatedCategory($categoryTransfer);
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class JenkinsController extends AbstractController
 {
-
     const LOGFILE = 'jenkins.log';
     const ROLE_ADMIN = 'admin';
     const ROLE_REPORTING = 'reporting';
@@ -224,5 +223,4 @@ $command</command>";
             return '<publishers/>';
         }
     }
-
 }

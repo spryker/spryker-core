@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AclBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
@@ -86,5 +85,4 @@ class AclBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(AclDependencyProvider::FACADE_USER);
     }
-
 }

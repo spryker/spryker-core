@@ -9,7 +9,6 @@ namespace Spryker\Zed\DiscountPromotion\Dependency\Facade;
 
 interface DiscountPromotionToProductInterface
 {
-
     /**
      * @param string $sku
      *
@@ -23,5 +22,4 @@ interface DiscountPromotionToProductInterface
      * @return bool
      */
     public function hasProductAbstract($sku);
-
 }

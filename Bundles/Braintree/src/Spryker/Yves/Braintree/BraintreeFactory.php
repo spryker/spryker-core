@@ -19,7 +19,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
  */
 class BraintreeFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\Braintree\Form\PayPalSubForm
      */
@@ -67,5 +66,4 @@ class BraintreeFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(BraintreeDependencyProvider::PLUGIN_CURRENCY);
     }
-
 }

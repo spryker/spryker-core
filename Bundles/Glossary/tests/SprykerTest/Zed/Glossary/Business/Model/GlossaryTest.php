@@ -26,7 +26,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
  */
 class GlossaryTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacade|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -366,5 +365,4 @@ class GlossaryTest extends Unit
         $this->assertEquals('setSomeOtherTranslation', $specificTranslationQuery->findOne()->getValue());
         $this->assertTrue($touchCountAfterCreation > $touchCountBeforeCreation);
     }
-
 }

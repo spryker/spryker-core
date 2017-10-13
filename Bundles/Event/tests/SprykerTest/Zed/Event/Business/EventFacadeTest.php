@@ -37,7 +37,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class EventFacadeTest extends Unit
 {
-
     const TEST_EVENT_NAME = 'test.event';
 
     /**
@@ -309,5 +308,4 @@ class EventFacadeTest extends Unit
         $queueReceivedMessageTransfer->setQueueMessage($queueMessageTransfer);
         return $queueReceivedMessageTransfer;
     }
-
 }

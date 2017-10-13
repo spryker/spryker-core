@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Business\Process;
 
 interface EventInterface
 {
-
     /**
      * @param bool $manual
      *
@@ -98,5 +97,4 @@ interface EventInterface
      * @return bool
      */
     public function hasTimeout();
-
 }

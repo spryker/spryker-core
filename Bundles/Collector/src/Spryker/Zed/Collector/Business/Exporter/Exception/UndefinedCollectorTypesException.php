@@ -11,10 +11,8 @@ use RuntimeException;
 
 class UndefinedCollectorTypesException extends RuntimeException
 {
-
     /**
      * @var string
      */
     protected $message = 'Undefined collector types';
-
 }

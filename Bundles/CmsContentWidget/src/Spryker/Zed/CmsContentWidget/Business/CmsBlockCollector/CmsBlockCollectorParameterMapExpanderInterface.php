@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CmsBlockCollectorParameterMapExpanderInterface
 {
-
     /**
      * @param array $collectedData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -19,5 +18,4 @@ interface CmsBlockCollectorParameterMapExpanderInterface
      * @return array
      */
     public function map(array $collectedData, LocaleTransfer $localeTransfer);
-
 }

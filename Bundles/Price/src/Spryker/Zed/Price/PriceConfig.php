@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -21,5 +20,4 @@ class PriceConfig extends AbstractBundleConfig
     {
         return Config::get(PriceConstants::DEFAULT_PRICE_TYPE);
     }
-
 }

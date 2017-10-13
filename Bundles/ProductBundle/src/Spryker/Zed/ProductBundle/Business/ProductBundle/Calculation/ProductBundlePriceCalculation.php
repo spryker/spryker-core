@@ -15,7 +15,6 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 
 class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -241,5 +240,4 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $bundleItemTransfer->setSumPriceToPayAggregation(0);
         }
     }
-
 }

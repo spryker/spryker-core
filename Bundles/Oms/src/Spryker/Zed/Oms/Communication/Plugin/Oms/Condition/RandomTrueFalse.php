@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class RandomTrueFalse extends AbstractCondition
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -21,5 +20,4 @@ class RandomTrueFalse extends AbstractCondition
     {
         return (bool)mt_rand(0, 1);
     }
-
 }

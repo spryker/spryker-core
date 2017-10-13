@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
@@ -26,5 +25,4 @@ interface SalesStubInterface
      * @return \Generated\Shared\Transfer\OrderTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getOrderDetails(OrderTransfer $orderTransfer);
-
 }

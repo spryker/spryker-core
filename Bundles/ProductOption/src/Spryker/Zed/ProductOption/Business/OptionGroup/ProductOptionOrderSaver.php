@@ -16,7 +16,6 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
 
 class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
      */
@@ -133,5 +132,4 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     {
         return new SpySalesOrderItemOption();
     }
-
 }

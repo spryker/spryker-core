@@ -12,7 +12,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorService extends AbstractDependencyFinder
 {
-
     const NO_LAYER = 'Default';
     const BUNDLE = 'bundle';
 
@@ -56,5 +55,4 @@ class LocatorService extends AbstractDependencyFinder
     {
         return sprintf('Spryker\\Client\\%1$s\\\\%1$sClient', $bundle);
     }
-
 }

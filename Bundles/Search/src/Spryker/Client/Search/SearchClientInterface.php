@@ -11,7 +11,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 interface SearchClientInterface
 {
-
     /**
      * Specification:
      * - Connects to Elasticsearch client if possible
@@ -84,5 +83,4 @@ interface SearchClientInterface
      * @return \Elastica\ResultSet
      */
     public function searchKeys($searchString, $limit = null, $offset = null);
-
 }

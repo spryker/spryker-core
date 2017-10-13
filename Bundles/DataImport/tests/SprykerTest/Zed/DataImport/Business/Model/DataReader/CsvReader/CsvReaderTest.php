@@ -30,7 +30,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
  */
 class CsvReaderTest extends Unit
 {
-
     const EXPECTED_NUMBER_OF_DATA_SETS_IN_CSV = 3;
     const EXPECTED_NUMBER_OF_COLUMNS_IN_DATA_SET = 3;
 
@@ -246,5 +245,4 @@ class CsvReaderTest extends Unit
 
         return $dataImporterReaderConfiguration;
     }
-
 }

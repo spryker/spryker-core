@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Response;
 
 class Response
 {
-
     /**
      * @return string
      */
@@ -143,5 +142,4 @@ class Response
                 <content />
             </response>';
     }
-
 }

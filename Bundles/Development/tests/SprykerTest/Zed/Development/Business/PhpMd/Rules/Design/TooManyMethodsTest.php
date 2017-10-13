@@ -25,7 +25,6 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods;
  */
 class TooManyMethodsTest extends Unit
 {
-
     const THRESHOLD_LOW = 1;
     const THRESHOLD_HIGH = 3;
     const NUMBER_OF_METHODS = 2;
@@ -124,5 +123,4 @@ class TooManyMethodsTest extends Unit
 
         return $nodeMock;
     }
-
 }

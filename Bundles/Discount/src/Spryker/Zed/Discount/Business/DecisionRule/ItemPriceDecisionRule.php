@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInter
 
 class ItemPriceDecisionRule implements DecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -54,5 +53,4 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
 
         return $this->comparators->compare($clauseTransfer, $currentItemTransfer->getUnitPrice());
     }
-
 }

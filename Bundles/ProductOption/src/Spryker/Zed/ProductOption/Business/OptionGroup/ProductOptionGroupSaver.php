@@ -15,7 +15,6 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -187,5 +186,4 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     {
         return new SpyProductOptionGroup();
     }
-
 }

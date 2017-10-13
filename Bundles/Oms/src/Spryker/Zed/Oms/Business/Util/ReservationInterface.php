@@ -8,7 +8,6 @@ namespace Spryker\Zed\Oms\Business\Util;
 
 interface ReservationInterface
 {
-
     /**
      * @param string $sku
      *
@@ -22,5 +21,4 @@ interface ReservationInterface
      * @return int
      */
     public function sumReservedProductQuantitiesForSku($sku);
-
 }

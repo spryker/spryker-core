@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 trait DependencyHelperTrait
 {
-
     /**
      * @param string $key
      * @param mixed $value
@@ -35,5 +34,4 @@ trait DependencyHelperTrait
      * @return \Codeception\Module
      */
     abstract protected function getModule($name);
-
 }

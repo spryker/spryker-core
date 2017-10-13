@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface EventQueueProducerInterface
 {
-
     /**
      * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
@@ -20,5 +19,4 @@ interface EventQueueProducerInterface
      * @return void
      */
     public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener);
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductReviewFacade extends AbstractFacade implements ProductReviewFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -79,5 +78,4 @@ class ProductReviewFacade extends AbstractFacade implements ProductReviewFacadeI
             ->createProductReviewDeleter()
             ->deleteProductReview($productReviewTransfer);
     }
-
 }

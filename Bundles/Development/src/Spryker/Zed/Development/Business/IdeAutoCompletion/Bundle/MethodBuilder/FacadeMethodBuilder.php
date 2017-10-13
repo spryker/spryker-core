@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 
 class FacadeMethodBuilder extends AbstractBundleMethodBuilder
 {
-
     /**
      * @return string
      */
@@ -32,5 +31,4 @@ class FacadeMethodBuilder extends AbstractBundleMethodBuilder
             $bundleTransfer->getName()
         );
     }
-
 }

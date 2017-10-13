@@ -9,7 +9,6 @@ namespace Spryker\Zed\Navigation\Dependency\Facade;
 
 class NavigationToTouchBridge implements NavigationToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -44,5 +43,4 @@ class NavigationToTouchBridge implements NavigationToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
-
 }

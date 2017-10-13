@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockGui\Dependency\QueryContainer;
 
 class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlockQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
@@ -48,5 +47,4 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
     {
         return $this->cmsBlockQueryContainer->queryTemplates();
     }
-
 }

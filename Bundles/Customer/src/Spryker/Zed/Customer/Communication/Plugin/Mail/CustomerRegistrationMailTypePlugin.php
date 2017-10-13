@@ -17,7 +17,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-
     const MAIL_TYPE = 'customer registration mail';
 
     /**
@@ -107,5 +106,4 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
 
         return $this;
     }
-
 }

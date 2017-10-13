@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface NavigationNodeUrlCleanerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
     public function detachUrlFromNavigationNodes(UrlTransfer $urlTransfer);
-
 }

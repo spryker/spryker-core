@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class KeyBuilderSharedTester extends Actor
 {
-
     use _generated\KeyBuilderSharedTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PaymentQueryContainer extends AbstractQueryContainer implements PaymentQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -65,5 +64,4 @@ class PaymentQueryContainer extends AbstractQueryContainer implements PaymentQue
             ->joinWithSalesPaymentMethodType()
             ->filterByFkSalesOrder($idSalesOrder);
     }
-
 }

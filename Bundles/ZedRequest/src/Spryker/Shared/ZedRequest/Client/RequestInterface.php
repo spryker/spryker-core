@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface RequestInterface
 {
-
     /**
      * @return string
      */
@@ -98,5 +97,4 @@ interface RequestInterface
      * @return $this
      */
     public function setUsername($username);
-
 }

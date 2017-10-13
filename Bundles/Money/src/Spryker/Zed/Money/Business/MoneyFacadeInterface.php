@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
  */
 interface MoneyFacadeInterface
 {
-
     /**
      * Specification:
      * - Converts int amount and isoCode to MoneyTransfer Object
@@ -117,5 +116,4 @@ interface MoneyFacadeInterface
      * @return int
      */
     public function convertDecimalToInteger($value);
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class ProductSearchMarker implements ProductSearchMarkerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -65,5 +64,4 @@ class ProductSearchMarker implements ProductSearchMarkerInterface
             $searchableProduct->save();
         }
     }
-
 }

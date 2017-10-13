@@ -17,7 +17,6 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
  */
 class FileSystemServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\FileSystem\Model\FileSystemReaderInterface
      */
@@ -71,5 +70,4 @@ class FileSystemServiceFactory extends AbstractServiceFactory
     {
         return $this->getProvidedDependency(FileSystemDependencyProvider::PLUGIN_STREAM);
     }
-
 }

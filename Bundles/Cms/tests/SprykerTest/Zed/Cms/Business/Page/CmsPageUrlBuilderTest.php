@@ -24,7 +24,6 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
  */
 class CmsPageUrlBuilderTest extends CmsMocks
 {
-
     /**
      * @return void
      */
@@ -88,5 +87,4 @@ class CmsPageUrlBuilderTest extends CmsMocks
 
         return new CmsPageUrlBuilder($cmsConfigMock);
     }
-
 }

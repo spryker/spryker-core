@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CustomerForm extends AbstractType
 {
-
     const FIELD_FIRST_NAME = 'first_name';
     const FIELD_LAST_NAME = 'last_name';
     const FIELD_SALUTATION = 'salutation';
@@ -133,5 +132,4 @@ class CustomerForm extends AbstractType
 
         return $this;
     }
-
 }

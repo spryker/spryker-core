@@ -9,7 +9,6 @@ namespace Spryker\Zed\Heartbeat\Business;
 
 interface HeartbeatFacadeInterface
 {
-
     /**
      * @api
      *
@@ -51,5 +50,4 @@ interface HeartbeatFacadeInterface
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doStorageHealthCheck();
-
 }

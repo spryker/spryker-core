@@ -11,7 +11,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class ProductReviewToSearchBridge implements ProductReviewToSearchInterface
 {
-
     /**
      * @var \Spryker\Client\Search\SearchClientInterface
      */
@@ -48,5 +47,4 @@ class ProductReviewToSearchBridge implements ProductReviewToSearchInterface
     {
         return $this->searchClient->search($searchQuery, $resultFormatters, $requestParameters);
     }
-
 }

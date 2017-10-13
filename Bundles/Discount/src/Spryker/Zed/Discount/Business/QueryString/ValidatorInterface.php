@@ -7,7 +7,6 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 interface ValidatorInterface
 {
-
     /**
      * @param string $type
      * @param string $queryString
@@ -15,5 +14,4 @@ interface ValidatorInterface
      * @return string[]
      */
     public function validateByType($type, $queryString);
-
 }

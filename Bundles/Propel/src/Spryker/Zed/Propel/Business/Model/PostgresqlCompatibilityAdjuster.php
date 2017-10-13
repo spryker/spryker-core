@@ -14,7 +14,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjusterInterface
 {
-
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaFinderInterface
      */
@@ -141,5 +140,4 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
 
         return $dom;
     }
-
 }

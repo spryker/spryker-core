@@ -17,7 +17,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
  */
 abstract class BaseCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
@@ -76,5 +75,4 @@ abstract class BaseCommandPlugin extends AbstractPlugin implements CommandByOrde
 
         return $orderTransferItems;
     }
-
 }

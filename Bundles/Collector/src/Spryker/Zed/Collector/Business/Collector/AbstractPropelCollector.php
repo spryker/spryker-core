@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 abstract class AbstractPropelCollector extends AbstractDatabaseCollector
 {
-
     /**
      * @var \Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery
      */
@@ -82,5 +81,4 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
             ->setLocale($locale)
             ->prepare();
     }
-
 }

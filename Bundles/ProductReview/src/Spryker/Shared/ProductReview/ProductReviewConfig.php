@@ -11,10 +11,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class ProductReviewConfig extends AbstractBundleConfig
 {
-
     const RESOURCE_TYPE_PRODUCT_REVIEW = 'product_review';
     const RESOURCE_TYPE_PRODUCT_ABSTRACT_REVIEW = 'product_abstract_review';
 
     const ELASTICSEARCH_INDEX_TYPE_NAME = 'product-review';
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Finder implements FinderInterface
 {
-
     /**
      * @var \Spryker\Zed\StateMachine\Business\StateMachine\BuilderInterface
      */
@@ -363,5 +362,4 @@ class Finder implements FinderInterface
             $statesByFlag
         )->find();
     }
-
 }

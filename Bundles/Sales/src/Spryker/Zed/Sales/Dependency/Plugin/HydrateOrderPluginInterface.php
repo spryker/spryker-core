@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface HydrateOrderPluginInterface
 {
-
     /**
      * Specification:
      *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
@@ -24,5 +23,4 @@ interface HydrateOrderPluginInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrate(OrderTransfer $orderTransfer);
-
 }

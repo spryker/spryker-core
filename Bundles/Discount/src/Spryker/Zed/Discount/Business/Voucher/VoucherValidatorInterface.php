@@ -7,12 +7,10 @@ namespace Spryker\Zed\Discount\Business\Voucher;
 
 interface VoucherValidatorInterface
 {
-
     /**
      * @param string $code
      *
      * @return bool
      */
     public function isUsable($code);
-
 }

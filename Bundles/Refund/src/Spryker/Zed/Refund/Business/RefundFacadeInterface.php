@@ -13,7 +13,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface RefundFacadeInterface
 {
-
     /**
      * Specification:
      * - Calculates refund amount for given OrderTransfer and OrderItems which should be refunded.
@@ -68,5 +67,4 @@ interface RefundFacadeInterface
      * @return bool
      */
     public function saveRefund(RefundTransfer $refundTransfer);
-
 }

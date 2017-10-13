@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class NestedTermsQuery extends AbstractNestedQuery
 {
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -48,5 +47,4 @@ class NestedTermsQuery extends AbstractNestedQuery
             $this->queryBuilder->createTermsQuery($fieldName . self::FACET_VALUE_SUFFIX, $this->filterValues),
         ]);
     }
-
 }

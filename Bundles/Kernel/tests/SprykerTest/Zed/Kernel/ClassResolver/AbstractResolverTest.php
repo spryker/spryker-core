@@ -23,7 +23,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 abstract class AbstractResolverTest extends Unit
 {
-
     /**
      * @var string
      */
@@ -195,5 +194,4 @@ abstract class AbstractResolverTest extends Unit
 
         return $basePath;
     }
-
 }

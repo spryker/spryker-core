@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistFacadeInterface
 {
-
     /**
      * Specification:
      *  - Creates wishlist for a specific customer with given name
@@ -218,5 +217,4 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer);
-
 }

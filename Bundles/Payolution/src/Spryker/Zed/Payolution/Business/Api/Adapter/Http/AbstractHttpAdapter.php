@@ -11,7 +11,6 @@ use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 
 abstract class AbstractHttpAdapter implements AdapterInterface
 {
-
     /**
      * @var static string[]
      */
@@ -110,5 +109,4 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
         return $options;
     }
-
 }

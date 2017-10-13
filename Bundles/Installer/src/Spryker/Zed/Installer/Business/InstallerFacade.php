@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
 {
-
     /**
      * @api
      *
@@ -24,5 +23,4 @@ class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
     {
         return $this->getFactory()->getInstallerPlugins();
     }
-
 }

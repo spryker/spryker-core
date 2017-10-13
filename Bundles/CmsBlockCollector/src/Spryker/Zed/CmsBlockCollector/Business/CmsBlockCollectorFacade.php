@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsBlockCollectorFacade extends AbstractFacade implements CmsBlockCollectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -62,5 +61,4 @@ class CmsBlockCollectorFacade extends AbstractFacade implements CmsBlockCollecto
                 $output
             );
     }
-
 }

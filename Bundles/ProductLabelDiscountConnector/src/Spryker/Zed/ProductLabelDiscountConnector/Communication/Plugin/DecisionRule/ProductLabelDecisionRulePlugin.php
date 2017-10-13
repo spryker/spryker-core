@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -61,5 +60,4 @@ class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionR
     {
         return $this->getFacade()->findAllLabels();
     }
-
 }

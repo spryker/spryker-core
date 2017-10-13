@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface BuilderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface
      */
     public function createProcess(StateMachineProcessTransfer $stateMachineProcessTransfer);
-
 }

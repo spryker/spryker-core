@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CustomerUserConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer\CustomerUserConnectorToUserQueryContainerInterface
      */
@@ -23,5 +22,4 @@ class CustomerUserConnectorCommunicationFactory extends AbstractCommunicationFac
     {
         return $this->getProvidedDependency(CustomerUserConnectorDependencyProvider::QUERY_CONTAINER_USER);
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 class Environment
 {
-
     /**
      * @return void
      */
@@ -35,5 +34,4 @@ class Environment
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();
     }
-
 }

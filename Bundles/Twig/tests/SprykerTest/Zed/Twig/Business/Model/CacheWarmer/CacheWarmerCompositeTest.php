@@ -24,7 +24,6 @@ use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
  */
 class CacheWarmerCompositeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -69,5 +68,4 @@ class CacheWarmerCompositeTest extends Unit
 
         return $mockBuilder->getMock();
     }
-
 }

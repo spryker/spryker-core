@@ -22,7 +22,6 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
  */
 class AbstractClassResolverTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -72,5 +71,4 @@ class AbstractClassResolverTest extends Unit
 
         return $abstractClassResolverMock;
     }
-
 }

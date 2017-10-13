@@ -30,7 +30,6 @@ use Spryker\Zed\CustomerApi\Business\CustomerApiFacade;
  */
 class CustomerApiFacadeTest extends Unit
 {
-
     /**
      * @var int
      */
@@ -185,5 +184,4 @@ class CustomerApiFacadeTest extends Unit
 
         $this->assertNull($result->getId());
     }
-
 }

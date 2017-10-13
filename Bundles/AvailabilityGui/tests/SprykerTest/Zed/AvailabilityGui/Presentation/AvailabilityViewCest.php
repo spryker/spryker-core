@@ -20,7 +20,6 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
  */
 class AvailabilityViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester $i
      *
@@ -48,5 +47,4 @@ class AvailabilityViewCest
         $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a');
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_LIST_HEADER);
     }
-
 }

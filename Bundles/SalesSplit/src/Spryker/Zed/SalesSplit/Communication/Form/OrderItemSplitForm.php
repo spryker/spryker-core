@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class OrderItemSplitForm extends AbstractType
 {
-
     const FIELD_QUANTITY = 'quantity';
     const FIELD_ID_ORDER_ITEM = 'id_sales_order_item';
     const FIELD_ID_ORDER = 'id_sales_order';
@@ -109,5 +108,4 @@ class OrderItemSplitForm extends AbstractType
 
         return $this;
     }
-
 }

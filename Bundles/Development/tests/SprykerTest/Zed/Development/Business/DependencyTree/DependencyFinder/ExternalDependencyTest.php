@@ -28,7 +28,6 @@ use Symfony\Component\Finder\Finder;
  */
 class ExternalDependencyTest extends Unit
 {
-
     /**
      * @throws \RuntimeException
      *
@@ -62,5 +61,4 @@ class ExternalDependencyTest extends Unit
 
         $this->assertCount(5, $dependencyTree);
     }
-
 }

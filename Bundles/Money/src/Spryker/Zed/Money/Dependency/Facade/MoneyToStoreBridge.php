@@ -9,7 +9,6 @@ namespace Spryker\Zed\Money\Dependency\Facade;
 
 class MoneyToStoreBridge implements MoneyToStoreInterface
 {
-
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
@@ -32,5 +31,4 @@ class MoneyToStoreBridge implements MoneyToStoreInterface
     {
         return $this->storeFacade->getStoreById($idStore);
     }
-
 }

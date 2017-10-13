@@ -36,7 +36,6 @@ use SprykerTest\Zed\ProductAttribute\ProductAttributeBusinessTester;
  */
 class ProductAttributeFacadeTest extends Test
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacade
      */
@@ -478,5 +477,4 @@ class ProductAttributeFacadeTest extends Test
 
         return $attributeTranslatorMock;
     }
-
 }

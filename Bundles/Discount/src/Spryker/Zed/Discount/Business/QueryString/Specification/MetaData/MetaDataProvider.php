@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInt
 
 class MetaDataProvider implements MetaDataProviderInterface
 {
-
     /**
      * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
@@ -154,5 +153,4 @@ class MetaDataProvider implements MetaDataProviderInterface
 
         return $valueOptions;
     }
-
 }

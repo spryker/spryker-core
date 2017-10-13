@@ -9,7 +9,6 @@ namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 interface GlossaryToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $idItem
@@ -25,5 +24,4 @@ interface GlossaryToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $idItem);
-
 }

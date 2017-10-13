@@ -25,7 +25,6 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
  */
 class ReorderProductSetTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class ReorderProductSetTest extends Unit
         $this->assertSame($productSetTransfer3->getWeight(), $actualProductSetTransfer3->getWeight(), 'ProductSet 3/3 should have expected weight.');
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer1->getIdProductSet(), 'ProductSet 3/3 should have been touched as active.');
     }
-
 }

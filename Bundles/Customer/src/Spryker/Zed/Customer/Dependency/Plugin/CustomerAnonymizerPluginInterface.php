@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerAnonymizerPluginInterface
 {
-
     /**
      * Specification
      *  - process anonymization on related to customer subject
@@ -23,5 +22,4 @@ interface CustomerAnonymizerPluginInterface
      * @return void
      */
     public function process(CustomerTransfer $customerTransfer);
-
 }

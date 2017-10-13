@@ -13,7 +13,6 @@ use Spryker\Shared\Ratepay\RatepayConstants;
 
 class Invoice extends AbstractMethod
 {
-
     /**
      * @const Payment method code.
      */
@@ -49,5 +48,4 @@ class Invoice extends AbstractMethod
     {
         return new RatepayPaymentInvoiceTransfer();
     }
-
 }

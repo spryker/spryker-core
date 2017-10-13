@@ -11,12 +11,10 @@ use Symfony\Component\Debug\Exception\FlattenException;
 
 interface ExceptionHandlerInterface
 {
-
     /**
      * @param \Symfony\Component\Debug\Exception\FlattenException $exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleException(FlattenException $exception);
-
 }

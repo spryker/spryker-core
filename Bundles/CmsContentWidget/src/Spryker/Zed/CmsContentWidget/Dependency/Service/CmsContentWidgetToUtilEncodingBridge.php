@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsContentWidget\Dependency\Service;
 
 class CmsContentWidgetToUtilEncodingBridge implements CmsContentWidgetToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -34,5 +33,4 @@ class CmsContentWidgetToUtilEncodingBridge implements CmsContentWidgetToUtilEnco
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
-
 }

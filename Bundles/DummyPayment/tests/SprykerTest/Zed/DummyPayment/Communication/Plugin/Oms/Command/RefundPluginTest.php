@@ -27,7 +27,6 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
  */
 class RefundPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -50,5 +49,4 @@ class RefundPluginTest extends Unit
 
         return $dummyPaymentFacadeMock;
     }
-
 }

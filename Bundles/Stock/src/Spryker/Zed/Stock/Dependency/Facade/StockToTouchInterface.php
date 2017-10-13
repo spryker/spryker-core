@@ -9,7 +9,6 @@ namespace Spryker\Zed\Stock\Dependency\Facade;
 
 interface StockToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param bool $itemId
@@ -17,5 +16,4 @@ interface StockToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $itemId);
-
 }

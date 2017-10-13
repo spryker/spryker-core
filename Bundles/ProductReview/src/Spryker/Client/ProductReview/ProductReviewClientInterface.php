@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 
 interface ProductReviewClientInterface
 {
-
     /**
      * Specification:
      * - Stores provided product review in persistent storage with pending status.
@@ -60,5 +59,4 @@ interface ProductReviewClientInterface
      * @return int
      */
     public function getMaximumRating();
-
 }

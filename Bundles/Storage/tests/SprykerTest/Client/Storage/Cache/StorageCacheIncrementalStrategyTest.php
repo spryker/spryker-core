@@ -21,7 +21,6 @@ use SprykerTest\Client\Storage\Helper\CacheDataProvider;
  */
 class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTest
 {
-
     /**
      * @param string $testType
      *
@@ -131,5 +130,4 @@ class StorageCacheIncrementalStrategyTest extends AbstractStorageCacheStrategyTe
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS);
     }
-
 }

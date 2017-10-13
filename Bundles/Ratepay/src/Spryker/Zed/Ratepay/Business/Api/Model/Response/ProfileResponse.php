@@ -10,7 +10,6 @@ use Spryker\Zed\Ratepay\Business\Api\SimpleXMLElement;
 
 class ProfileResponse extends BaseResponse
 {
-
     /**
      * @return array
      */
@@ -36,5 +35,4 @@ class ProfileResponse extends BaseResponse
     {
         return json_decode(json_encode((array)$xmlObject), true);
     }
-
 }

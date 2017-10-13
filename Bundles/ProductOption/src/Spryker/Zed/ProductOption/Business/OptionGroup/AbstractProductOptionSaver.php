@@ -17,7 +17,6 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -184,5 +183,4 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
         return $productAbstractProductOptionGroupEntity;
     }
-
 }

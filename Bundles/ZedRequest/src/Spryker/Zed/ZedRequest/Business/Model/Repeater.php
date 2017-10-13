@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request as HttpRequest;
  */
 class Repeater implements RepeaterInterface
 {
-
     /**
      * This is a hack to get around a bad design which uses the singleton pattern.
      *
@@ -129,5 +128,4 @@ class Repeater implements RepeaterInterface
     {
         return $this->getConfig()->getPathToYvesRequestRepeatData($fileName);
     }
-
 }

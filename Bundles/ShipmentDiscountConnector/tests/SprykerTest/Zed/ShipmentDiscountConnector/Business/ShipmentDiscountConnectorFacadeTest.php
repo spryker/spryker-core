@@ -27,7 +27,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\Ship
  */
 class ShipmentDiscountConnectorFacadeTest extends Test
 {
-
     /**
      * @var \SprykerTest\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorBusinessTester
      */
@@ -61,7 +60,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '=',
             'value' => $shipmentTransfer->getCarrier()->getIdShipmentCarrier(),
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -97,7 +96,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '=',
             'value' => $shipmentMethodTransfer->getIdShipmentMethod(),
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -129,7 +128,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '>=',
             'value' => 20,
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -164,7 +163,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '=',
             'value' => $shipmentTransfer->getCarrier()->getIdShipmentCarrier(),
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -200,7 +199,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '=',
             'value' => $shipmentMethodTransfer->getIdShipmentMethod(),
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -230,7 +229,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '>=',
             'value' => 20,
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -265,7 +264,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '=',
             'value' => 2,
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -301,7 +300,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '=',
             'value' => 2,
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -331,7 +330,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'operator' => '>=',
             'value' => 40,
             'acceptedTypes' => [
-                'number'
+                'number',
             ],
         ], true);
 
@@ -346,5 +345,4 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     {
         return $this->tester->getLocator()->shipmentDiscountConnector()->facade();
     }
-
 }

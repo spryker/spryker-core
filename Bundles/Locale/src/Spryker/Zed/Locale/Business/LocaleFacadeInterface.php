@@ -9,7 +9,6 @@ namespace Spryker\Zed\Locale\Business;
 
 interface LocaleFacadeInterface
 {
-
     /**
      * Specification:
      * - Checks if the given $localeName exists in database or not.
@@ -147,5 +146,4 @@ interface LocaleFacadeInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();
-
 }

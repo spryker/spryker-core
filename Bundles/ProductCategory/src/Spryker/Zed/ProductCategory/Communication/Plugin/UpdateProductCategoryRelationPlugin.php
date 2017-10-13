@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class UpdateProductCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationUpdatePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
@@ -29,5 +28,4 @@ class UpdateProductCategoryRelationPlugin extends AbstractPlugin implements Cate
             ->getFacade()
             ->updateAllProductMappingsForUpdatedCategory($categoryTransfer);
     }
-
 }

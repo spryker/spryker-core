@@ -12,7 +12,6 @@ namespace Spryker\Client\ProductSet;
  */
 interface ProductSetClientInterface
 {
-
     /**
      * Specification:
      * - Returns a list of Product Sets from Search.
@@ -53,5 +52,4 @@ interface ProductSetClientInterface
      * @return \Generated\Shared\Transfer\ProductSetStorageTransfer|null
      */
     public function findProductSetByIdProductSet($idProductSet);
-
 }

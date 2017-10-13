@@ -43,7 +43,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ApiBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Api\Business\Model\DispatcherInterface
      */
@@ -339,5 +338,4 @@ class ApiBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()
         );
     }
-
 }

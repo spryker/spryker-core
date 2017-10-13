@@ -43,7 +43,6 @@ use Spryker\Zed\Payolution\Business\PayolutionBusinessFactory;
  */
 class SaverTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -270,5 +269,4 @@ class SaverTest extends Unit
 
         return $checkoutResponseTransfer;
     }
-
 }

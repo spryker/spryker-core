@@ -14,7 +14,6 @@ use Spryker\Shared\EventJournal\EventJournalConstants;
  */
 abstract class AbstractWriter implements WriterInterface
 {
-
     /**
      * @var array
      */
@@ -35,5 +34,4 @@ abstract class AbstractWriter implements WriterInterface
     {
         return EventJournalConstants::TYPE;
     }
-
 }

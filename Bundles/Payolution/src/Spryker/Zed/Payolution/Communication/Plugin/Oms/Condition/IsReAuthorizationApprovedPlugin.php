@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class IsReAuthorizationApprovedPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsReAuthorizationApprovedPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isReAuthorizationApproved($orderTransfer);
     }
-
 }

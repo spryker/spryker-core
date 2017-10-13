@@ -13,7 +13,6 @@ use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
 class ConditionCollection implements ConditionCollectionInterface, ArrayAccess
 {
-
     /**
      * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface[]
      */
@@ -100,5 +99,4 @@ class ConditionCollection implements ConditionCollectionInterface, ArrayAccess
     {
         unset($this->conditions[$offset]);
     }
-
 }

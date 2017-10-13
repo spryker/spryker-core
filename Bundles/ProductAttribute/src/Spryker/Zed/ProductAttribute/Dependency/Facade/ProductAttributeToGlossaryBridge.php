@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductAttributeToGlossaryBridge implements ProductAttributeToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -103,5 +102,4 @@ class ProductAttributeToGlossaryBridge implements ProductAttributeToGlossaryInte
     {
         return $this->glossaryFacade->createKey($keyName);
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CollectorStorageConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CollectorStorageConnector\Dependency\Facade\CollectorStorageConnectorToCollectorInterface
      */
@@ -28,5 +27,4 @@ class CollectorStorageConnectorCommunicationFactory extends AbstractCommunicatio
     {
         return $this->getProvidedDependency(CollectorStorageConnectorDependencyProvider::FACADE_STORAGE);
     }
-
 }

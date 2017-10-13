@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInter
 
 class GrandTotalDecisionRule implements DecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -58,5 +57,4 @@ class GrandTotalDecisionRule implements DecisionRuleInterface
 
         return $this->comparators->compare($clauseTransfer, $quoteTransfer->getTotals()->getGrandTotal());
     }
-
 }

@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ColumnQueryMapperInterface
 {
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer
@@ -20,5 +19,4 @@ interface ColumnQueryMapperInterface
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function mapColumns(ModelCriteria $query, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer);
-
 }

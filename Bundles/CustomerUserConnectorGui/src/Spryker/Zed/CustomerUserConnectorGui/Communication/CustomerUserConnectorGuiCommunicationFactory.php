@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
@@ -95,5 +94,4 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
     {
         return $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_USER);
     }
-
 }

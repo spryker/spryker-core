@@ -11,7 +11,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface;
 
 class TestCommandPlugin implements CommandPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
@@ -21,5 +20,4 @@ class TestCommandPlugin implements CommandPluginInterface
     {
         return true;
     }
-
 }

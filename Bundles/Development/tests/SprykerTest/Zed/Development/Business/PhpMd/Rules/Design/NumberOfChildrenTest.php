@@ -25,7 +25,6 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren;
  */
 class NumberOfChildrenTest extends Unit
 {
-
     const NUMBER_OF_CHILDREN = 2;
     const THRESHOLD = 1;
 
@@ -100,5 +99,4 @@ class NumberOfChildrenTest extends Unit
 
         return $nodeMock;
     }
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateIdeAutoCompletionConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:ide:generate-auto-completion';
 
     /**
@@ -50,5 +49,4 @@ class GenerateIdeAutoCompletionConsole extends Console
             }
         }
     }
-
 }

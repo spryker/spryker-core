@@ -26,7 +26,6 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionValueSaverTest extends MockProvider
 {
-
     /**
      * @return void
      */
@@ -101,5 +100,4 @@ class ProductOptionValueSaverTest extends MockProvider
             ])
             ->getMock();
     }
-
 }

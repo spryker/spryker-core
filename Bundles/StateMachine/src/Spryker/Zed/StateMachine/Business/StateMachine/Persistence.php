@@ -19,7 +19,6 @@ use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Persistence implements PersistenceInterface
 {
-
     /**
      * @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess[]
      */
@@ -427,5 +426,4 @@ class Persistence implements PersistenceInterface
 
         return $stateMachineItemTransfer;
     }
-
 }

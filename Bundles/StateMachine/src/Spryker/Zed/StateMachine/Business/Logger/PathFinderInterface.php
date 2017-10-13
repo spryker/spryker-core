@@ -7,10 +7,8 @@ namespace Spryker\Zed\StateMachine\Business\Logger;
 
 interface PathFinderInterface
 {
-
     /**
      * @return string
      */
     public function getCurrentExecutionPath();
-
 }

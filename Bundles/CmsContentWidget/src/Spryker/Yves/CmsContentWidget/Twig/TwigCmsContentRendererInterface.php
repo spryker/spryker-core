@@ -9,7 +9,6 @@ namespace Spryker\Yves\CmsContentWidget\Twig;
 
 interface TwigCmsContentRendererInterface
 {
-
     /**
      * @param array $contentList
      * @param array $context
@@ -17,5 +16,4 @@ interface TwigCmsContentRendererInterface
      * @return array
      */
     public function render(array $contentList, array $context);
-
 }

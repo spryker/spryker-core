@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class AssetsPathFunction extends TwigFunction
 {
-
     /**
      * @return string
      */
@@ -31,5 +30,4 @@ class AssetsPathFunction extends TwigFunction
             return '/assets/' . $path;
         };
     }
-
 }

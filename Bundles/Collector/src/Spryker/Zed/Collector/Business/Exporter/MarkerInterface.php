@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface MarkerInterface
 {
-
     /**
      * @param string $exportType
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -36,5 +35,4 @@ interface MarkerInterface
      * @return bool
      */
     public function deleteTimestamps(array $keys);
-
 }

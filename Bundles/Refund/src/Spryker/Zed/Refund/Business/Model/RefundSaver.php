@@ -17,7 +17,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class RefundSaver implements RefundSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -167,5 +166,4 @@ class RefundSaver implements RefundSaverInterface
         $orderTransfer = $this->calculationFacade->recalculateOrder($orderTransfer);
         $this->salesFacade->updateOrder($orderTransfer, $refundTransfer->getFkSalesOrder());
     }
-
 }

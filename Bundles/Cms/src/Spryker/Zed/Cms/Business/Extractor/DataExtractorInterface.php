@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface DataExtractorInterface
 {
-
     /**
      * @param string $data
      *
@@ -27,5 +26,4 @@ interface DataExtractorInterface
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
     public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer);
-
 }

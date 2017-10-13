@@ -22,7 +22,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
  */
 class CategoryListCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
@@ -56,5 +55,4 @@ class CategoryListCest
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::SELECTOR_TREE_LIST);
     }
-
 }

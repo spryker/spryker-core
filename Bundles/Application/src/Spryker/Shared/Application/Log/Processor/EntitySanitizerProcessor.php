@@ -12,7 +12,6 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 class EntitySanitizerProcessor
 {
-
     const EXTRA = 'entity';
     const CONTEXT_KEY = 'entity';
     const RECORD_CONTEXT = 'context';
@@ -68,5 +67,4 @@ class EntitySanitizerProcessor
 
         return null;
     }
-
 }

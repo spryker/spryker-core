@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
@@ -99,5 +98,4 @@ interface WishlistStubInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer);
-
 }

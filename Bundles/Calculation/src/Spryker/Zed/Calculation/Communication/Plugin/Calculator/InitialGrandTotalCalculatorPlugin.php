@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class InitialGrandTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class InitialGrandTotalCalculatorPlugin extends AbstractPlugin implements Calcul
         $this->getFacade()
             ->calculateInitialGrandTotal($calculableObjectTransfer);
     }
-
 }

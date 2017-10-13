@@ -15,7 +15,6 @@ use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartCo
 
 class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
      */
@@ -82,5 +81,4 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
             $productOptionTransfer->setSumGrossPrice($price);
         }
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class KernelYvesTester extends Actor
 {
-
     use _generated\KernelYvesTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

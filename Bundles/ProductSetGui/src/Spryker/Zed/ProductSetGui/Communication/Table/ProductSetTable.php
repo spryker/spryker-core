@@ -20,7 +20,6 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductSetTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-set-table';
 
     const COL_ID_PRODUCT_SET = 'id_product_set';
@@ -206,5 +205,4 @@ class ProductSetTable extends AbstractTable
             'Deactivate'
         );
     }
-
 }

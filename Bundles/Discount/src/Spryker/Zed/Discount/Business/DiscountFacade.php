@@ -23,7 +23,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -663,5 +662,4 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
              ->createPriceModeDecisionRule()
              ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
-
 }

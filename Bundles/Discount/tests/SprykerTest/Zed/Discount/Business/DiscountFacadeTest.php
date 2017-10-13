@@ -44,7 +44,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\Discount\BusinessTester
      */
@@ -66,7 +65,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('123');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $isSatisfied = $discountFacade->isItemSkuSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
@@ -90,7 +89,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(10);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ]);
 
         $isSatisfied = $discountFacade->isQuoteGrandTotalSatisfiedBy(
@@ -122,7 +121,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(5);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ]);
 
         $isSatisfied = $discountFacade->isTotalQuantitySatisfiedBy(
@@ -150,7 +149,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(50);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ]);
 
         $isSatisfied = $discountFacade->isSubTotalSatisfiedBy(
@@ -178,7 +177,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('sku');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ]);
 
         $collected = $discountFacade->collectBySku($quoteTransfer, $clauseTransfer);
@@ -311,7 +310,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('value');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $withValue = 'value';
@@ -331,7 +330,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('value');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $withValue = 'value2';
@@ -351,7 +350,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('value');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $errors = $discountFacade->validateQueryStringByType(MetaProviderFactory::TYPE_DECISION_RULE, 'invalid =');
@@ -422,7 +421,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('value');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $errors = $discountFacade->validateQueryStringByType(MetaProviderFactory::TYPE_DECISION_RULE, 'sku = "123"');
@@ -802,5 +801,4 @@ class DiscountFacadeTest extends Unit
 
         return $discountRulePluginMock;
     }
-
 }

@@ -12,7 +12,6 @@ namespace Spryker\Zed\Category\Business\Tree;
  */
 class CategoryTreeFormat
 {
-
     /**
      * @param array $categories
      * @param int $parentIdCategory
@@ -37,5 +36,4 @@ class CategoryTreeFormat
 
         return $children;
     }
-
 }

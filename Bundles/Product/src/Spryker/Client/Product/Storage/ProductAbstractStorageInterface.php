@@ -9,12 +9,10 @@ namespace Spryker\Client\Product\Storage;
 
 interface ProductAbstractStorageInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
      * @return mixed
      */
     public function getProductAbstractFromStorageById($idProductAbstract);
-
 }

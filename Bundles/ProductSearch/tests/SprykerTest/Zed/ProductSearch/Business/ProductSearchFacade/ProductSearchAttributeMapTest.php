@@ -25,7 +25,6 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
  */
 class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
 {
-
     /**
      * @return void
      */
@@ -229,5 +228,4 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
 
         return $productSearchAttributeMapEntity;
     }
-
 }

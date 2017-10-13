@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class RatepayInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
-
     /**
      * @return void
      */
@@ -24,5 +23,4 @@ class RatepayInstallerPlugin extends AbstractPlugin implements InstallerPluginIn
     {
         $this->getFacade()->install();
     }
-
 }

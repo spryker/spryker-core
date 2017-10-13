@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodeStyleSnifferConsole extends Console
 {
-
     const COMMAND_NAME = 'code:sniff';
     const OPTION_MODULE = 'module';
     const OPTION_SNIFFS = 'sniffs';
@@ -56,13 +55,13 @@ class CodeStyleSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getOption(static::OPTION_MODULE);
+        $module = $this->input->getOption(static::OPTION_MODULE);
 
-        $message = 'Check code style in project level';
-        if ($bundle) {
-            $message = 'Check code style in all modules';
-            if ($bundle !== static::OPTION_BUNDLE_ALL) {
-                $message = 'Check code style in "' . $bundle . '" module';
+        $message = 'Check code style in PROJECT level';
+        if ($module) {
+            $message = 'Check code style in all CORE modules';
+            if ($module !== static::OPTION_BUNDLE_ALL) {
+                $message = 'Check code style in "' . $module . '" CORE module';
             }
         }
 
@@ -73,7 +72,7 @@ class CodeStyleSnifferConsole extends Console
 
         $this->info($message);
 
-        return $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
+        return $this->getFacade()->checkCodeStyle($module, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
     }
 
     /**
@@ -85,5 +84,4 @@ class CodeStyleSnifferConsole extends Console
     {
         $this->setAliases(['code:sniff:style']);
     }
-
 }

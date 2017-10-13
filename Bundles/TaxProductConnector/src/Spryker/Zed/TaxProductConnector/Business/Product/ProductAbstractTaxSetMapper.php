@@ -12,7 +12,6 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContaine
 
 class ProductAbstractTaxSetMapper
 {
-
     /**
      * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
@@ -54,5 +53,4 @@ class ProductAbstractTaxSetMapper
 
         return $productAbstractTransfer;
     }
-
 }

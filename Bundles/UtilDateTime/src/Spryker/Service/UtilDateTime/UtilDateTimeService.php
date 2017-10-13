@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class UtilDateTimeService extends AbstractService implements UtilDateTimeServiceInterface
 {
-
     /**
      * Specification:
      * - Formats a given datetime string into a configured date
@@ -59,5 +58,4 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
     {
         return $this->getFactory()->createDateFormatter()->formatTime($date);
     }
-
 }

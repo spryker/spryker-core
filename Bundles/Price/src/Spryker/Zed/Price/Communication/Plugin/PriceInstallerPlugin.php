@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PriceInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
-
     /**
      * @return void
      */
@@ -24,5 +23,4 @@ class PriceInstallerPlugin extends AbstractPlugin implements InstallerPluginInte
     {
         $this->getFacade()->install();
     }
-
 }

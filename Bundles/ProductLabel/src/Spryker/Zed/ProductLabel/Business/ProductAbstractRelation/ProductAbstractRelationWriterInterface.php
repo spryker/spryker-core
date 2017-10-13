@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 interface ProductAbstractRelationWriterInterface
 {
-
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
@@ -17,5 +16,4 @@ interface ProductAbstractRelationWriterInterface
      * @return void
      */
     public function addRelations($idProductLabel, array $idsProductAbstract);
-
 }

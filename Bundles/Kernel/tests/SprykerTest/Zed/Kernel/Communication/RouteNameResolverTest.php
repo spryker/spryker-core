@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RouteNameResolverTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -33,5 +32,4 @@ class RouteNameResolverTest extends Unit
 
         $this->assertSame('Foo/Bar/baz', $routeNameResolver->resolve());
     }
-
 }

@@ -21,7 +21,6 @@ use Spryker\Zed\Application\Communication\ZedBootstrap;
  */
 class ZedBootstrapTest extends Unit
 {
-
     const HTTP_X_INTERNAL_REQUEST = 'HTTP_X_INTERNAL_REQUEST';
 
     const REGISTER_SERVICE_PROVIDER = 'registerServiceProvider';
@@ -87,5 +86,4 @@ class ZedBootstrapTest extends Unit
             self::IS_AUTHENTICATION_ENABLED,
         ])->getMock();
     }
-
 }

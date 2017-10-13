@@ -21,7 +21,6 @@ use Spryker\Yves\Kernel\Locator;
  */
 class LocatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -31,5 +30,4 @@ class LocatorTest extends Unit
 
         $this->assertInstanceOf(BundleProxy::class, $locator->locateFoo());
     }
-
 }

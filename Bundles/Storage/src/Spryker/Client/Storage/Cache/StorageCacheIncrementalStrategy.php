@@ -12,7 +12,6 @@ use Spryker\Client\Storage\StorageConfig;
 
 class StorageCacheIncrementalStrategy implements StorageCacheStrategyInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\Cache\StorageCacheStrategyHelperInterface
      */
@@ -136,5 +135,4 @@ class StorageCacheIncrementalStrategy implements StorageCacheStrategyInterface
     {
         return array_search(StorageClient::KEY_NEW, $this->storageCacheStrategyHelper->getCachedKeys()) !== false;
     }
-
 }

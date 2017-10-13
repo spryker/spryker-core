@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Dependency\Util;
 
 class ZedNavigationToUtilEncodingBridge implements ZedNavigationToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -47,5 +46,4 @@ class ZedNavigationToUtilEncodingBridge implements ZedNavigationToUtilEncodingIn
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

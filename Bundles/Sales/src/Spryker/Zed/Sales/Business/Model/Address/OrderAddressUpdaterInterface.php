@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 
 interface OrderAddressUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param int $idAddress
@@ -19,5 +18,4 @@ interface OrderAddressUpdaterInterface
      * @return boolean
      */
     public function update(AddressTransfer $addressTransfer, $idAddress);
-
 }

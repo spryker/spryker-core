@@ -12,7 +12,6 @@ use Spryker\Shared\Navigation\NavigationConfig;
 
 class NavigationKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class NavigationKeyBuilder extends SharedResourceKeyBuilder
     {
         return NavigationConfig::RESOURCE_TYPE_NAVIGATION_MENU;
     }
-
 }

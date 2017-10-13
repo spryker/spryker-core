@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
@@ -42,5 +41,4 @@ class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCmsBlockTemplateQuery::create();
     }
-
 }

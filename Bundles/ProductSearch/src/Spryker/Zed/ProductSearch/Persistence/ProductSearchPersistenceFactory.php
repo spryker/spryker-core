@@ -23,7 +23,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
@@ -87,5 +86,4 @@ class ProductSearchPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductAbstractQuery::create();
     }
-
 }

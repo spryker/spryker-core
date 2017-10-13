@@ -19,7 +19,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterfa
  */
 class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreCheckPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -64,5 +63,4 @@ class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreC
             ->setMessage($braintreeTransactionResponseTransfer->getMessage());
         $checkoutResponseTransfer->addError($error);
     }
-
 }

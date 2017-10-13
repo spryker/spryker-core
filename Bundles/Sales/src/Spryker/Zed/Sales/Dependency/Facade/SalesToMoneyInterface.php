@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface SalesToMoneyInterface
 {
-
     /**
      * @param int $amount
      * @param null|string $isoCode
@@ -33,5 +32,4 @@ interface SalesToMoneyInterface
      * @return string
      */
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer);
-
 }

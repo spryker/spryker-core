@@ -13,7 +13,6 @@ use Spryker\Client\Kernel\Container;
 
 class AvailabilityDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_LOCALE = 'client locale';
     const KV_STORAGE = 'kv storage';
 
@@ -34,5 +33,4 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

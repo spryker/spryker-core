@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 interface ProductOptionToTouchInterface
 {
-
     /**
      * @api
      *
@@ -19,5 +18,4 @@ interface ProductOptionToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $idItem, $keyChange = false);
-
 }

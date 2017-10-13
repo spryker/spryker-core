@@ -17,7 +17,6 @@ use Spryker\Client\Wishlist\WishlistClientInterface;
 
 class CartHandler implements CartHandlerInterface
 {
-
     /**
      * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface
      */
@@ -178,5 +177,4 @@ class CartHandler implements CartHandlerInterface
             ->setSku($sku)
             ->setQuantity($quantity);
     }
-
 }

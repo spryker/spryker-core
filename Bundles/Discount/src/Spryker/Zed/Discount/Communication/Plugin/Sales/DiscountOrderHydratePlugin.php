@@ -17,7 +17,6 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
  */
 class DiscountOrderHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class DiscountOrderHydratePlugin extends AbstractPlugin implements HydrateOrderP
         return $this->getFacade()
             ->hydrateOrder($orderTransfer);
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class PdoBatchIterator implements CountableIteratorInterface
 {
-
     /**
      * @var \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface
      */
@@ -157,5 +156,4 @@ class PdoBatchIterator implements CountableIteratorInterface
 
         return $st->fetchColumn();
     }
-
 }

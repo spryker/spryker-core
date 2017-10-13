@@ -9,7 +9,6 @@ namespace Spryker\Zed\DataImport\Dependency\Facade;
 
 class DataImportToTouchBridge implements DataImportToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -55,5 +54,4 @@ class DataImportToTouchBridge implements DataImportToTouchInterface
     {
         $this->touchFacade->bulkTouchSetDeleted($itemType, $itemIds);
     }
-
 }

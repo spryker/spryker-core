@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class DiscountPromotionQueryContainer extends AbstractQueryContainer implements DiscountPromotionQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -43,5 +42,4 @@ class DiscountPromotionQueryContainer extends AbstractQueryContainer implements 
             ->createDiscountPromotionQuery()
             ->filterByIdDiscountPromotion($idDiscountPromotion);
     }
-
 }

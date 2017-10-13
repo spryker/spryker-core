@@ -9,7 +9,6 @@ namespace Spryker\Zed\Currency\Dependency\Facade;
 
 interface CurrencyToStoreInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
@@ -19,5 +18,4 @@ interface CurrencyToStoreInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore();
-
 }

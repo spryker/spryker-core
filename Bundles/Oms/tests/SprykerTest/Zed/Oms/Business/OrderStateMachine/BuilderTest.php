@@ -29,7 +29,6 @@ use Spryker\Zed\Oms\Business\Util\DrawerInterface;
  */
 class BuilderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -192,5 +191,4 @@ class BuilderTest extends Unit
     {
         return __DIR__ . '/Builder/Fixtures/DefinitionLocationB';
     }
-
 }

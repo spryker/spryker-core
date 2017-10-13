@@ -32,7 +32,6 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
  */
 class MailBuilderTest extends Unit
 {
-
     const SUBJECT = 'subject';
     const TEMPLATE_NAME_HTML = 'html.template.name';
     const TEMPLATE_NAME_TEXT = 'text.template.name';
@@ -234,5 +233,4 @@ class MailBuilderTest extends Unit
 
         return $glossaryFacadeMock;
     }
-
 }

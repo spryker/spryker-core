@@ -15,7 +15,6 @@ use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
 class SessionHandlerRedisLocking implements SessionHandlerInterface
 {
-
     const KEY_PREFIX = 'session:';
 
     /**
@@ -174,5 +173,4 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     {
         return true;
     }
-
 }

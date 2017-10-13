@@ -36,7 +36,6 @@ use Symfony\Component\Form\FormInterface;
  */
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param int|null $idDiscount
      *
@@ -284,5 +283,4 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
     }
-
 }

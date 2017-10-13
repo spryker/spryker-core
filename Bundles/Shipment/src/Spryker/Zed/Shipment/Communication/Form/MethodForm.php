@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class MethodForm extends AbstractType
 {
-
     const FIELD_NAME_FIELD = 'name';
     const FIELD_ID_FIELD = 'idShipmentMethod';
     const FIELD_IS_ACTIVE = 'isActive';
@@ -287,5 +286,4 @@ class MethodForm extends AbstractType
 
         return $this;
     }
-
 }

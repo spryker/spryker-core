@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface ItemExpanderPluginInterface
 {
-
     /**
      * Specification:
      * - This plugin is executed before cart add/remove items to persistence,
@@ -24,5 +23,4 @@ interface ItemExpanderPluginInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer);
-
 }

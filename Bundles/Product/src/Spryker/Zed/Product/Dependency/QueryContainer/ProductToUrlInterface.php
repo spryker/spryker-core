@@ -9,10 +9,8 @@ namespace Spryker\Zed\Product\Dependency\QueryContainer;
 
 interface ProductToUrlInterface
 {
-
     /**
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrls();
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 class ContainerKeyNotFoundException extends Exception
 {
-
     /**
      * @param object $callerClass
      * @param string $key
@@ -47,5 +46,4 @@ class ContainerKeyNotFoundException extends Exception
 
         return $message;
     }
-
 }

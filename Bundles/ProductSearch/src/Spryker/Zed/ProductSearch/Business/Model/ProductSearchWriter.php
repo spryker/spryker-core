@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class ProductSearchWriter implements ProductSearchWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarkerInterface
      */
@@ -78,5 +77,4 @@ class ProductSearchWriter implements ProductSearchWriterInterface
 
         return $isSearchableLocales;
     }
-
 }

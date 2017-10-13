@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabelCollectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -107,5 +106,4 @@ class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabel
                 $output
             );
     }
-
 }

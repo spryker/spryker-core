@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class UtilSanitizeService extends AbstractService implements UtilSanitizeServiceInterface
 {
-
     /**
      *
      * Specification:
@@ -34,5 +33,4 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
             ->createHtml()
             ->escape($text, $double, $charset);
     }
-
 }

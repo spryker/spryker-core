@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 interface ProductManagementToPriceInterface
 {
-
     /**
      * @param int $idAbstractProduct
      * @param string|null $priceType
@@ -43,5 +42,4 @@ interface ProductManagementToPriceInterface
      * @return string
      */
     public function getDefaultPriceTypeName();
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CollectorSearchConnector\Dependency\Facade;
 
 class CollectorSearchConnectorToCollectorBridge implements CollectorSearchConnectorToCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
@@ -32,5 +31,4 @@ class CollectorSearchConnectorToCollectorBridge implements CollectorSearchConnec
     {
         $this->collectorFacade->deleteSearchTimestamps($timestamps);
     }
-
 }

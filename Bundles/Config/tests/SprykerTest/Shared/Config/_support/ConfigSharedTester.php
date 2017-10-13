@@ -21,7 +21,6 @@ use Spryker\Shared\Config\Profiler;
  */
 class ConfigSharedTester extends Actor
 {
-
     use _generated\ConfigSharedTesterActions;
 
     /**
@@ -75,5 +74,4 @@ class ConfigSharedTester extends Actor
             sprintf('The count for "%s" was expected to be "%d"', ProfilerTest::PROFILE_KEY, $expectedCount)
         );
     }
-
 }

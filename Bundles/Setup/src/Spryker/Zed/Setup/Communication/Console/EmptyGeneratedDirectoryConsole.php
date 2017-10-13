@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EmptyGeneratedDirectoryConsole extends Console
 {
-
     const COMMAND_NAME = 'setup:empty-generated-directory';
 
     /**
@@ -40,5 +39,4 @@ class EmptyGeneratedDirectoryConsole extends Console
     {
         $this->getFacade()->emptyGeneratedDirectory();
     }
-
 }

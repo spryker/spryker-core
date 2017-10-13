@@ -14,7 +14,6 @@ use Spryker\Zed\Acl\Communication\Form\RuleForm;
 
 class AclRuleFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Acl\Business\AclFacade
      */
@@ -61,5 +60,4 @@ class AclRuleFormDataProvider
             SpyAclRuleTableMap::getValueSet(SpyAclRuleTableMap::COL_TYPE)
         );
     }
-
 }

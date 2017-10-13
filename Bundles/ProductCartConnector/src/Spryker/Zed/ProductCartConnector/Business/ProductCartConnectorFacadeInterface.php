@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface ProductCartConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Reads a persisted concrete product from database.
@@ -38,5 +37,4 @@ interface ProductCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateItems(CartChangeTransfer $cartChangeTransfer);
-
 }

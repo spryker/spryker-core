@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NewsletterConfig extends AbstractBundleConfig
 {
-
     /**
      * @param string $token
      *
@@ -81,5 +80,4 @@ class NewsletterConfig extends AbstractBundleConfig
     {
         return [];
     }
-
 }

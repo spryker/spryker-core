@@ -27,7 +27,6 @@ use Twig_LoaderInterface;
  */
 class TwigFilesystemLoaderTest extends Unit
 {
-
     const PATH_TO_ZED_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Zed/Bundle/Presentation';
     const CONTENT_CACHED_FILE = 'cached file' . PHP_EOL;
     const CONTENT_PROJECT_ZED_FILE = 'project zed file' . PHP_EOL;
@@ -196,5 +195,4 @@ class TwigFilesystemLoaderTest extends Unit
 
         return new TwigFilesystemLoader([$path], $cache, $this->getTemplateNameExtractor());
     }
-
 }

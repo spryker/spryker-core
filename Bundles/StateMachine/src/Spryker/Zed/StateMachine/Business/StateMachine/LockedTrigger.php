@@ -11,7 +11,6 @@ use Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface;
 
 class LockedTrigger implements TriggerInterface
 {
-
     /**
      * @var \Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface
      */
@@ -143,5 +142,4 @@ class LockedTrigger implements TriggerInterface
     {
         return $identifier . $stateMachineName . $processName;
     }
-
 }

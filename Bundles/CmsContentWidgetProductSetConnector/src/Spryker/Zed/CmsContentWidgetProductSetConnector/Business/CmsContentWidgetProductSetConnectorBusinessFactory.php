@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CmsContentWidgetProductSetConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsContentWidgetProductSetConnector\Business\Mapper\CmsProductSetKeyParameterMapperInterface
      */
@@ -24,5 +23,4 @@ class CmsContentWidgetProductSetConnectorBusinessFactory extends AbstractBusines
     {
         return new CmsProductSetKeyParameterMapper($this->getQueryContainer());
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Client\Search\Exception\InvalidSearchQueryException;
  */
 class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     const AGGREGATION_NAME = 'completion';
 
     const SIZE = 10;
@@ -105,5 +104,4 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
 
         return '';
     }
-
 }

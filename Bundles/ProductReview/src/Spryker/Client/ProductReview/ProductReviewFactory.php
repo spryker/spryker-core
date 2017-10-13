@@ -16,7 +16,6 @@ use Spryker\Shared\ProductReview\KeyBuilder\ProductAbstractReviewResourceKeyBuil
 
 class ProductReviewFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\ProductReview\Zed\ProductReviewStubInterface
      */
@@ -118,5 +117,4 @@ class ProductReviewFactory extends AbstractFactory
     {
         return new ProductAbstractReviewResourceKeyBuilder();
     }
-
 }

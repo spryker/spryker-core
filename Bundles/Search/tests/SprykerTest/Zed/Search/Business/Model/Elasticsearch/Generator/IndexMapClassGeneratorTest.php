@@ -26,7 +26,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
  */
 class IndexMapClassGeneratorTest extends Unit
 {
-
     const TARGET_DIRECTORY = __DIR__ . '/Generated/';
     const TEST_FILES_DIRECTORY = __DIR__ . '/test_files/';
 
@@ -128,5 +127,4 @@ class IndexMapClassGeneratorTest extends Unit
 
         return $indexDefinition;
     }
-
 }

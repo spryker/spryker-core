@@ -12,7 +12,6 @@ use Spryker\Service\UtilDataReader\Model\BatchIterator\PropelBatchIterator;
 
 class BatchIteratorBuilder implements BatchIteratorBuilderInterface
 {
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
@@ -23,5 +22,4 @@ class BatchIteratorBuilder implements BatchIteratorBuilderInterface
     {
         return new PropelBatchIterator($query, $chunkSize);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Config;
 
 class Profiler
 {
-
     const PROFILE_VALUE = 'value';
     const PROFILE_DEFAULT = 'default';
     const PROFILE_COUNT = 'count';
@@ -100,5 +99,4 @@ class Profiler
     {
         $this->profileData[$key][static::PROFILE_COUNT]++;
     }
-
 }

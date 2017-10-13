@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
  */
 class UtilDataReaderService extends AbstractService implements UtilDataReaderServiceInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -143,5 +142,4 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     {
         return $this->getFactory()->createYamlBatchIterator($fileName, $chunkSize);
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface;
 
 class SubscriberMerger implements SubscriberMergerInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
      */
@@ -39,5 +38,4 @@ class SubscriberMerger implements SubscriberMergerInterface
 
         return $eventCollection;
     }
-
 }

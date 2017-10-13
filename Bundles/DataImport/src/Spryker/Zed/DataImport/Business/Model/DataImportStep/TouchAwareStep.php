@@ -12,7 +12,6 @@ use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface;
 
 class TouchAwareStep implements DataImportStepAfterExecuteInterface
 {
-
     /**
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface
      */
@@ -139,5 +138,4 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
     {
         $this->flush();
     }
-
 }

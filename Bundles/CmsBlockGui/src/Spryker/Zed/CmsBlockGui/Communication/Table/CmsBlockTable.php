@@ -15,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsBlockTable extends AbstractTable
 {
-
     const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
     const COL_NAME = SpyCmsBlockTableMap::COL_NAME;
     const COL_ACTIONS = 'Actions';
@@ -176,5 +175,4 @@ class CmsBlockTable extends AbstractTable
 
         return '<span class="label label-danger">Inactive</span>';
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Client\Glossary;
 
 interface GlossaryClientInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface GlossaryClientInterface
      * @return string
      */
     public function translate($id, $localeName, array $parameters = []);
-
 }

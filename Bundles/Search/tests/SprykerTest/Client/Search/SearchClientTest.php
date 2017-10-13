@@ -30,7 +30,6 @@ use Spryker\Client\Search\SearchFactory;
  */
 class SearchClientTest extends Unit
 {
-
     /**
      * @var \Spryker\Client\Search\SearchClientInterface|\Spryker\Client\Kernel\AbstractClient
      */
@@ -156,7 +155,7 @@ class SearchClientTest extends Unit
             ->willReturn($this->getMockBuilder(QueryInterface::class)->getMock());
 
         $queryExpanders = [
-            $queryExpanderMock
+            $queryExpanderMock,
         ];
 
         $result = $this->searchClient->expandQuery($queryMock, $queryExpanders);
@@ -209,5 +208,4 @@ class SearchClientTest extends Unit
 
         $this->searchClient->setFactory($searchFactoryMock);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 interface PersistenceManagerInterface
 {
-
     /**
      * @param string $stateName
      *
@@ -28,5 +27,4 @@ interface PersistenceManagerInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity();
-
 }

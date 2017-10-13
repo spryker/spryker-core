@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutPreConditionInterface
 {
-
     /**
      * Checks a condition before the order is saved. If the condition fails, an error is added to the response transfer.
      *
@@ -24,5 +23,4 @@ interface CheckoutPreConditionInterface
      * @return void
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
 }

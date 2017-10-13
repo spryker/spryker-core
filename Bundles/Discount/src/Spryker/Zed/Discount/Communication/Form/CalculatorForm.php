@@ -34,7 +34,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CalculatorForm extends AbstractType
 {
-
     const FIELD_AMOUNT = 'amount';
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
@@ -189,7 +188,7 @@ class CalculatorForm extends AbstractType
             'constraints' => [
                 new NotBlank([
                     'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
-                ])
+                ]),
             ],
         ];
 
@@ -327,5 +326,4 @@ class CalculatorForm extends AbstractType
     {
         return 'discount_calculator';
     }
-
 }

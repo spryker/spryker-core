@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
  */
 class CmsBlockFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\CmsBlock\BusinessTester
      */
@@ -202,5 +201,4 @@ class CmsBlockFacadeTest extends Unit
     {
         return $this->tester->getLocator()->cmsBlock()->facade();
     }
-
 }

@@ -19,7 +19,6 @@ use Throwable;
 
 class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
-
     const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
     const QUANTITY = 'quantity';
 
@@ -331,5 +330,4 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         }
         return $bundleTotalStockPerWarehouse;
     }
-
 }

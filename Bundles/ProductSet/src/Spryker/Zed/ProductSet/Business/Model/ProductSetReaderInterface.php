@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 interface ProductSetReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer|null
      */
     public function findProductSet(ProductSetTransfer $productSetTransfer);
-
 }

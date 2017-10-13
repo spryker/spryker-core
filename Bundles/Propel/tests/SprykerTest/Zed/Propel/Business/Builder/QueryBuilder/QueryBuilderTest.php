@@ -33,7 +33,6 @@ use Spryker\Zed\Propel\Business\Builder\QueryBuilder;
  */
 class QueryBuilderTest extends Unit
 {
-
     /**
      * @return array
      */
@@ -109,5 +108,4 @@ class QueryBuilderTest extends Unit
     {
         unlink($fileName);
     }
-
 }

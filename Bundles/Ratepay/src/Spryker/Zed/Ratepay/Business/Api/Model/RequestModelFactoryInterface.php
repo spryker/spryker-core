@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Api\Model;
 
 interface RequestModelFactoryInterface
 {
-
     /**
      * @param string $modelType
      * @param callable $builder
@@ -23,5 +22,4 @@ interface RequestModelFactoryInterface
      * @return \Spryker\Zed\Ratepay\Business\Api\Model\RequestInterface
      */
     public function build($modelType);
-
 }

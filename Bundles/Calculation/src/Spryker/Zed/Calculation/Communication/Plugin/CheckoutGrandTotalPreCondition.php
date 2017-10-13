@@ -16,7 +16,6 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
  */
 class CheckoutGrandTotalPreCondition implements CheckoutPreConditionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -27,5 +26,4 @@ class CheckoutGrandTotalPreCondition implements CheckoutPreConditionInterface
     {
         $this->getFacade()->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

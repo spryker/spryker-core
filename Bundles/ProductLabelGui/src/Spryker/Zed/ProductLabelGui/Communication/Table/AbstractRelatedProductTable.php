@@ -15,7 +15,6 @@ use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterfac
 
 abstract class AbstractRelatedProductTable extends AbstractTable
 {
-
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
     const COL_PRODUCT_ABSTRACT_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
     const COL_PRODUCT_ABSTRACT_CATEGORIES = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV;
@@ -158,5 +157,4 @@ abstract class AbstractRelatedProductTable extends AbstractTable
             $statusName
         );
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class LabelCreator implements LabelCreatorInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -168,5 +167,4 @@ class LabelCreator implements LabelCreatorInterface
             ->localizedAttributesCollectionWriter
             ->save($productLabelTransfer->getLocalizedAttributesCollection());
     }
-
 }

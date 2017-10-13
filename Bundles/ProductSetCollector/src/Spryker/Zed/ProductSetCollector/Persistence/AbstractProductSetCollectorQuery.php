@@ -17,7 +17,6 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 abstract class AbstractProductSetCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const FIELD_ID_PRODUCT_SET = 'id_product_set';
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_WEIGHT = 'weight';
@@ -80,5 +79,4 @@ abstract class AbstractProductSetCollectorQuery extends AbstractPropelCollectorQ
                 static::FIELD_ID_PRODUCT_ABSTRACTS
             );
     }
-
 }

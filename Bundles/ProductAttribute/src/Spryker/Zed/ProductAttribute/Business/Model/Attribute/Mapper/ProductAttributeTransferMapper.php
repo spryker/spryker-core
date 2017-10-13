@@ -19,7 +19,6 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInter
 
 class ProductAttributeTransferMapper implements ProductAttributeTransferMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface
      */
@@ -177,5 +176,4 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
         return null;
     }
-
 }

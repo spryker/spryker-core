@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class ProductGroupTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -43,5 +42,4 @@ class ProductGroupTwigServiceProvider extends AbstractPlugin implements ServiceP
     public function boot(Application $app)
     {
     }
-
 }

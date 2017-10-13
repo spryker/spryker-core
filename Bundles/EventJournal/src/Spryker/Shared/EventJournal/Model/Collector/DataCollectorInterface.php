@@ -12,7 +12,6 @@ namespace Spryker\Shared\EventJournal\Model\Collector;
  */
 interface DataCollectorInterface
 {
-
     /**
      * @return array
      */
@@ -22,5 +21,4 @@ interface DataCollectorInterface
      * @return string
      */
     public function getType();
-
 }

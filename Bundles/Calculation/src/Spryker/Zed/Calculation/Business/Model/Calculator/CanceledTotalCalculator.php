@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class CanceledTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -54,5 +53,4 @@ class CanceledTotalCalculator implements CalculatorInterface
         }
         return $canceledTotal;
     }
-
 }

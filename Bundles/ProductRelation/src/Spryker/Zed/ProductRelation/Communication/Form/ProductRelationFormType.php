@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductRelationFormType extends AbstractType
 {
-
     const FIELD_RELATION_TYPE = 'productRelationType';
     const FIELD_FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
     const FIELD_ID_PRODUCT_RELATION = 'idProductRelation';
@@ -93,7 +92,7 @@ class ProductRelationFormType extends AbstractType
     {
         $builder->add(static::FIELD_QUERY_SET, HiddenType::class, [
             'constraints' => [
-                new NotBlank(['message' => 'Query not defined.'])
+                new NotBlank(['message' => 'Query not defined.']),
             ],
         ]);
 
@@ -156,7 +155,7 @@ class ProductRelationFormType extends AbstractType
     {
         $builder->add(static::FIELD_FK_PRODUCT_ABSTRACT, TextType::class, [
             'constraints' => [
-                new NotBlank(['message' => 'Abstract product is not selected.'])
+                new NotBlank(['message' => 'Abstract product is not selected.']),
             ],
         ]);
 
@@ -170,5 +169,4 @@ class ProductRelationFormType extends AbstractType
     {
         return 'product_relation';
     }
-
 }

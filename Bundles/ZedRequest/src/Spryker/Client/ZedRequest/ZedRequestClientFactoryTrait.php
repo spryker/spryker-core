@@ -11,7 +11,6 @@ use Spryker\Client\ZedRequest\ServiceProvider\ZedRequestClientServiceProvider;
 
 trait ZedRequestClientFactoryTrait
 {
-
     /**
      * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
@@ -28,5 +27,4 @@ trait ZedRequestClientFactoryTrait
      * @return mixed
      */
     abstract public function getProvidedDependency($key);
-
 }

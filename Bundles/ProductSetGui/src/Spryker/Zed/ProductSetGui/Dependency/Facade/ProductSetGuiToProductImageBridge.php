@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
 class ProductSetGuiToProductImageBridge implements ProductSetGuiToProductImageInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
@@ -32,5 +31,4 @@ class ProductSetGuiToProductImageBridge implements ProductSetGuiToProductImageIn
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 class CategoryToUrlBridge implements CategoryToUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
@@ -84,5 +83,4 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     {
         $this->urlFacade->deleteUrl($urlTransfer);
     }
-
 }

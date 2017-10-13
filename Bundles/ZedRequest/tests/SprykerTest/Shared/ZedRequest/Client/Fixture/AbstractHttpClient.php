@@ -11,7 +11,6 @@ use Spryker\Shared\ZedRequest\Client\AbstractHttpClient as SharedAbstractHttpCli
 
 class AbstractHttpClient extends SharedAbstractHttpClient
 {
-
     /**
      * @return array
      */
@@ -19,5 +18,4 @@ class AbstractHttpClient extends SharedAbstractHttpClient
     {
         return [];
     }
-
 }

@@ -14,7 +14,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
 {
-
     const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
 
     /**
@@ -106,5 +105,4 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
         return $uniqueBundledItems;
     }
-
 }

@@ -23,7 +23,6 @@ use Generated\Shared\Transfer\ItemTransfer;
  */
 class BasketItemMapperTest extends AbstractMapperTest
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class BasketItemMapperTest extends AbstractMapperTest
         $this->assertEquals('q5', $this->requestTransfer->getShoppingBasket()->getItems()[0]->getTaxRate());
         $this->assertEquals(12, $this->requestTransfer->getShoppingBasket()->getItems()[0]->getUnitPriceGross());
     }
-
 }

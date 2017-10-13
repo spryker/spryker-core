@@ -15,7 +15,6 @@ use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToTouchInterface;
 
 class ProductReviewTouch implements ProductReviewTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToTouchInterface
      */
@@ -105,5 +104,4 @@ class ProductReviewTouch implements ProductReviewTouchInterface
             ->requireIdProductReview()
             ->requireFkProductAbstract();
     }
-
 }

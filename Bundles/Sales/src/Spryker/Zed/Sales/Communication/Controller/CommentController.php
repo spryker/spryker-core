@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CommentController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -92,5 +91,4 @@ class CommentController extends AbstractController
             $this->addErrorMessage($error->getMessage());
         }
     }
-
 }

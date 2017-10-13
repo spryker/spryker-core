@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class BraintreeCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Braintree\Communication\Table\Payments
      */
@@ -52,5 +51,4 @@ class BraintreeCommunicationFactory extends AbstractCommunicationFactory
 
         return new StatusLog($statusLogQuery, $idPayment);
     }
-
 }

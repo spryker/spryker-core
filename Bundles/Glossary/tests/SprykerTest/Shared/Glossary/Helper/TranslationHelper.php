@@ -13,7 +13,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class TranslationHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -32,5 +31,4 @@ class TranslationHelper extends Module
 
         return $identifier;
     }
-
 }

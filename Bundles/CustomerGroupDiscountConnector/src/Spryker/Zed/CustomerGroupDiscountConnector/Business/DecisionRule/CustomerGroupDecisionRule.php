@@ -14,7 +14,6 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
 
 class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToDiscountFacadeInterface
      */
@@ -85,5 +84,4 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
 
         return true;
     }
-
 }

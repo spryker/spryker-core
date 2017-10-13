@@ -25,7 +25,6 @@ use Twig_Environment;
  */
 class BundleMethodGeneratorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -65,5 +64,4 @@ class BundleMethodGeneratorTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
     }
-
 }

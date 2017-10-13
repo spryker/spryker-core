@@ -431,5 +431,4 @@ class AutoloadUpdater implements UpdaterInterface
 
         return $composerJson;
     }
-
 }

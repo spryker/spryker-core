@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AssignForm extends AbstractType
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -106,5 +105,4 @@ class AssignForm extends AbstractType
     {
         return 'assign_form';
     }
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductLabelValidityConsole extends Console
 {
-
     const COMMAND_NAME = 'product-label:validity';
 
     /**
@@ -40,5 +39,4 @@ class ProductLabelValidityConsole extends Console
     {
         $this->getFacade()->checkLabelValidityDateRangeAndTouch();
     }
-
 }

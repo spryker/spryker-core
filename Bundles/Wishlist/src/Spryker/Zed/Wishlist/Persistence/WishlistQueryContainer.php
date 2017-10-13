@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -64,5 +63,4 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
             ->createWishlistItemQuery()
             ->filterByFkWishlist($idWishlist);
     }
-
 }

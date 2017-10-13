@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesProductConnector\Dependency\QueryContainer;
 
 interface ProductToSalesProductConnectorQueryContainerInterface
 {
-
     /**
      * @param string $sku
      *
@@ -21,5 +20,4 @@ interface ProductToSalesProductConnectorQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKey();
-
 }

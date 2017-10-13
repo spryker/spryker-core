@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
 class AssignedProductTable extends AbstractRelatedProductRelationTable
 {
-
     /**
      * @var string
      */
@@ -35,5 +34,4 @@ class AssignedProductTable extends AbstractRelatedProductRelationTable
     {
         return 'checked="checked"';
     }
-
 }

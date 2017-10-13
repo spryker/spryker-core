@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface ProductImageCartConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Reads a persisted concrete product from database.
@@ -25,5 +24,4 @@ interface ProductImageCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer);
-
 }

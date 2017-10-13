@@ -17,7 +17,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class StepCollection implements StepCollectionInterface
 {
-
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
@@ -278,5 +277,4 @@ class StepCollection implements StepCollectionInterface
     {
         return new ArrayIterator($this->steps);
     }
-
 }

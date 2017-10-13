@@ -29,7 +29,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderP
  */
 class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQueryExpanderPluginAggregationTest
 {
-
     /**
      * @return array
      */
@@ -358,5 +357,4 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
 
         return [$searchConfig, $expectedAggregations, $parameters];
     }
-
 }

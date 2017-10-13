@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryTreeReaderInterface
 {
-
     /**
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -219,5 +218,4 @@ interface CategoryTreeReaderInterface
      * @return array
      */
     public function getSubTree($idCategoryNode, LocaleTransfer $localeTransfer);
-
 }

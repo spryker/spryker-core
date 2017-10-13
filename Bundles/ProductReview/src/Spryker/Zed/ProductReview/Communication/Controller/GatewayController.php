@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
@@ -44,5 +43,4 @@ class GatewayController extends AbstractGatewayController
                 ->addError((new ProductReviewErrorTransfer())->setMessage($exception->getMessage()));
         }
     }
-
 }

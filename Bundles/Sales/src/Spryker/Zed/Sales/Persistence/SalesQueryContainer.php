@@ -19,7 +19,6 @@ use Spryker\Zed\Propel\PropelFilterCriteria;
  */
 class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -274,5 +273,4 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->groupBySku()
             ->orderByCount();
     }
-
 }

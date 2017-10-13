@@ -25,7 +25,6 @@ use Throwable;
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -166,5 +165,4 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             json_encode($array)
         ));
     }
-
 }

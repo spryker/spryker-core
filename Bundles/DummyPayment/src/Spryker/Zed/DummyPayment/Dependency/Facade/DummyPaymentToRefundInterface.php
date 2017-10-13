@@ -12,7 +12,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface DummyPaymentToRefundInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
@@ -27,5 +26,4 @@ interface DummyPaymentToRefundInterface
      * @return bool
      */
     public function saveRefund(RefundTransfer $refundTransfer);
-
 }

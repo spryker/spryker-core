@@ -13,7 +13,6 @@ use Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface;
 
 class ProductReviewReader implements ProductReviewReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface
      */
@@ -81,5 +80,4 @@ class ProductReviewReader implements ProductReviewReaderInterface
             ->queryProductReviewById($productReviewTransfer->getIdProductReview())
             ->findOne();
     }
-
 }

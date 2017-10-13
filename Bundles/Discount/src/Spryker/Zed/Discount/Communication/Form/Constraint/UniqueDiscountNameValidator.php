@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueDiscountNameValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed value is valid.
      *
@@ -85,5 +84,4 @@ class UniqueDiscountNameValidator extends ConstraintValidator
 
         return false;
     }
-
 }

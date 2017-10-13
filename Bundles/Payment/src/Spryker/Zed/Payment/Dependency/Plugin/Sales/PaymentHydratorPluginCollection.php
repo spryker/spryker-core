@@ -11,7 +11,6 @@ use Spryker\Zed\Payment\Exception\PaymentHydratorPluginNotFoundException;
 
 class PaymentHydratorPluginCollection implements PaymentHydratorPluginCollectionInterface
 {
-
     /**
      * @var \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface[]
      */
@@ -57,5 +56,4 @@ class PaymentHydratorPluginCollection implements PaymentHydratorPluginCollection
 
         return $this->plugins[$provider];
     }
-
 }

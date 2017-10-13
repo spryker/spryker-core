@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class EditGlossaryController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
 
     /**
@@ -85,5 +84,4 @@ class EditGlossaryController extends AbstractController
             'idCmsBlock' => $idCmsBlock,
         ]);
     }
-
 }

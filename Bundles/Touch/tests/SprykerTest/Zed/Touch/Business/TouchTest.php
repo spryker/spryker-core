@@ -25,7 +25,6 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
  */
 class TouchTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
@@ -103,5 +102,4 @@ class TouchTest extends Unit
         $number = $this->touchFacade->removeTouchEntriesMarkedAsDeleted();
         $this->assertGreaterThan(0, $number);
     }
-
 }

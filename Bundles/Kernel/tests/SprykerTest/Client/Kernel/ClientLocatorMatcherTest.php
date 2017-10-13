@@ -20,7 +20,6 @@ use Spryker\Client\Kernel\ClientLocatorMatcher;
  */
 class ClientLocatorMatcherTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -44,5 +43,4 @@ class ClientLocatorMatcherTest extends Unit
     {
         $this->assertFalse((new ClientLocatorMatcher())->match('locatorClient'));
     }
-
 }

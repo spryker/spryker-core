@@ -25,7 +25,6 @@ use Symfony\Component\Intl\Intl;
  */
 class CurrencyBuilderTest extends Unit
 {
-
     const DEFAULT_CURRENCY = 'EUR';
 
     /**
@@ -60,5 +59,4 @@ class CurrencyBuilderTest extends Unit
             Store::getInstance()->getCurrencyIsoCode()
         );
     }
-
 }

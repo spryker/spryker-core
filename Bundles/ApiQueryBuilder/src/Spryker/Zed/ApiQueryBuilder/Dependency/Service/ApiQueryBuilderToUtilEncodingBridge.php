@@ -9,7 +9,6 @@ namespace Spryker\Zed\ApiQueryBuilder\Dependency\Service;
 
 class ApiQueryBuilderToUtilEncodingBridge implements ApiQueryBuilderToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -47,5 +46,4 @@ class ApiQueryBuilderToUtilEncodingBridge implements ApiQueryBuilderToUtilEncodi
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

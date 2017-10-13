@@ -27,7 +27,6 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
  */
 class ValidatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -185,5 +184,4 @@ class ValidatorTest extends Unit
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
-
 }

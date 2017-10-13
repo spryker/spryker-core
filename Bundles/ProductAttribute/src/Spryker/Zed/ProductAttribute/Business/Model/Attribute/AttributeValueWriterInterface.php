@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 interface AttributeValueWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
     public function saveProductAttributeValues(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
-
 }

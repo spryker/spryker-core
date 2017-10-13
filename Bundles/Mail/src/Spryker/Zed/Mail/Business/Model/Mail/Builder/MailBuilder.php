@@ -18,7 +18,6 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
 
 class MailBuilder implements MailBuilderInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\MailTransfer
      */
@@ -193,5 +192,4 @@ class MailBuilder implements MailBuilderInterface
 
         return $keyName;
     }
-
 }

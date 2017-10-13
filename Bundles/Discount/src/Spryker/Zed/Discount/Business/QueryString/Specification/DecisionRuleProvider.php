@@ -15,7 +15,6 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class DecisionRuleProvider implements SpecificationProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
      */
@@ -74,5 +73,4 @@ class DecisionRuleProvider implements SpecificationProviderInterface
             )
         );
     }
-
 }

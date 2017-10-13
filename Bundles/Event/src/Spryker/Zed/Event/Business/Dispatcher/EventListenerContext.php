@@ -12,7 +12,6 @@ use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
 
 class EventListenerContext implements EventListenerContextInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface
      */
@@ -58,5 +57,4 @@ class EventListenerContext implements EventListenerContextInterface
     {
         return get_class($this->eventListener);
     }
-
 }

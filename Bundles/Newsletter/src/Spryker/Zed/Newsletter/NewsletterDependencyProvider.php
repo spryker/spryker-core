@@ -14,7 +14,6 @@ use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailBridge;
 
 class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_MAIL = 'mail facade';
     const FACADE_GLOSSARY = 'glossary facade';
 
@@ -48,5 +47,4 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

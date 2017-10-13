@@ -14,7 +14,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
-
     const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**
@@ -127,5 +126,4 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
     {
         return $this->searchCollectorConfiguration;
     }
-
 }

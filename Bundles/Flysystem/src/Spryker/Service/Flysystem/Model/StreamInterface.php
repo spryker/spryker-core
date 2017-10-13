@@ -9,7 +9,6 @@ namespace Spryker\Service\Flysystem\Model;
 
 interface StreamInterface
 {
-
     /**
      * @param string $filesystemName
      * @param string $path
@@ -55,5 +54,4 @@ interface StreamInterface
      * @return void
      */
     public function writeStream($filesystemName, $path, $resource, array $config = []);
-
 }

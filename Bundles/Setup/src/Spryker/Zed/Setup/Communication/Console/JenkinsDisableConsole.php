@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class JenkinsDisableConsole extends Console
 {
-
     const COMMAND_NAME = 'setup:jenkins:disable';
     const DESCRIPTION = 'Disable Jenkins';
 
@@ -43,5 +42,4 @@ class JenkinsDisableConsole extends Console
 
         $output->writeln($result);
     }
-
 }

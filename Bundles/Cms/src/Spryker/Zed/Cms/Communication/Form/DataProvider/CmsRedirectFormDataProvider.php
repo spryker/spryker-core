@@ -12,7 +12,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsRedirectFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -54,5 +53,4 @@ class CmsRedirectFormDataProvider
             CmsRedirectForm::FIELD_STATUS => $urlRedirectEntity->getStatus(),
         ];
     }
-
 }

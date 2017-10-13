@@ -17,7 +17,6 @@ use Elastica\Query\Terms;
 
 class QueryBuilder implements QueryBuilderInterface
 {
-
     /**
      * @param string $fieldName
      * @param float|null $minValue
@@ -106,5 +105,4 @@ class QueryBuilder implements QueryBuilderInterface
     {
         return new MatchAll();
     }
-
 }

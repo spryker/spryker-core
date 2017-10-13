@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 interface BusinessFactoryInterface
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -26,5 +25,4 @@ interface BusinessFactoryInterface
      * @return void
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer);
-
 }

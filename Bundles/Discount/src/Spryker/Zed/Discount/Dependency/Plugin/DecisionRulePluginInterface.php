@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DecisionRulePluginInterface
 {
-
     /**
      * Specification:
      *
@@ -51,5 +50,4 @@ interface DecisionRulePluginInterface
      * @return array
      */
     public function acceptedDataTypes();
-
 }

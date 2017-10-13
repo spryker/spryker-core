@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Category\PageObject;
 
 class Category
 {
-
     const FORM_FIELD_CATEGORY_KEY = 'category[category_key]';
     const FORM_FIELD_CATEGORY_PARENT = 'category[parent_category_node]';
     const FORM_FIELD_CATEGORY_TEMPLATE = 'category[fk_category_template]';
@@ -101,5 +100,4 @@ class Category
     {
         return sprintf(self::FORM_FIELD_CATEGORY_KEYWORDS_PATTERN, $position);
     }
-
 }

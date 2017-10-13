@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CmsCollectorToCmsInterface
 {
-
     /**
      * @param string $cmsPageData
      *
@@ -36,5 +35,4 @@ interface CmsCollectorToCmsInterface
      * @return array
      */
     public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer);
-
 }

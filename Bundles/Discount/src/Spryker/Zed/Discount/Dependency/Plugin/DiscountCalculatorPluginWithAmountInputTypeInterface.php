@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Dependency\Plugin;
 
 interface DiscountCalculatorPluginWithAmountInputTypeInterface
 {
-
     /**
      * Specification:
      *  - With this interface for calculator plugin you can indicate what input type calculator expect.
@@ -20,5 +19,4 @@ interface DiscountCalculatorPluginWithAmountInputTypeInterface
      * @return string
      */
     public function getInputType();
-
 }

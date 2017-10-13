@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CategoryExporterClient extends AbstractClient implements CategoryExporterClientInterface
 {
-
     /**
      * @api
      *
@@ -39,5 +38,4 @@ class CategoryExporterClient extends AbstractClient implements CategoryExporterC
     {
         return $this->getFactory()->createCategoryTreeBuilder()->createTreeFromCategoryNode($categoryNode, $locale);
     }
-
 }

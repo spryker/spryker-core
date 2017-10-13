@@ -25,7 +25,6 @@ use Throwable;
 
 class CmsPageSaver implements CmsPageSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
@@ -432,5 +431,4 @@ class CmsPageSaver implements CmsPageSaverInterface
     {
         return new SpyCmsPageLocalizedAttributes();
     }
-
 }

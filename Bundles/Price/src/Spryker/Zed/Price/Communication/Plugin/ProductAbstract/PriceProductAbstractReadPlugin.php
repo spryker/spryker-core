@@ -18,7 +18,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
  */
 class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -40,5 +39,4 @@ class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAb
 
         return $productAbstractTransfer;
     }
-
 }

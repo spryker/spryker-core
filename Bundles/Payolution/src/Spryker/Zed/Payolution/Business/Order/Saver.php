@@ -15,7 +15,6 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionOrderItem;
 
 class Saver implements SaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -82,5 +81,4 @@ class Saver implements SaverInterface
             $paymentOrderItemEntity->save();
         }
     }
-
 }

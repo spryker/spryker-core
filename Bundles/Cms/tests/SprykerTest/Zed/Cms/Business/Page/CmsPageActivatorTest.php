@@ -24,7 +24,6 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
  */
 class CmsPageActivatorTest extends CmsMocks
 {
-
     /**
      * @return void
      */
@@ -98,5 +97,4 @@ class CmsPageActivatorTest extends CmsMocks
 
         return $cmsPageActivatorMock;
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Session\Business\Lock\SessionLockReaderInterface;
 
 class RedisSessionLockReader implements SessionLockReaderInterface
 {
-
     /**
      * @var \Predis\Client
      */
@@ -46,5 +45,4 @@ class RedisSessionLockReader implements SessionLockReaderInterface
 
         return $token;
     }
-
 }

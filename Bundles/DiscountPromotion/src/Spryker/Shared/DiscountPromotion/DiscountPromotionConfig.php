@@ -9,10 +9,8 @@ namespace Spryker\Shared\DiscountPromotion;
 
 class DiscountPromotionConfig
 {
-
     /**
      * This constant used to uniquely identify promotion discount collector strategy type
      */
     const DISCOUNT_COLLECTOR_STRATEGY = 'promotion';
-
 }

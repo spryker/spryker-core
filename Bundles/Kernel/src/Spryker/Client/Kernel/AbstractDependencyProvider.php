@@ -9,7 +9,6 @@ namespace Spryker\Client\Kernel;
 
 abstract class AbstractDependencyProvider implements BundleDependencyProviderInterface
 {
-
     use BundleConfigResolverAwareTrait;
 
     /**
@@ -21,5 +20,4 @@ abstract class AbstractDependencyProvider implements BundleDependencyProviderInt
     {
         return $container;
     }
-
 }

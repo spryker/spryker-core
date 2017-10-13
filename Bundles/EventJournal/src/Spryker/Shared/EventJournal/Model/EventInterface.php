@@ -12,7 +12,6 @@ namespace Spryker\Shared\EventJournal\Model;
  */
 interface EventInterface
 {
-
     /**
      * @param string $name
      * @param array|string $data
@@ -32,5 +31,4 @@ interface EventInterface
      * @return array
      */
     public function getFields();
-
 }

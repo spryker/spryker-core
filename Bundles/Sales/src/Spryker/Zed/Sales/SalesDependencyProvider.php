@@ -21,7 +21,6 @@ use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_COUNTRY = 'FACADE_COUNTRY';
     const FACADE_OMS = 'FACADE_OMS';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
@@ -253,5 +252,4 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
          return [];
     }
-
 }

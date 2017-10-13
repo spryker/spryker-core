@@ -13,7 +13,6 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class TranslationSaver implements TranslationSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
      */
@@ -112,5 +111,4 @@ class TranslationSaver implements TranslationSaverInterface
             $this->glossaryFacade->updateAndTouchTranslation($key, $localeTransfer, $value);
         }
     }
-
 }

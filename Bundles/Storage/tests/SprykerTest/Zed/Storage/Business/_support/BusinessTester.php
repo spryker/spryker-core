@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class BusinessTester extends Actor
 {
-
     use _generated\BusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

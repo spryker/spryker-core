@@ -11,7 +11,6 @@ namespace Spryker\Yves\Currency\Plugin;
  */
 interface CurrencyPluginInterface
 {
-
     /**
      * @param string $isoCode
      *
@@ -23,5 +22,4 @@ interface CurrencyPluginInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
-
 }

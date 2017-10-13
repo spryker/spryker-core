@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class DoubleSubmitProtectionServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -57,5 +56,4 @@ class DoubleSubmitProtectionServiceProviderTest extends Unit
 
         return $application;
     }
-
 }

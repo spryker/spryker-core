@@ -22,7 +22,6 @@ use Spryker\Service\UtilText\Model\Url\Url;
  */
 class UrlTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -221,5 +220,4 @@ class UrlTest extends Unit
 
         $this->assertSame('https://www.foobar.dev:81/?x=y', $url->build());
     }
-
 }

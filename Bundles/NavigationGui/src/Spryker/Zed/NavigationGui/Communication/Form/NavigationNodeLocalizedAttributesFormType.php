@@ -27,7 +27,6 @@ use Symfony\Component\Validator\Constraints\Url;
 
 class NavigationNodeLocalizedAttributesFormType extends AbstractType
 {
-
     const FIELD_TITLE = 'title';
     const FIELD_FK_LOCALE = 'fk_locale';
     const FIELD_LINK = 'link';
@@ -368,5 +367,4 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
 
         return $this->urlFacade->findUrl($urlTransfer);
     }
-
 }

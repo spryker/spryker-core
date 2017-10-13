@@ -9,7 +9,6 @@ namespace Spryker\Zed\Newsletter\Persistence;
 
 interface NewsletterQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -78,5 +77,4 @@ interface NewsletterQueryContainerInterface
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery
      */
     public function queryNewsletterType();
-
 }

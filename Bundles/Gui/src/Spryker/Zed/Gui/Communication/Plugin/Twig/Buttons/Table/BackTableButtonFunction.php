@@ -9,7 +9,6 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table;
 
 class BackTableButtonFunction extends AbstractTableFunction
 {
-
     /**
      * @return string
      */
@@ -33,5 +32,4 @@ class BackTableButtonFunction extends AbstractTableFunction
     {
         return 'backTableButton';
     }
-
 }

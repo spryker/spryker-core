@@ -9,7 +9,6 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 
 interface AvailabilityToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $idItem
@@ -18,5 +17,4 @@ interface AvailabilityToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $idItem, $keyChange = false);
-
 }

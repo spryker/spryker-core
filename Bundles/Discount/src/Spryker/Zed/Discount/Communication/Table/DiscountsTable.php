@@ -16,7 +16,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DiscountsTable extends AbstractTable
 {
-
     const TABLE_COL_PERIOD = self::TYPE_COL_PERIOD;
     const TABLE_COL_TYPE = 'Type';
     const TYPE_COL_PERIOD = 'Period';
@@ -312,5 +311,4 @@ class DiscountsTable extends AbstractTable
 
         return $table;
     }
-
 }

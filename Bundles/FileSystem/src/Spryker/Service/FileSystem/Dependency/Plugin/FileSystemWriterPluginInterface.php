@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
 
 interface FileSystemWriterPluginInterface
 {
-
     /**
      * Specification:
      * - Mark resource with private access rights
@@ -167,5 +166,4 @@ interface FileSystemWriterPluginInterface
      * @return void
      */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer);
-
 }

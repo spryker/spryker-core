@@ -25,7 +25,6 @@ use Spryker\Yves\Ratepay\Form\DataProvider\InstallmentDataProvider;
  */
 class InstallmentDataProviderTest extends AbstractDataProviderTest
 {
-
     /**
      * @return void
      */
@@ -85,5 +84,4 @@ class InstallmentDataProviderTest extends AbstractDataProviderTest
     {
         return $this->getMockBuilder(SessionClientInterface::class)->getMock();
     }
-
 }

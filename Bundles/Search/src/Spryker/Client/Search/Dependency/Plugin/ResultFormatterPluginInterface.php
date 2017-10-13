@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 interface ResultFormatterPluginInterface
 {
-
     /**
      * @api
      *
@@ -26,5 +25,4 @@ interface ResultFormatterPluginInterface
      * @return mixed
      */
     public function formatResult($searchResult, array $requestParameters = []);
-
 }

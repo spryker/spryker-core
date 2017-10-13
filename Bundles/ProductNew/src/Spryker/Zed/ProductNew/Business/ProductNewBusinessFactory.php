@@ -16,7 +16,6 @@ use Spryker\Zed\ProductNew\Business\Label\ProductAbstractRelationReader;
  */
 class ProductNewBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductNew\Business\Label\ProductAbstractRelationReaderInterface
      */
@@ -24,5 +23,4 @@ class ProductNewBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractRelationReader($this->getQueryContainer(), $this->getConfig());
     }
-
 }

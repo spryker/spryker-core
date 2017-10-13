@@ -32,7 +32,6 @@ use Spryker\Zed\Kernel\Container;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_MESSENGER = 'MESSENGER_FACADE';
     const FACADE_MONEY = 'MONEY_FACADE';
     const FACADE_CURRENCY = 'CURRENCY_FACADE';
@@ -429,5 +428,4 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

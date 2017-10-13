@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface TransformerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
@@ -22,5 +21,4 @@ interface TransformerInterface
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function transform(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response);
-
 }

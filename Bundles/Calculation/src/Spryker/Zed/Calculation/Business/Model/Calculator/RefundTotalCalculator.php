@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class RefundTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -70,5 +69,4 @@ class RefundTotalCalculator implements CalculatorInterface
         }
         return $refundTotalAmount;
     }
-
 }

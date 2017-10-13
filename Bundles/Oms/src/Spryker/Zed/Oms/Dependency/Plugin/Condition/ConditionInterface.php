@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface ConditionInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface ConditionInterface
      * @return bool
      */
     public function check(SpySalesOrderItem $orderItem);
-
 }
