@@ -12,4 +12,7 @@ interface ShipmentConstants
 
     const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 
+    const PRICE_MODE_NET = 'NET_MODE';
+    const PRICE_MODE_GROSS = 'GROSS_MODE';
+
 }

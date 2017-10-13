@@ -13,7 +13,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Shipment\PriceMode;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface;
@@ -148,7 +148,7 @@ class ShipmentFacadeTest extends Test
         ];
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(PriceMode::PRICE_MODE_GROSS)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
 
         // Act
@@ -167,7 +167,7 @@ class ShipmentFacadeTest extends Test
         $this->tester->disableAllShipmentMethods();
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(PriceMode::PRICE_MODE_GROSS)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
 
         $idShipmentMethod = $this->tester
@@ -194,7 +194,7 @@ class ShipmentFacadeTest extends Test
         $this->tester->disableAllShipmentMethods();
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(PriceMode::PRICE_MODE_GROSS)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
 
         $shipmentMethodTransferCollection = $this->tester->haveActiveShipmentMethods(3);
@@ -225,7 +225,7 @@ class ShipmentFacadeTest extends Test
         $this->tester->disableAllShipmentMethods();
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(PriceMode::PRICE_MODE_GROSS)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
 
         $priceList = [
@@ -265,7 +265,7 @@ class ShipmentFacadeTest extends Test
         $this->tester->disableAllShipmentMethods();
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(PriceMode::PRICE_MODE_GROSS)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
 
         $shipmentMethodTransferCollection = $this->tester->haveActiveShipmentMethods(4);
@@ -318,7 +318,7 @@ class ShipmentFacadeTest extends Test
         ];
         $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
 
-        $expectedResult = $priceMode === PriceMode::PRICE_MODE_GROSS ? $grossPrice : $netPrice;
+        $expectedResult = $priceMode === ShipmentConstants::PRICE_MODE_GROSS ? $grossPrice : $netPrice;
 
         // Act
         $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->getAvailableMethods($quoteTransfer);
@@ -334,8 +334,8 @@ class ShipmentFacadeTest extends Test
     public function priceModes()
     {
         return [
-            [PriceMode::PRICE_MODE_GROSS],
-            [PriceMode::PRICE_MODE_NET],
+            [ShipmentConstants::PRICE_MODE_GROSS],
+            [ShipmentConstants::PRICE_MODE_NET],
         ];
     }
 
@@ -353,7 +353,7 @@ class ShipmentFacadeTest extends Test
         $this->tester->disableAllShipmentMethods();
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(PriceMode::PRICE_MODE_GROSS)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
 
         $priceList = [

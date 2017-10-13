@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Spryker\Shared\Shipment\PriceMode;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
@@ -308,7 +308,7 @@ class Method implements MethodInterface
             return null;
         }
 
-        $price = $quoteTransfer->getPriceMode() === PriceMode::PRICE_MODE_GROSS ?
+        $price = $quoteTransfer->getPriceMode() === ShipmentConstants::PRICE_MODE_GROSS ?
             $methodPriceEntity->getDefaultGrossPrice() :
             $methodPriceEntity->getDefaultNetPrice();
 
