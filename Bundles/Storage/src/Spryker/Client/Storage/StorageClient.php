@@ -392,9 +392,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         $cacheKey = static::generateCacheKey($request);
 
         if ($cacheKey && is_array(self::$cachedKeys)) {
-            $this->getFactory()
-                ->createStorageCacheStrategy($storageCacheStrategyName)
-                ->updateCache($cacheKey);
+            $this->updateCache($storageCacheStrategyName, $cacheKey);
         }
     }
 
@@ -443,9 +441,11 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         if ($request) {
             $requestUri = $request->getRequestUri();
             $serverName = $request->server->get('SERVER_NAME');
+            $getParameters = $request->query->all();
         } else {
             $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
             $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
+            $getParameters = $_GET;
         }
 
         if ($requestUri === null || $serverName === null) {
@@ -453,33 +453,60 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         }
 
         $urlSegments = strtok($requestUri, '?');
-        $getParametersKey = static::filterGetParameters();
-        $key = strtolower(Store::getInstance()->getStoreName()) . self::KEY_NAME_SEPARATOR .
+        $getParametersKey = static::filterGetParameters($getParameters);
+
+        $cacheKey = strtolower(Store::getInstance()->getStoreName()) . self::KEY_NAME_SEPARATOR .
             strtolower(Store::getInstance()->getCurrentLocale()) . self::KEY_NAME_SEPARATOR .
             self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
             $urlSegments . $getParametersKey;
 
-        return $key;
+        return $cacheKey;
     }
 
     /**
+     * @param array $getParameters
+     *
      * @return string
      */
-    protected static function filterGetParameters()
+    protected static function filterGetParameters($getParameters)
     {
-        $getParametersKey = '';
-        $getParameters = $_GET;
-        $allowedGetParametersList = (new self)->getFactory()
-            ->getStorageClientConfig()
-            ->getAllowedGetParametersList();
+        $allowedGetParametersList = self::getAllowedGetParametersList();
 
-        if (count($getParameters) > 0) {
-            $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersList));
-            ksort($allowedGetParameters);
-            $getParametersKey = '?' . http_build_query($allowedGetParameters);
-        }
+        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersList));
+        ksort($allowedGetParameters);
+        $getParametersKey = count($allowedGetParameters) > 0
+            ?  '?' . http_build_query($allowedGetParameters)
+            : '';
 
         return $getParametersKey;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedGetParametersList()
+    {
+        return (new self)->getFactory()
+            ->getStorageClientConfig()
+            ->getAllowedGetParametersList();
+    }
+
+    public function test()
+    {
+        return self::getAllowedGetParametersList();
+    }
+
+    /**
+     * @param string $storageCacheStrategyName
+     * @param string $cacheKey
+     *
+     * @return void
+     */
+    protected function updateCache($storageCacheStrategyName, $cacheKey)
+    {
+        $this->getFactory()
+            ->createStorageCacheStrategy($storageCacheStrategyName)
+            ->updateCache($cacheKey);
     }
 
     /**
