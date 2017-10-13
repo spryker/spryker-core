@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\EventBehavior\Model;
+namespace Spryker\Zed\EventBehavior\Business\Model;
 
-interface EventEntityInterface
+interface EventEntityTransferFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

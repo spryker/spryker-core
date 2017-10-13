@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\EventBehavior\Business;
 
+use Spryker\Zed\EventBehavior\Business\Model\EventEntityTransferFilter;
 use Spryker\Zed\EventBehavior\Business\Model\TriggerManager;
 use Spryker\Zed\EventBehavior\EventBehaviorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -44,5 +45,13 @@ class EventBehaviorBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(EventBehaviorDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\EventBehavior\Business\Model\EventEntityTransferFilterInterface
+     */
+    public function createEventEntityTransferFilter()
+    {
+        return new EventEntityTransferFilter();
     }
 }

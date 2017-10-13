@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\EventBehavior\Model;
+namespace Spryker\Service\UtilSanitize\Model;
 
 class ArrayFilter implements ArrayFilterInterface
 {
