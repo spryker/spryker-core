@@ -17,7 +17,7 @@ install:
   - composer update --no-interaction --prefer-dist --no-autoloader
 
 script:
-  - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
+  - composer cs-check
 
 notifications:
   email: false
