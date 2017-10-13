@@ -55,7 +55,7 @@ class CodeStyleSniffer
         $path = $this->resolvePath($module, $isCore, $pathOption);
 
         $defaults = [
-            'ignore' => ($module || $pathOption) ? '' : 'vendor/',
+            'ignore' => $isCore || $path ? '' : 'vendor/',
         ];
         $options += $defaults;
 
