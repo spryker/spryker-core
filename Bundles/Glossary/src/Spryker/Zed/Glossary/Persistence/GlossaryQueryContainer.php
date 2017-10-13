@@ -346,7 +346,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     public function queryDistinctKeysFromQuery(ModelCriteria $query)
     {
         $query
-            ->distinct('key')
+            ->distinct()
             ->withColumn(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, 'value')
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'label');
 
@@ -363,7 +363,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     public function queryDistinctLocalesFromQuery(ModelCriteria $query)
     {
         $query
-            ->distinct('locale_name')
+            ->distinct()
             ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, 'value')
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, 'label');
 
