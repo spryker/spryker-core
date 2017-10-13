@@ -31,7 +31,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
         $refundCalculationPlugin = new ExpenseRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
         $salesOrderItems = [
-            $this->getSalesOrderItemOne()
+            $this->getSalesOrderItemOne(),
         ];
 
         $refundTransfer = new RefundTransfer();
@@ -49,7 +49,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
         $refundCalculationPlugin = new ExpenseRefundCalculator;
         $orderTransfer = $this->getOrderTransferWithRefundedItem();
         $salesOrderItems = [
-            $this->getSalesOrderItemTwo()
+            $this->getSalesOrderItemTwo(),
         ];
 
         $refundTransfer = new RefundTransfer();

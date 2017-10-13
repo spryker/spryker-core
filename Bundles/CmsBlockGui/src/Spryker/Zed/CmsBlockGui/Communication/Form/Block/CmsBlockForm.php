@@ -152,7 +152,7 @@ class CmsBlockForm extends AbstractType
                             }
                         },
                     ],
-                ])
+                ]),
             ],
         ]);
 

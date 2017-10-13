@@ -116,7 +116,7 @@ class SanitizerTest extends Unit
             [
                 ['sanitize' => 'sanitize me'],
                 ['baz' => 'bat'],
-            ]
+            ],
         ];
         $expected = $input;
         $expected[0][0]['sanitize'] = static::SANITIZED_VALUE;

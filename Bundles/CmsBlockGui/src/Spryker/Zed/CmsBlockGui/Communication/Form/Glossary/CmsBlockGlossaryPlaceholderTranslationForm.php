@@ -87,7 +87,7 @@ class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
             ],
             'required' => false,
             'constraints' => [
-                $this->getFactory()->createTwigContentConstraint()
+                $this->getFactory()->createTwigContentConstraint(),
             ],
         ]);
 

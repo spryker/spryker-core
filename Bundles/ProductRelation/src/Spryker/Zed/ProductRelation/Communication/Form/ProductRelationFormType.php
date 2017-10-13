@@ -92,7 +92,7 @@ class ProductRelationFormType extends AbstractType
     {
         $builder->add(static::FIELD_QUERY_SET, HiddenType::class, [
             'constraints' => [
-                new NotBlank(['message' => 'Query not defined.'])
+                new NotBlank(['message' => 'Query not defined.']),
             ],
         ]);
 
@@ -155,7 +155,7 @@ class ProductRelationFormType extends AbstractType
     {
         $builder->add(static::FIELD_FK_PRODUCT_ABSTRACT, TextType::class, [
             'constraints' => [
-                new NotBlank(['message' => 'Abstract product is not selected.'])
+                new NotBlank(['message' => 'Abstract product is not selected.']),
             ],
         ]);
 

@@ -10,7 +10,7 @@
     "fzaninotto/faker": "^1.6"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
