@@ -44,6 +44,20 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPricesByIdShipmentMethod($idShipmentMethod)
+    {
+        return $this->getFactory()
+            ->createShipmentMethodPriceQuery()
+            ->filterByFkShipmentMethod($idShipmentMethod);
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryActiveCarriers()

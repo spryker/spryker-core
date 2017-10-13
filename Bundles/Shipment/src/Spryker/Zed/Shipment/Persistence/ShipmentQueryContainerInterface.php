@@ -112,6 +112,15 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPricesByIdShipmentMethod($idShipmentMethod);
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
      * @param int $idStore
      * @param int $idCurrency
      *
