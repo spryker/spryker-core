@@ -496,20 +496,13 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * @api
-     *
      * @return string[]
      */
-    public function getAllowedGetParametersList()
+    protected function getAllowedGetParametersList()
     {
         return (new self)->getFactory()
             ->getStorageClientConfig()
             ->getAllowedGetParametersList();
-    }
-
-    public function test()
-    {
-        return self::getAllowedGetParametersList();
     }
 
     /**
