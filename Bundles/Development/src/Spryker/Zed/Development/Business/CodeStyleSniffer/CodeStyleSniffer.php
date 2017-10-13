@@ -87,7 +87,7 @@ class CodeStyleSniffer
             return $pathToRoot . $path;
         }
 
-        return $this->resolveProjectPath($module);
+        return $this->resolveProjectPath($module, $path);
     }
 
     /**
@@ -255,10 +255,11 @@ class CodeStyleSniffer
 
     /**
      * @param string $module
+     * @param string|null $pathSuffix
      *
      * @return string
      */
-    protected function resolveProjectPath($module)
+    protected function resolveProjectPath($module, $pathSuffix = null)
     {
         $projectNamespaces = $this->config->getProjectNamespaces();
         $pathToRoot = $this->config->getPathToRoot();
@@ -269,6 +270,10 @@ class CodeStyleSniffer
 
             foreach (static::APPLICATION_LAYERS as $layer) {
                 $layerPath = $path . $layer . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
+                if ($pathSuffix) {
+                    $layerPath .= $pathSuffix;
+                }
+
                 if (!is_dir($layerPath)) {
                     continue;
                 }
