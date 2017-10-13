@@ -106,7 +106,7 @@ class AutoloadUpdaterTest extends Unit
 
         $updatedJson = $this->getJsonAfterUpdate(
             [
-                AutoloadUpdater::BASE_SRC_DIR . '/' . AutoloadUpdater::SPRYKER_NAMESPACE
+                AutoloadUpdater::BASE_SRC_DIR . '/' . AutoloadUpdater::SPRYKER_NAMESPACE,
             ],
             $this->getComposerJson(),
             [

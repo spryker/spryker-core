@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class AutoloadUpdater implements UpdaterInterface
 {
-
     const AUTOLOAD_KEY = 'autoload';
     const AUTOLOAD_DEV_KEY = 'autoload-dev';
 
