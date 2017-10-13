@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Kernel\View;
 
+use Exception;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 
 class View implements ViewInterface, WidgetContainerInterface
@@ -98,7 +99,7 @@ class View implements ViewInterface, WidgetContainerInterface
      */
     public function offsetExists($offset)
     {
-        return isset($this->data[$offset]);
+        return isset($this->data[$offset]) || array_key_exists($offset, $this->data);
     }
 
     /**
@@ -115,21 +116,27 @@ class View implements ViewInterface, WidgetContainerInterface
      * @param mixed $offset
      * @param mixed $value
      *
+     * @throws \Exception
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
     {
-        $this->data[$offset] = $value;
+        // TODO: customize exception
+        throw new Exception('This is a ready only object.');
     }
 
     /**
      * @param mixed $offset
      *
+     * @throws \Exception
+     *
      * @return void
      */
     public function offsetUnset($offset)
     {
-        unset($this->data[$offset]);
+        // TODO: customize exception
+        throw new Exception('This is a ready only object.');
     }
 
 }

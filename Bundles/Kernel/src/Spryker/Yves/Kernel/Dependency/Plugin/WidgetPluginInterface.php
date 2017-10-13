@@ -7,6 +7,9 @@
 
 namespace Spryker\Yves\Kernel\Dependency\Plugin;
 
+/**
+ * TODO: write where/how this class used
+ */
 interface WidgetPluginInterface
 {
 

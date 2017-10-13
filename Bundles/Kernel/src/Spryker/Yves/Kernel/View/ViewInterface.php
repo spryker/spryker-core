@@ -9,6 +9,9 @@ namespace Spryker\Yves\Kernel\View;
 
 use ArrayAccess;
 
+/**
+ * TODO: write where/how this class used
+ */
 interface ViewInterface extends ArrayAccess
 {
 
