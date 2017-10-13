@@ -21,8 +21,8 @@ class LogFacade extends AbstractFacade implements LogFacadeInterface
      *
      * @return void
      */
-    public function deleteLogFileDirectories()
+    public function clearLogs()
     {
-        $this->getFactory()->createLogFileDirectoryRemover()->deleteLogFileDirectories();
+        $this->getFactory()->createLogClearer()->clearLogs();
     }
 }

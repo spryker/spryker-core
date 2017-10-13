@@ -1,4 +1,4 @@
-namespace: Frontend
+namespace: SetupFrontend
 actor: Tester
 paths:
     tests: tests

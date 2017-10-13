@@ -5,20 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Frontend\Communication\Console;
+namespace Spryker\Zed\SetupFrontend\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-/**
- * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
- */
-class InstallProjectDependenciesConsole extends Console
+class YvesBuildFrontendConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:install-dependencies';
-    const DESCRIPTION = 'This command will install project dependencies.';
+    const COMMAND_NAME = 'frontend:yves-build-frontend';
+    const DESCRIPTION = 'This command will build Yves frontend.';
 
     /**
      * @return void
@@ -39,9 +36,9 @@ class InstallProjectDependenciesConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Install Project dependencies');
+        $this->info('Build Yves frontend');
 
-        $process = new Process('npm install', APPLICATION_ROOT_DIR);
+        $process = new Process('npm run yves', APPLICATION_ROOT_DIR);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });

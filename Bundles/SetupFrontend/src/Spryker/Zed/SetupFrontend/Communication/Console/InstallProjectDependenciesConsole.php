@@ -5,20 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Frontend\Communication\Console;
+namespace Spryker\Zed\SetupFrontend\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
 
-/**
- * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
- */
-class YvesAssetsCleanUpConsole extends Console
+class InstallProjectDependenciesConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:cleanup-yves-assets';
-    const DESCRIPTION = 'This command will remove all yves assets.';
+    const COMMAND_NAME = 'frontend:install-dependencies';
+    const DESCRIPTION = 'This command will install project dependencies.';
 
     /**
      * @return void
@@ -39,18 +36,12 @@ class YvesAssetsCleanUpConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Cleanup Yves assets');
+        $this->info('Install Project dependencies');
 
-        $frontendDependencyDirectories = [
-            APPLICATION_ROOT_DIR . '/public/Yves/assets',
-        ];
-        $filesystem = new Filesystem();
-
-        foreach ($frontendDependencyDirectories as $frontendDependencyDirectory) {
-            if (is_dir($frontendDependencyDirectory)) {
-                $filesystem->remove($frontendDependencyDirectory);
-            }
-        }
+        $process = new Process('npm install', APPLICATION_ROOT_DIR);
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
 
         return static::CODE_SUCCESS;
     }

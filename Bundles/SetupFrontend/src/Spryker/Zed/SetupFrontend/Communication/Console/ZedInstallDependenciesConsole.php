@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Frontend\Communication\Console;
+namespace Spryker\Zed\SetupFrontend\Communication\Console;
 
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
@@ -15,9 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
-/**
- * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
- */
 class ZedInstallDependenciesConsole extends Console
 {
     const COMMAND_NAME = 'frontend:zed-install-dependencies';

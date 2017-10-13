@@ -11,11 +11,11 @@ interface LogFacadeInterface
 {
     /**
      * Specification:
-     * - Deletes all specified log directories.
+     * - Clear all logs.
      *
      * @api
      *
      * @return void
      */
-    public function deleteLogFileDirectories();
+    public function clearLogs();
 }

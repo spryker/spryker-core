@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Frontend\Communication\Console;
+namespace Spryker\Zed\SetupFrontend\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-/**
- * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
- */
 class InstallNodeJsConsole extends Console
 {
     const COMMAND_NAME = 'frontend:install-node-js';
@@ -47,9 +44,9 @@ class InstallNodeJsConsole extends Console
         $version = trim(preg_replace('/\s+/', ' ', $process->getOutput()));
         $this->info(sprintf('Node.js Version "%s"', $version));
 
-        if (preg_match('/^v[0-5]/', $version)) {
+        if (preg_match('/^v[0-7]/', $version)) {
             $this->info('Download node source');
-            $process = new Process('curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -');
+            $process = new Process('curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -');
             $process->run(function ($type, $buffer) {
                 echo $buffer;
             });

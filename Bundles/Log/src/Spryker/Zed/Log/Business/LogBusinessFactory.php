@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Log\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Log\Business\Model\LogFileDirectoryRemover;
+use Spryker\Zed\Log\Business\Model\LogClear;
 
 /**
  * @method \Spryker\Zed\Log\LogConfig getConfig()
@@ -16,11 +16,11 @@ use Spryker\Zed\Log\Business\Model\LogFileDirectoryRemover;
 class LogBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Log\Business\Model\LogFileDirectoryRemoverInterface
+     * @return \Spryker\Zed\Log\Business\Model\LogClearInterface
      */
-    public function createLogFileDirectoryRemover()
+    public function createLogClearer()
     {
-        return new LogFileDirectoryRemover(
+        return new LogClear(
             $this->getConfig()->getLogFileDirectories()
         );
     }

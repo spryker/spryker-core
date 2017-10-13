@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Frontend\Communication\Console;
+namespace Spryker\Zed\SetupFrontend\Communication\Console;
 
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
-/**
- * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
- */
-class YvesBuildFrontendConsole extends Console
+class YvesInstallDependenciesConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:yves-build-frontend';
-    const DESCRIPTION = 'This command will build Yves frontend.';
+    const COMMAND_NAME = 'frontend:yves-install-dependencies';
+    const DESCRIPTION = 'This command will install Yves Module dependencies.';
 
     /**
      * @return void
@@ -39,12 +39,20 @@ class YvesBuildFrontendConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Build Yves frontend');
+        $this->info('Install Yves dependencies');
 
-        $process = new Process('npm run yves', APPLICATION_ROOT_DIR);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        $finder = new Finder();
+
+        $finder->files()->in(Config::get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Yves')->name('package.json')->depth('< 2');
+
+        foreach ($finder as $file) {
+            $path = $file->getPath();
+            $this->info(sprintf('Install dependencies in "%s"', $path));
+            $process = new Process('npm install', $path);
+            $process->run(function ($type, $buffer) {
+                echo $buffer;
+            });
+        }
 
         return static::CODE_SUCCESS;
     }

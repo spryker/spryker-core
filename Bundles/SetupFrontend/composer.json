@@ -1,6 +1,6 @@
 {
-  "name": "spryker/frontend",
-  "description": "Frontend module",
+  "name": "spryker/setup-frontend",
+  "description": "SetupFrontend module",
   "license": "proprietary",
   "require": {
     "spryker/config": "^3.0.0",

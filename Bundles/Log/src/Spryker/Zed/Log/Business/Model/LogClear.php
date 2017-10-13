@@ -9,7 +9,7 @@ namespace Spryker\Zed\Log\Business\Model;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class LogFileDirectoryRemover implements LogFileDirectoryRemoverInterface
+class LogClear implements LogClearInterface
 {
     /**
      * @var array
@@ -27,7 +27,7 @@ class LogFileDirectoryRemover implements LogFileDirectoryRemoverInterface
     /**
      * @return void
      */
-    public function deleteLogFileDirectories()
+    public function clearLogs()
     {
         $filesystem = new Filesystem();
 
