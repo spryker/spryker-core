@@ -26,8 +26,12 @@ class StorageCacheServiceProvider extends AbstractPlugin implements ServiceProvi
     public function register(Application $app)
     {
         $app->finish(function (Request $request) use ($app) {
-            if (isset($app[StorageConstants::STORAGE_CACHE_STRATEGY])) {
-                $this->getClient()->persistCacheForRequest($request, $app[StorageConstants::STORAGE_CACHE_STRATEGY]);
+            if (isset($app[StorageConstants::STORAGE_CACHE_STRATEGY]) && isset($app[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS])) {
+                $this->getClient()->persistCacheForRequest(
+                    $request,
+                    $app[StorageConstants::STORAGE_CACHE_STRATEGY],
+                    $app[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS]
+                );
             }
         });
     }

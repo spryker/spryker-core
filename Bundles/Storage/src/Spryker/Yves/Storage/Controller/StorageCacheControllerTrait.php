@@ -25,4 +25,16 @@ trait StorageCacheControllerTrait
             $this->getApplication()[StorageConstants::STORAGE_CACHE_STRATEGY] = $storageCacheStrategy;
         }
     }
+
+    /**
+     * @param array $storageCacheAllowedGetParameters
+     *
+     * @return void
+     */
+    protected function initializeStorageCacheAllowedGetParameters(array $storageCacheAllowedGetParameters)
+    {
+        if (!isset($this->getApplication()[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS])) {
+            $this->getApplication()[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS] = $storageCacheAllowedGetParameters;
+        }
+    }
 }

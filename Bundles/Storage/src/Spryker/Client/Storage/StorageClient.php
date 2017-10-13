@@ -383,14 +383,18 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      * @param string $storageCacheStrategyName
+     * @param array $allowedGetParameters
      *
      * @return void
      */
-    public function persistCacheForRequest(Request $request, $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE)
-    {
-        $cacheKey = static::generateCacheKey($request);
+    public function persistCacheForRequest(
+        Request $request,
+        $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE,
+        array $allowedGetParameters = []
+    ) {
+        $cacheKey = static::generateCacheKey($request, $allowedGetParameters);
 
         if ($cacheKey && is_array(self::$cachedKeys)) {
             $this->updateCache($storageCacheStrategyName, $cacheKey);
@@ -433,11 +437,12 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request|null $request
+     * @param Request|null $request
+     * @param array $allowedGetParameters
      *
      * @return string
      */
-    protected static function generateCacheKey(Request $request = null)
+    protected static function generateCacheKey(Request $request = null, array $allowedGetParameters= [])
     {
         if ($request) {
             $requestUri = $request->getRequestUri();
@@ -454,7 +459,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         }
 
         $urlSegments = strtok($requestUri, '?');
-        $getParametersKey = static::filterGetParameters($getParameters);
+        $getParametersKey = static::filterGetParameters($getParameters, $allowedGetParameters);
 
         $cacheKey = self::assembleCacheKey($urlSegments, $getParametersKey);
 
@@ -479,30 +484,19 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
     /**
      * @param array $getParameters
+     * @param array $allowedGetParameters
      *
      * @return string
      */
-    protected static function filterGetParameters(array $getParameters)
+    protected static function filterGetParameters(array $getParameters, array $allowedGetParameters)
     {
-        $allowedGetParametersList = self::getAllowedGetParametersList();
-
-        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersList));
+        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParameters));
         ksort($allowedGetParameters);
         $getParametersKey = count($allowedGetParameters) > 0
             ?  '?' . http_build_query($allowedGetParameters)
             : '';
 
         return $getParametersKey;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getAllowedGetParametersList()
-    {
-        return (new self)->getFactory()
-            ->getStorageClientConfig()
-            ->getAllowedGetParametersList();
     }
 
     /**
