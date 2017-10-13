@@ -11,17 +11,19 @@ interface ReaderInterface
 {
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
     public function getPriceTypes();
 
     /**
      * @param string $sku
-     * @param string|null $priceTypeName
+     * @param string $priceTypeName
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return int
      */
-    public function getPriceBySku($sku, $priceTypeName = null);
+    public function getPriceBySku($sku, $priceTypeName, $currencyIsoCode, $priceMode);
 
     /**
      * @param string $sku
@@ -46,26 +48,6 @@ interface ReaderInterface
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
 
     /**
-     * @param int $idAbstractProduct
-     * @param string|null $priceTypeName
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
-
-    /**
-     * @param int $idProduct
-     * @param string|null $priceTypeName
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductConcretePrice($idProduct, $priceTypeName = null);
-
-    /**
      * @param string $priceTypeNameName
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceType
@@ -74,11 +56,13 @@ interface ReaderInterface
 
     /**
      * @param string $sku
-     * @param string|null $priceTypeName
+     * @param string $priceTypeName
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceTypeName = null);
+    public function hasValidPrice($sku, $priceTypeName, $currencyIsoCode, $priceMode);
 
     /**
      * @param string $sku
@@ -115,10 +99,10 @@ interface ReaderInterface
     /**
      * @param string $sku
      * @param string $priceTypeName
-     *
+     * @param string $currencyIsoCode
      * @return int
      */
-    public function getProductPriceIdBySku($sku, $priceTypeName);
+    public function getProductPriceIdBySku($sku, $priceTypeName, $currencyIsoCode);
 
     /**
      * @param string|null $priceType

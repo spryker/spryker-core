@@ -1,0 +1,86 @@
+
+{% set numberOfGrossPriceTypes = moneyValueFormViewCollection.vars.priceTypes.GROSS_MODE|length %}
+{% set numberOfNetPriceTypes = moneyValueFormViewCollection.vars.priceTypes.NET_MODE|length %}
+
+{% set priceModeGross = 'GROSS_MODE' %}
+{% set priceModeNet = 'NET_MODE' %}
+{% set priceModeBoth = 'BOTH' %}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-bottom: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
+            <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF;  border-bottom: 1px solid #FFF;border-left:1px solid #FFF;"></th>
+
+            {% if numberOfGrossPriceTypes > 0 %}
+                <th colspan="{{ numberOfGrossPriceTypes }}" style="text-align:center;">{{ 'Gross price' | trans }}</th>
+            {% endif %}
+
+            {%  if numberOfNetPriceTypes > 0 %}
+                <th colspan="{{ numberOfNetPriceTypes }}" style="text-align:center;">{{ 'Net price' | trans }}</th>
+            {% endif %}
+        </tr>
+        <tr>
+            <td style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></td>
+            <td style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF;;"></td>
+            {% for priceType in moneyValueFormViewCollection.vars.priceTypes.GROSS_MODE %}
+                <td>{{ priceType.name }}</td>
+            {% endfor %}
+
+            {% for priceType in moneyValueFormViewCollection.vars.priceTypes.NET_MODE %}
+                <td>{{ priceType.name }}</td>
+            {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for storeName, storeCurrencies in moneyValueFormViewCollection.vars.priceTable %}
+
+        {% for currency, priceModes in storeCurrencies %}
+            <tr>
+                {% if loop.first %}
+                    <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold" rowspan="{{ storeCurrencies|length }}">
+                        {{ storeName }}
+                    </td>
+                {% endif %}
+
+                <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
+                    {{ currency }}
+                </td>
+
+               {% for priceMode, priceTypes in priceModes|sort %}
+                    {% for priceType, productMoneyValueForView in priceTypes %}
+
+                        {% set moneyValue = productMoneyValueForView.moneyValue %}
+                        {% set priceTypeTransfer = productMoneyValueForView.vars.price_type %}
+
+                        {% if (priceTypeTransfer.priceModeConfiguration == priceModeGross or priceTypeTransfer.priceModeConfiguration == priceModeBoth) and priceMode == priceModeGross %}
+                            <td class="{% if moneyValue.gross_amount.vars.errors|length > 0 %}has-error{% endif %}">
+                                {{ form_widget(moneyValue.gross_amount) }}
+                                <div class="{% if moneyValue.gross_amount.vars.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form_errors(moneyValue.gross_amount) }}
+                                </div>
+                            </td>
+                        {%  endif %}
+
+                        {%  if (priceTypeTransfer.priceModeConfiguration == priceModeNet or priceTypeTransfer.priceModeConfiguration == priceModeBoth) and priceMode == priceModeNet %}
+                            <td class="{% if moneyValue.net_amount.vars.errors|length > 0 %}has-error{% endif %}">
+                                {{ form_widget(moneyValue.net_amount) }}
+                                <div class="{% if moneyValue.net_amount.vars.errors|length > 0 %}has-error{% endif %}">
+                                    {{ form_errors(moneyValue.net_amount) }}
+                                </div>
+                            </td>
+                         {%  endif %}
+
+                        {{ form_row(moneyValue.fk_currency) }}
+                        {{ form_row(moneyValue.fk_store) }}
+                        {{ form_row(productMoneyValueForView.fk_price_type) }}
+                   {% endfor %}
+                {% endfor %}
+         </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>
+
+{% do moneyValueFormViewCollection.setRendered %}

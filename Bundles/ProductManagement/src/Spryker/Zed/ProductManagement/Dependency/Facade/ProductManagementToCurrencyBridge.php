@@ -31,4 +31,11 @@ class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyIn
         return $this->currencyFacade->getCurrent();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies()
+    {
+        return $this->currencyFacade->getAllStoresWithCurrencies();
+    }
 }

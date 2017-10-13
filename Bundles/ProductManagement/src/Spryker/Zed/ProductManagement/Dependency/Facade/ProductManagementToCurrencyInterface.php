@@ -15,4 +15,9 @@ interface ProductManagementToCurrencyInterface
      */
     public function getCurrent();
 
+    /**
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies();
+
 }

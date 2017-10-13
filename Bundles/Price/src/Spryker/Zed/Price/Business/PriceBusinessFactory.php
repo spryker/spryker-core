@@ -29,7 +29,8 @@ class PriceBusinessFactory extends AbstractBusinessFactory
         return new Reader(
             $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getCurrencyFacade()
         );
     }
 
@@ -73,6 +74,14 @@ class PriceBusinessFactory extends AbstractBusinessFactory
     protected function getTouchFacade()
     {
         return $this->getProvidedDependency(PriceDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\Price\Dependency\Facade\PriceToCurrencyInterface
+     */
+    protected function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(PriceDependencyProvider::FACADE_CURRENCY);
     }
 
     /**

@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductConcreteFormEdit extends ProductFormAdd
@@ -139,23 +142,16 @@ class ProductConcreteFormEdit extends ProductFormAdd
      */
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
-        $builder
-            ->add(self::FORM_PRICE_AND_TAX, new ConcretePriceForm($this->moneyFacade, $this->currencyFacade), [
-                'label' => false,
-                'constraints' => [new Callback([
-                    'methods' => [
-                        function ($dataToValidate, ExecutionContextInterface $context) {
-                            if ((int)$dataToValidate[PriceForm::FIELD_PRICE] < 0) {
-                                $context->addViolation('Please enter Price information under Price & Taxes');
-                            }
-                        },
-                    ],
-                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX],
-                ])],
-                ConcretePriceForm::OPTION_TAX_RATE_CHOICES => $options[self::OPTION_TAX_RATES],
-                ConcretePriceForm::OPTION_CURRENCY_ISO_CODE => $options[static::OPTION_CURRENCY_ISO_CODE],
-            ]);
-
+        $builder->add(
+            static::FIELD_PRICES,
+            ProductMoneyCollectionType::class,
+            [
+                'entry_options' => [
+                    'data_class' => PriceProductTransfer::class,
+                ],
+                'entry_type' => ProductMoneyType::class
+            ]
+        );
         return $this;
     }
 

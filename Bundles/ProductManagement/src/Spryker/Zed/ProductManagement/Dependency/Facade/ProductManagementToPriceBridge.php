@@ -24,28 +24,6 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     }
 
     /**
-     * @param int $idAbstractProduct
-     * @param string|null $priceType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductAbstractPrice($idAbstractProduct, $priceType = null)
-    {
-        return $this->priceFacade->findProductAbstractPrice($idAbstractProduct, $priceType);
-    }
-
-    /**
-     * @param int $idProduct
-     * @param string|null $priceType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductConcretePrice($idProduct, $priceType = null)
-    {
-        return $this->priceFacade->findProductConcretePrice($idProduct, $priceType);
-    }
-
-    /**
      * @param string $sku
      * @param string|null $priceTypeName
      *
@@ -57,7 +35,7 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
     public function getPriceTypeValues()
     {
@@ -70,6 +48,17 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     public function getDefaultPriceTypeName()
     {
         return $this->priceFacade->getDefaultPriceTypeName();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
+    {
+        return $this->priceFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
     }
 
 }

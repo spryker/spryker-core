@@ -20,7 +20,7 @@ interface PriceFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
     public function getPriceTypeValues();
 
@@ -35,42 +35,13 @@ interface PriceFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param string|null $priceTypeName
+     * @param string $priceTypeName
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return int
      */
-    public function getPriceBySku($sku, $priceTypeName = null);
-
-    /**
-     * Specification:
-     * - Reads the persisted price for the given abstract product id for the given price type.
-     * - If price type is not provided, then the default price type will be used.
-     * - Returns a hydrated PriceProductTransfer if the price exists, null otherwise.
-     *
-     * @api
-     *
-     * @param int $idAbstractProduct
-     * @param string|null $priceTypeName
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
-
-    /**
-     * Specification:
-     * - Reads the persisted price for the given concrete product id for the given price type.
-     * - If price type is not provided, then the default price type will be used.
-     * - If the price is not found, then it'll read the abstract product price instead.
-     * - Returns a hydrated PriceProductTransfer if one of the concrete or abstract price exists, null otherwise.
-     *
-     * @api
-     *
-     * @param int $idProduct
-     * @param string|null $priceTypeName
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductConcretePrice($idProduct, $priceTypeName = null);
+    public function getPriceBySku($sku, $priceTypeName, $currencyIsoCode, $priceMode);
 
     /**
      * Specification:
@@ -112,6 +83,7 @@ interface PriceFacadeInterface
     public function install();
 
     /**
+     * Specification:
      * - Searches for a persisted price in database that has the given SKU for the given price type.
      * - If price type is not provided, then the default price type will be used.
      * - The SKU can belong to either a concrete or an abstract product.
@@ -121,11 +93,13 @@ interface PriceFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param string|null $priceType
+     * @param string $priceType
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceType = null);
+    public function hasValidPrice($sku, $priceType, $currencyIsoCode, $priceMode);
 
     /**
      * Specification:
@@ -164,24 +138,11 @@ interface PriceFacadeInterface
      *
      * @param string $sku
      * @param string $priceType
+     * @param string $currencyIsoCode
      *
      * @return int
      */
-    public function getIdPriceProduct($sku, $priceType);
-
-    /**
-     * Specification:
-     * - Create a new product price entity if it doesn't exists by abstract product id and price type.
-     * - Updates the price of a product price entity if it exists by abstract product id and price type.
-     * - If price type wasn't explicitly specified, then the default price type will be used.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer);
+    public function getIdPriceProduct($sku, $priceType, $currencyIsoCode);
 
     /**
      * Specification:
@@ -196,20 +157,6 @@ interface PriceFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer);
-
-    /**
-     * Specification:
-     * - Create a new product price entity if it doesn't exists by concrete product id and price type.
-     * - Updates the price of a product price entity if it exists by concrete product id and price type.
-     * - If price type wasn't explicitly specified, then the default price type will be used.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
      * Specification:

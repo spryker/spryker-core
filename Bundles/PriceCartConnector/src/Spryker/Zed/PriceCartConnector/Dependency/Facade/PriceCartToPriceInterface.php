@@ -12,18 +12,22 @@ interface PriceCartToPriceInterface
 
     /**
      * @param string $sku
-     * @param string|null $priceType
+     * @param string $priceType
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceType = null);
+    public function hasValidPrice($sku, $priceType, $currencyIsoCode, $priceMode);
 
     /**
      * @param string $sku
-     * @param string|null $priceType
+     * @param string $priceType
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return int
      */
-    public function getPriceBySku($sku, $priceType = null);
+    public function getPriceBySku($sku, $priceType, $currencyIsoCode, $priceMode);
 
 }

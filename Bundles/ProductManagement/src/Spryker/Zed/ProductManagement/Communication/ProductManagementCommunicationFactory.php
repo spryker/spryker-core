@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price\ProductMoneyCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
@@ -165,6 +166,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStore(),
             $this->createProductStockHelper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price\ProductMoneyCollectionDataProvider
+     */
+    public function createMoneyCollectionMultiStoreDataProvider()
+    {
+        return new ProductMoneyCollectionDataProvider($this->getCurrencyFacade(), $this->getPriceFacade());
     }
 
     /**

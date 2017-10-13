@@ -11,22 +11,6 @@ interface ProductManagementToPriceInterface
 {
 
     /**
-     * @param int $idAbstractProduct
-     * @param string|null $priceType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductAbstractPrice($idAbstractProduct, $priceType = null);
-
-    /**
-     * @param int $idProduct
-     * @param string|null $priceType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductConcretePrice($idProduct, $priceType = null);
-
-    /**
      * @param string $sku
      * @param string|null $priceTypeName
      *
@@ -35,7 +19,7 @@ interface ProductManagementToPriceInterface
     public function getPriceBySku($sku, $priceTypeName = null);
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
     public function getPriceTypeValues();
 
@@ -43,5 +27,13 @@ interface ProductManagementToPriceInterface
      * @return string
      */
     public function getDefaultPriceTypeName();
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
 
 }

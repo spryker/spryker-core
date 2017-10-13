@@ -25,26 +25,26 @@ class PriceManager implements PriceManagerInterface
     /**
      * @var string
      */
-    protected $grossPriceType;
+    protected $priceType;
 
     /**
      * @var string
      */
-    protected $priceMode;
+    protected $defaultPriceMode;
 
     /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
-     * @param string|null $grossPriceType
+     * @param string|null $priceType
      * @param string $priceMode
      */
     public function __construct(
         PriceCartToPriceInterface $priceFacade,
-        $grossPriceType,
+        $priceType,
         $priceMode = PriceMode::PRICE_MODE_GROSS
     ) {
         $this->priceFacade = $priceFacade;
-        $this->grossPriceType = $grossPriceType;
-        $this->priceMode = $priceMode;
+        $this->priceType = $priceType;
+        $this->defaultPriceMode = $priceMode;
     }
 
     /**
@@ -58,8 +58,11 @@ class PriceManager implements PriceManagerInterface
     {
         $cartChangeTransfer->setQuote($this->setQuotePriceMode($cartChangeTransfer->getQuote()));
 
+        $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();
+        $currencyIsoCode = $cartChangeTransfer->getQuote()->getCurrency()->getCode();
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->priceFacade->hasValidPrice($itemTransfer->getSku(), $this->grossPriceType)) {
+            if (!$this->priceFacade->hasValidPrice($itemTransfer->getSku(), $this->priceType, $currencyIsoCode, $priceMode)) {
                 throw new PriceMissingException(
                     sprintf(
                         'Cart item %s can not be priced',
@@ -68,7 +71,7 @@ class PriceManager implements PriceManagerInterface
                 );
             }
 
-            $this->setPrice($itemTransfer, $cartChangeTransfer->getQuote()->getPriceMode());
+            $this->setPrice($itemTransfer, $priceMode, $currencyIsoCode);
         }
 
         return $cartChangeTransfer;
@@ -81,7 +84,7 @@ class PriceManager implements PriceManagerInterface
      */
     protected function setQuotePriceMode(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->setPriceMode($this->priceMode);
+        $quoteTransfer->setPriceMode($this->defaultPriceMode);
 
         return $quoteTransfer;
     }
@@ -89,28 +92,34 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
+     * @param string $currencyIsoCode
      *
      * @return void
      */
-    protected function setPrice(ItemTransfer $itemTransfer, $priceMode)
+    protected function setPrice(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
     {
         if ($priceMode === PriceMode::PRICE_MODE_NET) {
             $itemTransfer->setUnitNetPrice(
                 $this->priceFacade->getPriceBySku(
                     $itemTransfer->getSku(),
-                    $this->grossPriceType
+                    $this->priceType,
+                    $currencyIsoCode,
+                    $priceMode
                 )
             );
             $itemTransfer->setUnitGrossPrice(0);
-        } else {
-            $itemTransfer->setUnitGrossPrice(
-                $this->priceFacade->getPriceBySku(
-                    $itemTransfer->getSku(),
-                    $this->grossPriceType
-                )
-            );
-            $itemTransfer->setUnitNetPrice(0);
+            return;
         }
+
+        $itemTransfer->setUnitGrossPrice(
+            $this->priceFacade->getPriceBySku(
+                $itemTransfer->getSku(),
+                $this->priceType,
+                $currencyIsoCode,
+                $priceMode
+            )
+        );
+        $itemTransfer->setUnitNetPrice(0);
     }
 
 }

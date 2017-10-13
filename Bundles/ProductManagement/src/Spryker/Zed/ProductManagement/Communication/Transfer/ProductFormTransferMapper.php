@@ -23,12 +23,10 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
@@ -112,16 +110,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
-        $priceTransfer = $this->buildProductAbstractPriceTransfer($form);
-        $productAbstractTransfer->setPrice($priceTransfer);
-
-        $prices = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICES)->getData();
-        $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-        $priceTransfers = $this->buildProductPriceTransfers($prices, $idProductAbstract);
-        $productAbstractTransfer->setPrices(new ArrayObject($priceTransfers));
-
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productAbstractTransfer->setImageSets(new ArrayObject($imageSetCollection));
+        $productAbstractTransfer->setPrices($formData[ProductFormAdd::FIELD_PRICES]);
 
         return $productAbstractTransfer;
     }
@@ -178,12 +169,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
-        $priceTransfer = $this->buildProductConcretePriceTransfer($form, $productConcreteTransfer->getIdProductConcrete());
-        $productConcreteTransfer->setPrice($priceTransfer);
-
-        $prices = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICES)->getData();
-        $priceTransfers = $this->buildProductPriceTransfers($prices, null, $productConcreteTransfer->getIdProductConcrete());
-        $productConcreteTransfer->setPrices(new ArrayObject($priceTransfers));
+        $formData = $form->getData();
+        $productConcreteTransfer->setPrices($formData[ProductFormAdd::FIELD_PRICES]);
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
         $productConcreteTransfer->setStocks(new ArrayObject($stockCollection));
@@ -205,7 +192,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             ->fromArray($data, true)
             ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
             ->setSku($this->utilTextService->generateSlug($data[ProductFormAdd::FIELD_SKU]))
-            ->setIdTaxSet($data[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE]);
+            ->setIdTaxSet($data[ProductFormAdd::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;
     }
@@ -330,21 +317,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function buildProductAbstractPriceTransfer(FormInterface $form)
-    {
-        $price = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(PriceForm::FIELD_PRICE)->getData();
-        $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-
-        $priceTransfer = (new PriceProductTransfer())->setIdProductAbstract($idProductAbstract)->setPrice($price);
-
-        return $priceTransfer;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function buildProductImageSetCollection(FormInterface $form)
@@ -395,44 +367,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function buildProductConcretePriceTransfer(FormInterface $form, $idProduct)
-    {
-        $price = $form->get(ProductFormAdd::FORM_PRICE_AND_TAX)->get(ConcretePriceForm::FIELD_PRICE)->getData();
-
-        $priceTransfer = (new PriceProductTransfer())->setIdProduct($idProduct)->setPrice($price);
-
-        return $priceTransfer;
-    }
-
-    /**
-     * @param array $prices
-     * @param int|null $idProductAbstract
-     * @param int|null $idProduct
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function buildProductPriceTransfers(array $prices, $idProductAbstract = null, $idProduct = null)
-    {
-        $priceTransfers = [];
-        foreach ($prices as $priceType => $price) {
-            $priceTransfer = (new PriceProductTransfer())
-                ->setIdProductAbstract($idProductAbstract)
-                ->setIdProduct($idProduct)
-                ->setPrice($price)
-                ->setPriceTypeName($priceType);
-
-            $priceTransfers[] = $priceTransfer;
-        }
-
-        return $priceTransfers;
     }
 
     /**

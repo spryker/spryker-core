@@ -9,6 +9,7 @@ namespace Spryker\Zed\Money\Communication\Form\Type;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractCollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -32,13 +33,13 @@ class MoneyCollectionType extends AbstractCollectionType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $options = $this->overwriteCollectionDefaultEntryType($options);
+
         $defaultOptions = [
             'entry_options' => [
                 'data_class' => MoneyValueTransfer::class,
             ],
         ];
-
-        $options['entry_type'] = MoneyType::class;
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -47,7 +48,7 @@ class MoneyCollectionType extends AbstractCollectionType
             }
         );
 
-        parent::buildForm($builder, array_merge_recursive($defaultOptions, $options));
+        parent::buildForm($builder, array_replace_recursive($defaultOptions, $options));
     }
 
     /**
@@ -112,6 +113,27 @@ class MoneyCollectionType extends AbstractCollectionType
         }
 
         return $this->getFactory()->createMoneyCollectionSingleStoreDataProvider();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'money_collection';
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function overwriteCollectionDefaultEntryType(array $options)
+    {
+        if ($options['entry_type'] === TextType::class) {
+            $options['entry_type'] = MoneyType::class;
+        }
+        return $options;
     }
 
 }

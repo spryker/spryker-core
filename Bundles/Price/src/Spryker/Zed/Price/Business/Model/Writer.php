@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
+use Orm\Zed\Price\Persistence\SpyPriceProductStore;
+use Orm\Zed\Price\Persistence\SpyPriceProductStoreQuery;
 use Spryker\Zed\Price\Business\Exception\ProductPriceChangeException;
 use Spryker\Zed\Price\Business\Exception\UndefinedPriceTypeException;
 use Spryker\Zed\Price\Dependency\Facade\PriceToTouchInterface;
@@ -289,53 +291,11 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        if (!$productAbstractTransfer->getPrice()) {
-            return $productAbstractTransfer;
-        }
-
-        $idProductAbstract = $productAbstractTransfer
-            ->requireIdProductAbstract()
-            ->getIdProductAbstract();
-
-        $priceTransfer = $productAbstractTransfer->getPrice();
-        $this->persistProductAbstractPriceEntity($priceTransfer, $idProductAbstract);
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->handleDatabaseTransaction(function () use ($productAbstractTransfer) {
             return $this->executePersistProductAbstractPriceCollectionTransaction($productAbstractTransfer);
         });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        if (!$productConcreteTransfer->getPrice()) {
-            return $productConcreteTransfer;
-        }
-
-        $idProductConcrete = $productConcreteTransfer
-            ->requireIdProductConcrete()
-            ->getIdProductConcrete();
-
-        $priceTransfer = $productConcreteTransfer->getPrice();
-        $this->persistProductConcretePriceEntity($priceTransfer, $idProductConcrete);
-
-        return $productConcreteTransfer;
     }
 
     /**
@@ -357,14 +317,26 @@ class Writer implements WriterInterface
      */
     protected function executePersistProductAbstractPriceCollectionTransaction(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $productAbstractTransfer = $this->persistProductAbstractPrice($productAbstractTransfer); // keep for BC reasons
-
         $idProductAbstract = $productAbstractTransfer
             ->requireIdProductAbstract()
             ->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
             $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
+
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+            $priceProduceStoreEntity = SpyPriceProductStoreQuery::create()
+                ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+                ->filterByFkCurrency($moneyValueTransfer->getFkCurrency())
+                ->filterByFkStore($moneyValueTransfer->getFkStore())
+                ->findOneOrCreate();;
+
+            $priceProduceStoreEntity->fromArray($moneyValueTransfer->toArray());
+            $priceProduceStoreEntity->setFkPriceProduct($priceProductTransfer->getIdPriceProduct());
+            $priceProduceStoreEntity->setNetPrice($moneyValueTransfer->getNetAmount());
+            $priceProduceStoreEntity->setGrossPrice($moneyValueTransfer->getGrossAmount());
+            $priceProduceStoreEntity->save();
         }
 
         return $productAbstractTransfer;
@@ -377,14 +349,26 @@ class Writer implements WriterInterface
      */
     protected function executePersistProductConcretePriceCollectionTransaction(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productConcreteTransfer = $this->persistProductConcretePrice($productConcreteTransfer); // keep for BC reasons
-
         $idProductConcrete = $productConcreteTransfer
             ->requireIdProductConcrete()
             ->getIdProductConcrete();
 
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
             $this->persistProductConcretePriceEntity($priceProductTransfer, $idProductConcrete);
+
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+            $priceProduceStoreEntity = SpyPriceProductStoreQuery::create()
+                ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+                ->filterByFkCurrency($moneyValueTransfer->getFkCurrency())
+                ->filterByFkStore($moneyValueTransfer->getFkStore())
+                ->findOneOrCreate();
+
+            $priceProduceStoreEntity->fromArray($moneyValueTransfer->toArray());
+            $priceProduceStoreEntity->setFkPriceProduct($priceProductTransfer->getIdPriceProduct());
+            $priceProduceStoreEntity->setNetPrice($moneyValueTransfer->getNetAmount());
+            $priceProduceStoreEntity->setGrossPrice($moneyValueTransfer->getGrossAmount());
+            $priceProduceStoreEntity->save();
         }
 
         return $productConcreteTransfer;
@@ -398,16 +382,15 @@ class Writer implements WriterInterface
      */
     protected function persistProductAbstractPriceEntity(PriceProductTransfer $priceTransfer, $idProductAbstract)
     {
-        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceType()->getName());
 
         $priceProductEntity = $this->queryContainer
             ->queryPriceProduct()
-            ->filterByFkProductAbstract($priceTransfer->getIdProductAbstract())
+            ->filterByFkProductAbstract($idProductAbstract)
             ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
             ->findOneOrCreate();
 
         $priceProductEntity->setFkProductAbstract($idProductAbstract);
-        $priceProductEntity->setPrice($priceTransfer->getPrice());
         $priceProductEntity->save();
 
         $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
@@ -423,17 +406,16 @@ class Writer implements WriterInterface
      */
     protected function persistProductConcretePriceEntity(PriceProductTransfer $priceTransfer, $idProductConcrete)
     {
-        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceTypeName());
+        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceType()->getName());
 
         $priceProductEntity = $this->queryContainer
             ->queryPriceProduct()
-            ->filterByFkProduct($priceTransfer->getIdProduct())
+            ->filterByFkProduct($idProductConcrete)
             ->filterByFkPriceType($priceTypeEntity->getIdPriceType())
             ->filterByFkProductAbstract(null, Criteria::ISNULL)
             ->findOneOrCreate();
 
         $priceProductEntity->setFkProduct($idProductConcrete);
-        $priceProductEntity->setPrice($priceTransfer->getPrice());
         $priceProductEntity->save();
 
         $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());

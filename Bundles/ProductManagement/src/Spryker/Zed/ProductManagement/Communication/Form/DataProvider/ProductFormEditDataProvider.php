@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 
@@ -83,25 +83,8 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
      */
     protected function appendPriceAndTax(ProductAbstractTransfer $productAbstractTransfer, array $formData)
     {
-        $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_TAX_RATE] = $productAbstractTransfer->getIdTaxSet();
-
-        $priceTransfer = $this->priceFacade->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
-        if ($priceTransfer) {
-            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
-        }
-
-        $defaultPriceTypeName = $this->priceFacade->getDefaultPriceTypeName();
-        $priceTypes = $this->priceFacade->getPriceTypeValues();
-
-        foreach ($priceTypes as $priceType) {
-            if ($priceType === $defaultPriceTypeName) {
-                continue;
-            }
-
-            $priceTransfer = $this->priceFacade->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract(), $priceType);
-
-            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][PriceForm::FIELD_PRICES][$priceType] = $priceTransfer ? $priceTransfer->getPrice() : null;
-        }
+        $formData[ProductFormAdd::FIELD_TAX_RATE] = $productAbstractTransfer->getIdTaxSet();
+        $formData[ProductFormAdd::FIELD_PRICES] = $productAbstractTransfer->getPrices();
 
         return $formData;
     }

@@ -33,13 +33,12 @@ interface PriceQueryContainerInterface
      * @api
      *
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param string $priceType
+     * @param int $idCurrency
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductAbstract($sku, SpyPriceType $priceType);
+    public function queryPriceEntityForProductAbstract($sku, $priceType, $idCurrency);
 
     /**
      * @api
@@ -70,13 +69,12 @@ interface PriceQueryContainerInterface
      * @api
      *
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param string $priceType
+     * @param int $idCurrency
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductConcrete($sku, SpyPriceType $priceType);
+    public function queryPriceEntityForProductConcrete($sku, $priceType, $idCurrency);
 
     /**
      * @api

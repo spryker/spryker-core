@@ -25,13 +25,15 @@ class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
 
     /**
      * @param string $sku
-     * @param string|null $priceType
+     * @param string $priceType
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return int
      */
-    public function getPriceBySku($sku, $priceType = null)
+    public function getPriceBySku($sku, $priceType, $currencyIsoCode, $priceMode)
     {
-        return $this->priceFacade->getPriceBySku($sku, $priceType);
+        return $this->priceFacade->getPriceBySku($sku, $priceType, $currencyIsoCode, $priceMode);
     }
 
 }

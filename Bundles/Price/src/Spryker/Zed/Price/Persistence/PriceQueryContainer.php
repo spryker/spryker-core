@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Price\Persistence;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Orm\Zed\Price\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Price\Persistence\SpyPriceType;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -49,20 +50,31 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
      * @api
      *
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     * @param string $priceType
+     * @param int $idCurrency
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductAbstract($sku, SpyPriceType $priceType)
+    public function queryPriceEntityForProductAbstract($sku, $priceType, $idCurrency)
     {
-        return $this->getFactory()->createPriceProductQuery()
-            ->filterByPriceType($priceType)
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->usePriceTypeQuery()
+                ->filterByName($priceType)
+            ->endUse()
             ->addJoin([
                 SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductAbstractTableMap::COL_SKU,
             ], [
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 $this->getConnection()->quote($sku),
+            ])
+            ->addJoin([
+                SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT,
+                SpyPriceProductStoreTableMap::COL_FK_CURRENCY
+            ], [
+                SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT,
+                (int)$idCurrency,
             ]);
     }
 
@@ -79,6 +91,7 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
             ->createPriceProductQuery()
             ->filterByPrice(null, Criteria::ISNOTNULL)
             ->joinWithPriceType()
+            ->joinWithPriceProductStore()
             ->useSpyProductAbstractQuery()
                 ->filterBySku($sku)
             ->endUse();
@@ -114,20 +127,31 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
      * @api
      *
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     * @param string $priceType
+     * @param int $idCurrency
      *
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductConcrete($sku, SpyPriceType $priceType)
+    public function queryPriceEntityForProductConcrete($sku, $priceType, $idCurrency)
     {
-        return $this->getFactory()->createPriceProductQuery()
-            ->filterByPriceType($priceType)
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->usePriceTypeQuery()
+               ->filterByName($priceType)
+            ->endUse()
             ->addJoin([
                 SpyPriceProductTableMap::COL_FK_PRODUCT,
                 SpyProductTableMap::COL_SKU,
-            ], [
+            ],[
                 SpyProductTableMap::COL_ID_PRODUCT,
                 $this->getConnection()->quote($sku),
+            ])
+            ->addJoin([
+                SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT,
+                SpyPriceProductStoreTableMap::COL_FK_CURRENCY
+            ],[
+                SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT,
+                (int)$idCurrency,
             ]);
     }
 
@@ -144,6 +168,7 @@ class PriceQueryContainer extends AbstractQueryContainer implements PriceQueryCo
             ->createPriceProductQuery()
             ->filterByPrice(null, Criteria::ISNOTNULL)
             ->joinWithPriceType()
+            ->joinWithPriceProductStore()
             ->useProductQuery()
                 ->filterBySku($sku)
             ->endUse();

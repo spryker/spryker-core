@@ -24,7 +24,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
     public function getPriceTypeValues()
     {
@@ -42,50 +42,15 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param string|null $priceTypeName
+     * @param string $priceTypeName
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return int
      */
-    public function getPriceBySku($sku, $priceTypeName = null)
+    public function getPriceBySku($sku, $priceTypeName, $currencyIsoCode, $priceMode)
     {
-        return $this->getFactory()->createReaderModel()->getPriceBySku($sku, $priceTypeName);
-    }
-
-    /**
-     * Specification:
-     * - Reads the persisted price for the given abstract product id for the given price type.
-     * - If price type is not provided, then the default price type will be used.
-     * - Returns a hydrated PriceProductTransfer if the price exists, null otherwise.
-     *
-     * @api
-     *
-     * @param int $idAbstractProduct
-     * @param string|null $priceTypeName
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
-    {
-        return $this->getFactory()->createReaderModel()->findProductAbstractPrice($idAbstractProduct, $priceTypeName);
-    }
-
-    /**
-     * Specification:
-     * - Reads the persisted price for the given concrete product id for the given price type.
-     * - If price type is not provided, then the default price type will be used.
-     * - If the price is not found, then it'll read the abstract product price instead.
-     * - Returns a hydrated PriceProductTransfer if one of the concrete or abstract price exists, null otherwise.
-     *
-     * @api
-     *
-     * @param int $idProduct
-     * @param string|null $priceTypeName
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductConcretePrice($idProduct, $priceTypeName = null)
-    {
-        return $this->getFactory()->createReaderModel()->findProductConcretePrice($idProduct, $priceTypeName);
+        return $this->getFactory()->createReaderModel()->getPriceBySku($sku, $priceTypeName, $currencyIsoCode, $priceMode);
     }
 
     /**
@@ -149,13 +114,15 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param string|null $priceType
+     * @param string $priceType
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceType = null)
+    public function hasValidPrice($sku, $priceType, $currencyIsoCode, $priceMode)
     {
-        return $this->getFactory()->createReaderModel()->hasValidPrice($sku, $priceType);
+        return $this->getFactory()->createReaderModel()->hasValidPrice($sku, $priceType, $currencyIsoCode, $priceMode);
     }
 
     /**
@@ -201,29 +168,13 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @param string $sku
      * @param string $priceType
+     * @param string $currencyIsoCode
      *
      * @return int
      */
-    public function getIdPriceProduct($sku, $priceType)
+    public function getIdPriceProduct($sku, $priceType, $currencyIsoCode)
     {
-        return $this->getFactory()->createReaderModel()->getProductPriceIdBySku($sku, $priceType);
-    }
-
-    /**
-     * Specification:
-     * - Create a new product price entity if it doesn't exists by abstract product id and price type.
-     * - Updates the price of a product price entity if it exists by abstract product id and price type.
-     * - If price type wasn't explicitly specified, then the default price type will be used.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function persistProductAbstractPrice(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        return $this->getFactory()->createWriterModel()->persistProductAbstractPrice($productAbstractTransfer);
+        return $this->getFactory()->createReaderModel()->getProductPriceIdBySku($sku, $priceType, $currencyIsoCode);
     }
 
     /**
@@ -243,23 +194,6 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Create a new product price entity if it doesn't exists by concrete product id and price type.
-     * - Updates the price of a product price entity if it exists by concrete product id and price type.
-     * - If price type wasn't explicitly specified, then the default price type will be used.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function persistProductConcretePrice(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $this->getFactory()->createWriterModel()->persistProductConcretePrice($productConcreteTransfer);
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @api
@@ -270,7 +204,9 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      */
     public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->getFactory()->createWriterModel()->persistProductConcretePriceCollection($productConcreteTransfer);
+        return $this->getFactory()
+            ->createWriterModel()
+            ->persistProductConcretePriceCollection($productConcreteTransfer);
     }
 
     /**

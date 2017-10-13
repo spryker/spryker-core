@@ -25,11 +25,6 @@ class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductCo
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $priceProductTransfer = $this->getFacade()->findProductConcretePrice($productConcreteTransfer->getIdProductConcrete());
-        if ($priceProductTransfer) {
-            $productConcreteTransfer->setPrice($priceProductTransfer);
-        }
-
         $priceProductTransfers = $this->getFacade()->findProductConcretePrices(
             $productConcreteTransfer->getIdProductConcrete(),
             $productConcreteTransfer->getFkProductAbstract()

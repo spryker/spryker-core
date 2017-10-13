@@ -140,6 +140,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
         $productOptions = $itemTransfer->getProductOptions();
         $priceMode = $quoteTransfer->getPriceMode();
+        $currencyIsoCode = $quoteTransfer->getCurrency()->getCode();
         for ($i = 0; $i < $quantity; $i++) {
 
             $bundleItemTransfer = new ItemTransfer();
@@ -153,7 +154,12 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
             $quoteTransfer->addBundleItem($bundleItemTransfer);
 
-            $bundledItems = $this->createBundledItemsTransferCollection($bundledProducts, $bundleItemIdentifier, $priceMode);
+            $bundledItems = $this->createBundledItemsTransferCollection(
+                $bundledProducts,
+                $bundleItemIdentifier,
+                $priceMode,
+                $currencyIsoCode
+            );
 
             $lastBundledItemTransfer = $bundledItems[count($bundledItems) - 1];
             $lastBundledItemTransfer->setProductOptions($productOptions);
@@ -209,16 +215,22 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
      * @param string $bundleItemIdentifier
      * @param string $priceMode
+     * @param string $currencyIsoCode
      *
      * @return array
      */
-    protected function createBundledItemsTransferCollection(ObjectCollection $bundledProducts, $bundleItemIdentifier, $priceMode)
+    protected function createBundledItemsTransferCollection(ObjectCollection $bundledProducts, $bundleItemIdentifier, $priceMode, $currencyIsoCode)
     {
         $bundledItems = [];
         foreach ($bundledProducts as $index => $productBundleEntity) {
             $quantity = $productBundleEntity->getQuantity();
             for ($i = 0; $i < $quantity; $i++) {
-                $bundledItems[] = $this->createBundledItemTransfer($productBundleEntity, $bundleItemIdentifier, $priceMode);
+                $bundledItems[] = $this->createBundledItemTransfer(
+                    $productBundleEntity,
+                    $bundleItemIdentifier,
+                    $priceMode,
+                    $currencyIsoCode
+                );
             }
         }
         return $bundledItems;
@@ -273,10 +285,16 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $bundleProductEntity
      * @param string $bundleItemIdentifier
      * @param string $priceMode
+     * @param string $currencyIsoCode
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createBundledItemTransfer(SpyProductBundle $bundleProductEntity, $bundleItemIdentifier, $priceMode)
+    protected function createBundledItemTransfer(
+        SpyProductBundle $bundleProductEntity,
+        $bundleItemIdentifier,
+        $priceMode,
+        $currencyIsoCode
+    )
     {
         $bundledConcreteProductEntity = $bundleProductEntity->getSpyProductRelatedByFkBundledProduct();
 
@@ -289,7 +307,12 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $this->localeFacade->getCurrentLocale()
         );
 
-        $unitPrice = $this->getProductPrice($bundledConcreteProductEntity->getSku());
+        $unitPrice = $this->getProductPrice(
+            $bundledConcreteProductEntity->getSku(),
+            'DEFAULT',
+            $currencyIsoCode,
+            $priceMode
+        );
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setId($productConcreteTransfer->getIdProductConcrete())
@@ -307,13 +330,21 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param string $sku
+     * @param string $priceType
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return int
      */
-    protected function getProductPrice($sku)
+    protected function getProductPrice($sku, $priceType, $currencyIsoCode, $priceMode)
     {
         if (!isset(static::$productPriceCache[$sku])) {
-            static::$productPriceCache[$sku] = $this->priceFacade->getPriceBySku($sku);
+            static::$productPriceCache[$sku] = $this->priceFacade->getPriceBySku(
+                $sku,
+                $priceType,
+                $currencyIsoCode,
+                $priceMode
+            );
         }
 
          return static::$productPriceCache[$sku];

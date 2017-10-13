@@ -8,16 +8,22 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use DateTime;
+use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
@@ -40,6 +46,10 @@ class ProductFormAdd extends AbstractType
 
     const FIELD_SKU = 'sku';
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    const FIELD_PRICES = 'prices';
+    const FIELD_TAX_RATE = 'tax_rate';
+    const FIELD_NEW_FROM = 'new_from';
+    const FIELD_NEW_TO = 'new_to';
 
     const FORM_ATTRIBUTE_ABSTRACT = 'attribute_abstract';
     const FORM_ATTRIBUTE_SUPER = 'attribute_super';
@@ -48,16 +58,14 @@ class ProductFormAdd extends AbstractType
     const FORM_PRICE_AND_STOCK = 'price_and_stock';
     const FORM_TAX_SET = 'tax_set';
     const FORM_SEO = 'seo';
-    const FIELD_NEW_FROM = 'new_from';
-    const FIELD_NEW_TO = 'new_to';
-
     const FORM_IMAGE_SET = 'image_set';
+
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
     const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
     const OPTION_ID_LOCALE = 'option_id_locale';
-
     const OPTION_TAX_RATES = 'option_tax_rates';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+
     const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
     const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
@@ -138,10 +146,10 @@ class ProductFormAdd extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(self::OPTION_ID_LOCALE);
-        $resolver->setRequired(self::OPTION_ATTRIBUTE_ABSTRACT);
-        $resolver->setRequired(self::OPTION_ATTRIBUTE_SUPER);
-        $resolver->setRequired(self::OPTION_TAX_RATES);
+        $resolver->setRequired(static::OPTION_ID_LOCALE);
+        $resolver->setRequired(static::OPTION_ATTRIBUTE_ABSTRACT);
+        $resolver->setRequired(static::OPTION_ATTRIBUTE_SUPER);
+        $resolver->setRequired(static::OPTION_TAX_RATES);
 
         $validationGroups = $this->getValidationGroups();
 
@@ -190,6 +198,7 @@ class ProductFormAdd extends AbstractType
             ->addGeneralLocalizedForms($builder)
             ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
             ->addPriceForm($builder, $options)
+            ->addTaxRateField($builder, $options)
             ->addSeoLocalizedForms($builder)
             ->addImageLocalizedForms($builder);
     }
@@ -507,26 +516,36 @@ class ProductFormAdd extends AbstractType
      */
     protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
     {
-        $builder
-            ->add(self::FORM_PRICE_AND_TAX, new PriceForm($this->moneyFacade, $this->currencyFacade), [
-                'label' => false,
-                'constraints' => [new Callback([
-                    'methods' => [
-                        function ($dataToValidate, ExecutionContextInterface $context) {
-                            if ((int)$dataToValidate[PriceForm::FIELD_PRICE] < 0) {
-                                $context->addViolation('Please enter Price information under Price & Taxes');
-                            }
+        $builder->add(
+            static::FIELD_PRICES,
+            ProductMoneyCollectionType::class,
+            [
+                'entry_options' => [
+                    'data_class' => PriceProductTransfer::class,
+                ],
+                'entry_type' => ProductMoneyType::class
+            ]
+        );
+        return $this;
+    }
 
-                            if ((int)$dataToValidate[PriceForm::FIELD_TAX_RATE] <= 0) {
-                                $context->addViolation('Please enter Tax information under Price & Taxes');
-                            }
-                        },
-                    ],
-                    'groups' => [self::VALIDATION_GROUP_PRICE_AND_TAX],
-                ])],
-                PriceForm::OPTION_TAX_RATE_CHOICES => $options[self::OPTION_TAX_RATES],
-                PriceForm::OPTION_CURRENCY_ISO_CODE => $options[static::OPTION_CURRENCY_ISO_CODE],
-            ]);
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addTaxRateField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(self::FIELD_TAX_RATE, new Select2ComboBoxType(), [
+            'label' => 'Tax Set',
+            'required' => true,
+            'choices' => $options[static::OPTION_TAX_RATES],
+            'placeholder' => '-',
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
 
         return $this;
     }
@@ -548,63 +567,6 @@ class ProductFormAdd extends AbstractType
                 'allow_delete' => true,
                 'prototype' => true,
                 'prototype_name' => '__image_set_name__',
-                // TODO: move this under ImageSetForm's itself
-                /*
-                'constraints' => [new Callback([
-                    'methods' => [
-                        function ($imageSetCollection, ExecutionContextInterface $context) {
-                            return;
-                            if (array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                                return;
-                            }
-
-                            $isEmpty = true;
-                            foreach ($imageSetCollection as $setData) {
-                                if (trim($setData[ImageSetForm::FIELD_SET_NAME]) !== '') {
-                                    $isEmpty = false;
-                                    break;
-                                }
-
-                                foreach ($setData[ImageSetForm::PRODUCT_IMAGES] as $productImage) {
-                                    if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_SMALL]) !== '') {
-                                        $isEmpty = false;
-                                        break;
-                                    }
-
-                                    if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_LARGE]) !== '') {
-                                        $isEmpty = false;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if ($isEmpty) {
-                                return;
-                            }
-
-                            foreach ($imageSetCollection as $setData) {
-                                if (trim($setData[ImageSetForm::FIELD_SET_NAME]) === '') {
-                                    $context->addViolation('Please enter Image Set Name under Images');
-                                    GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
-                                }
-
-                                foreach ($setData[ImageSetForm::PRODUCT_IMAGES] as $productImage) {
-                                    if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_SMALL]) === '') {
-                                        $context->addViolation('Please enter small image url under Images');
-                                        GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
-                                    }
-
-                                    if (trim($productImage[ImageCollectionForm::FIELD_IMAGE_LARGE]) === '') {
-                                        $context->addViolation('Please enter large image url under Images');
-                                        GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
-                                    }
-                                }
-                            }
-                        },
-                    ],
-                    'groups' => [self::VALIDATION_GROUP_IMAGE_SET]
-                ])]
-                */
             ]);
 
         return $this;

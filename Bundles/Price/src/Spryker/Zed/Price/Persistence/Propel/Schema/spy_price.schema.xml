@@ -42,10 +42,43 @@
     <table name="spy_price_type" phpName="SpyPriceType">
         <column name="id_price_type" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="price_mode_configuration" type="ENUM" valueSet="NET_MODE, GROSS_MODE, BOTH" required="false" />
+
         <unique name="spy_price_type-name">
             <unique-column name="name"/>
         </unique>
+
         <id-method-parameter value="spy_price_type_pk_seq"/>
+    </table>
+
+    <table name="spy_price_product_store">
+        <column name="id_price_product_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_price_product" type="INTEGER" required="true"/>
+        <column name="fk_currency" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="false"/>
+
+        <column name="net_price" type="INTEGER" required="false" />
+        <column name="gross_price" type="INTEGER" required="false" />
+
+        <unique name="spy_price_product_store-unique-price_product">
+            <unique-column name="fk_currency" />
+            <unique-column name="fk_price_product" />
+            <unique-column name="fk_store" />
+        </unique>
+
+        <foreign-key name="spy_price_product_store-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="PriceProductStore">
+            <reference local="fk_currency" foreign="id_currency"/>
+        </foreign-key>
+
+        <foreign-key name="spy_price_product_store-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="PriceProductStore">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <foreign-key name="spy_price_product_store-fk_price_product" foreignTable="spy_price_product" phpName="PriceProduct" refPhpName="PriceProductStore">
+            <reference local="fk_price_product" foreign="id_price_product"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_price_product_store_pk_seq"/>
     </table>
 
 </database>

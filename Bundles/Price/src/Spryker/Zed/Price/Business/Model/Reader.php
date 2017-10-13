@@ -7,11 +7,21 @@
 
 namespace Spryker\Zed\Price\Business\Model;
 
+use ArrayObject;
 use Exception;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
+use Orm\Zed\Price\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\Price\Persistence\SpyPriceProduct;
+use Orm\Zed\Price\Persistence\SpyPriceProductStore;
 use Orm\Zed\Price\Persistence\SpyPriceType;
+use Propel\Runtime\Formatter\ArrayFormatter;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Price\Business\Exception\MissingPriceException;
+use Spryker\Zed\Price\Dependency\Facade\PriceToCurrencyInterface;
 use Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use Spryker\Zed\Price\Persistence\PriceQueryContainerInterface;
 use Spryker\Zed\Price\PriceConfig;
@@ -21,6 +31,8 @@ class Reader implements ReaderInterface
 
     const PRICE_TYPE_UNKNOWN = 'price type unknown: ';
     const SKU_UNKNOWN = 'sku unknown';
+    const COL_GROSS_PRICE = 'gross_price';
+    const COL_NET_PRICE = 'net_price';
 
     /**
      * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
@@ -43,31 +55,43 @@ class Reader implements ReaderInterface
     protected $priceTypeEntityByNameCache = [];
 
     /**
+     * @var \Spryker\Zed\Price\Dependency\Facade\PriceToCurrencyInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Price\Dependency\Facade\PriceToProductInterface $productFacade
      * @param \Spryker\Zed\Price\PriceConfig $priceConfig
+     * @param \Spryker\Zed\Price\Dependency\Facade\PriceToCurrencyInterface $currencyFacade
      */
     public function __construct(
         PriceQueryContainerInterface $queryContainer,
         PriceToProductInterface $productFacade,
-        PriceConfig $priceConfig
+        PriceConfig $priceConfig,
+        PriceToCurrencyInterface $currencyFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
         $this->priceConfig = $priceConfig;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
-     * @return string[]
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
     public function getPriceTypes()
     {
         $priceTypes = [];
-        $priceTypeEntities = $this->queryContainer->queryAllPriceTypes()->find();
+        $priceTypeEntities = $this->queryContainer
+            ->queryAllPriceTypes()
+            ->find();
 
-        /** @var \Orm\Zed\Price\Persistence\SpyPriceType $priceType */
-        foreach ($priceTypeEntities as $priceType) {
-            $priceTypes[] = $priceType->getName();
+        /** @var \Orm\Zed\Price\Persistence\SpyPriceType $priceTypeEntity */
+        foreach ($priceTypeEntities as $priceTypeEntity) {
+            $priceModeTransfer = new PriceTypeTransfer();
+            $priceModeTransfer->fromArray($priceTypeEntity->toArray(), true);
+            $priceTypes[] = $priceModeTransfer;
         }
 
         return $priceTypes;
@@ -75,16 +99,25 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param string|null $priceTypeName
+     * @param string $priceTypeName
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return int
      */
-    public function getPriceBySku($sku, $priceTypeName = null)
+    public function getPriceBySku($sku, $priceTypeName, $currencyIsoCode, $priceMode)
     {
         $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
-        $priceEntity = $this->getPriceEntity($sku, $this->getPriceTypeByName($priceTypeName));
 
-        return $priceEntity->getPrice();
+        $currencyTransfer = $this->currencyFacade->fromIsoCode($currencyIsoCode);
+
+        $productPrice = $this->getProductPrice($sku, $priceTypeName, $currencyTransfer->getIdCurrency());
+
+        if ($priceMode == PriceMode::PRICE_MODE_NET) {
+            return $productPrice[static::COL_NET_PRICE];
+        }
+
+        return $productPrice[static::COL_GROSS_PRICE];
     }
 
     /**
@@ -129,71 +162,6 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param int $idAbstractProduct
-     * @param string|null $priceTypeName
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
-    {
-        $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
-        $priceEntity = $this->queryContainer
-            ->queryPriceProduct()
-            ->filterByFkProductAbstract($idAbstractProduct)
-            ->filterByPriceType($this->getPriceTypeByName($priceTypeName))
-            ->findOne();
-
-        if (!$priceEntity) {
-            return null;
-        }
-
-        $priceTransfer = (new PriceProductTransfer());
-        $priceTransfer
-            ->fromArray($priceEntity->toArray(), true)
-            ->setIdProductAbstract($idAbstractProduct)
-            ->setPrice($priceEntity->getPrice())
-            ->setPriceTypeName($priceTypeName);
-
-        return $priceTransfer;
-    }
-
-    /**
-     * @param int $idProduct
-     * @param string|null $priceTypeName
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductConcretePrice($idProduct, $priceTypeName = null)
-    {
-        $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
-        $priceTypeEntity = $this->getPriceTypeByName($priceTypeName);
-
-        $priceEntity = $this->queryContainer
-            ->queryPriceProduct()
-            ->filterByFkProduct($idProduct)
-            ->filterByPriceType($priceTypeEntity)
-            ->findOne();
-
-        if (!$priceEntity) {
-            $priceEntity = $this->queryContainer
-                ->queryProductAbstractPriceByIdConcreteProduct($idProduct)
-                ->filterByPriceType($priceTypeEntity)
-                ->findOne();
-        }
-
-        if (!$priceEntity) {
-            return null;
-        }
-
-        $priceTransfer = (new PriceProductTransfer())
-            ->fromArray($priceEntity->toArray(), true)
-            ->setIdProduct($idProduct)
-            ->setPrice($priceEntity->getPrice())
-            ->setPriceTypeName($priceTypeName);
-
-        return $priceTransfer;
-    }
-
     /**
      * @param string $priceTypeName
      *
@@ -232,11 +200,13 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param string|null $priceTypeName
+     * @param string $priceTypeName
+     * @param string $currencyIsoCode
+     * @param string $priceMode
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceTypeName = null)
+    public function hasValidPrice($sku, $priceTypeName, $currencyIsoCode, $priceMode)
     {
         $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
 
@@ -244,14 +214,16 @@ class Reader implements ReaderInterface
             return false;
         }
 
-        $priceType = $this->getPriceTypeByName($priceTypeName);
-        if ($this->hasPriceForProductConcrete($sku, $priceType) || $this->hasPriceForProductAbstract($sku, $priceType)) {
+        $currencyTransfer = $this->currencyFacade->fromIsoCode($currencyIsoCode);
+        $idCurrency = $currencyTransfer->getIdCurrency();
+
+        if ($this->hasPriceForProductConcrete($sku, $priceTypeName, $idCurrency) || $this->hasPriceForProductAbstract($sku, $priceTypeName, $idCurrency)) {
             return true;
         }
 
         if ($this->hasProductConcrete($sku)) {
             $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-            if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType)) {
+            if ($this->hasProductAbstract($abstractSku) && $this->hasPriceForProductAbstract($abstractSku, $priceType, $idCurrency)) {
                 return true;
             }
         }
@@ -282,58 +254,61 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      * @param string $priceTypeName
+     * @param string $currencyIsoCode
      *
      * @return int
      */
-    public function getProductPriceIdBySku($sku, $priceTypeName)
+    public function getProductPriceIdBySku($sku, $priceTypeName, $currencyIsoCode)
     {
         $priceType = $this->getPriceTypeByName($priceTypeName);
 
-        if ($this->hasPriceForProductConcrete($sku, $priceType)) {
+        $currencyTransfer = $this->currencyFacade->fromIsoCode($currencyIsoCode);
+        $idCurrency = $currencyTransfer->getIdCurrency();
+
+        if ($this->hasPriceForProductConcrete($sku, $priceType, $idCurrency)) {
             return $this->queryContainer
-                ->queryPriceEntityForProductConcrete($sku, $priceType)
+                ->queryPriceEntityForProductConcrete($sku, $priceType, $idCurrency)
                 ->findOne()
                 ->getIdPriceProduct();
         }
 
-        if (!$this->hasPriceForProductAbstract($sku, $priceType)) {
+        if (!$this->hasPriceForProductAbstract($sku, $priceType, $idCurrency)) {
             $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         }
 
         return $this->queryContainer
-            ->queryPriceEntityForProductAbstract($sku, $priceType)
+            ->queryPriceEntityForProductAbstract($sku, $priceType, $idCurrency)
             ->findOne()
             ->getIdPriceProduct();
     }
 
     /**
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     * @param string $priceType
+     * @param int $idCurrency
      *
      * @throws \Spryker\Zed\Price\Business\Exception\MissingPriceException
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
+     * @return array
      */
-    protected function getPriceEntity($sku, SpyPriceType $priceType)
+    protected function getProductPrice($sku, $priceType, $idCurrency)
     {
-        $priceProductConcreteEntity = $this->getPriceEntityForProductConcrete($sku, $priceType);
-
-        if ($priceProductConcreteEntity !== null) {
-            return $priceProductConcreteEntity;
+        $priceProductConcrete = $this->getPriceForProductConcrete($sku, $priceType, $idCurrency);
+        if ($priceProductConcrete !== null) {
+            return $priceProductConcrete;
         }
 
-        $priceProductAbstractEntity = $this->getPriceEntityForProductAbstract($sku, $priceType);
-
-        if ($priceProductAbstractEntity !== null) {
-            return $priceProductAbstractEntity;
+        $priceProductAbstract = $this->getPriceForProductAbstract($sku, $priceType, $idCurrency);
+        if ($priceProductAbstract !== null) {
+            return $priceProductAbstract;
         }
 
         if ($this->hasProductConcrete($sku)) {
             $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-            $priceProductAbstractEntity = $this->getPriceEntityForProductAbstract($abstractSku, $priceType);
+            $priceProductAbstract = $this->getPriceForProductAbstract($abstractSku, $priceType, $idCurrency);
 
-            if ($priceProductAbstractEntity !== null) {
-                return $priceProductAbstractEntity;
+            if ($priceProductAbstract !== null) {
+                return $priceProductAbstract;
             }
         }
 
@@ -345,14 +320,15 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     * @param string $priceType
+     * @param int $idCurrency
      *
      * @return bool
      */
-    protected function hasPriceForProductConcrete($sku, SpyPriceType $priceType)
+    protected function hasPriceForProductConcrete($sku, $priceType, $idCurrency)
     {
         $productConcrete = $this->queryContainer
-            ->queryPriceEntityForProductConcrete($sku, $priceType)
+            ->queryPriceEntityForProductConcrete($sku, $priceType, $idCurrency)
             ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
             ->findOne();
 
@@ -361,14 +337,15 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     * @param string $priceType
+     * @param int $idCurrency
      *
      * @return bool
      */
-    protected function hasPriceForProductAbstract($sku, $priceType)
+    protected function hasPriceForProductAbstract($sku, $priceType, $idCurrency)
     {
         $productAbstract = $this->queryContainer
-            ->queryPriceEntityForProductAbstract($sku, $priceType)
+            ->queryPriceEntityForProductAbstract($sku, $priceType, $idCurrency)
             ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
             ->findOne();
 
@@ -377,27 +354,35 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     * @param string $priceType
+     * @param string $idCurrency
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
+     * @return array
      */
-    protected function getPriceEntityForProductConcrete($sku, $priceType)
+    protected function getPriceForProductConcrete($sku, $priceType, $idCurrency)
     {
         return $this->queryContainer
-            ->queryPriceEntityForProductConcrete($sku, $priceType)
+            ->queryPriceEntityForProductConcrete($sku, $priceType, $idCurrency)
+            ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, static::COL_GROSS_PRICE)
+            ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, static::COL_NET_PRICE)
+            ->setFormatter(ArrayFormatter::class)
             ->findOne();
     }
 
     /**
      * @param string $sku
-     * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
+     * @param string $priceType
+     * @param int $idCurrency
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProduct
+     * @return array
      */
-    protected function getPriceEntityForProductAbstract($sku, $priceType)
+    protected function getPriceForProductAbstract($sku, $priceType, $idCurrency)
     {
         return $this->queryContainer
-            ->queryPriceEntityForProductAbstract($sku, $priceType)
+            ->queryPriceEntityForProductAbstract($sku, $priceType, $idCurrency)
+            ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, static::COL_GROSS_PRICE)
+            ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, static::COL_NET_PRICE)
+            ->setFormatter(ArrayFormatter::class)
             ->findOne();
     }
 
@@ -457,20 +442,50 @@ class Reader implements ReaderInterface
      */
     protected function mapPriceProductTransferCollectionForProductAbstract($priceProductEntities)
     {
-        $priceTransfers = [];
+        $productPriceCollection = [];
         foreach ($priceProductEntities as $priceProductEntity) {
-            $priceTypeName = $priceProductEntity->getPriceType()->getName();
-
-            $priceProductTransfer = new PriceProductTransfer();
-            $priceProductTransfer
-                ->fromArray($priceProductEntity->toArray(), true)
-                ->setIdProductAbstract($priceProductEntity->getFkProductAbstract())
-                ->setPriceTypeName($priceTypeName);
-
-            $priceTransfers[$priceTypeName] = $priceProductTransfer;
+            foreach ($priceProductEntity->getPriceProductStores() as $priceProductStoreEntity) {
+                $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity, $priceProductEntity);
+                $productPriceCollection[$index] = $this->mapProductPriceTransfer(
+                    $priceProductStoreEntity,
+                    $priceProductEntity
+                );
+            }
         }
 
-        return $priceTransfers;
+        return $productPriceCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProduct $priceProductEntity
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function mapProductPriceTransfer(
+        SpyPriceProductStore $priceProductStoreEntity,
+        SpyPriceProduct $priceProductEntity
+    ) {
+
+        $currencyTransfer = $this->currencyFacade
+            ->getByIdCurrency($priceProductStoreEntity->getFkCurrency());
+
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->fromArray($priceProductStoreEntity->toArray(), true)
+            ->setIdEntity($priceProductStoreEntity->getPrimaryKey())
+            ->setNetAmount($priceProductStoreEntity->getNetPrice())
+            ->setGrossAmount($priceProductStoreEntity->getGrossPrice())
+            ->setCurrency($currencyTransfer);
+
+        $priceTypeTransfer = (new PriceTypeTransfer())
+            ->fromArray($priceProductEntity->getPriceType()->toArray(), true);
+
+        return (new PriceProductTransfer())
+            ->fromArray($priceProductEntity->toArray(), true)
+            ->setIdProductAbstract($priceProductEntity->getFkProductAbstract())
+            ->setPriceTypeName($priceTypeTransfer->getName())
+            ->setPriceType($priceTypeTransfer)
+            ->setMoneyValue($moneyValueTransfer);
     }
 
     /**
@@ -509,20 +524,18 @@ class Reader implements ReaderInterface
      */
     protected function mapPriceProductTransferCollectionForProductConcrete($priceProductEntities)
     {
-        $priceTransfers = [];
+        $productPriceCollection = [];
         foreach ($priceProductEntities as $priceProductEntity) {
-            $priceTypeName = $priceProductEntity->getPriceType()->getName();
-
-            $priceProductTransfer = new PriceProductTransfer();
-            $priceProductTransfer
-                ->fromArray($priceProductEntity->toArray(), true)
-                ->setIdProduct($priceProductEntity->getFkProduct())
-                ->setPriceTypeName($priceTypeName);
-
-            $priceTransfers[$priceTypeName] = $priceProductTransfer;
+            foreach ($priceProductEntity->getPriceProductStores() as $priceProductStoreEntity) {
+                $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity, $priceProductEntity);
+                $productPriceCollection[$index] = $this->mapProductPriceTransfer(
+                    $priceProductStoreEntity,
+                    $priceProductEntity
+                );
+            }
         }
 
-        return $priceTransfers;
+        return $productPriceCollection;
     }
 
     /**
@@ -551,6 +564,27 @@ class Reader implements ReaderInterface
             ->find();
 
         return $this->mapPriceProductTransferCollectionForProductConcrete($productAbstractPriceEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     * @param \Orm\Zed\Price\Persistence\SpyPriceProduct $priceProductEntity
+     *
+     * @return string
+     */
+    protected function createProductPriceGroupingIndex(
+        SpyPriceProductStore $priceProductStoreEntity,
+        SpyPriceProduct $priceProductEntity
+    ) {
+        return implode(
+            '-',
+            [
+                $priceProductStoreEntity->getFkStore(),
+                $priceProductStoreEntity->getFkCurrency(),
+                $priceProductEntity->getPriceType()->getName(),
+                $priceProductEntity->getPriceType()->getPriceModeConfiguration(),
+            ]
+        );
     }
 
 }
