@@ -482,6 +482,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getAllowedGetParametersList()
