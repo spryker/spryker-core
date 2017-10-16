@@ -55,7 +55,7 @@ class IsIn implements ComparatorInterface
     public function getAcceptedTypes()
     {
         return [
-            ComparatorOperators::TYPE_LIST
+            ComparatorOperators::TYPE_LIST,
         ];
     }
 

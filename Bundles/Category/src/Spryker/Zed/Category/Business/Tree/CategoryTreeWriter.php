@@ -268,6 +268,6 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
         $nodeTransfer = (new NodeTransfer())
             ->fromArray($nodeEntity->toArray());
 
-        $this->nodeUrlManager->removeUrl($nodeTransfer, $locale);
+        $this->nodeUrlManager->removeUrl($nodeTransfer);
     }
 }

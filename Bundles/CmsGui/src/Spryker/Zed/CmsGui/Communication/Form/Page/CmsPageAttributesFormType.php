@@ -124,7 +124,7 @@ class CmsPageAttributesFormType extends AbstractType
             'label' => 'Name',
             'required' => true,
             'constraints' => [
-                new NotBlank()
+                new NotBlank(),
             ],
         ]);
 
