@@ -10,11 +10,13 @@ namespace Spryker\Zed\SetupFrontend\Communication\Console;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
+/**
+ * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacade getFacade()
+ */
 class YvesBuildFrontendConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:yves-build-frontend';
+    const COMMAND_NAME = 'frontend:yves:build';
     const DESCRIPTION = 'This command will build Yves frontend.';
 
     /**
@@ -38,11 +40,10 @@ class YvesBuildFrontendConsole extends Console
     {
         $this->info('Build Yves frontend');
 
-        $process = new Process('npm run yves', APPLICATION_ROOT_DIR);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        if ($this->getFacade()->buildYvesFrontend($this->getMessenger())) {
+            return static::CODE_SUCCESS;
+        }
 
-        return static::CODE_SUCCESS;
+        return static::CODE_ERROR;
     }
 }

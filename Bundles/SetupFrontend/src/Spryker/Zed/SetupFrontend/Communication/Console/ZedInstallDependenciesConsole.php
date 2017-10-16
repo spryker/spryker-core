@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\SetupFrontend\Communication\Console;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Process\Process;
 
+/**
+ * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacade getFacade()
+ */
 class ZedInstallDependenciesConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:zed-install-dependencies';
+    const COMMAND_NAME = 'frontend:zed:install-dependencies';
     const DESCRIPTION = 'This command will install Zed Module dependencies.';
 
     /**
@@ -41,19 +40,10 @@ class ZedInstallDependenciesConsole extends Console
     {
         $this->info('Install Zed dependencies');
 
-        $finder = new Finder();
-
-        $finder->files()->in(Config::get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Zed')->name('package.json')->depth('< 2');
-
-        foreach ($finder as $file) {
-            $path = $file->getPath();
-            $this->info(sprintf('Install dependencies in "%s"', $path));
-            $process = new Process('npm install', $path);
-            $process->run(function ($type, $buffer) {
-                echo $buffer;
-            });
+        if ($this->getFacade()->installZedDependencies($this->getMessenger())) {
+            return static::CODE_SUCCESS;
         }
 
-        return static::CODE_SUCCESS;
+        return static::CODE_ERROR;
     }
 }

@@ -10,12 +10,14 @@ namespace Spryker\Zed\SetupFrontend\Communication\Console;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacade getFacade()
+ */
 class ZedAssetsCleanUpConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:cleanup-zed-assets';
-    const DESCRIPTION = 'This command will remove all yves assets.';
+    const COMMAND_NAME = 'frontend:zed:cleanup-assets';
+    const DESCRIPTION = 'This command will remove all Zed assets.';
 
     /**
      * @return void
@@ -38,17 +40,10 @@ class ZedAssetsCleanUpConsole extends Console
     {
         $this->info('Cleanup Zed assets');
 
-        $frontendDependencyDirectories = [
-            APPLICATION_ROOT_DIR . '/public/Zed/assets',
-        ];
-        $filesystem = new Filesystem();
-
-        foreach ($frontendDependencyDirectories as $frontendDependencyDirectory) {
-            if (is_dir($frontendDependencyDirectory)) {
-                $filesystem->remove($frontendDependencyDirectory);
-            }
+        if ($this->getFacade()->removeZedAssets()) {
+            return static::CODE_SUCCESS;
         }
 
-        return static::CODE_SUCCESS;
+        return static::CODE_ERROR;
     }
 }

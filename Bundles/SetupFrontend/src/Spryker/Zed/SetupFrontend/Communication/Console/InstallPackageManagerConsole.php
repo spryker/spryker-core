@@ -14,10 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacade getFacade()
  */
-class CleanUpDependenciesConsole extends Console
+class InstallPackageManagerConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:project:cleanup-dependencies';
-    const DESCRIPTION = 'This command will remove all frontend dependencies.';
+    const COMMAND_NAME = 'frontend:install:package-manager';
+    const DESCRIPTION = 'This command will install the package manager.';
 
     /**
      * @return void
@@ -38,9 +38,9 @@ class CleanUpDependenciesConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Cleanup frontend project dependencies');
+        $this->info('Install package manager');
 
-        if ($this->getFacade()->cleanupProjectDependencies()) {
+        if ($this->getFacade()->installPackageManager($this->getMessenger())) {
             return static::CODE_SUCCESS;
         }
 

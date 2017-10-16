@@ -10,11 +10,13 @@ namespace Spryker\Zed\SetupFrontend\Communication\Console;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
+/**
+ * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacade getFacade()
+ */
 class InstallProjectDependenciesConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:install-dependencies';
+    const COMMAND_NAME = 'frontend:project:install-dependencies';
     const DESCRIPTION = 'This command will install project dependencies.';
 
     /**
@@ -38,11 +40,10 @@ class InstallProjectDependenciesConsole extends Console
     {
         $this->info('Install Project dependencies');
 
-        $process = new Process('npm install', APPLICATION_ROOT_DIR);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        if ($this->getFacade()->installProjectDependencies($this->getMessenger())) {
+            return static::CODE_SUCCESS;
+        }
 
-        return static::CODE_SUCCESS;
+        return static::CODE_ERROR;
     }
 }

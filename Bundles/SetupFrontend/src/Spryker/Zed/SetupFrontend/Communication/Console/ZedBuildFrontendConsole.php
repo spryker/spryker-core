@@ -10,11 +10,13 @@ namespace Spryker\Zed\SetupFrontend\Communication\Console;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
+/**
+ * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacade getFacade()
+ */
 class ZedBuildFrontendConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:zed-build-frontend';
+    const COMMAND_NAME = 'frontend:zed:build';
     const DESCRIPTION = 'This command will build Zed\'s frontend.';
 
     /**
@@ -38,11 +40,10 @@ class ZedBuildFrontendConsole extends Console
     {
         $this->info('Build Zed frontend');
 
-        $process = new Process('npm run zed', APPLICATION_ROOT_DIR);
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        if ($this->getFacade()->buildZedFrontend($this->getMessenger())) {
+            return static::CODE_SUCCESS;
+        }
 
-        return static::CODE_SUCCESS;
+        return static::CODE_ERROR;
     }
 }

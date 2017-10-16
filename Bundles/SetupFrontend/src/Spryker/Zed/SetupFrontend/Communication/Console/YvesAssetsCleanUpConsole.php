@@ -10,11 +10,13 @@ namespace Spryker\Zed\SetupFrontend\Communication\Console;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacade getFacade()
+ */
 class YvesAssetsCleanUpConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:cleanup-yves-assets';
+    const COMMAND_NAME = 'frontend:yves:cleanup-assets';
     const DESCRIPTION = 'This command will remove all yves assets.';
 
     /**
@@ -38,17 +40,10 @@ class YvesAssetsCleanUpConsole extends Console
     {
         $this->info('Cleanup Yves assets');
 
-        $frontendDependencyDirectories = [
-            APPLICATION_ROOT_DIR . '/public/Yves/assets',
-        ];
-        $filesystem = new Filesystem();
-
-        foreach ($frontendDependencyDirectories as $frontendDependencyDirectory) {
-            if (is_dir($frontendDependencyDirectory)) {
-                $filesystem->remove($frontendDependencyDirectory);
-            }
+        if ($this->getFacade()->removeYvesAssets()) {
+            return static::CODE_SUCCESS;
         }
 
-        return static::CODE_SUCCESS;
+        return static::CODE_ERROR;
     }
 }
