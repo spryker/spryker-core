@@ -17,6 +17,7 @@ use Spryker\Shared\Storage\StorageConstants;
  */
 abstract class AbstractKvProvider extends AbstractClientProvider
 {
+
     /**
      * @deprecated Not used.
      */
@@ -98,4 +99,5 @@ abstract class AbstractKvProvider extends AbstractClientProvider
 
         return $config;
     }
+
 }

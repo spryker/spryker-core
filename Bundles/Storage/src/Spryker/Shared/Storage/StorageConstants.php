@@ -9,6 +9,7 @@ namespace Spryker\Shared\Storage;
 
 interface StorageConstants
 {
+
     const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
     const STORAGE_REDIS_PROTOCOL = 'YVES_STORAGE_REDIS_PROTOCOL';
     const STORAGE_REDIS_PASSWORD = 'YVES_STORAGE_REDIS_PASSWORD';
@@ -42,4 +43,5 @@ interface StorageConstants
      * @api
      */
     const STORAGE_PREDIS_CLIENT_OPTIONS = 'STORAGE_PREDIS_CLIENT_OPTIONS';
+
 }

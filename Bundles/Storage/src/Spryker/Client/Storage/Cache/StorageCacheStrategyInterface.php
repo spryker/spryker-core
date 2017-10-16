@@ -9,10 +9,12 @@ namespace Spryker\Client\Storage\Cache;
 
 interface StorageCacheStrategyInterface
 {
+
     /**
      * @param string $cacheKey
      *
      * @return void
      */
     public function updateCache($cacheKey);
+
 }

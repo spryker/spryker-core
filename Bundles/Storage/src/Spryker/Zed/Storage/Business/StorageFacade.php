@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class StorageFacade extends AbstractFacade implements StorageFacadeInterface
 {
+
     /**
      * @api
      *
@@ -67,4 +68,5 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     {
         $this->getFactory()->createStorage()->deleteMulti($keys);
     }
+
 }

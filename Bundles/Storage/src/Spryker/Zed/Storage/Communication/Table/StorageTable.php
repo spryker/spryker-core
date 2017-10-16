@@ -15,6 +15,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class StorageTable extends AbstractTable
 {
+
     const ACTIONS = 'Actions';
 
     /**
@@ -89,4 +90,5 @@ class StorageTable extends AbstractTable
 
         return $result;
     }
+
 }

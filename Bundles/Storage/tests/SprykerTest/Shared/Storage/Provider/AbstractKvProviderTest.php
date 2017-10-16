@@ -21,6 +21,7 @@ use Spryker\Shared\Storage\Provider\AbstractKvProvider;
  */
 class AbstractKvProviderTest extends Unit
 {
+
     /**
      * @return void
      */
@@ -39,4 +40,5 @@ class AbstractKvProviderTest extends Unit
     {
         return $this->getMockBuilder(AbstractKvProvider::class)->getMockForAbstractClass();
     }
+
 }

@@ -14,8 +14,10 @@ namespace Spryker\Shared\Storage\Provider;
  */
 abstract class AbstractReadWriteClientProvider extends AbstractKvProvider
 {
+
     /**
      * @var string
      */
     protected $clientType = 'ReadWrite';
+
 }

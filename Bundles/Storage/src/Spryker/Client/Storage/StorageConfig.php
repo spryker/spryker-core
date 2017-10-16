@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class StorageConfig extends AbstractBundleConfig
 {
+
     /**
      * @return int
      */
@@ -26,4 +27,5 @@ class StorageConfig extends AbstractBundleConfig
     {
         return 86400;
     }
+
 }

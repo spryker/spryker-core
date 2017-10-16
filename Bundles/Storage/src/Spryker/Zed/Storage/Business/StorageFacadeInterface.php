@@ -9,6 +9,7 @@ namespace Spryker\Zed\Storage\Business;
 
 interface StorageFacadeInterface
 {
+
     /**
      * @api
      *
@@ -47,4 +48,5 @@ interface StorageFacadeInterface
      * @return void
      */
     public function deleteMulti(array $keys);
+
 }

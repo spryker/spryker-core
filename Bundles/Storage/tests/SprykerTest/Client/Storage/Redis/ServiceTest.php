@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ServiceTest extends Unit
 {
+
     /**
      * @var array
      */
@@ -272,4 +273,5 @@ class ServiceTest extends Unit
 
         return $request;
     }
+
 }

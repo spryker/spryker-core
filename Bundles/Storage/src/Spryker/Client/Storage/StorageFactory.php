@@ -16,6 +16,7 @@ use Spryker\Shared\Storage\StorageConstants;
 
 class StorageFactory extends AbstractFactory
 {
+
     const DEFAULT_REDIS_DATABASE = 0;
 
     /**
@@ -142,4 +143,5 @@ class StorageFactory extends AbstractFactory
 
         return null;
     }
+
 }

@@ -26,6 +26,7 @@ use SprykerTest\Client\Storage\Helper\CacheDataProvider;
  */
 abstract class AbstractStorageCacheStrategyTest extends Unit
 {
+
     const TEST_CACHE_KEY = 'StorageClient_testKey';
 
     /**
@@ -103,4 +104,5 @@ abstract class AbstractStorageCacheStrategyTest extends Unit
     {
         $this->storageClientMock->setCachedKeys($this->cacheDataProvider->getTestCacheDataInput($testType));
     }
+
 }

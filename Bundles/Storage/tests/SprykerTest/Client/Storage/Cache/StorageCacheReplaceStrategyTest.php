@@ -21,6 +21,7 @@ use SprykerTest\Client\Storage\Helper\CacheDataProvider;
  */
 class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
 {
+
     /**
      * @param string $testType
      *
@@ -89,4 +90,5 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NO_KEYS);
     }
+
 }

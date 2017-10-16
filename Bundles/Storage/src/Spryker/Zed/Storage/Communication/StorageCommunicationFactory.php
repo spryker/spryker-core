@@ -16,6 +16,7 @@ use Spryker\Zed\Storage\StorageDependencyProvider;
  */
 class StorageCommunicationFactory extends AbstractCommunicationFactory
 {
+
     /**
      * @return \Spryker\Zed\Storage\Communication\Table\StorageTable
      */
@@ -33,4 +34,5 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
     }
+
 }

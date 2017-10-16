@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage\Cache;
 
 class StorageCacheInactiveStrategy implements StorageCacheStrategyInterface
 {
+
     /**
      * @param string $cacheKey
      *
@@ -17,4 +18,5 @@ class StorageCacheInactiveStrategy implements StorageCacheStrategyInterface
     public function updateCache($cacheKey)
     {
     }
+
 }

@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageRequestCacheServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+
     /**
      * @param \Silex\Application $app
      *
@@ -39,4 +40,5 @@ class StorageRequestCacheServiceProvider extends AbstractPlugin implements Servi
     public function boot(Application $app)
     {
     }
+
 }

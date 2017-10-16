@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage\Cache;
 
 interface StorageCacheStrategyHelperInterface
 {
+
     /**
      * @param string $cacheKey
      *
@@ -53,4 +54,5 @@ interface StorageCacheStrategyHelperInterface
      * @return bool
      */
     public function isUnusedKey($status);
+
 }

@@ -11,6 +11,7 @@ use Spryker\Client\Storage\StorageClient;
 
 class Storage
 {
+
     /**
      * @var \Spryker\Client\Storage\StorageClient
      */
@@ -78,4 +79,5 @@ class Storage
     {
         $this->storageClient->deleteMulti($keys);
     }
+
 }
