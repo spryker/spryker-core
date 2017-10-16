@@ -12,7 +12,6 @@ use Spryker\Shared\Log\LogConstants;
 
 class LoggerConfigLoaderDefault implements LoggerConfigLoaderInterface
 {
-
     /**
      * @return bool
      */
@@ -30,5 +29,4 @@ class LoggerConfigLoaderDefault implements LoggerConfigLoaderInterface
 
         return new $loggerClassName;
     }
-
 }

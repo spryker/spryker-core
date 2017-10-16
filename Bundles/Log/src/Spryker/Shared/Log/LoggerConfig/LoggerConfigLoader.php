@@ -11,7 +11,6 @@ use Spryker\Shared\Log\Exception\LoggerLoaderException;
 
 class LoggerConfigLoader
 {
-
     /**
      * @var \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface[]
      */
@@ -40,5 +39,4 @@ class LoggerConfigLoader
 
         throw new LoggerLoaderException('Could not load a Logger class.');
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class LogCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Monolog\Handler\HandlerInterface[]
      */
@@ -91,5 +90,4 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
 
         return $lineFormatter;
     }
-
 }

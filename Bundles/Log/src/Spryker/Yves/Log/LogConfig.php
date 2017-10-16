@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 class LogConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -60,5 +59,4 @@ class LogConfig extends AbstractBundleConfig
     {
         return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH);
     }
-
 }

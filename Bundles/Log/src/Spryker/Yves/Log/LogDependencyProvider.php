@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Container;
 
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_QUEUE = 'queue client';
 
     /**
@@ -40,5 +39,4 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

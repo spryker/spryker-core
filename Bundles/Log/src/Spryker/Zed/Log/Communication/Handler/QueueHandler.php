@@ -13,7 +13,6 @@ use Spryker\Shared\Log\Handler\AbstractQueueHandler;
 
 class QueueHandler extends AbstractQueueHandler
 {
-
     /**
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      *
@@ -29,5 +28,4 @@ class QueueHandler extends AbstractQueueHandler
 
         parent::__construct($level, $bubble);
     }
-
 }

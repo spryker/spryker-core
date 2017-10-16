@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterface
 {
-
     /**
      * @return string
      */
@@ -40,5 +39,4 @@ class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterf
     {
         return $this->getFactory()->getProcessors();
     }
-
 }

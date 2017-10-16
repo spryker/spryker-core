@@ -12,7 +12,6 @@ use Monolog\Handler\AbstractProcessingHandler;
 
 class AbstractQueueHandler extends AbstractProcessingHandler
 {
-
     /**
      * @var \Spryker\Client\Queue\QueueClientInterface
      */
@@ -63,5 +62,4 @@ class AbstractQueueHandler extends AbstractProcessingHandler
 
         $this->queueClient->sendMessage($this->queueName, $queueSendTransfer);
     }
-
 }

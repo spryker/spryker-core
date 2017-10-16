@@ -9,7 +9,6 @@ namespace Spryker\Shared\Log\LoggerConfig;
 
 interface LoggerConfigLoaderInterface
 {
-
     /**
      * @return bool
      */
@@ -19,5 +18,4 @@ interface LoggerConfigLoaderInterface
      * @return \Spryker\Shared\Log\Config\LoggerConfigInterface
      */
     public function create();
-
 }

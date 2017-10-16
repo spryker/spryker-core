@@ -19,7 +19,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
  */
 class LogFactory extends AbstractFactory
 {
-
     /**
      * @return \Monolog\Handler\HandlerInterface[]
      */
@@ -91,5 +90,4 @@ class LogFactory extends AbstractFactory
 
         return $lineFormatter;
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class YvesLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterface
 {
-
     /**
      * @return string
      */
@@ -40,5 +39,4 @@ class YvesLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInter
     {
         return $this->getFactory()->getProcessors();
     }
-
 }
