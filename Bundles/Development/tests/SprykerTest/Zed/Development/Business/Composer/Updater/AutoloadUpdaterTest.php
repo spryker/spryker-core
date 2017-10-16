@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Development\Business\Composer\Updater;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
-use stdClass;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -64,8 +63,8 @@ class AutoloadUpdaterTest extends Unit
         $autoloadUpdaterMock->method('pathExists')->willReturn(false);
 
         $updatedComposerJson = $autoloadUpdaterMock->update($composerJson, $splFileInfo);
-        $this->assertInstanceOf(stdClass::class, $updatedComposerJson['autoload']);
-        $this->assertInstanceOf(stdClass::class, $updatedComposerJson['autoload-dev']);
+        $this->assertArrayNotHasKey('autoload', $updatedComposerJson, 'autoload empty and thus removed.');
+        $this->assertArrayNotHasKey('autoload-dev', $updatedComposerJson, 'autoload-dev empty and thus removed.');
     }
 
     /**

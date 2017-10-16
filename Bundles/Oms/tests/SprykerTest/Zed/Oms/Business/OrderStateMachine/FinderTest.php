@@ -76,7 +76,7 @@ class FinderTest extends Unit
 
         $salesOrderItemEntity->getState()->setName('not existing');
 
-        $this->setExpectedException(StateNotFoundException::class);
+        $this->setExpectedException(StateNotFoundException::class, 'State with name "not existing" not found in any StateMachine processes.');
 
         $finder->getStateDisplayName($salesOrderItemEntity);
     }
