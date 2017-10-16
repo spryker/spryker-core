@@ -380,7 +380,7 @@ abstract class AbstractTable
     protected function getTwigPaths()
     {
         return [
-            __DIR__ . '/../../Presentation/Table/'
+            __DIR__ . '/../../Presentation/Table/',
         ];
     }
 

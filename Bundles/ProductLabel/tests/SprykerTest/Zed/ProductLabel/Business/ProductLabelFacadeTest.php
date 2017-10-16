@@ -393,7 +393,7 @@ class ProductLabelFacadeTest extends Unit
         ]);
 
         $this->tester->setDependency(ProductLabelDependencyProvider::PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS, [
-            $productLabelRelationUpdaterPluginMock
+            $productLabelRelationUpdaterPluginMock,
         ]);
 
         // Act

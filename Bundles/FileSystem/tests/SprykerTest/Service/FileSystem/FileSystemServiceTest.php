@@ -100,7 +100,7 @@ class FileSystemServiceTest extends Unit
         $flysystemContainer = new Container();
         $flysystemContainer[FlysystemDependencyProvider::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $flysystemContainer) {
             return [
-                new LocalFilesystemBuilderPlugin()
+                new LocalFilesystemBuilderPlugin(),
             ];
         };
 

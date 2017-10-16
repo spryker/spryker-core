@@ -32,7 +32,7 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
     public function getCmsBlockCategoryPositionList()
     {
         return [
-            static::CMS_BLOCK_CATEGORY_POSITION_DEFAULT
+            static::CMS_BLOCK_CATEGORY_POSITION_DEFAULT,
         ];
     }
 

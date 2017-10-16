@@ -44,7 +44,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->getMimetype($fileSystemQueryTransfer);
+        return $this->fileSystemReader->getMimeType($fileSystemQueryTransfer);
     }
 
     /**

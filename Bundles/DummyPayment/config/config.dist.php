@@ -29,7 +29,7 @@ $config[OmsConstants::PROCESS_LOCATION] = [
 ];
 
 $config[OmsConstants::ACTIVE_PROCESSES] = [
-    'DummyPayment01'
+    'DummyPayment01',
 ];
 
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [

@@ -15,18 +15,16 @@
     "swiftmailer/swiftmailer": "Recommended to use this package as default mailer."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
-    },
     "psr-4": {
       "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
       "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
