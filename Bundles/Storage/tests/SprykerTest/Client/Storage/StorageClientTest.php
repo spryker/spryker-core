@@ -78,7 +78,7 @@ class StorageClientTest extends Unit
     /**
      * @return string
      */
-    protected function getStoreNameAndLocal()
+    protected function getStoreAndLocale()
     {
         return strtolower(Store::getInstance()->getStoreName()) . '.' .
             strtolower(Store::getInstance()->getCurrentLocale()) . '.';
