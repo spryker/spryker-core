@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class StorageClientServiceProvider implements ServiceProviderInterface
 {
-
     const CLIENT_STORAGE = 'storage client';
 
     /**
@@ -40,5 +39,4 @@ class StorageClientServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

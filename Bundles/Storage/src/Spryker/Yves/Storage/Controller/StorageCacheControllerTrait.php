@@ -14,7 +14,6 @@ use Spryker\Shared\Storage\StorageConstants;
  */
 trait StorageCacheControllerTrait
 {
-
     /**
      * @param string $storageCacheStrategy
      *
@@ -38,5 +37,4 @@ trait StorageCacheControllerTrait
             $this->getApplication()[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS] = $storageCacheAllowedGetParameters;
         }
     }
-
 }

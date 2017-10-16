@@ -12,7 +12,6 @@ use Spryker\Client\Storage\StorageConfig;
 
 class CacheDataProvider
 {
-
     const TEST_TYPE_NEW_KEYS = 'TEST_TYPE_NEW_CACHE';
     const TEST_TYPE_USED_KEYS = 'TEST_TYPE_USED_KEYS';
     const TEST_TYPE_UNUSED_KEYS = 'TEST_TYPE_UNUSED_KEYS';
@@ -355,5 +354,4 @@ class CacheDataProvider
 
         return $cache;
     }
-
 }

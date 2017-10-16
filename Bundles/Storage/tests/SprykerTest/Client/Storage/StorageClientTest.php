@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClientTest extends Unit
 {
-
     const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
 
     /**
@@ -44,8 +43,8 @@ class StorageClientTest extends Unit
     }
 
     /**
-     * @param $uri
-     * @param $expectedCacheKey
+     * @param string $uri
+     * @param string $expectedCacheKey
      * @param array $allowedGetParameters
      * @param array $getParameters
      *
@@ -185,5 +184,4 @@ class StorageClientTest extends Unit
             $getParameters
         );
     }
-
 }

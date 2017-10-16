@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageCacheServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -27,12 +26,19 @@ class StorageCacheServiceProvider extends AbstractPlugin implements ServiceProvi
     public function register(Application $app)
     {
         $app->finish(function (Request $request) use ($app) {
-            if (isset($app[StorageConstants::STORAGE_CACHE_STRATEGY]) && isset($app[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS])) {
-                $this->getClient()->persistCacheForRequest(
-                    $request,
-                    $app[StorageConstants::STORAGE_CACHE_STRATEGY],
-                    $app[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS]
-                );
+            if (isset($app[StorageConstants::STORAGE_CACHE_STRATEGY])) {
+                if (isset($app[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS])) {
+                    $this->getClient()->persistCacheForRequest(
+                        $request,
+                        $app[StorageConstants::STORAGE_CACHE_STRATEGY],
+                        $app[StorageConstants::STORAGE_CACHE_ALLOWED_GET_PARAMETERS]
+                    );
+                } else {
+                    $this->getClient()->persistCacheForRequest(
+                        $request,
+                        $app[StorageConstants::STORAGE_CACHE_STRATEGY]
+                    );
+                }
             }
         });
     }
@@ -45,5 +51,4 @@ class StorageCacheServiceProvider extends AbstractPlugin implements ServiceProvi
     public function boot(Application $app)
     {
     }
-
 }
