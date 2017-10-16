@@ -19,7 +19,7 @@ class CacheWarmer implements CacheWarmerInterface
     protected $cacheWriter;
 
     /**
-     * @var string
+     * @var \Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface
      */
     protected $templatePathMapBuilder;
 
