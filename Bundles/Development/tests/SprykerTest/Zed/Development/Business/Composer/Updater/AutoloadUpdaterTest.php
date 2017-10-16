@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Development\Business\Composer\Updater;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
-use stdClass;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**

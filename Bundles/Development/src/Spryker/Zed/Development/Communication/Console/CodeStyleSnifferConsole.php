@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
@@ -24,7 +25,7 @@ class CodeStyleSnifferConsole extends Console
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_FIX = 'fix';
     const OPTION_EXPLAIN = 'explain';
-    const OPTION_BUNDLE_ALL = 'all';
+    const OPTION_CORE = 'core';
     const ARGUMENT_SUB_PATH = 'path';
 
     /**
@@ -40,6 +41,7 @@ class CodeStyleSnifferConsole extends Console
         $this->addAlias();
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to fix code style for (or "all")');
+        $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Core (instead of Project)');
         $this->addOption(static::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
         $this->addOption(static::OPTION_EXPLAIN, 'e', InputOption::VALUE_NONE, 'Explain the standard by showing the sniffs it includes');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
@@ -55,14 +57,13 @@ class CodeStyleSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $isCore = $this->input->getOption(static::OPTION_CORE);
         $module = $this->input->getOption(static::OPTION_MODULE);
+        $message = sprintf('Run Architecture Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
 
-        $message = 'Check code style in PROJECT level';
         if ($module) {
-            $message = 'Check code style in all CORE modules';
-            if ($module !== static::OPTION_BUNDLE_ALL) {
-                $message = 'Check code style in "' . $module . '" CORE module';
-            }
+            $module = $this->normalizeModuleName($module);
+            $message .= ' in ' . $module . ' module';
         }
 
         $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
@@ -83,5 +84,19 @@ class CodeStyleSnifferConsole extends Console
     protected function addAlias()
     {
         $this->setAliases(['code:sniff:style']);
+    }
+
+    /**
+     * @param string $module
+     *
+     * @return string
+     */
+    protected function normalizeModuleName($module)
+    {
+        $filter = new UnderscoreToCamelCase();
+        $normalized = $filter->filter(str_replace('-', '_', $module));
+        $normalized = ucfirst($normalized);
+
+        return $normalized;
     }
 }
