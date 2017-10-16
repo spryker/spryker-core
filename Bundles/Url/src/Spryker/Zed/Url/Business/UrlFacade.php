@@ -33,7 +33,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      */
     public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
     {
-        if (func_num_args() === 4) {
+        if (is_string($urlTransfer)) {
             return $this->legacyCreateUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
         }
 

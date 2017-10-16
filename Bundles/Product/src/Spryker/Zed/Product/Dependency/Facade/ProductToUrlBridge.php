@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 class ProductToUrlBridge implements ProductToUrlInterface
@@ -25,11 +26,14 @@ class ProductToUrlBridge implements ProductToUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl(UrlTransfer $urlTransfer)
+    public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
     {
         return $this->urlFacade->createUrl($urlTransfer);
     }
@@ -55,11 +59,11 @@ class ProductToUrlBridge implements ProductToUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is only for BC reasons.
      *
      * @return bool
      */
-    public function hasUrl(UrlTransfer $urlTransfer)
+    public function hasUrl($urlTransfer)
     {
         return $this->urlFacade->hasUrl($urlTransfer);
     }
