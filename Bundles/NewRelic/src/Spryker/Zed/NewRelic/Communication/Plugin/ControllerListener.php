@@ -72,7 +72,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $request = $event->getRequest();
         $transactionName = $this->getTransactionName($request);
         $requestUri = $request->server->get('REQUEST_URI', 'n/a');
-        $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostname());
+        $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostName());
 
         $this->newRelicApi->setNameOfTransaction($transactionName);
         $this->newRelicApi->addCustomParameter('request_uri', $requestUri);
