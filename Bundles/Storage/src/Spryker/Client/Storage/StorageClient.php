@@ -460,7 +460,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         $urlSegments = strtok($requestUri, '?');
         $getParametersKey = static::filterGetParameters($getParameters, $allowedGetParameters);
 
-        $cacheKey = self::assembleCacheKey($urlSegments, $getParametersKey);
+        $cacheKey = static::assembleCacheKey($urlSegments, $getParametersKey);
 
         return $cacheKey;
     }
@@ -476,7 +476,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParameters));
         ksort($allowedGetParameters);
         $getParametersKey = count($allowedGetParameters) > 0
-            ?  '?' . http_build_query($allowedGetParameters)
+            ? '?' . http_build_query($allowedGetParameters)
             : '';
 
         return $getParametersKey;
