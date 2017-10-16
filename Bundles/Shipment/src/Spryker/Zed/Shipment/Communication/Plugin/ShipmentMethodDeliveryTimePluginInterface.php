@@ -15,7 +15,7 @@ interface ShipmentMethodDeliveryTimePluginInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int
+     * @return int Delivery time in seconds
      */
     public function getTime(QuoteTransfer $quoteTransfer);
 

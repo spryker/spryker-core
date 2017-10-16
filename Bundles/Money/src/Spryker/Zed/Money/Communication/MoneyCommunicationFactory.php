@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionMultiStoreCollectionDataProvider;
 use Spryker\Zed\Money\Communication\Form\DataProvider\MoneyCollectionSingleStoreDataProvider;
 use Spryker\Zed\Money\Communication\Form\DataProvider\MoneyDataProvider;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 use Spryker\Zed\Money\MoneyDependencyProvider;
 
@@ -67,6 +68,14 @@ class MoneyCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType
+     */
+    public function createMoneyCollectionType()
+    {
+        return new MoneyCollectionType();
     }
 
 }

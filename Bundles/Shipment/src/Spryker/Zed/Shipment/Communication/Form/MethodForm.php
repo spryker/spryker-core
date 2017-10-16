@@ -37,6 +37,19 @@ class MethodForm extends AbstractType
     const OPTION_DATA_CLASS = 'data_class';
 
     /**
+     * @var string
+     */
+    protected $moneyValueCollectionTypeClass;
+
+    /**
+     * @param string $moneyValueCollectionTypeClass
+     */
+    public function __construct($moneyValueCollectionTypeClass)
+    {
+        $this->moneyValueCollectionTypeClass = $moneyValueCollectionTypeClass;
+    }
+
+    /**
      * @return string
      */
     public function getName()
@@ -141,7 +154,7 @@ class MethodForm extends AbstractType
     {
         $builder->add(
             static::FIELD_MONEY_VALUE_COLLECTION,
-            MoneyCollectionType::class,
+            $this->moneyValueCollectionTypeClass,
             [
                 'property_path' => ShipmentMethodTransfer::PRICES,
                 MoneyCollectionType::OPTION_AMOUNT_PER_STORE => true,
