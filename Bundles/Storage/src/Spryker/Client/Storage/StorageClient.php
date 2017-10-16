@@ -383,7 +383,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $storageCacheStrategyName
      * @param array $allowedGetParameters
      *
@@ -437,12 +437,12 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * @param Request|null $request
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      * @param array $allowedGetParameters
      *
      * @return string
      */
-    protected static function generateCacheKey(Request $request = null, array $allowedGetParameters= [])
+    protected static function generateCacheKey(Request $request = null, array $allowedGetParameters = [])
     {
         if ($request) {
             $requestUri = $request->getRequestUri();
@@ -467,22 +467,6 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
-     * @param string $urlSegments
-     * @param string $getParametersKey
-     *
-     * @return string
-     */
-    protected static function assembleCacheKey($urlSegments, $getParametersKey)
-    {
-        $cacheKey = strtolower(Store::getInstance()->getStoreName()) . self::KEY_NAME_SEPARATOR .
-            strtolower(Store::getInstance()->getCurrentLocale()) . self::KEY_NAME_SEPARATOR .
-            self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
-            $urlSegments . $getParametersKey;
-
-        return $cacheKey;
-    }
-
-    /**
      * @param array $getParameters
      * @param array $allowedGetParameters
      *
@@ -497,6 +481,22 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             : '';
 
         return $getParametersKey;
+    }
+
+    /**
+     * @param string $urlSegments
+     * @param string $getParametersKey
+     *
+     * @return string
+     */
+    protected static function assembleCacheKey($urlSegments, $getParametersKey)
+    {
+        $cacheKey = strtolower(Store::getInstance()->getStoreName()) . self::KEY_NAME_SEPARATOR .
+            strtolower(Store::getInstance()->getCurrentLocale()) . self::KEY_NAME_SEPARATOR .
+            self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
+            $urlSegments . $getParametersKey;
+
+        return $cacheKey;
     }
 
     /**

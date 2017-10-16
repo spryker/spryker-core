@@ -5,61 +5,115 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Storage\Business;
+namespace SprykerTest\Client\Storage;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Storage\Business\StorageFacade;
+use Spryker\Client\Storage\StorageClient;
+use Spryker\Shared\Storage\StorageConstants;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
- * @group Zed
+ * @group Client
  * @group Storage
- * @group Business
- * @group Facade
- * @group StorageFacadeTest
+ * @group StorageClientTest
  * Add your own group annotations below this line
  */
-class StorageFacadeTest extends Unit
+class StorageClientTest extends Unit
 {
-    /**
-     * @var \SprykerTest\Zed\Storage\BusinessTester
-     */
-    protected $tester;
+
+    const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
 
     /**
-     * @var \Spryker\Zed\Storage\Business\StorageFacade
+     * @var \Spryker\Client\Storage\StorageClient
      */
-    protected $storageFacade;
+    protected $storageClientMock;
 
     /**
      * @return void
      */
-    public function setUp()
+    protected function _before()
     {
-        parent::setUp();
+        $this->storageClientMock = $this
+            ->getMockBuilder(StorageClient::class)
+            ->setMethods(['updateCache'])
+            ->getMock();
+    }
 
-        $this->skipIfCircleCi();
-        $this->storageFacade = new StorageFacade();
+    /**
+     * @param $uri
+     * @param $expectedCacheKey
+     * @param array $allowedGetParameters
+     * @param array $getParameters
+     *
+     * @return void
+     */
+    protected function testStorageCacheAllowedGetParameters(
+        $uri,
+        $expectedCacheKey,
+        array $allowedGetParameters = [],
+        array $getParameters = []
+    ) {
+        $request = new Request();
+        $request->server->set('SERVER_NAME', 'localhost');
+        $request->server->set('REQUEST_URI', $uri);
+        $request->query = new ParameterBag($getParameters);
+
+        $this->storageClientMock->expects($this->once())
+            ->method('updateCache')
+            ->with(
+                $this->equalTo(self::STORAGE_CACHE_STRATEGY),
+                $this->equalTo($expectedCacheKey)
+            );
+
+        $this->storageClientMock->persistCacheForRequest(
+            $request,
+            self::STORAGE_CACHE_STRATEGY,
+            $allowedGetParameters
+        );
     }
 
     /**
      * @return void
      */
-    protected function skipIfCircleCi()
+    public function testCacheWithNoGetParameter()
     {
-        if (getenv('CIRCLECI') || getenv('TRAVIS')) {
-            $this->markTestSkipped('Circle ci not set up properly');
-        }
+        $uri = '/en/cameras-&-camcorders';
+        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders';
+
+        $this->testStorageCacheAllowedGetParameters($uri, $expectedCacheKey);
     }
 
     /**
      * @return void
      */
-    public function testGetTotalCount()
+    public function testCacheWithOneAllowedGetParameterAndOneIsRequested()
     {
-        $count = $this->storageFacade->getTotalCount();
-
-        $this->assertTrue($count > 0);
+//        $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
+//        $expectedCacheKey = 'kv:de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1';
     }
+
+    /**
+     * @return void
+     */
+    public function testCacheWithOneAllowedGetParameterAndTwoAreRequested()
+    {
+    }
+
+    /**
+     * @return void
+     */
+    public function testCacheWithTwoAllowedGetParameterAndTwoAreRequested()
+    {
+    }
+
+    /**
+     * @return void
+     */
+    public function testCacheWithTwoAllowedGetParameterAndTwoAreRequestedAndNotOrdered()
+    {
+    }
+
 }
