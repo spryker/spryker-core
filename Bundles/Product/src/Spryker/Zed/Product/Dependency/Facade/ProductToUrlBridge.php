@@ -35,7 +35,7 @@ class ProductToUrlBridge implements ProductToUrlInterface
      */
     public function createUrl($urlTransfer, LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
     {
-        return $this->urlFacade->createUrl($urlTransfer);
+        return $this->urlFacade->createUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
     }
 
     /**
