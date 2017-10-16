@@ -9,6 +9,7 @@ namespace SprykerTest\Client\Storage;
 
 use Codeception\Test\Unit;
 use Spryker\Client\Storage\StorageClient;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,12 +77,21 @@ class StorageClientTest extends Unit
     }
 
     /**
+     * @return string
+     */
+    protected function getStoreNameAndLocal()
+    {
+        return strtolower(Store::getInstance()->getStoreName()) . '.' .
+            strtolower(Store::getInstance()->getCurrentLocale()) . '.';
+    }
+
+    /**
      * @return void
      */
     public function testGenerateCacheKeyWithNoGetParameter()
     {
         $uri = '/en/cameras-&-camcorders';
-        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders';
+        $expectedCacheKey = $this->getStoreNameAndLocal() . 'storage./en/cameras-&-camcorders';
 
         $this->testStorageCacheAllowedGetParameters($uri, $expectedCacheKey);
     }
@@ -92,7 +102,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithOneAllowedGetParameterAndOneIsGiven()
     {
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
-        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $expectedCacheKey = $this->getStoreNameAndLocal() . 'storage./en/cameras-&-camcorders?allowedParameter1=1';
         $allowedGetParameters = ['allowedParameter1'];
         $getParameters = ['allowedParameter1' => '1'];
 
@@ -110,7 +120,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithTwoAllowedGetParameterAndOneIsGiven()
     {
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
-        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $expectedCacheKey = $this->getStoreNameAndLocal() . 'storage./en/cameras-&-camcorders?allowedParameter1=1';
         $allowedGetParameters = ['allowedParameter1', 'allowedParameter2'];
         $getParameters = ['allowedParameter1' => '1'];
 
@@ -128,7 +138,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithOneAllowedGetParameterAndTwoAreGiven()
     {
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
-        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $expectedCacheKey = $this->getStoreNameAndLocal() . 'storage./en/cameras-&-camcorders?allowedParameter1=1';
         $allowedGetParameters = ['allowedParameter1'];
         $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
 
@@ -146,7 +156,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoOrderedAreGiven()
     {
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
-        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
+        $expectedCacheKey = $this->getStoreNameAndLocal() . 'storage./en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
         $allowedGetParameters = ['allowedParameter1', 'allowedParameter2'];
         $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
 
@@ -164,7 +174,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoNotOrderedAreGiven()
     {
         $uri = '/en/cameras-&-camcorders?allowedParameter2=2&allowedParameter1=1';
-        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
+        $expectedCacheKey = $this->getStoreNameAndLocal() . 'storage./en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
         $allowedGetParameters = ['allowedParameter1', 'allowedParameter2'];
         $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
 
