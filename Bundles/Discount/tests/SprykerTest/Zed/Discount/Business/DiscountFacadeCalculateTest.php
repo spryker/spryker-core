@@ -339,7 +339,7 @@ class DiscountFacadeCalculateTest extends Unit
 
         $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER] = function () use ($filterPluginMock) {
             return [
-                $filterPluginMock
+                $filterPluginMock,
             ];
         };
 

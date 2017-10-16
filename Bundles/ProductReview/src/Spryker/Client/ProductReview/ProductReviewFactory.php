@@ -87,9 +87,19 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated use getProductReviewConfig
+     *
      * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
      */
     public function getConfig()
+    {
+        return parent::getConfig();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     */
+    public function getProductReviewConfig()
     {
         return parent::getConfig();
     }

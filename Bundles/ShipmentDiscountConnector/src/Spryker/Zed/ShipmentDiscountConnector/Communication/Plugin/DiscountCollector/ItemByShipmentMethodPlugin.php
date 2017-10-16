@@ -56,7 +56,7 @@ class ItemByShipmentMethodPlugin extends AbstractPlugin implements CollectorPlug
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 

@@ -92,9 +92,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createCodeStyleSniffer()
     {
         return new CodeStyleSniffer(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory(),
-            $this->getConfig()->getCodingStandard()
+            $this->getConfig()
         );
     }
 

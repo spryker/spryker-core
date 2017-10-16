@@ -13,8 +13,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\ProductLabelDiscountConnector\\": "tests/SprykerTest/Zed/ProductLabelDiscountConnector/_support/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

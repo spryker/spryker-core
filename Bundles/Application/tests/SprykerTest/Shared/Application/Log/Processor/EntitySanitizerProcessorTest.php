@@ -35,7 +35,7 @@ class EntitySanitizerProcessorTest extends Unit
     {
         $record = ['message' => 'message', 'context' => $context];
         $filterFields = [
-            'first_name'
+            'first_name',
         ];
         $sanitizer = new Sanitizer($filterFields, '***');
         $processor = new EntitySanitizerProcessor($sanitizer);

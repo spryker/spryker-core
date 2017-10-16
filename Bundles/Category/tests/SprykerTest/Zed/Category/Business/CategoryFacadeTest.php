@@ -73,7 +73,7 @@ class CategoryFacadeTest extends Unit
 
         //add extra parent to initial node (make c1 enveloped into c1 through c2)
         $categoryTransfer1->setExtraParents(new ArrayObject([
-            $categoryTransfer2->getCategoryNode()
+            $categoryTransfer2->getCategoryNode(),
         ]));
         $categoryFacade->update($categoryTransfer1);
 

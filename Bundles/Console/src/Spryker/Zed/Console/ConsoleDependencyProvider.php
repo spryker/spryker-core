@@ -101,7 +101,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     protected function getServiceProviders(Container $container)
     {
         return [
-            new PropelServiceProvider()
+            new PropelServiceProvider(),
         ];
     }
 }

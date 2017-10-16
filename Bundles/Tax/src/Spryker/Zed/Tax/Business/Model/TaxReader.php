@@ -96,7 +96,7 @@ class TaxReader implements TaxReaderInterface
      */
     public function getTaxSets()
     {
-        $propelCollection = $this->queryContainer->queryAllTaxsets()->find();
+        $propelCollection = $this->queryContainer->queryAllTaxSets()->find();
 
         $transferCollection = new TaxSetCollectionTransfer();
         foreach ($propelCollection as $taxSetEntity) {

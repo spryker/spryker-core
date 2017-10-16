@@ -190,7 +190,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $request = $this->getRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
-        $request->setHost($this->utilNetworkService->getHostname() ?: 'n/a');
+        $request->setHost($this->utilNetworkService->getHostName() ?: 'n/a');
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {
