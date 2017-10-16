@@ -58,7 +58,7 @@ class Sellable implements SellableInterface
     public function calculateStockForProduct($sku)
     {
         $physicalItems = $this->stockFacade->calculateStockForProduct($sku);
-        $reservedItems = $this->omsFacade->sumReservedProductQuantitiesForSku($sku);
+        $reservedItems = $this->omsFacade->getOmsReservedProductQuantitiesForSku($sku);
 
         return $physicalItems - $reservedItems;
     }

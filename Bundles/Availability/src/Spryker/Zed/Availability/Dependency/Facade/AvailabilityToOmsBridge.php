@@ -23,6 +23,9 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
     }
 
     /**
+     * @deprecated Using this method will affect the performance,
+     * use AvailabilityToOmsInterface::getOmsReservedProductQuantitiesForSku() instead.
+     *
      * @param string $sku
      *
      * @return int
@@ -30,5 +33,15 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
     public function sumReservedProductQuantitiesForSku($sku)
     {
         return $this->omsFacade->sumReservedProductQuantitiesForSku($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantitiesForSku($sku)
+    {
+        return $this->omsFacade->getOmsReservedProductQuantitiesForSku($sku);
     }
 }

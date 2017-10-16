@@ -72,6 +72,21 @@ class Reservation implements ReservationInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantitiesForSku($sku)
+    {
+        $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOne();
+        if ($reservationEntity === null) {
+            return 0;
+        }
+
+        return $reservationEntity->getReservationQuantity();
+    }
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
