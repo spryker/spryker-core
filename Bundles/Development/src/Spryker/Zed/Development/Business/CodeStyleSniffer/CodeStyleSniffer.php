@@ -50,14 +50,14 @@ class CodeStyleSniffer
      */
     public function checkCodeStyle($module, array $options = [])
     {
-        $pathOption = isset($options['path']) ? $options['path'] : null;
         $isCore = isset($options['core']) ? $options['core'] : false;
-        $path = $this->resolvePath($module, $isCore, $pathOption);
-
+        $pathOption = isset($options['path']) ? $options['path'] : null;
         $defaults = [
-            'ignore' => $isCore || $path ? '' : 'vendor/',
+            'ignore' => $isCore || $pathOption ? '' : 'vendor/',
         ];
         $options += $defaults;
+
+        $path = $this->resolvePath($module, $isCore, $pathOption);
 
         return $this->runSnifferCommand($path, $options);
     }
