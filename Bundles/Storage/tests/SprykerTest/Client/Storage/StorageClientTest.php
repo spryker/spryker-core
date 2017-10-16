@@ -78,7 +78,7 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testCacheWithNoGetParameter()
+    public function testGenerateCacheKeyWithNoGetParameter()
     {
         $uri = '/en/cameras-&-camcorders';
         $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders';
@@ -89,31 +89,91 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testCacheWithOneAllowedGetParameterAndOneIsRequested()
+    public function testGenerateCacheKeyWithOneAllowedGetParameterAndOneIsGiven()
     {
-//        $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
-//        $expectedCacheKey = 'kv:de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
+        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $allowedGetParameters = ['allowedParameter1'];
+        $getParameters = ['allowedParameter1' => '1'];
+
+        $this->testStorageCacheAllowedGetParameters(
+            $uri,
+            $expectedCacheKey,
+            $allowedGetParameters,
+            $getParameters
+        );
     }
 
     /**
      * @return void
      */
-    public function testCacheWithOneAllowedGetParameterAndTwoAreRequested()
+    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndOneIsGiven()
     {
+        $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
+        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $allowedGetParameters = ['allowedParameter1', 'allowedParameter2'];
+        $getParameters = ['allowedParameter1' => '1'];
+
+        $this->testStorageCacheAllowedGetParameters(
+            $uri,
+            $expectedCacheKey,
+            $allowedGetParameters,
+            $getParameters
+        );
     }
 
     /**
      * @return void
      */
-    public function testCacheWithTwoAllowedGetParameterAndTwoAreRequested()
+    public function testGenerateCacheKeyWithOneAllowedGetParameterAndTwoAreGiven()
     {
+        $uri = '/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
+        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1';
+        $allowedGetParameters = ['allowedParameter1'];
+        $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
+
+        $this->testStorageCacheAllowedGetParameters(
+            $uri,
+            $expectedCacheKey,
+            $allowedGetParameters,
+            $getParameters
+        );
     }
 
     /**
      * @return void
      */
-    public function testCacheWithTwoAllowedGetParameterAndTwoAreRequestedAndNotOrdered()
+    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoOrderedAreGiven()
     {
+        $uri = '/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
+        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
+        $allowedGetParameters = ['allowedParameter1', 'allowedParameter2'];
+        $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
+
+        $this->testStorageCacheAllowedGetParameters(
+            $uri,
+            $expectedCacheKey,
+            $allowedGetParameters,
+            $getParameters
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoNotOrderedAreGiven()
+    {
+        $uri = '/en/cameras-&-camcorders?allowedParameter2=2&allowedParameter1=1';
+        $expectedCacheKey = 'de.en_us.storage./en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
+        $allowedGetParameters = ['allowedParameter1', 'allowedParameter2'];
+        $getParameters = ['allowedParameter1' => '1', 'allowedParameter2' => '2'];
+
+        $this->testStorageCacheAllowedGetParameters(
+            $uri,
+            $expectedCacheKey,
+            $allowedGetParameters,
+            $getParameters
+        );
     }
 
 }
