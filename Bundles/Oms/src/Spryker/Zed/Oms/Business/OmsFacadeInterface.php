@@ -134,7 +134,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Process[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getProcesses();
 
@@ -189,7 +189,7 @@ interface OmsFacadeInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null);
 
@@ -416,7 +416,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 

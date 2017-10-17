@@ -125,7 +125,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Process[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getProcesses()
     {
