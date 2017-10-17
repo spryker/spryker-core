@@ -156,7 +156,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param string|int $timeout
+     * @param string $timeout
      *
      * @return void
      */

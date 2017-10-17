@@ -440,7 +440,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param HasAwareConditionCollectionInterface|mixed $collection
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareConditionCollectionInterface|mixed $collection
      * @param string $commandName
      *
      * @return bool
