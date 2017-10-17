@@ -16,7 +16,9 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 
 class Drawer implements DrawerInterface
@@ -83,7 +85,7 @@ class Drawer implements DrawerInterface
     protected $conditions;
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection
+     * @var CommandCollectionInterface
      */
     protected $commands;
 
@@ -381,7 +383,7 @@ class Drawer implements DrawerInterface
         if ($transition->hasCondition()) {
             $conditionLabel = $transition->getCondition();
 
-            if (!$this->conditions->has($transition->getCondition())) {
+            if (!$this->inCollection($transition->getCondition())) {
                 $conditionLabel .= ' ' . $this->notImplemented;
             }
 
@@ -415,7 +417,7 @@ class Drawer implements DrawerInterface
             if ($event->hasCommand()) {
                 $commandLabel = 'c:' . $event->getCommand();
 
-                if ($this->commands->has($event->getCommand())) {
+                if ($this->inCollection($event->getCommand())) {
                     $commandModel = $this->commands->get($event->getCommand());
                     if ($commandModel instanceof CommandByOrderInterface) {
                         $commandLabel .= ' (by order)';
@@ -436,6 +438,20 @@ class Drawer implements DrawerInterface
         }
 
         return $label;
+    }
+
+    /**
+     * @param string $commandName
+     *
+     * @return bool
+     */
+    protected function inCollection($commandName)
+    {
+        if ($this->commands instanceof HasAwareConditionCollectionInterface) {
+            return $this->commands->has($commandName);
+        }
+
+        return false;
     }
 
     /**

@@ -212,6 +212,8 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
             return null;
         }
 
-        return json_encode(['id_sales_order_items' => $orderItemIds]);
+        return json_encode([
+            'id_sales_order_items' => $orderItemIds,
+        ]);
     }
 }
