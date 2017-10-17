@@ -82,14 +82,16 @@ interface EventInterface
     public function getTransitions();
 
     /**
-     * @param int $timeout
+     * Examples: "1 hour", "1 week" etc
+     *
+     * @param string $timeout
      *
      * @return void
      */
     public function setTimeout($timeout);
 
     /**
-     * @return int
+     * @return string
      */
     public function getTimeout();
 

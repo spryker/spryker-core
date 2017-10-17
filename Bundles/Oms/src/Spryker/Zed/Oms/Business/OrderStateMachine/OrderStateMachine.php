@@ -696,7 +696,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array $data
+     * @param array|\Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */

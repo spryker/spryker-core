@@ -387,7 +387,7 @@ interface OmsFacadeInterface
      * @api
      *
      * @param string $eventId
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param array $logContext
      * @param array $data
      *

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oms\Business\Lock;
 interface LockerInterface
 {
     /**
-     * @param int $identifier
+     * @param string $identifier
      * @param string|null $details
      *
      * @return bool

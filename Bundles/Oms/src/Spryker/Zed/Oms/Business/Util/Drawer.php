@@ -454,7 +454,7 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param string $label
+     * @param string[] $label
      *
      * @return string
      */
