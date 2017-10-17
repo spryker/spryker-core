@@ -153,7 +153,7 @@ class Builder implements BuilderInterface
 
         /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
-            $xmlElement = $this->prefixSubProcessElementValues($xmlElement, $prefix);
+            $xmlElement = $this->prefixSubProcessElementValue($xmlElement, $prefix);
             $xmlElement = $this->prefixSubProcessElementAttributes($xmlElement, $prefix);
 
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
@@ -172,7 +172,7 @@ class Builder implements BuilderInterface
      *
      * @return \SimpleXMLElement
      */
-    protected function prefixSubProcessElementValues(SimpleXMLElement $xmlElement, $prefix = null)
+    protected function prefixSubProcessElementValue(SimpleXMLElement $xmlElement, $prefix = null)
     {
         if ($prefix === null) {
             return $xmlElement;
