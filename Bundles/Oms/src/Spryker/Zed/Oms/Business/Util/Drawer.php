@@ -16,7 +16,6 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
-use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
@@ -85,7 +84,7 @@ class Drawer implements DrawerInterface
     protected $conditions;
 
     /**
-     * @var CommandCollectionInterface
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface
      */
     protected $commands;
 

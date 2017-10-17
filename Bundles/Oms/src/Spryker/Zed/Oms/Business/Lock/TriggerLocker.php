@@ -74,7 +74,7 @@ class TriggerLocker implements LockerInterface
     }
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @return void
      */

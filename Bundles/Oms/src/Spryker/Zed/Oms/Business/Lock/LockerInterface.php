@@ -18,7 +18,7 @@ interface LockerInterface
     public function acquire($identifier, $details = null);
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @return void
      */
