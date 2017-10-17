@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Business\Voucher;
 
 interface VoucherCodeInterface
 {
-
     /**
      * @param string[] $codes
      *
@@ -23,5 +22,4 @@ interface VoucherCodeInterface
      * @return int
      */
     public function useCodes(array $codes);
-
 }

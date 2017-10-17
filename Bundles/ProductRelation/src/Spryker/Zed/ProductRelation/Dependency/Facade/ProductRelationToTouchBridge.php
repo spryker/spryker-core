@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Dependency\Facade;
 
 class ProductRelationToTouchBridge implements ProductRelationToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -56,5 +55,4 @@ class ProductRelationToTouchBridge implements ProductRelationToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $idItem);
     }
-
 }

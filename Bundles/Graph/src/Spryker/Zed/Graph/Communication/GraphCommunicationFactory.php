@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class GraphCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param string $name
      * @param array $attributes
@@ -90,5 +89,4 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
             throw new InvalidGraphAdapterException($message);
         }
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Business\Version;
 
 interface VersionFinderInterface
 {
-
     /**
      * @param int $idCmsPage
      *
@@ -38,5 +37,4 @@ interface VersionFinderInterface
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
     public function getCmsVersionData($idCmsPage);
-
 }

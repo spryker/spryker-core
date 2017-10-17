@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester;
  */
 class ProductAttributeGuiAttributeCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class ProductAttributeGuiAttributeCreateCest
         $i->amOnPage(ProductAttributeGuiAttributeCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes / Create a Product Attribute');
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\ProductRelation;
 
 class ProductRelationTypes
 {
-
     const TYPE_RELATED_PRODUCTS = 'related-products';
     const TYPE_UP_SELLING = 'up-selling';
 
@@ -23,5 +22,4 @@ class ProductRelationTypes
             static::TYPE_UP_SELLING,
         ];
     }
-
 }

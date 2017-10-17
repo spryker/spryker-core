@@ -16,7 +16,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 abstract class AbstractRouter implements RouterInterface
 {
-
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
@@ -181,5 +180,4 @@ abstract class AbstractRouter implements RouterInterface
 
         return $scheme;
     }
-
 }

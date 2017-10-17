@@ -21,7 +21,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPostCheckPluginInterface
 {
-
     const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
 
     /**
@@ -76,5 +75,4 @@ class PayolutionPostCheckPlugin extends BaseAbstractPlugin implements CheckoutPo
 
         return ($transactionStatusLogEntity && $transactionStatusLogEntity->getProcessingCode() === $successStatusCode);
     }
-
 }

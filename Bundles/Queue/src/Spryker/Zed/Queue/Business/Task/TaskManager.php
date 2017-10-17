@@ -13,7 +13,6 @@ use Spryker\Zed\Queue\QueueConfig;
 
 class TaskManager implements TaskManagerInterface
 {
-
     /**
      * @var \Spryker\Client\Queue\QueueClientInterface
      */
@@ -128,5 +127,4 @@ class TaskManager implements TaskManagerInterface
             }
         }
     }
-
 }

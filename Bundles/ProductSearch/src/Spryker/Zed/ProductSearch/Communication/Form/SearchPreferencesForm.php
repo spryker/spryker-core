@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SearchPreferencesForm extends AbstractAttributeKeyForm
 {
-
     const FIELD_ID_PRODUCT_ATTRIBUTE_KEY = 'idProductAttributeKey';
     const FIELD_FULL_TEXT = 'fullText';
     const FIELD_FULL_TEXT_BOOSTED = 'fullTextBoosted';
@@ -181,5 +180,4 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
             }
         ));
     }
-
 }

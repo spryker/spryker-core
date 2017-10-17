@@ -18,7 +18,6 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPdoCollectorQuery;
 
 abstract class AbstractPdoCollector extends AbstractDatabaseCollector
 {
-
     /**
      * @var \Spryker\Zed\Collector\Persistence\Collector\AbstractPdoCollectorQuery
      */
@@ -127,5 +126,4 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
 
         $this->criteriaBuilder->sql($sql);
     }
-
 }

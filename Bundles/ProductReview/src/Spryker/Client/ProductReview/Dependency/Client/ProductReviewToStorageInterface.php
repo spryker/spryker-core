@@ -9,12 +9,10 @@ namespace Spryker\Client\ProductReview\Dependency\Client;
 
 interface ProductReviewToStorageInterface
 {
-
     /**
      * @param string $key
      *
      * @return mixed
      */
     public function get($key);
-
 }

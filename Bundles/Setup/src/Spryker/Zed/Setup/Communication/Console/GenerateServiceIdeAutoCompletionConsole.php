@@ -23,7 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateServiceIdeAutoCompletionConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:ide:generate-service-auto-completion';
     const APPLICATION_SERVICE = 'Service';
 
@@ -101,5 +100,4 @@ class GenerateServiceIdeAutoCompletionConsole extends Console
 
         $this->info('Generated Service IdeBundleAutoCompletion file');
     }
-
 }

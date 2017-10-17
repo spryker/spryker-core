@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ProductApiToApiQueryBuilderBridge implements ProductApiToApiQueryBuilderInterface
 {
-
     /**
      * @var \Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainerInterface
      */
@@ -46,5 +45,4 @@ class ProductApiToApiQueryBuilderBridge implements ProductApiToApiQueryBuilderIn
     {
         return $this->apiQueryBuilderQueryContainer->buildQueryFromRequest($query, $apiQueryBuilderQueryTransfer);
     }
-
 }

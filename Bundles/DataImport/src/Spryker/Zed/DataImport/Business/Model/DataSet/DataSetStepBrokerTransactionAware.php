@@ -12,7 +12,6 @@ use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterfa
 
 class DataSetStepBrokerTransactionAware extends DataSetStepBroker
 {
-
     /**
      * @var \Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface
      */
@@ -94,5 +93,4 @@ class DataSetStepBrokerTransactionAware extends DataSetStepBroker
             $this->propelConnection->endTransaction();
         }
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class SearchCommunicationTester extends Actor
 {
-
     use _generated\SearchCommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

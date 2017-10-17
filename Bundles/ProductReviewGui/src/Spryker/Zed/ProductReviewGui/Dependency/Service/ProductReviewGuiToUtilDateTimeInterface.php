@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductReviewGui\Dependency\Service;
 
 interface ProductReviewGuiToUtilDateTimeInterface
 {
-
     /**
      * @param string $date
      *
      * @return string
      */
     public function formatDateTime($date);
-
 }

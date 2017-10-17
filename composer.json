@@ -10,12 +10,13 @@
     "fzaninotto/faker": "^1.6"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
-    "use-include-path": true
+    "use-include-path": true,
+    "process-timeout": 1000
   },
   "autoload": {
     "files": [
@@ -26,6 +27,9 @@
   "bin": [
     "Bundles/Console/bin/console"
   ],
+  "scripts": {
+    "cs-check": "vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p"
+  },
   "replace": {
     "spryker/acl": "*",
     "spryker/application": "*",

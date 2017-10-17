@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ResponseInterface
 {
-
     const INFO_MESSAGES = 'infoMessages';
     const ERROR_MESSAGES = 'errorMessages';
     const SUCCESS_MESSAGES = 'successMessages';
@@ -128,5 +127,4 @@ interface ResponseInterface
      * @return $this
      */
     public function setTransfer(TransferInterface $transferObject);
-
 }

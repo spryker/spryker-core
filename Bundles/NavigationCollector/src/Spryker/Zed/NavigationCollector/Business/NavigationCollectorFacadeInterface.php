@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface NavigationCollectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Executes navigation storage collector.
@@ -45,5 +44,4 @@ interface NavigationCollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

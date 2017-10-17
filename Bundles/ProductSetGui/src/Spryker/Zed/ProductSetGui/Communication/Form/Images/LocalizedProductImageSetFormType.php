@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class LocalizedProductImageSetFormType extends AbstractType
 {
-
     const FIELD_ID_PRODUCT_IMAGE_SET = 'id_product_image_set';
     const FIELD_NAME = 'name';
     const FIELD_FK_LOCALE = 'fk_locale';
@@ -131,5 +130,4 @@ class LocalizedProductImageSetFormType extends AbstractType
 
         return $this;
     }
-
 }

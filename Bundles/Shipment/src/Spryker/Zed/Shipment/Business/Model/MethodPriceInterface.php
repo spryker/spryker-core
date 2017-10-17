@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface MethodPriceInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return void
      */
     public function save(ShipmentMethodTransfer $shipmentMethodTransfer);
-
 }

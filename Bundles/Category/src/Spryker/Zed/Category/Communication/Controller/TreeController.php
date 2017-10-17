@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TreeController extends AbstractController
 {
-
     const PARAM_ID_ROOT_NODE = 'id-root-node';
 
     /**
@@ -46,5 +45,4 @@ class TreeController extends AbstractController
             ->getFacade()
             ->getTreeNodeChildrenByIdCategoryAndLocale($idRootNode, $localeTransfer);
     }
-
 }

@@ -25,7 +25,6 @@ use Spryker\Zed\Money\MoneyDependencyProvider;
  */
 class MoneyBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Shared\Money\Builder\MoneyBuilderInterface
      */
@@ -155,5 +154,4 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     {
         return new DecimalToIntegerConverter();
     }
-
 }

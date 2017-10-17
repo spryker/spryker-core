@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PriceForm extends AbstractPriceForm
 {
-
     /**
      * @return string
      */
@@ -33,5 +32,4 @@ class PriceForm extends AbstractPriceForm
             ->addPriceField($builder, $options)
             ->addPriceFieldCollection($builder, $options);
     }
-
 }

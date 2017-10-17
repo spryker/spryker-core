@@ -21,7 +21,6 @@ use SprykerTest\Zed\CmsGui\PageObject\CmsGuiListPage;
  */
 class CmsGuiViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\CmsGui\CmsGuiPresentationTester $i
      *
@@ -33,5 +32,4 @@ class CmsGuiViewCest
         $i->clickDataTableLinkInDropDownOfButton('View', 'In Zed');
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / View CMS Page');
     }
-
 }

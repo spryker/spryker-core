@@ -11,7 +11,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class JsonDependencyTreeWriter implements DependencyTreeWriterInterface
 {
-
     /**
      * @var string
      */
@@ -35,5 +34,4 @@ class JsonDependencyTreeWriter implements DependencyTreeWriterInterface
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->pathToFile, json_encode($dependencyTree, JSON_PRETTY_PRINT));
     }
-
 }

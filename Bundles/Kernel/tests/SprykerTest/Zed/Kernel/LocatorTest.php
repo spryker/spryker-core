@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Locator;
  */
 class LocatorTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Kernel\Locator
      */
@@ -44,5 +43,4 @@ class LocatorTest extends Unit
     {
         $this->assertInstanceOf(BundleProxy::class, $this->locator->foo());
     }
-
 }

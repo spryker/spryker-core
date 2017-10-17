@@ -23,7 +23,6 @@ use SprykerTest\Service\Kernel\ClassResolver\AbstractResolverTest;
  */
 class ConfigResolverTest extends AbstractResolverTest
 {
-
     /**
      * @var string
      */
@@ -60,5 +59,4 @@ class ConfigResolverTest extends AbstractResolverTest
 
         return $resolverMock;
     }
-
 }

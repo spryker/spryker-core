@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NodeController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
     const PARAM_ID_NAVIGATION_NODE = 'id-navigation-node';
     const PARAM_ID_SELECTED_TREE_NODE = 'id-selected-tree-node';
@@ -167,5 +166,4 @@ class NodeController extends AbstractController
 
         return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
     }
-
 }

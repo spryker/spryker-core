@@ -12,7 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractSubForm extends AbstractType
 {
-
     public static $errorFieldsDisplayed = [];
 
     /**
@@ -28,5 +27,4 @@ abstract class AbstractSubForm extends AbstractType
             'required' => false,
         ]);
     }
-
 }

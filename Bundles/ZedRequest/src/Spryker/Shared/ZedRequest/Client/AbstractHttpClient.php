@@ -27,7 +27,6 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
-
     const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
 
@@ -191,7 +190,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $request = $this->getRequest();
         $request->setSessionId(session_id());
         $request->setTime(time());
-        $request->setHost($this->utilNetworkService->getHostname() ?: 'n/a');
+        $request->setHost($this->utilNetworkService->getHostName() ?: 'n/a');
 
         foreach ($metaTransfers as $name => $metaTransfer) {
             if (!is_string($name) || is_numeric($name) || !$metaTransfer instanceof TransferInterface) {
@@ -312,5 +311,4 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
         return $request;
     }
-
 }

@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {
-
     const PRIORITY = -255;
 
     /**
@@ -63,7 +62,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $request = $event->getRequest();
         $transactionName = $request->attributes->get('_route');
         $requestUri = $request->server->get('REQUEST_URI', 'n/a');
-        $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostname());
+        $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostName());
 
         $this->newRelicApi->setNameOfTransaction($transactionName);
         $this->newRelicApi->addCustomParameter('request_uri', $requestUri);
@@ -99,5 +98,4 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
             KernelEvents::CONTROLLER => ['onKernelController', static::PRIORITY],
         ];
     }
-
 }

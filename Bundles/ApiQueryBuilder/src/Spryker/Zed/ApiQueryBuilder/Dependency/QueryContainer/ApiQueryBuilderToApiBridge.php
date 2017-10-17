@@ -9,7 +9,6 @@ namespace Spryker\Zed\ApiQueryBuilder\Dependency\QueryContainer;
 
 class ApiQueryBuilderToApiBridge implements ApiQueryBuilderToApiInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface
      */
@@ -42,5 +41,4 @@ class ApiQueryBuilderToApiBridge implements ApiQueryBuilderToApiInterface
     {
         return $this->apiQueryContainer->createApiItem($data);
     }
-
 }

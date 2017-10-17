@@ -86,16 +86,13 @@ use Zend\Filter\Word\CamelCaseToDash;
  */
 class DevelopmentBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
     public function createCodeStyleSniffer()
     {
         return new CodeStyleSniffer(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory(),
-            $this->getConfig()->getCodingStandard()
+            $this->getConfig()
         );
     }
 
@@ -1101,5 +1098,4 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CamelCaseToDash();
     }
-
 }

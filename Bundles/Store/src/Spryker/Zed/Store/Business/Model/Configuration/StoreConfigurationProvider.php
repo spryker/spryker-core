@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Store;
 
 class StoreConfigurationProvider implements StoreConfigurationProviderInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
@@ -113,5 +112,4 @@ class StoreConfigurationProvider implements StoreConfigurationProviderInterface
     {
         return $this->store->getConfigurationForStore($storeName);
     }
-
 }

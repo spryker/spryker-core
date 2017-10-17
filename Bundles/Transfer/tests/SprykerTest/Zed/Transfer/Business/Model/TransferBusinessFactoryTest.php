@@ -26,7 +26,6 @@ use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
  */
 class TransferBusinessFactoryTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\Transfer\Business\TransferBusinessFactory
      */
@@ -74,5 +73,4 @@ class TransferBusinessFactoryTest extends Unit
 
         $this->assertInstanceOf(TransferValidatorInterface::class, $transferCleaner);
     }
-
 }

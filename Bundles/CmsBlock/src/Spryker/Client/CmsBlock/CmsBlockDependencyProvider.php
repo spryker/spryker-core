@@ -13,7 +13,6 @@ use Spryker\Client\Kernel\Container;
 
 class CmsBlockDependencyProvider extends AbstractDependencyProvider
 {
-
     const KV_STORAGE = 'CLIENT:CMS_BLOCK:KV_STORAGE';
 
     /**
@@ -42,5 +41,4 @@ class CmsBlockDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

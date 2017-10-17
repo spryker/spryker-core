@@ -34,7 +34,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Table\CmsPageTable
      */
@@ -341,5 +340,4 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CREATE_GLOSSARY_EXPANDER);
     }
-
 }

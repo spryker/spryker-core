@@ -9,7 +9,6 @@ namespace Spryker\Zed\CustomerGroup\Communication\Table\Assignment;
 
 class AvailableCustomerTable extends AbstractAssignmentTable
 {
-
     /**
      * @var string
      */
@@ -30,5 +29,4 @@ class AvailableCustomerTable extends AbstractAssignmentTable
     {
         return '';
     }
-
 }

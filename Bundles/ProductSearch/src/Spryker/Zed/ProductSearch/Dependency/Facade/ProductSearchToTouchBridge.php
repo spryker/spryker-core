@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
 class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -44,5 +43,4 @@ class ProductSearchToTouchBridge implements ProductSearchToTouchInterface
     {
         return $this->touchFacade->bulkTouchSetActive($itemType, $itemIds);
     }
-
 }

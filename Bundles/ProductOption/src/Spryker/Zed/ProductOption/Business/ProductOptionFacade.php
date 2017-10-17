@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeInterface
 {
-
     /**
      * Specification:
      *  - Persist new product option group, update existing group if idOptionGroup is set
@@ -212,5 +211,4 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     {
         return $this->getFactory()->createProductOptionGroupIdHydrator()->hydrateProductOptionGroupIds($orderTransfer);
     }
-
 }

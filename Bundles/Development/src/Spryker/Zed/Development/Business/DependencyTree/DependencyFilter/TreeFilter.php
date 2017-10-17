@@ -9,7 +9,6 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFilter;
 
 class TreeFilter implements TreeFilterCompositeInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface[]
      */
@@ -60,5 +59,4 @@ class TreeFilter implements TreeFilterCompositeInterface
 
         return $filterDependency;
     }
-
 }

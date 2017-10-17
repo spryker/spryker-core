@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditBlockController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
@@ -149,5 +148,4 @@ class EditBlockController extends AbstractController
             [static::URL_PARAM_ID_CMS_BLOCK => $idCmsBlock]
         )->build();
     }
-
 }

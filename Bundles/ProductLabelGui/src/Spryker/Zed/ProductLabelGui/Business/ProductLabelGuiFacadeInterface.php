@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Business;
 
 interface ProductLabelGuiFacadeInterface
 {
-
     /**
      * Specification:
      * - Updates the position field of the given list of product-label transfers and persists the changes
@@ -22,5 +21,4 @@ interface ProductLabelGuiFacadeInterface
      * @return void
      */
     public function updateLabelPositions(array $productLabelTransferCollection, array $positionMap);
-
 }

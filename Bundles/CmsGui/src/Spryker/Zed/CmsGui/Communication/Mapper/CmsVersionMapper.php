@@ -9,13 +9,11 @@ namespace Spryker\Zed\CmsGui\Communication\Mapper;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapperInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
 use Spryker\Zed\CmsGui\Dependency\Service\CmsGuiToUtilEncodingInterface;
 
 class CmsVersionMapper implements CmsVersionMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
      */
@@ -69,5 +67,4 @@ class CmsVersionMapper implements CmsVersionMapperInterface
 
         return $cmsVersionDataTransfer;
     }
-
 }

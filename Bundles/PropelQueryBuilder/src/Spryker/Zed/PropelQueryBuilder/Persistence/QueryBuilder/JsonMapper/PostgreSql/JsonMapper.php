@@ -8,12 +8,11 @@
 namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\PostgreSql;
 
 use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
-use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface;
 use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\JsonMapperInterface;
+use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface;
 
 class JsonMapper implements JsonMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface $operator
@@ -47,12 +46,12 @@ class JsonMapper implements JsonMapperInterface
      */
     public function getOperator(PropelQueryBuilderRuleSetTransfer $ruleSetTransfer, OperatorInterface $operator, $attributeName)
     {
-        $operatorValue = sprintf("::JSON->>'%s' %s",
+        $operatorValue = sprintf(
+            "::JSON->>'%s' %s",
             $attributeName,
             $operator->getOperator()
         );
 
         return $operatorValue;
     }
-
 }

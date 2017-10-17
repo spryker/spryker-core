@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -104,5 +103,4 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     {
         return in_array($request->getPathInfo(), $this->getConfig()->getSslExcludedResources());
     }
-
 }

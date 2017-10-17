@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductFacadeInterface
 {
-
     /**
      * Specification:
      * - Adds product abstract with its attributes, meta information and concrete variants.
@@ -690,5 +689,4 @@ interface ProductFacadeInterface
      * @return array
      */
     public function decodeProductAttributes($attributes);
-
 }

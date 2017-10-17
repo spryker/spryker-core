@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 
 class CustomerUserConnectorGuiToCustomerUserConnectorBridge implements CustomerUserConnectorGuiToCustomerUserConnectorInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacadeInterface
      */
@@ -32,5 +31,4 @@ class CustomerUserConnectorGuiToCustomerUserConnectorBridge implements CustomerU
     {
         return $this->customerUserConnectorFacade->updateCustomerUserConnection($customerUserConnectionUpdateTransfer);
     }
-
 }

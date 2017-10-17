@@ -19,7 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractConfigurableSearchPdoCollector extends AbstractSearchPdoCollector
 {
-
     /**
      * @return \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
      */
@@ -121,5 +120,4 @@ abstract class AbstractConfigurableSearchPdoCollector extends AbstractSearchPdoC
     {
         return unserialize(serialize($storeWriter));
     }
-
 }

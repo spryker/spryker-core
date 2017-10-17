@@ -9,12 +9,10 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyTreeWriter;
 
 interface DependencyTreeWriterInterface
 {
-
     /**
      * @param array $dependencyTree
      *
      * @return void
      */
     public function write(array $dependencyTree);
-
 }

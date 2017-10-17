@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\PaginationSearchResultTransfer;
  */
 class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-
     const NAME = 'pagination';
 
     /**
@@ -53,5 +52,4 @@ class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatte
 
         return $paginationSearchResultTransfer;
     }
-
 }

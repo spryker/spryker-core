@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CustomerUserConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerUserConnector\Business\Model\CustomerUserConnectionUpdaterInterface
      */
@@ -26,5 +25,4 @@ class CustomerUserConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(CustomerUserConnectorDependencyProvider::QUERY_CONTAINER_CUSTOMER)
         );
     }
-
 }

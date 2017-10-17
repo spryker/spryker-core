@@ -24,7 +24,6 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
  */
 class CmsPageActivatorTest extends CmsMocks
 {
-
     /**
      * @return void
      */
@@ -82,7 +81,6 @@ class CmsPageActivatorTest extends CmsMocks
 
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
-
         }
 
         if ($touchFacadeMock === null) {
@@ -98,7 +96,5 @@ class CmsPageActivatorTest extends CmsMocks
             ->willReturn($cmsPageEntity);
 
         return $cmsPageActivatorMock;
-
     }
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Yves\ProductRelation\Resolver;
 
 interface ProductRelationDataProviderResolverInterface
 {
-
     /**
      * @param string $type
      *
      * @return \Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface|null
      */
     public function resolveByType($type);
-
 }

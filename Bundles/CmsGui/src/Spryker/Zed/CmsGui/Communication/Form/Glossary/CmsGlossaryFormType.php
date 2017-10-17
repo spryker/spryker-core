@@ -17,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsGlossaryFormType extends AbstractType
 {
-
     const FIELD_GLOSSARY_ATTRIBUTES = 'glossaryAttributes';
 
     const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_glossary_attributes';
@@ -76,5 +75,4 @@ class CmsGlossaryFormType extends AbstractType
 
         return $this;
     }
-
 }

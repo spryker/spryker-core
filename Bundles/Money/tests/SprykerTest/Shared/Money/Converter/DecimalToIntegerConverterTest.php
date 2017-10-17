@@ -22,7 +22,6 @@ use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
  */
 class DecimalToIntegerConverterTest extends Unit
 {
-
     /**
      * @dataProvider convertValues
      *
@@ -63,5 +62,4 @@ class DecimalToIntegerConverterTest extends Unit
         $integerToDecimalConverter = new DecimalToIntegerConverter();
         $integerToDecimalConverter->convert(100);
     }
-
 }

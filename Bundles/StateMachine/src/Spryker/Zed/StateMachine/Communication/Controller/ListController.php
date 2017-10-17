@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ListController extends AbstractController
 {
-
     const URL_PARAM_STATE_MACHINE = 'state-machine';
 
     /**
@@ -48,5 +47,4 @@ class ListController extends AbstractController
             'stateMachineName' => $stateMachineName,
         ]);
     }
-
 }

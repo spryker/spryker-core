@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DependencyController extends AbstractController
 {
-
     const APPLICATION_ZED = 'Zed';
     const QUERY_KEY_BUILD_TREE = 'build-tree';
     const QUERY_KEY_BUNDLE = 'bundle';
@@ -218,5 +217,4 @@ class DependencyController extends AbstractController
     {
         return file_exists($this->getFactory()->getConfig()->getPathToJsonDependencyTree());
     }
-
 }

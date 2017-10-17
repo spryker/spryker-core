@@ -15,7 +15,6 @@ use Symfony\Component\Intl\Intl;
 
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_STORE = 'STORE_FACADE';
 
     const INTERNATIONALIZATION = 'internationalization';
@@ -64,5 +63,4 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

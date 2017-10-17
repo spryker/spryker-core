@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PLUGINS_STATE_MACHINE_HANDLERS = 'PLUGINS_STATE_MACHINE_HANDLERS';
     const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
     const SERVICE_NETWORK = 'util network service';
@@ -65,5 +64,4 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

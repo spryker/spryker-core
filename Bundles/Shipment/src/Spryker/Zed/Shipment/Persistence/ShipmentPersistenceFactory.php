@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ShipmentPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
@@ -51,5 +50,4 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyShipmentMethodPriceQuery::create();
     }
-
 }

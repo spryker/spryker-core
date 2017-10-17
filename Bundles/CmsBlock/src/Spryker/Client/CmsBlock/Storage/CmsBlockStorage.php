@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
-
     /**
      * @var \Spryker\Client\CmsBlock\Dependency\Client\CmsBlockToStorageClientInterface
      */
@@ -84,7 +83,6 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $availableBlockNames = null;
 
         foreach ($options as $optionKey => $resources) {
-
             $resources = (array)$resources;
             $blockNames = $this->getBlockNamesForOption($optionKey, $resources, $localeName);
 
@@ -137,5 +135,4 @@ class CmsBlockStorage implements CmsBlockStorageInterface
 
         return $resultArray;
     }
-
 }

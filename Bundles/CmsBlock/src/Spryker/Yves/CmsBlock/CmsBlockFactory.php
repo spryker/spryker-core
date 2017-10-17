@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class CmsBlockFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
      */
@@ -19,5 +18,4 @@ class CmsBlockFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CmsBlockDependencyProvider::CMS_BLOCK_TWIG_CONTENT_RENDERER_PLUGIN);
     }
-
 }

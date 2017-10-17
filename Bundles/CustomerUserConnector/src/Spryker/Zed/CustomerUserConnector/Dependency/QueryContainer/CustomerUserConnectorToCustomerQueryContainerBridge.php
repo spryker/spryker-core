@@ -7,7 +7,6 @@ namespace Spryker\Zed\CustomerUserConnector\Dependency\QueryContainer;
 
 class CustomerUserConnectorToCustomerQueryContainerBridge implements CustomerUserConnectorToCustomerQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
@@ -38,5 +37,4 @@ class CustomerUserConnectorToCustomerQueryContainerBridge implements CustomerUse
     {
         return $this->customerQueryContainer->queryCustomers();
     }
-
 }

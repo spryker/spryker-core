@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
  */
 class PayolutionInstallmentSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
-
     /**
      * @return \Spryker\Yves\Payolution\Form\InstallmentSubForm
      */
@@ -31,5 +30,4 @@ class PayolutionInstallmentSubFormPlugin extends AbstractPlugin implements SubFo
     {
         return $this->getFactory()->createInstallmentFormDataProvider();
     }
-
 }

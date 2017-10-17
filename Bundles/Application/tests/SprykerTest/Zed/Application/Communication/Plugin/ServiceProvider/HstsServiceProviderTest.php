@@ -27,7 +27,6 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
  */
 class HstsServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -91,5 +90,4 @@ class HstsServiceProviderTest extends Unit
 
         $hstsMock->onKernelResponse($eventMock);
     }
-
 }

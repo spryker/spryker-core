@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class RefundFacade extends AbstractFacade implements RefundFacadeInterface
 {
-
     /**
      * Specification:
      * - Calculates refund amount for given OrderTransfer and OrderItems which should be refunded.
@@ -86,5 +85,4 @@ class RefundFacade extends AbstractFacade implements RefundFacadeInterface
     {
         return $this->getFactory()->createRefundSaver()->saveRefund($refundTransfer);
     }
-
 }

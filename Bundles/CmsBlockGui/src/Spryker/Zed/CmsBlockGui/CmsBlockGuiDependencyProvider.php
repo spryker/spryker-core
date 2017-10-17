@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
     const FACADE_LOCALE = 'CMS_BLOCK_GUI:FACADE_LOCALE';
 
@@ -153,5 +152,4 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         $pimplePlugin = new Pimple();
         return $pimplePlugin->getApplication()['twig'];
     }
-
 }

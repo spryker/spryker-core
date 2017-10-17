@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 interface AttributeWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
@@ -25,5 +24,4 @@ interface AttributeWriterInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
     public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
-
 }

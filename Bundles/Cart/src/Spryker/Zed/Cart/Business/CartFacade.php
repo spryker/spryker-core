@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -58,5 +57,4 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     {
         return $this->getFactory()->createCartOperation()->reloadItems($quoteTransfer);
     }
-
 }

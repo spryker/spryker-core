@@ -22,7 +22,6 @@ use SprykerTest\Zed\Customer\PageObject\CustomerIndexPage;
  */
 class CustomerIndexCest
 {
-
     /**
      * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class CustomerIndexCest
 
         $i->seeBreadcrumbNavigation('Dashboard / Customers / Customers');
     }
-
 }

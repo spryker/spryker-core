@@ -9,7 +9,6 @@ namespace Spryker\Zed\Money\Dependency\Facade;
 
 interface MoneyToCurrencyInterface
 {
-
     /**
      * @param string $isoCode
      *
@@ -28,5 +27,4 @@ interface MoneyToCurrencyInterface
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies();
-
 }

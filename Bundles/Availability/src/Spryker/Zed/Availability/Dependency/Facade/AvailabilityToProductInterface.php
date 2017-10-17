@@ -7,12 +7,10 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 
 interface AvailabilityToProductInterface
 {
-
     /**
      * @param string $productConcreteSku
      *
      * @return int
      */
     public function getAbstractSkuFromProductConcrete($productConcreteSku);
-
 }

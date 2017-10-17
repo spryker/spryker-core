@@ -13,7 +13,6 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CustomerStub implements CustomerStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -216,5 +215,4 @@ class CustomerStub implements CustomerStubInterface
     {
         return $this->zedStub->call('/customer/gateway/anonymize-customer', $customerTransfer);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ApiQueryBuilderQueryContainer extends AbstractQueryContainer implements ApiQueryBuilderQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -45,5 +44,4 @@ class ApiQueryBuilderQueryContainer extends AbstractQueryContainer implements Ap
             ->createApiRequestMapper()
             ->toPropelQueryBuilderCriteria($apiQueryBuilderQueryTransfer);
     }
-
 }

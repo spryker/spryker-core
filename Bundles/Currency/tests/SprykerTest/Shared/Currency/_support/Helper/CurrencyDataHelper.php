@@ -13,7 +13,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CurrencyDataHelper extends Module
 {
-
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
@@ -36,5 +35,4 @@ class CurrencyDataHelper extends Module
     {
         return $this->getLocator()->currency()->facade();
     }
-
 }

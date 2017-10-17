@@ -14,7 +14,6 @@ use Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface;
 
 class ProductGroupTouch implements ProductGroupTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductGroup\Dependency\Facade\ProductGroupToTouchInterface
      */
@@ -113,5 +112,4 @@ class ProductGroupTouch implements ProductGroupTouchInterface
     {
         $productGroupTransfer->requireIdProductGroup();
     }
-
 }

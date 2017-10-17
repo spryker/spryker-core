@@ -11,7 +11,6 @@ use SprykerTest\Shared\Kernel\Fixtures\Transfer\Foo\Bar;
 
 class Foo extends AbstractTransfer
 {
-
     /**
      * @var mixed
      */
@@ -36,5 +35,4 @@ class Foo extends AbstractTransfer
 
         return $this;
     }
-
 }

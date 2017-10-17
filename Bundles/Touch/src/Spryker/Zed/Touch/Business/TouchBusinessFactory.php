@@ -23,7 +23,6 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
  */
 class TouchBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Touch\Business\Model\TouchRecordInterface
      */
@@ -106,5 +105,4 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     {
         return new IdFilterUpdate($this->getQueryContainer());
     }
-
 }

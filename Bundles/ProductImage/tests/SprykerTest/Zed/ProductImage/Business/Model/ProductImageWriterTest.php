@@ -27,7 +27,6 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
  */
 class ProductImageWriterTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -104,5 +103,4 @@ class ProductImageWriterTest extends Unit
         $this->assertInstanceOf(ProductImageSetTransfer::class, $imageSetTransfer);
         $this->assertInstanceOf(ProductImageTransfer::class, $imageSetTransfer->getProductImages()[0]);
     }
-
 }

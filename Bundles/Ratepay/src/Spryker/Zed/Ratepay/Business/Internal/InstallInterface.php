@@ -9,10 +9,8 @@ namespace Spryker\Zed\Ratepay\Business\Internal;
 
 interface InstallInterface
 {
-
     /**
      * @return array
      */
     public function install();
-
 }

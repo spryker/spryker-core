@@ -26,7 +26,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class ControllerListenerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -39,7 +38,8 @@ class ControllerListenerTest extends Unit
         $request = new Request();
         $request->attributes->set('_route', 'foo/bar/baz');
 
-        $controller = function () {};
+        $controller = function () {
+        };
         $filterControllerEvent = new FilterControllerEvent(
             $this->getKernelMock(),
             $controller,
@@ -76,5 +76,4 @@ class ControllerListenerTest extends Unit
 
         return $kernelMock;
     }
-
 }

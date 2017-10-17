@@ -18,7 +18,6 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-table';
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_PREVIEW = 'preview';
@@ -162,5 +161,4 @@ class ProductTable extends AbstractTable
 
         return $checkbox_html;
     }
-
 }

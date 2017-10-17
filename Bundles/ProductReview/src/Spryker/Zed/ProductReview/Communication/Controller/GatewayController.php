@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
@@ -38,12 +37,10 @@ class GatewayController extends AbstractGatewayController
             return (new ProductReviewResponseTransfer())
                 ->setIsSuccess(true)
                 ->setProductReview($productReviewTransfer);
-
         } catch (RatingOutOfRangeException $exception) {
             return (new ProductReviewResponseTransfer())
                 ->setIsSuccess(false)
                 ->addError((new ProductReviewErrorTransfer())->setMessage($exception->getMessage()));
         }
     }
-
 }

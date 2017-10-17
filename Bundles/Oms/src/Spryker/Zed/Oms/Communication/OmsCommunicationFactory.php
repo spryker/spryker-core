@@ -16,7 +16,6 @@ use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
  */
 class OmsCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Oms\Communication\Table\TransitionLogTable
      */
@@ -26,5 +25,4 @@ class OmsCommunicationFactory extends AbstractCommunicationFactory
 
         return new TransitionLogTable($queryContainer);
     }
-
 }

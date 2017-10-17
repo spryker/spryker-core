@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AvailabilityCartConnectorFacade extends AbstractFacade implements AvailabilityCartConnectorFacadeInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class AvailabilityCartConnectorFacade extends AbstractFacade implements Availabi
             ->createCartCheckAvailability()
             ->checkCartAvailability($cartChangeTransfer);
     }
-
 }

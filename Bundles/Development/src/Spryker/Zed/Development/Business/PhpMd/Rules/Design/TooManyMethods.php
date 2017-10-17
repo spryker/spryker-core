@@ -14,7 +14,6 @@ use PHPMD\Rule\ClassAware;
 
 class TooManyMethods extends AbstractRule implements ClassAware
 {
-
     const MAX_METHODS = 'maxmethods';
     const METHODS_IGNORE_PATTERN = 'ignorepattern';
 
@@ -86,5 +85,4 @@ class TooManyMethods extends AbstractRule implements ClassAware
             || preg_match('/(BusinessFactory|CommunicationFactory)/', $node->getName())
         );
     }
-
 }

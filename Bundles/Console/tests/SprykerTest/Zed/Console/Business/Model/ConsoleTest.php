@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Console\Business\Model;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock;
@@ -25,7 +24,6 @@ use SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock;
  */
 class ConsoleTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -73,14 +71,6 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    private function getFacadeMock()
-    {
-        return $this->getMockBuilder(AbstractFacade::class)->disableOriginalConstructor()->getMock();
-    }
-
-    /**
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
     private function getQueryContainerMock()
@@ -95,5 +85,4 @@ class ConsoleTest extends Unit
     {
         return new ConsoleMock('TestCommand');
     }
-
 }

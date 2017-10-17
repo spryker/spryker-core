@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\QueryContainer;
 
 class ProductBundleToStockQueryContainerBridge implements ProductBundleToStockQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
      */
@@ -32,5 +31,4 @@ class ProductBundleToStockQueryContainerBridge implements ProductBundleToStockQu
     {
          return $this->stockQueryContainer->queryStockByProducts($idProduct);
     }
-
 }

@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
-
     /**
      * @api
      *
@@ -59,7 +58,7 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ];
     }
 
@@ -75,5 +74,4 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
           'NET_MODE' => 'Net Mode',
         ];
     }
-
 }

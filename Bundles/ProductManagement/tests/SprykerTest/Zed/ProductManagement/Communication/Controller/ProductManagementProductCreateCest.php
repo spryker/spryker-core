@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester;
  */
 class ProductManagementProductCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class ProductManagementProductCreateCest
         $i->amOnPage(ProductManagementProductCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Create a Product');
     }
-
 }

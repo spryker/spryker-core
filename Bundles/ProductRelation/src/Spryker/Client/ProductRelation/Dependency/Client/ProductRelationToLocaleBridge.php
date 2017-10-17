@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductRelation\Dependency\Client;
 
 class ProductRelationToLocaleBridge implements ProductRelationToLocaleInterface
 {
-
     /**
      * @var \Spryker\Client\Locale\LocaleClientInterface
      */
@@ -30,5 +29,4 @@ class ProductRelationToLocaleBridge implements ProductRelationToLocaleInterface
     {
         return $this->localeClient->getCurrentLocale();
     }
-
 }

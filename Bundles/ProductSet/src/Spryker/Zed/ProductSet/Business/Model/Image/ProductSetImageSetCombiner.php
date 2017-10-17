@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetImageSetCombiner implements ProductSetImageSetCombinerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -111,5 +110,4 @@ class ProductSetImageSetCombiner implements ProductSetImageSetCombinerInterface
     {
         return $this->productImageFacade->findProductImageSetById($productImageSetEntity->getIdProductImageSet());
     }
-
 }

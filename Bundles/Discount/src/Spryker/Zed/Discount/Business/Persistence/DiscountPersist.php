@@ -19,7 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class DiscountPersist implements DiscountPersistInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -397,5 +396,4 @@ class DiscountPersist implements DiscountPersistInterface
             $discountAmountEntity->save();
         }
     }
-
 }

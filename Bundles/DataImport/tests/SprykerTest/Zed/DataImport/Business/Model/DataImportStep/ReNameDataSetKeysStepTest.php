@@ -24,7 +24,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
  */
 class ReNameDataSetKeysStepTest extends Unit
 {
-
     const ORIGINAL_KEY_A = 'key-a';
     const NEW_KEY_A = 'new-key-a';
     const VALUE_A = 'value a';
@@ -65,5 +64,4 @@ class ReNameDataSetKeysStepTest extends Unit
         ));
         $this->assertSame($value, $dataSet[$newKey], 'Expected that original value is copied to new key but it was not copied');
     }
-
 }

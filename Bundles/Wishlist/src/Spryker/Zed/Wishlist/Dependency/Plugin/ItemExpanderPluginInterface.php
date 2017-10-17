@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 
 interface ItemExpanderPluginInterface
 {
-
     /**
      * Specification:
      * - This plugin is executed when wishlist item is mapped from entity to transfer object
@@ -23,5 +22,4 @@ interface ItemExpanderPluginInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function expandItem(WishlistItemTransfer $WishlistItemTransfer);
-
 }

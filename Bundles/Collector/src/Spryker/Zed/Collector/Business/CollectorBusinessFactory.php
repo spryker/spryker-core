@@ -36,7 +36,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\CollectorExporter
      */
@@ -324,5 +323,4 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CollectorManager();
     }
-
 }

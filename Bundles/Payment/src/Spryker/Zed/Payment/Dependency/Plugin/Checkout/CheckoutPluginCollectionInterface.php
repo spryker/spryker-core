@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 
 interface CheckoutPluginCollectionInterface
 {
-
     /**
      * @api
      *
@@ -40,5 +39,4 @@ interface CheckoutPluginCollectionInterface
      * @return bool
      */
     public function has($provider, $pluginType);
-
 }

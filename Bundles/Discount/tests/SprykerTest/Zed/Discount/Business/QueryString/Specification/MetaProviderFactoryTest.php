@@ -26,7 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
  */
 class MetaProviderFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -120,5 +119,4 @@ class MetaProviderFactoryTest extends Unit
     {
         return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }
-
 }

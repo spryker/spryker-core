@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CollectorStrategyResolver implements CollectorStrategyResolverInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[]
      */
@@ -44,5 +43,4 @@ class CollectorStrategyResolver implements CollectorStrategyResolverInterface
 
         return null;
     }
-
 }

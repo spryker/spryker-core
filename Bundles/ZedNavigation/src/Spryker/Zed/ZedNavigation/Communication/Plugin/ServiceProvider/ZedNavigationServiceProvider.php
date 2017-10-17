@@ -20,7 +20,6 @@ use Twig_SimpleFunction;
  */
 class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const URI_SUFFIX_INDEX = '\/index$';
     const URI_SUFFIX_SLASH = '\/$';
 
@@ -159,5 +158,4 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
         return (new ZedNavigation())
             ->buildNavigation($uri);
     }
-
 }

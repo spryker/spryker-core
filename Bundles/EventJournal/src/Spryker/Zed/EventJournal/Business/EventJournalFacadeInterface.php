@@ -14,7 +14,6 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
  */
 interface EventJournalFacadeInterface
 {
-
     /**
      * @api
      *
@@ -23,5 +22,4 @@ interface EventJournalFacadeInterface
      * @return void
      */
     public function saveEvent(EventInterface $event);
-
 }

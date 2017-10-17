@@ -9,7 +9,6 @@ namespace Spryker\Shared\Search;
 
 interface SearchConfig
 {
-
     /**
      * Available facet types
      */
@@ -17,5 +16,4 @@ interface SearchConfig
     const FACET_TYPE_RANGE = 'range';
     const FACET_TYPE_PRICE_RANGE = 'price-range';
     const FACET_TYPE_CATEGORY = 'category';
-
 }

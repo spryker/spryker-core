@@ -28,7 +28,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\SortByQueryFilterP
  */
 class SortByQueryFilterPreProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -71,5 +70,4 @@ class SortByQueryFilterPreProcessorTest extends Unit
         ];
         $this->assertSame($expected, $apiRequestTransferAfter->getFilter()->getSort());
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -234,5 +233,4 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getFactory()->createShipmentMethodTransformer()
             ->transformEntityToTransfer($shipmentMethodEntity);
     }
-
 }

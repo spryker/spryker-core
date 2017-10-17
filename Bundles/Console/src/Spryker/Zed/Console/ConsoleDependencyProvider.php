@@ -13,7 +13,6 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
 
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const COMMANDS = 'commands';
     const EVENT_SUBSCRIBER = 'event_subscriber';
     const SERVICE_PROVIDERS = 'service providers';
@@ -102,8 +101,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     protected function getServiceProviders(Container $container)
     {
         return [
-            new PropelServiceProvider()
+            new PropelServiceProvider(),
         ];
     }
-
 }

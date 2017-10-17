@@ -24,7 +24,6 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
  */
 class SellableTest extends Unit
 {
-
     const SKU_PRODUCT = 'sku-123-321';
 
     /**
@@ -110,5 +109,4 @@ class SellableTest extends Unit
         return $this->getMockBuilder(AvailabilityToOmsInterface::class)
             ->getMock();
     }
-
 }

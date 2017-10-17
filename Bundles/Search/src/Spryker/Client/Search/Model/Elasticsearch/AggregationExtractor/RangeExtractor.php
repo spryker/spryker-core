@@ -13,7 +13,6 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\NumericFacetAggregatio
 
 class RangeExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -118,5 +117,4 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
 
         return [null, null];
     }
-
 }

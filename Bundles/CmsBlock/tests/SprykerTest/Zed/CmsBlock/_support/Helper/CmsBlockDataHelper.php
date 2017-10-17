@@ -14,7 +14,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsBlockDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -61,5 +60,4 @@ class CmsBlockDataHelper extends Module
     {
         return $this->getLocator()->cmsBlock()->facade();
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 
 class RefundTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
     const SPY_SALES_ORDER = 'SpySalesOrder';
     const COL_CURRENCY_ISO_CODE = 'spy_sales_order.currency_iso_code';
@@ -156,5 +155,4 @@ class RefundTable extends AbstractTable
     {
         return $this->dateFormatter->formatDateTime($date);
     }
-
 }

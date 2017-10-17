@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationNodeDeleter implements NavigationNodeDeleterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -108,5 +107,4 @@ class NavigationNodeDeleter implements NavigationNodeDeleterInterface
     {
         $navigationNodeEntity->delete();
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class PayolutionPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery
      */
@@ -42,5 +41,4 @@ class PayolutionPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyPaymentPayolutionTransactionRequestLogQuery::create();
     }
-
 }

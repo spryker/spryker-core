@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewTouchInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
@@ -32,5 +31,4 @@ interface ProductReviewTouchInterface
      * @return void
      */
     public function touchProductReviewDeleted(ProductReviewTransfer $productReviewTransfer);
-
 }

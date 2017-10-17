@@ -21,7 +21,6 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
  */
 class PropelSchemaFinderTest extends AbstractPropelSchemaTest
 {
-
     /**
      * @return void
      */
@@ -33,5 +32,4 @@ class PropelSchemaFinderTest extends AbstractPropelSchemaTest
 
         $this->assertInstanceOf('Symfony\Component\Finder\Finder', $schemaFinder->getSchemaFiles());
     }
-
 }

@@ -29,7 +29,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\CorsFilterPostPr
  */
 class CorsFilterPostProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -84,5 +83,4 @@ class CorsFilterPostProcessorTest extends Unit
         ];
         $this->assertSame($expected, $apiResponseTransfer->getHeaders());
     }
-
 }

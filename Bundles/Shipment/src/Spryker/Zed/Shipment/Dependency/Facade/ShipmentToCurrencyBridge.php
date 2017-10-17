@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 class ShipmentToCurrencyBridge implements ShipmentToCurrencyInterface
 {
-
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
@@ -42,5 +41,4 @@ class ShipmentToCurrencyBridge implements ShipmentToCurrencyInterface
     {
         return $this->currencyFacade->getByIdCurrency($idCurrency);
     }
-
 }

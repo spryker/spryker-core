@@ -7,7 +7,6 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 interface ProductOptionGroupReaderInterface
 {
-
     /**
      * @param int $idProductOptionGroup
      *
@@ -16,5 +15,4 @@ interface ProductOptionGroupReaderInterface
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
     public function getProductOptionGroupById($idProductOptionGroup);
-
 }

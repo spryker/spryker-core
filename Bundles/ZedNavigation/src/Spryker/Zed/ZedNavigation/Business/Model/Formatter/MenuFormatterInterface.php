@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Formatter;
 
 interface MenuFormatterInterface
 {
-
     /**
      * @param array $pages
      * @param string $pathInfo
@@ -18,5 +17,4 @@ interface MenuFormatterInterface
      * @return array
      */
     public function formatMenu(array $pages, $pathInfo, $includeInvisible = false);
-
 }

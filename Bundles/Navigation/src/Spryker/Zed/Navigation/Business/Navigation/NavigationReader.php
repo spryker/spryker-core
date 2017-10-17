@@ -13,7 +13,6 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationReader implements NavigationReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
      */
@@ -79,5 +78,4 @@ class NavigationReader implements NavigationReaderInterface
 
         return $navigationTransfer;
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeD
 
 class ProductAttributeCollector implements ProductAttributeCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRuleInterface
      */
@@ -39,7 +38,6 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
     {
         $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-
             $isSatisfied = $this->productAttributeDecisionRule
                 ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
 
@@ -84,5 +82,4 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
             return $itemTransfer->getUnitGrossPrice();
         }
     }
-
 }

@@ -12,7 +12,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductSetDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -34,5 +33,4 @@ class ProductSetDataHelper extends Module
     {
         return $this->getLocator()->productSet()->facade();
     }
-
 }

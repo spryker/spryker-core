@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetGui\Dependency\Service;
 
 interface ProductSetGuiToUtilEncodingInterface
 {
-
     /**
      * @param mixed $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface ProductSetGuiToUtilEncodingInterface
      * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

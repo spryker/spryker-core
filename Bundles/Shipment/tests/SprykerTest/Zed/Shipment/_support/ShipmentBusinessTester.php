@@ -23,7 +23,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ShipmentBusinessTester extends Actor
 {
-
     use _generated\ShipmentBusinessTesterActions;
 
    /**
@@ -119,5 +118,4 @@ class ShipmentBusinessTester extends Actor
     {
         return $this->getLocator()->store()->facade()->getCurrentStore()->getName();
     }
-
 }

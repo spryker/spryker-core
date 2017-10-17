@@ -13,7 +13,6 @@ use Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface;
 
 class UrlUpdatePluginObserver implements UrlUpdaterBeforeSaveObserverInterface, UrlUpdaterAfterSaveObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
      */
@@ -39,5 +38,4 @@ class UrlUpdatePluginObserver implements UrlUpdaterBeforeSaveObserverInterface, 
             $urlUpdatePlugin->update($urlTransfer);
         }
     }
-
 }

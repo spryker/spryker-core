@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class PhpInfoController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -58,5 +57,4 @@ class PhpInfoController extends AbstractController
 
         return $phpInfoContent;
     }
-
 }

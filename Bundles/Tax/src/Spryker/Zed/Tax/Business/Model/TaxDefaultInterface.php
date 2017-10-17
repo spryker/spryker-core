@@ -8,7 +8,6 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 interface TaxDefaultInterface
 {
-
     /**
      * @return string
      */
@@ -18,5 +17,4 @@ interface TaxDefaultInterface
      * @return float
      */
     public function getDefaultTaxRate();
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -143,7 +142,6 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
         if ($productOptionGroupTransfer->getName() &&
             strpos($productOptionGroupTransfer->getName(), ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX) === false) {
-
             $productOptionGroupTransfer->setName(
                 ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $productOptionGroupTransfer->getName()
             );
@@ -188,5 +186,4 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     {
         return new SpyProductOptionGroup();
     }
-
 }

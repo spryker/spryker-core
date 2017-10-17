@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 
 interface ApiValidatorPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ interface ApiValidatorPluginInterface
      * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
      */
     public function validate(ApiDataTransfer $apiDataTransfer);
-
 }

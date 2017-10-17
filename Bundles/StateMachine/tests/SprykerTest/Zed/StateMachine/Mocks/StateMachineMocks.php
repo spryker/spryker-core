@@ -28,7 +28,6 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 
 class StateMachineMocks extends Unit
 {
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
      */
@@ -208,5 +207,4 @@ class StateMachineMocks extends Unit
 
         return $itemLockMock;
     }
-
 }

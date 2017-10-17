@@ -7,7 +7,6 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer;
 
 interface CustomerUserConnectorGuiToCustomerQueryContainerInterface
 {
-
     /**
      * @param int $id
      *
@@ -19,5 +18,4 @@ interface CustomerUserConnectorGuiToCustomerQueryContainerInterface
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomers();
-
 }

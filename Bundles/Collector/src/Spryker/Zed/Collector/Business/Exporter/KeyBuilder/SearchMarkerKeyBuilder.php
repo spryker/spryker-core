@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class SearchMarkerKeyBuilder implements KeyBuilderInterface
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -32,5 +31,4 @@ class SearchMarkerKeyBuilder implements KeyBuilderInterface
     {
         return 'search-export';
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 interface CalculatorTypeInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
@@ -19,5 +18,4 @@ interface CalculatorTypeInterface
      * @return int
      */
     public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer);
-
 }

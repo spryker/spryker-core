@@ -15,7 +15,6 @@ use Spryker\Shared\ZedRequest\Client\Middleware\MiddlewareInterface;
 
 class ZedRequestLogPlugin implements MiddlewareInterface
 {
-
     use LoggerTrait;
 
     const NAME = 'guzzle request log middleware';
@@ -45,5 +44,4 @@ class ZedRequestLogPlugin implements MiddlewareInterface
             return $request;
         });
     }
-
 }

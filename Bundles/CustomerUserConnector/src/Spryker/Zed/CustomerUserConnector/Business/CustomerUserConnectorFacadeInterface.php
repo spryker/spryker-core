@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 
 interface CustomerUserConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Assigns provided user in transfer object to the "transfer.idCustomersToAssign" customers.
@@ -22,5 +21,4 @@ interface CustomerUserConnectorFacadeInterface
      * @return bool
      */
     public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer);
-
 }

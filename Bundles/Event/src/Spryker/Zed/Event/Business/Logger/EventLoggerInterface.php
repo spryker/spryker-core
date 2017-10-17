@@ -9,12 +9,10 @@ namespace Spryker\Zed\Event\Business\Logger;
 
 interface EventLoggerInterface
 {
-
     /**
      * @param string $message
      *
      * @return void
      */
     public function log($message);
-
 }

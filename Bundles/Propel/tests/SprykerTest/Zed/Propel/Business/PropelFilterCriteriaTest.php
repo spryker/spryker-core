@@ -23,7 +23,6 @@ use Spryker\Zed\Propel\PropelFilterCriteria;
  */
 class PropelFilterCriteriaTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class PropelFilterCriteriaTest extends Unit
         $this->assertEquals(0, $propelCriteria->getOffset());
         $this->assertEquals(['foobar DESC'], $propelCriteria->getOrderByColumns());
     }
-
 }

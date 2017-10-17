@@ -25,7 +25,6 @@ use Throwable;
 
 class CmsPageSaver implements CmsPageSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
@@ -109,7 +108,6 @@ class CmsPageSaver implements CmsPageSaverInterface
             $this->saveCmsPageLocalizedMetaAttributes($cmsPageTransfer, $localizedAttributeEntities);
 
             $this->cmsQueryContainer->getConnection()->commit();
-
         } catch (Exception $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -145,7 +143,6 @@ class CmsPageSaver implements CmsPageSaverInterface
         }
 
         try {
-
             $this->cmsQueryContainer->getConnection()->beginTransaction();
 
             if ($cmsPageEntity->getFkTemplate() !== $cmsPageTransfer->getFkTemplate()) {
@@ -348,7 +345,6 @@ class CmsPageSaver implements CmsPageSaverInterface
         $cmsPageUrlList = $this->createCmsPageList($cmsPageEntity);
 
         foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
-
             $cmsPageLocalizedAttributesEntity = $cmsPageLocalizedAttributesList[$cmsPageAttributesTransfer->getIdCmsPageLocalizedAttributes()];
             $urlEntity = $cmsPageUrlList[$cmsPageAttributesTransfer->getFkLocale()];
 
@@ -392,7 +388,6 @@ class CmsPageSaver implements CmsPageSaverInterface
         array $cmsPageLocalizedAttributesList
     ) {
         foreach ($cmsPageTransfer->getMetaAttributes() as $cmsPageMetaAttributesTransfer) {
-
             $cmsPageLocalizedAttributesEntity = $cmsPageLocalizedAttributesList[$cmsPageMetaAttributesTransfer->getIdCmsPageLocalizedAttributes()];
 
             $cmsPageLocalizedAttributesEntity = $this->mapCmsPageLocalizedMetaAttributes(
@@ -436,5 +431,4 @@ class CmsPageSaver implements CmsPageSaverInterface
     {
         return new SpyCmsPageLocalizedAttributes();
     }
-
 }

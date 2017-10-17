@@ -25,7 +25,6 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
  */
 class WebErrorHtmlRendererTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -106,5 +105,4 @@ class WebErrorHtmlRendererTest extends Unit
 
         return $errorPageMock;
     }
-
 }

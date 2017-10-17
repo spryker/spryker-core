@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class DiscountToMessengerBridge implements DiscountToMessengerInterface
 {
-
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacade
      */
@@ -54,5 +53,4 @@ class DiscountToMessengerBridge implements DiscountToMessengerInterface
     {
         $this->messengerFacade->addInfoMessage($message);
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -93,5 +92,4 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
 
         return $relationEntity;
     }
-
 }

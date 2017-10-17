@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CartItemGroupKeyOptionPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -27,5 +26,4 @@ class CartItemGroupKeyOptionPlugin extends AbstractPlugin implements ItemExpande
     {
         return $this->getFacade()->expandGroupKey($cartChangeTransfer);
     }
-
 }

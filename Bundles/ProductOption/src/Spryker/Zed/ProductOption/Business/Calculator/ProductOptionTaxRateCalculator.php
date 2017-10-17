@@ -14,7 +14,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionTaxRateCalculator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -152,5 +151,4 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
             ->find()
             ->toArray();
     }
-
 }

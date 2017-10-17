@@ -22,7 +22,6 @@ use Spryker\Zed\Storage\Business\StorageFacade;
  */
 class StorageFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\Storage\BusinessTester
      */
@@ -63,5 +62,4 @@ class StorageFacadeTest extends Unit
 
         $this->assertTrue($count > 0);
     }
-
 }

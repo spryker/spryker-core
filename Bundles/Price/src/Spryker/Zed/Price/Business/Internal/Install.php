@@ -12,7 +12,6 @@ use Spryker\Zed\Price\PriceConfig;
 
 class Install implements InstallInterface
 {
-
     /**
      * @var \Spryker\Zed\Price\Business\Model\Writer
      */
@@ -48,5 +47,4 @@ class Install implements InstallInterface
     {
         $this->writer->createPriceType($this->config->getPriceTypeDefaultName());
     }
-
 }

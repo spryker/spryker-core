@@ -10,7 +10,6 @@ use Spryker\Shared\Kernel\AbstractLocator;
 
 class LocatorWithMatcher extends AbstractLocator
 {
-
     /**
      * @var string
      */
@@ -35,5 +34,4 @@ class LocatorWithMatcher extends AbstractLocator
     {
         return $this;
     }
-
 }

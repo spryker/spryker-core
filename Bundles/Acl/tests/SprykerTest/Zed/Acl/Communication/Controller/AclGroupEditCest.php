@@ -22,7 +22,6 @@ use SprykerTest\Zed\Acl\PageObject\AclGroupListPage;
  */
 class AclGroupEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\Acl\AclCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class AclGroupEditCest
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups / Edit Group');
     }
-
 }

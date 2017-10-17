@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 
 interface ProductOptionGroupSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
@@ -26,5 +25,4 @@ interface ProductOptionGroupSaverInterface
      * @return bool
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive);
-
 }

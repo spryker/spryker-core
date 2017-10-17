@@ -26,7 +26,6 @@ use Symfony\Component\Finder\Finder;
  */
 class TemplatePathMapBuilderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -71,5 +70,4 @@ class TemplatePathMapBuilderTest extends Unit
     {
         return __DIR__ . '/Fixtures';
     }
-
 }

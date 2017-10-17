@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 class ShipmentToStoreBridge implements ShipmentToStoreInterface
 {
-
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
@@ -38,5 +37,4 @@ class ShipmentToStoreBridge implements ShipmentToStoreInterface
     {
         return $this->storeFacade->getAllStores();
     }
-
 }

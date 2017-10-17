@@ -34,7 +34,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UrlFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacade
      */
@@ -646,5 +645,4 @@ class UrlFacadeTest extends Unit
 
         $this->assertFalse($urlRedirectValidationResponseTransfer->getIsValid(), 'URL redirect validation response should notice redirect loops.');
     }
-
 }

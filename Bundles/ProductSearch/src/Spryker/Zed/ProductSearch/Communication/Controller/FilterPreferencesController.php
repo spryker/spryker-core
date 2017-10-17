@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterPreferencesController extends AbstractController
 {
-
     const PARAM_ID = 'id';
     const PARAM_TERM = 'term';
 
@@ -192,5 +191,4 @@ class FilterPreferencesController extends AbstractController
 
         return $this->redirectResponse('/product-search/filter-preferences');
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -27,5 +26,4 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
     {
         return $this->getFacade()->addGrossPriceToItems($cartChangeTransfer);
     }
-
 }

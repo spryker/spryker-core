@@ -27,7 +27,6 @@ use SprykerTest\Zed\Development\Helper\IdeAutoCompletion;
  */
 class IdeAutoCompletionWriterTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\Development\DevelopmentBusinessTester
      */
@@ -156,5 +155,4 @@ class IdeAutoCompletionWriterTest extends Unit
 
         return $configMock;
     }
-
 }

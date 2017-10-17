@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductReviewClient extends AbstractClient implements ProductReviewClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -78,7 +77,6 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      */
     public function getMaximumRating()
     {
-        return $this->getFactory()->getConfig()->getMaximumRating();
+        return $this->getFactory()->getProductReviewConfig()->getMaximumRating();
     }
-
 }

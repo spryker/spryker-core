@@ -9,12 +9,10 @@ namespace Spryker\Client\ProductLabel\Dependency\Client;
 
 interface ProductLabelToStorageInterface
 {
-
     /**
      * @param string $key
      *
      * @return mixed
      */
     public function get($key);
-
 }

@@ -26,7 +26,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerGroup\Communication\Table\CustomerGroupTable
      */
@@ -153,5 +152,4 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Shared\ProductReview\KeyBuilder\ProductAbstractReviewResourceKeyBuil
 
 class ProductReviewFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\ProductReview\Zed\ProductReviewStubInterface
      */
@@ -88,9 +87,19 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated use getProductReviewConfig
+     *
      * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
      */
     public function getConfig()
+    {
+        return parent::getConfig();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     */
+    public function getProductReviewConfig()
     {
         return parent::getConfig();
     }
@@ -118,5 +127,4 @@ class ProductReviewFactory extends AbstractFactory
     {
         return new ProductAbstractReviewResourceKeyBuilder();
     }
-
 }

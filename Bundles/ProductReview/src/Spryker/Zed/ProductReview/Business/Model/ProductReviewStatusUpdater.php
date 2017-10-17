@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -115,5 +114,4 @@ class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
         $productReviewTransfer->requireIdProductReview();
         $productReviewTransfer->requireStatus();
     }
-
 }

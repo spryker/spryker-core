@@ -21,7 +21,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class TranslationTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
     const URL_GLOSSARY_EDIT = '/glossary/edit';
     const GENERATED_KEY_MASK = 'generated.%';
@@ -170,5 +169,4 @@ class TranslationTable extends AbstractTable
 
         return $urls;
     }
-
 }

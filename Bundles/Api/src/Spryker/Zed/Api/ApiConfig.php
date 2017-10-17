@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
 {
-
     const ROUTE_PREFIX_API_REST = '/api/rest/';
 
     const FORMAT_TYPE = 'json';
@@ -131,5 +130,4 @@ class ApiConfig extends AbstractBundleConfig
 
         return array_unique($methods);
     }
-
 }

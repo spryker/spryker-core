@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesSplit\Business\Model;
 
 interface OrderItemSplitInterface
 {
-
     /**
      * @param int $idSalesOrderItem
      * @param int $quantityToSplit
@@ -19,5 +18,4 @@ interface OrderItemSplitInterface
      * @return \Generated\Shared\Transfer\ItemSplitResponseTransfer
      */
     public function split($idSalesOrderItem, $quantityToSplit);
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearc
 
 class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
     const FACADE_SEARCH = 'FACADE_SEARCH';
@@ -99,5 +98,4 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
             return $container->getLocator()->touch()->queryContainer();
         };
     }
-
 }

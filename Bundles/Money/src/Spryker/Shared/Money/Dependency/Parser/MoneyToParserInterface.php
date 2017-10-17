@@ -9,7 +9,6 @@ namespace Spryker\Shared\Money\Dependency\Parser;
 
 interface MoneyToParserInterface
 {
-
     /**
      * @param string $money
      * @param string $isoCode
@@ -17,5 +16,4 @@ interface MoneyToParserInterface
      * @return string
      */
     public function parse($money, $isoCode);
-
 }

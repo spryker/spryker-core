@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
  */
 class RestController extends AbstractApiController
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -34,5 +33,4 @@ class RestController extends AbstractApiController
     public function deniedAction()
     {
     }
-
 }

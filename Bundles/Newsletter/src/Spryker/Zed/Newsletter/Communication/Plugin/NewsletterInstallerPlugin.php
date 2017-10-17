@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class NewsletterInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
-
     /**
      * @return void
      */
@@ -24,5 +23,4 @@ class NewsletterInstallerPlugin extends AbstractPlugin implements InstallerPlugi
     {
         $this->getFacade()->install();
     }
-
 }

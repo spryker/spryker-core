@@ -11,7 +11,6 @@ use Spryker\Zed\Customer\Communication\Form\CustomerUpdateForm;
 
 class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
 {
-
     /**
      * @param int|null $idCustomer
      *
@@ -75,5 +74,4 @@ class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
 
         return $result;
     }
-
 }

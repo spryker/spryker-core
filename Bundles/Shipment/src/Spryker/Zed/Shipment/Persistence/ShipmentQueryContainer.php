@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
-
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
 
     /**
@@ -218,5 +217,4 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
         return $query;
     }
-
 }

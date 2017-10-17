@@ -12,7 +12,6 @@ use Spryker\Service\UtilSanitize\Model\Html;
 
 class UtilSanitizeServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\UtilSanitize\Model\HtmInterface
      */
@@ -20,5 +19,4 @@ class UtilSanitizeServiceFactory extends AbstractServiceFactory
     {
         return new Html();
     }
-
 }

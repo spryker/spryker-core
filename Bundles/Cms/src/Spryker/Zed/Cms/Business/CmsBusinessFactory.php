@@ -39,7 +39,6 @@ use Symfony\Component\Finder\Finder;
  */
 class CmsBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Cms\Business\Page\PageManagerInterface
      */
@@ -354,5 +353,4 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new DataExtractor($this->getUtilEncodingService());
     }
-
 }

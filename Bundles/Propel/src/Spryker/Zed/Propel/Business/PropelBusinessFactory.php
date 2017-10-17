@@ -38,7 +38,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PropelBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaInterface
      */
@@ -328,5 +327,4 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         return new MigrationCheckConsole();
     }
-
 }

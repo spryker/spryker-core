@@ -27,7 +27,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 abstract class CmsMocks extends Unit
 {
-
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $propelConnectionMock
      *
@@ -188,5 +187,4 @@ abstract class CmsMocks extends Unit
         return $this->getMockBuilder(CmsGlossaryKeyGeneratorInterface::class)
             ->getMock();
     }
-
 }

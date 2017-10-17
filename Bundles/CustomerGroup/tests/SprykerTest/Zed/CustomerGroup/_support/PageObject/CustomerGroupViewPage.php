@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\CustomerGroup\PageObject;
 
 class CustomerGroupViewPage
 {
-
     /**
      * @param int $idCustomerGroup
      *
@@ -19,5 +18,4 @@ class CustomerGroupViewPage
     {
         return '/customer-group/view?id-customer-group=' . $idCustomerGroup;
     }
-
 }

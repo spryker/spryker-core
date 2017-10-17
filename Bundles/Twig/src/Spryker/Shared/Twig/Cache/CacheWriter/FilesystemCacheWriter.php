@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 
 class FilesystemCacheWriter implements CacheWriterInterface
 {
-
     /**
      * @var string
      */
@@ -49,5 +48,4 @@ class FilesystemCacheWriter implements CacheWriterInterface
             opcache_invalidate($this->cacheFilePath, true);
         }
     }
-
 }

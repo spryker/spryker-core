@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentMethodDeliveryTimePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int Delivery time in seconds
      */
     public function getTime(QuoteTransfer $quoteTransfer);
-
 }

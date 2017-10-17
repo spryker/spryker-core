@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 interface ProductGroupCreatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
      * @return \Generated\Shared\Transfer\ProductGroupTransfer
      */
     public function createProductGroup(ProductGroupTransfer $productGroupTransfer);
-
 }

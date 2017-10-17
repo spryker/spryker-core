@@ -14,7 +14,6 @@ namespace Spryker\Shared\NewRelicApi;
  */
 interface NewRelicApiInterface
 {
-
     /**
      * Report an error at this line of code, with a complete stack trace.
      *
@@ -174,5 +173,4 @@ interface NewRelicApiInterface
      * @return $this
      */
     public function recordCustomEvent($name, array $attributes = []);
-
 }

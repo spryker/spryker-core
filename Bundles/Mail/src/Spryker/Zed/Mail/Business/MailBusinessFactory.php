@@ -19,7 +19,6 @@ use Spryker\Zed\Mail\MailDependencyProvider;
  */
 class MailBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Mailer\MailHandlerInterface
      */
@@ -100,5 +99,4 @@ class MailBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(MailDependencyProvider::MAILER);
     }
-
 }

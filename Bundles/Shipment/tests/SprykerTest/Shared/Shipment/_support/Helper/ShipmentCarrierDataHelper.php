@@ -11,7 +11,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ShipmentCarrierDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -37,5 +36,4 @@ class ShipmentCarrierDataHelper extends Module
     {
         return $this->getLocator()->shipment()->facade();
     }
-
 }

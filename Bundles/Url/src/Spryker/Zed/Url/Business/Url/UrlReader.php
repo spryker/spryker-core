@@ -13,7 +13,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlReader implements UrlReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -149,5 +148,4 @@ class UrlReader implements UrlReaderInterface
     {
         return $this->urlQueryContainer->queryUrls();
     }
-
 }

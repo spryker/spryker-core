@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentDiscountDecisionRuleInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -36,5 +35,4 @@ interface ShipmentDiscountDecisionRuleInterface
      * @return bool
      */
     public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer);
-
 }

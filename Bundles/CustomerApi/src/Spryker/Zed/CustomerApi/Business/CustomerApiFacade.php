@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -110,5 +109,4 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
             ->createCustomerApiValidator()
             ->validate($apiDataTransfer);
     }
-
 }

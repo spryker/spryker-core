@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class PropelFilterCriteria implements PropelFilterCriteriaInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\FilterTransfer
      */
@@ -69,5 +68,4 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
 
         return $criteria;
     }
-
 }

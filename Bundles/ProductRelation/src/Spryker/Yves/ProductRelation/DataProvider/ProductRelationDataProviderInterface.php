@@ -9,7 +9,6 @@ namespace Spryker\Yves\ProductRelation\DataProvider;
 
 interface ProductRelationDataProviderInterface
 {
-
     /**
      * @param array $parameters
      *
@@ -21,5 +20,4 @@ interface ProductRelationDataProviderInterface
      * @return string
      */
     public function getAcceptedType();
-
 }

@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface SkuGeneratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -28,5 +27,4 @@ interface SkuGeneratorInterface
         ProductAbstractTransfer $productAbstractTransfer,
         ProductConcreteTransfer $productConcreteTransfer
     );
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CustomerGroup\Communication\Table\Assignment;
 
 interface AssignmentCustomerQueryBuilderInterface
 {
-
     /**
      * @param int|null $idCustomerGroup
      *
@@ -23,5 +22,4 @@ interface AssignmentCustomerQueryBuilderInterface
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function buildAssignedQuery($idCustomerGroup = null);
-
 }

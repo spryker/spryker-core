@@ -11,7 +11,6 @@ use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class ZedRequestStub
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
@@ -48,5 +47,4 @@ class ZedRequestStub
     {
         return $this->zedStub->getLastResponseErrorMessages();
     }
-
 }

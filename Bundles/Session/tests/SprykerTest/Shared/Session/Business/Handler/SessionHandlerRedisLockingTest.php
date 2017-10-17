@@ -24,7 +24,6 @@ use Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking;
  */
 class SessionHandlerRedisLockingTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -108,5 +107,4 @@ class SessionHandlerRedisLockingTest extends Unit
 
         return $sessionHandler;
     }
-
 }

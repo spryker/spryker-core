@@ -13,7 +13,6 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class EnvironmentInfo extends TwigFunction
 {
-
     /**
      * @return string
      */
@@ -37,7 +36,7 @@ class EnvironmentInfo extends TwigFunction
                 . '<dt>Store:'
                 . '<dd>' . Store::getInstance()->getStoreName()
                 . '<dt>Server:'
-                . '<dd>' . $utilNetworkHost->getHostName()
+                . '<dd>' . $utilNetworkHost->getHostname()
                 . '<dt>Controller:'
                 . '<dd>' . $currentController
                 . '</dl></div>';
@@ -45,5 +44,4 @@ class EnvironmentInfo extends TwigFunction
             return $html;
         };
     }
-
 }

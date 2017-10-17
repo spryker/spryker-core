@@ -25,7 +25,6 @@ use Spryker\Zed\Url\Business\Exception\UrlExistsException;
  */
 class UrlHandlingTest extends FacadeTestAbstract
 {
-
     /**
      * @return void
      */
@@ -252,5 +251,4 @@ class UrlHandlingTest extends FacadeTestAbstract
             ->filterByItemId($idUrl)
             ->findOne();
     }
-
 }

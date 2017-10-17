@@ -29,7 +29,6 @@ use SprykerTest\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugi
  */
 class AbstractPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -125,5 +124,4 @@ class AbstractPluginTest extends Unit
 
         return $pluginMock;
     }
-
 }

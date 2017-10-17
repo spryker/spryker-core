@@ -44,7 +44,6 @@ use Spryker\Zed\Ratepay\Business\RatepayBusinessFactory;
  */
 abstract class AbstractBusinessTest extends Unit
 {
-
     const PAYMENT_METHOD = '';
 
     /**
@@ -445,5 +444,4 @@ abstract class AbstractBusinessTest extends Unit
 
         return $processEntity;
     }
-
 }

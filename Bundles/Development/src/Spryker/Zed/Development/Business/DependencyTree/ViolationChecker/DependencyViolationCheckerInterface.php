@@ -9,10 +9,8 @@ namespace Spryker\Zed\Development\Business\DependencyTree\ViolationChecker;
 
 interface DependencyViolationCheckerInterface
 {
-
     /**
      * @return array
      */
     public function getDependencyViolations();
-
 }

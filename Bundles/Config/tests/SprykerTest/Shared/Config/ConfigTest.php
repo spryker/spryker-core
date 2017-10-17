@@ -20,7 +20,6 @@ use Spryker\Shared\Config\Config;
  */
 class ConfigTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -28,5 +27,4 @@ class ConfigTest extends Unit
     {
         $this->assertInstanceOf(Config::class, Config::getInstance());
     }
-
 }

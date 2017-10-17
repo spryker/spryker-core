@@ -21,7 +21,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
  */
 class ProductManagementProductConcreteEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
@@ -34,5 +33,4 @@ class ProductManagementProductConcreteEditCest
         $i->clickDataTableEditButton(1, 'product-variant-table_wrapper');
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Concrete Product');
     }
-
 }

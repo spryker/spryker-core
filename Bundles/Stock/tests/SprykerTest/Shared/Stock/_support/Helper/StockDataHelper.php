@@ -14,7 +14,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StockDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -37,5 +36,4 @@ class StockDataHelper extends Module
     {
         return $this->getLocator()->stock()->facade();
     }
-
 }

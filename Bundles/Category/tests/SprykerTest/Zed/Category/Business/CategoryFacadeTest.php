@@ -26,7 +26,6 @@ use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
  */
 class CategoryFacadeTest extends Unit
 {
-
     const CATEGORY_NODE_ID_ROOT = 1;
 
     /**
@@ -74,7 +73,7 @@ class CategoryFacadeTest extends Unit
 
         //add extra parent to initial node (make c1 enveloped into c1 through c2)
         $categoryTransfer1->setExtraParents(new ArrayObject([
-            $categoryTransfer2->getCategoryNode()
+            $categoryTransfer2->getCategoryNode(),
         ]));
         $categoryFacade->update($categoryTransfer1);
 
@@ -120,5 +119,4 @@ class CategoryFacadeTest extends Unit
     {
         return $this->tester->getLocator()->category()->facade();
     }
-
 }

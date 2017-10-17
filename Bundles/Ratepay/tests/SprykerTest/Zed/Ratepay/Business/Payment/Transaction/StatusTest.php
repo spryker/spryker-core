@@ -28,7 +28,6 @@ use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
  */
 class StatusTest extends Unit
 {
-
     /**
      * @return bool
      */
@@ -158,5 +157,4 @@ class StatusTest extends Unit
 
         return $queryContainer;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 
 class CreateActionButtonFunction extends AbstractActionButtonFunction
 {
-
     /**
      * @return string
      */
@@ -33,5 +32,4 @@ class CreateActionButtonFunction extends AbstractActionButtonFunction
     {
         return 'createActionButton';
     }
-
 }

@@ -12,7 +12,6 @@ namespace Spryker\Client\ProductRelation;
  */
 interface ProductRelationClientInterface
 {
-
     /**
      * Specification:
      *   - Reads abstract product relations
@@ -24,5 +23,4 @@ interface ProductRelationClientInterface
      * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
     public function getProductRelationsByIdProductAbstract($idProductAbstract);
-
 }

@@ -21,7 +21,6 @@ use Codeception\Scenario;
  */
 class AclPresentationTester extends Actor
 {
-
     use _generated\AclPresentationTesterActions;
 
     /**
@@ -34,5 +33,4 @@ class AclPresentationTester extends Actor
         $this->amZed();
         $this->amLoggedInUser();
     }
-
 }

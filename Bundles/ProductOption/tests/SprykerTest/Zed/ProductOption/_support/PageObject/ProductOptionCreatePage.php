@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductOption\PageObject;
 
 class ProductOptionCreatePage
 {
-
     const URL = '/product-option/create/index';
 
     const PRODUCT_OPTION_CREATED_SUCCESS_MESSAGE = 'Product option group created.';
@@ -37,5 +36,4 @@ class ProductOptionCreatePage
             ],
         ],
     ];
-
 }

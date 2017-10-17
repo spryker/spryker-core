@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewCreatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
     public function createProductReview(ProductReviewTransfer $productReviewTransfer);
-
 }

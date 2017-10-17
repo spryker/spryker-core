@@ -23,7 +23,6 @@ use SprykerTest\Zed\Ratepay\Business\Request\Payment\ElvAbstractTest;
  */
 class ElvTest extends ElvAbstractTest
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class ElvTest extends ElvAbstractTest
     {
         return $facade->initPayment($this->mockRatepayPaymentInitTransfer());
     }
-
 }

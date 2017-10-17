@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class IsCaptureApprovedPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsCaptureApprovedPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isCaptureApproved($orderTransfer);
     }
-
 }

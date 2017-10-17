@@ -24,7 +24,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
  */
 class CheckoutDependencyProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -40,5 +39,4 @@ class CheckoutDependencyProviderTest extends Unit
         $this->assertArrayHasKey(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, $container);
         $this->assertInstanceOf(SubFormPluginCollection::class, $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS]);
     }
-
 }

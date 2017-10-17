@@ -11,12 +11,10 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
 interface ShipmentMethodTransformerInterface
 {
-
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function transformEntityToTransfer(SpyShipmentMethod $shipmentMethodEntity);
-
 }

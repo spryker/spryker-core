@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductImageQueryContainer extends AbstractQueryContainer implements ProductImageQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -228,5 +227,4 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
                 ->orderBySortOrder(Criteria::DESC)
             ->endUse();
     }
-
 }

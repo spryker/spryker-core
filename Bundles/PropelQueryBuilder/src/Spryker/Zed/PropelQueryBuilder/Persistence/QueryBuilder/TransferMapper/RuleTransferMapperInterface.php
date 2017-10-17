@@ -9,12 +9,10 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\TransferMapper
 
 interface RuleTransferMapperInterface
 {
-
     /**
      * @param string $json
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
     public function createRuleQuerySetFromJson($json);
-
 }

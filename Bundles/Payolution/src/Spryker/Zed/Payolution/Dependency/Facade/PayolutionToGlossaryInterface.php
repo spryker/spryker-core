@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface PayolutionToGlossaryInterface
 {
-
     /**
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
@@ -29,5 +28,4 @@ interface PayolutionToGlossaryInterface
      * @return string
      */
     public function translate($keyName, array $data = []);
-
 }

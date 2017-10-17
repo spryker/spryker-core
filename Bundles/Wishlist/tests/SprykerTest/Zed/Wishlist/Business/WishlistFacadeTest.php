@@ -39,7 +39,6 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
  */
 class WishlistFacadeTest extends Unit
 {
-
     const DEFAULT_NAME = 'default';
 
     /**
@@ -642,5 +641,4 @@ class WishlistFacadeTest extends Unit
 
         $this->stockFacade->createStockProduct($stockProductTransfer);
     }
-
 }

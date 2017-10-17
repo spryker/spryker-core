@@ -18,7 +18,6 @@ use Spryker\Zed\Payolution\Persistence\PayolutionQueryContainer;
 
 class PayolutionFacadeMockBuilder
 {
-
     /**
      * @param \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface $adapter
      * @param \Codeception\Test\Unit $testCase
@@ -70,5 +69,4 @@ class PayolutionFacadeMockBuilder
 
         return $businessFactoryMock;
     }
-
 }

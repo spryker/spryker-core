@@ -9,10 +9,8 @@ namespace Spryker\Zed\Country\Business\Internal;
 
 interface InstallInterface
 {
-
     /**
      * @return void
      */
     public function install();
-
 }

@@ -14,7 +14,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ShipmentMethodDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     const NAMESPACE_ROOT = '\\';
@@ -160,5 +159,4 @@ class ShipmentMethodDataHelper extends Module
     {
         return $this->getLocator()->shipment()->facade();
     }
-
 }

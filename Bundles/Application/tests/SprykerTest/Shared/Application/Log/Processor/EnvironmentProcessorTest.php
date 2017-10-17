@@ -22,7 +22,6 @@ use Spryker\Shared\Application\Log\Processor\EnvironmentProcessor;
  */
 class EnvironmentProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class EnvironmentProcessorTest extends Unit
 
         $this->assertArrayHasKey(EnvironmentProcessor::EXTRA, $result['extra']);
     }
-
 }

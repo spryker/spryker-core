@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
 
 class Locator extends AbstractLocatorLocator
 {
-
     /**
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
@@ -35,5 +34,4 @@ class Locator extends AbstractLocatorLocator
 
         return $bundleProxy;
     }
-
 }

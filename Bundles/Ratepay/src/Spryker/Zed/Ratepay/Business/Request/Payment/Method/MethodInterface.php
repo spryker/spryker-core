@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 
 interface MethodInterface
 {
-
     /**
      * @return string
      */
@@ -86,5 +85,4 @@ interface MethodInterface
         OrderTransfer $partialOrderTransfer,
         array $orderItems
     );
-
 }

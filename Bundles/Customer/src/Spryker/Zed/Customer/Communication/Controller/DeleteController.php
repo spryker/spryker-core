@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -66,5 +65,4 @@ class DeleteController extends AbstractController
         $this->addSuccessMessage('Customer successfully deleted');
         return $this->redirectResponse('/customer');
     }
-
 }

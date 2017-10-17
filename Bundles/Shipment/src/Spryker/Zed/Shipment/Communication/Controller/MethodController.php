@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MethodController extends AbstractController
 {
-
     const ID_METHOD_PARAMETER = 'id-method';
 
     const MESSAGE_UPDATE_SUCCESS = 'Shipment method "%s" was updated successfully.';
@@ -82,5 +81,4 @@ class MethodController extends AbstractController
 
         return $this->redirectResponse('/shipment');
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 interface GlossaryToLocaleInterface
 {
-
     /**
      * @param string $localeName
      *
@@ -37,5 +36,4 @@ interface GlossaryToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function createLocale($localeName);
-
 }

@@ -14,7 +14,6 @@ use Spryker\Service\UtilDateTime\UtilDateTimeService;
 
 class DateTimeFormatterServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -41,5 +40,4 @@ class DateTimeFormatterServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 
 class JsonIndexDefinitionMerger implements IndexDefinitionMergerInterface
 {
-
     /**
      * @param array $definition1
      * @param array $definition2
@@ -20,5 +19,4 @@ class JsonIndexDefinitionMerger implements IndexDefinitionMergerInterface
     {
         return array_replace_recursive($definition1, $definition2);
     }
-
 }

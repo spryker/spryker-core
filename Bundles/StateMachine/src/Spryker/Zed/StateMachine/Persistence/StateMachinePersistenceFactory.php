@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class StateMachinePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLogQuery
      */
@@ -68,5 +67,4 @@ class StateMachinePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyStateMachineLockQuery::create();
     }
-
 }

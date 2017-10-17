@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DependencyTreeBuilderConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:dependency:build-tree';
 
     const OPTION_APPLICATION = 'application';
@@ -67,5 +66,4 @@ class DependencyTreeBuilderConsole extends Console
 
         $this->getFacade()->buildDependencyTree($application, $bundle, $layer);
     }
-
 }

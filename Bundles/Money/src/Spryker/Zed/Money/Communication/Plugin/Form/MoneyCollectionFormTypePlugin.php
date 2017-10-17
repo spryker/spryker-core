@@ -17,7 +17,6 @@ use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
  */
 class MoneyCollectionFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
-
     /**
      * @return string
      */
@@ -25,5 +24,4 @@ class MoneyCollectionFormTypePlugin extends AbstractPlugin implements FormTypeIn
     {
         return MoneyCollectionType::class;
     }
-
 }

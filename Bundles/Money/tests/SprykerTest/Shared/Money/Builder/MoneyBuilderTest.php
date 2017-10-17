@@ -28,7 +28,6 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
  */
 class MoneyBuilderTest extends Unit
 {
-
     const DEFAULT_CURRENCY = 'EUR';
     const AMOUNT_INTEGER = 1000;
     const AMOUNT_FLOAT = 10.00;
@@ -195,5 +194,4 @@ class MoneyBuilderTest extends Unit
     {
         return new MoneyBuilder($this->getMoneyToTransferConverterMock(), new DecimalToIntegerConverter(), self::DEFAULT_CURRENCY);
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvi
  */
 class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRule
      */
@@ -70,5 +69,4 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_LOCALE);
     }
-
 }

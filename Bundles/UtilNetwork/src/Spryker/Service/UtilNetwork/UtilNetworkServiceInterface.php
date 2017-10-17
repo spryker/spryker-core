@@ -7,7 +7,6 @@ namespace Spryker\Service\UtilNetwork;
 
 interface UtilNetworkServiceInterface
 {
-
     /**
      * Specification:
      *  - Get current running script hostname
@@ -25,5 +24,4 @@ interface UtilNetworkServiceInterface
      * @return string
      */
     public function getRequestId();
-
 }

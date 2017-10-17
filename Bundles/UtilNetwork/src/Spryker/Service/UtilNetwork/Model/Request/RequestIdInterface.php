@@ -9,10 +9,8 @@ namespace Spryker\Service\UtilNetwork\Model\Request;
 
 interface RequestIdInterface
 {
-
     /**
      * @return string
      */
     public function getRequestId();
-
 }

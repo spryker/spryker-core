@@ -21,7 +21,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
  */
 class ProductManagementProductConcreteViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
@@ -35,5 +34,4 @@ class ProductManagementProductConcreteViewCest
 
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / View Concrete Product');
     }
-
 }

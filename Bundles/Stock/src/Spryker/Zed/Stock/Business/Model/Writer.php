@@ -17,7 +17,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class Writer implements WriterInterface
 {
-
     const TOUCH_STOCK_TYPE = 'stock-type';
     const TOUCH_STOCK_PRODUCT = 'stock-product';
     const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
@@ -256,5 +255,4 @@ class Writer implements WriterInterface
 
         return $productConcreteTransfer;
     }
-
 }

@@ -15,7 +15,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class CookieServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @var \Spryker\Yves\Kernel\Application
      */
@@ -59,5 +58,4 @@ class CookieServiceProvider implements ServiceProviderInterface
     {
         $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], -255);
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\BundleProxy;
 
 class LocatorLocator extends AbstractLocatorLocator
 {
-
     /**
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
@@ -19,5 +18,4 @@ class LocatorLocator extends AbstractLocatorLocator
     {
         return new BundleProxy();
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductSearchConfig extends AbstractBundleConfig
 {
-
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
@@ -37,5 +36,4 @@ class ProductSearchConfig extends AbstractBundleConfig
                 ->setIsMultiValued(false),
         ];
     }
-
 }

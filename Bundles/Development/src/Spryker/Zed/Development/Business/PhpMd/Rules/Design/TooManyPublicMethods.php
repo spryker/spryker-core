@@ -14,7 +14,6 @@ use PHPMD\Rule\ClassAware;
 
 class TooManyPublicMethods extends AbstractRule implements ClassAware
 {
-
     const NUMBER_OF_PUBLIC_METHODS = 'npm';
     const THRESHOLD = 'maxmethods';
 
@@ -83,5 +82,4 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
     {
         return (preg_match('/(Client|Yves|Zed)\\\\(.*?)\\\\(.*?)Facade/', $node->getFullQualifiedName()) || preg_match('/(Factory)/', $node->getName()));
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
  */
 class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpanderInterface
      */
@@ -55,5 +54,4 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_PRODUCT);
     }
-
 }

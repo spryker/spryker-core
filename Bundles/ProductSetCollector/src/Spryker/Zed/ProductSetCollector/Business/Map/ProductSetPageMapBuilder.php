@@ -22,7 +22,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
  */
 class ProductSetPageMapBuilder implements PageMapInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReaderInterface
      */
@@ -134,5 +133,4 @@ class ProductSetPageMapBuilder implements PageMapInterface
             }
         }
     }
-
 }

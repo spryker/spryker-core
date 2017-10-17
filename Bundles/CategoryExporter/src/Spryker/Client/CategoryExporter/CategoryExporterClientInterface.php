@@ -9,7 +9,6 @@ namespace Spryker\Client\CategoryExporter;
 
 interface CategoryExporterClientInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ interface CategoryExporterClientInterface
      * @return array
      */
     public function getTreeFromCategoryNode(array $categoryNode, $locale);
-
 }

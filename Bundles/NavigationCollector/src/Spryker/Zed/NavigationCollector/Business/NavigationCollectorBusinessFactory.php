@@ -18,7 +18,6 @@ use Spryker\Zed\NavigationCollector\Persistence\Collector\Propel\NavigationMenuC
  */
 class NavigationCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\NavigationCollector\Business\Collector\Storage\NavigationMenuCollector
      */
@@ -83,5 +82,4 @@ class NavigationCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(NavigationCollectorDependencyProvider::FACADE_NAVIGATION);
     }
-
 }

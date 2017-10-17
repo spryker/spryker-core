@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartToQuoteBridge implements CartToQuoteInterface
 {
-
     /**
      * @var \Spryker\Client\Quote\QuoteClientInterface
      */
@@ -50,5 +49,4 @@ class CartToQuoteBridge implements CartToQuoteInterface
     {
         $this->quoteClient->clearQuote();
     }
-
 }

@@ -7,7 +7,6 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 
 interface MetaDataProviderInterface
 {
-
     /**
      * @return string[]
      */
@@ -48,5 +47,4 @@ interface MetaDataProviderInterface
      * @return array
      */
     public function getQueryStringValueOptions();
-
 }

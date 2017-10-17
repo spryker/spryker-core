@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 class DiscountAmountFormatter implements DiscountAmountFormatterInterface
 {
-
     /**
      * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
@@ -93,5 +92,4 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
         }
         return $discountConfiguratorTransfer;
     }
-
 }

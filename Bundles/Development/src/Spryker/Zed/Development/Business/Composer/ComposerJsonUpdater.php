@@ -14,7 +14,6 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
-
     const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
     const KEY_REQUIRE = 'require';
     const KEY_REQUIRE_DEV = 'require-dev';
@@ -126,13 +125,13 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      */
     protected function clean(array $composerJson)
     {
-        if  (!empty($composerJson[static::KEY_REQUIRE])) {
+        if (!empty($composerJson[static::KEY_REQUIRE])) {
             ksort($composerJson[static::KEY_REQUIRE]);
         } elseif (isset($composerJson[static::KEY_REQUIRE])) {
             unset($composerJson[static::KEY_REQUIRE]);
         }
 
-        if  (!empty($composerJson[static::KEY_REQUIRE_DEV])) {
+        if (!empty($composerJson[static::KEY_REQUIRE_DEV])) {
             ksort($composerJson[static::KEY_REQUIRE_DEV]);
         } elseif (isset($composerJson[static::KEY_REQUIRE_DEV])) {
             unset($composerJson[static::KEY_REQUIRE_DEV]);
@@ -169,7 +168,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
             'config',
         ];
 
-        $callable = function($a, $b) use ($map) {
+        $callable = function ($a, $b) use ($map) {
             $keyA = in_array($a, $map) ? array_search($a, $map) : 999;
             $keyB = in_array($b, $map) ? array_search($b, $map) : 999;
 
@@ -202,5 +201,4 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
             throw new RuntimeException(sprintf('Invalid composer name, expected %s, got %s', $expected, $vendorName));
         }
     }
-
 }

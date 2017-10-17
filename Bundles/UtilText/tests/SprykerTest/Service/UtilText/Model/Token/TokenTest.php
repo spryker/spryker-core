@@ -22,7 +22,6 @@ use Spryker\Service\UtilText\Model\Token\Token;
  */
 class TokenTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class TokenTest extends Unit
         $isValid = $tokenService->check('wrong' . $rawToken, $token);
         $this->assertFalse($isValid);
     }
-
 }

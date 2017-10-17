@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class TwigFacade extends AbstractFacade implements TwigFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -26,5 +25,4 @@ class TwigFacade extends AbstractFacade implements TwigFacadeInterface
     {
         $this->getFactory()->createCacheWarmer()->warmUp();
     }
-
 }

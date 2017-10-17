@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class BeginsWith extends AbstractOperator
 {
-
     const TYPE = 'begins_with';
 
     /**
@@ -32,5 +31,4 @@ class BeginsWith extends AbstractOperator
     {
         return sprintf('%s%%', $rule->getValue());
     }
-
 }

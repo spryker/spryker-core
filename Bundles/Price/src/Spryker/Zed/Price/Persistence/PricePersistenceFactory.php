@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class PricePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Price\Persistence\SpyPriceTypeQuery
      */
@@ -33,5 +32,4 @@ class PricePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyPriceProductQuery::create();
     }
-
 }

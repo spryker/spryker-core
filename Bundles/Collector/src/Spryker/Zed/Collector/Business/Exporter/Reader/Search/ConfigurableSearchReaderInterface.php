@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 
 interface ConfigurableSearchReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer $collectorConfigurationTransfer
      *
@@ -23,5 +22,4 @@ interface ConfigurableSearchReaderInterface
      * @return \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
      */
     public function getSearchCollectorConfiguration();
-
 }

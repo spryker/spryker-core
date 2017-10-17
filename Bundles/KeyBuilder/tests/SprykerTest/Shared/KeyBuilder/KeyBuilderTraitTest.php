@@ -21,7 +21,6 @@ use SprykerTest\Shared\KeyBuilder\Fixtures\KeyBuilder;
  */
 class KeyBuilderTraitTest extends Unit
 {
-
     /**
      * @dataProvider generateKey
      *
@@ -55,5 +54,4 @@ class KeyBuilderTraitTest extends Unit
             ['foo \'23\' bar', $storeName . '.de_de.key-builder.identifier.foo--23--bar'],
         ];
     }
-
 }

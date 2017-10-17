@@ -17,7 +17,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  */
 class MailProviderPlugin extends AbstractPlugin implements MailProviderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
@@ -27,5 +26,4 @@ class MailProviderPlugin extends AbstractPlugin implements MailProviderPluginInt
     {
         $this->getFacade()->sendMail($mailTransfer);
     }
-
 }

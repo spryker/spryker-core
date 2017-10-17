@@ -15,7 +15,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CustomerOrderReader implements CustomerOrderReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -79,5 +78,4 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
 
         return $orders;
     }
-
 }

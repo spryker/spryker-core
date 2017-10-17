@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class SearchPreferencesDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -67,5 +66,4 @@ class SearchPreferencesDataProvider
 
         return $options;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Payolution;
 
 interface PayolutionConstants
 {
-
     const PAYOLUTION = 'payolution';
     const TRANSACTION_GATEWAY_URL = 'PAYOLUTION_TRANSACTION_GATEWAY_URL';
     const CALCULATION_GATEWAY_URL = 'PAYOLUTION_CALCULATION_GATEWAY_URL';
@@ -59,5 +58,4 @@ interface PayolutionConstants
      * @api
      */
     const BASE_URL_YVES = 'PAYOLUTION:BASE_URL_YVES';
-
 }

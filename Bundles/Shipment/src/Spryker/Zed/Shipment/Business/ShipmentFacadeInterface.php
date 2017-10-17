@@ -16,7 +16,6 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
 interface ShipmentFacadeInterface
 {
-
     /**
      * Specification:
      * - Creates carrier using provided ShipmentCarrier transfer object data.
@@ -199,5 +198,4 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity);
-
 }

@@ -21,7 +21,6 @@ use Spryker\Service\UtilDateTime\UtilDateTimeDependencyProvider;
  */
 class UtilDateTimeDependencyProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -33,5 +32,4 @@ class UtilDateTimeDependencyProviderTest extends Unit
 
         $this->assertArrayHasKey(UtilDateTimeDependencyProvider::CONFIG, $container);
     }
-
 }

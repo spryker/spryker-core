@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Category\PageObject;
 
 class CategoryListPage
 {
-
     const URL = '/category/root';
 
     const SELECTOR_TABLE = 'dataTables_wrapper';
@@ -38,5 +37,4 @@ class CategoryListPage
     {
         return sprintf('//a[@title="Delete Category"][%s]', $position);
     }
-
 }

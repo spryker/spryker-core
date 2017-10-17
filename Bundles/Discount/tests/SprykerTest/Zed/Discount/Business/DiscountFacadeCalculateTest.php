@@ -43,7 +43,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
  */
 class DiscountFacadeCalculateTest extends Unit
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -193,7 +192,6 @@ class DiscountFacadeCalculateTest extends Unit
                 $collectedDiscountTransfer->setDiscountableItems($discountableItems);
 
                 return $collectedDiscountTransfer;
-
             });
 
         $discountFacade = $this->createMockedDiscountFacade($filterPluginMock);
@@ -341,7 +339,7 @@ class DiscountFacadeCalculateTest extends Unit
 
         $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER] = function () use ($filterPluginMock) {
             return [
-                $filterPluginMock
+                $filterPluginMock,
             ];
         };
 
@@ -376,5 +374,4 @@ class DiscountFacadeCalculateTest extends Unit
     {
         return SpyCurrencyQuery::create()->findOneByCode('EUR');
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Business\Relation;
 
 interface ProductRelationActivatorInterface
 {
-
     /**
      * @param int $idProductRelation
      *
@@ -27,5 +26,4 @@ interface ProductRelationActivatorInterface
      * @return void
      */
     public function deactivate($idProductRelation);
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Zed\AvailabilityGui\Dependency\QueryContainer;
 
 interface AvailabilityGuiToProductBundleQueryContainerInterface
 {
-
     /**
      * @param int $idProductConcrete
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
     public function queryBundleProduct($idProductConcrete);
-
 }

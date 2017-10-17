@@ -9,12 +9,10 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductUrlGeneratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
     public function generateProductUrl(ProductAbstractTransfer $productAbstractTransfer);
-
 }

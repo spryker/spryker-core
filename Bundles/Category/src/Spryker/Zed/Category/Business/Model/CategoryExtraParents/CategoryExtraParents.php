@@ -18,7 +18,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryExtraParents implements CategoryExtraParentsInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -304,5 +303,4 @@ class CategoryExtraParents implements CategoryExtraParentsInterface
             $sourceNodeEntity->getFkParentCategoryNode()
         );
     }
-
 }

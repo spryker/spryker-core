@@ -25,7 +25,6 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class MoneyType extends AbstractType
 {
-
     const FIELD_NET_AMOUNT = 'net_amount';
     const FIELD_GROSS_AMOUNT = 'gross_amount';
     const FIELD_FK_CURRENCY = 'fk_currency';
@@ -201,5 +200,4 @@ class MoneyType extends AbstractType
     {
         return $this->getFactory()->createMoneyDataProvider();
     }
-
 }

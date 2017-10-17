@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ToggleStatusController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
 
     const MESSAGE_MAP_UPDATE_SUCCESS = [
@@ -55,5 +54,4 @@ class ToggleStatusController extends AbstractController
 
         return $this->redirectResponse('/navigation-gui');
     }
-
 }

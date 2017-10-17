@@ -12,7 +12,6 @@ use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 
 class UserUpdateFormDataProvider extends UserFormDataProvider
 {
-
     /**
      * @return array
      */
@@ -35,5 +34,4 @@ class UserUpdateFormDataProvider extends UserFormDataProvider
             SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS)
         );
     }
-
 }

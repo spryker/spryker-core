@@ -24,7 +24,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const REFERER = 'referer';
 
     /**
@@ -179,5 +178,4 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
         return true;
     }
-
 }

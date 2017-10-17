@@ -12,7 +12,6 @@ use Orm\Zed\Price\Persistence\SpyPriceType;
 
 interface PriceQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -137,5 +136,4 @@ interface PriceQueryContainerInterface
      * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
      */
     public function queryProductAbstractPriceByIdConcreteProduct($idProduct);
-
 }

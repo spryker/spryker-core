@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -333,5 +332,4 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     {
         return $this->getFactory()->createArchitectureSniffer()->getRules();
     }
-
 }

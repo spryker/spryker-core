@@ -24,7 +24,6 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
  */
 class OmsDependencyInjectorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -81,5 +80,4 @@ class OmsDependencyInjectorTest extends Unit
 
         return $conditionCollection;
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBrid
 
 class ProductReviewStub implements ProductReviewStubInterface
 {
-
     /**
      * @var \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge
      */
@@ -35,5 +34,4 @@ class ProductReviewStub implements ProductReviewStubInterface
     {
         return $this->zedRequestClient->call('/product-review/gateway/submit-customer-review', $productReviewRequestTransfer);
     }
-
 }

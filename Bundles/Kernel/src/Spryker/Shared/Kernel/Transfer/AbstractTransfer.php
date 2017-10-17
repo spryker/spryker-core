@@ -17,7 +17,6 @@ use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
 abstract class AbstractTransfer implements TransferInterface, Serializable
 {
-
     /**
      * @var array
      */
@@ -335,5 +334,4 @@ abstract class AbstractTransfer implements TransferInterface, Serializable
     {
         $this->initCollectionProperties();
     }
-
 }

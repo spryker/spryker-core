@@ -12,7 +12,6 @@ use Spryker\Shared\ProductGroup\ProductGroupConfig;
 
 class ProductAbstractGroupsKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class ProductAbstractGroupsKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductGroupConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_GROUPS;
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutPluginInterface
 {
-
     /**
      * @api
      *
@@ -22,5 +21,4 @@ interface CheckoutPluginInterface
      * @return void
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

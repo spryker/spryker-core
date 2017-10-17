@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CmsBlockProductConnectorToCollectorBridge implements CmsBlockProductConnectorToCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
@@ -65,5 +64,4 @@ class CmsBlockProductConnectorToCollectorBridge implements CmsBlockProductConnec
             $output
         );
     }
-
 }

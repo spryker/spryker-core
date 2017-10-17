@@ -25,7 +25,6 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
  */
 class PaymentDependencyInjectorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -56,5 +55,4 @@ class PaymentDependencyInjectorTest extends Unit
 
         return $pluginCollection;
     }
-
 }

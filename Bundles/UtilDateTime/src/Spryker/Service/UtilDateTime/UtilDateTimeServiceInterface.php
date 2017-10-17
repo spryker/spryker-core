@@ -11,7 +11,6 @@ namespace Spryker\Service\UtilDateTime;
  */
 interface UtilDateTimeServiceInterface
 {
-
     /**
      * Specification:
      * - Formats a given datetime string into a configured date
@@ -47,5 +46,4 @@ interface UtilDateTimeServiceInterface
      * @return string
      */
     public function formatTime($date);
-
 }

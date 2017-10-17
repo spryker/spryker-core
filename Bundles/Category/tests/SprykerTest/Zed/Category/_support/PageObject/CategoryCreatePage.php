@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Category\PageObject;
 
 class CategoryCreatePage extends Category
 {
-
     const URL = '/category/create';
 
     const FORM_SUBMIT_BUTTON = 'Create';
@@ -89,5 +88,4 @@ class CategoryCreatePage extends Category
     {
         return sprintf(self::FORM_FIELD_CATEGORY_KEYWORDS_PATTERN, $position);
     }
-
 }

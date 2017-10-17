@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TranslationForm extends AbstractType
 {
-
     const FIELD_GLOSSARY_KEY = 'glossary_key';
     const FIELD_LOCALES = 'locales';
 
@@ -186,5 +185,4 @@ class TranslationForm extends AbstractType
 
         return $constraints;
     }
-
 }

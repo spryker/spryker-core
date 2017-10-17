@@ -23,7 +23,6 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class EditController extends AbstractController
 {
-
     const PARAM_ID_USER = 'id-user';
     const USER_LISTING_URL = '/user';
 
@@ -269,5 +268,4 @@ class EditController extends AbstractController
             $groupPlugin->removeUserFromGroup($idUser, $groupTransfer->getIdAclGroup());
         }
     }
-
 }

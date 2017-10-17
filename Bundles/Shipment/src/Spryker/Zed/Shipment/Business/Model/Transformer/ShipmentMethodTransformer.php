@@ -17,7 +17,6 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
@@ -109,5 +108,4 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
 
         return $shipmentMethodEntity->getShipmentCarrier()->getName();
     }
-
 }

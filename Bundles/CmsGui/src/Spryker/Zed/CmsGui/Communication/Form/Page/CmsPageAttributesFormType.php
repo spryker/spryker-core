@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class CmsPageAttributesFormType extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_URL = 'url';
     const FIELD_LOCALE_NAME = 'localeName';
@@ -125,7 +124,7 @@ class CmsPageAttributesFormType extends AbstractType
             'label' => 'Name',
             'required' => true,
             'constraints' => [
-                new NotBlank()
+                new NotBlank(),
             ],
         ]);
 
@@ -195,5 +194,4 @@ class CmsPageAttributesFormType extends AbstractType
     {
         return $event->getData();
     }
-
 }

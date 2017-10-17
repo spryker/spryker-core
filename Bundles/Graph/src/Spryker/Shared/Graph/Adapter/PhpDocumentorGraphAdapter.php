@@ -15,7 +15,6 @@ use Spryker\Shared\Graph\GraphAdapterInterface;
 
 class PhpDocumentorGraphAdapter implements GraphAdapterInterface
 {
-
     /**
      * @var \phpDocumentor\GraphViz\Graph
      */
@@ -166,5 +165,4 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
             $element->$setter($value);
         }
     }
-
 }

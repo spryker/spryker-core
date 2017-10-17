@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class AclDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_USER = 'user facade';
     const FACADE_ACL = 'acl facade';
     const QUERY_CONTAINER_USER = 'user query container';
@@ -91,5 +90,4 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

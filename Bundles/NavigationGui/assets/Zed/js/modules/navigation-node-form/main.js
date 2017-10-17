@@ -54,6 +54,7 @@ function displaySelectedNodeTypeField(type) {
 function changeNodeType() {
     resetNodeTypeFields();
     displaySelectedNodeTypeField($(this).val());
+    triggerResize();
 }
 
 /**
@@ -63,4 +64,12 @@ function resetNodeTypeFields() {
     $('.js-node-type-field')
         .addClass('hidden')
         .find('input[type="text"]').val('');
+}
+
+/**
+ * @return {void}
+ */
+function triggerResize() { 
+    var resizeEvent = new Event('resize');
+    window.dispatchEvent(resizeEvent);
 }

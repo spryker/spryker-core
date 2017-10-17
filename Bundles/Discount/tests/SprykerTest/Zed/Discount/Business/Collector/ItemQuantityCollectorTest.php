@@ -23,7 +23,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemQuantityCollectorTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -64,5 +63,4 @@ class ItemQuantityCollectorTest extends BaseRuleTester
 
         return new ItemQuantityCollector($comparatorMock);
     }
-
 }

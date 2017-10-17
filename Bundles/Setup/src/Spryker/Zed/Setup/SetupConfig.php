@@ -19,7 +19,6 @@ use Spryker\Zed\ZedNavigation\Communication\Console\BuildNavigationConsole;
 
 class SetupConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -97,5 +96,4 @@ class SetupConfig extends AbstractBundleConfig
             SearchConsole::COMMAND_NAME,
         ];
     }
-
 }

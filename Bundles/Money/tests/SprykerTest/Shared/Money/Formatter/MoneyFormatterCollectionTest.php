@@ -24,7 +24,6 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
  */
 class MoneyFormatterCollectionTest extends Unit
 {
-
     const FORMATTER = 'formatter';
 
     /**
@@ -76,5 +75,4 @@ class MoneyFormatterCollectionTest extends Unit
     {
         return $this->getMockBuilder(MoneyFormatterInterface::class)->getMock();
     }
-
 }

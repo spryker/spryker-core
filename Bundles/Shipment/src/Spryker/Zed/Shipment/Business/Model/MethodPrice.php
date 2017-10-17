@@ -14,7 +14,6 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class MethodPrice implements MethodPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
@@ -112,5 +111,4 @@ class MethodPrice implements MethodPriceInterface
         $priceEntity->setFkShipmentMethod($idShipmentMethod);
         $priceEntity->save();
     }
-
 }

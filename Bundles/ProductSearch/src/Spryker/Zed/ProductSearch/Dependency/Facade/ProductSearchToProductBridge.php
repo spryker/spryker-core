@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 
 class ProductSearchToProductBridge implements ProductSearchToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -64,5 +63,4 @@ class ProductSearchToProductBridge implements ProductSearchToProductInterface
     {
         return $this->productFacade->updateProductAttributeKey($productAttributeKeyTransfer);
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
-
     const DECISION_RULE_FIELD_NAME = 'shipment-method';
 
     /**
@@ -80,5 +79,4 @@ class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements Decisio
     {
         return $this->getFacade()->getMethodList();
     }
-
 }

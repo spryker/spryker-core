@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Validator;
 
 class MenuLevelValidator implements MenuLevelValidatorInterface
 {
-
     /**
      * @var int
      */
@@ -37,5 +36,4 @@ class MenuLevelValidator implements MenuLevelValidatorInterface
             throw new MenuLevelException($this->maxLevelCount, $pageTitle);
         }
     }
-
 }

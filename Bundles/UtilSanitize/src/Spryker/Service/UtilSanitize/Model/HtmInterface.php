@@ -7,7 +7,6 @@ namespace Spryker\Service\UtilSanitize\Model;
 
 interface HtmInterface
 {
-
     /**
      * Convenience method for htmlspecialchars to use UTF8 by default.
      *
@@ -21,5 +20,4 @@ interface HtmInterface
      * @return string Wrapped text.
      */
     public function escape($text, $double = true, $charset = null);
-
 }

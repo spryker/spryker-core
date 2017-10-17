@@ -32,7 +32,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  */
 class ShipmentFacadeTest extends Test
 {
-
     const DELIVERY_TIME_PLUGIN = 'example_delivery_time_plugin';
     const AVAILABILITY_PLUGIN = 'example_availability_plugin';
     const PRICE_PLUGIN = 'example_price_plugin';
@@ -438,5 +437,4 @@ class ShipmentFacadeTest extends Test
             ],
         ]);
     }
-
 }

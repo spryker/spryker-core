@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
 class DummyPaymentCreditCardFormDataProvider implements StepEngineFormDataProviderInterface
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -83,5 +82,4 @@ class DummyPaymentCreditCardFormDataProvider implements StepEngineFormDataProvid
             ++$currentYear => $currentYear,
         ];
     }
-
 }

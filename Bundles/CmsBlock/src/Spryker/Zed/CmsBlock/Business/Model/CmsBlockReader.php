@@ -11,7 +11,6 @@ use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 
 class CmsBlockReader implements CmsBlockReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
@@ -51,5 +50,4 @@ class CmsBlockReader implements CmsBlockReaderInterface
 
         return null;
     }
-
 }

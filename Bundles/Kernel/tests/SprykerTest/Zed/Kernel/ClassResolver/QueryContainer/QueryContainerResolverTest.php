@@ -23,7 +23,6 @@ use SprykerTest\Zed\Kernel\ClassResolver\AbstractResolverTest;
  */
 class QueryContainerResolverTest extends AbstractResolverTest
 {
-
     /**
      * @var string
      */
@@ -60,5 +59,4 @@ class QueryContainerResolverTest extends AbstractResolverTest
 
         return $resolverMock;
     }
-
 }

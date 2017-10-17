@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CustomerAnonymizer implements CustomerAnonymizerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -196,5 +195,4 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
             $this->addressModel->updateAddress($addressTransfer);
         }
     }
-
 }

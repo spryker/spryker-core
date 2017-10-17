@@ -17,7 +17,6 @@ use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 class TaxReader implements TaxReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
      */
@@ -97,7 +96,7 @@ class TaxReader implements TaxReaderInterface
      */
     public function getTaxSets()
     {
-        $propelCollection = $this->queryContainer->queryAllTaxsets()->find();
+        $propelCollection = $this->queryContainer->queryAllTaxSets()->find();
 
         $transferCollection = new TaxSetCollectionTransfer();
         foreach ($propelCollection as $taxSetEntity) {
@@ -154,5 +153,4 @@ class TaxReader implements TaxReaderInterface
 
         return $taxSetQuery->count() > 0;
     }
-
 }

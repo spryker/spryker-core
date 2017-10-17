@@ -49,7 +49,6 @@ use Spryker\Zed\Messenger\Business\MessengerFacade;
  */
 class CalculatorTest extends Unit
 {
-
     const ITEM_GROSS_PRICE_500 = 500;
 
     /**
@@ -233,7 +232,7 @@ class CalculatorTest extends Unit
     protected function createDecisionRulePlugins()
     {
         return [
-            new SkuDecisionRulePlugin()
+            new SkuDecisionRulePlugin(),
         ];
     }
 
@@ -644,5 +643,4 @@ class CalculatorTest extends Unit
 
         return $discountTransfer;
     }
-
 }

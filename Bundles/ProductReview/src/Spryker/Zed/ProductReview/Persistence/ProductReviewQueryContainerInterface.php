@@ -12,7 +12,6 @@ namespace Spryker\Zed\ProductReview\Persistence;
  */
 interface ProductReviewQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ interface ProductReviewQueryContainerInterface
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReview();
-
 }

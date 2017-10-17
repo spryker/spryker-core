@@ -12,7 +12,6 @@ namespace Spryker\Zed\Store\Persistence;
  */
 interface StoreQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -39,5 +38,4 @@ interface StoreQueryContainerInterface
      * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
      */
     public function queryStoreById($idStore);
-
 }

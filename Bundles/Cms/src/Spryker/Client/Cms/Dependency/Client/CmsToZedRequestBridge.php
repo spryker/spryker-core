@@ -9,7 +9,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class CmsToZedRequestBridge implements CmsToZedRequestInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
@@ -34,5 +33,4 @@ class CmsToZedRequestBridge implements CmsToZedRequestInterface
     {
         return $this->zedRequestClient->call($url, $object, $timeoutInSeconds);
     }
-
 }

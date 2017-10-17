@@ -9,10 +9,8 @@ namespace Spryker\Zed\Kernel\Communication\Form;
 
 interface FormTypeInterface
 {
-
     /**
      * @return string
      */
     public function getType();
-
 }

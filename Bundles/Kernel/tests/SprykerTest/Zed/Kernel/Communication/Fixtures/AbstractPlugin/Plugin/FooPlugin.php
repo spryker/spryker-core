@@ -10,7 +10,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 class FooPlugin extends AbstractPlugin
 {
-
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
@@ -42,5 +41,4 @@ class FooPlugin extends AbstractPlugin
     {
         return 'Kernel';
     }
-
 }

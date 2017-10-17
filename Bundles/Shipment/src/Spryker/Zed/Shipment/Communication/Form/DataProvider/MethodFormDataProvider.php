@@ -17,7 +17,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 class MethodFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
@@ -147,5 +146,4 @@ class MethodFormDataProvider
 
         return array_combine($plugins, $plugins);
     }
-
 }

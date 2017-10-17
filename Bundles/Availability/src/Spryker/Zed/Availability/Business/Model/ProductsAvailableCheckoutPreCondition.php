@@ -14,7 +14,6 @@ use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -109,5 +108,4 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             ->addError($checkoutErrorTransfer)
             ->setIsSuccess(false);
     }
-
 }

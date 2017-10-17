@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 interface ShipmentToStoreInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
@@ -19,5 +18,4 @@ interface ShipmentToStoreInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getAllStores();
-
 }

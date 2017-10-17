@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class NavigationTwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -43,5 +42,4 @@ class NavigationTwigServiceProvider extends AbstractPlugin implements ServicePro
     public function boot(Application $app)
     {
     }
-
 }

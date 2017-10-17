@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderI
     {
         $this->getFacade()->saveOrder($quoteTransfer, $checkoutResponse);
     }
-
 }

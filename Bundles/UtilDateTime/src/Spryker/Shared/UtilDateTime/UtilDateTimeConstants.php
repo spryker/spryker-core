@@ -9,7 +9,6 @@ namespace Spryker\Shared\UtilDateTime;
 
 interface UtilDateTimeConstants
 {
-
     /**
      * Specification:
      * - Configures the used DateTimeZone for formatting
@@ -45,5 +44,4 @@ interface UtilDateTimeConstants
      * @api
      */
     const DATE_TIME_FORMAT_TIME = 'DATE_TIME_FORMAT_TIME';
-
 }

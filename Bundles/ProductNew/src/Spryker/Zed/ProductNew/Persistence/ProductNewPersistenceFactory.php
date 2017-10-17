@@ -16,7 +16,6 @@ use Spryker\Zed\ProductNew\ProductNewDependencyProvider;
  */
 class ProductNewPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductNew\Dependency\QueryContainer\ProductNewToProductLabelInterface
      */
@@ -32,5 +31,4 @@ class ProductNewPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductNewDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
-
 }

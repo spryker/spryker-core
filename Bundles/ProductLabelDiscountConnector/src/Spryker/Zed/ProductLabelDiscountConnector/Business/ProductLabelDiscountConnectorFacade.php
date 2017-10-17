@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductLabelDiscountConnectorFacade extends AbstractFacade implements ProductLabelDiscountConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -66,5 +65,4 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
             ->createLabelProvider()
             ->findAllLabels();
     }
-
 }

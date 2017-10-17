@@ -8,7 +8,6 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 
 class AvailabilityToProductBridge implements AvailabilityToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -31,5 +30,4 @@ class AvailabilityToProductBridge implements AvailabilityToProductInterface
     {
         return $this->productFacade->getAbstractSkuFromProductConcrete($productConcreteSku);
     }
-
 }

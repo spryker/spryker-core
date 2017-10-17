@@ -12,7 +12,6 @@ use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class PayolutionStub implements PayolutionStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -35,5 +34,4 @@ class PayolutionStub implements PayolutionStubInterface
     {
         return $this->zedRequestClient->call('/payolution/gateway/calculate-installment-payments', $quoteTransfer);
     }
-
 }

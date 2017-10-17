@@ -13,7 +13,6 @@ use Spryker\Zed\Assertion\Business\AssertionFacade;
 
 class AssertionServiceProvider implements ServiceProviderInterface
 {
-
     const ASSERTION = 'assertion';
 
     /**
@@ -36,5 +35,4 @@ class AssertionServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

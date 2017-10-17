@@ -19,6 +19,7 @@ use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
 
+
     const PLUGINS = 'PLUGINS';
     const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
     const PRICE_PLUGINS = 'PRICE_PLUGINS';
@@ -192,5 +193,4 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
             )
         );
     }
-
 }

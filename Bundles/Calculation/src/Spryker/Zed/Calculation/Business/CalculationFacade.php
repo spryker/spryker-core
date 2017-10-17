@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CalculationFacade extends AbstractFacade implements CalculationFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -390,5 +389,4 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
             ->createNetTotalCalculator()
             ->recalculate($calculableObjectTransfer);
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\ProductRelation\Persistence\Rule\Query\QueryInterface;
 
 class ProductRelationRuleQueryCreator implements ProductRelationRuleQueryCreatorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToPropelQueryBuilderInterface
      */
@@ -65,5 +64,4 @@ class ProductRelationRuleQueryCreator implements ProductRelationRuleQueryCreator
 
         return $propelQueryBuilderCriteriaTransfer;
     }
-
 }

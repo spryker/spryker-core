@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CmsUserConnectorFacade extends AbstractFacade implements CmsUserConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -47,5 +46,4 @@ class CmsUserConnectorFacade extends AbstractFacade implements CmsUserConnectorF
             ->createCmsVersionUserExpander()
             ->expandCmsVersionTransferWithUser($cmsVersionTransfer);
     }
-
 }

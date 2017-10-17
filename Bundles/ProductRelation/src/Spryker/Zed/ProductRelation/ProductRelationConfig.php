@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductRelationConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string|null
      */
@@ -31,5 +30,4 @@ class ProductRelationConfig extends AbstractBundleConfig
 
         return null;
     }
-
 }

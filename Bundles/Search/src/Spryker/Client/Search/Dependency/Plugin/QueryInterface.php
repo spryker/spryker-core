@@ -9,12 +9,10 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 interface QueryInterface
 {
-
     /**
      * @api
      *
      * @return mixed A query object.
      */
     public function getSearchQuery();
-
 }

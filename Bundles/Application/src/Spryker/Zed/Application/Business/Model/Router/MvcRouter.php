@@ -20,7 +20,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 class MvcRouter implements RouterInterface
 {
-
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
@@ -110,5 +109,4 @@ class MvcRouter implements RouterInterface
             '_route' => $routeNameResolver->resolve(),
         ];
     }
-
 }

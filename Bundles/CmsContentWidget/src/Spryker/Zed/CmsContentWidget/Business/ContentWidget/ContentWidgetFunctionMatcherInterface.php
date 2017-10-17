@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsContentWidget\Business\ContentWidget;
 
 interface ContentWidgetFunctionMatcherInterface
 {
-
     /**
      * @param string $content
      *
      * @return \Generated\Shared\Transfer\CmsContentWidgetFunctionsTransfer
      */
     public function extractTwigFunctions($content);
-
 }

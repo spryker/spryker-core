@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class NewsletterQueryContainer extends AbstractQueryContainer implements NewsletterQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -139,5 +138,4 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
     {
         return $this->getFactory()->createNewsletterTypeQuery();
     }
-
 }

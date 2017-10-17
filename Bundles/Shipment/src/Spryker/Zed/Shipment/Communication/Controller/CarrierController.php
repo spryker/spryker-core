@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CarrierController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -50,5 +49,4 @@ class CarrierController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

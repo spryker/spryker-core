@@ -14,7 +14,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RequestLog extends AbstractTable
 {
-
     /**
      * @var \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery
      */
@@ -133,5 +132,4 @@ class RequestLog extends AbstractTable
 
         return $resultArray;
     }
-
 }

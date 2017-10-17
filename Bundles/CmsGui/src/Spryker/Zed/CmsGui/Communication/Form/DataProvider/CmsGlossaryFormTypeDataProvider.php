@@ -14,7 +14,6 @@ use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
 class CmsGlossaryFormTypeDataProvider
 {
-
     const TYPE_GLOSSARY_NEW = 'New glossary';
     const TYPE_GLOSSARY_FIND = 'Find glossary by key';
     const TYPE_AUTO_GLOSSARY = 'Auto';
@@ -84,5 +83,4 @@ class CmsGlossaryFormTypeDataProvider
             static::TYPE_FULLTEXT_SEARCH,
         ];
     }
-
 }

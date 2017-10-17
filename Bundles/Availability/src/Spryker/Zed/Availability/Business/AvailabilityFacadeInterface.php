@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface AvailabilityFacadeInterface
 {
-
     /**
      * Specification:
      *  - Checks if product is never out of stock.
@@ -116,5 +115,4 @@ interface AvailabilityFacadeInterface
      * @return int
      */
     public function saveProductAvailability($sku, $quantity);
-
 }

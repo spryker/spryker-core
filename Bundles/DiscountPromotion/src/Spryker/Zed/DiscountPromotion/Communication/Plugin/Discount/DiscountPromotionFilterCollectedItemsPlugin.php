@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DiscountPromotionFilterCollectedItemsPlugin extends AbstractPlugin implements DiscountableItemFilterPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -52,5 +51,4 @@ class DiscountPromotionFilterCollectedItemsPlugin extends AbstractPlugin impleme
 
         return $collectedDiscountTransfer;
     }
-
 }

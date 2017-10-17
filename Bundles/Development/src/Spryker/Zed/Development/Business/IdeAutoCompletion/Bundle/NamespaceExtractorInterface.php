@@ -10,7 +10,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 interface NamespaceExtractorInterface
 {
-
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $directory
      * @param string $baseDirectoryGlobPattern
@@ -18,5 +17,4 @@ interface NamespaceExtractorInterface
      * @return string
      */
     public function fromDirectory(SplFileInfo $directory, $baseDirectoryGlobPattern);
-
 }

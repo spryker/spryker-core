@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class SalesPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
@@ -71,5 +70,4 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyOmsOrderItemStateHistoryQuery::create();
     }
-
 }

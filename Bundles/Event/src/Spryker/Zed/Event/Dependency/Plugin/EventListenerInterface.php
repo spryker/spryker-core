@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface EventListenerInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface EventListenerInterface
      * @return void
      */
     public function handle(TransferInterface $eventTransfer);
-
 }

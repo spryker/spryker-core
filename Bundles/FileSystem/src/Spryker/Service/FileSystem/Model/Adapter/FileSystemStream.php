@@ -13,7 +13,6 @@ use Spryker\Service\FileSystem\Model\FileSystemStreamInterface;
 
 class FileSystemStream implements FileSystemStreamInterface
 {
-
     /**
      * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface
      */
@@ -69,5 +68,4 @@ class FileSystemStream implements FileSystemStreamInterface
     {
         $this->fileSystemStream->writeStream($fileSystemStreamTransfer, $stream);
     }
-
 }

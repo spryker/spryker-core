@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class CmsPageLocalizedAttributesForm extends AbstractType
 {
-
     const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'id_cms_page_localized_attributes';
     const FIELD_FK_CMS_PAGE = 'fk_cms_page';
     const FIELD_NAME = 'name';
@@ -146,5 +145,4 @@ class CmsPageLocalizedAttributesForm extends AbstractType
 
         return $this;
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductGroupClient extends AbstractClient implements ProductGroupClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -31,5 +30,4 @@ class ProductGroupClient extends AbstractClient implements ProductGroupClientInt
             ->createProductStorageReader()
             ->findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
     }
-
 }

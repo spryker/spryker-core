@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class User implements UserInterface
 {
-
     const USER_BUNDLE_SESSION_KEY = 'user';
 
     /**
@@ -411,5 +410,4 @@ class User implements UserInterface
     {
         return sprintf('%s:currentUser', static::USER_BUNDLE_SESSION_KEY);
     }
-
 }

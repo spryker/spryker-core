@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Business\Model;
 
 interface PositionUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransferCollection
      * @param int[] $positionMap
@@ -17,5 +16,4 @@ interface PositionUpdaterInterface
      * @return void
      */
     public function update(array $productLabelTransferCollection, array $positionMap);
-
 }

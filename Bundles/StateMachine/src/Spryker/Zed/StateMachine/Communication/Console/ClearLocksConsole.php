@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClearLocksConsole extends Console
 {
-
     const COMMAND_NAME = 'state-machine:clear-locks';
     const COMMAND_DESCRIPTION = 'Clear expired locks from lock table';
 
@@ -40,5 +39,4 @@ class ClearLocksConsole extends Console
     {
         $this->getFacade()->clearLocks();
     }
-
 }

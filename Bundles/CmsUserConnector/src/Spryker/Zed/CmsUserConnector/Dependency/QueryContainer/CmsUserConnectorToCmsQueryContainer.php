@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsUserConnector\Dependency\QueryContainer;
 
 class CmsUserConnectorToCmsQueryContainer implements CmsUserConnectorToCmsQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -32,5 +31,4 @@ class CmsUserConnectorToCmsQueryContainer implements CmsUserConnectorToCmsQueryC
     {
         return $this->cmsQueryContainer->queryCmsVersionById($idCmsVersion);
     }
-
 }

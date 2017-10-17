@@ -14,7 +14,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -126,5 +125,4 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
 
         return $urlEntity;
     }
-
 }

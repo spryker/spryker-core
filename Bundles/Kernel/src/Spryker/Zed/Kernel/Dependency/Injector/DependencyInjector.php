@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Container;
 
 class DependencyInjector implements DependencyInjectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection
      */
@@ -66,5 +65,4 @@ class DependencyInjector implements DependencyInjectorInterface
 
         return $container;
     }
-
 }

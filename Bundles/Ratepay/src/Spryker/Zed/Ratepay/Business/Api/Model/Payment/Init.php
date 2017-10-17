@@ -11,7 +11,5 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Base;
 
 class Init extends Base
 {
-
     const OPERATION = Constants::REQUEST_MODEL_PAYMENT_INIT;
-
 }

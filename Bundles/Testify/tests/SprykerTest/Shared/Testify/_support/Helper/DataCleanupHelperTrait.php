@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 trait DataCleanupHelperTrait
 {
-
     /**
      * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\DataCleanupHelper
      */
@@ -24,5 +23,4 @@ trait DataCleanupHelperTrait
      * @return \Codeception\Module
      */
     abstract protected function getModule($name);
-
 }

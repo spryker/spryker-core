@@ -13,7 +13,6 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 class ErrorHandlerFactory
 {
-
     const APPLICATION_ZED = 'ZED';
     const SAPI_CLI = 'cli';
     const SAPI_PHPDBG = 'phpdbg';
@@ -91,5 +90,4 @@ class ErrorHandlerFactory
     {
         return new $errorRenderer($this->application);
     }
-
 }

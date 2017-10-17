@@ -11,7 +11,6 @@ use Spryker\Shared\Search\Provider\AbstractIndexClientProvider;
 
 class IndexClientProvider extends AbstractIndexClientProvider
 {
-
     /**
      * @return \Elastica\Index
      */
@@ -19,5 +18,4 @@ class IndexClientProvider extends AbstractIndexClientProvider
     {
         return $this->createZedClient();
     }
-
 }

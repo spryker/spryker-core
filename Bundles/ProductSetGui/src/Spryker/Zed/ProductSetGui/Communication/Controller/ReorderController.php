@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReorderController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -71,5 +70,4 @@ class ReorderController extends AbstractController
             $productTable->fetchData()
         );
     }
-
 }

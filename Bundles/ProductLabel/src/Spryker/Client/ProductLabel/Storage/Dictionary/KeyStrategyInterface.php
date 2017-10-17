@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\StorageProductLabelTransfer;
 
 interface KeyStrategyInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StorageProductLabelTransfer $storageProductLabelTransfer
      *
      * @return mixed
      */
     public function getDictionaryKey(StorageProductLabelTransfer $storageProductLabelTransfer);
-
 }

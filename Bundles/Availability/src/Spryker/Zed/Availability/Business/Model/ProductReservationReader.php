@@ -12,7 +12,6 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 class ProductReservationReader implements ProductReservationReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
@@ -116,5 +115,4 @@ class ProductReservationReader implements ProductReservationReaderInterface
             }
         }
     }
-
 }

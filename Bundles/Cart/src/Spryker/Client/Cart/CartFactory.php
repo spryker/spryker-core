@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CartFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface
      */
@@ -44,5 +43,4 @@ class CartFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGIN_ITEM_COUNT);
     }
-
 }

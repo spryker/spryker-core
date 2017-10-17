@@ -12,7 +12,6 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 abstract class AbstractOptInHandler
 {
-
     /**
      * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface
      */
@@ -54,5 +53,4 @@ abstract class AbstractOptInHandler
 
         return null;
     }
-
 }

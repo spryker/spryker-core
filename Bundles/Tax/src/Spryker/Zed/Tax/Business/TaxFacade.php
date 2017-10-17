@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 {
-
     /**
      * Specification:
      *  - Returns all persisted tax rates
@@ -405,5 +404,4 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
             ->createTaxRateAverageAggregationCalculator()
             ->recalculate($calculableObjectTransfer);
     }
-
 }

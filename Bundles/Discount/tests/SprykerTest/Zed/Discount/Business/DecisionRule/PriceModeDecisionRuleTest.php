@@ -23,7 +23,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class PriceModeDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -57,5 +56,4 @@ class PriceModeDecisionRuleTest extends BaseRuleTester
 
         return new PriceModeDecisionRule($comparatorMock);
     }
-
 }

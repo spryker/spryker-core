@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
  */
 interface ProductAttributeFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns product abstract attributes with metadata info
@@ -309,5 +308,4 @@ interface ProductAttributeFacadeInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection();
-
 }

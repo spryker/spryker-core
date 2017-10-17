@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DiscountPromotionConfigurationExpanderPlugin extends AbstractPlugin implements DiscountConfigurationExpanderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -31,5 +30,4 @@ class DiscountPromotionConfigurationExpanderPlugin extends AbstractPlugin implem
     {
         return $this->getFacade()->expandDiscountConfigurationWithPromotion($discountConfiguratorTransfer);
     }
-
 }

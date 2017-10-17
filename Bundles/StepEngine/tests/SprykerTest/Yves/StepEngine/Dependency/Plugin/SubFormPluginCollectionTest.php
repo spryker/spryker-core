@@ -23,7 +23,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
  */
 class SubFormPluginCollectionTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -78,5 +77,4 @@ class SubFormPluginCollectionTest extends Unit
     {
         return $this->getMockBuilder(SubFormPluginInterface::class)->getMock();
     }
-
 }

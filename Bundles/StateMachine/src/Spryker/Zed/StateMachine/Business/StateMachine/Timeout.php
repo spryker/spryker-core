@@ -16,7 +16,6 @@ use Spryker\Zed\StateMachine\Business\Process\ProcessInterface;
 
 class Timeout implements TimeoutInterface
 {
-
     /**
      * @var \DateTime[]
      */
@@ -151,5 +150,4 @@ class Timeout implements TimeoutInterface
 
         return $intervalSum;
     }
-
 }

@@ -9,7 +9,5 @@ namespace SprykerTest\Zed\ProductManagement\PageObject;
 
 class ProductManagementProductCreatePage
 {
-
     const URL = '/product-management/add';
-
 }

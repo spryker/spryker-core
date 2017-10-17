@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCollector\Dependency\Service;
 
 interface CmsBlockCollectorToUtilEncodingInterface
 {
-
     /**
      * @param string $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface CmsBlockCollectorToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

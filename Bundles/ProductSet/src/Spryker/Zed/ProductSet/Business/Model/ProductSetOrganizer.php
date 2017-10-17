@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductSetOrganizer implements ProductSetOrganizerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -104,5 +103,4 @@ class ProductSetOrganizer implements ProductSetOrganizerInterface
         $productSetEntity->setWeight($productSetTransfer->getWeight());
         $productSetEntity->save();
     }
-
 }

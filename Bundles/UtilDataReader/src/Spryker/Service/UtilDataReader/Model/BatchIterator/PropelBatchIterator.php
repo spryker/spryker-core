@@ -12,7 +12,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class PropelBatchIterator implements CountableIteratorInterface
 {
-
     /**
      * @var int
      */
@@ -134,5 +133,4 @@ class PropelBatchIterator implements CountableIteratorInterface
 
         return $query->count();
     }
-
 }

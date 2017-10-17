@@ -17,7 +17,6 @@ use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
  */
 class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param string|null $grossPriceType
      *
@@ -40,5 +39,4 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_PRICE);
     }
-
 }

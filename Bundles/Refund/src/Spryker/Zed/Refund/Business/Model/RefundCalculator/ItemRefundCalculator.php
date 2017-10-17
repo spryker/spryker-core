@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\RefundTransfer;
 
 class ItemRefundCalculator extends AbstractRefundCalculator
 {
-
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -87,5 +86,4 @@ class ItemRefundCalculator extends AbstractRefundCalculator
             $productOptionTransfer->setCanceledAmount($productOptionTransfer->getRefundableAmount());
         }
     }
-
 }

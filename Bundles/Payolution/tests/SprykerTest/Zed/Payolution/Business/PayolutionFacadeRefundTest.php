@@ -24,7 +24,6 @@ use SprykerTest\Zed\Payolution\Business\Api\Adapter\Http\RefundAdapterMock;
  */
 class PayolutionFacadeRefundTest extends AbstractFacadeTest
 {
-
     /**
      * @return void
      */
@@ -121,5 +120,4 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $this->assertEquals(3, $this->getStatusLogCollectionForPayment()->count());
         $this->matchStatusLogWithResponse($statusLog, $expectedResponse);
     }
-
 }

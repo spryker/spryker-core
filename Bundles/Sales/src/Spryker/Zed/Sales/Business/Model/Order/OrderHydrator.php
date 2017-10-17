@@ -22,7 +22,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator implements OrderHydratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -397,5 +396,4 @@ class OrderHydrator implements OrderHydratorInterface
             $orderTransfer->setFkCustomer(null);
         }
     }
-
 }

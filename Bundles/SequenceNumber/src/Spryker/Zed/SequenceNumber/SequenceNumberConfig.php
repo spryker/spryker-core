@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SequenceNumberConfig extends AbstractBundleConfig
 {
-
     /**
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer|null $settings
      *
@@ -91,5 +90,4 @@ class SequenceNumberConfig extends AbstractBundleConfig
     {
         return 'Sequence';
     }
-
 }

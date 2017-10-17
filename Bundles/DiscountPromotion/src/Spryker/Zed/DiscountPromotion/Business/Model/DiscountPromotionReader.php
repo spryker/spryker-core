@@ -14,7 +14,6 @@ use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInt
 
 class DiscountPromotionReader implements DiscountPromotionReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface
      */
@@ -107,5 +106,4 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
 
         return $this->discountPromotionMapper->mapTransfer($discountPromotionEntity);
     }
-
 }

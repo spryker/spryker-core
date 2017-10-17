@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class DiscountPromotionPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery
      */
@@ -24,5 +23,4 @@ class DiscountPromotionPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyDiscountPromotionQuery::create();
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
 interface PriceCartToPriceInterface
 {
-
     /**
      * @param string $sku
      * @param string|null $priceType
@@ -25,5 +24,4 @@ interface PriceCartToPriceInterface
      * @return int
      */
     public function getPriceBySku($sku, $priceType = null);
-
 }

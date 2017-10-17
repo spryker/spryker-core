@@ -41,7 +41,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ZedBootstrap
 {
-
     /**
      * @var \Silex\ServiceProviderInterface[]
      */
@@ -221,5 +220,4 @@ class ZedBootstrap
 
         return $store->getCurrentLocale();
     }
-
 }

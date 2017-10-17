@@ -31,7 +31,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleSalesOrderSaverTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -140,5 +139,4 @@ class ProductBundleSalesOrderSaverTest extends Unit
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }
-
 }

@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ProductSetCollectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Executes product set storage collector.
@@ -70,5 +69,4 @@ interface ProductSetCollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class DummyPaymentFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
      */
@@ -56,5 +55,4 @@ class DummyPaymentFactory extends AbstractFactory
     {
         return new DummyPaymentHandler();
     }
-
 }

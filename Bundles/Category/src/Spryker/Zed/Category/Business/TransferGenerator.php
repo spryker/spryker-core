@@ -15,7 +15,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class TransferGenerator implements TransferGeneratorInterface
 {
-
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
@@ -71,5 +70,4 @@ class TransferGenerator implements TransferGeneratorInterface
 
         return $transferList;
     }
-
 }

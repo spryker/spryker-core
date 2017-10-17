@@ -13,7 +13,6 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class CustomerGroupFormTabs extends AbstractTabs
 {
-
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -78,5 +77,4 @@ class CustomerGroupFormTabs extends AbstractTabs
 
         return $this;
     }
-
 }
