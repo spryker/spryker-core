@@ -199,7 +199,7 @@ class AbstractTransferTest extends Unit
             )
             ->setTransferCollection(new ArrayObject([
                 (new AbstractTransfer())
-                    ->setInt(300)
+                    ->setInt(300),
             ]));
 
         $given = $transfer->toArray(true, true);
