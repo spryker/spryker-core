@@ -11,11 +11,8 @@ use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
  * @group Zed
  * @group ProductCategoryFilter
  * @group Business
- * @group Facade
- * @group ProductCategoryFacadeTest
+ * @group CreateProductCategoryFilterTest
  * Add your own group annotations below this line
- *
- * @property \SprykerTest\Zed\ProductCategoryFilter\ProductCategoryFilterBusinessTester $tester
  */
 class CreateProductCategoryFilterTest extends Unit
 {

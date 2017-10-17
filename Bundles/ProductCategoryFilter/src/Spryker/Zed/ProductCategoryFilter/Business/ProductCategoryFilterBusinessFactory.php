@@ -9,22 +9,18 @@ namespace Spryker\Zed\ProductCategoryFilter\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterCreator;
-use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterCreatorInterface;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterDeleter;
-use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterDeleterInterface;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterReader;
-use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterReaderInterface;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterUpdater;
-use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterUpdaterInterface;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterConfig getConfig()
  */
 class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
-     * @return ProductCategoryFilterCreatorInterface
+     * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterCreatorInterface
      */
     public function createProductCategoryFilterCreator()
     {
@@ -32,8 +28,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     *
-     * @return ProductCategoryFilterReaderInterface
+     * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterReaderInterface
      */
     public function createProductCategoryFilterReader()
     {
@@ -41,7 +36,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductCategoryFilterUpdaterInterface
+     * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterUpdaterInterface
      */
     public function createProductCategoryFilterUpdater()
     {
@@ -49,7 +44,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductCategoryFilterDeleterInterface
+     * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterDeleterInterface
      */
     public function createProductCategoryFilterDeleter()
     {
