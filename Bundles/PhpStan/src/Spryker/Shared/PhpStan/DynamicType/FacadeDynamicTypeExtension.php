@@ -14,7 +14,6 @@ class FacadeDynamicTypeExtension extends AbstractSprykerDynamicTypeExtension imp
 {
     protected $methodResolves = [
         'getFactory' => true,
-        'getConfig' => true,
     ];
 
     /**

@@ -12,6 +12,12 @@ use Spryker\Zed\Kernel\Communication\Console\Console;
 
 class ConsoleDynamicTypeExtension extends AbstractSprykerDynamicTypeExtension implements DynamicMethodReturnTypeExtension
 {
+    protected $methodResolves = [
+        'getFacade' => true,
+        'getQueryContainer' => true,
+        'getFactory' => true,
+    ];
+
     /**
      * @return string
      */

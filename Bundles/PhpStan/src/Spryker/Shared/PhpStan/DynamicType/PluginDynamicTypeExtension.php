@@ -19,6 +19,7 @@ class PluginDynamicTypeExtension extends AbstractSprykerDynamicTypeExtension imp
         'getFacade' => true,
         'getFactory' => true,
         'getQueryContainer' => true,
+        'getConfig' => true,
     ];
 
     /**

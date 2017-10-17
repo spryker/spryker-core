@@ -17,11 +17,7 @@ use PHPStan\Type\Type;
 
 abstract class AbstractSprykerDynamicTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    protected $methodResolves = [
-        'getFacade' => true,
-        'getQueryContainer' => true,
-        'getFactory' => true,
-    ];
+    protected $methodResolves = [];
 
     /**
      * @param MethodReflection $methodReflection
