@@ -21,7 +21,6 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
  */
 class TimeoutTest extends Unit
 {
-
     const CONDITION_NAME = 'conditionName';
     const EVENT_PAY = 'pay';
     const EVENT_SHIP = 'ship';
@@ -88,7 +87,7 @@ class TimeoutTest extends Unit
         return $this->getMockBuilder(OrderStateMachine::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'triggerEvent'
+                'triggerEvent',
             ])
             ->getMock();
     }
@@ -101,9 +100,8 @@ class TimeoutTest extends Unit
         return $this->getMockBuilder(Timeout::class)
             ->disableOriginalConstructor()
             ->setMethods([
-                'findItemsWithExpiredTimeouts'
+                'findItemsWithExpiredTimeouts',
             ])
             ->getMock();
     }
-
 }

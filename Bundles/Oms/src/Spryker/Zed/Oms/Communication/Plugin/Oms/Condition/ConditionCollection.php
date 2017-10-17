@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Condition;
 
 use ArrayAccess;
-use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface as DependencyConditionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface as DependencyConditionInterface;
 use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
 class ConditionCollection implements ConditionCollectionInterface, ArrayAccess

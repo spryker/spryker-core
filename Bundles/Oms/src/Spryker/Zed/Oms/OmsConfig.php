@@ -66,5 +66,4 @@ class OmsConfig extends AbstractBundleConfig
     {
         return 'new';
     }
-
 }

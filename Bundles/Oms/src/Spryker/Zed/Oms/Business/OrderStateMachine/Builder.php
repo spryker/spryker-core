@@ -14,7 +14,6 @@ use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
-use Spryker\Zed\Oms\OmsConfig;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Builder implements BuilderInterface
