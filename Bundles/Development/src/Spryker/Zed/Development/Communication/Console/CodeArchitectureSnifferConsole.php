@@ -169,6 +169,8 @@ class CodeArchitectureSnifferConsole extends Console
      */
     protected function runCustomPath(OutputInterface $output, $customPath)
     {
+        $output->writeln($customPath, OutputInterface::VERBOSITY_VERBOSE);
+
         $violations = $this->getFacade()->runArchitectureSniffer($customPath, $this->input->getOptions());
         $count = $this->displayViolations($output, $violations);
 
