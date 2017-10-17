@@ -8,10 +8,28 @@
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
+use Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterface
 {
-    use RetrievesProductCategoryFilterEntity;
+    use RetrievesProductCategoryFilterEntityTrait;
+    use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var ProductCategoryFilterTouchInterface
+     */
+    protected $productCategoryFilterTouch;
+
+    /**
+     * @param ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
+     * @param ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+     */
+    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTouchInterface $productCategoryFilterTouch)
+    {
+        $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
+        $this->productCategoryFilterTouch = $productCategoryFilterTouch;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
@@ -20,11 +38,37 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
      */
     public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
+        return $this->handleDatabaseTransaction(function () use ($productCategoryFilterTransfer) {
+            return $this->executeUpdateProductCategoryFilterTransaction($productCategoryFilterTransfer);
+        });
+    }
+
+    /**
+     * @param ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return ProductCategoryFilterTransfer
+     */
+    protected function executeUpdateProductCategoryFilterTransaction(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
+    {
+        $productCategoryFilterEntity = $this->updateProductCategoryFilterEntity($productCategoryFilterTransfer);
+        $productCategoryFilterTransfer->fromArray($productCategoryFilterEntity->toArray(), true);
+
+        $this->productCategoryFilterTouch->touchProductCategoryFilterActive($productCategoryFilterTransfer);
+        return $productCategoryFilterTransfer;
+    }
+
+    /**
+     * @param ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter
+     */
+    protected function updateProductCategoryFilterEntity(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
+    {
         $productCategoryFilterEntity = $this->getProductCategoryFilterEntityByCategoryId($productCategoryFilterTransfer->getFkCategory());
 
         $productCategoryFilterEntity->fromArray($productCategoryFilterTransfer->modifiedToArray());
         $productCategoryFilterEntity->save();
 
-        return $productCategoryFilterTransfer->fromArray($productCategoryFilterEntity->toArray(), true);
+        return $productCategoryFilterEntity;
     }
 }

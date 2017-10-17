@@ -7,22 +7,12 @@
 
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
 
-use Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface;
-
-trait RetrievesProductCategoryFilterEntity
+trait RetrievesProductCategoryFilterEntityTrait
 {
     /**
      * @var \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface
      */
     protected $productCategoryFilterQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ProductCategoryFilter\Persistence\Propel\AbstractSpyProductCategoryFilterQuery $productCategoryFilterQueryContainer
-     */
-    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer)
-    {
-        $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
-    }
 
     /**
      * @param int $categoryId

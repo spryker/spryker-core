@@ -8,10 +8,19 @@
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
+use Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface;
 
 class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterface
 {
-    use RetrievesProductCategoryFilterEntity;
+    use RetrievesProductCategoryFilterEntityTrait;
+
+    /**
+     * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
+     */
+    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer)
+    {
+        $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
+    }
 
     /**
      * @param int $categoryId
