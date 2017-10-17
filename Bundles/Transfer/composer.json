@@ -17,13 +17,12 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "Transfer\\Module\\": "tests/_support/Module/"
+      "SprykerTest\\Shared\\Transfer\\": "tests/SprykerTest/Shared/Transfer/_support/Helper/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

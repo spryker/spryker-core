@@ -54,7 +54,7 @@ class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 }

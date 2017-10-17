@@ -188,7 +188,7 @@ class CalculatorForm extends AbstractType
             'constraints' => [
                 new NotBlank([
                     'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
-                ])
+                ]),
             ],
         ];
 

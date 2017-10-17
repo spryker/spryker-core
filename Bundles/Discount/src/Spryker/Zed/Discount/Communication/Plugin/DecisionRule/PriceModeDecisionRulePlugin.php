@@ -58,7 +58,7 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ];
     }
 

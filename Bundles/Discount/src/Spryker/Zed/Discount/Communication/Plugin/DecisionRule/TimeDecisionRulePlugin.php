@@ -54,7 +54,7 @@ class TimeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePlugi
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
 }

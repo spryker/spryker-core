@@ -430,7 +430,7 @@ class CheckoutFacadeTest extends Unit
 
         $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
             return [
-                new OmsPostSaveHookPlugin()
+                new OmsPostSaveHookPlugin(),
             ];
         };
 

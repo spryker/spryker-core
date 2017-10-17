@@ -17,9 +17,9 @@ use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 class SalesPaymentHydrator implements SalesPaymentHydratorInterface
 {
     /**
-     * @var array
+     * @var \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface
      */
-    protected $paymentHydratePluginCollection = [];
+    protected $paymentHydratePluginCollection;
 
     /**
      * @var \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface

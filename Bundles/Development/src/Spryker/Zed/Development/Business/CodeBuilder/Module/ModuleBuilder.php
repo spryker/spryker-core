@@ -37,7 +37,7 @@ class ModuleBuilder
         'composer.json',
         'CHANGELOG.md',
         'README.md',
-        'LICENSE'
+        'LICENSE',
     ];
 
     /**

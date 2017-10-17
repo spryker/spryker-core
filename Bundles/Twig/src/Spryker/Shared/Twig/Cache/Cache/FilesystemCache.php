@@ -34,7 +34,7 @@ class FilesystemCache implements CacheInterface
     protected $cache;
 
     /**
-     * @var array
+     * @var \Spryker\Shared\Twig\Cache\CacheWriterInterface
      */
     protected $cacheWriter;
 
