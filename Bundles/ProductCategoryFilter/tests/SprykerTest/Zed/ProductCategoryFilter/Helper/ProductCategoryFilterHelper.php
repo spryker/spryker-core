@@ -20,7 +20,7 @@ class ProductCategoryFilterHelper extends Module
     /**
      * @param array $override
      *
-     * @return ProductCategoryFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
     public function haveProductCategoryFilter($override = [])
     {
@@ -39,8 +39,7 @@ class ProductCategoryFilterHelper extends Module
     }
 
     /**
-     *
-     * @return CategoryDataHelper|Module
+     * @return \SprykerTest\Zed\Category\Helper\CategoryDataHelper|\Codeception\Module
      */
     protected function getCategoryDataHelper()
     {
