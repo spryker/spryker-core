@@ -34,7 +34,7 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
     /**
      * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
+     * @return ProductCategoryFilterTransfer
      */
     public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
