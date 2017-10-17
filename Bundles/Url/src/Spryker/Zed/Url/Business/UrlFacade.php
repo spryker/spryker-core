@@ -24,10 +24,10 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is accepted for BC reasons.
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
-     * @param string|null $resourceType @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
-     * @param int|null $idResource @deprecated This parameter exists for BC reasons. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer Deprecated: This parameter exists for BC reasons only. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param string|null $resourceType Deprecated: This parameter exists for BC reasons only. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
+     * @param int|null $idResource Deprecated: This parameter exists for BC reasons only. Use `createUrl(UrlTransfer $urlTransfer)` format instead.
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -43,7 +43,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use UrlCreator::createUrl() instead.
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -81,7 +81,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer String format is only for BC reasons.
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
      *
      * @return bool
      */
@@ -101,7 +101,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer String format is only for BC reasons.
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
@@ -113,7 +113,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use UrlReader::hasUrl() instead.
      *
      * @param string $url
      *
@@ -259,7 +259,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer Deprecated: RedirectTransfer format is accepted for BC reasons only.
      *
      * @return void
      */
@@ -276,7 +276,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use UrlDeleter::deleteUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer
      *
@@ -338,7 +338,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrl() instead.
+     * @deprecated Use UrlFacade::createUrl() instead.
      *
      * @param string $url
      * @param string $resourceType
@@ -357,7 +357,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrl/updateUrl instead.
+     * @deprecated Use UrlFacade::createUrl() or UrlFacade::updateUrl() instead.
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -373,7 +373,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use hasUrl() instead.
+     * @deprecated Use UrlFacade::hasUrl() instead.
      *
      * @param int $idUrl
      *
@@ -389,7 +389,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use findUrl() instead.
+     * @deprecated Use UrlFacade::findUrl() instead.
      *
      * @param string $urlString
      *
@@ -406,7 +406,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated use findUrl() instead.
+     * @deprecated Use UrlFacade::findUrl() instead.
      *
      * @param int $idUrl
      *
@@ -475,7 +475,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use activateUrl() instead.
+     * @deprecated Use UrlFacade::activateUrl() instead.
      *
      * @param int $idUrl
      *
@@ -489,7 +489,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use deactivateUrl() instead.
+     * @deprecated Use UrlFacade::deactivateUrl() instead.
      *
      * @param int $idUrl
      *
@@ -503,7 +503,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrlRedirect() instead.
+     * @deprecated Use UrlFacade::createUrlRedirect() instead.
      *
      * @param string $toUrl
      * @param int $status
@@ -521,7 +521,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrlRedirect() instead.
+     * @deprecated Use UrlFacade::createUrlRedirect() instead.
      *
      * @param string $toUrl
      * @param int $status
@@ -539,7 +539,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrlRedirect() instead.
+     * @deprecated Use UrlFacade::createUrlRedirect() instead.
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -557,7 +557,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
+     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
      *
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -575,7 +575,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
+     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -591,7 +591,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use activateUrlRedirect() instead.
+     * @deprecated Use UrlFacade::activateUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -607,7 +607,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrl()/updateUrl() instead.
+     * @deprecated Use UrlFacade::createUrl() or UrlFacade::updateUrl() instead.
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -623,7 +623,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use createUrlRedirect()/updateUrlRedirect() instead.
+     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
      *
      * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
      *
@@ -639,8 +639,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @api
      *
-     * @deprecated This method will be removed with next major release because of invalid dependency direction.
-     * Use ProductFacade::getProductUrl() instead.
+     * @deprecated This method will be removed with next major release because of invalid dependency direction. Use ProductFacade::getProductUrl() instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale

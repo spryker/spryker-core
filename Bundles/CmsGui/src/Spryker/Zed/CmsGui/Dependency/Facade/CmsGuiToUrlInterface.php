@@ -10,11 +10,11 @@ use Generated\Shared\Transfer\UrlTransfer;
 interface CmsGuiToUrlInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
      *
      * @return bool
      */
-    public function hasUrl(UrlTransfer $urlTransfer);
+    public function hasUrl($urlTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
