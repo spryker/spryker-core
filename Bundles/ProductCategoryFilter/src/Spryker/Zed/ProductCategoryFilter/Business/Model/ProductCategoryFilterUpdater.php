@@ -17,13 +17,13 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var ProductCategoryFilterTouchInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface
      */
     protected $productCategoryFilterTouch;
 
     /**
-     * @param ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
-     * @param ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+     * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
+     * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
      */
     public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTouchInterface $productCategoryFilterTouch)
     {
@@ -44,9 +44,9 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
     }
 
     /**
-     * @param ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return ProductCategoryFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
     protected function executeUpdateProductCategoryFilterTransaction(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
@@ -58,7 +58,7 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
     }
 
     /**
-     * @param ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
      * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter
      */

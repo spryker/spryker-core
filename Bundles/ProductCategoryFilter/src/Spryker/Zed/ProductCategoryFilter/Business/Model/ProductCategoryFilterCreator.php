@@ -16,12 +16,12 @@ class ProductCategoryFilterCreator implements ProductCategoryFilterCreatorInterf
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var ProductCategoryFilterTouchInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface
      */
     protected $productCategoryFilterTouch;
 
     /**
-     * @param ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+     * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
      */
     public function __construct(ProductCategoryFilterTouchInterface $productCategoryFilterTouch)
     {
@@ -41,9 +41,9 @@ class ProductCategoryFilterCreator implements ProductCategoryFilterCreatorInterf
     }
 
     /**
-     * @param ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return ProductCategoryFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
     protected function executeCreateProductCategoryFilterTransaction(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
@@ -55,9 +55,9 @@ class ProductCategoryFilterCreator implements ProductCategoryFilterCreatorInterf
     }
 
     /**
-     * @param ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return SpyProductCategoryFilter
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter
      */
     protected function createProductCategoryFilterEntity(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
@@ -68,5 +68,4 @@ class ProductCategoryFilterCreator implements ProductCategoryFilterCreatorInterf
 
         return $productCategoryFilterEntity;
     }
-
 }

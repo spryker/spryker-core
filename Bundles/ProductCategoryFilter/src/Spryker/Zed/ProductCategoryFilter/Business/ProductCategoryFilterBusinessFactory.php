@@ -58,7 +58,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductGroupTouch()
     {
-        return new ProductCategoryFilterTouch($this->getTouchFacade(), $this->getQueryContainer());
+        return new ProductCategoryFilterTouch($this->getTouchFacade());
     }
 
     /**
