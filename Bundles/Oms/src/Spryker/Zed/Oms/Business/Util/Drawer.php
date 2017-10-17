@@ -374,9 +374,9 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
-     * @param string $label
+     * @param string[] $label
      *
-     * @return array
+     * @return string[]
      */
     protected function addEdgeConditionText(TransitionInterface $transition, $label)
     {
@@ -395,9 +395,9 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
-     * @param string $label
+     * @param string[] $label
      *
-     * @return array
+     * @return string[]
      */
     protected function addEdgeEventText(TransitionInterface $transition, $label)
     {
