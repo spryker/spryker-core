@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  */
-class MoneyCollectionType extends AbstractCollectionType implements MoneyCollectionTypeInterface
+class MoneyCollectionType extends AbstractCollectionType
 {
 
     const OPTION_AMOUNT_PER_STORE = 'amount_per_store';

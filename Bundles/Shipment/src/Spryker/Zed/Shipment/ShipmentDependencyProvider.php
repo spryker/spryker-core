@@ -8,11 +8,13 @@
 namespace Spryker\Zed\Shipment;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
+use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePlugin;
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -21,6 +23,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
     const PRICE_PLUGINS = 'PRICE_PLUGINS';
     const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
+    const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_VALUE_COLLECTION_FORM_TYPE_PLUGIN';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
@@ -47,9 +50,24 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addMoneyCollectionFormTypePlugin($container);
 
         $container[static::FACADE_TAX] = function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyCollectionFormTypePlugin(Container $container)
+    {
+        $container[static::MONEY_COLLECTION_FORM_TYPE_PLUGIN] = function (Container $container) {
+            return $this->createMoneyCollectionFormTypePlugin($container);
         };
 
         return $container;
@@ -154,6 +172,25 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     protected function getDeliveryTimePlugins(Container $container)
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @throws \Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePlugin
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function createMoneyCollectionFormTypePlugin(Container $container)
+    {
+        throw new MissingMoneyCollectionFormTypePlugin(
+            sprintf(
+                'Missing instance of %s! You need to configure MoneyCollectionFormType ' .
+                'in your own ShipmentDependencyProvider::createMoneyCollectionFormTypePlugin() ' .
+                'to be able to manage shipment prices.',
+                FormTypeInterface::class
+            )
+        );
     }
 
 }

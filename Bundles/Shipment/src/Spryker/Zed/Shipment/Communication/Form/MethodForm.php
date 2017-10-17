@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
+use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +26,7 @@ class MethodForm extends AbstractType
     const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
     const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
     const FIELD_TAX_SET_FIELD = 'fkTaxSet';
-    const FIELD_MONEY_VALUE_COLLECTION = 'moneyValueCollection';
+    const FIELD_PRICES = 'prices';
 
     const OPTION_CARRIER_CHOICES = 'carrier_choices';
     const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
@@ -37,16 +37,16 @@ class MethodForm extends AbstractType
     const OPTION_DATA_CLASS = 'data_class';
 
     /**
-     * @var string
+     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
-    protected $moneyValueCollectionTypeClass;
+    protected $moneyCollectionFormTypePlugin;
 
     /**
-     * @param string $moneyValueCollectionTypeClass
+     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $moneyCollectionFormTypePlugin
      */
-    public function __construct($moneyValueCollectionTypeClass)
+    public function __construct(FormTypeInterface $moneyCollectionFormTypePlugin)
     {
-        $this->moneyValueCollectionTypeClass = $moneyValueCollectionTypeClass;
+        $this->moneyCollectionFormTypePlugin = $moneyCollectionFormTypePlugin;
     }
 
     /**
@@ -73,7 +73,7 @@ class MethodForm extends AbstractType
             ->addIsActiveField($builder)
             ->addIdField($builder)
             ->addTaxSetField($builder, $options)
-            ->addMoneyValueCollectionField($builder);
+            ->addMoneyCollectionField($builder);
     }
 
     /**
@@ -150,14 +150,13 @@ class MethodForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMoneyValueCollectionField(FormBuilderInterface $builder)
+    protected function addMoneyCollectionField(FormBuilderInterface $builder)
     {
         $builder->add(
-            static::FIELD_MONEY_VALUE_COLLECTION,
-            $this->moneyValueCollectionTypeClass,
+            static::FIELD_PRICES,
+            $this->moneyCollectionFormTypePlugin->getType(),
             [
-                'property_path' => ShipmentMethodTransfer::PRICES,
-                MoneyCollectionType::OPTION_AMOUNT_PER_STORE => true,
+                ShipmentConstants::OPTION_AMOUNT_PER_STORE => true,
             ]
         );
 

@@ -103,4 +103,18 @@
         <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
+    <transfer name="MoneyValue">
+        <property name="idEntity" type="int" />
+        <property name="fkCurrency" type="int" />
+        <property name="fkStore"  type="int"/>
+        <property name="currency" type="Currency" />
+        <property name="netAmount" type="int" />
+        <property name="grossAmount" type="int" />
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string" />
+        <property name="currency" type="Currency" />
+    </transfer>
+
 </transfers>

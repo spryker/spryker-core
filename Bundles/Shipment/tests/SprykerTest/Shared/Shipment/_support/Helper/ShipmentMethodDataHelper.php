@@ -22,7 +22,7 @@ class ShipmentMethodDataHelper extends Module
     /**
      * First level key represents store name.
      * Second level key represents currency iso code.
-     * Second level value represents the optional corresponding MoneyValue override values.
+     * Second level value represents the optional corresponding MoneyValue transfer object override values.
      */
     const DEFAULT_PRICE_LIST = [
         'DE' => [

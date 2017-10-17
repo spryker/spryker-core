@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Communication;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Money\Communication\Plugin\Form\MoneyCollectionTypePlugin;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
@@ -86,7 +85,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMethodForm(ShipmentMethodTransfer $data, array $options = [])
     {
-        $form = new MethodForm($this->getMoneyValueCollectionTypeClass());
+        $form = new MethodForm($this->getMoneyCollectionFormTypePlugin());
 
         return $this->getFormFactory()->create($form, $data, $options);
     }
@@ -124,11 +123,11 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return string
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
-    public function getMoneyValueCollectionTypeClass()
+    public function getMoneyCollectionFormTypePlugin()
     {
-        return MoneyCollectionTypePlugin::class;
+        return $this->getProvidedDependency(ShipmentDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN);
     }
 
 }
