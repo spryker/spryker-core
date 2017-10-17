@@ -76,21 +76,16 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * Note: The optional argument `$xmlFolder` will be removed in next major version.
-     * Define paths to your process definition in `OmsConfig::getProcessDefinitionLocation()`
-     *
-     * @param string|null $xmlFolder @deprecated Will be removed in next major version.
-     *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
-    public function createOrderStateMachineBuilder($xmlFolder = null)
+    public function createOrderStateMachineBuilder()
     {
         return new Builder(
             $this->createProcessEvent(),
             $this->createProcessState(),
             $this->createProcessTransition(),
             $this->createProcessProcess(),
-            $xmlFolder ?: $this->getConfig()->getProcessDefinitionLocation()
+            $this->getConfig()->getProcessDefinitionLocation()
         );
     }
 
