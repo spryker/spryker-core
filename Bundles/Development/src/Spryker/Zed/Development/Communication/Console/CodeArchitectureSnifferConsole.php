@@ -79,7 +79,7 @@ class CodeArchitectureSnifferConsole extends Console
         } else {
             $pathToRoot = $this->getFactory()->getConfig()->getPathToRoot();
             $customPath = $pathToRoot . $path;
-            if (file_exists($path)) {
+            if (file_exists($customPath)) {
                 $success = $this->runCustomPath($output, $customPath);
             } else {
                 $success = $this->runForProject($output, $module, $path);
