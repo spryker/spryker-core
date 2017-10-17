@@ -513,17 +513,21 @@ class OrderStateMachine implements OrderStateMachineInterface
             $log->addCommand($orderItemEntity, $command);
 
             try {
-                if ($type === self::BY_ITEM) {
-                    $returnData = $command->run($orderItemEntity, $data);
-                    $this->returnData = array_merge($this->returnData, $returnData);
-                    $processedOrderItems[] = $orderItemEntity;
-                } else {
+                if ($command instanceof CommandByOrderInterface) {
                     $returnData = $command->run($orderItems, $orderEntity, $data);
                     if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
                     }
 
                     return $orderItems;
+                }
+
+                if ($command instanceof CommandByItemInterface) {
+                    $returnData = $command->run($orderItemEntity, $data);
+                    $this->returnData = array_merge($this->returnData, $returnData);
+                    $processedOrderItems[] = $orderItemEntity;
+                } else {
+                    throw new LogicException('Unknown type of command: ' . get_class($command));
                 }
             } catch (Exception $e) {
                 $log->setIsError(true);
