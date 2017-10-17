@@ -3,6 +3,7 @@
 namespace SprykerTest\Zed\ProductCategoryFilter\Business;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
 /**
  * Auto-generated group annotations
@@ -30,5 +31,10 @@ class DeleteProductCategoryFilterTest extends Unit
 
         // Assert
         $this->assertNull($this->tester->getFacade()->findProductCategoryFilterByCategoryId($productCategoryFilter->getFkCategory()));
+        $this->tester->assertTouchDeleted(
+            ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER,
+            $productCategoryFilter->getIdProductCategoryFilter(),
+            'Product category filter should have been touched as deleted.'
+        );
     }
 }

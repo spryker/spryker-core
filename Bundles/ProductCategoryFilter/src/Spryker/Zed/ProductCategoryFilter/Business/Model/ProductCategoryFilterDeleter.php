@@ -7,9 +7,28 @@
 
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
 
+use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
+use Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+
 class ProductCategoryFilterDeleter implements ProductCategoryFilterDeleterInterface
 {
-    use RetrievesProductCategoryFilterEntity;
+    use RetrievesProductCategoryFilterEntityTrait;
+    use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var ProductCategoryFilterTouchInterface
+     */
+    protected $productCategoryFilterTouch;
+    /**
+     * @param ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
+     * @param ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+     */
+    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTouchInterface $productCategoryFilterTouch)
+    {
+        $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
+        $this->productCategoryFilterTouch = $productCategoryFilterTouch;
+    }
 
     /**
      * @param int $categoryId
@@ -18,7 +37,33 @@ class ProductCategoryFilterDeleter implements ProductCategoryFilterDeleterInterf
      */
     public function deleteProductCategoryFilterByCategoryId($categoryId)
     {
+        $this->handleDatabaseTransaction(function () use ($categoryId) {
+            $this->executeDeleteProductCategoryFilterTransaction($categoryId);
+        });
+    }
+
+    /**
+     * @param int $categoryId
+     *
+     * @return void
+     */
+    protected function executeDeleteProductCategoryFilterTransaction($categoryId)
+    {
+        $productCategoryFilterEntity = $this->deleteProductCategoryFilterEntity($categoryId);
+        $this->productCategoryFilterTouch->touchProductCategoryFilterDeleted(
+            (new ProductCategoryFilterTransfer())->fromArray($productCategoryFilterEntity->toArray(), true)
+        );
+    }
+
+    /**
+     * @param int $categoryId
+     *
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter
+     */
+    protected function deleteProductCategoryFilterEntity($categoryId)
+    {
         $productCategoryFilterEntity = $this->getProductCategoryFilterEntityByCategoryId($categoryId);
         $productCategoryFilterEntity->delete();
+        return $productCategoryFilterEntity;
     }
 }

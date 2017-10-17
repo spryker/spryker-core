@@ -26,3 +26,4 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\ProductCategoryFilter\Helper\ProductCategoryFilterHelper
+                - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper

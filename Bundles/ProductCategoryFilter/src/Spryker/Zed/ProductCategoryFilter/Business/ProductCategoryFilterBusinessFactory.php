@@ -11,7 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterCreator;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterDeleter;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterReader;
+use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouch;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterUpdater;
+use Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainer getQueryContainer()
@@ -24,7 +26,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductCategoryFilterCreator()
     {
-        return new ProductCategoryFilterCreator();
+        return new ProductCategoryFilterCreator($this->createProductGroupTouch());
     }
 
     /**
@@ -40,7 +42,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductCategoryFilterUpdater()
     {
-        return new ProductCategoryFilterUpdater($this->getQueryContainer());
+        return new ProductCategoryFilterUpdater($this->getQueryContainer(), $this->createProductGroupTouch());
     }
 
     /**
@@ -48,6 +50,22 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductCategoryFilterDeleter()
     {
-        return new ProductCategoryFilterDeleter($this->getQueryContainer());
+        return new ProductCategoryFilterDeleter($this->getQueryContainer(), $this->createProductGroupTouch());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface
+     */
+    public function createProductGroupTouch()
+    {
+        return new ProductCategoryFilterTouch($this->getTouchFacade(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchInterface
+     */
+    public function getTouchFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterDependencyProvider::FACADE_TOUCH);
     }
 }

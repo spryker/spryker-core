@@ -8,7 +8,34 @@
 namespace Spryker\Zed\ProductCategoryFilter;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchBridge;
 
 class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    const FACADE_TOUCH = 'FACADE_TOUCH';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $this->addTouchFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addTouchFacade(Container $container)
+    {
+        $container[static::FACADE_TOUCH] = function (Container $container) {
+            return new ProductCategoryFilterToTouchBridge($container->getLocator()->touch()->facade());
+        };
+    }
 }

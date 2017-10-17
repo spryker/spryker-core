@@ -4,6 +4,7 @@ namespace SprykerTest\Zed\ProductCategoryFilter\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
+use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
 /**
  * Auto-generated group annotations
@@ -35,5 +36,10 @@ class UpdateProductCategoryFilterTest extends Unit
         $productCategoryFilterFromDb = $this->tester->getFacade()->findProductCategoryFilterByCategoryId($productCategoryFilter->getFkCategory());
         // Assert
         $this->assertSame($newFilterData, $productCategoryFilterFromDb->getFilterData(), 'Product category filter should contain new data');
+        $this->tester->assertTouchActive(
+            ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER,
+            $productCategoryFilter->getIdProductCategoryFilter(),
+            'Product category filter should have been touched as active.'
+        );
     }
 }
