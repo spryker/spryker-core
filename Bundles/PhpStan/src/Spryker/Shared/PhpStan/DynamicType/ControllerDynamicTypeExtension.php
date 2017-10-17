@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\PHPStan\DynamicType;
+namespace Spryker\Shared\PhpStan\DynamicType;
 
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
