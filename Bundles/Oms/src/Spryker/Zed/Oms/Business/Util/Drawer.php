@@ -382,7 +382,7 @@ class Drawer implements DrawerInterface
         if ($transition->hasCondition()) {
             $conditionLabel = $transition->getCondition();
 
-            if (!$this->inCollection($transition->getCondition())) {
+            if (!$this->inCollection($this->conditions, $transition->getCondition())) {
                 $conditionLabel .= ' ' . $this->notImplemented;
             }
 
@@ -416,7 +416,7 @@ class Drawer implements DrawerInterface
             if ($event->hasCommand()) {
                 $commandLabel = 'c:' . $event->getCommand();
 
-                if ($this->inCollection($event->getCommand())) {
+                if ($this->inCollection($this->commands, $event->getCommand())) {
                     $commandModel = $this->commands->get($event->getCommand());
                     if ($commandModel instanceof CommandByOrderInterface) {
                         $commandLabel .= ' (by order)';
@@ -440,14 +440,15 @@ class Drawer implements DrawerInterface
     }
 
     /**
+     * @param HasAwareConditionCollectionInterface|mixed $collection
      * @param string $commandName
      *
      * @return bool
      */
-    protected function inCollection($commandName)
+    protected function inCollection($collection, $commandName)
     {
-        if ($this->commands instanceof HasAwareConditionCollectionInterface) {
-            return $this->commands->has($commandName);
+        if ($collection instanceof HasAwareConditionCollectionInterface) {
+            return $collection->has($commandName);
         }
 
         return false;
