@@ -399,25 +399,7 @@ class Builder implements BuilderInterface
      */
     private function setProcessDefinitionLocation($processDefinitionLocation)
     {
-        $processDefinitionLocation = $this->setDefaultIfNull($processDefinitionLocation);
-
         $this->processDefinitionLocation = $processDefinitionLocation;
-    }
-
-    /**
-     * @deprecated This method can be removed when `$processDefinitionLocation` is mandatory
-     *
-     * @param string|array|null $processDefinitionLocation
-     *
-     * @return string|array
-     */
-    private function setDefaultIfNull($processDefinitionLocation)
-    {
-        if ($processDefinitionLocation !== null) {
-            return $processDefinitionLocation;
-        }
-
-        return $processDefinitionLocation = OmsConfig::DEFAULT_PROCESS_LOCATION;
     }
 
     /**
