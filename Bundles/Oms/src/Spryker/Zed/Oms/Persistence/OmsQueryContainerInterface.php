@@ -149,18 +149,6 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Not used, will be removed in the next major release.
-     *
-     * @param string $identifier
-     * @param \DateTime $expirationDate
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
-     */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate);
-
-    /**
-     * @api
-     *
      * @param \DateTime $expirationDate
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery

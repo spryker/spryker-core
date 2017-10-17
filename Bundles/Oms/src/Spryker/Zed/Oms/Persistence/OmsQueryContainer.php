@@ -285,24 +285,6 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
-     * @deprecated Not used, will be removed in the next major release.
-     *
-     * @param string $identifier
-     * @param \DateTime $expirationDate
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
-     */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate)
-    {
-        return $this->getFactory()
-            ->createOmsStateMachineLockQuery()
-            ->filterByIdentifier($identifier)
-            ->filterByExpires(['min' => $expirationDate], Criteria::GREATER_EQUAL);
-    }
-
-    /**
-     * @api
-     *
      * @param \DateTime $expirationDate
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
