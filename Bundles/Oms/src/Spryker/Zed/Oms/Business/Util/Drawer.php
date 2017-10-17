@@ -78,7 +78,7 @@ class Drawer implements DrawerInterface
     protected $fontSizeSmall = null;
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface
      */
     protected $conditions;
 

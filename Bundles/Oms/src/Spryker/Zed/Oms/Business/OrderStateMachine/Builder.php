@@ -50,7 +50,7 @@ class Builder implements BuilderInterface
     protected $process;
 
     /**
-     * @var array
+     * @var string|array
      */
     protected $processDefinitionLocation;
 
