@@ -44,8 +44,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Please use createLockedOrderStateMachine() instead
-     *
      * @param array $logContext
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
@@ -75,18 +73,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
              $this->createOrderStateMachine($logContext),
              $this->createTriggerLocker()
          );
-    }
-
-    /**
-     * @deprecated Please use createLockedOrderStateMachine() instead
-     *
-     * @param array $logContext
-     *
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface
-     */
-    public function createOrderStateMachineOrderStateMachine(array $logContext = [])
-    {
-        return $this->createOrderStateMachine($logContext);
     }
 
     /**
