@@ -118,48 +118,48 @@ class CodeStyleSniffer
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param string|null $pathSuffix
      *
      * @return array
      */
-    protected function buildPaths($bundle, $pathSuffix = null)
+    protected function buildPaths($module, $pathSuffix = null)
     {
         return [
-            $this->getPathToCoreModule($this->normalizeModuleNameForSplit($bundle), $pathSuffix),
-            $this->getPathToCorePackageNonSplit($this->normalizeModuleNameForSplit($bundle), $pathSuffix),
-            $this->getPathToCoreModule($this->normalizeModuleNameForNonSplit($bundle), $pathSuffix),
+            $this->getPathToCoreModule($this->normalizeModuleNameForSplit($module), $pathSuffix),
+            $this->getPathToCorePackageNonSplit($this->normalizeModuleNameForSplit($module), $pathSuffix),
+            $this->getPathToCoreModule($this->normalizeModuleNameForNonSplit($module), $pathSuffix),
         ];
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      *
      * @return string
      */
-    protected function normalizeModuleNameForNonSplit($bundle)
+    protected function normalizeModuleNameForNonSplit($module)
     {
         $filterChain = new FilterChain();
         $filterChain
             ->attach(new UnderscoreToCamelCase())
             ->attach(new DashToCamelCase());
 
-        return ucfirst($filterChain->filter($bundle));
+        return ucfirst($filterChain->filter($module));
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      *
      * @return string
      */
-    protected function normalizeModuleNameForSplit($bundle)
+    protected function normalizeModuleNameForSplit($module)
     {
         $filterChain = new FilterChain();
         $filterChain
             ->attach(new UnderscoreToCamelCase())
             ->attach(new CamelCaseToDash());
 
-        return strtolower($filterChain->filter($bundle));
+        return strtolower($filterChain->filter($module));
     }
 
     /**
