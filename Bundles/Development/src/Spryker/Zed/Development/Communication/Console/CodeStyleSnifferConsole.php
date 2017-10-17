@@ -59,7 +59,7 @@ class CodeStyleSnifferConsole extends Console
     {
         $isCore = $this->input->getOption(static::OPTION_CORE);
         $module = $this->input->getOption(static::OPTION_MODULE);
-        $message = sprintf('Run Architecture Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
+        $message = sprintf('Run Code Style Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
 
         if ($module) {
             $module = $this->normalizeModuleName($module);
