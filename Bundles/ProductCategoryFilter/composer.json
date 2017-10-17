@@ -6,6 +6,10 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "require": {
+     "spryker/kernel": "^3.0.0",
+     "spryker/category": "^4.0.0"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

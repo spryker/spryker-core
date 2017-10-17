@@ -10,10 +10,8 @@ use Codeception\Test\Unit;
  * @group Zed
  * @group ProductCategoryFilter
  * @group Business
- * @group UpdateProductCategoryFilterTest
+ * @group ReadProductCategoryFilterTest
  * Add your own group annotations below this line
- *
- * @property \SprykerTest\Zed\ProductCategoryFilter\ProductCategoryFilterBusinessTester $tester
  */
 class ReadProductCategoryFilterTest extends Unit
 {
@@ -24,7 +22,6 @@ class ReadProductCategoryFilterTest extends Unit
     {
         // Arrange
         $productCategoryFilter = $this->tester->haveProductCategoryFilter();
-
 
         // Act
         $productCategoryFilterFromDb = $this->tester->getFacade()->findProductCategoryFilterByCategoryId($productCategoryFilter->getFkCategory());

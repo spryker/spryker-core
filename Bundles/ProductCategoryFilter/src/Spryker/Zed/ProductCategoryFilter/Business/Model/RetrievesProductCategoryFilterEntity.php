@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
 
@@ -8,7 +12,7 @@ use Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryCont
 trait RetrievesProductCategoryFilterEntity
 {
     /**
-     * @var ProductCategoryFilterQueryContainerInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface
      */
     protected $productCategoryFilterQueryContainer;
 
@@ -31,5 +35,4 @@ trait RetrievesProductCategoryFilterEntity
             ->queryProductCategoryFilterByCategoryId($categoryId)
             ->findOne();
     }
-
 }
