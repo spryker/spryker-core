@@ -17,12 +17,13 @@ class ProductCategoryFilterDeleter implements ProductCategoryFilterDeleterInterf
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var ProductCategoryFilterTouchInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface
      */
     protected $productCategoryFilterTouch;
+
     /**
-     * @param ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
-     * @param ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+     * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
+     * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
      */
     public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTouchInterface $productCategoryFilterTouch)
     {

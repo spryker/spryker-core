@@ -1,32 +1,35 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 use Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchInterface;
-use Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface;
 
 class ProductCategoryFilterTouch implements ProductCategoryFilterTouchInterface
 {
     /**
-     * @var ProductCategoryFilterToTouchInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchInterface
      */
     protected $touchFacade;
 
     /**
      * ProductCategoryFilterTouch constructor.
-     * @param ProductCategoryFilterToTouchInterface $touchFacade
-     * @param ProductCategoryFilterQueryContainerInterface $productGroupQueryContainer
+     *
+     * @param \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchInterface $touchFacade
      */
-    public function __construct(ProductCategoryFilterToTouchInterface $touchFacade, ProductCategoryFilterQueryContainerInterface $productGroupQueryContainer)
+    public function __construct(ProductCategoryFilterToTouchInterface $touchFacade)
     {
         $this->touchFacade = $touchFacade;
-        $this->productGroupQueryContainer = $productGroupQueryContainer;
     }
 
     /**
-     * @param ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
      * @return bool
      */
@@ -36,7 +39,7 @@ class ProductCategoryFilterTouch implements ProductCategoryFilterTouchInterface
     }
 
     /**
-     * @param ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
      * @return bool
      */
