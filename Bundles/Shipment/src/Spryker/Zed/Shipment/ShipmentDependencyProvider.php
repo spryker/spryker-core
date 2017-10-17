@@ -14,7 +14,7 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
-use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePlugin;
+use Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException;
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -23,7 +23,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
     const PRICE_PLUGINS = 'PRICE_PLUGINS';
     const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
-    const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_VALUE_COLLECTION_FORM_TYPE_PLUGIN';
+    const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
@@ -177,13 +177,13 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @throws \Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePlugin
+     * @throws \Spryker\Zed\Shipment\Exception\MissingMoneyCollectionFormTypePluginException
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
     protected function createMoneyCollectionFormTypePlugin(Container $container)
     {
-        throw new MissingMoneyCollectionFormTypePlugin(
+        throw new MissingMoneyCollectionFormTypePluginException(
             sprintf(
                 'Missing instance of %s! You need to configure MoneyCollectionFormType ' .
                 'in your own ShipmentDependencyProvider::createMoneyCollectionFormTypePlugin() ' .

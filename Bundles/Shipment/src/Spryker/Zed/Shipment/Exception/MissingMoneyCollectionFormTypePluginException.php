@@ -9,6 +9,6 @@ namespace Spryker\Zed\Shipment\Exception;
 
 use Exception;
 
-class MissingMoneyCollectionFormTypePlugin extends Exception
+class MissingMoneyCollectionFormTypePluginException extends Exception
 {
 }
