@@ -63,19 +63,6 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest) instead.
-     *
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
-     * @param string $sku
-     * @param bool $returnTest
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true);
-
-    /**
-     * @api
-     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
