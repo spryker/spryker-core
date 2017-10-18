@@ -17,7 +17,7 @@ class ProductCategoryFilterGuiToProductCategoryFilterBridge implements ProductCa
     protected $productCategoryFilterFacade;
 
     /**
-     * @param $productCategoryFilterFacade
+     * @param \Spryker\Zed\ProductCategoryFilter\Business\ProductCategoryFilterFacadeInterface $productCategoryFilterFacade
      */
     public function __construct($productCategoryFilterFacade)
     {
