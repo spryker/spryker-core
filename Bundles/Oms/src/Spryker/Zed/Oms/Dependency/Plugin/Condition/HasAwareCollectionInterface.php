@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Dependency\Plugin\Condition;
 
-interface HasAwareConditionCollectionInterface
+interface HasAwareCollectionInterface
 {
     /**
      * @api

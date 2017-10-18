@@ -17,7 +17,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
-use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 
 class Drawer implements DrawerInterface
@@ -440,14 +440,14 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareConditionCollectionInterface|mixed $collection
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface|mixed $collection
      * @param string $commandName
      *
      * @return bool
      */
     protected function inCollection($collection, $commandName)
     {
-        if ($collection instanceof HasAwareConditionCollectionInterface) {
+        if ($collection instanceof HasAwareCollectionInterface) {
             return $collection->has($commandName);
         }
 
