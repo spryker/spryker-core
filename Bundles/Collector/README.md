@@ -1,5 +1,7 @@
 # Collector Module
 
+Collector provides the architecture for front-end collectors that collect and export data to key-value storage and search.
+
 ## Installation
 
 ```
@@ -8,4 +10,4 @@ composer require spryker/collector
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/infrastructure/collector/collector.html)

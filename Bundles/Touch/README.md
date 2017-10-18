@@ -1,5 +1,7 @@
 # Touch Module
 
+As Yves has no connection to the database of Zed, touch is a key concept to make rendering front-end pages fast. Yves fetches all dynamic data from a key-value storage (Redis) and a search engine (Elasticsearch). The process of collecting data consists of two steps: touch and export. Touch module marks items for exporting to key-value storage and search.
+
 ## Installation
 
 ```
@@ -8,4 +10,4 @@ composer require spryker/touch
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
