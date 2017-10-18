@@ -478,6 +478,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * Specification:
+     * - Performs commands on items
+     * - All passing items should have the same event available
+     * - For CommandByOrderInterface the command will be taken from the first order item
+     *
      * @param string $eventId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
