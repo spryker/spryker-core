@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\ProductCategoryFilterCollector\Business;
+
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductCategoryFilter\Persistence\Collector\Propel\ProductCategoryFilterCollectorQuery;
+use Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterCollectorDependencyProvider;
+use Spryker\Zed\ProductCategoryFilterCollector\Business\Collector\Storage\ProductCategoryFilterCollector;
+
+/**
+ * @method \Spryker\Zed\ProductCategoryFilterCollector\ProductCategoryFilterCollectorConfig getConfig()
+ */
+class ProductCategoryFilterCollectorBusinessFactory extends AbstractBusinessFactory
+{
+    /**
+     * @return \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface
+     */
+    public function createStorageProductGroupCollector()
+    {
+        $collector = new ProductCategoryFilterCollector($this->getUtilDataReaderService());
+
+        $collector->setTouchQueryContainer($this->getTouchQueryContainer());
+        $collector->setQueryBuilder($this->createProductCategoryFilterCollectorQuery());
+
+        return $collector;
+    }
+
+    /**
+     * @return \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
+     */
+    protected function getUtilDataReaderService()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterCollectorDependencyProvider::SERVICE_DATA_READER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToCollectorInterface
+     */
+    public function getCollectorFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterCollectorDependencyProvider::FACADE_COLLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
+     */
+    protected function getTouchQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterCollectorDependencyProvider::QUERY_CONTAINER_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilter\Persistence\Collector\Propel\ProductCategoryFilterCollectorQuery
+     */
+    protected function createProductCategoryFilterCollectorQuery()
+    {
+        return new ProductCategoryFilterCollectorQuery();
+    }
+}
