@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\Development\Business\CodeStyleSniffer;
 
 use Codeception\Test\Unit;
-use Pyz\Zed\Development\DevelopmentConfig;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
+use Spryker\Zed\Development\DevelopmentConfig;
 
 /**
  * Auto-generated group annotations
