@@ -170,6 +170,96 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
+    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndNullValuesWhenNoPropertyWasSetCamelCased()
+    {
+        $transfer = new AbstractTransfer();
+        $given = $transfer->toArray(true, true);
+        $expected = [
+            'string' => null,
+            'int' => null,
+            'bool' => null,
+            'array' => [],
+            'transfer' => null,
+            'transferCollection' => new ArrayObject(),
+        ];
+
+        $this->assertEquals($expected, $given);
+    }
+
+    /**
+     * @return void
+     */
+    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesCamelCasedAndRecursived()
+    {
+        $transfer = (new AbstractTransfer())
+            ->setInt(100)
+            ->setTransfer(
+                (new AbstractTransfer())
+                    ->setInt(200)
+            )
+            ->setTransferCollection(new ArrayObject([
+                (new AbstractTransfer())
+                    ->setInt(300),
+            ]));
+
+        $given = $transfer->toArray(true, true);
+        $expected = [
+            'string' => null,
+            'int' => 100,
+            'bool' => null,
+            'array' => [],
+            'transfer' => [
+                'string' => null,
+                'int' => 200,
+                'bool' => null,
+                'array' => [],
+                'transfer' => null,
+                'transferCollection' => new ArrayObject(),
+            ],
+            'transferCollection' => [
+                [
+                    'string' => null,
+                    'int' => 300,
+                    'bool' => null,
+                    'array' => [],
+                    'transfer' => null,
+                    'transferCollection' => new ArrayObject(),
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expected, $given);
+    }
+
+    /**
+     * @return void
+     */
+    public function testManyWaysToAccessAProperty()
+    {
+        $transfer = (new AbstractTransfer())
+            ->setInt(100)
+            ->setTransferCollection(new ArrayObject());
+
+        //Method call
+        $this->assertSame(100, $transfer->getInt());
+        $this->assertEquals(new ArrayObject(), $transfer->getTransferCollection());
+
+        //Transfer to array
+        $this->assertSame(100, $transfer->toArray()['int']);
+        $this->assertEquals(new ArrayObject(), $transfer->toArray()['transfer_collection']);
+
+        //Transfer to array with camelcase
+        $this->assertSame(100, $transfer->toArray(true, true)['int']);
+        $this->assertEquals(new ArrayObject(), $transfer->toArray(true, true)['transferCollection']);
+
+        //ArrayAccess
+        $this->assertSame(100, $transfer['int']);
+        $this->assertEquals(new ArrayObject(), $transfer['transferCollection']);
+    }
+
+    /**
+     * @return void
+     */
     public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValues()
     {
         $transfer = new AbstractTransfer();
