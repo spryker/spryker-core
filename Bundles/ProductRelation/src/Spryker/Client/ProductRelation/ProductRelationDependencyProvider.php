@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductRelation;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToLocaleBridge;
+use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToPriceProductBridge;
 use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageBridge;
 
 class ProductRelationDependencyProvider extends AbstractDependencyProvider
@@ -17,6 +18,7 @@ class ProductRelationDependencyProvider extends AbstractDependencyProvider
 
     const KV_STORAGE = 'kv storage';
     const CLIENT_LOCALE = 'locale client';
+    const CLIENT_PRICE_PRODUCT = 'price product client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -31,6 +33,10 @@ class ProductRelationDependencyProvider extends AbstractDependencyProvider
 
         $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new ProductRelationToLocaleBridge($container->getLocator()->locale()->client());
+        };
+
+        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductRelationToPriceProductBridge($container->getLocator()->priceProduct()->client());
         };
 
         return $container;

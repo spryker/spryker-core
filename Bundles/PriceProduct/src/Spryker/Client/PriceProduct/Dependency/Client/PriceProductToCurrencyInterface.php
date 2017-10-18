@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Price\PriceModeResolver;
+namespace Spryker\Client\PriceProduct\Dependency\Client;
 
-interface PriceModeResolverInterface
+interface PriceProductToCurrencyInterface
 {
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrentPriceMode();
+    public function getCurrent();
 }

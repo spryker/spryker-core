@@ -4,32 +4,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Price\PriceModeResolver;
+namespace Spryker\Client\Price\PriceModeResolver;
 
 use Spryker\Client\Quote\QuoteClientInterface;
-use Spryker\Yves\Price\Dependency\Client\PriceToQuoteClientInterface;
-use Spryker\Yves\Price\PriceConfig;
+use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface;
+use Spryker\Client\Price\PriceConfig;
 
 class PriceModeResolver implements PriceModeResolverInterface
 {
     /**
-     * @var \Spryker\Yves\Price\Dependency\Client\PriceToQuoteClientInterface
+     * @var \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface
      */
     protected $quoteClient;
 
     /**
-     * @var \Spryker\Yves\Price\PriceConfig
+     * @var \Spryker\Client\Price\PriceConfig
      */
     protected $priceConfig;
 
     /**
-     * @param \Spryker\Yves\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
-     * @param \Spryker\Yves\Price\PriceConfig $priceConfig
+     * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
+     * @param \Spryker\Client\Price\PriceConfig $priceConfig
      */
-    public function __construct(
-        PriceToQuoteClientInterface $quoteClient,
-        PriceConfig $priceConfig
-    )
+    public function __construct(PriceToQuoteClientInterface $quoteClient, PriceConfig $priceConfig)
     {
         $this->quoteClient = $quoteClient;
         $this->priceConfig = $priceConfig;
@@ -47,7 +44,7 @@ class PriceModeResolver implements PriceModeResolverInterface
         }
 
         return $this->priceConfig
-            ->createSharedConfig()
+            ->createSharedPriceConfig()
             ->getDefaultPriceMode();
     }
 }

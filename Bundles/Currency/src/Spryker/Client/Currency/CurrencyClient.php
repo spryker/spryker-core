@@ -1,20 +1,17 @@
 <?php
-
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Currency\Plugin;
+namespace Spryker\Client\Currency;
 
-use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Spryker\Client\Currency\CurrencyFactory getFactory()
- *
- * @deprecated use CurrencyClient instead
  */
-class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
+class CurrencyClient extends AbstractClient implements CurrencyClientInterface
 {
 
     /**
@@ -34,5 +31,4 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
     {
         return $this->getFactory()->createCurrencyBuilder()->getCurrent();
     }
-
 }

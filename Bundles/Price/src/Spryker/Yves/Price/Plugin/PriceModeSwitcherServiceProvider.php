@@ -15,6 +15,7 @@ use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Yves\Price\PriceFactory getFactory()
+ * @method \Spryker\Client\Price\PriceClient getClient()
  * @method \Spryker\Yves\Price\PriceConfig getConfig()
  */
 class PriceModeSwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -75,9 +76,7 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
      */
     protected function getCurrentPriceMode()
     {
-        return $this->getFactory()
-            ->createPriceModeResolver()
-            ->getCurrentPriceMode();
+        return $this->getClient()->getCurrentPriceMode();
     }
 
     /**

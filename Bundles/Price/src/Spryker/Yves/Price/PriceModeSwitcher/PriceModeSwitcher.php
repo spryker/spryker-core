@@ -42,7 +42,10 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
      */
     public function switchPriceMode($priceMode)
     {
-        $priceModes = $this->priceConfig->createSharedConfig()->getPriceModes();
+        $priceModes = $this->priceConfig
+            ->createSharedConfig()
+            ->getPriceModes();
+
         if (!isset($priceModes[$priceMode])) {
             throw new UnknownPriceModeException(
                 sprintf('Unknown price mode "%s".'. $priceMode)

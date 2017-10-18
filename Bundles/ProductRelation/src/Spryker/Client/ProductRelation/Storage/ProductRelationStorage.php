@@ -9,6 +9,8 @@ namespace Spryker\Client\ProductRelation\Storage;
 
 use Generated\Shared\Transfer\StorageProductAbstractRelationTransfer;
 use Generated\Shared\Transfer\StorageProductRelationsTransfer;
+use Spryker\Client\PriceProduct\PriceProductClientInterface;
+use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToPriceProductInterface;
 use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
@@ -36,19 +38,27 @@ class ProductRelationStorage implements ProductRelationStorageInterface
     protected $translations = [];
 
     /**
+     * @var \Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToPriceProductInterface
+     */
+    protected $priceProductClient;
+
+    /**
      * @param \Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageInterface $storage
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
+     * @param \Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToPriceProductInterface $priceProductClient
      */
     public function __construct(
         ProductRelationToStorageInterface $storage,
         KeyBuilderInterface $keyBuilder,
-        $localeName
+        $localeName,
+        ProductRelationToPriceProductInterface $priceProductClient
     ) {
 
         $this->keyBuilder = $keyBuilder;
         $this->localeName = $localeName;
         $this->storage = $storage;
+        $this->priceProductClient = $priceProductClient;
     }
 
     /**
@@ -91,7 +101,13 @@ class ProductRelationStorage implements ProductRelationStorageInterface
     protected function mapStorageProductAbstractRelationTransfer(array $productAbstract)
     {
         $storageProductAbstractRelationTransfer = new StorageProductAbstractRelationTransfer();
+
         $storageProductAbstractRelationTransfer->fromArray($productAbstract, true);
+
+        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPrice($productAbstract['prices']);
+
+        $storageProductAbstractRelationTransfer->setPrices($currentProductPriceTransfer->getPrices());
+        $storageProductAbstractRelationTransfer->setPrice($currentProductPriceTransfer->getPrice());
 
         return $storageProductAbstractRelationTransfer;
     }

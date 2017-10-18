@@ -48,7 +48,7 @@
                     {{ currency }}
                 </td>
 
-               {% for priceMode, priceTypes in priceModes|sort %}
+               {% for priceMode, priceTypes in priceModes|sort|reverse %}
                     {% for priceType, productMoneyValueForView in priceTypes %}
 
                         {% set moneyValue = productMoneyValueForView.moneyValue %}

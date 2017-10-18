@@ -4,13 +4,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Price\Plugin;
+namespace Spryker\Client\PriceProduct\Dependency\Client;
 
-/**
- * @method \Spryker\Yves\Price\PriceFactory getFactory()
- * @method \Spryker\Yves\Price\PriceConfig getConfig()
- */
-interface PriceModePluginInterface
+interface PriceProductToPriceInterface
 {
     /**
      * @return string

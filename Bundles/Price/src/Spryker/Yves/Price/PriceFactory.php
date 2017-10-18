@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Price;
 
-use Spryker\Yves\Kernel\AbstractFactory;
-use Spryker\Yves\Price\PriceModeResolver\PriceModeResolver;
+use Spryker\Client\Price\PriceModeResolver\PriceModeResolver;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Yves\Price\PriceModeSwitcher\PriceModeSwitcher;
 
 /**
@@ -22,15 +22,10 @@ class PriceFactory extends AbstractFactory
      */
     public function createPriceModeSwitcher()
     {
-        return new PriceModeSwitcher($this->getQuoteClient(), $this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Yves\Price\PriceModeResolver\PriceModeResolverInterface
-     */
-    public function createPriceModeResolver()
-    {
-        return new PriceModeResolver($this->getQuoteClient(), $this->getConfig());
+        return new PriceModeSwitcher(
+            $this->getQuoteClient(),
+            $this->getConfig()
+        );
     }
 
     /**

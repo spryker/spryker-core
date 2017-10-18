@@ -12,6 +12,7 @@ use Exception;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
@@ -78,7 +79,10 @@ class Writer implements WriterInterface
     public function createPriceType($name)
     {
         $priceTypeEntity = $this->queryContainer->queryPriceType($name)->findOneOrCreate();
-        $priceTypeEntity->setName($name)->save();
+        $priceTypeEntity
+            ->setName($name)
+            ->setPriceModeConfiguration(SpyPriceTypeTableMap::COL_PRICE_MODE_CONFIGURATION_BOTH)
+            ->save();
 
         return $priceTypeEntity->getIdPriceType();
     }

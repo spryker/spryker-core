@@ -4,15 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\PriceProduct\Plugin;
+namespace Spryker\Client\Price\PriceModeResolver;
 
-/**
- * @method \Spryker\Yves\PriceProduct\PriceProductConfig getConfig()
- */
-interface PriceProductPluginInterface
+interface PriceModeResolverInterface
 {
     /**
      * @return string
      */
-    public function getPriceTypeDefaultName();
+    public function getCurrentPriceMode();
 }

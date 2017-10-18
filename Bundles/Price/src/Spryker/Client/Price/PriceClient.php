@@ -4,18 +4,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Price\Plugin;
+namespace Spryker\Client\Price;
 
-use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Yves\Price\PriceFactory getFactory()
- * @method \Spryker\Yves\Price\PriceConfig getConfig()
+ * @method \Spryker\Client\Price\PriceFactory getFactory()
+ * @method \Spryker\Client\Price\PriceConfig getConfig()
  */
-class PriceModePlugin extends AbstractPlugin implements PriceModePluginInterface
+class PriceClient extends AbstractClient implements PriceClientInterface
 {
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getCurrentPriceMode()
@@ -26,22 +30,30 @@ class PriceModePlugin extends AbstractPlugin implements PriceModePluginInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getGrossPriceModeIdentifier()
     {
         return $this->getConfig()
-            ->createSharedConfig()
+            ->createSharedPriceConfig()
             ->getGrossPriceModeIdentifier();
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getNetPriceModeIdentifier()
     {
         return $this->getConfig()
-            ->createSharedConfig()
+            ->createSharedPriceConfig()
             ->getNetPriceModeIdentifier();
     }
 }

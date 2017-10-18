@@ -4,13 +4,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\PriceProduct;
+namespace Spryker\Client\PriceProduct;
 
-use Spryker\Yves\Kernel\AbstractBundleConfig;
+use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig as SharedPriceProductConfig;
 
 class PriceProductConfig extends AbstractBundleConfig
 {
+
     /**
      * @return \Spryker\Shared\PriceProduct\PriceProductConfig
      */
