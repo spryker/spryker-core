@@ -1,5 +1,7 @@
 # Payolution Module
 
+Payolution is an integration module for implementing Payolution payment provider (https://www.payolution.com/en/). Integrated payment options are invoice and installment.
+
 ## Installation
 
 ```
@@ -8,4 +10,4 @@ composer require spryker/payolution
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](http://academy.spryker.com/developing_with_spryker/3rd-party_integration/integration_payment_payolution.html)

@@ -1,4 +1,6 @@
-# FlysystemLocalFileSystem
+# FlysystemLocalFileSystem Module
+
+FlysystemLocalFileSystem is a 3rd party connector module for the local file system functionality with the FileSystem module from the "league/flysystem" package.
 
 ## Installation
 
@@ -8,4 +10,4 @@ composer require spryker/flysystem-local-file-system
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/flysystem.html)
