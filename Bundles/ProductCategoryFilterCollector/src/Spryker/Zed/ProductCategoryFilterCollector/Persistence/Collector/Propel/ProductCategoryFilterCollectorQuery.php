@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterCollector\Persistence\Collector\Propel;
 
+use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Orm\Zed\ProductCategoryFilter\Persistence\Map\SpyProductCategoryFilterTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -21,10 +22,10 @@ class ProductCategoryFilterCollectorQuery extends AbstractPropelCollectorQuery
     {
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
-            SpyProductCategoryFilterTableMap::COL_ID_PRODUCT_CATEGORY_FILTER,
+            SpyProductCategoryFilterTableMap::COL_FK_CATEGORY,
             Criteria::INNER_JOIN
         );
 
-        $this->touchQuery->withColumn(SpyProductCategoryFilterTableMap::COL_FILTER_DATA);
+        $this->touchQuery->withColumn(SpyProductCategoryFilterTableMap::COL_FILTER_DATA, ProductCategoryFilterTransfer::FILTER_DATA);
     }
 }

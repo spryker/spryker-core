@@ -38,7 +38,7 @@ class UpdateProductCategoryFilterTest extends Unit
         $this->assertSame($newFilterData, $productCategoryFilterFromDb->getFilterData(), 'Product category filter should contain new data');
         $this->tester->assertTouchActive(
             ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER,
-            $productCategoryFilter->getIdProductCategoryFilter(),
+            $productCategoryFilter->getFkCategory(),
             'Product category filter should have been touched as active.'
         );
     }

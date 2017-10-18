@@ -43,7 +43,7 @@ class CreateProductCategoryFilterTest extends Unit
 
         $this->tester->assertTouchActive(
             ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER,
-            $productCategoryFilter->getIdProductCategoryFilter(),
+            $productCategoryFilter->getFkCategory(),
             'Product category filter should have been touched as active.'
         );
     }
