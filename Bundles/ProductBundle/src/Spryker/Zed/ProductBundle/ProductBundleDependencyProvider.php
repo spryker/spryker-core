@@ -45,7 +45,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductBundleToPriceBridge($container->getLocator()->price()->facade());
+            return new ProductBundleToPriceBridge($container->getLocator()->priceProduct()->facade());
         };
 
         $container[static::FACADE_LOCALE] = function (Container $container) {

@@ -22,10 +22,5 @@ interface ProductManagementConstants
      */
     const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
 
-
-    const PRICE_MODE_GROSS = 'GROSS_MODE';
-    const PRICE_MODE_NET = 'NET_MODE';
     const PRICE_MODE_BOTH = 'BOTH';
-
-
 }

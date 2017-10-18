@@ -137,6 +137,19 @@ class CurrencyReader implements CurrencyReaderInterface
     }
 
     /**
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getDefaultCurrencyForCurrentStore()
+    {
+        $defaultCurrencyIsoCode = $this->storeFacade->getCurrentStore()
+            ->getDefaultCurrencyIsoCode();
+
+        return $this->getByIsoCode($defaultCurrencyIsoCode);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException

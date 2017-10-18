@@ -18,8 +18,10 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface;
 
 class BundledProductTable extends AbstractTable
@@ -43,9 +45,9 @@ class BundledProductTable extends AbstractTable
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface
      */
-    protected $priceFacade;
+    protected $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
@@ -68,31 +70,39 @@ class BundledProductTable extends AbstractTable
     protected $localeTransfer;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     */
+    protected $priceFacade;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface $availabilityFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
      * @param int|null $idProductConcrete
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementToUtilEncodingInterface $utilEncodingService,
-        ProductManagementToPriceInterface $priceFacade,
+        ProductManagementToPriceProductInterface $priceProductFacade,
         ProductManagementToMoneyInterface $moneyFacade,
         ProductManagementToAvailabilityInterface $availabilityFacade,
         LocaleTransfer $localeTransfer,
+        ProductManagementToPriceInterface $priceFacade,
         $idProductConcrete = null
     ) {
         $this->setTableIdentifier('bundled-product-table');
         $this->productQueryContainer = $productQueryContainer;
         $this->utilEncodingService = $utilEncodingService;
-        $this->priceFacade = $priceFacade;
+        $this->priceProductFacade = $priceProductFacade;
         $this->moneyFacade = $moneyFacade;
         $this->availabilityFacade = $availabilityFacade;
         $this->idProductConcrete = $idProductConcrete;
         $this->localeTransfer = $localeTransfer;
+        $this->priceFacade = $priceFacade;
     }
 
     /**
@@ -109,12 +119,16 @@ class BundledProductTable extends AbstractTable
             )
         );
 
+        $defaultPriceMode = $this->priceFacade->getDefaultPriceMode();
+
+        $priceLabel = sprintf('Price (%s)', $defaultPriceMode);
+
         $config->setHeader([
             static::COL_SELECT => 'Select',
             static::COL_ID_PRODUCT_CONCRETE => 'id product',
             SpyProductLocalizedAttributesTableMap::COL_NAME => 'Product name',
             SpyProductTableMap::COL_SKU => 'SKU',
-            static::COL_PRICE => 'Price',
+            static::COL_PRICE => $priceLabel,
             SpyStockProductTableMap::COL_QUANTITY => 'Stock',
             static::COL_AVAILABILITY => 'Availability',
             SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => 'Is never out of stock',
@@ -174,7 +188,7 @@ class BundledProductTable extends AbstractTable
                 static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
                 SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
                 SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
-                static::COL_PRICE => $this->getFormatedPrice($item->getSku()),
+                static::COL_PRICE => $this->getFormattedPrice($item->getSku()),
                 SpyStockProductTableMap::COL_QUANTITY => $item->getStockQuantity(),
                 static::COL_AVAILABILITY => $this->getAvailability($item),
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
@@ -208,9 +222,9 @@ class BundledProductTable extends AbstractTable
      *
      * @return string
      */
-    protected function getFormatedPrice($sku)
+    protected function getFormattedPrice($sku)
     {
-        $priceInCents = $this->priceFacade->getPriceBySku($sku);
+        $priceInCents = $this->priceProductFacade->getPriceBySku($sku);
 
         $moneyTransfer = $this->moneyFacade->fromInteger($priceInCents);
 

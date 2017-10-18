@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,25 +8,18 @@ namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
 interface PriceCartToPriceInterface
 {
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier();
 
     /**
-     * @param string $sku
-     * @param string $priceType
-     * @param string $currencyIsoCode
-     * @param string $priceMode
-     *
-     * @return bool
+     * @return string
      */
-    public function hasValidPrice($sku, $priceType, $currencyIsoCode, $priceMode);
+    public function getGrossPriceModeIdentifier();
 
     /**
-     * @param string $sku
-     * @param string $priceType
-     * @param string $currencyIsoCode
-     * @param string $priceMode
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceType, $currencyIsoCode, $priceMode);
-
+    public function getDefaultPriceMode();
 }

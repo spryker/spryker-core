@@ -35,17 +35,17 @@ class ProductSetCollector extends AbstractSearchPropelCollector
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $productSetPageMapPlugin
-     * @param \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearchInterface $searchFacade
+     * @param \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearchInterface $searchProductFacade
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         PageMapInterface $productSetPageMapPlugin,
-        ProductSetCollectorToSearchInterface $searchFacade
+        ProductSetCollectorToSearchInterface $searchProductFacade
     ) {
         parent::__construct($utilDataReaderService);
 
         $this->productSetPageMapPlugin = $productSetPageMapPlugin;
-        $this->searchFacade = $searchFacade;
+        $this->searchFacade = $searchProductFacade;
     }
 
     /**

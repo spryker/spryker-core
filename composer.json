@@ -116,6 +116,7 @@
     "spryker/pimple": "*",
     "spryker/price": "*",
     "spryker/price-cart-connector": "*",
+    "spryker/price-product": "*",
     "spryker/product": "*",
     "spryker/product-attribute": "*",
     "spryker/product-attribute-gui": "*",

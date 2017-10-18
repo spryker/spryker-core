@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
 use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 
 /**
@@ -45,7 +45,7 @@ class PriceManagerTest extends Unit
         $item->setId(123);
         $itemCollection->addItem($item);
 
-        $priceCartToPriceBridge = new PriceCartToPriceBridge($priceFacadeStub);
+        $priceCartToPriceBridge = new PriceCartToPriceProductBridge($priceFacadeStub);
         $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice', PriceMode::PRICE_MODE_GROSS);
 
         $modifiedItemCollection = $priceManager->addGrossPriceToItems($itemCollection);
@@ -76,13 +76,13 @@ class PriceManagerTest extends Unit
         $item->setSku(123);
         $itemCollection->addItem($item);
 
-        $priceCartToPriceBridge = new PriceCartToPriceBridge($priceFacadeStub);
+        $priceCartToPriceBridge = new PriceCartToPriceProductBridge($priceFacadeStub);
         $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice', PriceMode::PRICE_MODE_GROSS);
         $priceManager->addGrossPriceToItems($itemCollection);
     }
 
     /**
-     * @return \SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub|\Spryker\Zed\Price\Business\PriceFacade
+     * @return \SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub|\Spryker\Zed\PriceProduct\Business\PriceProductFacade
      */
     private function createPriceFacadeStub()
     {

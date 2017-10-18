@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;

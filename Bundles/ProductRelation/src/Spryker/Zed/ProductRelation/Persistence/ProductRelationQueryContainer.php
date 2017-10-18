@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Persistence;
 
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -34,6 +33,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_SKU = 'sku';
     const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+    const COL_PRICE_PRODUCT = 'spy_price_product.price';
 
     /**
      * @api
@@ -154,7 +154,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 SpyProductAbstractTableMap::COL_SKU,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION,
-                SpyPriceProductTableMap::COL_PRICE,
+                static::COL_PRICE_PRODUCT,
                 SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL,
             ])
             ->withColumn(
@@ -186,7 +186,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
             ->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->addGroupByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
             ->addGroupByColumn(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->addGroupByColumn(SpyPriceProductTableMap::COL_PRICE);
+            ->addGroupByColumn(static::COL_PRICE_PRODUCT);
     }
 
     /**

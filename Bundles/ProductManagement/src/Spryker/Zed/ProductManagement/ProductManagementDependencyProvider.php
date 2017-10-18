@@ -16,6 +16,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyB
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
@@ -39,6 +40,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_PRICE = 'FACADE_PRICE';
+    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     const FACADE_STOCK = 'FACADE_STOCK';
     const FACADE_MONEY = 'FACADE_MONEY';
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
@@ -90,8 +92,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
         };
 
-        $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductManagementToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
 
         $container[static::FACADE_STOCK] = function (Container $container) {
@@ -116,6 +118,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return $container->getLocator()->productImage()->queryContainer();
+        };
+
+        $container[static::FACADE_PRICE] = function (Container $container) {
+            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
         return $container;
@@ -152,8 +158,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToTaxBridge($container->getLocator()->tax()->facade());
         };
 
-        $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductManagementToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
 
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
@@ -202,6 +208,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::FACADE_PRODUCT_ATTRIBUTE] = function (Container $container) {
             return new ProductManagementToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
+        };
+
+        $container[static::FACADE_PRICE] = function (Container $container) {
+            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
         $container = $this->addStore($container);

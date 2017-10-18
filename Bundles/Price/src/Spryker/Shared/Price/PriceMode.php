@@ -7,10 +7,11 @@
 
 namespace Spryker\Shared\Price;
 
+/**
+ * @deprecated use \Spryker\Shared\Price\PriceConfig instead
+ */
 interface PriceMode
 {
-
-    const PRICE_MODE_NET = 'NET_MODE';
-    const PRICE_MODE_GROSS = 'GROSS_MODE';
-
+    const PRICE_MODE_NET = PriceConfig::PRICE_MODE_NET;
+    const PRICE_MODE_GROSS = PriceConfig::PRICE_MODE_GROSS;
 }

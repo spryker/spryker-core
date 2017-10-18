@@ -102,4 +102,18 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
         return $this->getFactory()->createCurrencyReader()->getAllStoresWithCurrencies();
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getDefaultCurrencyForCurrentStore()
+    {
+        return $this->getFactory()
+            ->createCurrencyReader()
+            ->getDefaultCurrencyForCurrentStore();
+    }
+
 }

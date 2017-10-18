@@ -11,8 +11,21 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ */
 class ProductMoneyCollectionType extends MoneyCollectionType
 {
+    /**
+     * @var string
+     */
+    protected static $netPriceModeIdentifier;
+
+    /**
+     * @var string
+     */
+    protected static $grossPriceModeIdentifier;
+
     /**
      * {@inheritdoc}
      */
@@ -31,9 +44,13 @@ class ProductMoneyCollectionType extends MoneyCollectionType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $priceTable = [];
+
+        $grossPriceModeIdentifier = $this->getGrossPriceModeIdentifier();
+        $netPriceModeIdentifier = $this->getNetPriceModeIdentifier();
+
         $priceTypes = [
-            ProductManagementConstants::PRICE_MODE_NET => [],
-            ProductManagementConstants::PRICE_MODE_GROSS => []
+            $grossPriceModeIdentifier => [],
+            $netPriceModeIdentifier => []
         ];
 
         foreach ($view as $item) {
@@ -49,10 +66,11 @@ class ProductMoneyCollectionType extends MoneyCollectionType
             $currencySymbol = $moneyValue->vars['currency_symbol'];
 
             if ($priceModeConfiguration == ProductManagementConstants::PRICE_MODE_BOTH) {
-                $priceTypes[ProductManagementConstants::PRICE_MODE_NET][$priceType] = $priceTypeTransfer;
-                $priceTypes[ProductManagementConstants::PRICE_MODE_GROSS][$priceType] = $priceTypeTransfer;
-                $priceTable[$storeName][$currencySymbol][ProductManagementConstants::PRICE_MODE_NET][$priceType] = $item;
-                $priceTable[$storeName][$currencySymbol][ProductManagementConstants::PRICE_MODE_GROSS][$priceType] = $item;
+                $priceTypes[$netPriceModeIdentifier][$priceType] = $priceTypeTransfer;
+                $priceTypes[$grossPriceModeIdentifier][$priceType] = $priceTypeTransfer;
+
+                $priceTable[$storeName][$currencySymbol][$netPriceModeIdentifier][$priceType] = $item;
+                $priceTable[$storeName][$currencySymbol][$grossPriceModeIdentifier][$priceType] = $item;
 
             } else {
                 if (!isset($priceTypes[$priceModeConfiguration][$priceType])) {
@@ -65,5 +83,29 @@ class ProductMoneyCollectionType extends MoneyCollectionType
 
         $view->vars['priceTable'] = $priceTable;
         $view->vars['priceTypes'] = $priceTypes;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNetPriceModeIdentifier()
+    {
+        if (!static::$netPriceModeIdentifier) {
+            static::$netPriceModeIdentifier = $this->getFactory()->getPriceFacade()->getNetPriceModeIdentifier();
+        }
+
+        return static::$netPriceModeIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getGrossPriceModeIdentifier()
+    {
+        if (!static::$grossPriceModeIdentifier) {
+            static::$grossPriceModeIdentifier = $this->getFactory()->getPriceFacade()->getGrossPriceModeIdentifier();
+        }
+
+        return static::$grossPriceModeIdentifier;
     }
 }

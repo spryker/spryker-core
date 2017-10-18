@@ -9,13 +9,28 @@ namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PriceFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 
 class PriceManager implements PriceManagerInterface
 {
+    /**
+     * @var string
+     */
+    protected static $netPriceModeIdentifier;
+
+    /**
+     * @var string
+     */
+    protected static $defaultPriceType;
+
+    /**
+     * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
+     */
+    protected $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
@@ -23,28 +38,15 @@ class PriceManager implements PriceManagerInterface
     protected $priceFacade;
 
     /**
-     * @var string
-     */
-    protected $priceType;
-
-    /**
-     * @var string
-     */
-    protected $defaultPriceMode;
-
-    /**
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
-     * @param string|null $priceType
-     * @param string $priceMode
      */
     public function __construct(
-        PriceCartToPriceInterface $priceFacade,
-        $priceType,
-        $priceMode = PriceMode::PRICE_MODE_GROSS
+        PriceCartToPriceProductInterface $priceProductFacade,
+        PriceCartToPriceInterface $priceFacade
     ) {
+        $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
-        $this->priceType = $priceType;
-        $this->defaultPriceMode = $priceMode;
     }
 
     /**
@@ -56,22 +58,16 @@ class PriceManager implements PriceManagerInterface
      */
     public function addGrossPriceToItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $cartChangeTransfer->setQuote($this->setQuotePriceMode($cartChangeTransfer->getQuote()));
+        $cartChangeTransfer->setQuote(
+            $this->setQuotePriceMode($cartChangeTransfer->getQuote())
+        );
 
         $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();
         $currencyIsoCode = $cartChangeTransfer->getQuote()->getCurrency()->getCode();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->priceFacade->hasValidPrice($itemTransfer->getSku(), $this->priceType, $currencyIsoCode, $priceMode)) {
-                throw new PriceMissingException(
-                    sprintf(
-                        'Cart item %s can not be priced',
-                        $itemTransfer->getSku()
-                    )
-                );
-            }
-
-            $this->setPrice($itemTransfer, $priceMode, $currencyIsoCode);
+            $priceFilterTransfer = $this->createPriceFilter($itemTransfer, $priceMode, $currencyIsoCode);
+            $this->setPrice($itemTransfer, $priceFilterTransfer, $priceMode);
         }
 
         return $cartChangeTransfer;
@@ -84,9 +80,55 @@ class PriceManager implements PriceManagerInterface
      */
     protected function setQuotePriceMode(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->setPriceMode($this->defaultPriceMode);
+        if (!$quoteTransfer->getPriceMode()) {
+            $quoteTransfer->setPriceMode($this->priceFacade->getDefaultPriceMode());
+        }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param string $priceMode
+     *
+     * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
+     *
+     * @return void
+     */
+    protected function setPrice(ItemTransfer $itemTransfer, PriceFilterTransfer $priceFilterTransfer, $priceMode)
+    {
+        $price = $this->priceProductFacade->getPriceFor($priceFilterTransfer);
+
+        if ($price === null) {
+            throw new PriceMissingException(
+                sprintf(
+                    'Cart item "%s" can not be priced.',
+                    $itemTransfer->getSku()
+                )
+            );
+        }
+
+        if ($priceMode === $this->getNetPriceModeIdentifier()) {
+            $itemTransfer->setUnitNetPrice($price);
+            $itemTransfer->setUnitGrossPrice(0);
+            return;
+        }
+
+        $itemTransfer->setUnitGrossPrice($price);
+        $itemTransfer->setUnitNetPrice(0);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNetPriceModeIdentifier()
+    {
+        if (!static::$netPriceModeIdentifier) {
+            static::$netPriceModeIdentifier = $this->priceFacade->getNetPriceModeIdentifier();
+        }
+
+        return static::$netPriceModeIdentifier;
     }
 
     /**
@@ -94,32 +136,17 @@ class PriceManager implements PriceManagerInterface
      * @param string $priceMode
      * @param string $currencyIsoCode
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceFilterTransfer
      */
-    protected function setPrice(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
+    protected function createPriceFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
     {
-        if ($priceMode === PriceMode::PRICE_MODE_NET) {
-            $itemTransfer->setUnitNetPrice(
-                $this->priceFacade->getPriceBySku(
-                    $itemTransfer->getSku(),
-                    $this->priceType,
-                    $currencyIsoCode,
-                    $priceMode
-                )
-            );
-            $itemTransfer->setUnitGrossPrice(0);
-            return;
-        }
+        $priceFilterTransfer = new PriceFilterTransfer();
+        $priceFilterTransfer->setPriceMode($priceMode);
+        $priceFilterTransfer->setCurrencyIsoCode($currencyIsoCode);
+        $priceFilterTransfer->setSku($itemTransfer->getSku());
+        $priceFilterTransfer->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
-        $itemTransfer->setUnitGrossPrice(
-            $this->priceFacade->getPriceBySku(
-                $itemTransfer->getSku(),
-                $this->priceType,
-                $currencyIsoCode,
-                $priceMode
-            )
-        );
-        $itemTransfer->setUnitNetPrice(0);
+        return $priceFilterTransfer;
     }
 
 }

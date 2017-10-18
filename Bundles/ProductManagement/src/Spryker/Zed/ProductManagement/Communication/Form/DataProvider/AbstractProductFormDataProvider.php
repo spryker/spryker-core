@@ -25,7 +25,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -94,11 +94,6 @@ class AbstractProductFormDataProvider
     protected $productImageFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
-     */
-    protected $priceFacade;
-
-    /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
      */
     protected $attributeTransferCollection;
@@ -123,7 +118,6 @@ class AbstractProductFormDataProvider
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
@@ -138,7 +132,6 @@ class AbstractProductFormDataProvider
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         StockQueryContainerInterface $stockQueryContainer,
-        ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToProductImageInterface $productImageFacade,
         LocaleProvider $localeProvider,
@@ -154,7 +147,6 @@ class AbstractProductFormDataProvider
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productImageFacade = $productImageFacade;
         $this->localeProvider = $localeProvider;
-        $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;
         $this->currentLocale = $currentLocale;
         $this->attributeTransferCollection = new Collection($attributeCollection);

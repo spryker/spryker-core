@@ -26,7 +26,7 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
      */
     public function addGrossPriceToItems(CartChangeTransfer $change, $grossPriceType = null)
     {
-        return $this->getFactory()->createPriceManager($grossPriceType)->addGrossPriceToItems($change);
+        return $this->getFactory()->createPriceManager()->addGrossPriceToItems($change);
     }
 
 }

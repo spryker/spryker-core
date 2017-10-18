@@ -11,12 +11,12 @@ class ProductSetGuiToPriceBridge implements ProductSetGuiToPriceInterface
 {
 
     /**
-     * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
+     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
     protected $priceFacade;
 
     /**
-     * @param \Spryker\Zed\Price\Business\PriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceFacade
      */
     public function __construct($priceFacade)
     {

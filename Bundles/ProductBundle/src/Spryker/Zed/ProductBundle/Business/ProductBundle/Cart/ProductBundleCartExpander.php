@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PriceFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -309,7 +310,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
         $unitPrice = $this->getProductPrice(
             $bundledConcreteProductEntity->getSku(),
-            'DEFAULT',
             $currencyIsoCode,
             $priceMode
         );
@@ -330,21 +330,16 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param string $sku
-     * @param string $priceType
      * @param string $currencyIsoCode
      * @param string $priceMode
      *
      * @return int
      */
-    protected function getProductPrice($sku, $priceType, $currencyIsoCode, $priceMode)
+    protected function getProductPrice($sku, $currencyIsoCode, $priceMode)
     {
         if (!isset(static::$productPriceCache[$sku])) {
-            static::$productPriceCache[$sku] = $this->priceFacade->getPriceBySku(
-                $sku,
-                $priceType,
-                $currencyIsoCode,
-                $priceMode
-            );
+            $priceFilterTransfer = $this->createPriceFilterTransfer($sku, $currencyIsoCode, $priceMode);
+            static::$productPriceCache[$sku] = $this->priceFacade->getPriceFor($priceFilterTransfer);
         }
 
          return static::$productPriceCache[$sku];
@@ -426,11 +421,12 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $options = (array)$itemTransfer->getProductOptions();
         if (count($options) === 0) {
             $bundleItemTransfer->setGroupKey($bundleItemTransfer->getSku());
-        } else {
-            $options = $this->sortOptions($options);
-            $groupKey = $itemTransfer->getSku() . '_' . $this->combineOptionParts($options);
-            $bundleItemTransfer->setGroupKey($groupKey);
+            return;
         }
+
+        $options = $this->sortOptions($options);
+        $groupKey = $itemTransfer->getSku() . '_' . $this->combineOptionParts($options);
+        $bundleItemTransfer->setGroupKey($groupKey);
     }
 
     /**
@@ -444,9 +440,10 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if ($priceMode === PriceMode::PRICE_MODE_NET) {
             $itemTransfer->setUnitNetPrice($unitPrice);
-        } else {
-            $itemTransfer->setUnitGrossPrice($unitPrice);
+            return;
         }
+
+        $itemTransfer->setUnitGrossPrice($unitPrice);
     }
 
     /**
@@ -459,9 +456,11 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if ($priceMode === PriceMode::PRICE_MODE_NET) {
             $itemTransfer->requireUnitNetPrice();
-        } else {
-            $itemTransfer->requireUnitGrossPrice();
+            return;
         }
+
+        $itemTransfer->requireUnitGrossPrice();
+
     }
 
     /**
@@ -474,9 +473,24 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if ($priceMode === PriceMode::PRICE_MODE_NET) {
             return $itemTransfer->getUnitNetPrice();
-        } else {
-            return $itemTransfer->getUnitGrossPrice();
         }
+
+        return $itemTransfer->getUnitGrossPrice();
+    }
+
+    /**
+     * @param string$sku
+     * @param string $currencyIsoCode
+     * @param string $priceMode
+     *
+     * @return \Generated\Shared\Transfer\PriceFilterTransfer
+     */
+    protected function createPriceFilterTransfer($sku, $currencyIsoCode, $priceMode)
+    {
+        return (new PriceFilterTransfer())
+            ->setSku($sku)
+            ->setCurrencyIsoCode($currencyIsoCode)
+            ->setPriceMode($priceMode);
     }
 
 }

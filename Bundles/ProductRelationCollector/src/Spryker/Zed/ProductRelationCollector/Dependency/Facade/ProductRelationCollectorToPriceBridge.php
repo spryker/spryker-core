@@ -11,26 +11,27 @@ class ProductRelationCollectorToPriceBridge implements ProductRelationCollectorT
 {
 
     /**
-     * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
+     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
-    protected $priceFacade;
+    protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\Price\Business\PriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceFacade
      */
     public function __construct($priceFacade)
     {
-        $this->priceFacade = $priceFacade;
+        $this->priceProductFacade = $priceFacade;
     }
 
     /**
      * @param string $sku
+     * @param string|null $priceTypeName
      *
      * @return int
      */
-    public function getPriceBySku($sku)
+    public function getPriceBySku($sku, $priceTypeName = null)
     {
-        return $this->priceFacade->getPriceBySku($sku);
+        return $this->priceProductFacade->getPriceBySku($sku, $priceTypeName);
     }
 
     /**
@@ -40,7 +41,17 @@ class ProductRelationCollectorToPriceBridge implements ProductRelationCollectorT
      */
     public function findPricesBySku($sku)
     {
-        return $this->priceFacade->findPricesBySku($sku);
+        return $this->priceProductFacade->findPricesBySku($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return mixed
+     */
+    public function findPricesBySkuGrouped($sku)
+    {
+        return $this->priceProductFacade->findPricesBySkuGrouped($sku);
     }
 
 }

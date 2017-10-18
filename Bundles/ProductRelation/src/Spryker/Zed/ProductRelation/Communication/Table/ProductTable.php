@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductRelation\Communication\Table;
 
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -101,7 +100,7 @@ class ProductTable extends AbstractProductTable
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => '#',
             SpyProductAbstractTableMap::COL_SKU => 'Sku',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
-            SpyPriceProductTableMap::COL_PRICE => 'Price',
+            ProductRelationQueryContainer::COL_PRICE_PRODUCT => 'Price',
             ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES => 'Categories',
             static::COL_STATUS => 'Status',
         ];
@@ -136,7 +135,7 @@ class ProductTable extends AbstractProductTable
         $config->setSortable([
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductAbstractTableMap::COL_SKU,
-            SpyPriceProductTableMap::COL_PRICE,
+            ProductRelationQueryContainer::COL_PRICE_PRODUCT,
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
     }
@@ -150,7 +149,7 @@ class ProductTable extends AbstractProductTable
     {
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
-            SpyPriceProductTableMap::COL_PRICE,
+            ProductRelationQueryContainer::COL_PRICE_PRODUCT,
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
     }
@@ -225,7 +224,7 @@ class ProductTable extends AbstractProductTable
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             SpyProductAbstractTableMap::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $item[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
-            SpyPriceProductTableMap::COL_PRICE => $this->formatProductPrice((int)$item[SpyPriceProductTableMap::COL_PRICE]),
+            ProductRelationQueryContainer::COL_PRICE_PRODUCT => $this->formatProductPrice((int)$item[ProductRelationQueryContainer::COL_PRICE_PRODUCT]),
             ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES => $item[ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES],
             static::COL_STATUS => $this->getStatusLabel($item),
         ];

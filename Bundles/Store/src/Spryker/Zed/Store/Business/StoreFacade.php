@@ -56,4 +56,20 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
         return $this->getFactory()->createStoreReader()->getStoreById($idStore);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName($storeName)
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getStoreByName($storeName);
+    }
+
 }

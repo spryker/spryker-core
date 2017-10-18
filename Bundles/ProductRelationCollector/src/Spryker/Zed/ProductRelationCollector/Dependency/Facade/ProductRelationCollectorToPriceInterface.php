@@ -12,10 +12,11 @@ interface ProductRelationCollectorToPriceInterface
 
     /**
      * @param string $sku
+     * @param string|null $priceTypeName
      *
      * @return int
      */
-    public function getPriceBySku($sku);
+    public function getPriceBySku($sku, $priceTypeName = null);
 
     /**
      * @param string $sku
@@ -23,5 +24,12 @@ interface ProductRelationCollectorToPriceInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findPricesBySku($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @return array
+     */
+    public function findPricesBySkuGrouped($sku);
 
 }

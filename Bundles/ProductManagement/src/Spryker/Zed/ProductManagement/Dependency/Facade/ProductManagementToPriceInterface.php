@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,31 +8,18 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 interface ProductManagementToPriceInterface
 {
-
     /**
-     * @param string $sku
-     * @param string|null $priceTypeName
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceTypeName = null);
-
-    /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
-     */
-    public function getPriceTypeValues();
+    public function getNetPriceModeIdentifier();
 
     /**
      * @return string
      */
-    public function getDefaultPriceTypeName();
+    public function getGrossPriceModeIdentifier();
 
     /**
-     * @param int $idProductConcrete
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return string
      */
-    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
-
+    public function getDefaultPriceMode();
 }

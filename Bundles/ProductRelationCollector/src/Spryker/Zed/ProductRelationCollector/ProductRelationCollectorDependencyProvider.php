@@ -67,7 +67,7 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
     protected function providePriceFacade(Container $container)
     {
         $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductRelationCollectorToPriceBridge($container->getLocator()->price()->facade());
+            return new ProductRelationCollectorToPriceBridge($container->getLocator()->priceProduct()->facade());
         };
 
         return $container;

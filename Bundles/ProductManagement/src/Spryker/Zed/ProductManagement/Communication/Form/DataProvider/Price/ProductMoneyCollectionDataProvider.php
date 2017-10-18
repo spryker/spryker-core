@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 
 class ProductMoneyCollectionDataProvider
 {
@@ -24,21 +24,21 @@ class ProductMoneyCollectionDataProvider
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface
      */
     protected $priceFacade;
 
     /**
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface $currencyFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
      */
     public function __construct(
         ProductManagementToCurrencyInterface $currencyFacade,
-        ProductManagementToPriceInterface $priceFacade
+        ProductManagementToPriceProductInterface $priceProductFacade
     )
     {
         $this->currencyFacade = $currencyFacade;
-        $this->priceFacade = $priceFacade;
+        $this->priceFacade = $priceProductFacade;
     }
 
     /**

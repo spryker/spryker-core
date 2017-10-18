@@ -50,11 +50,11 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface
      */
     protected function getPriceFacade()
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**

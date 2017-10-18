@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\PriceCartConnector\Business\Fixture;
 
-use Spryker\Zed\Price\Business\PriceFacade;
+use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 
-class PriceFacadeStub extends PriceFacade
+class PriceFacadeStub extends PriceProductFacade
 {
 
     /**
@@ -26,9 +26,11 @@ class PriceFacadeStub extends PriceFacade
      * @param string $sku
      * @param string|null $priceType
      *
+     * @param string $currencyCode
+     * @param string $priceMode
      * @return mixed
      */
-    public function getPriceBySku($sku, $priceType = null)
+    public function getPriceBySku($sku, $priceType, $currencyCode, $priceMode)
     {
         return $this->prices[$sku];
     }
@@ -36,10 +38,12 @@ class PriceFacadeStub extends PriceFacade
     /**
      * @param string $sku
      * @param string|null $priceType
+     * @param string $currencyCode
+     * @param string $priceMode
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceType = null)
+    public function hasValidPrice($sku, $priceType, $currencyCode, $priceMode)
     {
         if (!isset($this->validities[$sku])) {
             return false;

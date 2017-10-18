@@ -11,12 +11,12 @@ class PriceDataFeedToPriceBridge implements PriceDataFeedToPriceInterface
 {
 
     /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
     protected $priceQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceQueryContainer
      */
     public function __construct($priceQueryContainer)
     {
@@ -24,7 +24,7 @@ class PriceDataFeedToPriceBridge implements PriceDataFeedToPriceInterface
     }
 
     /**
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryPriceProduct()
     {

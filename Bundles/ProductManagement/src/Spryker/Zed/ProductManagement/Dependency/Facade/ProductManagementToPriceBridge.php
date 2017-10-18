@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,7 +8,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 class ProductManagementToPriceBridge implements ProductManagementToPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
@@ -24,41 +22,27 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     }
 
     /**
-     * @param string $sku
-     * @param string|null $priceTypeName
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceTypeName = null)
+    public function getNetPriceModeIdentifier()
     {
-        return $this->priceFacade->getPriceBySku($sku, $priceTypeName);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
-     */
-    public function getPriceTypeValues()
-    {
-        return $this->priceFacade->getPriceTypeValues();
+        return $this->priceFacade->getNetPriceModeIdentifier();
     }
 
     /**
      * @return string
      */
-    public function getDefaultPriceTypeName()
+    public function getGrossPriceModeIdentifier()
     {
-        return $this->priceFacade->getDefaultPriceTypeName();
+        return $this->priceFacade->getGrossPriceModeIdentifier();
     }
 
     /**
-     * @param int $idProductConcrete
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return string
      */
-    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
+    public function getDefaultPriceMode()
     {
-        return $this->priceFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
+        return $this->priceFacade->getDefaultPriceMode();
     }
 
 }

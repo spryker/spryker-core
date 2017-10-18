@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,7 +8,6 @@ namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
 class PriceCartToPriceBridge implements PriceCartToPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
@@ -24,29 +22,26 @@ class PriceCartToPriceBridge implements PriceCartToPriceInterface
     }
 
     /**
-     * @param string $sku
-     * @param string $priceType
-     * @param string $currencyIsoCode
-     * @param string $priceMode
-     *
-     * @return bool
+     * @return string
      */
-    public function hasValidPrice($sku, $priceType, $currencyIsoCode, $priceMode)
+    public function getNetPriceModeIdentifier()
     {
-        return $this->priceFacade->hasValidPrice($sku, $priceType, $currencyIsoCode, $priceMode);
+        return $this->priceFacade->getNetPriceModeIdentifier();
     }
 
     /**
-     * @param string $sku
-     * @param string $priceType
-     * @param string $currencyIsoCode
-     * @param string $priceMode
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceType, $currencyIsoCode, $priceMode)
+    public function getGrossPriceModeIdentifier()
     {
-        return $this->priceFacade->getPriceBySku($sku, $priceType, $currencyIsoCode, $priceMode);
+        return $this->priceFacade->getGrossPriceModeIdentifier();
     }
 
+    /**
+     * @return string
+     */
+    public function getDefaultPriceMode()
+    {
+        return $this->priceFacade->getDefaultPriceMode();
+    }
 }

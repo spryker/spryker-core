@@ -19,18 +19,22 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param string|null $defaultPriceType
-     *
-     * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager
+     * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface
      */
-    public function createPriceManager($defaultPriceType = null)
+    public function createPriceManager()
     {
-        if ($defaultPriceType === null) {
-            $bundleConfig = $this->getConfig();
-            $defaultPriceType = $bundleConfig->getGrossPriceType();
-        }
+        return new PriceManager(
+            $this->getPriceProductFacade(),
+            $this->getPriceFacade()
+        );
+    }
 
-        return new PriceManager($this->getPriceFacade(), $defaultPriceType, $this->getConfig()->getPriceMode());
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
+     */
+    protected function getPriceProductFacade()
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**

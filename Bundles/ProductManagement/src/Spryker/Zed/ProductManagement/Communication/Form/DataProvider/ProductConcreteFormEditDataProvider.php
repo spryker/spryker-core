@@ -22,7 +22,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -43,7 +43,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
@@ -59,7 +58,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         StockQueryContainerInterface $stockQueryContainer,
-        ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToProductImageInterface $productImageFacade,
         LocaleProvider $localeProvider,
@@ -75,7 +73,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $productManagementQueryContainer,
             $productQueryContainer,
             $stockQueryContainer,
-            $priceFacade,
             $productFacade,
             $productImageFacade,
             $localeProvider,
