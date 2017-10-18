@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterCollector\Business\Collector\Storage;
 
+use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 
@@ -28,6 +29,9 @@ class ProductCategoryFilterCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
-        return $collectItemData;
+        $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
+        $productCategoryFilterTransfer->fromArray($collectItemData, true);
+
+        return $productCategoryFilterTransfer->modifiedToArray();
     }
 }

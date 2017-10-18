@@ -35,7 +35,7 @@ class ProductCategoryFilterTouch implements ProductCategoryFilterTouchInterface
      */
     public function touchProductCategoryFilterActive(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
-        return $this->touchFacade->touchActive(ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER, $productCategoryFilterTransfer->getIdProductCategoryFilter());
+        return $this->touchFacade->touchActive(ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER, $productCategoryFilterTransfer->getFkCategory());
     }
 
     /**
@@ -45,6 +45,6 @@ class ProductCategoryFilterTouch implements ProductCategoryFilterTouchInterface
      */
     public function touchProductCategoryFilterDeleted(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
-        return $this->touchFacade->touchDeleted(ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER, $productCategoryFilterTransfer->getIdProductCategoryFilter());
+        return $this->touchFacade->touchDeleted(ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER, $productCategoryFilterTransfer->getFkCategory());
     }
 }

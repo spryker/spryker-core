@@ -9,6 +9,10 @@
             <reference local="fk_category" foreign="id_category"/>
         </foreign-key>
 
+        <unique name="spy_product_category_filter-unique-fk_category">
+            <unique-column name="fk_category"/>
+        </unique>
+
         <index>
             <index-column name="fk_category"/>
         </index>
