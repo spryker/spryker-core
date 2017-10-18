@@ -1,4 +1,4 @@
-# AvailabilityCheckoutConnector Module
+# SalesSplit Module
 
 SalesSplit provides the functionality that allows to split order items by quantity, to be processed independently.
 
