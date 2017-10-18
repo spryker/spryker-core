@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductCategoryFilterCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductCategoryFilter\Persistence\Collector\Propel\ProductCategoryFilterCollectorQuery;
-use Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterCollectorDependencyProvider;
 use Spryker\Zed\ProductCategoryFilterCollector\Business\Collector\Storage\ProductCategoryFilterCollector;
+use Spryker\Zed\ProductCategoryFilterCollector\Persistence\Collector\Propel\ProductCategoryFilterCollectorQuery;
+use Spryker\Zed\ProductCategoryFilterCollector\ProductCategoryFilterCollectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilterCollector\ProductCategoryFilterCollectorConfig getConfig()
@@ -55,7 +55,7 @@ class ProductCategoryFilterCollectorBusinessFactory extends AbstractBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductCategoryFilter\Persistence\Collector\Propel\ProductCategoryFilterCollectorQuery
+     * @return \Spryker\Zed\ProductCategoryFilterCollector\Persistence\Collector\Propel\ProductCategoryFilterCollectorQuery
      */
     protected function createProductCategoryFilterCollectorQuery()
     {

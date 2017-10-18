@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryFilter\Persistence\Collector\Propel;
+namespace Spryker\Zed\ProductCategoryFilterCollector\Persistence\Collector\Propel;
 
 use Orm\Zed\ProductCategoryFilter\Persistence\Map\SpyProductCategoryFilterTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
