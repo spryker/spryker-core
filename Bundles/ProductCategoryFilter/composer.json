@@ -10,7 +10,9 @@
      "spryker/kernel": "^3.0.0",
      "spryker/category": "^4.0.0",
      "spryker/propel-orm": "^1.0.0",
-     "spryker/touch": "^3.0.0"
+     "spryker/touch": "^3.0.0",
+     "spryker/key-builder": "^1.0.0",
+     "spryker/storage": "^3.0.0"
   },
   "autoload": {
     "psr-4": {
