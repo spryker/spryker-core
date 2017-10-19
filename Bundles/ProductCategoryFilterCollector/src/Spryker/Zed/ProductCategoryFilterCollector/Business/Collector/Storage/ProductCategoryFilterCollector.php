@@ -29,9 +29,6 @@ class ProductCategoryFilterCollector extends AbstractStoragePropelCollector
      */
     protected function collectItem($touchKey, array $collectItemData)
     {
-        $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
-        $productCategoryFilterTransfer->fromArray($collectItemData, true);
-
-        return $productCategoryFilterTransfer->modifiedToArray();
+        return $collectItemData[ProductCategoryFilterTransfer::FILTER_DATA];
     }
 }
