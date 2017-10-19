@@ -82,7 +82,8 @@ interface EventInterface
     public function getTransitions();
 
     /**
-     * Examples: "1 hour", "1 week" etc
+     * Specification:
+     * - Any valid for \DateInterval::createFromDateString() input ("1 hour", "1 week" etc)
      *
      * @param string $timeout
      *
