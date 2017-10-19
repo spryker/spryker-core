@@ -21,10 +21,10 @@ use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -478,6 +478,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * Specification:
+     * - Performs commands on items
+     * - All passing items should have the same event available
+     * - For CommandByOrderInterface the command will be taken from the first order item
+     *
      * @param string $eventId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
@@ -513,17 +518,21 @@ class OrderStateMachine implements OrderStateMachineInterface
             $log->addCommand($orderItemEntity, $command);
 
             try {
-                if ($type === self::BY_ITEM) {
-                    $returnData = $command->run($orderItemEntity, $data);
-                    $this->returnData = array_merge($this->returnData, $returnData);
-                    $processedOrderItems[] = $orderItemEntity;
-                } else {
+                if ($command instanceof CommandByOrderInterface) {
                     $returnData = $command->run($orderItems, $orderEntity, $data);
                     if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
                     }
 
                     return $orderItems;
+                }
+
+                if ($command instanceof CommandByItemInterface) {
+                    $returnData = $command->run($orderItemEntity, $data);
+                    $this->returnData = array_merge($this->returnData, $returnData);
+                    $processedOrderItems[] = $orderItemEntity;
+                } else {
+                    throw new LogicException('Unknown type of command: ' . get_class($command));
                 }
             } catch (Exception $e) {
                 $log->setIsError(true);
@@ -692,7 +701,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array $data
+     * @param array|\Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */

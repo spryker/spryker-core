@@ -63,19 +63,6 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest) instead.
-     *
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
-     * @param string $sku
-     * @param bool $returnTest
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true);
-
-    /**
-     * @api
-     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -158,18 +145,6 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
-
-    /**
-     * @api
-     *
-     * @deprecated Not used, will be removed in the next major release.
-     *
-     * @param string $identifier
-     * @param \DateTime $expirationDate
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
-     */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate);
 
     /**
      * @api

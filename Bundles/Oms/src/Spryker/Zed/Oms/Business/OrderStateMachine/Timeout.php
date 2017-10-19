@@ -178,7 +178,7 @@ class Timeout implements TimeoutInterface
     }
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection|mixed[]|mixed
      */
     protected function findItemsWithExpiredTimeouts()
     {

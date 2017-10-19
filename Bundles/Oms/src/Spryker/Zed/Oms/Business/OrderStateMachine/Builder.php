@@ -14,7 +14,6 @@ use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
-use Spryker\Zed\Oms\OmsConfig;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Builder implements BuilderInterface
@@ -50,7 +49,7 @@ class Builder implements BuilderInterface
     protected $process;
 
     /**
-     * @var array
+     * @var string|array
      */
     protected $processDefinitionLocation;
 
@@ -399,25 +398,7 @@ class Builder implements BuilderInterface
      */
     private function setProcessDefinitionLocation($processDefinitionLocation)
     {
-        $processDefinitionLocation = $this->setDefaultIfNull($processDefinitionLocation);
-
         $this->processDefinitionLocation = $processDefinitionLocation;
-    }
-
-    /**
-     * @deprecated This method can be removed when `$processDefinitionLocation` is mandatory
-     *
-     * @param string|array|null $processDefinitionLocation
-     *
-     * @return string|array
-     */
-    private function setDefaultIfNull($processDefinitionLocation)
-    {
-        if ($processDefinitionLocation !== null) {
-            return $processDefinitionLocation;
-        }
-
-        return $processDefinitionLocation = OmsConfig::DEFAULT_PROCESS_LOCATION;
     }
 
     /**

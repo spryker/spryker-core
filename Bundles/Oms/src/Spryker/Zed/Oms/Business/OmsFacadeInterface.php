@@ -134,7 +134,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Process[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getProcesses();
 
@@ -189,7 +189,7 @@ interface OmsFacadeInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null);
 
@@ -256,7 +256,7 @@ interface OmsFacadeInterface
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku);
 
@@ -387,7 +387,7 @@ interface OmsFacadeInterface
      * @api
      *
      * @param string $eventId
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param array $logContext
      * @param array $data
      *
@@ -416,7 +416,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 

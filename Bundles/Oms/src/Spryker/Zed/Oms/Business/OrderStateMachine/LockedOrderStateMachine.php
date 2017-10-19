@@ -172,21 +172,6 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @deprecated Use collectIdentifiersForOrderItemsLock() && buildIdentifierForOrderItemIdsLock() instead
-     * Will be removed with the next major.
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     *
-     * @return string
-     */
-    protected function buildIdentifierForOrderItemsLock(array $orderItems)
-    {
-        $orderItemIds = $this->collectIdentifiersForOrderItemsLock($orderItems);
-
-        return $this->buildIdentifierForOrderItemIdsLock($orderItemIds);
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
      * @return array
@@ -227,6 +212,8 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
             return null;
         }
 
-        return json_encode($orderItemIds);
+        return json_encode([
+            'id_sales_order_items' => $orderItemIds,
+        ]);
     }
 }

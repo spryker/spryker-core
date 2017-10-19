@@ -10,7 +10,7 @@ namespace Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 /**
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
