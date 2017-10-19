@@ -2,7 +2,7 @@ namespace: ProductManagement
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/ProductManagement
+    - tests/SprykerTest/Zed/ProductManagement
 
 paths:
     tests: tests

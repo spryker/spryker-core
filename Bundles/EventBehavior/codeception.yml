@@ -2,7 +2,7 @@ namespace: EventBehavior
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/EventBehavior
+    - tests/SprykerTest/Zed/EventBehavior
 
 paths:
     tests: tests

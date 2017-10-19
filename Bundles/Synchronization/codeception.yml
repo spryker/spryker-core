@@ -2,7 +2,7 @@ namespace: Synchronization
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/Synchronization
+    - tests/SprykerTest/Zed/Synchronization
 
 paths:
     tests: tests
