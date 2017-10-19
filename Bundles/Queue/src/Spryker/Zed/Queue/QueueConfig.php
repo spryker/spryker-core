@@ -13,8 +13,22 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class QueueConfig extends AbstractBundleConfig
 {
     const DEFAULT_QUEUE_OUTPUT_FILE_NAME = 'queue.log';
-    const DEFAULT_INTERVAL_SECONDS = 1000;
+    const DEFAULT_INTERVAL_MILLISECONDS = 1000;
     const DEFAULT_THRESHOLD = 59;
+
+    /**
+     * @return null
+     */
+    public function getWorkerMessageCheckOption()
+    {
+        $messageCheckOption = $this->getMessageCheckOptions();
+
+        if (array_key_exists(QueueConstants::QUEUE_WORKER_MESSAGE_CHECK_OPTION, $this->getMessageCheckOptions())) {
+            return $messageCheckOption[QueueConstants::QUEUE_WORKER_MESSAGE_CHECK_OPTION];
+        }
+
+        return null;
+    }
 
     /**
      * @param string $queueName
@@ -27,6 +41,10 @@ class QueueConfig extends AbstractBundleConfig
 
         if (array_key_exists($queueName, $queueReceiverOptions)) {
             return $queueReceiverOptions[$queueName];
+        }
+
+        if (array_key_exists(QueueConstants::QUEUE_DEFAULT_RECEIVER, $queueReceiverOptions)) {
+            return $queueReceiverOptions[QueueConstants::QUEUE_DEFAULT_RECEIVER];
         }
 
         return null;
@@ -46,6 +64,16 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * Queue check options can be defined
+     *
+     * @return array
+     */
+    protected function getMessageCheckOptions()
+    {
+        return [];
+    }
+
+    /**
      * @return string
      */
     public function getQueueServerId()
@@ -60,7 +88,7 @@ class QueueConfig extends AbstractBundleConfig
      */
     public function getQueueWorkerInterval()
     {
-        return $this->get(QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS, self::DEFAULT_INTERVAL_SECONDS);
+        return $this->get(QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS, self::DEFAULT_INTERVAL_MILLISECONDS);
     }
 
     /**
@@ -69,6 +97,14 @@ class QueueConfig extends AbstractBundleConfig
     public function getQueueWorkerOutputFileName()
     {
         return $this->get(QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME, self::DEFAULT_QUEUE_OUTPUT_FILE_NAME);
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueueWorkerLogStatus()
+    {
+        return $this->get(QueueConstants::QUEUE_WORKER_LOG_ACTIVE, false);
     }
 
     /**

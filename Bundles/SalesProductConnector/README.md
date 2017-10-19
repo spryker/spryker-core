@@ -1,7 +1,8 @@
 # SalesProductConnector Module
 [![Build Status](https://travis-ci.org/spryker/SalesProductConnector.svg)](https://travis-ci.org/spryker/SalesProductConnector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/SalesProductConnector/badge.svg)](https://coveralls.io/github/spryker/SalesProductConnector)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/SalesProductConnector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/SalesProductConnector/?branch=master)
+
+SalesProductConnector provides plugins to populate order items with additional product related data.
 
 ## Installation
 
@@ -11,4 +12,4 @@ composer require spryker/sales-product-connector
 
 ## Documentation
 
-[Spryker Documentation](https://spryker.github.io)
+[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/sales/sales.html)

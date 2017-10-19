@@ -33,4 +33,18 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
             ->createHtml()
             ->escape($text, $double, $charset);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public function arrayFilterRecursive(array $array)
+    {
+        return $this->getFactory()->createArrayFilter()->arrayFilterRecursive($array);
+    }
 }

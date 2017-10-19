@@ -209,4 +209,14 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->select([static::CONCRETE_SKU])
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAllAvailabilityAbstracts()
+    {
+        return $this->getFactory()->createSpyAvailabilityAbstractQuery();
+    }
 }

@@ -29,6 +29,17 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
+     */
+    public function queryAllProductSetData()
+    {
+        return $this->getFactory()
+            ->createProductSetDataQuery();
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductAbstractSetQuery
      */
     public function queryProductAbstractSet()

@@ -256,6 +256,13 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryAllCmsVersions();
+
+    /**
+     * @api
+     *
      * @param int $idPage
      * @param int $version
      *

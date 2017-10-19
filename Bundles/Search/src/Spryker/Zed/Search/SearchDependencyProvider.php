@@ -15,6 +15,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_SEARCH = 'search client';
     const SERVICE_UTIL_ENCODING = 'util encoding service';
+    const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +26,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     {
         $this->addSearchClient($container);
         $this->addUtilEncodingFacade($container);
+        $this->addPluginSearchPageMaps($container);
 
         return $container;
     }
@@ -51,5 +53,25 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new SearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addPluginSearchPageMaps(Container $container)
+    {
+        $container[self::PLUGIN_SEARCH_PAGE_MAPS] = function (Container $container) {
+            return $this->getSearchPageMapPlugins();
+        };
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
+     */
+    protected function getSearchPageMapPlugins()
+    {
+        return [];
     }
 }
