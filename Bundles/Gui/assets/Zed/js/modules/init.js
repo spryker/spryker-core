@@ -76,22 +76,25 @@ $(document).ready(function() {
     new Ibox();
 
     /* Prevent .save-submit items to be pressed twice */
-    $('.safe-submit').one('click', function () {
+    $('.safe-submit').on('click', function () {
         var $item = $(this);
         var $forms = $item.parents('form');
         var isValid = true;
+
+        function disableTrigger() {
+            $item
+                .prop('disabled', true)
+                .addClass('disabled')
+                .off('click');
+        }
 
         if ($forms.length > 0) { 
             isValid = !!$forms[0].checkValidity ? $forms[0].checkValidity() : isValid;
         }
 
-        setTimeout(function () {
-            if (isValid) { 
-                $item
-                    .prop('disabled', true)
-                    .addClass('disabled');
-            }
-        });
+        if (isValid) {
+            setTimeout(disableTrigger);
+        }
         
         return true;
     });
