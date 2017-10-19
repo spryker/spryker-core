@@ -9,14 +9,19 @@ namespace Spryker\Zed\Event\Dependency\Plugin;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-interface EventListenerInterface
+interface EventHandlerInterface extends EventBaseHandlerInterface
 {
     /**
+     * Specification
+     *  - Listeners needs to implement this interface to execute the codes for each
+     *  event.
+     *
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param string $eventName
      *
      * @return void
      */
-    public function handle(TransferInterface $eventTransfer);
+    public function handle(TransferInterface $eventTransfer, $eventName);
 }

@@ -54,18 +54,31 @@ class Builder implements BuilderInterface
     protected $processDefinitionLocation;
 
     /**
+     * @var string
+     */
+    protected $subProcessPrefixDelimiter;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|array $processDefinitionLocation
+     * @param string $subProcessPrefixDelimiter
      */
-    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, ProcessInterface $process, $processDefinitionLocation)
-    {
+    public function __construct(
+        EventInterface $event,
+        StateInterface $state,
+        TransitionInterface $transition,
+        ProcessInterface $process,
+        $processDefinitionLocation,
+        $subProcessPrefixDelimiter = ' - '
+    ) {
         $this->event = $event;
         $this->state = $state;
         $this->transition = $transition;
         $this->process = $process;
+        $this->subProcessPrefixDelimiter = $subProcessPrefixDelimiter;
 
         $this->setProcessDefinitionLocation($processDefinitionLocation);
     }
@@ -108,9 +121,17 @@ class Builder implements BuilderInterface
     {
         foreach ($this->rootElement->children() as $xmlProcess) {
             $processFile = $this->getAttributeString($xmlProcess, 'file');
+            $processName = $this->getAttributeString($xmlProcess, 'name');
+            $processPrefix = $this->getAttributeString($xmlProcess, 'prefix');
+
             if (isset($processFile)) {
                 $xmlSubProcess = $this->loadXmlFromFileName(str_replace(' ', '_', $processFile));
-                $this->recursiveMerge($xmlSubProcess, $this->rootElement);
+
+                if ($processName) {
+                    $xmlSubProcess->children()->process[0]['name'] = $processName;
+                }
+
+                $this->recursiveMerge($xmlSubProcess, $this->rootElement, $processPrefix);
             }
         }
     }
@@ -118,10 +139,11 @@ class Builder implements BuilderInterface
     /**
      * @param \SimpleXMLElement $fromXmlElement
      * @param \SimpleXMLElement $intoXmlNode
+     * @param string|null $prefix
      *
      * @return void
      */
-    protected function recursiveMerge($fromXmlElement, $intoXmlNode)
+    protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
         $xmlElements = $fromXmlElement->children();
         if (!isset($xmlElements)) {
@@ -130,14 +152,59 @@ class Builder implements BuilderInterface
 
         /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
+            $xmlElement = $this->prefixSubProcessElementValue($xmlElement, $prefix);
+            $xmlElement = $this->prefixSubProcessElementAttributes($xmlElement, $prefix);
+
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
             foreach ($attributes as $k => $v) {
                 $child->addAttribute($k, $v);
             }
 
-            $this->recursiveMerge($xmlElement, $child);
+            $this->recursiveMerge($xmlElement, $child, $prefix);
         }
+    }
+
+    /**
+     * @param \SimpleXMLElement $xmlElement
+     * @param string|null $prefix
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function prefixSubProcessElementValue(SimpleXMLElement $xmlElement, $prefix = null)
+    {
+        if ($prefix === null) {
+            return $xmlElement;
+        }
+
+        $namespaceDependentElementNames = ['source', 'target', 'event'];
+
+        if (in_array($xmlElement->getName(), $namespaceDependentElementNames)) {
+            $xmlElement[0] = $prefix . $this->subProcessPrefixDelimiter . $xmlElement[0];
+        }
+
+        return $xmlElement;
+    }
+
+    /**
+     * @param \SimpleXMLElement $xmlElement
+     * @param string|null $prefix
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function prefixSubProcessElementAttributes(SimpleXMLElement $xmlElement, $prefix = null)
+    {
+        if ($prefix === null) {
+            return $xmlElement;
+        }
+
+        $namespaceDependentElementNames = ['state', 'event'];
+
+        if (in_array($xmlElement->getName(), $namespaceDependentElementNames)) {
+            $xmlElement->attributes()['name'] = $prefix . $this->subProcessPrefixDelimiter . $xmlElement->attributes()['name'];
+        }
+
+        return $xmlElement;
     }
 
     /**

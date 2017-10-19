@@ -62,6 +62,14 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getEntityFileNamePattern()
+    {
+        return '/(.*?).(schema).xml/';
+    }
+
+    /**
      * @deprecated please use TransferConfig::getCoreSourceDirectoryGlobPatterns() instead
      *
      * @return string
@@ -103,6 +111,14 @@ class TransferConfig extends AbstractBundleConfig
      * @return string[]
      */
     protected function getAdditionalSourceDirectoryGlobPatterns()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getEntitiesSourceDirectories()
     {
         return [];
     }

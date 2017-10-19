@@ -85,7 +85,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createProcessState(),
             $this->createProcessTransition(),
             $this->createProcessProcess(),
-            $this->getConfig()->getProcessDefinitionLocation()
+            $this->getConfig()->getProcessDefinitionLocation(),
+            $this->getConfig()->getSubProcessPrefixDelimiter()
         );
     }
 

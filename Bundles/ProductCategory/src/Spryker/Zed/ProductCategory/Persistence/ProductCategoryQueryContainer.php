@@ -24,9 +24,11 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     const COL_CATEGORY_NAME = 'category_name';
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    protected function queryProductCategoryMappings()
+    public function queryProductCategoryMappings()
     {
         return $this->getFactory()->createProductCategoryQuery();
     }

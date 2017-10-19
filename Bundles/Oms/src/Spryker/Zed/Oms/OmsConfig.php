@@ -62,6 +62,14 @@ class OmsConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getSubProcessPrefixDelimiter()
+    {
+        return ' - ';
+    }
+
+    /**
+     * @return string
+     */
     public function getInitialStatus()
     {
         return 'new';
