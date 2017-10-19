@@ -26,7 +26,11 @@ class IndexController extends AbstractController
             (new ProductCategoryFilterTransfer())->fromArray(
                 [
                     ProductCategoryFilterTransfer::FK_CATEGORY => $categoryId,
-                    ProductCategoryFilterTransfer::FILTER_DATA => '{attr:value}',
+                    ProductCategoryFilterTransfer::FILTER_DATA => json_encode([
+                        'weight' => true,
+                        'price' => false,
+                        'category' => true,
+                    ]),
                 ],
                 true
             )
