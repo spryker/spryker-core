@@ -2,7 +2,7 @@ namespace: DiscountPromotion
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/DiscountPromotion
+    - tests/SprykerTest/Zed/DiscountPromotion
 
 paths:
     tests: tests

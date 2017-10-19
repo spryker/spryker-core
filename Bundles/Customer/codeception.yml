@@ -2,7 +2,7 @@ namespace: Customer
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/Customer
+    - tests/SprykerTest/Zed/Customer
 
 paths:
     tests: tests

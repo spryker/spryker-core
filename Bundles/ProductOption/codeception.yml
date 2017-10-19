@@ -2,7 +2,7 @@ namespace: ProductOption
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/ProductOption
+    - tests/SprykerTest/Zed/ProductOption
 
 paths:
     tests: tests
