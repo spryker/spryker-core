@@ -19,4 +19,12 @@ class QueueConfig extends AbstractBundleConfig
     {
         return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION, []);
     }
+
+    /**
+     * @return array
+     */
+    public function getDefaultQueueAdapterConfiguration()
+    {
+        return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT, []);
+    }
 }

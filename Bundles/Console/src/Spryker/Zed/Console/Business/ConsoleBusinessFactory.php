@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Console\Business;
 
+use Spryker\Zed\Console\Business\Model\ConsoleRunnerHook;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -15,6 +16,17 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ConsoleBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\Console\Business\Model\ConsoleRunnerHookInterface
+     */
+    public function createConsoleRunnerHook()
+    {
+        return new ConsoleRunnerHook(
+            $this->getPreRunHookPlugins(),
+            $this->getPostRunHookPlugins()
+        );
+    }
+
     /**
      * @return \Symfony\Component\Console\Command\Command[]
      */
@@ -37,5 +49,21 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     public function getServiceProviders()
     {
         return $this->getProvidedDependency(ConsoleDependencyProvider::SERVICE_PROVIDERS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     */
+    public function getPreRunHookPlugins()
+    {
+        return $this->getProvidedDependency(ConsoleDependencyProvider::PLUGINS_CONSOLE_PRE_RUN_HOOK);
+    }
+
+    /**
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     */
+    public function getPostRunHookPlugins()
+    {
+        return $this->getProvidedDependency(ConsoleDependencyProvider::PLUGINS_CONSOLE_POST_RUN_HOOK);
     }
 }

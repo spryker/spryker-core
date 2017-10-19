@@ -91,11 +91,13 @@ interface SearchFacadeInterface
     public function searchKeys($searchString, $limit = null, $offset = null);
 
     /**
+     * @api
+     *
+     * @deprecated use SearchFacade::transformPageMapToDocumentByMapperName() instead
+     *
      * Specification:
      * - Transforms a raw data array into an Elasticsearch "page" mapping type document
      * - The transformation is based on the given page map what configures which data goes into which field
-     *
-     * @api
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
@@ -104,6 +106,23 @@ interface SearchFacadeInterface
      * @return array
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
+     * - Transforms a raw data array into an Elasticsearch "page" mapping type document
+     * - The transformation is based on the given page map plugin name what configures which data goes into which field
+     *
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $mapperName
+     *
+     * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
+     *
+     * @return array
+     */
+    public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
 
     /**
      * Specification:

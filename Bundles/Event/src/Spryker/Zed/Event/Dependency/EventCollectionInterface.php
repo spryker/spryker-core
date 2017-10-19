@@ -9,27 +9,27 @@ namespace Spryker\Zed\Event\Dependency;
 
 use ArrayAccess;
 use IteratorAggregate;
-use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
 
 interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
 {
     /**
      * @param string $eventName
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface $eventListener
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param int $priority
      *
      * @return $this
      */
-    public function addListener($eventName, EventListenerInterface $eventListener, $priority = 0);
+    public function addListener($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0);
 
     /**
      * @param string $eventName
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface $eventListener
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param int $priority
      *
      * @return $this
      */
-    public function addListenerQueued($eventName, EventListenerInterface $eventListener, $priority = 0);
+    public function addListenerQueued($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0);
 
     /**
      * @param string $eventName
@@ -43,7 +43,7 @@ interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      *
-     * @return \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface[]|\SplPriorityQueue
+     * @return \Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface[]|\SplPriorityQueue
      */
     public function get($eventName);
 }

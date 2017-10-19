@@ -31,6 +31,13 @@ interface PriceQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryAllPriceProducts();
+
+    /**
+     * @api
+     *
      * @param string $sku
      * @param \Orm\Zed\Price\Persistence\SpyPriceType $priceType
      *

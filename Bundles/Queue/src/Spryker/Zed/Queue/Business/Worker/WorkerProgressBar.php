@@ -54,12 +54,14 @@ class WorkerProgressBar implements WorkerProgressBarInterface
     }
 
     /**
+     * @param int $step
+     *
      * @return void
      */
-    public function advance()
+    public function advance($step = 1)
     {
         if ($this->progressBar) {
-            $this->progressBar->advance();
+            $this->progressBar->advance($step);
         }
     }
 
@@ -108,14 +110,21 @@ class WorkerProgressBar implements WorkerProgressBarInterface
             return;
         }
 
+        if ($newProcessNumber > 0) {
+            $newProcessNumber = sprintf('<fg=green;options=bold>%d</>', $newProcessNumber);
+        }
+
+        if ($busyProcessNumber > 0) {
+            $busyProcessNumber = sprintf('<fg=red;options=bold>%s</>', $busyProcessNumber);
+        }
+
         $this->output->writeln(
             sprintf(
-                '[%d] %s queue process(es): New: %d Busy: %d Last Update: %s',
+                '%02d) New: %s Busy: %s [%s]',
                 $rowId,
-                $queueName,
                 $newProcessNumber,
                 $busyProcessNumber,
-                date('H:i:s')
+                $queueName
             )
         );
     }

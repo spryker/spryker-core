@@ -43,6 +43,7 @@ class GeneratorConsole extends Console
         $messenger = $this->getMessenger();
 
         $facade->deleteGeneratedTransferObjects();
+        $facade->generateEntityTransferObjects($messenger);
         $facade->generateTransferObjects($messenger);
     }
 }

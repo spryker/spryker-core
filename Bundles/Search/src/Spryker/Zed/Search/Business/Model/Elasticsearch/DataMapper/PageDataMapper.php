@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CategoryMapTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException;
+use Spryker\Zed\Search\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
@@ -38,16 +39,38 @@ class PageDataMapper implements PageDataMapperInterface
     protected $pageIndexMap;
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @var \Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface[]
      */
-    public function __construct(PageMapBuilderInterface $pageMapBuilder)
+    protected $pageMapInterfaces = [];
+
+    /**
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param array $namedPageMapPlugins
+     */
+    public function __construct(PageMapBuilderInterface $pageMapBuilder, array $namedPageMapPlugins = [])
     {
         $this->pageMapBuilder = $pageMapBuilder;
+        $this->pageMapInterfaces = $this->mapPluginClassesByName($namedPageMapPlugins);
         $this->underscoreToDashFilter = new UnderscoreToDash();
         $this->pageIndexMap = new PageIndexMap();
     }
 
     /**
+     * @param \Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface[] $namedPageMapPlugins
+     *
+     * @return array
+     */
+    protected function mapPluginClassesByName(array $namedPageMapPlugins)
+    {
+        $pageMaps = [];
+        foreach ($namedPageMapPlugins as $namedPageMapPlugin) {
+            $pageMaps[$namedPageMapPlugin->getName()] = $namedPageMapPlugin;
+        }
+    }
+
+    /**
+     * @deprecated use PageDataMapper::transferDataByMapperName() instead
+     *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -58,6 +81,35 @@ class PageDataMapper implements PageDataMapperInterface
     {
         $result = [];
 
+        $pageMapTransfer = $pageMap->buildPageMap($this->pageMapBuilder, $data, $localeTransfer);
+
+        foreach ($pageMapTransfer->modifiedToArray() as $key => $value) {
+            $normalizedKey = $this->normalizeKey($key);
+
+            $result = $this->mapValue($pageMapTransfer, $normalizedKey, $value, $result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $mapperName
+     *
+     * @throws \Spryker\Zed\Search\Business\Exception\PluginNotFoundException
+     *
+     * @return array
+     */
+    public function transferDataByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName)
+    {
+        $result = [];
+
+        if (!isset($this->pageMapInterfaces[$mapperName])) {
+            throw new PluginNotFoundException(sprintf('PageMap plugin with this name: `%s` cannot be found', $mapperName));
+        }
+
+        $pageMap = $this->pageMapInterfaces[$mapperName];
         $pageMapTransfer = $pageMap->buildPageMap($this->pageMapBuilder, $data, $localeTransfer);
 
         foreach ($pageMapTransfer->modifiedToArray() as $key => $value) {

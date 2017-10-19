@@ -105,4 +105,11 @@ interface AvailabilityQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function querySpyProductAbstractAvailability();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAllAvailabilityAbstracts();
 }

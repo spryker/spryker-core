@@ -21,6 +21,20 @@ interface ProductGroupQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
+     */
+    public function queryAllProductAbstractGroups();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
+     */
+    public function queryAllProductGroups();
+
+    /**
+     * @api
+     *
      * @param int $idProductGroup
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery

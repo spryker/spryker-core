@@ -75,6 +75,26 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @api
      *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryAllProductAbstractLocalizedAttributes()
+    {
+        return $this->getFactory()->createProductAbstractLocalizedAttributesQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function queryAllProductLocalizedAttributes()
+    {
+        return $this->getFactory()->createProductLocalizedAttributesQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
