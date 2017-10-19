@@ -9,7 +9,7 @@ addons:
 
 cache:
   directories:
-    - $HOME/.composer/cache
+        - $HOME/.composer/cache
 
 services:
   - postgresql
@@ -18,9 +18,9 @@ sudo: required
 
 env:
   global:
-    - APPLICATION_ENV=development
-    - APPLICATION_STORE=DE
-    - ZED_DB_USERNAME=postgres
+        - APPLICATION_ENV=development
+        - APPLICATION_STORE=DE
+        - ZED_DB_USERNAME=postgres
 
 install:
   - composer self-update && composer --version

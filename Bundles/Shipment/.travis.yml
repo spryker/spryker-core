@@ -6,15 +6,15 @@ php:
 
 matrix:
   allow_failures:
-    - php: 7.0
+        - php: 7.0
 
 addons:
   postgresql: 9.4
 
 cache:
   directories:
-    - vendor
-    - $HOME/.composer/cache
+        - vendor
+        - $HOME/.composer/cache
 
 services:
   - postgresql
@@ -23,9 +23,9 @@ sudo: required
 
 env:
   global:
-    - APPLICATION_ENV=development
-    - APPLICATION_STORE=DE
-    - ZED_DB_USERNAME=postgres
+        - APPLICATION_ENV=development
+        - APPLICATION_STORE=DE
+        - ZED_DB_USERNAME=postgres
 
 install:
   - composer self-update && composer --version

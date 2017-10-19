@@ -5,13 +5,13 @@ php:
 
 cache:
   directories:
-    - vendor
-    - $HOME/.composer/cache
+        - vendor
+        - $HOME/.composer/cache
 
 env:
   global:
-    - APPLICATION_ENV=development
-    - APPLICATION_STORE=DE
+        - APPLICATION_ENV=development
+        - APPLICATION_STORE=DE
 
 install:
   - composer self-update && composer --version
