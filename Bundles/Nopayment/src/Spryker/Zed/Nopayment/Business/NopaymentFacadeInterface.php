@@ -13,7 +13,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface NopaymentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -41,5 +40,4 @@ interface NopaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
      */
     public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer);
-
 }

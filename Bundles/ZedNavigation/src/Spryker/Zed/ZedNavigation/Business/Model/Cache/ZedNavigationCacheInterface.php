@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Cache;
 
 interface ZedNavigationCacheInterface
 {
-
     /**
      * @return bool
      */
@@ -26,5 +25,4 @@ interface ZedNavigationCacheInterface
      * @return array
      */
     public function getNavigation();
-
 }

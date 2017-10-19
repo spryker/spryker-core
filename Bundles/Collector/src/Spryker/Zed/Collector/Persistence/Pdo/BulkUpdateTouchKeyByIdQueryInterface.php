@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Persistence\Pdo;
 
 interface BulkUpdateTouchKeyByIdQueryInterface
 {
-
     /**
      * @param string $tableName
      * @param string $keyValue
@@ -29,5 +28,4 @@ interface BulkUpdateTouchKeyByIdQueryInterface
      * @return void
      */
     public function flushQueries();
-
 }

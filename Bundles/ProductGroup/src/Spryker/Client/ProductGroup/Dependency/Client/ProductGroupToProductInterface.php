@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductGroup\Dependency\Client;
 
 interface ProductGroupToProductInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param string $localeName
@@ -17,5 +16,4 @@ interface ProductGroupToProductInterface
      * @return array
      */
     public function getProductAbstractFromStorageById($idProductAbstract, $localeName);
-
 }

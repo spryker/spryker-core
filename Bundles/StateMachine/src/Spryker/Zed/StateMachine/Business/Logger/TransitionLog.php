@@ -16,7 +16,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface;
 
 class TransitionLog implements TransitionLogInterface
 {
-
     const QUERY_STRING = 'QUERY_STRING';
 
     /**
@@ -153,7 +152,7 @@ class TransitionLog implements TransitionLogInterface
         $stateMachineTransitionLogEntity->setFkStateMachineProcess(
             $stateMachineItemTransfer->getIdStateMachineProcess()
         );
-        $stateMachineTransitionLogEntity->setHostname($this->utilNetworkService->getHostname());
+        $stateMachineTransitionLogEntity->setHostname($this->utilNetworkService->getHostName());
 
         $path = $this->pathFinder->getCurrentExecutionPath();
         $stateMachineTransitionLogEntity->setPath($path);
@@ -208,5 +207,4 @@ class TransitionLog implements TransitionLogInterface
     {
         return explode('&', $queryString);
     }
-
 }

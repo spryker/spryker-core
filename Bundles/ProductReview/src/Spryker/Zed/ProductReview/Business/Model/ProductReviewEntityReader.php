@@ -13,7 +13,6 @@ use Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface;
 
 class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface
      */
@@ -63,5 +62,4 @@ class ProductReviewEntityReader implements ProductReviewEntityReaderInterface
     {
         $productReviewTransfer->requireIdProductReview();
     }
-
 }

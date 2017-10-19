@@ -26,7 +26,6 @@ use Spryker\Zed\User\UserConfig;
  */
 class UserTest extends Unit
 {
-
     /**
      * @const string
      */
@@ -367,5 +366,4 @@ class UserTest extends Unit
 
         return $queryContainer;
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleCartAvailabilityCheck extends BasePreCheck implements ProductBundleCartAvailabilityCheckInterface
 {
-
     const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
     const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
     const STOCK_TRANSLATION_PARAMETER = 'stock';
@@ -238,5 +237,4 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $availability = $this->calculateRegularItemAvailability($itemTransfer, $itemsInCart);
         return $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
     }
-
 }

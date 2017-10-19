@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class UtilDateTimeServiceTester extends Actor
 {
-
     use _generated\UtilDateTimeServiceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\Client;
 
 class ZedBootstrap extends Framework implements DependsOnModule
 {
-
     const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
 
     /**
@@ -120,5 +119,4 @@ class ZedBootstrap extends Framework implements DependsOnModule
 
         return $twigBundleConfigMock;
     }
-
 }

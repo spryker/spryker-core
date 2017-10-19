@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface StepInterface
 {
-
     /**
      * Requirements for this step, return true when satisfied.
      *
@@ -70,5 +69,4 @@ interface StepInterface
      * @return array
      */
     public function getTemplateVariables(AbstractTransfer $dataTransfer);
-
 }

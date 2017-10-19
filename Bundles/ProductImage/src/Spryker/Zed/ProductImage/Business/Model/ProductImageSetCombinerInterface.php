@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductImage\Business\Model;
 
 interface ProductImageSetCombinerInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -26,5 +25,4 @@ interface ProductImageSetCombinerInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
-
 }

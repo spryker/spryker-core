@@ -15,7 +15,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterf
  */
 class BraintreePostSavePlugin extends BaseAbstractPlugin implements CheckoutPostCheckPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -26,5 +25,4 @@ class BraintreePostSavePlugin extends BaseAbstractPlugin implements CheckoutPost
     {
         $this->getFacade()->postSaveHook($quoteTransfer, $checkoutResponse);
     }
-
 }

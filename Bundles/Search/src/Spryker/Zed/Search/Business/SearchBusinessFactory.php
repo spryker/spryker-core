@@ -29,7 +29,6 @@ use Spryker\Zed\Search\SearchDependencyProvider;
  */
 class SearchBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -176,7 +175,10 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createPageDataMapper()
     {
-        return new PageDataMapper($this->createPageMapBuilder());
+        return new PageDataMapper(
+            $this->createPageMapBuilder(),
+            $this->getSearchPageMapPlugins()
+        );
     }
 
     /**
@@ -195,4 +197,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(SearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
+     */
+    public function getSearchPageMapPlugins()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGIN_SEARCH_PAGE_MAPS);
+    }
 }

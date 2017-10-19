@@ -14,7 +14,6 @@ use Twig_LoaderInterface;
 
 class TwigFilesystemLoader implements Twig_LoaderInterface
 {
-
     /**
      * @var array
      */
@@ -213,5 +212,4 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1' . addcslashes('-', '$') . '$2', $bundleName));
     }
-
 }

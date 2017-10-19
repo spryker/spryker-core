@@ -13,7 +13,6 @@ use Spryker\Shared\Flysystem\OperationHandler\WriteOperationHandlerTrait;
 
 class Writer implements WriterInterface
 {
-
     use WriteOperationHandlerTrait;
 
     /**
@@ -191,5 +190,4 @@ class Writer implements WriterInterface
                 ->write($path, $content, $config);
         });
     }
-
 }

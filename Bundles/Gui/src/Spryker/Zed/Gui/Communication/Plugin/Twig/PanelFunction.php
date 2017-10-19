@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class PanelFunction extends TwigFunction
 {
-
     /**
      * @return string
      */
@@ -74,5 +73,4 @@ class PanelFunction extends TwigFunction
             return $html;
         };
     }
-
 }

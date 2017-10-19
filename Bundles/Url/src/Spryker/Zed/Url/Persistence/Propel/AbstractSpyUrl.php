@@ -22,7 +22,6 @@ use Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException;
  */
 abstract class AbstractSpyUrl extends BaseSpyUrl
 {
-
     const RESOURCE_DATA_NAME = 'name';
     const RESOURCE_DATA_VALUE = 'value';
 
@@ -113,5 +112,4 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
 
         return $setterName;
     }
-
 }

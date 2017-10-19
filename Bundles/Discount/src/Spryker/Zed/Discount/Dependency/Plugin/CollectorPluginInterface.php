@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CollectorPluginInterface
 {
-
     /**
      * Specification:
      *  - Collect items to which discount have to be applied, ClauseTransfer holds query string parameters,
@@ -44,5 +43,4 @@ interface CollectorPluginInterface
      * @return string[]
      */
     public function acceptedDataTypes();
-
 }

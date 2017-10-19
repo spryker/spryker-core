@@ -16,7 +16,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
  */
 class ProductBundleAvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ class ProductBundleAvailabilityHandlerPlugin extends AbstractPlugin implements R
     {
         $this->getFacade()->updateAffectedBundlesAvailability($sku);
     }
-
 }

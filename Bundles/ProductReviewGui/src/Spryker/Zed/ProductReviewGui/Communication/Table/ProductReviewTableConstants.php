@@ -16,7 +16,6 @@ use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainer;
 
 interface ProductReviewTableConstants
 {
-
     const TABLE_IDENTIFIER = 'product-review-table';
 
     const SORT_DESC = TableConfiguration::SORT_DESC;
@@ -42,5 +41,4 @@ interface ProductReviewTableConstants
     const COL_PRODUCT_REVIEW_GUI_FIRST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_FIRST_NAME;
     const COL_PRODUCT_REVIEW_GUI_LAST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_LAST_NAME;
     const EXTRA_DETAILS = 'details';
-
 }

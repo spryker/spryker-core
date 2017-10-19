@@ -8,7 +8,6 @@ namespace Spryker\Client\Availability\Dependency\Client;
 
 class AvailabilityToStorageBridge implements AvailabilityToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -31,5 +30,4 @@ class AvailabilityToStorageBridge implements AvailabilityToStorageInterface
     {
         return $this->storageClient->get($key);
     }
-
 }

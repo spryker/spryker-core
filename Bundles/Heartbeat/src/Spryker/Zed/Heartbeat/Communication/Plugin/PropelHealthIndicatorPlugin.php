@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PropelHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
@@ -24,5 +23,4 @@ class PropelHealthIndicatorPlugin extends AbstractPlugin implements HealthIndica
     {
         return $this->getFacade()->doPropelHealthCheck();
     }
-
 }

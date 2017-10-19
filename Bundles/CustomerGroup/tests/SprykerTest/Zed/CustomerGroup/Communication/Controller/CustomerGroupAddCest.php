@@ -22,7 +22,6 @@ use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupAddPage;
  */
 class CustomerGroupAddCest
 {
-
     /**
      * @param \SprykerTest\Zed\CustomerGroup\CustomerGroupCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class CustomerGroupAddCest
 
         $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups / Add a customer group');
     }
-
 }

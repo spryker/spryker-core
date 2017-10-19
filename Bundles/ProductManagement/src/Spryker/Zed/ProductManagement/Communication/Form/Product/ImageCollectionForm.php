@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ImageCollectionForm extends AbstractSubForm
 {
-
     const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
     const FIELD_IMAGE_SMALL = 'external_url_small';
     const FIELD_IMAGE_LARGE = 'external_url_large';
@@ -175,5 +174,4 @@ class ImageCollectionForm extends AbstractSubForm
 
         return $this;
     }
-
 }

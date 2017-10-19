@@ -16,7 +16,6 @@ use Propel\Generator\Model\PropelTypes;
 
 class QueryBuilder extends PropelQueryBuilder
 {
-
     /**
      * @param \Propel\Generator\Model\Column $col
      *
@@ -382,5 +381,4 @@ SCRIPT;
     }
 ";
     }
-
 }

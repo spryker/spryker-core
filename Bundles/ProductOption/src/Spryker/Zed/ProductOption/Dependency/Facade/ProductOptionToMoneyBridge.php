@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class ProductOptionToMoneyBridge implements ProductOptionToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -96,5 +95,4 @@ class ProductOptionToMoneyBridge implements ProductOptionToMoneyInterface
     {
         return $this->moneyFacade->fromString($amount, $isoCode);
     }
-
 }

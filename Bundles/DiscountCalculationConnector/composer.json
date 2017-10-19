@@ -3,7 +3,7 @@
   "description": "DiscountCalculationConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/discount": "^4.0.0",
+    "spryker/discount": "^4.0.0 || ^5.0.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
@@ -15,14 +15,8 @@
     "spryker/calculation": "If you want to use Calculation plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

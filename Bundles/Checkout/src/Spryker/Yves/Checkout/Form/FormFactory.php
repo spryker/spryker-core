@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class FormFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider
      */
@@ -54,5 +53,4 @@ class FormFactory extends AbstractFactory
     {
         return new SubFormDataProviders($subFormProvider);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductLabel\Storage;
 
 interface LabelDictionaryReaderInterface
 {
-
     /**
      * @param int[] $idsProductLabel
      * @param string $localeName
@@ -41,5 +40,4 @@ interface LabelDictionaryReaderInterface
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null
      */
     public function findLabelByName($labelName, $localeName);
-
 }

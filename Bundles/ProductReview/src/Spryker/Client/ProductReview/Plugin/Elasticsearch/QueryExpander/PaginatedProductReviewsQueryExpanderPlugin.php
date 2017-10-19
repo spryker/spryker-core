@@ -18,7 +18,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class PaginatedProductReviewsQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
@@ -48,5 +47,4 @@ class PaginatedProductReviewsQueryExpanderPlugin extends AbstractPlugin implemen
         $query->setFrom(($currentPage - 1) * $itemsPerPage);
         $query->setSize($itemsPerPage);
     }
-
 }

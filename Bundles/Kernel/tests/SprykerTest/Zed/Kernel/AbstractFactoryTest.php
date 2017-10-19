@@ -26,7 +26,6 @@ use SprykerTest\Zed\Kernel\Fixtures\Factory;
  */
 class AbstractFactoryTest extends Unit
 {
-
     const CONTAINER_KEY = 'key';
     const CONTAINER_VALUE = 'value';
 
@@ -129,5 +128,4 @@ class AbstractFactoryTest extends Unit
 
         return $factoryMock;
     }
-
 }

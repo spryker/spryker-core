@@ -25,7 +25,6 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CacheWarmerConsoleTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class CacheWarmerConsoleTest extends Unit
 
         return $mockBuilder->getMock();
     }
-
 }

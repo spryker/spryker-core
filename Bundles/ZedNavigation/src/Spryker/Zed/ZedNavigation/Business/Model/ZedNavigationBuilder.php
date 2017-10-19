@@ -13,7 +13,6 @@ use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface;
 
 class ZedNavigationBuilder
 {
-
     const MENU = 'menu';
     const PATH = 'path';
 
@@ -65,5 +64,4 @@ class ZedNavigationBuilder
             self::PATH => $path,
         ];
     }
-
 }

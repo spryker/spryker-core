@@ -24,7 +24,6 @@ use SprykerTest\Zed\Discount\PageObject\DiscountViewPage;
  */
 class DiscountListCest
 {
-
     /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountEditPage $editPage
@@ -67,5 +66,4 @@ class DiscountListCest
         $i->amOnPage(DiscountListPage::URL);
         $i->seeElement(DiscountListPage::SELECTOR_DATA_TABLE);
     }
-
 }

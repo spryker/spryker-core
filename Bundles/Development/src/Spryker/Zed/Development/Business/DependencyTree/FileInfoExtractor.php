@@ -12,7 +12,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class FileInfoExtractor
 {
-
     const LAYER = 'Default';
 
     /**
@@ -94,5 +93,4 @@ class FileInfoExtractor
 
         throw new Exception(sprintf('Could not extract class name parts from file "%s".', $fileInfo->getPathname()));
     }
-
 }

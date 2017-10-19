@@ -21,7 +21,6 @@ use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
 class InstallmentFormDataProvider implements StepEngineFormDataProviderInterface
 {
-
     /**
      * @var \Spryker\Client\Payolution\PayolutionClientInterface
      */
@@ -165,5 +164,4 @@ class InstallmentFormDataProvider implements StepEngineFormDataProviderInterface
     {
         return $this->moneyPlugin->convertIntegerToDecimal((int)$amount);
     }
-
 }

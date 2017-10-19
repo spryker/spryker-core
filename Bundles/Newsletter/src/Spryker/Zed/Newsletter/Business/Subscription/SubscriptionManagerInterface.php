@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\NewsletterTypeTransfer;
 
 interface SubscriptionManagerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterType
@@ -36,5 +35,4 @@ interface SubscriptionManagerInterface
      * @return bool
      */
     public function unsubscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType);
-
 }

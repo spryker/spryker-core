@@ -16,9 +16,13 @@ use Spryker\Shared\Config\Profiler\ConfigProfilerCollector;
 use Spryker\Shared\Config\Profiler\ConfigProfilerCollectorFactory;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 
+/**
+ * @deprecated Please use the specific ConfigProfilerServiceProvider for your application.
+ *
+ * This will be removed with the next major.
+ */
 class ConfigProfilerServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -140,5 +144,4 @@ class ConfigProfilerServiceProvider implements ServiceProviderInterface
     {
         return realpath(dirname(__DIR__) . '/../Theme/default');
     }
-
 }

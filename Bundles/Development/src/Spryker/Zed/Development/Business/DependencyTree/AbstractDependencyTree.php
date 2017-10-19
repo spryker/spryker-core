@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractDependencyTree
 {
-
     /**
      * @var array
      */
@@ -33,5 +32,4 @@ abstract class AbstractDependencyTree
     {
         return $this->dependencyTree;
     }
-
 }

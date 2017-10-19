@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class ServiceLocatorMatcher implements LocatorMatcherInterface
 {
-
     const METHOD_PREFIX = 'service';
 
     /**
@@ -25,5 +24,4 @@ class ServiceLocatorMatcher implements LocatorMatcherInterface
     {
         return (strpos($method, self::METHOD_PREFIX) === 0);
     }
-
 }

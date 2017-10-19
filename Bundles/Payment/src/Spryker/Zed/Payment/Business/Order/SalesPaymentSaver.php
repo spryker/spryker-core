@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class SalesPaymentSaver implements SalesPaymentSaverInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -140,5 +139,4 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
 
         return $paymentMethodTypeEntity;
     }
-
 }

@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\SalesPaymentTransfer;
  */
 interface PaymentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -89,5 +88,4 @@ interface PaymentFacadeInterface
      * @return void
      */
     public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer);
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AttributeSuperForm extends AttributeAbstractForm
 {
-
     /**
      * @return string
      */
@@ -80,5 +79,4 @@ class AttributeSuperForm extends AttributeAbstractForm
 
         return $this;
     }
-
 }

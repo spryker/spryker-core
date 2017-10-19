@@ -26,7 +26,6 @@ use Spryker\Zed\Braintree\Business\Payment\Transaction\CaptureTransaction;
  */
 class BraintreeFacadeCaptureTest extends AbstractFacadeTest
 {
-
     /**
      * @return void
      */
@@ -109,5 +108,4 @@ class BraintreeFacadeCaptureTest extends AbstractFacadeTest
 
         return $response;
     }
-
 }

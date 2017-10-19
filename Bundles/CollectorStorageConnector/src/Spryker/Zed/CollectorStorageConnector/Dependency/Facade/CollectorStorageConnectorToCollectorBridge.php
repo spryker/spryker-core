@@ -9,7 +9,6 @@ namespace Spryker\Zed\CollectorStorageConnector\Dependency\Facade;
 
 class CollectorStorageConnectorToCollectorBridge implements CollectorStorageConnectorToCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
@@ -32,5 +31,4 @@ class CollectorStorageConnectorToCollectorBridge implements CollectorStorageConn
     {
         $this->collectorFacade->deleteStorageTimestamps($timestamps);
     }
-
 }

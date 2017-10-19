@@ -15,7 +15,6 @@ use Spryker\Client\Search\Exception\SearchResponseException;
 
 class ElasticsearchSearchHandler implements SearchHandlerInterface
 {
-
     /**
      * @var \Elastica\SearchableInterface
      */
@@ -89,5 +88,4 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
 
         return $rawSearchResult;
     }
-
 }

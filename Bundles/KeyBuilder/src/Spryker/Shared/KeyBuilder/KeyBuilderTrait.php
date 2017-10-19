@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Store;
 
 trait KeyBuilderTrait
 {
-
     /**
      * @var string
      */
@@ -69,5 +68,4 @@ trait KeyBuilderTrait
 
         return str_replace($charsToReplace, '-', mb_strtolower(trim($key)));
     }
-
 }

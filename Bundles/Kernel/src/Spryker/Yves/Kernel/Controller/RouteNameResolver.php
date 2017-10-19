@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
 
 class RouteNameResolver implements RouteNameResolverInterface
 {
-
     /**
      * @var string
      */
@@ -32,5 +31,4 @@ class RouteNameResolver implements RouteNameResolverInterface
     {
         return $this->path;
     }
-
 }

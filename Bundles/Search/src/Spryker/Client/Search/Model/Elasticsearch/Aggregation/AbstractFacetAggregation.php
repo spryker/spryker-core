@@ -8,25 +8,33 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Elastica\Aggregation\AbstractAggregation;
+use Elastica\Aggregation\Filter;
 use Elastica\Aggregation\Nested;
 use Elastica\Aggregation\Terms;
+use Elastica\Query\Term;
+use Generated\Shared\Transfer\FacetConfigTransfer;
 
 abstract class AbstractFacetAggregation implements FacetAggregationInterface
 {
-
     const FACET_VALUE = 'facet-value';
     const FACET_NAME = 'facet-name';
     const NAME_SUFFIX = '-name';
+    const PATH_SEPARATOR = '.';
 
     /**
      * @param string $fieldName
      * @param \Elastica\Aggregation\AbstractAggregation $aggregation
+     * @param string|null $path
      *
      * @return \Elastica\Aggregation\AbstractAggregation
      */
-    protected function createNestedFacetAggregation($fieldName, AbstractAggregation $aggregation)
+    protected function createNestedFacetAggregation($fieldName, AbstractAggregation $aggregation, $path = null)
     {
-        return (new Nested($fieldName, $fieldName))
+        if ($path === null) {
+            $path = $fieldName;
+        }
+
+        return (new Nested($fieldName, $path))
             ->addAggregation($aggregation);
     }
 
@@ -37,8 +45,25 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
      */
     protected function createFacetNameAggregation($fieldName)
     {
-        return (new Terms($fieldName . self::NAME_SUFFIX))
-            ->setField($this->addNestedFieldPrefix($fieldName, self::FACET_NAME));
+        return (new Terms($fieldName . static::NAME_SUFFIX))
+            ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_NAME));
+    }
+
+    /**
+     * @param string $parentFieldName
+     * @param string $fieldName
+     *
+     * @return \Elastica\Aggregation\AbstractAggregation
+     */
+    protected function createStandaloneFacetNameAggregation($parentFieldName, $fieldName)
+    {
+        $filterName = $this->addNestedFieldPrefix($parentFieldName, $fieldName);
+        $filterName = $filterName . static::NAME_SUFFIX;
+
+        return (new Filter($filterName))
+            ->setFilter(new Term([
+                $this->addNestedFieldPrefix($parentFieldName, static::FACET_NAME) => $fieldName,
+            ]));
     }
 
     /**
@@ -49,7 +74,40 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
      */
     protected function addNestedFieldPrefix($nestedFieldName, $fieldName)
     {
-        return $nestedFieldName . '.' . $fieldName;
+        return $nestedFieldName . static::PATH_SEPARATOR . $fieldName;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return string
+     */
+    protected function getNestedFieldName(FacetConfigTransfer $facetConfigTransfer)
+    {
+        $nestedFieldName = $facetConfigTransfer->getFieldName();
+
+        if ($facetConfigTransfer->getAggregationParams()) {
+            $nestedFieldName = $this->addNestedFieldPrefix(
+                $nestedFieldName,
+                $facetConfigTransfer->getName()
+            );
+        }
+
+        return $nestedFieldName;
+    }
+
+    /**
+     * @param \Elastica\Aggregation\AbstractAggregation $aggregation
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return \Elastica\Aggregation\AbstractAggregation
+     */
+    protected function applyAggregationParams(AbstractAggregation $aggregation, FacetConfigTransfer $facetConfigTransfer)
+    {
+        foreach ($facetConfigTransfer->getAggregationParams() as $aggregationParamKey => $aggregationParamValue) {
+            $aggregation->setParam($aggregationParamKey, $aggregationParamValue);
+        }
+
+        return $aggregation;
+    }
 }

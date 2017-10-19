@@ -23,7 +23,6 @@ use SprykerTest\Shared\Log\Fixtures\TestLoggerConfig2;
  */
 class LoggerTest extends Unit
 {
-
     use LoggerTrait;
 
     /**
@@ -55,5 +54,4 @@ class LoggerTest extends Unit
 
         $this->assertNotSame($logger1, $logger2);
     }
-
 }

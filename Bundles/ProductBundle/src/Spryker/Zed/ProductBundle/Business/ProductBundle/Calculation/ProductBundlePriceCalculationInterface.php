@@ -13,7 +13,6 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 
 interface ProductBundlePriceCalculationInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -33,5 +32,4 @@ interface ProductBundlePriceCalculationInterface
         SpySalesOrderItem $salesOrderItemEntity,
         array $bundledProducts
     );
-
 }

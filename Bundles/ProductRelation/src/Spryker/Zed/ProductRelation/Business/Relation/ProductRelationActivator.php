@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductRelationActivator implements ProductRelationActivatorInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -138,5 +137,4 @@ class ProductRelationActivator implements ProductRelationActivatorInterface
     {
         return $this->touchFacade->touchActive(ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION, $idProductAbstract);
     }
-
 }

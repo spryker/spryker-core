@@ -12,7 +12,6 @@ use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
 
 class DiscountPromotionMapper implements DiscountPromotionMapperInterface
 {
-
     /**
      * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion $discountPromotionEntity
      *
@@ -49,5 +48,4 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
     {
         return new DiscountPromotionTransfer();
     }
-
 }

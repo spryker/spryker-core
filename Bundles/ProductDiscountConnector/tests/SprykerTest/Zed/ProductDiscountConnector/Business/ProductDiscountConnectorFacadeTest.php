@@ -40,7 +40,6 @@ use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvi
  */
 class ProductDiscountConnectorFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -233,9 +232,8 @@ class ProductDiscountConnectorFacadeTest extends Unit
         $clauseTransfer->setAttribute('color');
         $clauseTransfer->setValue($value);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
         return $clauseTransfer;
     }
-
 }

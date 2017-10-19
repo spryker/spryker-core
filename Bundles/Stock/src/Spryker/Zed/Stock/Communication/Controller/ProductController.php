@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class ProductController extends AbstractController
 {
-
     /**
      * @param string $sku
      *
@@ -27,5 +26,4 @@ class ProductController extends AbstractController
             'isNeverOutOfStock' => $this->getFacade()->isNeverOutOfStock($sku),
         ]);
     }
-
 }

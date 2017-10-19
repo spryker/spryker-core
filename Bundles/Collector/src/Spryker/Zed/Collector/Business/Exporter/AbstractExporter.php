@@ -23,7 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractExporter implements ExporterInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
      */
@@ -200,5 +199,4 @@ abstract class AbstractExporter implements ExporterInterface
         $result->setTotalCount(0);
         $result->setDeletedCount(0);
     }
-
 }

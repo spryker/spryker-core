@@ -30,7 +30,6 @@ use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
  */
 class CustomerGroupFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -265,5 +264,4 @@ class CustomerGroupFacadeTest extends Unit
 
         return $customerEntity;
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class OmsPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -35,5 +34,4 @@ class OmsPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHo
 
         $this->getFacade()->triggerEventForNewOrderItems($salesOrderItemIds);
     }
-
 }

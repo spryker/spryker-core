@@ -18,7 +18,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CustomerDataHelper extends Module
 {
-
     use DependencyHelperTrait;
     use LocatorHelperTrait;
 
@@ -27,7 +26,7 @@ class CustomerDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function haveCustomer($override = [])
+    public function haveCustomer(array $override = [])
     {
         $customerTransfer = (new CustomerBuilder($override))
             ->withBillingAddress()
@@ -57,5 +56,4 @@ class CustomerDataHelper extends Module
     {
         return Stub::makeEmpty(MailFacadeInterface::class);
     }
-
 }

@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
 
 class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
 {
-
     /**
      * @var string
      */
@@ -64,5 +63,4 @@ class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
 
         return $finder;
     }
-
 }

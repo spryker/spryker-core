@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 
 class ProductManagementToProductImageBridge implements ProductManagementToProductImageInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
@@ -65,5 +64,4 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
     }
-
 }

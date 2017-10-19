@@ -15,7 +15,6 @@ use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
 class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
-
     /**
      * @var \Elastica\Query
      */
@@ -57,5 +56,4 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     {
         return $this->searchString;
     }
-
 }

@@ -18,12 +18,10 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class Calculator implements CalculatorInterface
 {
-
     use LoggerTrait;
 
     const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
@@ -109,29 +107,13 @@ class Calculator implements CalculatorInterface
             }
 
             $calculatorPlugin = $this->getCalculatorPlugin($discountTransfer);
-            $discountAmount = $this->getCalculatedDiscountAmount($discountableItems, $discountTransfer, $calculatorPlugin);
+            $discountAmount = $calculatorPlugin->calculateDiscount($discountableItems, $discountTransfer);
             $discountTransfer->setAmount($discountAmount);
 
             $collectedDiscounts[] = $this->createCollectedDiscountTransfer($discountTransfer, $discountableItems);
         }
 
         return $collectedDiscounts;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculatorPlugin
-     *
-     * @return int
-     */
-    protected function getCalculatedDiscountAmount(array $discountableItems, DiscountTransfer $discountTransfer, $calculatorPlugin)
-    {
-        if ($calculatorPlugin instanceof DiscountAmountCalculatorPluginInterface) {
-            return $calculatorPlugin->calculateDiscount($discountableItems, clone $discountTransfer);
-        }
-
-        return $calculatorPlugin->calculate($discountableItems, $discountTransfer->getAmount());
     }
 
     /**
@@ -147,7 +129,6 @@ class Calculator implements CalculatorInterface
         $nonExclusiveDiscounts = [];
         $exclusiveFound = false;
         foreach ($collectedDiscounts as $collectedDiscountTransfer) {
-
             $discountTransfer = $collectedDiscountTransfer->getDiscount();
             if (!$discountTransfer->getCollectorQueryString()) {
                 $applicableDiscounts[] = $collectedDiscountTransfer;
@@ -307,5 +288,4 @@ class Calculator implements CalculatorInterface
     {
         $this->collectorStrategyResolver = $collectorStrategyResolver;
     }
-
 }

@@ -34,7 +34,6 @@ use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer implements CustomerInterface
 {
-
     const BCRYPT_FACTOR = 12;
     const BCRYPT_SALT = '';
 
@@ -795,5 +794,4 @@ class Customer implements CustomerInterface
 
         return $customerTransfer;
     }
-
 }

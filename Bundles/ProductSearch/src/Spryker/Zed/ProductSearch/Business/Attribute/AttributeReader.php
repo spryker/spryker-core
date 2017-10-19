@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 class AttributeReader implements AttributeReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -117,5 +116,4 @@ class AttributeReader implements AttributeReaderInterface
 
         return $productSearchAttributes;
     }
-
 }

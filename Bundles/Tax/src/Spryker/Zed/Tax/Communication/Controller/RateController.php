@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RateController extends AbstractController
 {
-
     const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
     /**
@@ -49,7 +48,7 @@ class RateController extends AbstractController
             } else {
                 $taxRateTransfer = $this->getFacade()->createTaxRate($taxRateTransfer);
                 if ($taxRateTransfer->getIdTaxRate()) {
-                    $this->addSuccessMessage('Tax rate successfully created.');
+                    $this->addSuccessMessage(sprintf('Tax rate %d was created successfully.', $taxRateTransfer->getIdTaxRate()));
                     $redirectUrl = Url::generate('/tax/rate/edit', [static::PARAM_URL_ID_TAX_RATE => $taxRateTransfer->getIdTaxRate()])->build();
                     return $this->redirectResponse($redirectUrl);
                 }
@@ -93,7 +92,7 @@ class RateController extends AbstractController
             } else {
                 $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
                 if ($rowsAffected > 0) {
-                    $this->addSuccessMessage('Tax rate successfully updated.');
+                    $this->addSuccessMessage(sprintf('Tax rate %d was updated successfully.', $idTaxRate));
                 }
             }
         }
@@ -130,7 +129,7 @@ class RateController extends AbstractController
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
         $this->getFacade()->deleteTaxRate($idTaxRate);
-        $this->addSuccessMessage('The tax rate has been deleted.');
+        $this->addSuccessMessage(sprintf('Tax rate %d was deleted successfully.', $idTaxRate));
 
         return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
     }
@@ -158,5 +157,4 @@ class RateController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

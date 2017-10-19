@@ -18,7 +18,6 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
 
 class PreCheckMocks extends Unit
 {
-
     /**
      * @var array
      */
@@ -95,5 +94,4 @@ class PreCheckMocks extends Unit
             ->with($this->fixtures['bundle-sku'])
             ->willReturn($bundledProducts);
     }
-
 }

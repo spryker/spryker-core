@@ -34,7 +34,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Table\CmsPageTable
      */
@@ -44,7 +43,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsQueryContainer(),
             $this->getLocaleFacade(),
             $this->getConfig(),
-            $this->getCmsFacade()
+            $this->getCmsFacade(),
+            $this->getCmsPageTableExpanderPlugins()
         );
     }
 
@@ -325,4 +325,19 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CmsGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+    protected function getCmsPageTableExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_PAGE_TABLE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface[]
+     */
+    public function getCreateGlossaryExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CREATE_GLOSSARY_EXPANDER);
+    }
 }

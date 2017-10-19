@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Attribute;
 
 class AttributeProcessor implements AttributeProcessorInterface
 {
-
     /**
      * @var array
      */
@@ -210,5 +209,4 @@ class AttributeProcessor implements AttributeProcessorInterface
             array_fill(0, count($mergedAttributes), null)
         );
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class UserInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
-
     /**
      * @return void
      */
@@ -24,5 +23,4 @@ class UserInstallerPlugin extends AbstractPlugin implements InstallerPluginInter
     {
         $this->getFacade()->install();
     }
-
 }

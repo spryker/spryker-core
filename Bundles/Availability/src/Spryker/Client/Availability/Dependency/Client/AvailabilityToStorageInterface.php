@@ -8,12 +8,10 @@ namespace Spryker\Client\Availability\Dependency\Client;
 
 interface AvailabilityToStorageInterface
 {
-
     /**
      * @param string $key
      *
      * @return mixed
      */
     public function get($key);
-
 }

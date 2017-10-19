@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -71,6 +70,26 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         $query->filterByFkProductAbstract($idProductAbstract);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryAllProductAbstractLocalizedAttributes()
+    {
+        return $this->getFactory()->createProductAbstractLocalizedAttributesQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function queryAllProductLocalizedAttributes()
+    {
+        return $this->getFactory()->createProductLocalizedAttributesQuery();
     }
 
     /**
@@ -192,5 +211,4 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 trait LoggerTrait
 {
-
     /**
      * @param \Spryker\Shared\Log\Config\LoggerConfigInterface|null $loggerConfig
      *
@@ -21,5 +20,4 @@ trait LoggerTrait
     {
         return LoggerFactory::getInstance($loggerConfig);
     }
-
 }

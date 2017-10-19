@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\PageTransfer;
 
 interface GlossaryKeyMappingManagerInterface
 {
-
     /**
      * @param int $idPage
      * @param string $placeholder
@@ -102,5 +101,4 @@ interface GlossaryKeyMappingManagerInterface
      * @return string
      */
     public function generateGlossaryKeyName($templateName, $placeholder, $autoIncrement = true);
-
 }

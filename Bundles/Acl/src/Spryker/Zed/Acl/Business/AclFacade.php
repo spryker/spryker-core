@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AclFacade extends AbstractFacade implements AclFacadeInterface
 {
-
     /**
      * Main Installer Method
      *
@@ -482,5 +481,4 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
             ->createRuleModel()
             ->isIgnorable($bundle, $controller, $action);
     }
-
 }

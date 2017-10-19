@@ -21,7 +21,6 @@ use Propel\Runtime\Connection\ConnectionInterface;
  */
 abstract class AbstractSpyProductSearchAttributeMap extends BaseSpyProductSearchAttributeMap
 {
-
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
@@ -33,5 +32,4 @@ abstract class AbstractSpyProductSearchAttributeMap extends BaseSpyProductSearch
 
         return parent::preUpdate($connection);
     }
-
 }

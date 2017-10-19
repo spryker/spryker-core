@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade;
 
 interface CmsBlockCategoryConnectorToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $idCmsBlock
@@ -25,5 +24,4 @@ interface CmsBlockCategoryConnectorToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $idCmsBlock);
-
 }

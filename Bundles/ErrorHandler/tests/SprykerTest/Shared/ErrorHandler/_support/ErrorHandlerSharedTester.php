@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class ErrorHandlerSharedTester extends Actor
 {
-
     use _generated\ErrorHandlerSharedTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

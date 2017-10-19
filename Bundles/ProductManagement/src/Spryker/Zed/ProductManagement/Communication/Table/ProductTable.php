@@ -19,7 +19,6 @@ use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 
 class ProductTable extends AbstractProductTable
 {
-
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_NAME = 'name';
     const COL_SKU = 'sku';
@@ -259,5 +258,4 @@ class ProductTable extends AbstractProductTable
 
         return true;
     }
-
 }

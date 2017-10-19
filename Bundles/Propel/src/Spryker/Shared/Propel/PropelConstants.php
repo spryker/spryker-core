@@ -9,7 +9,6 @@ namespace Spryker\Shared\Propel;
 
 interface PropelConstants
 {
-
     /**
      * Specification:
      * - Key for propel configuration.
@@ -123,5 +122,4 @@ interface PropelConstants
      * @api
      */
     const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';
-
 }

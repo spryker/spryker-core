@@ -30,7 +30,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
  */
 class SwiftMailerTest extends Unit
 {
-
     const SUBJECT = 'subject';
     const FROM_EMAIL = 'from@email.com';
     const FROM_NAME = 'fromName';
@@ -184,5 +183,4 @@ class SwiftMailerTest extends Unit
 
         return $swiftMailer;
     }
-
 }

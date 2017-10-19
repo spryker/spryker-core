@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -122,5 +121,4 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     {
         $this->getFactory()->createPaymentCalculator()->recalculatePayments($calculableObjectTransfer);
     }
-
 }

@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UpdateController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
@@ -36,18 +35,18 @@ class UpdateController extends AbstractController
 
         if ($navigationForm->isValid()) {
             $navigationTransfer = $navigationForm->getData();
-            $navigationTransfer = $this->getFactory()
+            $this->getFactory()
                 ->getNavigationFacade()
                 ->updateNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation #%d successfully updated.', $navigationTransfer->getIdNavigation()));
+            $this->addSuccessMessage(sprintf('Navigation element %d was updated successfully.', $idNavigation));
 
             return $this->redirectResponse('/navigation-gui');
         }
 
         return $this->viewResponse([
             'navigationForm' => $navigationForm->createView(),
+            'idNavigation' => $idNavigation,
         ]);
     }
-
 }

@@ -19,7 +19,6 @@ use Symfony\Component\Finder\Finder;
 
 class TemplateManager implements TemplateManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -328,5 +327,4 @@ class TemplateManager implements TemplateManagerInterface
     {
         return file_exists($templateFile);
     }
-
 }

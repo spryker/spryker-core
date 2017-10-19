@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BundleFormDataProvider
 {
-
     /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
@@ -94,5 +93,4 @@ class BundleFormDataProvider
 
         return $bundleNames;
     }
-
 }

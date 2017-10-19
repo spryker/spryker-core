@@ -15,7 +15,6 @@ use Spryker\Shared\Search\SearchConstants;
  */
 abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
 {
-
     /**
      * @return \Elastica\Index
      */
@@ -25,5 +24,4 @@ abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
 
         return $client->getIndex(Config::get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME));
     }
-
 }

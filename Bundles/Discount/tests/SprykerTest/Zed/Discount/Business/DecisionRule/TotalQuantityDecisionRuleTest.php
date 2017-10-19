@@ -23,7 +23,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class TotalQuantityDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -63,5 +62,4 @@ class TotalQuantityDecisionRuleTest extends BaseRuleTester
 
         return new TotalQuantityDecisionRule($comparatorMock);
     }
-
 }

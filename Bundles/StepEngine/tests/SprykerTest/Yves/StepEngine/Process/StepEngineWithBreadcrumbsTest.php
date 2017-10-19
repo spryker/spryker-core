@@ -24,7 +24,6 @@ use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
  */
 class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
 {
-
     const FORM_NAME = 'formName';
 
     /**
@@ -81,5 +80,4 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
     {
         return new StepMockWithBreadcrumbs($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }
-
 }

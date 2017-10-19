@@ -29,7 +29,6 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
  */
 class TaxProductConnectorFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -175,5 +174,4 @@ class TaxProductConnectorFacadeTest extends Unit
 
         return $productAbstractTransfer;
     }
-
 }

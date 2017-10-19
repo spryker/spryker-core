@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CartItemFixture extends AbstractTransfer
 {
-
     /**
      * @var string
      */
@@ -54,5 +53,4 @@ class CartItemFixture extends AbstractTransfer
     {
         // TODO: Implement setQuantity() method.
     }
-
 }

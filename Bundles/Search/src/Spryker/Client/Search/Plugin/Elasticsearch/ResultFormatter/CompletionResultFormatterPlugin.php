@@ -15,7 +15,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\CompletionQueryExpa
  */
 class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-
     const NAME = 'completion';
 
     /**
@@ -55,5 +54,4 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
 
         return $result;
     }
-
 }

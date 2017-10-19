@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetCollector\Dependency\Facade;
 
 class ProductSetCollectorToProductSetBridge implements ProductSetCollectorToProductSetInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
      */
@@ -33,5 +32,4 @@ class ProductSetCollectorToProductSetBridge implements ProductSetCollectorToProd
     {
         return $this->productSetFacade->getCombinedProductSetImageSets($idProductSet, $idLocale);
     }
-
 }

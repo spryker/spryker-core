@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQuery
 {
-
     const COL_URL = 'url';
     const COL_IS_ACTIVE = 'is_active';
     const COL_DATA = 'data';
@@ -78,5 +77,4 @@ abstract class AbstractCmsVersionPageCollector extends AbstractPropelCollectorQu
 
         return $queryString;
     }
-
 }

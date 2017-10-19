@@ -23,7 +23,6 @@ use SprykerTest\Zed\Ratepay\Business\Request\Payment\InstallmentAbstractTest;
  */
 class InstallmentTest extends InstallmentAbstractTest
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class InstallmentTest extends InstallmentAbstractTest
     {
         return $facade->initPayment($this->mockRatepayPaymentInitTransfer());
     }
-
 }

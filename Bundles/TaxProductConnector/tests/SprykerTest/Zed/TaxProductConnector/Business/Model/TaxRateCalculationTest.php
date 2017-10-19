@@ -27,7 +27,6 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContaine
  */
 class TaxRateCalculationTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -230,5 +229,4 @@ class TaxRateCalculationTest extends Unit
             ],
         ];
     }
-
 }

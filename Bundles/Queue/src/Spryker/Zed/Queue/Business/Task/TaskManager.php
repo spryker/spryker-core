@@ -13,7 +13,6 @@ use Spryker\Zed\Queue\QueueConfig;
 
 class TaskManager implements TaskManagerInterface
 {
-
     /**
      * @var \Spryker\Client\Queue\QueueClientInterface
      */
@@ -98,11 +97,11 @@ class TaskManager implements TaskManagerInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    public function receiveMessages($queueName, $chunkSize, array $options = null)
+    public function receiveMessages($queueName, $chunkSize, array $options = [])
     {
         return $this->client->receiveMessages($queueName, $chunkSize, $options);
     }
@@ -128,5 +127,4 @@ class TaskManager implements TaskManagerInterface
             }
         }
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class BraintreeBusinessTester extends Actor
 {
-
     use _generated\BraintreeBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

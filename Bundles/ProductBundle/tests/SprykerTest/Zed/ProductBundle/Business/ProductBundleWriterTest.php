@@ -30,7 +30,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleWriterTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -156,5 +155,4 @@ class ProductBundleWriterTest extends Unit
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }
-
 }

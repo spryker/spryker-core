@@ -14,7 +14,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 class SwiftMailer implements MailProviderPluginInterface
 {
-
     /**
      * @var \Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface
      */
@@ -114,5 +113,4 @@ class SwiftMailer implements MailProviderPluginInterface
 
         return $this;
     }
-
 }

@@ -37,7 +37,6 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
  */
 class ProductBundleFacadeTest extends Unit
 {
-
     const SKU_BUNDLED_1 = 'sku-1-test-tester';
     const SKU_BUNDLED_2 = 'sku-2-test-tester';
     const BUNDLE_SKU_3 = 'sku-3-test-tester';
@@ -470,5 +469,4 @@ class ProductBundleFacadeTest extends Unit
 
         return $productConcreteTransfer;
     }
-
 }

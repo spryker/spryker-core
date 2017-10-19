@@ -29,7 +29,6 @@ use Spryker\Zed\Setup\SetupDependencyProvider;
  */
 class SetupBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Setup\Business\Model\Cronjobs
      */
@@ -223,5 +222,4 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(SetupDependencyProvider::SYMFONY_FINDER);
     }
-
 }

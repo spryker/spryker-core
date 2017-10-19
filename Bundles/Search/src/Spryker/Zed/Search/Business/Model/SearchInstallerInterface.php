@@ -9,10 +9,8 @@ namespace Spryker\Zed\Search\Business\Model;
 
 interface SearchInstallerInterface
 {
-
     /**
      * @return void
      */
     public function install();
-
 }

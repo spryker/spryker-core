@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class UserForm extends AbstractType
 {
-
     const OPTION_GROUP_CHOICES = 'group_choices';
     const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
 
@@ -230,5 +229,4 @@ class UserForm extends AbstractType
             'groups' => [self::GROUP_UNIQUE_USERNAME_CHECK],
         ]);
     }
-
 }

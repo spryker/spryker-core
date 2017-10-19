@@ -21,7 +21,6 @@ use Spryker\Zed\Setup\Business\SetupBusinessFactory;
  */
 class SetupBusinessFactoryTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\Setup\Business\SetupBusinessFactory
      */
@@ -49,5 +48,4 @@ class SetupBusinessFactoryTest extends Unit
 
         $this->assertInstanceOf('Spryker\Zed\Setup\Business\Model\DirectoryRemover', $instance);
     }
-
 }

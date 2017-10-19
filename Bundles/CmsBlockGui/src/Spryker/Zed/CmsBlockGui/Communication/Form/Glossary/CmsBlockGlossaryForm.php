@@ -18,7 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsBlockGlossaryForm extends AbstractType
 {
-
     const FIELD_GLOSSARY_PLACEHOLDERS = 'glossaryPlaceholders';
     const OPTION_DATA_CLASS_PLACEHOLDERS = 'data_class_glossary_placeholders';
 
@@ -74,5 +73,4 @@ class CmsBlockGlossaryForm extends AbstractType
 
         return $this;
     }
-
 }

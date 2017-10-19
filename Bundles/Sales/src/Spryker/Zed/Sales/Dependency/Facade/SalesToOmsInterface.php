@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface SalesToOmsInterface
 {
-
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
@@ -57,5 +56,4 @@ interface SalesToOmsInterface
      * @return array
      */
     public function getOrderItemMatrix();
-
 }

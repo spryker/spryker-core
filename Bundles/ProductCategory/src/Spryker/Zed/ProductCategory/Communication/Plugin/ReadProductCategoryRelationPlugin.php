@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ReadProductCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
 {
-
     /**
      * @return string
      */
@@ -49,5 +48,4 @@ class ReadProductCategoryRelationPlugin extends AbstractPlugin implements Catego
 
         return $productNames;
     }
-
 }

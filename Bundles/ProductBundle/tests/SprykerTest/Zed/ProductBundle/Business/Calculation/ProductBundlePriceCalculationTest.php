@@ -30,7 +30,6 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePr
  */
 class ProductBundlePriceCalculationTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -154,5 +153,4 @@ class ProductBundlePriceCalculationTest extends Unit
 
         return $bundledItems;
     }
-
 }

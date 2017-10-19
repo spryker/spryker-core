@@ -34,6 +34,18 @@
     protected ${{ property.name }}{% if property.type == 'array' %} = []{% endif %};
 {% endmacro %}
 
+{# propertyNamesMap #}
+{% macro addPropertyNameMap(propertyNameMap) %}
+    /**
+     * @var array
+     */
+    protected $transferPropertyNameMap = [
+    {% for propertyNameUnderScore, propertyNameCamelCase  in propertyNameMap %}
+    '{{ propertyNameUnderScore }}' => '{{ propertyNameCamelCase }}',
+    {% endfor -%}
+    ];
+{%- endmacro %}
+
 {# constructor #}
 {% macro addConstructor(properties) %}
 {% if properties %}
@@ -73,7 +85,7 @@
 
         {% endif -%}
         $this->{{ method.property }} = ${{ method.property }};
-        $this->addModifiedProperty(self::{{ method.propertyConst }});
+        $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
     }
@@ -116,7 +128,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
         $this->{{ method.parent }}[] = ${{ method.property }};
-        $this->addModifiedProperty(self::{{ method.propertyConst }});
+        $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
     }
@@ -137,7 +149,7 @@
      */
     public function {{ method.name }}()
     {
-{% if method.isCollection %}
+{% if method.isCollection and method.typeHint != "array" %}
         $this->assertCollectionPropertyIsSet(self::{{ method.propertyConst }});
 {% else %}
         $this->assertPropertyIsSet(self::{{ method.propertyConst }});

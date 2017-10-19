@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 class ProductLabelDiscountConnectorToDiscountBridge implements ProductLabelDiscountConnectorToDiscountInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
@@ -35,5 +34,4 @@ class ProductLabelDiscountConnectorToDiscountBridge implements ProductLabelDisco
     {
         return $this->discountFacade->queryStringCompare($clauseTransfer, $compareWith);
     }
-
 }

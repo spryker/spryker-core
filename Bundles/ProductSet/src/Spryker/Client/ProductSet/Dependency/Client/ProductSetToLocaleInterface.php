@@ -9,10 +9,8 @@ namespace Spryker\Client\ProductSet\Dependency\Client;
 
 interface ProductSetToLocaleInterface
 {
-
     /**
      * @return string
      */
     public function getCurrentLocale();
-
 }

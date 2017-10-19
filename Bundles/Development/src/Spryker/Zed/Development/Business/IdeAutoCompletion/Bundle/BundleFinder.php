@@ -14,7 +14,6 @@ use Symfony\Component\Finder\Finder;
 
 class BundleFinder implements BundleFinderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -142,5 +141,4 @@ class BundleFinder implements BundleFinderInterface
 
         return $mergedMethodTransferCollection;
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 
 class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLabelInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
@@ -84,5 +83,4 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     {
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
-
 }

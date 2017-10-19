@@ -22,7 +22,6 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
  */
 class TaxSetViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
      *
@@ -34,5 +33,4 @@ class TaxSetViewCest
         $i->clickDataTableViewButton();
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / View Tax Set');
     }
-
 }

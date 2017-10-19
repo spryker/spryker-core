@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
 class ComparatorOperators implements ComparatorOperatorsInterface
 {
-
     const MATCH_ALL_IDENTIFIER = '*';
     const TYPE_NUMBER = 'number';
     const TYPE_STRING = 'string';
@@ -200,5 +199,4 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     {
         return ($withValue === self::MATCH_ALL_IDENTIFIER);
     }
-
 }

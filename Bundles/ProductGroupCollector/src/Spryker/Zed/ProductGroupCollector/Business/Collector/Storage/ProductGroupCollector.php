@@ -14,7 +14,6 @@ use Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductGroupC
 
 class ProductGroupCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @return string
      */
@@ -46,5 +45,4 @@ class ProductGroupCollector extends AbstractStoragePropelCollector
     {
         return true;
     }
-
 }

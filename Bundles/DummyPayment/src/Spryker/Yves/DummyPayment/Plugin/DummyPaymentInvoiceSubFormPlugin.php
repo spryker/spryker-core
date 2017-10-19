@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
  */
 class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
-
     /**
      * @return \Spryker\Yves\DummyPayment\Form\InvoiceSubForm
      */
@@ -31,5 +30,4 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
     {
         return $this->getFactory()->createInvoiceFormDataProvider();
     }
-
 }

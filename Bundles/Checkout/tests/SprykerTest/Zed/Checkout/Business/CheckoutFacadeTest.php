@@ -65,7 +65,6 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
  */
 class CheckoutFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Checkout\Business\CheckoutFacade
      */
@@ -430,7 +429,7 @@ class CheckoutFacadeTest extends Unit
 
         $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
             return [
-                new OmsPostSaveHookPlugin()
+                new OmsPostSaveHookPlugin(),
             ];
         };
 
@@ -533,5 +532,4 @@ class CheckoutFacadeTest extends Unit
 
         return $salesBusinessFactoryMock;
     }
-
 }

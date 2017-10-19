@@ -9,10 +9,8 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 interface FacetAggregationInterface
 {
-
     /**
      * @return \Elastica\Aggregation\AbstractAggregation
      */
     public function createAggregation();
-
 }

@@ -31,7 +31,6 @@ use Spryker\Zed\Braintree\Dependency\Facade\BraintreeToRefundInterface;
  */
 class BraintreeFacadeRefundTest extends AbstractFacadeTest
 {
-
     /**
      * @return void
      */
@@ -160,5 +159,4 @@ class BraintreeFacadeRefundTest extends AbstractFacadeTest
 
         return $moneyFacadeMock;
     }
-
 }

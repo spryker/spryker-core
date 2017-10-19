@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 interface ProductBundleToAvailabilityInterface
 {
-
     /**
      * @param string $sku
      * @param int $quantity
@@ -39,5 +38,4 @@ interface ProductBundleToAvailabilityInterface
      * @return int
      */
     public function saveProductAvailability($sku, $quantity);
-
 }

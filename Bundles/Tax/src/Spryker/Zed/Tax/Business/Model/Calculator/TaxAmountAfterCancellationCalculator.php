@@ -13,7 +13,6 @@ use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
 class TaxAmountAfterCancellationCalculator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface
      */
@@ -46,7 +45,6 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
     protected function calculateItemTaxAmountAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer)
     {
         foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
-
             if (!$itemTransfer->getCanceledAmount()) {
                 continue;
             }
@@ -75,7 +73,6 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
     protected function calculateOrderExpenseTaxAmountAfterCancellation(CalculableObjectTransfer $calculableObjectTransfer)
     {
         foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
-
             if (!$expenseTransfer->getCanceledAmount()) {
                 continue;
             }
@@ -111,5 +108,4 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
             return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate, true);
         }
     }
-
 }

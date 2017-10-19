@@ -17,7 +17,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
  */
 class CategoryAttributeTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'category_attribute_table';
 
     /**
@@ -87,5 +86,4 @@ class CategoryAttributeTable extends AbstractTable
 
         return $results;
     }
-
 }

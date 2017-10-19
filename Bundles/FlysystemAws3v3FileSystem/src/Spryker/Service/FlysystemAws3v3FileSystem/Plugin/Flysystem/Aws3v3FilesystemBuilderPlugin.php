@@ -16,7 +16,6 @@ use Spryker\Service\Kernel\AbstractPlugin;
  */
 class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFilesystemBuilderPluginInterface
 {
-
     /**
      * @param string $type
      *
@@ -39,5 +38,4 @@ class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemF
             ->createFlysystemAws3v3FileSystemBuilder($configTransfer, $flysystemPluginCollection)
             ->build();
     }
-
 }

@@ -21,7 +21,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @const string
      */
@@ -103,5 +102,4 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
 
         return '';
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductReview\Storage;
 
 interface ProductAbstractReviewStorageReaderInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param string $localeName
@@ -17,5 +16,4 @@ interface ProductAbstractReviewStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductAbstractReviewTransfer|null
      */
     public function findProductAbstractReview($idProductAbstract, $localeName);
-
 }

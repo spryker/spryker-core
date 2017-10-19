@@ -11,7 +11,6 @@ use ArrayAccess;
 
 interface ContainerInterface extends ArrayAccess
 {
-
     /**
      * @return \Spryker\Shared\Kernel\LocatorLocatorInterface
      */
@@ -24,5 +23,4 @@ interface ContainerInterface extends ArrayAccess
      * @return \Closure
      */
     public function extend($id, $callable);
-
 }

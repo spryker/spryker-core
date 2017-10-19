@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ContentWidgetParameterMapperInterface
 {
-
     /**
      * @param string $content
      *
@@ -26,5 +25,4 @@ interface ContentWidgetParameterMapperInterface
      * @return array
      */
     public function mapByTranslationKey($translationKey, LocaleTransfer $localeTransfer);
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 class LocaleManager
 {
-
     /**
      * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
@@ -204,5 +203,4 @@ class LocaleManager
 
         return $locales;
     }
-
 }

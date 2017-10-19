@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class CategoryFacetAggregation extends AbstractTermsFacetAggregation
 {
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -38,15 +37,16 @@ class CategoryFacetAggregation extends AbstractTermsFacetAggregation
     public function createAggregation()
     {
         $fieldName = $this->facetConfigTransfer->getFieldName();
+        $nestedFieldName = $this->getNestedFieldName($this->facetConfigTransfer);
 
         $aggregation = $this
             ->aggregationBuilder
-            ->createTermsAggregation($fieldName)
+            ->createTermsAggregation($nestedFieldName)
             ->setField($fieldName);
 
         $this->setTermsAggregationSize($aggregation, $this->facetConfigTransfer->getSize());
+        $aggregation = $this->applyAggregationParams($aggregation, $this->facetConfigTransfer);
 
         return $aggregation;
     }
-
 }

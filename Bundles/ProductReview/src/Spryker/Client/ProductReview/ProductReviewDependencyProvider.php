@@ -22,7 +22,6 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 
 class ProductReviewDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
@@ -155,5 +154,4 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
             new RatingAggregationResultFormatterPlugin(),
         ];
     }
-
 }

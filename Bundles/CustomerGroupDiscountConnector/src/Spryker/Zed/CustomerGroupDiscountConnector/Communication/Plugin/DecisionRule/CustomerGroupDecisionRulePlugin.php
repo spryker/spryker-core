@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
-
     /**
      * @api
      *
@@ -60,5 +59,4 @@ class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements Decision
             ComparatorOperators::TYPE_LIST,
         ];
     }
-
 }

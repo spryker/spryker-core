@@ -13,7 +13,6 @@ use Orm\Zed\Cms\Persistence\SpyCmsPage;
 
 interface PageManagerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
@@ -85,5 +84,4 @@ interface PageManagerInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function savePageUrlAndTouch(PageTransfer $pageTransfer);
-
 }

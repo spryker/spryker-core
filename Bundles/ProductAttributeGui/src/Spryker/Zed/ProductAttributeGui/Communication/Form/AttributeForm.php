@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class AttributeForm extends AbstractType
 {
-
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
     const FIELD_KEY = 'key';
     const FIELD_INPUT_TYPE = 'input_type';
@@ -235,5 +234,4 @@ class AttributeForm extends AbstractType
 
         return $this;
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -27,5 +26,4 @@ class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPlugi
     {
         return $this->getFactory()->getDiscountFacade()->calculateDiscounts($quoteTransfer);
     }
-
 }

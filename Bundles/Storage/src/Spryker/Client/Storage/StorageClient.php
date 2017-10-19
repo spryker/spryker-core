@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageClient extends AbstractClient implements StorageClientInterface
 {
-
     const KEY_USED = 'used';
     const KEY_NEW = 'new';
     const KEY_INIT = 'init';
@@ -32,9 +31,16 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * Pre-loaded values for this URL from Storage
      *
-     * @var array
+     * @var array|null
      */
     protected static $bufferedValues;
+
+    /**
+     * The Buffer for already decoded buffered values
+     *
+     * @var array|null
+     */
+    protected static $bufferedDecodedValues;
 
     /**
      * @var \Spryker\Client\Storage\Redis\ServiceInterface
@@ -75,6 +81,18 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     public function setCachedKeys($keys)
     {
         return static::$cachedKeys = $keys;
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function resetCache()
+    {
+        self::$cachedKeys = null;
+        self::$bufferedValues = null;
+        self::$bufferedDecodedValues = null;
     }
 
     /**
@@ -170,14 +188,19 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $this->loadCacheKeysAndValues();
 
-        if (array_key_exists($key, self::$bufferedValues)) {
-            self::$cachedKeys[$key] = self::KEY_USED;
-            return $this->jsonDecode(self::$bufferedValues[$key]);
+        if (!array_key_exists($key, self::$bufferedValues)) {
+            self::$cachedKeys[$key] = self::KEY_NEW;
+
+            return $this->getService()->get($key);
         }
 
-        self::$cachedKeys[$key] = self::KEY_NEW;
+        self::$cachedKeys[$key] = self::KEY_USED;
 
-        return $this->getService()->get($key);
+        if (!array_key_exists($key, self::$bufferedDecodedValues)) {
+            self::$bufferedDecodedValues[$key] = $this->jsonDecode(self::$bufferedValues[$key]);
+        }
+
+        return self::$bufferedDecodedValues[$key];
     }
 
     /**
@@ -191,8 +214,17 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $this->loadCacheKeysAndValues();
 
+        // Get immediately available values
         $keyValues = array_intersect_key(self::$bufferedValues, array_flip($keys));
+
+        foreach ($keyValues as $key => $keyValue) {
+            self::$cachedKeys[$key] = self::KEY_USED;
+        }
+
+        // Get the rest of requested keys without a value
         $keys = array_diff($keys, array_keys($keyValues));
+
+        $keyValues = $this->prefixKeyValues($keyValues);
 
         if ($keys) {
             $keyValues += $this->getService()->getMulti($keys);
@@ -287,6 +319,22 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @param array $keyValues
+     *
+     * @return array
+     */
+    protected function prefixKeyValues(array $keyValues)
+    {
+        $prefixedKeyValues = [];
+
+        foreach ($keyValues as $key => $value) {
+            $prefixedKeyValues[$this->getKeyPrefix() . $key] = $value;
+        }
+
+        return $prefixedKeyValues;
+    }
+
+    /**
      * Pre-Loads all values from storage with mget()
      *
      * @return void
@@ -294,17 +342,26 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected function loadAllValues()
     {
         self::$bufferedValues = [];
+        self::$bufferedDecodedValues = [];
 
         if (!empty(self::$cachedKeys) && is_array(self::$cachedKeys)) {
             $values = $this->getService()->getMulti(array_keys(self::$cachedKeys));
 
             if (!empty($values) && is_array($values)) {
                 foreach ($values as $key => $value) {
-                    $keySuffix = substr($key, strlen(Service::KV_PREFIX));
+                    $keySuffix = substr($key, strlen($this->getKeyPrefix()));
                     self::$bufferedValues[$keySuffix] = $value;
                 }
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getKeyPrefix()
+    {
+        return Service::KV_PREFIX;
     }
 
     /**
@@ -412,5 +469,4 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
         return $result;
     }
-
 }

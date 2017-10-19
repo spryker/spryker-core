@@ -13,7 +13,6 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class InstallmentPaymentMapper extends BaseMapper
 {
-
     /**
      * @var \Generated\Shared\Transfer\RatepayPaymentRequestTransfer
      */
@@ -56,5 +55,4 @@ class InstallmentPaymentMapper extends BaseMapper
                 $this->moneyFacade->convertIntegerToDecimal((int)$this->ratepayPaymentRequestTransfer->getInstallmentGrandTotalAmount())
             );
     }
-
 }

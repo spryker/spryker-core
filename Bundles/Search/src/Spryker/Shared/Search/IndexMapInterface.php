@@ -9,7 +9,6 @@ namespace Spryker\Shared\Search;
 
 interface IndexMapInterface
 {
-
     /**
      * @return array
      */
@@ -28,5 +27,4 @@ interface IndexMapInterface
      * @return array
      */
     public function getMetadata($propertyName);
-
 }

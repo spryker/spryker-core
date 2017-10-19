@@ -23,7 +23,6 @@ use Spryker\Yves\Ratepay\Handler\RatepayHandler;
  */
 class RatepayFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\Ratepay\Handler\RatepayHandler
      */
@@ -116,5 +115,4 @@ class RatepayFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(RatepayDependencyProvider::CLIENT_SESSION);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RefundTransfer;
 
 interface RefundCalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -20,5 +19,4 @@ interface RefundCalculatorInterface
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function calculateRefund(RefundTransfer $refundTransfer, OrderTransfer $orderTransfer, array $salesOrderItems);
-
 }

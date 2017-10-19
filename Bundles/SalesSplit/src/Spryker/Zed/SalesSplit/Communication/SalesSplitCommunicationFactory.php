@@ -17,7 +17,6 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
  */
 class SalesSplitCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -55,5 +54,4 @@ class SalesSplitCommunicationFactory extends AbstractCommunicationFactory
     {
         return new OrderItemSplitDataProvider();
     }
-
 }

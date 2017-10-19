@@ -12,7 +12,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectReader implements UrlRedirectReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -70,5 +69,4 @@ class UrlRedirectReader implements UrlRedirectReaderInterface
 
         return $urlRedirectQuery;
     }
-
 }

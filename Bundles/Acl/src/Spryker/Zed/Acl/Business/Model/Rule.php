@@ -22,7 +22,6 @@ use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class Rule implements RuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
@@ -341,5 +340,4 @@ class Rule implements RuleInterface
             $this->rulesValidator->addRule($rulesTransfer);
         }
     }
-
 }

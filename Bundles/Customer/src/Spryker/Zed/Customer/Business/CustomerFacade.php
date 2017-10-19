@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
 {
-
     /**
      * @api
      *
@@ -449,5 +448,4 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     {
         return $this->getFactory()->createCustomerOrderHydrator()->hydrateOrderTransfer($orderTransfer);
     }
-
 }

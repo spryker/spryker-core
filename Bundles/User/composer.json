@@ -3,7 +3,7 @@
   "description": "User module",
   "license": "proprietary",
   "require": {
-    "spryker/gui": "^3.0.0",
+    "spryker/gui": "^3.10.0",
     "spryker/kernel": "^3.0.0",
     "spryker/session": "^3.1.1",
     "spryker/symfony": "^3.0.0",
@@ -23,14 +23,14 @@
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\User\\": "tests/SprykerTest/Shared/User/_support/Helper/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

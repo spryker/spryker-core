@@ -12,7 +12,6 @@ use Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter\Aws3v3Adapte
 
 class Aws3v3FilesystemBuilder extends AbstractFilesystemBuilder
 {
-
     /**
      * @return \Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer
      */
@@ -49,5 +48,4 @@ class Aws3v3FilesystemBuilder extends AbstractFilesystemBuilder
 
         return new Aws3v3AdapterBuilder($adapterConfigTransfer);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ZedNavigation extends AbstractPlugin
 {
-
     /**
      * @param string $pathInfo
      *
@@ -31,5 +30,4 @@ class ZedNavigation extends AbstractPlugin
         return $this->getFacade()
             ->buildNavigation($pathInfo);
     }
-
 }

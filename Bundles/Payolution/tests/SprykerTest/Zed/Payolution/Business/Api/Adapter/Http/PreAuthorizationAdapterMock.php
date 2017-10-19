@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Payolution\Business\Api\Adapter\Http;
 
 class PreAuthorizationAdapterMock extends AbstractAdapterMock
 {
-
     /**
      * @return array
      */
@@ -123,5 +122,4 @@ class PreAuthorizationAdapterMock extends AbstractAdapterMock
             'address_zip=10623' . '&' .
             'name_title=Mr';
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface GlossaryQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -195,5 +194,4 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryGlossaryTranslationByFkGlossaryKeys(array $idGlossaryKeys);
-
 }

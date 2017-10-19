@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
 class AttributeInputManager
 {
-
     /**
      * @param string $inputType
      * @param string|null $value
@@ -39,5 +38,4 @@ class AttributeInputManager
 
         return $input;
     }
-
 }

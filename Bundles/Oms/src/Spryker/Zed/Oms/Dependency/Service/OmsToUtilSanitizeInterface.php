@@ -7,7 +7,6 @@ namespace Spryker\Zed\Oms\Dependency\Service;
 
 interface OmsToUtilSanitizeInterface
 {
-
     /**
      * @param string $text
      * @param bool $double
@@ -15,5 +14,4 @@ interface OmsToUtilSanitizeInterface
      * @return string
      */
     public function escapeHtml($text, $double = true);
-
 }

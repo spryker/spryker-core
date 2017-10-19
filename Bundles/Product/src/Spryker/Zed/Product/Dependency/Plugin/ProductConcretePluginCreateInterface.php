@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcretePluginCreateInterface
 {
-
     /**
      * Specification:
      * - Executed before and after an concrete product is created.
@@ -26,5 +25,4 @@ interface ProductConcretePluginCreateInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function create(ProductConcreteTransfer $productConcreteTransfer);
-
 }

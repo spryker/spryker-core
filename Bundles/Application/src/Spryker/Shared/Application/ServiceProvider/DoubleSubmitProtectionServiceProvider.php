@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -76,5 +75,4 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
     public function boot(Application $app)
     {
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
  */
 class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -87,5 +86,4 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create($formType, $data, []);
     }
-
 }

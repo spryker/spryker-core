@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
@@ -48,5 +47,4 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
     }
-
 }

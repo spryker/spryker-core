@@ -14,7 +14,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
 {
-
     const LOCALE_FILTER_VALUE = 'LOCALE_FILTER_VALUE';
     const LOCALE_FILTER_CRITERIA = 'LOCALE_FILTER_CRITERIA';
 
@@ -221,5 +220,4 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
 
         return $abstractProductQuery;
     }
-
 }

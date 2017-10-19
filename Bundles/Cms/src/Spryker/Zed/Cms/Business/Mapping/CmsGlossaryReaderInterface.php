@@ -7,7 +7,6 @@ namespace Spryker\Zed\Cms\Business\Mapping;
 
 interface CmsGlossaryReaderInterface
 {
-
     /**
      * @param int $idCmsPage
      *
@@ -16,5 +15,4 @@ interface CmsGlossaryReaderInterface
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
     public function findPageGlossaryAttributes($idCmsPage);
-
 }

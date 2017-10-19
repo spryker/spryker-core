@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlRedirectTransfer;
 
 interface UrlRedirectReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
@@ -25,5 +24,4 @@ interface UrlRedirectReaderInterface
      * @return bool
      */
     public function hasUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
-
 }

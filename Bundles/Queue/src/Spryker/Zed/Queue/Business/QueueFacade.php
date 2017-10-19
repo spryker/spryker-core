@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueFacade extends AbstractFacade implements QueueFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -48,5 +47,4 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
             ->createWorker($output)
             ->start($command);
     }
-
 }

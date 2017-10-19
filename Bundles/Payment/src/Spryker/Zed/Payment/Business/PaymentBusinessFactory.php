@@ -22,7 +22,6 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
  */
 class PaymentBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutorInterface
      */
@@ -102,5 +101,4 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     {
         return new PaymentCalculator();
     }
-
 }

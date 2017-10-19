@@ -9,12 +9,10 @@ namespace Spryker\Zed\Installer\Business;
 
 interface InstallerFacadeInterface
 {
-
     /**
      * @api
      *
      * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
      */
     public function getInstallerPlugins();
-
 }

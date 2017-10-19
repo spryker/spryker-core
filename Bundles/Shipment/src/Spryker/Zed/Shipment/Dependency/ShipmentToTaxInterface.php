@@ -8,7 +8,6 @@ namespace Spryker\Zed\Shipment\Dependency;
 
 interface ShipmentToTaxInterface
 {
-
     /**
      * @return string
      */
@@ -23,5 +22,4 @@ interface ShipmentToTaxInterface
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
     public function getTaxSets();
-
 }

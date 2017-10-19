@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
 class RedisRead extends Redis implements ReadInterface
 {
-
     const KV_PREFIX = 'kv:';
 
     /**
@@ -102,5 +101,4 @@ class RedisRead extends Redis implements ReadInterface
     {
         return $prefix ? $prefix . $key : $key;
     }
-
 }

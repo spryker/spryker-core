@@ -12,7 +12,6 @@ use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
 class SalesPaymentReader implements SalesPaymentReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface
      */
@@ -41,5 +40,4 @@ class SalesPaymentReader implements SalesPaymentReaderInterface
 
         return $salesPaymentEntity->getAmount();
     }
-
 }

@@ -37,7 +37,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormAdd extends AbstractType
 {
-
     const FIELD_SKU = 'sku';
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
@@ -707,7 +706,6 @@ class ProductFormAdd extends AbstractType
                         $context->addViolation('Date "New from" is the same as "New to".');
                     }
                 }
-
             },
         ]);
     }
@@ -753,5 +751,4 @@ class ProductFormAdd extends AbstractType
             }
         );
     }
-
 }

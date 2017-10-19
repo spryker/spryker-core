@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
@@ -42,5 +41,4 @@ class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductLabelProductAbstractQuery::create();
     }
-
 }

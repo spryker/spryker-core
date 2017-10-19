@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "fzaninotto/faker": "^1.6",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.10.0",
     "spryker/log": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
@@ -17,13 +17,12 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "Transfer\\Module\\": "tests/_support/Module/"
+      "SprykerTest\\Shared\\Transfer\\": "tests/SprykerTest/Shared/Transfer/_support/Helper/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

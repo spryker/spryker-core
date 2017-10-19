@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase;
 
 class DatabaseCreatorCollection implements DatabaseCreatorCollectionInterface
 {
-
     /**
      * @var array
      */
@@ -46,5 +45,4 @@ class DatabaseCreatorCollection implements DatabaseCreatorCollectionInterface
     {
         return array_key_exists($engine, $this->databaseCreator);
     }
-
 }

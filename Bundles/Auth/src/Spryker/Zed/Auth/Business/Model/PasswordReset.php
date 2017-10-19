@@ -21,7 +21,6 @@ use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class PasswordReset
 {
-
     const LENGTH = 22;
 
     /**
@@ -183,5 +182,4 @@ class PasswordReset
     ) {
         $this->userPasswordResetNotificationSender = $userPasswordResetNotificationSender;
     }
-
 }

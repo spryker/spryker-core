@@ -16,7 +16,6 @@ use Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPlugin
  */
 class CmsBlockProductAbstractBlockListViewPlugin extends AbstractPlugin implements ProductAbstractViewPluginInterface
 {
-
     /**
      * @return string
      */
@@ -35,5 +34,4 @@ class CmsBlockProductAbstractBlockListViewPlugin extends AbstractPlugin implemen
         return $this->getFacade()
             ->getCmsBlockRenderedList($idProductAbstract);
     }
-
 }

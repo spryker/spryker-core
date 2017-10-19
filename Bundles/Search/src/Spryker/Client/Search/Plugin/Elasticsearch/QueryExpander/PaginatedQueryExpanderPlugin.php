@@ -18,7 +18,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
@@ -49,5 +48,4 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
         $query->setFrom(($currentPage - 1) * $itemsPerPage);
         $query->setSize($itemsPerPage);
     }
-
 }

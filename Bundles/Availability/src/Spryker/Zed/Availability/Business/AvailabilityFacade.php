@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -134,5 +133,4 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
             ->createAvailabilityHandler()
             ->saveCurrentAvailability($sku, $quantity);
     }
-
 }

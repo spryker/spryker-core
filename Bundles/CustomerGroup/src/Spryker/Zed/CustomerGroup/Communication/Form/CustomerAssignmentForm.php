@@ -16,7 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomerAssignmentForm extends AbstractType
 {
-
     const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
     const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = 'idsCustomerToAssign';
     const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = 'idsCustomerToDeAssign';
@@ -143,5 +142,4 @@ class CustomerAssignmentForm extends AbstractType
                 }
             ));
     }
-
 }

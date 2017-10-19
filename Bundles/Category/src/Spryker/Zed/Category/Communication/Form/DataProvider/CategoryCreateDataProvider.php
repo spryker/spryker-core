@@ -17,7 +17,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryCreateDataProvider
 {
-
     const DATA_CLASS = 'data_class';
 
     /**
@@ -148,5 +147,4 @@ class CategoryCreateDataProvider
             ->find()
             ->toKeyValue('idCategoryTemplate', 'name');
     }
-
 }

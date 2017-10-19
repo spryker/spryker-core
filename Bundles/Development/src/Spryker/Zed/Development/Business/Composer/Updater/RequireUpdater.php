@@ -18,7 +18,6 @@ use Zend\Filter\Word\DashToCamelCase;
 
 class RequireUpdater implements UpdaterInterface
 {
-
     const KEY_REQUIRE = 'require';
     const RELEASE_OPERATOR = '^';
     const EXTERNAL_DEPENDENCIES_BUNDLE_NAME = 'External';
@@ -108,5 +107,4 @@ class RequireUpdater implements UpdaterInterface
 
         return $dependentBundles;
     }
-
 }

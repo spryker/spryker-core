@@ -21,7 +21,6 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
  */
 class ClassInfoTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -77,5 +76,4 @@ class ClassInfoTest extends Unit
 
         $this->assertSame('ClassResolver', $classInfo->getLayer());
     }
-
 }

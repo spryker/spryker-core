@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class BundleCreateConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:module:create';
     const ARGUMENT_MODULE = 'module';
     const ARGUMENT_FILE = 'file';
@@ -63,5 +62,4 @@ class BundleCreateConsole extends Console
 
         $this->getFacade()->createModule($module, $options);
     }
-
 }

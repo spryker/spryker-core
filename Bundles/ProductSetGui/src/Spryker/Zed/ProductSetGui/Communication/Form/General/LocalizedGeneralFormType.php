@@ -28,7 +28,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class LocalizedGeneralFormType extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_URL = 'url';
     const FIELD_URL_PREFIX = 'url_prefix';
@@ -281,5 +280,4 @@ class LocalizedGeneralFormType extends AbstractType
 
         return $url;
     }
-
 }

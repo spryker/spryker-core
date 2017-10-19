@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
  */
 class MetaDataProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -141,7 +140,7 @@ class MetaDataProviderTest extends Unit
 
         return new MetaDataProvider(
             [
-                $decisionRulePluginMock
+                $decisionRulePluginMock,
             ],
             $comparatorOperators,
             $logicalComparatorsMock
@@ -173,5 +172,4 @@ class MetaDataProviderTest extends Unit
     {
         return $this->getMockBuilder(LogicalComparators::class)->getMock();
     }
-
 }

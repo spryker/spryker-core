@@ -21,7 +21,6 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Writer implements WriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     const DEFAULT_NAME = 'default';
@@ -471,5 +470,4 @@ class Writer implements WriterInterface
 
         return $query->count() === 0;
     }
-
 }

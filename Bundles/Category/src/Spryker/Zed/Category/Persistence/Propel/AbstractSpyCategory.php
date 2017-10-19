@@ -22,7 +22,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
  */
 abstract class AbstractSpyCategory extends BaseSpyCategory
 {
-
     /**
      * @param int $idLocale
      *
@@ -39,5 +38,4 @@ abstract class AbstractSpyCategory extends BaseSpyCategory
 
         return $this->getAttributes($criteria);
     }
-
 }

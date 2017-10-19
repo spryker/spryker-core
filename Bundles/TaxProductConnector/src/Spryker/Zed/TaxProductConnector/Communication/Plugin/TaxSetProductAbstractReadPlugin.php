@@ -16,7 +16,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
  */
 class TaxSetProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -27,5 +26,4 @@ class TaxSetProductAbstractReadPlugin extends AbstractPlugin implements ProductA
          return $this->getFacade()
              ->mapTaxSet($productAbstractTransfer);
     }
-
 }

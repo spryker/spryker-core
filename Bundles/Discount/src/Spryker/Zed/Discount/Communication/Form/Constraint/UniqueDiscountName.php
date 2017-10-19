@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueDiscountName extends SymfonyConstraint
 {
-
     const OPTION_DISCOUNT_QUERY_CONTAINER = 'discountQueryContainer';
 
     /**
@@ -25,5 +24,4 @@ class UniqueDiscountName extends SymfonyConstraint
     {
         return $this->discountQueryContainer;
     }
-
 }

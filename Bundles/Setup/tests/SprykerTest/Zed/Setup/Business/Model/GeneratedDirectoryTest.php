@@ -24,7 +24,6 @@ use Symfony\Component\Finder\Finder;
  */
 class GeneratedDirectoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class GeneratedDirectoryTest extends Unit
             ->getMockBuilder(Finder::class)
             ->getMock();
     }
-
 }

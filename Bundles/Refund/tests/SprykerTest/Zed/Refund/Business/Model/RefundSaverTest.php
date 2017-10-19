@@ -35,7 +35,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
  */
 class RefundSaverTest extends Unit
 {
-
     /**
      * @var bool
      */
@@ -266,5 +265,4 @@ class RefundSaverTest extends Unit
     {
         return $this->isCommitSuccessful;
     }
-
 }

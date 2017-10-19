@@ -20,7 +20,6 @@ use Orm\Zed\Stock\Persistence\Base\SpyStockProduct as BaseSpyStockProduct;
  */
 abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
 {
-
     /**
      * @param int $amount
      *
@@ -42,5 +41,4 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
         $this->setQuantity($this->getQuantity() + $amount);
         $this->save();
     }
-
 } // Spryker\Zed\Stock\Persistence\Propel\AbstractSpyStockProduct

@@ -22,7 +22,6 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
  */
 class SalesDetailCest
 {
-
     /**
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
@@ -40,5 +39,4 @@ class SalesDetailCest
         $i->waitForElement('#items', 3);
         $i->seeElement(['xpath' => SalesDetailPage::getSalesOrderItemRowSelector(1)]);
     }
-
 }

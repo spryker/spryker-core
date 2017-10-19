@@ -20,7 +20,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class AttributeWriter implements AttributeWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -324,5 +323,4 @@ class AttributeWriter implements AttributeWriterInterface
     {
         return $this->localeFacade->getLocale($localeName);
     }
-
 }

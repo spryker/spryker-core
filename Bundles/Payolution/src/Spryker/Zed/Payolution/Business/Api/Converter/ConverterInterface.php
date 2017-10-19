@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payolution\Business\Api\Converter;
 
 interface ConverterInterface
 {
-
     /**
      * @param string $stringData
      *
@@ -30,5 +29,4 @@ interface ConverterInterface
      * @return \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     public function toCalculationResponseTransfer($stringData);
-
 }

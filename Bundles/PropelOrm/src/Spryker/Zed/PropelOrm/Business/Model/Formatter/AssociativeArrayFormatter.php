@@ -11,7 +11,6 @@ use Propel\Runtime\Formatter\SimpleArrayFormatter;
 
 class AssociativeArrayFormatter extends SimpleArrayFormatter
 {
-
     /**
      * @param array $row
      *
@@ -73,5 +72,4 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
     {
         return strpos($keyName, '\\') !== false;
     }
-
 }

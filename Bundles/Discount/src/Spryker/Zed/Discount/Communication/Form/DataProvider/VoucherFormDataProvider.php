@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 
 class VoucherFormDataProvider extends BaseDiscountFormDataProvider
 {
-
     /**
      * @param int|null $idDiscount
      *
@@ -27,5 +26,4 @@ class VoucherFormDataProvider extends BaseDiscountFormDataProvider
 
         return $discountVoucherTransfer;
     }
-
 }

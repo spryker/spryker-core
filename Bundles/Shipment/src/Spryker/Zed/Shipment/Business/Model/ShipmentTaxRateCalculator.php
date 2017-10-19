@@ -14,7 +14,6 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentTaxRateCalculator implements CalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
@@ -108,5 +107,4 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
             $countryIso2Code
         )->findOne();
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
  */
 class ProductBundleProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ class ProductBundleProductConcreteAfterCreatePlugin extends AbstractPlugin imple
     {
         return $this->getFacade()->saveBundledProducts($productConcreteTransfer);
     }
-
 }

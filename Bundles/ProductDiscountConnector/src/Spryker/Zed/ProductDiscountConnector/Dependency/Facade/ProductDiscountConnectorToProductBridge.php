@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductDiscountConnectorToProductBridge implements ProductDiscountConnectorToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -36,5 +35,4 @@ class ProductDiscountConnectorToProductBridge implements ProductDiscountConnecto
     {
         return $this->productFacade->getCombinedConcreteAttributes($productConcreteTransfer, $localeTransfer);
     }
-
 }

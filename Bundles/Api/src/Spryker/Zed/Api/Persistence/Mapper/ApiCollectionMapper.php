@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class ApiCollectionMapper implements ApiCollectionMapperInterface
 {
-
     /**
      * @param array $data
      *
@@ -35,5 +34,4 @@ class ApiCollectionMapper implements ApiCollectionMapperInterface
 
         return $apiCollectionTransfer;
     }
-
 }

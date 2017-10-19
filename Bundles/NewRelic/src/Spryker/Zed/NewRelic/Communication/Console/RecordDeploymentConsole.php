@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RecordDeploymentConsole extends Console
 {
-
     const COMMAND_NAME = 'newrelic:record-deployment';
     const DESCRIPTION = 'Send deployment notification to New Relic';
 
@@ -98,5 +97,4 @@ class RecordDeploymentConsole extends Console
 
         return 0;
     }
-
 }

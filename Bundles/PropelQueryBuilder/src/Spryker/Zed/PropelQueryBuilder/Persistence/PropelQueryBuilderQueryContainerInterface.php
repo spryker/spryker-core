@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface PropelQueryBuilderQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * Specification:
      * - Converts RuleQuerySet of PropelQueryBuilderCriteriaTransfer into Propel criteria
@@ -41,5 +40,4 @@ interface PropelQueryBuilderQueryContainerInterface extends QueryContainerInterf
      * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
     public function createPropelQueryBuilderCriteriaFromJson($json);
-
 }

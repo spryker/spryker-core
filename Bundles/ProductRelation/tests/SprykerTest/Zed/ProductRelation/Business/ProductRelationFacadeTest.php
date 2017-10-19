@@ -33,7 +33,6 @@ use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
  */
 class ProductRelationFacadeTest extends Unit
 {
-
     const ID_TEST_LOCALE = 66;
 
     /**
@@ -299,5 +298,4 @@ class ProductRelationFacadeTest extends Unit
 
         return $ruleQuerySetTransfer;
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class PaymentPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
      */
@@ -33,5 +32,4 @@ class PaymentPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpySalesPaymentMethodTypeQuery::create();
     }
-
 }

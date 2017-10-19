@@ -9,7 +9,6 @@ namespace Spryker\Shared\Currency\Builder;
 
 interface CurrencyBuilderInterface
 {
-
     /**
      * @param string $isoCode
      *
@@ -21,5 +20,4 @@ interface CurrencyBuilderInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
-
 }

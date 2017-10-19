@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
@@ -19,6 +20,7 @@ use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
@@ -42,7 +44,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\Discount\BusinessTester
      */
@@ -64,7 +65,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('123');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $isSatisfied = $discountFacade->isItemSkuSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
@@ -88,7 +89,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(10);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ]);
 
         $isSatisfied = $discountFacade->isQuoteGrandTotalSatisfiedBy(
@@ -120,7 +121,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(5);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ]);
 
         $isSatisfied = $discountFacade->isTotalQuantitySatisfiedBy(
@@ -148,7 +149,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue(50);
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ]);
 
         $isSatisfied = $discountFacade->isSubTotalSatisfiedBy(
@@ -176,7 +177,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('sku');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ]);
 
         $collected = $discountFacade->collectBySku($quoteTransfer, $clauseTransfer);
@@ -309,7 +310,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('value');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $withValue = 'value';
@@ -329,7 +330,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('value');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $withValue = 'value2';
@@ -349,7 +350,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('value');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $errors = $discountFacade->validateQueryStringByType(MetaProviderFactory::TYPE_DECISION_RULE, 'invalid =');
@@ -420,7 +421,7 @@ class DiscountFacadeTest extends Unit
         $clauseTransfer->setOperator('=');
         $clauseTransfer->setValue('value');
         $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING
+            ComparatorOperators::TYPE_STRING,
         ]);
 
         $errors = $discountFacade->validateQueryStringByType(MetaProviderFactory::TYPE_DECISION_RULE, 'sku = "123"');
@@ -583,13 +584,16 @@ class DiscountFacadeTest extends Unit
 
         $discountableItemTransfer = new DiscountableItemTransfer();
         $discountableItemTransfer->setQuantity(3);
-        $discountableItemTransfer->setUnitGrossPrice(30);
+        $discountableItemTransfer->setUnitPrice(30);
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($calculatedDiscounts);
         $discountableItems[] = $discountableItemTransfer;
 
         $discountFacade = $this->createDiscountFacade();
 
-        $amount = $discountFacade->calculatePercentage($discountableItems, 10 * 100);
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setAmount(10 * 100);
+
+        $amount = $discountFacade->calculatePercentageDiscount($discountableItems, $discountTransfer);
 
         $this->assertEquals(9, $amount);
     }
@@ -600,7 +604,16 @@ class DiscountFacadeTest extends Unit
     public function testCalculatedFixedShouldUseFixedAmountGiver()
     {
         $discountFacade = $this->createDiscountFacade();
-        $amount = $discountFacade->calculateFixed([], 50);
+        $discountTransfer = new DiscountTransfer();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $discountTransfer->setCurrency($currencyTransfer);
+
+        $moneyValueTransfer = new MoneyValueTransfer();
+        $moneyValueTransfer->setGrossAmount(50);
+        $moneyValueTransfer->setCurrency($currencyTransfer);
+        $discountTransfer->addMoneyValue($moneyValueTransfer);
+        $amount = $discountFacade->calculateFixedDiscount([], $discountTransfer);
 
         $this->assertEquals(50, $amount);
     }
@@ -626,7 +639,7 @@ class DiscountFacadeTest extends Unit
 
             $discountableItemTransfer = new DiscountableItemTransfer();
             $discountableItemTransfer->setQuantity(1);
-            $discountableItemTransfer->setUnitGrossPrice($price);
+            $discountableItemTransfer->setUnitPrice($price);
             $discountableItemTransfer->setOriginalItemCalculatedDiscounts($calculatedDiscounts);
             $discountableItems->append($discountableItemTransfer);
         }
@@ -636,8 +649,8 @@ class DiscountFacadeTest extends Unit
         $discountFacade = $this->createDiscountFacade();
         $discountFacade->distributeAmount($collectedDiscountTransfer);
 
-        $firstItemDistributedAmount = $discountableItems[0]->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
-        $secondItemDistributedAmount = $discountableItems[1]->getOriginalItemCalculatedDiscounts()[0]->getUnitGrossAmount();
+        $firstItemDistributedAmount = $discountableItems[0]->getOriginalItemCalculatedDiscounts()[0]->getUnitAmount();
+        $secondItemDistributedAmount = $discountableItems[1]->getOriginalItemCalculatedDiscounts()[0]->getUnitAmount();
 
         $this->assertEquals(14, $firstItemDistributedAmount);
         $this->assertEquals(86, $secondItemDistributedAmount);
@@ -788,5 +801,4 @@ class DiscountFacadeTest extends Unit
 
         return $discountRulePluginMock;
     }
-
 }

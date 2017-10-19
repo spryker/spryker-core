@@ -13,7 +13,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectValidator implements UrlRedirectValidatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -106,5 +105,4 @@ class UrlRedirectValidator implements UrlRedirectValidatorInterface
             ->queryUrlRedirectBySourceUrl($sourceUrl)
             ->findOne();
     }
-
 }

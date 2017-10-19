@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer;
 
 interface ProductAttributeGuiToProductInterface
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -19,5 +18,4 @@ interface ProductAttributeGuiToProductInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProduct();
-
 }

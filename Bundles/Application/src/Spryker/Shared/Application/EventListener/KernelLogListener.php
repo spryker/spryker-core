@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class KernelLogListener implements EventSubscriberInterface
 {
-
     /**
      * @var \Psr\Log\LoggerInterface
      */
@@ -123,5 +122,4 @@ class KernelLogListener implements EventSubscriberInterface
             KernelEvents::RESPONSE => ['onKernelResponse'],
         ];
     }
-
 }

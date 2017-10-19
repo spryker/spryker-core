@@ -27,7 +27,6 @@ use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemB
  */
 class FlysystemAws3v3FileSystemTest extends Unit
 {
-
     const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
     const PATH_DOCUMENT = 'documents/';
 
@@ -94,5 +93,4 @@ class FlysystemAws3v3FileSystemTest extends Unit
 
         $this->assertTrue($isTypeAccepted);
     }
-
 }

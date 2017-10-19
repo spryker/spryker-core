@@ -14,7 +14,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferValidator implements TransferValidatorInterface
 {
-
     const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
@@ -229,5 +228,4 @@ class TransferValidator implements TransferValidatorInterface
 
         return $filter->filter(str_replace(self::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
     }
-
 }

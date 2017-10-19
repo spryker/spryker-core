@@ -15,7 +15,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class GlossaryInstaller implements GlossaryInstallerInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface
      */
@@ -113,5 +112,4 @@ class GlossaryInstaller implements GlossaryInstallerInterface
 
         return $results;
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const STORE = 'STORE';
     const PLUGINS = 'PLUGINS';
     const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
@@ -150,5 +149,4 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

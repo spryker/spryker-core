@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 
 class CategoryExtractor implements AggregationExtractorInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -72,5 +71,4 @@ class CategoryExtractor implements AggregationExtractorInterface
 
         return $facetValues;
     }
-
 }

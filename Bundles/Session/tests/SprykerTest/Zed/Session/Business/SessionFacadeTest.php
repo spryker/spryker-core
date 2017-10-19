@@ -26,7 +26,6 @@ use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvi
  */
 class SessionFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -124,5 +123,4 @@ class SessionFacadeTest extends Unit
             [SessionConstants::SESSION_HANDLER_FILE],
         ];
     }
-
 }

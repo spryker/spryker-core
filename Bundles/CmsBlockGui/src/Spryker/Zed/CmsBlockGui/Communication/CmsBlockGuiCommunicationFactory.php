@@ -25,7 +25,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider
      */
@@ -190,5 +189,4 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CmsBlockGlossaryPlaceholderForm();
     }
-
 }

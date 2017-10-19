@@ -22,7 +22,6 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
  */
 class TaxSetCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
      *
@@ -31,7 +30,6 @@ class TaxSetCreateCest
     public function breadcrumbIsVisible(TaxCommunicationTester $i)
     {
         $i->amOnPage(TaxSetCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Create New Tax Set');
+        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Create Tax Set');
     }
-
 }

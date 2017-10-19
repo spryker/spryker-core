@@ -14,7 +14,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class DataImportStepBeforeAndAfter implements DataImportStepInterface, DataImportStepBeforeExecuteInterface, DataImportStepAfterExecuteInterface
 {
-
     /**
      * @return void
      */
@@ -37,5 +36,4 @@ class DataImportStepBeforeAndAfter implements DataImportStepInterface, DataImpor
     public function afterExecute()
     {
     }
-
 }

@@ -15,7 +15,6 @@ use Codeception\Module;
  */
 class Environment extends Module
 {
-
     const MODE_ISOLATED = 'isolated';
 
     const MODE_DEFAULT_ROOT = '../../../../..';
@@ -53,5 +52,4 @@ class Environment extends Module
         defined('APPLICATION_VENDOR_DIR') || define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . '/vendor');
         defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . '/src');
     }
-
 }

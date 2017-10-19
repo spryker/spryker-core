@@ -19,7 +19,6 @@ use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterf
 
 class CmsPageFormTypeDataProvider
 {
-
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
      */
@@ -113,7 +112,6 @@ class CmsPageFormTypeDataProvider
         $cmsPageTransfer = new CmsPageTransfer();
 
         foreach ($this->getAvailableLocales() as $localeTransfer) {
-
             $cmsPageAttributeTransfer = $this->createInitialCmsPageAttributesTransfer($localeTransfer);
             $cmsPageTransfer->addPageAttribute($cmsPageAttributeTransfer);
 
@@ -163,5 +161,4 @@ class CmsPageFormTypeDataProvider
         return $this->localFacade
             ->getLocaleCollection();
     }
-
 }

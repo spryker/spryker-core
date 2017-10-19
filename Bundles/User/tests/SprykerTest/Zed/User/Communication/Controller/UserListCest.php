@@ -22,7 +22,6 @@ use SprykerTest\Zed\User\UserCommunicationTester;
  */
 class UserListCest
 {
-
     /**
      * @param \SprykerTest\Zed\User\UserCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class UserListCest
         $i->amOnPage(UserListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / User');
     }
-
 }

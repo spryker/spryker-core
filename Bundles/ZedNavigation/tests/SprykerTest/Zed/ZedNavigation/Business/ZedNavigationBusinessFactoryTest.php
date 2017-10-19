@@ -22,7 +22,6 @@ use Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory;
  */
 class ZedNavigationBusinessFactoryTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory
      */
@@ -40,5 +39,4 @@ class ZedNavigationBusinessFactoryTest extends Unit
 
         $this->assertInstanceOf(ZedNavigationBuilder::class, $instance);
     }
-
 }

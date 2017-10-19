@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class PayolutionClient extends AbstractClient implements PayolutionClientInterface
 {
-
     /**
      * @api
      *
@@ -83,5 +82,4 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     {
         return $this->getSession()->removeInstallmentPayments();
     }
-
 }

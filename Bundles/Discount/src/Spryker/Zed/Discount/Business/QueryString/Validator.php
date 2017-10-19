@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
 
 class Validator implements ValidatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface
      */
@@ -97,5 +96,4 @@ class Validator implements ValidatorInterface
     {
         $this->collectorBuilder->buildFromQueryString($queryString);
     }
-
 }

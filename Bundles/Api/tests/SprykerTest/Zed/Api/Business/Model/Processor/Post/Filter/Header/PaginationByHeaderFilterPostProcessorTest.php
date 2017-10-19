@@ -31,7 +31,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeade
  */
 class PaginationByHeaderFilterPostProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -68,5 +67,4 @@ class PaginationByHeaderFilterPostProcessorTest extends Unit
         ];
         $this->assertSame($expected, $apiResponseTransfer->getHeaders());
     }
-
 }

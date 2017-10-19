@@ -14,7 +14,6 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 
 class DataReaderStub extends ArrayIterator implements DataReaderInterface, ConfigurableDataReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImportReaderConfigurationTransfer
      *
@@ -24,5 +23,4 @@ class DataReaderStub extends ArrayIterator implements DataReaderInterface, Confi
     {
         return $this;
     }
-
 }

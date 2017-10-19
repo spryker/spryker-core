@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class SessionStorageTest extends Unit
 {
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -89,5 +88,4 @@ class SessionStorageTest extends Unit
 
         $this->sessionStorage->deleteToken($testKey);
     }
-
 }

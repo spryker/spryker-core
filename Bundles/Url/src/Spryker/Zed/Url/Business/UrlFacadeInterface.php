@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface UrlFacadeInterface
 {
-
     /**
      * Specification:
      * - Persists a new URL entity in database.
@@ -474,5 +473,4 @@ interface UrlFacadeInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
-
 }

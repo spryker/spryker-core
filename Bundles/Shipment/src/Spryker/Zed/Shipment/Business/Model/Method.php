@@ -16,7 +16,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 class Method implements MethodInterface
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
@@ -371,5 +370,4 @@ class Method implements MethodInterface
 
         return $shipmentMethodTransfer;
     }
-
 }

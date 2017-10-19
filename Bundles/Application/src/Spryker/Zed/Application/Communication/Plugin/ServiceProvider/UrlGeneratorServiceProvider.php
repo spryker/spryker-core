@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -40,5 +39,4 @@ class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProvi
     public function boot(Application $app)
     {
     }
-
 }

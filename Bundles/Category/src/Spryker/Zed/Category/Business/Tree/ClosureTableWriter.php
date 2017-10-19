@@ -17,7 +17,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class ClosureTableWriter implements ClosureTableWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -231,5 +230,4 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             $entityToMoveToRoot->delete();
         }
     }
-
 }

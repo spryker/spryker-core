@@ -11,7 +11,6 @@ use Symfony\Component\Finder\Finder;
 
 class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
 {
-
     /**
      * @var array
      */
@@ -57,5 +56,4 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
 
         return $paths;
     }
-
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
 use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException;
+use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\CamelCaseToDash;
@@ -16,10 +17,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeStyleSniffer
 {
-
     const CODE_SUCCESS = 0;
-
-    const BUNDLE_ALL = 'all';
 
     const OPTION_FIX = 'fix';
     const OPTION_PRINT_DIFF_REPORT = 'report-diff';
@@ -29,31 +27,20 @@ class CodeStyleSniffer
     const OPTION_SNIFFS = 'sniffs';
     const OPTION_VERBOSE = 'verbose';
 
-    /**
-     * @var string
-     */
-    protected $applicationRoot;
+    const APPLICATION_NAMESPACES = ['Orm'];
+    const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
     /**
-     * @var string
+     * @var \Spryker\Zed\Development\DevelopmentConfig
      */
-    protected $pathToBundles;
+    protected $config;
 
     /**
-     * @var string
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    protected $codingStandard;
-
-    /**
-     * @param string $applicationRoot
-     * @param string $pathToBundles
-     * @param string $codingStandard
-     */
-    public function __construct($applicationRoot, $pathToBundles, $codingStandard)
+    public function __construct(DevelopmentConfig $config)
     {
-        $this->applicationRoot = $applicationRoot;
-        $this->pathToBundles = $pathToBundles;
-        $this->codingStandard = $codingStandard;
+        $this->config = $config;
     }
 
     /**
@@ -64,49 +51,57 @@ class CodeStyleSniffer
      */
     public function checkCodeStyle($module, array $options = [])
     {
+        $isCore = isset($options['core']) ? $options['core'] : false;
         $pathOption = isset($options['path']) ? $options['path'] : null;
-        $path = $this->resolvePath($module, $pathOption);
-
         $defaults = [
-            'ignore' => ($module || $pathOption) ? '' : 'vendor/',
+            'ignore' => $isCore || $pathOption ? '' : 'vendor/',
         ];
         $options += $defaults;
+
+        $path = $this->resolvePath($module, $isCore, $pathOption);
 
         return $this->runSnifferCommand($path, $options);
     }
 
     /**
      * @param string $module
+     * @param bool $isCore
      * @param string|null $path
      *
      * @return string
      */
-    protected function resolvePath($module, $path = null)
+    protected function resolvePath($module, $isCore, $path = null)
     {
         $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : null;
 
-        if ($module) {
-            if (strtolower($module) === static::BUNDLE_ALL) {
-                return rtrim($this->pathToBundles, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        if ($isCore) {
+            if (!$module) {
+                return rtrim($this->config->getPathToCore(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             }
 
-            return $this->getPathToBundle($module, $path);
+            return $this->getPathToModule($module, $path);
         }
 
-        return rtrim($this->applicationRoot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $path;
+        $pathToRoot = $this->config->getPathToRoot();
+
+        if (!$module) {
+            return $pathToRoot . $path;
+        }
+
+        return $this->resolveProjectPath($module, $path);
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param string|null $pathSuffix
      *
      * @throws \Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException
      *
      * @return string
      */
-    protected function getPathToBundle($bundle, $pathSuffix = null)
+    protected function getPathToModule($module, $pathSuffix = null)
     {
-        $lookupPaths = $this->buildPaths($bundle, $pathSuffix);
+        $lookupPaths = $this->buildPaths($module, $pathSuffix);
 
         foreach ($lookupPaths as $path) {
             if ($this->isPathValid($path)) {
@@ -116,7 +111,7 @@ class CodeStyleSniffer
 
         $message = sprintf(
             'Could not find valid paths to your module "%s". Lookup paths "%s". Maybe there is a typo in the module name?',
-            $bundle,
+            $module,
             implode(', ', $lookupPaths)
         );
 
@@ -124,76 +119,76 @@ class CodeStyleSniffer
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param string|null $pathSuffix
      *
      * @return array
      */
-    protected function buildPaths($bundle, $pathSuffix = null)
+    protected function buildPaths($module, $pathSuffix = null)
     {
         return [
-            $this->getPathToSprykerBundle($this->normalizeBundleNameForSplit($bundle), $pathSuffix),
-            $this->getPathToSprykerPackageNonSplit($this->normalizeBundleNameForSplit($bundle), $pathSuffix),
-            $this->getPathToSprykerBundle($this->normalizeBundleNameForNonSplit($bundle), $pathSuffix),
+            $this->getPathToCoreModule($this->normalizeModuleNameForSplit($module), $pathSuffix),
+            $this->getPathToCorePackageNonSplit($this->normalizeModuleNameForSplit($module), $pathSuffix),
+            $this->getPathToCoreModule($this->normalizeModuleNameForNonSplit($module), $pathSuffix),
         ];
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      *
      * @return string
      */
-    protected function normalizeBundleNameForNonSplit($bundle)
+    protected function normalizeModuleNameForNonSplit($module)
     {
         $filterChain = new FilterChain();
         $filterChain
             ->attach(new UnderscoreToCamelCase())
             ->attach(new DashToCamelCase());
 
-        return ucfirst($filterChain->filter($bundle));
+        return ucfirst($filterChain->filter($module));
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      *
      * @return string
      */
-    protected function normalizeBundleNameForSplit($bundle)
+    protected function normalizeModuleNameForSplit($module)
     {
         $filterChain = new FilterChain();
         $filterChain
             ->attach(new UnderscoreToCamelCase())
             ->attach(new CamelCaseToDash());
 
-        return strtolower($filterChain->filter($bundle));
+        return strtolower($filterChain->filter($module));
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param string|null $pathSuffix
      *
      * @return string
      */
-    protected function getPathToSprykerBundle($bundle, $pathSuffix = null)
+    protected function getPathToCoreModule($module, $pathSuffix = null)
     {
         return implode('', [
-            rtrim($this->pathToBundles, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
-            $bundle . DIRECTORY_SEPARATOR,
+            rtrim($this->config->getPathToCore(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+            $module . DIRECTORY_SEPARATOR,
             $pathSuffix,
         ]);
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param string|null $pathSuffix
      *
      * @return string
      */
-    protected function getPathToSprykerPackageNonSplit($bundle, $pathSuffix = null)
+    protected function getPathToCorePackageNonSplit($module, $pathSuffix = null)
     {
         return implode('', [
-            rtrim(dirname(dirname($this->pathToBundles)), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
-            $bundle . DIRECTORY_SEPARATOR,
+            rtrim(dirname(dirname($this->config->getPathToCore())), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
+            $module . DIRECTORY_SEPARATOR,
             $pathSuffix,
         ]);
     }
@@ -218,7 +213,7 @@ class CodeStyleSniffer
     {
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 
-        $config = ' --standard=' . $this->codingStandard;
+        $config = ' --standard=' . $this->config->getCodingStandard();
         if ($options[static::OPTION_VERBOSE]) {
             $config .= ' -v';
         }
@@ -251,7 +246,7 @@ class CodeStyleSniffer
             return static::CODE_SUCCESS;
         }
 
-        $process = new Process($command, $this->applicationRoot, null, null, 4800);
+        $process = new Process($command, $this->config->getPathToRoot(), null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
@@ -260,17 +255,35 @@ class CodeStyleSniffer
     }
 
     /**
-     * @deprecated Use `normalizeBundleNameForNonSplit()` or `normalizeBundleNameForSplit()`
-     *
-     * @param string $bundle
+     * @param string $module
+     * @param string|null $pathSuffix
      *
      * @return string
      */
-    protected function normalizeBundleName($bundle)
+    protected function resolveProjectPath($module, $pathSuffix = null)
     {
-        $filter = new UnderscoreToCamelCase();
+        $projectNamespaces = $this->config->getProjectNamespaces();
+        $namespaces = array_merge(static::APPLICATION_NAMESPACES, $projectNamespaces);
+        $pathToRoot = $this->config->getPathToRoot();
 
-        return ucfirst($filter->filter($bundle));
+        $paths = [];
+        foreach ($namespaces as $namespace) {
+            $path = $pathToRoot . 'src' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR;
+
+            foreach (static::APPLICATION_LAYERS as $layer) {
+                $layerPath = $path . $layer . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
+                if ($pathSuffix) {
+                    $layerPath .= $pathSuffix;
+                }
+
+                if (!is_dir($layerPath)) {
+                    continue;
+                }
+
+                $paths[] = $layerPath;
+            }
+        }
+
+        return implode(' ', $paths);
     }
-
 }

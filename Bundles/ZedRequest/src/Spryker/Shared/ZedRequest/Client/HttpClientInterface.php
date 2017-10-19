@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
  */
 interface HttpClientInterface
 {
-
     /**
      * @param int $timeoutInSeconds
      *
@@ -45,5 +44,4 @@ interface HttpClientInterface
      * @return int
      */
     public static function getRequestCounter();
-
 }

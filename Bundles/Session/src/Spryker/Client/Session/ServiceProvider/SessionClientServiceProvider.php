@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class SessionClientServiceProvider implements ServiceProviderInterface
 {
-
     const CLIENT_SESSION = 'session client';
 
     /**
@@ -40,5 +39,4 @@ class SessionClientServiceProvider implements ServiceProviderInterface
     public function boot(Application $application)
     {
     }
-
 }

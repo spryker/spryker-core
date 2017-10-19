@@ -11,7 +11,6 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInt
 
 class ZedNavigationCacheBuilder
 {
-
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface
      */
@@ -40,5 +39,4 @@ class ZedNavigationCacheBuilder
         $navigation = $this->navigationCollector->getNavigation();
         $this->navigationCache->setNavigation($navigation);
     }
-
 }

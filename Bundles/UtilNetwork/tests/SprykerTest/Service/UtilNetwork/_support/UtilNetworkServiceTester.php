@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class UtilNetworkServiceTester extends Actor
 {
-
     use _generated\UtilNetworkServiceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

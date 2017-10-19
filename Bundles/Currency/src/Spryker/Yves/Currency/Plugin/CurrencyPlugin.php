@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
 {
-
     /**
      * @param string $isoCode
      *
@@ -32,5 +31,4 @@ class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
     {
         return $this->getFactory()->createCurrencyBuilder()->getCurrent();
     }
-
 }

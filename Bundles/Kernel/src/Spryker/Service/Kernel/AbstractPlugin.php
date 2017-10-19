@@ -13,7 +13,6 @@ use Spryker\Service\Kernel\ClassResolver\Service\ServiceResolver;
 
 abstract class AbstractPlugin
 {
-
     /**
      * @var \Spryker\Service\Kernel\AbstractBundleConfig
      */
@@ -136,5 +135,4 @@ abstract class AbstractPlugin
     {
         return new BundleConfigResolver();
     }
-
 }

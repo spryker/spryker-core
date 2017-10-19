@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
@@ -42,5 +41,4 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
-
 }

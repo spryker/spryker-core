@@ -22,7 +22,6 @@ use Generated\Shared\Transfer\AddressTransfer;
  */
 class AddressMapperTest extends AbstractMapperTest
 {
-
     /**
      * @return void
      */
@@ -60,5 +59,4 @@ class AddressMapperTest extends AbstractMapperTest
         $this->assertEquals('fn', $this->requestTransfer->getShippingAddress()->getFirstName());
         $this->assertEquals('ln', $this->requestTransfer->getShippingAddress()->getLastName());
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
  */
 abstract class BaseCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
@@ -72,10 +71,8 @@ abstract class BaseCommandPlugin extends AbstractPlugin implements CommandByOrde
         foreach ($orderItems as $orderItem) {
             $orderTransferItems[$orderItem->getIdSalesOrderItem()] = $this
                 ->getOrderItemTotalsByIdSalesOrderItem($orderItem->getIdSalesOrderItem());
-
         }
 
         return $orderTransferItems;
     }
-
 }

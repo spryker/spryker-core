@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -83,7 +82,23 @@ class ViewController extends AbstractController
         $customerTransfer = $this->createCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
         $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
+        $customerTransfer = $this->applyCustomerTransferExpanderPlugins($customerTransfer);
+
         return $customerTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function applyCustomerTransferExpanderPlugins(CustomerTransfer $customerTransfer)
+    {
+        $expanderPlugins = $this->getFactory()->getCustomerTransferExpanderPlugins();
+        foreach ($expanderPlugins as $expanderPlugin) {
+            $customerTransfer = $expanderPlugin->expandTransfer($customerTransfer);
+        }
+
+        return $customerTransfer;
+    }
 }

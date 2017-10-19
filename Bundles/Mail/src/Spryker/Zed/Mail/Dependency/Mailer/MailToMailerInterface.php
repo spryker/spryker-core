@@ -9,7 +9,6 @@ namespace Spryker\Zed\Mail\Dependency\Mailer;
 
 interface MailToMailerInterface
 {
-
     /**
      * @param string $subject
      *
@@ -51,5 +50,4 @@ interface MailToMailerInterface
      * @return void
      */
     public function send();
-
 }

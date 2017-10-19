@@ -9,7 +9,6 @@ namespace Spryker\Client\Navigation;
 
 interface NavigationClientInterface
 {
-
     /**
      * Specification:
      * - Finds navigation tree in the Key-Value Storage.
@@ -23,5 +22,4 @@ interface NavigationClientInterface
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer|null
      */
     public function findNavigationTreeByKey($navigationKey, $localeName);
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductL
 
 class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
 
@@ -70,5 +69,4 @@ class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDepe
             return new ProductLabelDiscountConnectorToProductLabelQueryContainerBridge($container->getLocator()->productLabel()->queryContainer());
         };
     }
-
 }

@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Discount\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
@@ -16,7 +17,6 @@ use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInter
 
 class BaseRuleTester extends Unit
 {
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -54,6 +54,11 @@ class BaseRuleTester extends Unit
     protected function createQuoteTransfer(array $items = [])
     {
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setPriceMode('GROSS_MODE');
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer->setCurrency($currencyTransfer);
         $quoteTransfer->setItems(new ArrayObject($items));
 
         return $quoteTransfer;
@@ -69,11 +74,10 @@ class BaseRuleTester extends Unit
     protected function createItemTransfer($price = 0, $quantity = 0, $sku = '')
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitGrossPrice($price);
+        $itemTransfer->setUnitPrice($price);
         $itemTransfer->setQuantity($quantity);
         $itemTransfer->setSku($sku);
 
         return $itemTransfer;
     }
-
 }

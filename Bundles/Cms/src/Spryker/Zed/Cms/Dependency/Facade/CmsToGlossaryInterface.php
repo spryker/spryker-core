@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CmsToGlossaryInterface
 {
-
     /**
      * @param int $idKey
      * @param array $data
@@ -129,5 +128,4 @@ interface CmsToGlossaryInterface
      * @return bool
      */
     public function deleteKeys(array $idKeys);
-
 }

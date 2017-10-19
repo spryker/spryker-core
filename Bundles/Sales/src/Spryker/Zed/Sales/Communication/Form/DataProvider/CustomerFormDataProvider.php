@@ -11,7 +11,6 @@ use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 
 class CustomerFormDataProvider extends AbstractSalesFormDataProvider
 {
-
     /**
      * @param int $idSalesOrder
      *
@@ -41,5 +40,4 @@ class CustomerFormDataProvider extends AbstractSalesFormDataProvider
             CustomerForm::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
         ];
     }
-
 }

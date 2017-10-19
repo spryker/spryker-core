@@ -40,7 +40,6 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
  */
 class SpecificationBuilderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -159,7 +158,7 @@ class SpecificationBuilderTest extends Unit
     protected function createDecisionRulePlugins()
     {
         return [
-           new SkuDecisionRulePlugin()
+           new SkuDecisionRulePlugin(),
         ];
     }
 
@@ -439,7 +438,6 @@ class SpecificationBuilderTest extends Unit
             $metaDataProviderMock = $this->createMetaDataProviderMock();
             $metaDataProviderMock->method('getAvailableFields')
                 ->willReturn(['quantity', 'sku', 'color', 'attribute.value']);
-
         }
 
         return new SpecificationBuilder(
@@ -506,5 +504,4 @@ class SpecificationBuilderTest extends Unit
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
-
 }

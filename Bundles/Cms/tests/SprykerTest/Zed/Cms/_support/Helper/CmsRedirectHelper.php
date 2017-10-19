@@ -14,7 +14,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsRedirectHelper extends Module
 {
-
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
@@ -68,5 +67,4 @@ class CmsRedirectHelper extends Module
             ->queryUrlRedirectByIdUrl($idUrl)
             ->delete();
     }
-
 }

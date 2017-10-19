@@ -24,7 +24,6 @@ use SprykerTest\Zed\PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
  */
 class DatabaseTransactionHandlerTraitTest extends Unit
 {
-
     /**
      * @var \Propel\Runtime\Connection\ConnectionInterface|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -43,7 +42,8 @@ class DatabaseTransactionHandlerTraitTest extends Unit
      */
     public function testShouldCommitWhenNoErrors()
     {
-        $callback = function () {};
+        $callback = function () {
+        };
 
         $this->connection
             ->expects($this->once())
@@ -84,5 +84,4 @@ class DatabaseTransactionHandlerTraitTest extends Unit
 
         $databaseTransactionHandlerTraitStub->execute($callback);
     }
-
 }

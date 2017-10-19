@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade;
 
 interface ShipmentDiscountConnectorToShipmentInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
@@ -26,5 +25,4 @@ interface ShipmentDiscountConnectorToShipmentInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findMethodById($idShipmentMethod);
-
 }

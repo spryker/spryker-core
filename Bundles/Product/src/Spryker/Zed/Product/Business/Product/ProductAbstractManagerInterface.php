@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductAbstractManagerInterface
 {
-
     /**
      * @param string $sku
      *
@@ -59,5 +58,4 @@ interface ProductAbstractManagerInterface
      * @return string
      */
     public function getAbstractSkuFromProductConcrete($sku);
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterface
 {
-
     /**
      * @api
      *
@@ -222,5 +221,4 @@ class PayolutionFacade extends AbstractFacade implements PayolutionFacadeInterfa
             ->createTransactionStatusLog()
             ->isRefundApproved($orderTransfer);
     }
-
 }

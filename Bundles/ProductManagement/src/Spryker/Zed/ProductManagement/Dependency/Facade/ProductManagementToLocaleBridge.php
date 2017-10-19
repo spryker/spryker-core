@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 class ProductManagementToLocaleBridge implements ProductManagementToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -68,5 +67,4 @@ class ProductManagementToLocaleBridge implements ProductManagementToLocaleInterf
     {
         return $this->localeFacade->getLocaleById($idLocale);
     }
-
 }

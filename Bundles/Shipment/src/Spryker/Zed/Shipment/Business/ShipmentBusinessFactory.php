@@ -22,7 +22,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  */
 class ShipmentBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Shipment\Business\Model\CarrierInterface
      */
@@ -108,5 +107,4 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_SALES);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilDataReader\Dependency;
 
 class YamlReaderBridge implements YamlReaderInterface
 {
-
     /**
      * @var \Symfony\Component\Yaml\Yaml
      */
@@ -32,5 +31,4 @@ class YamlReaderBridge implements YamlReaderInterface
     {
         return $this->yamlReader->parse($fileName);
     }
-
 }

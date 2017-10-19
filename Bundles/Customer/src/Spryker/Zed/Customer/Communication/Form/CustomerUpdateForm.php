@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CustomerUpdateForm extends CustomerForm
 {
-
     const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
     const FIELD_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
 
@@ -109,5 +108,4 @@ class CustomerUpdateForm extends CustomerForm
 
         return $this;
     }
-
 }

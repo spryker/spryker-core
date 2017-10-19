@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester;
  */
 class FilterPreferencesCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
@@ -96,5 +95,4 @@ class FilterPreferencesCest
         $i->canSeeCurrentUrlEquals(FilterPreferencesPage::URL_LIST);
         $i->canSee('Filter preferences synchronization was successful.');
     }
-
 }

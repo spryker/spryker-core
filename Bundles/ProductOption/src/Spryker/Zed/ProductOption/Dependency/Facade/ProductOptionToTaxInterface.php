@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 interface ProductOptionToTaxInterface
 {
-
     /**
      * @param int $grossPrice
      * @param float $taxRate
@@ -39,5 +38,4 @@ interface ProductOptionToTaxInterface
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
     public function getTaxSet($id);
-
 }

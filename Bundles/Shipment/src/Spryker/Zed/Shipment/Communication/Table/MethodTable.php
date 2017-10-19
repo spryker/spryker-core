@@ -16,7 +16,6 @@ use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
 
 class MethodTable extends AbstractTable
 {
-
     const CARRIER = 'Carrier';
     const METHOD = 'Method';
     const DESCRIPTION = 'Description';
@@ -211,5 +210,4 @@ class MethodTable extends AbstractTable
 
         return $urls;
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class EventJournalFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\EventJournal\Business\Model\EventJournal
      */
@@ -23,5 +22,4 @@ class EventJournalFactory extends AbstractBusinessFactory
     {
         return new EventJournal();
     }
-
 }

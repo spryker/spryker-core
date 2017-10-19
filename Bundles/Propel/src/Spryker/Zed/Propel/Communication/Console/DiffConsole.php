@@ -16,7 +16,6 @@ use Symfony\Component\Process\Process;
 
 class DiffConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:diff';
 
     const PROCESS_TIMEOUT = 300;
@@ -56,5 +55,4 @@ class DiffConsole extends Console
             echo $buffer;
         });
     }
-
 }

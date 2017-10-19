@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 interface CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface CalculationPluginInterface
      * @return void
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer);
-
 }

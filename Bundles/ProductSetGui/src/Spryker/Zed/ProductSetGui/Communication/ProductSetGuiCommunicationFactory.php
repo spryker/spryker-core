@@ -33,7 +33,6 @@ use Spryker\Zed\ProductSetGui\ProductSetGuiDependencyProvider;
  */
 class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\CreateFormDataProvider
      */
@@ -275,5 +274,4 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductSetGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_SET);
     }
-
 }

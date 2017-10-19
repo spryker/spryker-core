@@ -16,7 +16,6 @@ use Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface;
  */
 class ProductSearchConfigExpanderPlugin extends AbstractPlugin implements SearchConfigExpanderPluginInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\SearchConfigExtensionTransfer
      */
@@ -76,5 +75,4 @@ class ProductSearchConfigExpanderPlugin extends AbstractPlugin implements Search
 
         return $data;
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CountryCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Country\Communication\Table\CountryTable
      */
@@ -26,5 +25,4 @@ class CountryCommunicationFactory extends AbstractCommunicationFactory
 
         return new CountryTable($countryQuery);
     }
-
 }

@@ -6,11 +6,11 @@
         {{ form_start(navigationNodeForm) }}
 
             <div class="ibox-title">
-                <h5>{{ 'Update node' | trans }}</h5>
+                <h5>{{ 'Edit node' | trans }}</h5>
 
                 <div class="pull-right">
                     <a href="{{ url('/navigation-gui/node/create', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode}) }}" id="add-child-node-btn" class="btn btn-xs btn-primary">
-                        <i class="fa fa-pencil-square-o"></i> {{ 'Add child node' | trans }}
+                        <i class="fa fa-pencil-square-o"></i> {{ 'Create child node' | trans }}
                     </a>
 
                     {% if idNavigationNode %}
@@ -19,7 +19,7 @@
                            class="btn btn-xs btn-danger"
                            onclick="return confirm('{{ 'Are you sure you remove the selected node and all its children?' | trans }}')"
                         >
-                            <i class="fa fa-trash"></i> {{ 'Remove selected node' | trans }}
+                            <i class="fa fa-trash"></i> {{ 'Delete selected node' | trans }}
                         </a>
                     {% endif %}
                 </div>
@@ -39,6 +39,10 @@
 
 {% endblock %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-navigation.css" />
+{% endblock %}
 {% block footer_js %}
     {{ parent() }}
     <script src="/assets/js/spryker-zed-navigation-node-form.js"></script>

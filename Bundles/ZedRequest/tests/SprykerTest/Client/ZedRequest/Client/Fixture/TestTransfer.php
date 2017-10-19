@@ -11,13 +11,20 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class TestTransfer extends AbstractTransfer
 {
-
     const FOO = 'foo';
 
     /**
      * @var string
      */
     protected $foo;
+
+    /**
+     * @var array
+     */
+    protected $transferPropertyNameMap = [
+        'foo' => 'foo',
+        'Foo' => 'foo',
+    ];
 
     /**
      * @var array
@@ -39,7 +46,7 @@ class TestTransfer extends AbstractTransfer
     public function setFoo($foo)
     {
         $this->foo = $foo;
-        $this->addModifiedProperty(self::FOO);
+        $this->modifiedProperties[self::FOO] = true;
 
         return $this;
     }
@@ -61,5 +68,4 @@ class TestTransfer extends AbstractTransfer
 
         return $this;
     }
-
 }

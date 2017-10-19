@@ -11,7 +11,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotIn extends In
 {
-
     const TYPE = 'not_in';
 
     /**
@@ -21,5 +20,4 @@ class NotIn extends In
     {
         return Criteria::NOT_IN;
     }
-
 }

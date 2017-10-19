@@ -22,7 +22,6 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
  */
 class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
 {
-
     const NAME_OF_SCHEMA_FILE_GROUP = 'spy_foo.schema.xml';
 
     /**
@@ -68,5 +67,4 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
         $this->assertArrayHasKey(self::NAME_OF_SCHEMA_FILE_GROUP, $groupedSchemaFiles);
         $this->assertCount(2, $groupedSchemaFiles[self::NAME_OF_SCHEMA_FILE_GROUP]);
     }
-
 }

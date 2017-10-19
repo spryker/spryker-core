@@ -17,7 +17,6 @@ use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInter
 
 class AttributeWriter implements AttributeWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface
      */
@@ -200,5 +199,4 @@ class AttributeWriter implements AttributeWriterInterface
             ->requireInputType()
             ->requireKey();
     }
-
 }

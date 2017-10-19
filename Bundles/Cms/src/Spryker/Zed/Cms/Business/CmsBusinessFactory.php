@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Business;
 
+use Spryker\Zed\Cms\Business\Extractor\DataExtractor;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGenerator;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver;
@@ -15,6 +16,7 @@ use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
 use Spryker\Zed\Cms\Business\Page\CmsPageReader;
 use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder;
+use Spryker\Zed\Cms\Business\Page\LocaleCmsPageDataExpander;
 use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
@@ -37,7 +39,6 @@ use Symfony\Component\Finder\Finder;
  */
 class CmsBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Cms\Business\Page\PageManagerInterface
      */
@@ -193,8 +194,8 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new VersionPublisher(
             $this->createVersionGenerator(),
             $this->createVersionDataMapper(),
+            $this->createVersionFinder(),
             $this->getTouchFacade(),
-            $this->getQueryContainer(),
             $this->getCmsVersionPostSavePlugins()
         );
     }
@@ -298,6 +299,14 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     */
+    protected function getCmsPageDataExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_DATA_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface
      */
     public function getUtilEncodingService()
@@ -329,4 +338,19 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new CmsGlossaryKeyGenerator($this->getGlossaryFacade());
     }
 
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\LocaleCmsPageDataExpanderInterface
+     */
+    public function createLocaleCmsPageDataExpander()
+    {
+        return new LocaleCmsPageDataExpander($this->getCmsPageDataExpanderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Extractor\DataExtractorInterface
+     */
+    public function createDataExtractor()
+    {
+        return new DataExtractor($this->getUtilEncodingService());
+    }
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 
 class CustomerOrderHydrator implements CustomerOrderHydratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Business\Customer\CustomerInterface
      */
@@ -49,5 +48,4 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
 
         return $orderTransfer;
     }
-
 }

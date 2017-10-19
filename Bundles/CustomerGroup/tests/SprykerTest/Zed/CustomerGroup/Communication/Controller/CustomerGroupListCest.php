@@ -22,7 +22,6 @@ use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupListPage;
  */
 class CustomerGroupListCest
 {
-
     /**
      * @param \SprykerTest\Zed\CustomerGroup\CustomerGroupCommunicationTester $i
      *
@@ -44,5 +43,4 @@ class CustomerGroupListCest
         $i->listDataTable(CustomerGroupListPage::URL . '/index/table');
         $i->seeDataTable();
     }
-
 }

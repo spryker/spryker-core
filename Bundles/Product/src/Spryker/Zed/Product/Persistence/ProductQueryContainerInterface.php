@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -44,6 +43,20 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryProductAbstractLocalizedAttributes($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryAllProductAbstractLocalizedAttributes();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function queryAllProductLocalizedAttributes();
 
     /**
      * @api
@@ -117,5 +130,4 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractWithName($idLocale);
-
 }

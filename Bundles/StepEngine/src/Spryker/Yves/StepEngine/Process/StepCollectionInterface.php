@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface StepCollectionInterface extends IteratorAggregate
 {
-
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $step
      *
@@ -83,5 +82,4 @@ interface StepCollectionInterface extends IteratorAggregate
      * @return string
      */
     public function getEscapeUrl(StepInterface $currentStep);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Currency\Business\Model;
 
 interface CurrencyReaderInterface
 {
-
     /**
      * @param int $idCurrency
      *
@@ -19,4 +18,24 @@ interface CurrencyReaderInterface
      */
     public function getByIdCurrency($idCurrency);
 
+    /**
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getCurrentStoreWithCurrencies();
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies();
+
+    /**
+     * @param string $isoCode
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getByIsoCode($isoCode);
 }

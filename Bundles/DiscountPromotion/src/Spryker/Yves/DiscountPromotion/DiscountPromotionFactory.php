@@ -7,13 +7,11 @@
 
 namespace Spryker\Yves\DiscountPromotion;
 
-use Spryker\Yves\DiscountPromotion\DiscountPromotionDependencyProvider;
 use Spryker\Yves\DiscountPromotion\Mapper\PromotionProductMapper;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class DiscountPromotionFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\DiscountPromotion\Mapper\PromotionProductMapperInterface
      */
@@ -37,5 +35,4 @@ class DiscountPromotionFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::PRODUCT_MAPPER_PLUGIN);
     }
-
 }

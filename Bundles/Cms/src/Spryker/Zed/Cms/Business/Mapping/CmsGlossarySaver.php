@@ -21,7 +21,6 @@ use Throwable;
 
 class CmsGlossarySaver implements CmsGlossarySaverInterface
 {
-
     const DEFAULT_TRANSLATION = '';
 
     /**
@@ -68,7 +67,6 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             $this->cmsQueryContainer->getConnection()->beginTransaction();
 
             foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $glossaryAttributesTransfer) {
-
                 $translationKey = $this->resolveTranslationKey($glossaryAttributesTransfer);
                 $glossaryAttributesTransfer->setTranslationKey($translationKey);
 
@@ -76,10 +74,8 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
 
                 $idCmsGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryAttributesTransfer);
                 $glossaryAttributesTransfer->setFkCmsGlossaryMapping($idCmsGlossaryMapping);
-
             }
             $this->cmsQueryContainer->getConnection()->commit();
-
         } catch (Exception $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -324,5 +320,4 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             $glossaryTranslationTransfer->setTranslation(static::DEFAULT_TRANSLATION);
         }
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 interface ResolverCacheFactoryInterface
 {
-
     /**
      * @return bool
      */
@@ -21,5 +20,4 @@ interface ResolverCacheFactoryInterface
      * @return \Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface
      */
     public function createClassResolverCacheProvider();
-
 }

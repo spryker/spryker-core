@@ -9,7 +9,6 @@ namespace Spryker\Zed\Braintree\Dependency\Facade;
 
 class BraintreeToCurrencyBridge implements BraintreeToCurrencyInterface
 {
-
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
@@ -30,5 +29,4 @@ class BraintreeToCurrencyBridge implements BraintreeToCurrencyInterface
     {
         return $this->currencyFacade->getCurrent();
     }
-
 }

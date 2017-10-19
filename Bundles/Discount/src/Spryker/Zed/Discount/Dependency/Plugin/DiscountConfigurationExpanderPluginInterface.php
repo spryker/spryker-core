@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
 interface DiscountConfigurationExpanderPluginInterface
 {
-
     /**
      *  Specification:
      *   - This plugin is used to add additional data to DiscountConfigurationTransfer, which is then mapped to zed discount form.
@@ -23,5 +22,4 @@ interface DiscountConfigurationExpanderPluginInterface
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function expand(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 abstract class AbstractUrlDeleterSubject
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\Deletion\UrlDeleterBeforeDeleteObserverInterface[]
      */
@@ -65,5 +64,4 @@ abstract class AbstractUrlDeleterSubject
             $observer->handleUrlDeletion($urlTransfer);
         }
     }
-
 }

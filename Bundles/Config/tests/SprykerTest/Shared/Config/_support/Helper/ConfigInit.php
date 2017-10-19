@@ -12,7 +12,6 @@ use Symfony\Component\Finder\Finder;
 
 class ConfigInit extends Module
 {
-
     /**
      * @return void
      */
@@ -169,5 +168,4 @@ class ConfigInit extends Module
     {
         return $this->getTargetDirectory() . '/config_default-test.php';
     }
-
 }

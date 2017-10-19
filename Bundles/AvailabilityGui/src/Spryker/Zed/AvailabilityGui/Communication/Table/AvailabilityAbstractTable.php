@@ -18,7 +18,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailabilityAbstractTable extends AbstractTable
 {
-
     const TABLE_COL_ACTION = 'Actions';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
     const AVAILABLE = 'Available';
@@ -94,7 +93,6 @@ class AvailabilityAbstractTable extends AbstractTable
         $queryResult = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
 
         foreach ($queryResult as $productAbstractEntity) {
-
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
             $isNeverOutOfStock = $this->isAllConcreteIsNeverOutOfStock($productAbstractEntity);
@@ -222,5 +220,4 @@ class AvailabilityAbstractTable extends AbstractTable
 
         return $reservation;
     }
-
 }

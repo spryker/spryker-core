@@ -16,7 +16,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const TWIG_LOADER_YVES = 'twig.loader.yves';
 
     /**
@@ -39,5 +38,4 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     public function boot(Application $app)
     {
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 
 class Parser implements ParserInterface
 {
-
     /**
      * @var \Spryker\Shared\Money\Dependency\Parser\MoneyToParserInterface
      */
@@ -46,5 +45,4 @@ class Parser implements ParserInterface
 
         return $this->moneyToTransferMapper->convert($money);
     }
-
 }

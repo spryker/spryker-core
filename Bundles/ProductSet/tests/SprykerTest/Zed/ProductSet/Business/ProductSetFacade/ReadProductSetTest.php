@@ -24,7 +24,6 @@ use Generated\Shared\Transfer\ProductSetTransfer;
  */
 class ReadProductSetTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -154,5 +153,4 @@ class ReadProductSetTest extends Unit
         $this->assertSame($productAbstractTransfer5->getIdProductAbstract(), $actualProductSetTransfer->getIdProductAbstracts()[3], 'Product #5 should be in position 4.');
         $this->assertSame($productAbstractTransfer3->getIdProductAbstract(), $actualProductSetTransfer->getIdProductAbstracts()[4], 'Product #3 should be in position 5.');
     }
-
 }

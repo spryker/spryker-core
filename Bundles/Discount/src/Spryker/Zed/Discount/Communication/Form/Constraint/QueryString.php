@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class QueryString extends SymfonyConstraint
 {
-
     const OPTION_DISCOUNT_FACADE = 'discountFacade';
     const OPTION_QUERY_STRING_TYPE = 'queryStringType';
 
@@ -39,5 +38,4 @@ class QueryString extends SymfonyConstraint
     {
         return $this->queryStringType;
     }
-
 }

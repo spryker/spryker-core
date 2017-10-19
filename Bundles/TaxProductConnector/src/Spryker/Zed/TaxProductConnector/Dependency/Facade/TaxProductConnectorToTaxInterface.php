@@ -9,7 +9,6 @@ namespace Spryker\Zed\TaxProductConnector\Dependency\Facade;
 
 interface TaxProductConnectorToTaxInterface
 {
-
     /**
      * @return string
      */
@@ -19,5 +18,4 @@ interface TaxProductConnectorToTaxInterface
      * @return float
      */
     public function getDefaultTaxRate();
-
 }

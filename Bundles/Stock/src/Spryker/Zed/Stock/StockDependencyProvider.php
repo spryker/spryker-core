@@ -14,7 +14,6 @@ use Spryker\Zed\Stock\Dependency\Facade\StockToTouchBridge;
 
 class StockDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'facade touch';
     const FACADE_PRODUCT = 'facade product';
     const PLUGINS_STOCK_UPDATE = 'stock update plugins';
@@ -50,5 +49,4 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

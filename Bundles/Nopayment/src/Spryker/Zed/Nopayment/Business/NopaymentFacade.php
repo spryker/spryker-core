@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -54,5 +53,4 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
     {
         return $this->getFactory()->createNopaymentMethodFilter()->filterPaymentMethods($paymentMethods, $quoteTransfer);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class NavigationReader implements NavigationReaderInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -63,5 +62,4 @@ class NavigationReader implements NavigationReaderInterface
 
         return $navigationTreeTransfer;
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
 
 class CurrencyFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
@@ -56,5 +55,4 @@ class CurrencyFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_SESSION);
     }
-
 }

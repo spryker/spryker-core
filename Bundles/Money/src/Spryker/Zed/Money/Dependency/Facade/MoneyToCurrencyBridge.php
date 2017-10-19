@@ -9,7 +9,6 @@ namespace Spryker\Zed\Money\Dependency\Facade;
 
 class MoneyToCurrencyBridge implements MoneyToCurrencyInterface
 {
-
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
@@ -33,4 +32,19 @@ class MoneyToCurrencyBridge implements MoneyToCurrencyInterface
         return $this->currencyFacade->fromIsoCode($isoCode);
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getStoreWithCurrencies()
+    {
+        return $this->currencyFacade->getCurrentStoreWithCurrencies();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies()
+    {
+        return $this->currencyFacade->getAllStoresWithCurrencies();
+    }
 }

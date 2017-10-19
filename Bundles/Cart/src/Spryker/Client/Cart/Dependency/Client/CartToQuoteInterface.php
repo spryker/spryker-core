@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartToQuoteInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -28,5 +27,4 @@ interface CartToQuoteInterface
      * @return void
      */
     public function clearQuote();
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Graph;
 
 interface GraphInterface
 {
-
     const DEFAULT_GROUP = 'default';
 
     /**
@@ -45,5 +44,4 @@ interface GraphInterface
      * @return string
      */
     public function render($type, $fileName = null);
-
 }

@@ -14,7 +14,6 @@ use Symfony\Component\Process\Process;
 
 class SetupHelper extends Module
 {
-
     const TEST_ENV_SCRIPT = 'setup_test';
 
     /**
@@ -70,5 +69,4 @@ class SetupHelper extends Module
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR;
     }
-
 }

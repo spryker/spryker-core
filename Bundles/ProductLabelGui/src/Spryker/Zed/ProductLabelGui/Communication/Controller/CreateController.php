@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -153,5 +152,4 @@ class CreateController extends AbstractController
 
         return $this->jsonResponse($assignedProductTable->fetchData());
     }
-
 }

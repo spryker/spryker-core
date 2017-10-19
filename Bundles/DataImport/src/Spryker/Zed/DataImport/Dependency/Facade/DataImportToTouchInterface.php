@@ -9,7 +9,6 @@ namespace Spryker\Zed\DataImport\Dependency\Facade;
 
 interface DataImportToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param array $itemIds
@@ -33,5 +32,4 @@ interface DataImportToTouchInterface
      * @return void
      */
     public function bulkTouchSetDeleted($itemType, array $itemIds);
-
 }

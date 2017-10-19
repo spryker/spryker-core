@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class KvMarkerKeyBuilder implements KeyBuilderInterface
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -32,5 +31,4 @@ class KvMarkerKeyBuilder implements KeyBuilderInterface
     {
         return 'kv-export';
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlDeletePluginInterface
 {
-
     /**
      * Specification:
      * - This plugin is executed before and/or after URL entity deletion, depending for which event was it provided.
@@ -23,5 +22,4 @@ interface UrlDeletePluginInterface
      * @return void
      */
     public function delete(UrlTransfer $urlTransfer);
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NavigationTreeTransfer;
 
 interface NavigationTreeHierarchyUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeTransfer
      *
      * @return void
      */
     public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer);
-
 }

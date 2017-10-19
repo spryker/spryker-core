@@ -18,7 +18,6 @@ use Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncoding
 
 class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'locale facade';
     const FACADE_PRODUCT = 'product facade';
     const FACADE_CATEGORY = 'category facade';
@@ -75,5 +74,4 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

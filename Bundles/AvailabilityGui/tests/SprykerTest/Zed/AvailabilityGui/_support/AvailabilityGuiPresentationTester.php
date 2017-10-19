@@ -22,7 +22,6 @@ use Codeception\Scenario;
  */
 class AvailabilityGuiPresentationTester extends Actor
 {
-
     use _generated\AvailabilityGuiPresentationTesterActions;
 
     /**
@@ -58,5 +57,4 @@ class AvailabilityGuiPresentationTester extends Actor
     {
         $this->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[8]/a");
     }
-
 }

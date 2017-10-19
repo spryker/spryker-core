@@ -9,7 +9,6 @@ namespace Spryker\Zed\Customer\Dependency\Facade;
 
 class CustomerToCountryBridge implements CustomerToCountryInterface
 {
-
     /**
      * @var \Spryker\Zed\Country\Business\CountryFacadeInterface
      */
@@ -62,5 +61,4 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     {
         return $this->countryFacade->getCountryByIso2Code($iso2Code);
     }
-
 }

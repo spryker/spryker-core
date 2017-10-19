@@ -17,7 +17,6 @@ use Spryker\Zed\Nopayment\Business\Nopayment\Paid;
  */
 class NopaymentBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilter
      */
@@ -35,5 +34,4 @@ class NopaymentBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer()
         );
     }
-
 }

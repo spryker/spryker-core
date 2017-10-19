@@ -15,7 +15,6 @@ use Spryker\Shared\Kernel\KernelConstants;
 
 class FactoryNotFoundException extends Exception
 {
-
     /**
      * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
@@ -51,5 +50,4 @@ class FactoryNotFoundException extends Exception
 
         return $message;
     }
-
 }

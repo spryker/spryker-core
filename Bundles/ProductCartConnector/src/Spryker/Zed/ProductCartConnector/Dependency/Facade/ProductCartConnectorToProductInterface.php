@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductCartConnectorToProductInterface
 {
-
     /**
      * @param string $concreteSku
      *
@@ -41,5 +40,4 @@ interface ProductCartConnectorToProductInterface
      * @return bool
      */
     public function hasProductAbstract($abstractSku);
-
 }

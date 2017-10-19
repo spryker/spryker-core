@@ -25,7 +25,6 @@ use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
  */
 class MoneyPluginTest extends Unit
 {
-
     const AMOUNT_INTEGER = 1000;
     const AMOUNT_FLOAT = 10.00;
     const AMOUNT_STRING = '1000';
@@ -179,5 +178,4 @@ class MoneyPluginTest extends Unit
         $this->assertInternalType('int', $converted);
         $this->assertSame(1000, $converted);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 
 interface DiscountableItemFilterPluginInterface
 {
-
     /**
      * Specification:
      *
@@ -25,5 +24,4 @@ interface DiscountableItemFilterPluginInterface
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer
      */
     public function filter(CollectedDiscountTransfer $collectedDiscountTransfer);
-
 }

@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class IsRefundApprovedPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsRefundApprovedPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isRefundApproved($orderTransfer);
     }
-
 }

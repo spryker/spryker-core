@@ -4,8 +4,10 @@
   "license": "proprietary",
   "require": {
     "moneyphp/money": "^3.0.0",
-    "spryker/currency": "^2.0.0 || ^3.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/currency": "^2.0.0 || ^3.1.0",
+    "spryker/kernel": "^3.11.0",
+    "spryker/store": "^1.1.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -19,19 +21,16 @@
     "spryker/twig": "If you want to use Money in Twig."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
     "psr-4": {
       "Config\\Module\\": "vendor/spryker/Config/tests/_support/Module",
       "Testify\\Module\\": "vendor/spryker/Testify/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/Transfer/tests/_support/Module"
+      "Transfer\\Module\\": "vendor/spryker/Transfer/tests/_support/Module",
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

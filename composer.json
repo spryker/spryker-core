@@ -10,12 +10,13 @@
     "fzaninotto/faker": "^1.6"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
-    "use-include-path": true
+    "use-include-path": true,
+    "process-timeout": 1000
   },
   "autoload": {
     "files": [
@@ -26,6 +27,9 @@
   "bin": [
     "Bundles/Console/bin/console"
   ],
+  "scripts": {
+    "cs-check": "vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p"
+  },
   "replace": {
     "spryker/acl": "*",
     "spryker/application": "*",
@@ -39,6 +43,7 @@
     "spryker/cache": "*",
     "spryker/calculation": "*",
     "spryker/cart": "*",
+    "spryker/cart-currency-connector": "*",
     "spryker/cart-variant": "*",
     "spryker/catalog": "*",
     "spryker/category": "*",
@@ -68,6 +73,8 @@
     "spryker/customer": "*",
     "spryker/customer-group": "*",
     "spryker/customer-group-discount-connector": "*",
+    "spryker/customer-user-connector": "*",
+    "spryker/customer-user-connector-gui": "*",
     "spryker/development": "*",
     "spryker/discount": "*",
     "spryker/discount-calculation-connector": "*",
@@ -76,6 +83,8 @@
     "spryker/dummy-payment": "*",
     "spryker/elastica": "*",
     "spryker/error-handler": "*",
+    "spryker/event": "*",
+    "spryker/event-behavior": "*",
     "spryker/event-journal": "*",
     "spryker/file-system": "*",
     "spryker/flysystem": "*",
@@ -168,6 +177,8 @@
     "spryker/stock-sales-connector": "*",
     "spryker/storage": "*",
     "spryker/symfony": "*",
+    "spryker/synchronization": "*",
+    "spryker/synchronization-behavior": "*",
     "spryker/tax": "*",
     "spryker/tax-product-connector": "*",
     "spryker/testify": "*",

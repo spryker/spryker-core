@@ -17,7 +17,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
  */
 class ProductConcreteAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -27,5 +26,4 @@ class ProductConcreteAfterUpdatePlugin extends AbstractPlugin implements Product
     {
         return $this->getFacade()->persistStockProductCollection($productConcreteTransfer);
     }
-
 }

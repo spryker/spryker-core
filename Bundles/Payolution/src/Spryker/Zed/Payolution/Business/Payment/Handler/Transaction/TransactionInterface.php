@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface TransactionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -59,5 +58,4 @@ interface TransactionInterface
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer
      */
     public function refundPayment(OrderTransfer $orderTransfer, $idPayment);
-
 }

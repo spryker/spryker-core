@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
 
 interface AttributeMapWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
@@ -32,5 +31,4 @@ interface AttributeMapWriterInterface
      * @return void
      */
     public function clean(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
-
 }

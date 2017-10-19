@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
 trait BundleDependencyProviderResolverAwareTrait
 {
-
     use ContainerMocker;
 
     /**
@@ -157,5 +156,4 @@ trait BundleDependencyProviderResolverAwareTrait
     {
         return new DependencyInjectorResolver();
     }
-
 }

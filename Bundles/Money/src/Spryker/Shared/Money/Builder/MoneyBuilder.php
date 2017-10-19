@@ -15,7 +15,6 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
 
 class MoneyBuilder implements MoneyBuilderInterface
 {
-
     /**
      * @var \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
@@ -159,5 +158,4 @@ class MoneyBuilder implements MoneyBuilderInterface
     {
         return $this->dataMapper->convert($money);
     }
-
 }

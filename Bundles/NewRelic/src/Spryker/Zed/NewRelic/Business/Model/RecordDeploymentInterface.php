@@ -9,7 +9,6 @@ namespace Spryker\Zed\NewRelic\Business\Model;
 
 interface RecordDeploymentInterface
 {
-
     /**
      * @param array $arguments
      *
@@ -18,5 +17,4 @@ interface RecordDeploymentInterface
      * @return $this
      */
     public function recordDeployment(array $arguments = []);
-
 }

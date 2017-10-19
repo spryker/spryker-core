@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 
 abstract class AbstractOperator implements OperatorInterface
 {
-
     const TYPE = null;
 
     /**
@@ -36,5 +35,4 @@ abstract class AbstractOperator implements OperatorInterface
     {
         return $rule->getValue();
     }
-
 }

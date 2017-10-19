@@ -21,7 +21,6 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
  */
 class DataImportBusinessTester extends Actor
 {
-
     use _generated\DataImportBusinessTesterActions;
 
     /**
@@ -31,5 +30,4 @@ class DataImportBusinessTester extends Actor
     {
         return new DataImportBusinessFactory();
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesClientInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ interface SalesClientInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer);
-
 }

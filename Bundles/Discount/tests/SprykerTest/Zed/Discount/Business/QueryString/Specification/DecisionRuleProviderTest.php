@@ -30,7 +30,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
  */
 class DecisionRuleProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -128,5 +127,4 @@ class DecisionRuleProviderTest extends Unit
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }
-
 }

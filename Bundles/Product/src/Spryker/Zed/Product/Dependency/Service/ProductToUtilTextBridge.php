@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Dependency\Service;
 
 class ProductToUtilTextBridge implements ProductToUtilTextInterface
 {
-
     /**
      * @var \Spryker\Service\UtilText\UtilTextServiceInterface
      */
@@ -32,5 +31,4 @@ class ProductToUtilTextBridge implements ProductToUtilTextInterface
     {
         return $this->utilTextService->generateSlug($value);
     }
-
 }

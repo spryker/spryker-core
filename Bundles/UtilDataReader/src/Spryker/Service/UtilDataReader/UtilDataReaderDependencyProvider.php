@@ -13,7 +13,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class UtilDataReaderDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const YAML_READER = 'yaml reader';
 
     /**
@@ -41,5 +40,4 @@ class UtilDataReaderDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

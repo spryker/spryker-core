@@ -19,7 +19,6 @@ use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
 
 class CustomerGroup implements CustomerGroupInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
      */
@@ -277,5 +276,4 @@ class CustomerGroup implements CustomerGroupInterface
 
         return $customerGroupTransfer;
     }
-
 }

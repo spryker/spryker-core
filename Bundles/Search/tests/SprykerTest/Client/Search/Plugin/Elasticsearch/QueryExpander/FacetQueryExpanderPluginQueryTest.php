@@ -22,7 +22,6 @@ use Elastica\Query\BoolQuery;
  */
 class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPluginQueryTest
 {
-
     /**
      * @return array
      */
@@ -115,5 +114,4 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
 
         return [$searchConfig, $expectedQuery];
     }
-
 }

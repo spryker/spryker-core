@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TwigConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -149,5 +148,4 @@ class TwigConfig extends AbstractBundleConfig
 
         return $directories;
     }
-
 }

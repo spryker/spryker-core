@@ -18,7 +18,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class SortByCreatedAtQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
@@ -45,5 +44,4 @@ class SortByCreatedAtQueryExpanderPlugin extends AbstractPlugin implements Query
             ],
         ]);
     }
-
 }

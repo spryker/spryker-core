@@ -17,7 +17,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterf
  */
 class PayolutionSaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -28,5 +27,4 @@ class PayolutionSaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSa
     {
         $this->getFacade()->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

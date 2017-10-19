@@ -21,7 +21,6 @@ use SprykerTest\Zed\ProductOption\ProductOptionPresentationTester;
  */
 class ProductOptionEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i
      *
@@ -87,5 +86,4 @@ class ProductOptionEditCest
     {
         return new ProductOptionFacade();
     }
-
 }
