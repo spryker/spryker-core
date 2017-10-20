@@ -16,6 +16,8 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 /**
  * Old implementation of DiscountAmountAggregation not used since Discount module version 5, kept for BC reasons.
+ *
+ * @deprecated use \Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator instead
  */
 class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
 {
@@ -41,7 +43,7 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->isOrder = !empty($calculableObjectTransfer->getOriginalOrder()) ? true : false;
+        $this->isOrder = $calculableObjectTransfer->getOriginalOrder() ? true : false;
 
         $this->calculateDiscountAmountAggregationForItems(
             $calculableObjectTransfer->getItems(),
@@ -64,7 +66,6 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
     protected function calculateDiscountAmountAggregationForItems(ArrayObject $items, $priceMode)
     {
         foreach ($items as $itemTransfer) {
-
             $this->calculateDiscountAmountForProductOptions($itemTransfer, $priceMode);
 
             $itemTransfer->setUnitDiscountAmountAggregation(
@@ -94,7 +95,6 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
     protected function calculateDiscountAmountAggregationForExpenses(ArrayObject $expenses, $priceMode)
     {
         foreach ($expenses as $expenseTransfer) {
-
             $unitDiscountAmountAggregation = $this->calculateUnitDiscountAmountAggregation(
                 $expenseTransfer->getCalculatedDiscounts(),
                 $expenseTransfer->getUnitPrice(),
@@ -134,7 +134,6 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
     protected function calculateDiscountAmountForProductOptions(ItemTransfer $itemTransfer, $priceMode)
     {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-
             $productOptionTransfer->setUnitDiscountAmountAggregation(
                 $this->calculateUnitDiscountAmountAggregation(
                     $productOptionTransfer->getCalculatedDiscounts(),
@@ -280,5 +279,4 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
             }
         }
     }
-
 }
