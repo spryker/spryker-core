@@ -139,5 +139,12 @@
         <property name="originalQuote" type="Quote" />
     </transfer>
 
+    <transfer name="CalculatedDiscount">
+        <property name="unitAmount" type="int" />
+        <property name="sumAmount" type="int" />
+        <property name="unitGrossAmount" type="int"/>
+        <property name="sumGrossAmount" type="int"/>
+    </transfer>
+
 </transfers>
 
