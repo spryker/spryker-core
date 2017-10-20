@@ -9,11 +9,15 @@ namespace Spryker\Zed\ProductCategoryFilterGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToLocaleBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryBridge;
 
 class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_PRODUCT_CATEGORY_FILTER = 'FACADE_PRODUCT_CATEGORY_FILTER';
+    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -22,7 +26,20 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = $this->addProductCategoryFilterFacade($container);
+        $this->addProductCategoryFilterFacade($container);
+        $this->addLocaleFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $this->addCategoryQueryContainer($container);
 
         return $container;
     }
@@ -39,5 +56,31 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+            return new ProductCategoryFilterGuiToCategoryBridge($container->getLocator()->category()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addLocaleFacade(Container $container)
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new ProductCategoryFilterGuiToLocaleBridge($container->getLocator()->locale()->facade());
+        };
     }
 }
