@@ -4,7 +4,10 @@
   "license": "proprietary",
   "require": {
     "spryker/product-category-filter": "^1.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/category": "^4.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/locale": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
