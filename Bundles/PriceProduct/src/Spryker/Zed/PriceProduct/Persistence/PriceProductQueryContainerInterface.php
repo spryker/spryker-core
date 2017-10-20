@@ -99,43 +99,10 @@ interface PriceProductQueryContainerInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceType $priceType
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
-     */
-    public function querySpecificPriceForProductAbstract(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceType $priceType
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
-     */
-    public function querySpecificPriceForProductConcrete(PriceProductTransfer $transferPriceProduct, SpyPriceType $priceType);
-
-    /**
-     * @api
-     *
      * @param int $idPriceProduct
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryPriceProductEntity($idPriceProduct);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
-     */
-    public function queryProductAbstractPriceByIdConcreteProduct($idProduct);
 
 }

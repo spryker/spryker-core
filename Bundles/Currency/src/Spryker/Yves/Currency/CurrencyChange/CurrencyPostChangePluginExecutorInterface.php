@@ -11,12 +11,6 @@ interface CurrencyPostChangePluginExecutorInterface
 {
 
     /**
-     *
-     * Specification:
-     * - Plugin executed when currency is changed
-     *
-     * @api
-     *
      * @param string $currencyIsoCode
      *
      * @return void

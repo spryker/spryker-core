@@ -7,8 +7,7 @@
 
 namespace Spryker\Yves\Price;
 
-use Spryker\Client\Price\PriceModeResolver\PriceModeResolver;
-use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Price\PriceModeSwitcher\PriceModeSwitcher;
 
 /**

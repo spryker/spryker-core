@@ -41,4 +41,12 @@ class PriceProductFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_CURRENCY);
     }
+
+    /**
+     * @return \Spryker\Shared\PriceProduct\PriceProductConfig
+     */
+    public function createSharedPriceConfig()
+    {
+        return $this->getConfig()->createSharedPriceConfig();
+    }
 }

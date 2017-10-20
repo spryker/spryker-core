@@ -122,7 +122,7 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function providePriceFacade(Container $container)
     {
         $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductSetGuiToPriceBridge($container->getLocator()->price()->facade());
+            return new ProductSetGuiToPriceBridge($container->getLocator()->priceProduct()->facade());
         };
     }
 

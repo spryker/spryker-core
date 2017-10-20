@@ -51,7 +51,6 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
                 sprintf('Unknown price mode "%s".'. $priceMode)
             );
         }
-
         $quoteTransfer = $this->quoteClient->getQuote();
         $quoteTransfer->setPriceMode($priceMode);
         $this->quoteClient->setQuote($quoteTransfer);

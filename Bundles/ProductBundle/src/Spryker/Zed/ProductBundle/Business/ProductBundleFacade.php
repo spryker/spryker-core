@@ -264,4 +264,18 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
             ->hydrate($orderTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     */
+    public function filterBundleItemsOnCartReload(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductBundlePreReloadUpdater()
+            ->preReloadItems($quoteTransfer);
+    }
+
 }

@@ -36,18 +36,18 @@ class CategoryExtractor implements AggregationExtractorInterface
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
-        $parameterName = $this->facetConfigTransfer->getParameterName();
+        $name = $this->facetConfigTransfer->getName();
 
         $facetResultValueTransfers = $this->extractFacetData($aggregations);
 
         $facetResultTransfer = new FacetSearchResultTransfer();
         $facetResultTransfer
-            ->setName($parameterName)
+            ->setName($name)
             ->setValues($facetResultValueTransfers)
             ->setConfig(clone $this->facetConfigTransfer);
 
-        if (isset($requestParameters[$parameterName])) {
-            $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
+        if (isset($requestParameters[$name])) {
+            $facetResultTransfer->setActiveValue($requestParameters[$name]);
         }
 
         return $facetResultTransfer;

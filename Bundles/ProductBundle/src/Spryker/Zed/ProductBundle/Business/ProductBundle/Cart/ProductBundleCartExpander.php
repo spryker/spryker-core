@@ -260,7 +260,10 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function distributeBundleUnitPrice(array $bundledProducts, $bundleUnitPrice, $priceMode)
     {
-        $totalBundledItemUnitGrossPrice = $this->calculateBundleTotalUnitGrossPrice($bundledProducts);
+        $totalBundledItemUnitGrossPrice = $this->calculateBundleTotalUnitPrice($bundledProducts, $priceMode);
+        if ($totalBundledItemUnitGrossPrice < 0) {
+            return;
+        }
 
         $roundingError = 0;
         $priceRatio = $bundleUnitPrice / $totalBundledItemUnitGrossPrice;
@@ -269,7 +272,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             $this->requirePriceByMode($itemTransfer, $priceMode);
 
             $unitPrice = $this->getPriceByPriceMode($itemTransfer, $priceMode);
-
             if ($unitPrice <= 0) {
                 throw new OutOfBoundsException("Invalid price given, natural integer expected.");
             }
@@ -385,13 +387,18 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     * @param string $priceMode
      *
      * @return int
      */
-    protected function calculateBundleTotalUnitGrossPrice(array $bundledProducts)
+    protected function calculateBundleTotalUnitPrice(array $bundledProducts, $priceMode)
     {
-        $totalBundleItemAmount = (int)array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) {
-            $total += $itemTransfer->getUnitGrossPrice();
+        $totalBundleItemAmount = (int)array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) use($priceMode) {
+            if ($priceMode === PriceMode::PRICE_MODE_NET) {
+                $total += $itemTransfer->getUnitNetPrice();
+            } else {
+                $total += $itemTransfer->getUnitGrossPrice();
+            }
             return $total;
         });
 

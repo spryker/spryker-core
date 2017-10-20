@@ -13,7 +13,6 @@ use Spryker\Yves\Currency\Dependency\Client\CurrencyToSessionBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Price\Dependency\Client\PriceToQuoteClientBridge;
-use Symfony\Component\Intl\Intl;
 
 class PriceDependencyProvider extends AbstractBundleDependencyProvider
 {

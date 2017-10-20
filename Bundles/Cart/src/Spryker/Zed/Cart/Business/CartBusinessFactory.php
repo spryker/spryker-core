@@ -23,7 +23,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartOperation()
     {
-        return new Operation(
+        $operation =  new Operation(
             $this->createStorageProvider(),
             $this->getCalculatorFacade(),
             $this->getMessengerFacade(),
@@ -31,6 +31,10 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getCartPreCheckPlugins(),
             $this->getPostSavePlugins()
         );
+
+        $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
+
+        return $operation;
     }
 
     /**
@@ -79,6 +83,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getPostSavePlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_POST_SAVE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Dependency\PreReloadItemsPluginInterface[]
+     */
+    protected function getPreReloadItemsPlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS);
     }
 
 }

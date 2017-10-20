@@ -50,19 +50,19 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      */
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
-        $parameterName = $this->facetConfigTransfer->getParameterName();
+        $name = $this->facetConfigTransfer->getName();
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
-        $facetResultValueTransfers = $this->extractFacetData($aggregations, $parameterName, $fieldName);
+        $facetResultValueTransfers = $this->extractFacetData($aggregations, $name, $fieldName);
 
         $facetResultTransfer = new FacetSearchResultTransfer();
         $facetResultTransfer
-            ->setName($parameterName)
+            ->setName($name)
             ->setValues($facetResultValueTransfers)
             ->setConfig(clone $this->facetConfigTransfer);
 
-        if (isset($requestParameters[$parameterName])) {
-            $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
+        if (isset($requestParameters[$name])) {
+            $facetResultTransfer->setActiveValue($requestParameters[$name]);
         }
 
         return $facetResultTransfer;

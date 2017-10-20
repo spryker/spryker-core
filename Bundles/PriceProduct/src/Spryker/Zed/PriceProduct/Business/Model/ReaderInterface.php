@@ -130,4 +130,12 @@ interface ReaderInterface
      */
     public function findPricesBySkuGrouped($sku);
 
+    /**
+     * @param int $idAbstractProduct
+     * @param string|null $priceTypeName
+     *
+     * @return mixed
+     */
+    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
+
 }

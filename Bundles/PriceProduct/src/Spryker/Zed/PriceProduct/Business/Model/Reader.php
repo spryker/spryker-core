@@ -777,4 +777,23 @@ class Reader implements ReaderInterface
 
         return $prices;
     }
+
+    /**
+     * @param int $idAbstractProduct
+     * @param string|null $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
+    {
+        $priceTypeName = $this->handleDefaultPriceType($priceTypeName);
+
+        $priceProductEntity = $this->queryContainer
+            ->queryPricesForProductAbstractById($idAbstractProduct)
+            ->filterByPriceType($priceTypeName)
+            ->findOne();
+
+
+        return $priceTransfer;
+    }
 }

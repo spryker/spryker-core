@@ -249,4 +249,19 @@ interface PriceProductFacadeInterface
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
 
+    /**
+     * Specification:
+     * - Reads the persisted price for the given abstract product id for the given price type.
+     * - If price type is not provided, then the default price type will be used.
+     * - Returns a hydrated PriceProductTransfer if the price exists, null otherwise.
+     *
+     * @api
+     *
+     * @param int $idAbstractProduct
+     * @param string|null $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
+
 }

@@ -16,6 +16,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpan
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleImageCartExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReloadUpdater;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
@@ -160,6 +161,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundlesSalesOrderHydrate()
     {
         return new ProductBundlesSalesOrderHydrate($this->getSalesQueryContainer(), $this->createProductBundlePriceCalculator());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReloadUpdaterInterface
+     */
+    public function createProductBundlePreReloadUpdater()
+    {
+        return new ProductBundlePreReloadUpdater();
     }
 
     /**

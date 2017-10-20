@@ -3,7 +3,7 @@
 
     <table name="spy_price_product" phpName="SpyPriceProduct">
         <column name="id_price_product" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
-        <column name="price" type="INTEGER" defaultValue="0"/>
+        <column name="price" type="INTEGER" defaultValue="0" comment="deprecated"/>
         <column name="fk_product" type="INTEGER" required="false"/>
         <column name="fk_price_type" type="INTEGER" required="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="false"/>

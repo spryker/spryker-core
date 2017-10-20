@@ -7,14 +7,14 @@
 
 namespace Spryker\Yves\CartCurrencyConnector\CurrencyChange;
 
-use Spryker\Yves\Currency\CurrencyChange\CurrencyPostChangePluginExecutorInterface;
+use Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  *
  * @method \Spryker\Yves\CartCurrencyConnector\CartCurrencyConnectorFactory getFactory()
  */
-class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements CurrencyPostChangePluginExecutorInterface
+class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements CurrencyPostChangePluginInterface
 {
 
     /**
