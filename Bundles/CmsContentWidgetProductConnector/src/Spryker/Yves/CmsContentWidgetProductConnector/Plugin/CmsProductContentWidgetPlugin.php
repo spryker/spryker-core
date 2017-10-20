@@ -38,12 +38,23 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
      */
     public function getContentWidgetFunction()
     {
-        return function (Twig_Environment $twig, array $context, $productAbstractSkuList, $templateIdentifier = null) {
-            return $twig->render(
-                $this->resolveTemplatePath($templateIdentifier),
-                $this->getContent($context, $productAbstractSkuList)
-            );
-        };
+        return [$this, 'contentWidgetFunction'];
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param array $context
+     * @param array|string $productAbstractSkuList $productAbstractSkuList
+     * @param null|string $templateIdentifier
+     *
+     * @return string
+     */
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $productAbstractSkuList, $templateIdentifier = null)
+    {
+        return $twig->render(
+            $this->resolveTemplatePath($templateIdentifier),
+            $this->getContent($context, $productAbstractSkuList)
+        );
     }
 
     /**

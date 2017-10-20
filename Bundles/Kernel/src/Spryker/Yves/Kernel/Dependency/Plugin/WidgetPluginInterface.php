@@ -7,10 +7,12 @@
 
 namespace Spryker\Yves\Kernel\Dependency\Plugin;
 
+use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
+
 /**
  * TODO: write where/how this class used
  */
-interface WidgetPluginInterface
+interface WidgetPluginInterface extends WidgetContainerInterface
 {
 
     /**

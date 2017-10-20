@@ -38,12 +38,23 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
      */
     public function getContentWidgetFunction()
     {
-        return function (Twig_Environment $twig, array $context, $productSetKeys, $templateIdentifier = null) {
-            return $twig->render(
-                $this->resolveTemplatePath($templateIdentifier),
-                $this->getContent($context, $productSetKeys)
-            );
-        };
+        return [$this, 'contentWidgetFunction'];
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param array $context
+     * @param array|string $productSetKeys
+     * @param string|null $templateIdentifier
+     *
+     * @return string
+     */
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $productSetKeys, $templateIdentifier = null)
+    {
+        return $twig->render(
+            $this->resolveTemplatePath($templateIdentifier),
+            $this->getContent($context, $productSetKeys)
+        );
     }
 
     /**
