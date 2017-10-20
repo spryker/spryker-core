@@ -70,7 +70,10 @@ class StepEngine implements StepEngineInterface
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function processProvided(FormCollectionHandlerProviderInterface $formCollectionHandlerProvider) {
+    public function processProvided(
+        Request $request,
+        FormCollectionHandlerProviderInterface $formCollectionHandlerProvider
+    ) {
         $dataTransfer = $this->dataContainer->get();
         $formCollection = $formCollectionHandlerProvider->provideFormCollectionHandler($dataTransfer);
         $response = $this->runProcess($request, $dataTransfer, $formCollection);

@@ -28,14 +28,6 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
-    public function createPaymentMethodSubForms()
-    {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PAYMENT_SUB_FORMS);
-    }
-
-    /**
-     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
-     */
     public function getPaymentMethodSubForms()
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::PAYMENT_SUB_FORMS);
@@ -49,7 +41,12 @@ class FormFactory extends AbstractFactory
         return $this->getProvidedDependency(CheckoutDependencyProvider::PLUGIN_PAYMENT_FILTERS);
     }
 
-    protected function createSubFormDataProvider( $subFormProvider)
+    /**
+     * @param \Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider $subFormProvider
+     *
+     * @return \Spryker\Yves\Checkout\Form\Provider\SubFormDataProviders
+     */
+    protected function createSubFormDataProvider(FilterableSubFormProvider $subFormProvider)
     {
         return new SubFormDataProviders($subFormProvider);
     }
