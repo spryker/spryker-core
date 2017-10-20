@@ -24,11 +24,11 @@ class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
      *
      * @return bool
      */
-    public function hasUrl(UrlTransfer $urlTransfer)
+    public function hasUrl($urlTransfer)
     {
         return $this->urlFacade->hasUrl($urlTransfer);
     }
