@@ -11,7 +11,7 @@
     "spryker/search": "^6.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/touch": "^3.0.0",
-    "spryker/url": "^3.1.2"
+    "spryker/url": "^3.2.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
