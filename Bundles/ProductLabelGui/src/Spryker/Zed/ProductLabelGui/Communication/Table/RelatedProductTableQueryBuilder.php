@@ -18,6 +18,7 @@ use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerInterface;
 use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface;
 use Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig;
@@ -113,7 +114,6 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
         $this->addProductName($query, $localeTransfer);
-        $this->addProductPrice($query);
         $this->addProductCategories($query, $localeTransfer);
         $this->addConcreteProductStates($query);
         $this->addRelation($query, $idProductLabel);
@@ -137,25 +137,6 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                     static::RESULT_FIELD_PRODUCT_ABSTRACT_NAME
                 )
                 ->filterByFkLocale($localeTransfer->getIdLocale())
-            ->endUse();
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
-     *
-     * @return void
-     */
-    protected function addProductPrice(SpyProductAbstractQuery $query)
-    {
-        $query
-            ->usePriceProductQuery()
-                ->withColumn(
-                    SpyPriceProductTableMap::COL_PRICE,
-                    static::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE
-                )
-                ->usePriceTypeQuery()
-                    ->filterByName($this->bundleConfig->getDefaultPriceType())
-                ->endUse()
             ->endUse();
     }
 

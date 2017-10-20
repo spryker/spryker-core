@@ -46,6 +46,7 @@
     "spryker/cart-currency-connector": "*",
     "spryker/cart-variant": "*",
     "spryker/catalog": "*",
+    "spryker/catalog-price-product-connector": "*",
     "spryker/category": "*",
     "spryker/category-exporter": "*",
     "spryker/checkout": "*",

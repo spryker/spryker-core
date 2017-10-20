@@ -7,29 +7,29 @@
 
 namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
-class ProductSetGuiToPriceBridge implements ProductSetGuiToPriceInterface
+class ProductSetGuiToPriceProductBridge implements ProductSetGuiToPriceInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
-    protected $priceFacade;
+    protected $priceProductFacade;
 
     /**
      * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceFacade
      */
     public function __construct($priceFacade)
     {
-        $this->priceFacade = $priceFacade;
+        $this->priceProductFacade = $priceFacade;
     }
 
     /**
-     * @param int $idAbstractProduct
-     * @param string|null $priceTypeName
+     * @param string $sku
+     * @param string $priceTypeName
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     * @return int
      */
-    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
+    public function getPriceBySku($sku, $priceTypeName = null)
     {
-        return $this->priceFacade->findProductAbstractPrice($idAbstractProduct, $priceTypeName);
+        return $this->priceProductFacade->getPriceBySku($sku, $priceTypeName);
     }
 }

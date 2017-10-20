@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Price\Dependency;
+namespace Spryker\Zed\PriceProduct\Dependency;
 
-interface PriceEvents
+interface PriceProductEvents
 {
     /**
      * Specification

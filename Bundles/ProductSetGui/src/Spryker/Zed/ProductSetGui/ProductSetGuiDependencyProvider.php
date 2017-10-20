@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyBridge;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceBridge;
+use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToUrlBridge;
@@ -25,7 +25,7 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_URL = 'FACADE_URL';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
-    const FACADE_PRICE = 'FACADE_PRICE';
+    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE';
     const FACADE_MONEY = 'FACADE_MONEY';
 
     const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
@@ -44,7 +44,7 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
         $this->provideLocaleFacade($container);
         $this->provideUrlFacade($container);
         $this->provideProductImageFacade($container);
-        $this->providePriceFacade($container);
+        $this->providePriceProductFacade($container);
         $this->provideMoneyFacade($container);
 
         $this->provideUtilEncodingService($container);
@@ -118,10 +118,10 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function providePriceFacade(Container $container)
+    protected function providePriceProductFacade(Container $container)
     {
-        $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductSetGuiToPriceBridge($container->getLocator()->priceProduct()->facade());
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductSetGuiToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
     }
 

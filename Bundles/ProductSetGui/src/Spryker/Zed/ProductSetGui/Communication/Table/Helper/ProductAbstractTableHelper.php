@@ -22,7 +22,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
     /**
      * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface
      */
-    protected $priceFacade;
+    protected $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface
@@ -31,16 +31,16 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
 
     /**
      * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInterface $productImageFacade
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface $priceProductFacade
      * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface $moneyFacade
      */
     public function __construct(
         ProductSetGuiToProductImageInterface $productImageFacade,
-        ProductSetGuiToPriceInterface $priceFacade,
+        ProductSetGuiToPriceInterface $priceProductFacade,
         ProductSetGuiToMoneyInterface $moneyFacade
     ) {
         $this->productImageFacade = $productImageFacade;
-        $this->priceFacade = $priceFacade;
+        $this->priceProductFacade = $priceProductFacade;
         $this->moneyFacade = $moneyFacade;
     }
 
@@ -64,13 +64,8 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      */
     public function getProductPrice(SpyProductAbstract $productAbstractEntity)
     {
-        $priceProductTransfer = $this->priceFacade->findProductAbstractPrice($productAbstractEntity->getIdProductAbstract());
-
-        if (!$priceProductTransfer) {
-            return null;
-        }
-
-        $moneyTransfer = $this->moneyFacade->fromInteger($priceProductTransfer->getPrice());
+        $price = $this->priceProductFacade->getPriceBySku($productAbstractEntity->getSku());
+        $moneyTransfer = $this->moneyFacade->fromInteger($price);
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }

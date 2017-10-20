@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductInterface;
 
 abstract class AbstractRelatedProductTable extends AbstractTable
 {
@@ -38,18 +39,26 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected $idProductLabel;
 
     /**
+     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductInterface
+     */
+    protected $priceProductFacade;
+
+    /**
      * @param \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface $tableQueryBuilder
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface $moneyFacade
      * @param int|null $idProductLabel
+     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductInterface $priceProductFacade
      */
     public function __construct(
         RelatedProductTableQueryBuilderInterface $tableQueryBuilder,
         ProductLabelGuiToMoneyInterface $moneyFacade,
-        $idProductLabel
+        $idProductLabel,
+        ProductLabelGuiToPriceProductInterface $priceProductFacade
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
         $this->moneyFacade = $moneyFacade;
         $this->idProductLabel = $idProductLabel;
+        $this->priceProductFacade = $priceProductFacade;
     }
 
     /**
@@ -127,9 +136,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
      */
     protected function getPriceColumn(SpyProductAbstract $productAbstractEntity)
     {
-        $price = (int)$productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE
-        );
+        $price = $this->priceProductFacade->getPriceBySku($productAbstractEntity->getSku());
         $moneyTransfer = $this->moneyFacade->fromInteger($price);
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
