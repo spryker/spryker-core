@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
@@ -16,24 +15,53 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 class IndexController extends AbstractController
 {
     /**
-     * @return void
+     * @return array
      */
     public function indexAction()
     {
-        $categoryId = 10;
-        $this->getFactory()->getProductCategoryFilterFacade()->deleteProductCategoryFilterByCategoryId($categoryId);
-        $this->getFactory()->getProductCategoryFilterFacade()->createProductCategoryFilter(
-            (new ProductCategoryFilterTransfer())->fromArray(
-                [
-                    ProductCategoryFilterTransfer::FK_CATEGORY => $categoryId,
-                    ProductCategoryFilterTransfer::FILTER_DATA => json_encode([
-                        'weight' => true,
-                        'price' => false,
-                        'category' => true,
-                    ]),
-                ],
-                true
-            )
+        $rootCategoriesTable = $this
+            ->getFactory()->
+            createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocale());
+        return $this->viewResponse([
+            'RootCategoriesTable' => $rootCategoriesTable->render(),
+        ]);
+//        $this->getFactory()->getProductCategoryFilterFacade()->deleteProductCategoryFilterByCategoryId($categoryId);
+//        $this->getFactory()->getProductCategoryFilterFacade()->createProductCategoryFilter(
+//            (new ProductCategoryFilterTransfer())->fromArray(
+//                [
+//                    ProductCategoryFilterTransfer::FK_CATEGORY => $categoryId,
+//                    ProductCategoryFilterTransfer::FILTER_DATA => json_encode([
+//                        'weight' => true,
+//                        'price' => false,
+//                        'category' => true,
+//                    ]),
+//                ],
+//                true
+//            )
+//        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction()
+    {
+        $productTable = $this
+            ->getFactory()
+            ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocale());
+
+        return $this->jsonResponse(
+            $productTable->fetchData()
         );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getCurrentLocale()
+    {
+        return $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
     }
 }
