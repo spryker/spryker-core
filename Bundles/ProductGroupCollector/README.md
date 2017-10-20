@@ -1,7 +1,8 @@
 # ProductGroupCollector Module
 [![Build Status](https://travis-ci.org/spryker/ProductGroupCollector.svg)](https://travis-ci.org/spryker/ProductGroupCollector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/ProductGroupCollector/badge.svg)](https://coveralls.io/github/spryker/ProductGroupCollector)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductGroupCollector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductGroupCollector/?branch=master)
+
+ProductGroupCollector provides product group data for Yves by exporting it to key-value storage.
 
 ## Installation
 
@@ -11,4 +12,4 @@ composer require spryker/product-group-collector
 
 ## Documentation
 
-[Spryker Documentation](https://spryker.github.io)
+[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/products/product_group/product_group.html)

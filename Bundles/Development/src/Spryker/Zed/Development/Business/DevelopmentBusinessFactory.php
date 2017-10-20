@@ -1063,7 +1063,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createArchitectureSniffer()
     {
-        $xml = $this->getXmlReader();
+        $xml = $this->createXmlReader();
         $command = $this->getConfig()->getArchitectureSnifferCommand();
         $defaultPriority = $this->getConfig()->getArchitectureSnifferDefaultPriority();
 
@@ -1071,9 +1071,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createXmlReader() instead.
+     *
      * @return \Zend\Config\Reader\Xml
      */
     protected function getXmlReader()
+    {
+        return $this->createXmlReader();
+    }
+
+    /**
+     * @return \Zend\Config\Reader\Xml
+     */
+    protected function createXmlReader()
     {
         return new Xml();
     }
@@ -1085,16 +1095,26 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new AllBundleFinder(
             $this->createFinder(),
-            $this->getCamelCaseToDashFilter(),
+            $this->createCamelCaseToDashFilter(),
             $this->getConfig()->getProjectNamespaces(),
             $this->getConfig()->getCoreNamespaces()
         );
     }
 
     /**
+     * @deprecated Use createCamelCaseToDashFilter() instead.
+     *
      * @return \Zend\Filter\Word\CamelCaseToDash
      */
     protected function getCamelCaseToDashFilter()
+    {
+        return $this->createCamelCaseToDashFilter();
+    }
+
+    /**
+     * @return \Zend\Filter\Word\CamelCaseToDash
+     */
+    protected function createCamelCaseToDashFilter()
     {
         return new CamelCaseToDash();
     }

@@ -120,6 +120,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     /**
      * {@inheritdoc}
      *
+     * @deprecated use SearchFacade::transformPageMapToDocumentByMapperName() instead
+     *
      * @api
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
@@ -135,6 +137,26 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
         return $this->getFactory()
             ->createPageDataMapper()
             ->mapData($pageMap, $data, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $mapperName
+     *
+     * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
+     *
+     * @return array
+     */
+    public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName)
+    {
+        return $this->getFactory()
+            ->createPageDataMapper()
+            ->transferDataByMapperName($data, $localeTransfer, $mapperName);
     }
 
     /**

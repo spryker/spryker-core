@@ -276,7 +276,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
             $script .= $this->addDoInsertBodyRaw();
         }
         $script .= "
-        \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity save (new)', ['entity' => \$this]);
+        \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity save (new)', ['entity' => \$this->toArray('fieldName', false)]);
 
         \$this->setNew(false);
 
@@ -307,7 +307,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         \$selectCriteria = \$this->buildPkeyCriteria();
         \$valuesCriteria = \$this->buildCriteria();
 
-        \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity save (update)', ['entity' => \$this]);
+        \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity save (update)', ['entity' => \$this->toArray('fieldName', false)]);
 
         return \$selectCriteria->doUpdate(\$valuesCriteria, \$con);
     }
@@ -326,7 +326,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
     protected function addDeleteClose(&$script)
     {
         $script .= "
-        \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity delete', ['entity' => \$this]);
+        \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity delete', ['entity' => \$this->toArray('fieldName', false)]);
     }
 ";
     }

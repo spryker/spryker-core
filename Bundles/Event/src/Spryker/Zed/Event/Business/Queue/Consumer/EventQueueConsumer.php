@@ -11,6 +11,8 @@ use Exception;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
@@ -45,6 +47,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     public function processMessages(array $queueMessageTransfers)
     {
+        $bulkListener = [];
         foreach ($queueMessageTransfers as $queueMessageTransfer) {
             $eventQueueSentMessageBodyTransfer = $this->createEventQueueSentMessageBodyTransfer(
                 $queueMessageTransfer->getQueueMessage()->getBody()
@@ -56,10 +59,13 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             }
 
             try {
-                $eventTransfer = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
+                $events = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
+                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][] = $events;
 
                 $listener = $this->createEventListener($eventQueueSentMessageBodyTransfer->getListenerClassName());
-                $listener->handle($eventTransfer);
+                if ($listener instanceof EventHandlerInterface) {
+                    $listener->handle($events, $eventQueueSentMessageBodyTransfer->getEventName());
+                }
 
                 $this->logConsumerAction(
                     sprintf(
@@ -84,7 +90,45 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             }
         }
 
+        foreach ($bulkListener as $listenerClassName => $events) {
+            $this->handleBulk($queueMessageTransfers, $events, $listenerClassName);
+        }
+
         return $queueMessageTransfers;
+    }
+
+    /**
+     * @param array $queueMessageTransfers
+     * @param array $events
+     * @param string $listenerClassName
+     *
+     * @return void
+     */
+    protected function handleBulk(array $queueMessageTransfers, array $events, $listenerClassName)
+    {
+        $listener = $this->createEventListener($listenerClassName);
+        if (!($listener instanceof EventBulkHandlerInterface)) {
+            return;
+        }
+
+        foreach ($events as $eventName => $eventTransfers) {
+            try {
+                $listener->handleBulk($eventTransfers, $eventName);
+            } catch (Exception $exception) {
+                $this->logConsumerAction(
+                    sprintf(
+                        'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
+                        $eventName,
+                        $listenerClassName,
+                        $exception->getMessage(),
+                        $exception->getTraceAsString()
+                    )
+                );
+                foreach ($queueMessageTransfers as $queueMessageTransfer) {
+                    $this->markMessageAsFailed($queueMessageTransfer);
+                }
+            }
+        }
     }
 
     /**
@@ -151,7 +195,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     /**
      * @param string $listenerClass
      *
-     * @return \Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface
+     * @return \Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface|\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface
      */
     protected function createEventListener($listenerClass)
     {

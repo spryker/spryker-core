@@ -97,11 +97,11 @@ class TaskManager implements TaskManagerInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    public function receiveMessages($queueName, $chunkSize, array $options = null)
+    public function receiveMessages($queueName, $chunkSize, array $options = [])
     {
         return $this->client->receiveMessages($queueName, $chunkSize, $options);
     }

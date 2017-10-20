@@ -1,7 +1,8 @@
 # ProductSetCollector Module
 [![Build Status](https://travis-ci.org/spryker/ProductSetCollector.svg)](https://travis-ci.org/spryker/ProductSetCollector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/ProductSetCollector/badge.svg)](https://coveralls.io/github/spryker/ProductSetCollector)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductSetCollector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductSetCollector/?branch=master)
+
+ProductSetCollector provides product set data for Yves by exporting it to key-value storage and search.
 
 ## Installation
 
@@ -11,4 +12,4 @@ composer require spryker/product-set-collector
 
 ## Documentation
 
-[Spryker Documentation](https://spryker.github.io)
+[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/products/product_set.html)

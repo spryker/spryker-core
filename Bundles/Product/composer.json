@@ -3,7 +3,7 @@
   "description": "Product module",
   "license": "proprietary",
   "require": {
-    "spryker/event": "^1.0.0",
+    "spryker/event": "^1.0.0 || ^2.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",

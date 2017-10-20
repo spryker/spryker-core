@@ -2,7 +2,7 @@ namespace: CmsBlockCategoryConnector
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/CmsBlockCategoryConnector
+    - tests/SprykerTest/Zed/CmsBlockCategoryConnector
 
 paths:
     tests: tests

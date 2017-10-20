@@ -635,6 +635,17 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @api
      *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryAllCmsVersions()
+    {
+        return $this->getFactory()
+            ->createSpyCmsVersionQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idPage
      * @param int $version
      *

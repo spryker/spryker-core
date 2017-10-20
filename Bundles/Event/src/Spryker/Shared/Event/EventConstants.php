@@ -32,4 +32,12 @@ interface EventConstants
      * @api
      */
     const EVENT_QUEUE = 'event';
+
+    /**
+     * Specification:
+     * - Error queue name as used when with asynchronous event handling
+     *
+     * @api
+     */
+    const EVENT_QUEUE_ERROR = 'event.error';
 }

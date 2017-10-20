@@ -3,7 +3,7 @@
   "description": "Category module",
   "license": "proprietary",
   "require": {
-    "spryker/event": "^1.0.0",
+    "spryker/event": "^1.0.0 || ^2.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Queue\Business\Worker;
 
+use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Queue\QueueConfig as SharedConfig;
 use Spryker\Zed\Queue\Business\Process\ProcessManagerInterface;
 use Spryker\Zed\Queue\QueueConfig;
@@ -38,6 +39,11 @@ class Worker implements WorkerInterface
     protected $workerProgressBar;
 
     /**
+     * @var \Spryker\Client\Queue\QueueClientInterface
+     */
+    protected $queueClient;
+
+    /**
      * @var array
      */
     protected $queueNames;
@@ -46,17 +52,20 @@ class Worker implements WorkerInterface
      * @param \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface $processManager
      * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
      * @param \Spryker\Zed\Queue\Business\Worker\WorkerProgressBarInterface $workerProgressBar
+     * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param array $queueNames
      */
     public function __construct(
         ProcessManagerInterface $processManager,
         QueueConfig $queueConfig,
         WorkerProgressBarInterface $workerProgressBar,
+        QueueClientInterface $queueClient,
         array $queueNames
     ) {
         $this->processManager = $processManager;
         $this->workerProgressBar = $workerProgressBar;
         $this->queueConfig = $queueConfig;
+        $this->queueClient = $queueClient;
         $this->queueNames = $queueNames;
     }
 
@@ -71,22 +80,24 @@ class Worker implements WorkerInterface
     {
         $startTime = time();
         $passedSeconds = 0;
+        $advancedStep = 1;
         $maxThreshold = (int)$this->queueConfig->getQueueWorkerMaxThreshold();
-        $delayIntervalSeconds = (int)$this->queueConfig->getQueueWorkerInterval();
+        $delayIntervalMilliseconds = (int)$this->queueConfig->getQueueWorkerInterval();
         $this->workerProgressBar->start($maxThreshold, $round);
 
         $pendingProcesses = [];
         while ($passedSeconds < $maxThreshold) {
             $processes = array_merge($this->executeOperation($command), $processes);
             $pendingProcesses = $this->getPendingProcesses($processes);
-            $this->workerProgressBar->advance();
 
-            usleep($delayIntervalSeconds * static::SECOND_TO_MILLISECONDS);
+            $this->workerProgressBar->advance($advancedStep);
+            $advancedStep = $delayIntervalMilliseconds / static::SECOND_TO_MILLISECONDS;
+            usleep($delayIntervalMilliseconds * static::SECOND_TO_MILLISECONDS);
             $passedSeconds = time() - $startTime;
         }
 
         $this->workerProgressBar->finish();
-        $this->waitForPendingProcesses($pendingProcesses, $command, $round, $delayIntervalSeconds);
+        $this->waitForPendingProcesses($pendingProcesses, $command, $round, $delayIntervalMilliseconds);
 
         $this->processManager->flushIdleProcesses();
     }
@@ -119,7 +130,7 @@ class Worker implements WorkerInterface
     {
         $pendingProcesses = [];
         foreach ($processes as $process) {
-            if ($process->isRunning()) {
+            if ($this->processManager->isProcessRunning($process->getPid())) {
                 $pendingProcesses[] = $process;
             }
         }
@@ -139,17 +150,22 @@ class Worker implements WorkerInterface
         $index = 0;
         $processes = [];
         foreach ($this->queueNames as $queue) {
-            $processCommand = sprintf('%s %s >> %s', $command, $queue, $this->queueConfig->getQueueWorkerOutputFileName());
+            $processCommand = sprintf('%s %s', $command, $queue);
+
+            if ($this->queueConfig->getQueueWorkerLogStatus()) {
+                $processCommand = sprintf('%s >> %s', $processCommand, $this->queueConfig->getQueueWorkerOutputFileName());
+            }
+
             $queueProcesses = $this->startProcesses($processCommand, $queue);
-            $processes = array_merge($processes, $queueProcesses[self::PROCESSES_INTSTANCES]);
+            $processes = array_merge($processes, $queueProcesses[static::PROCESSES_INTSTANCES]);
 
             $this
                 ->workerProgressBar
                 ->writeConsoleMessage(
                     ++$index,
                     $queue,
-                    $queueProcesses[self::PROCESS_BUSY],
-                    $queueProcesses[self::PROCESS_NEW]
+                    $queueProcesses[static::PROCESS_BUSY],
+                    $queueProcesses[static::PROCESS_NEW]
                 );
         }
 
@@ -168,14 +184,20 @@ class Worker implements WorkerInterface
         $numberOfWorkers = $this->getMaxQueueWorker($queue) - $busyProcessNumber;
 
         $processes = [];
-        for ($i = 0; $i < $numberOfWorkers; $i++) {
-            $processes[] = $this->processManager->triggerQueueProcess($command, $queue);
+        $message = $this->queueClient->receiveMessage($queue, $this->queueConfig->getWorkerMessageCheckOption());
+        if ($message->getQueueMessage() !== null) {
+            $this->queueClient->reject($message);
+            for ($i = 0; $i < $numberOfWorkers; $i++) {
+                $processes[] = $this->processManager->triggerQueueProcess($command, $queue);
+            }
+        } else {
+            $numberOfWorkers = 0;
         }
 
         return [
-            self::PROCESS_BUSY => $busyProcessNumber,
-            self::PROCESS_NEW => $numberOfWorkers,
-            self::PROCESSES_INTSTANCES => $processes,
+            static::PROCESS_BUSY => $busyProcessNumber,
+            static::PROCESS_NEW => $numberOfWorkers,
+            static::PROCESSES_INTSTANCES => $processes,
         ];
     }
 
