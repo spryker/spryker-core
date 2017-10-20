@@ -228,16 +228,16 @@ class Discount implements DiscountInterface
      */
     protected function filterNonApplicableDiscounts(Collection $discounts, QuoteTransfer $quoteTransfer)
     {
-        $NonApplicableDiscounts = [];
+        $nonApplicableDiscounts = [];
         foreach ($discounts as $discountEntity) {
             if ($this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
                 continue;
             }
 
-            $NonApplicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity);
+            $nonApplicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity, $quoteTransfer);
         }
 
-        return $NonApplicableDiscounts;
+        return $nonApplicableDiscounts;
     }
 
     /**
