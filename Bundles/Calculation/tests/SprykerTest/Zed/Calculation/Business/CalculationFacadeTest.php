@@ -18,6 +18,7 @@ use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorForGenericAmountPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ExpenseTotalCalculatorPlugin;
@@ -140,7 +141,7 @@ class CalculationFacadeTest extends Unit
     {
         $calculationFacade = $this->createCalculationFacade(
             [
-                new DiscountAmountAggregatorPlugin(),
+                new DiscountAmountAggregatorForGenericAmountPlugin(),
             ]
         );
 

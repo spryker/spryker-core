@@ -15,6 +15,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class GeneratedTransfer extends AbstractTransfer
 {
+
     const TEST_STRING = 'testString';
 
     const TEST_STRING_ARRAY = 'testStringArray';
@@ -594,4 +595,5 @@ class GeneratedTransfer extends AbstractTransfer
 
         return $this;
     }
+
 }
