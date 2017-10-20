@@ -9,7 +9,6 @@ namespace Spryker\Zed\Tax\Dependency\Plugin;
 
 interface TaxChangePluginInterface
 {
-
     /**
      * @api
      *
@@ -27,5 +26,4 @@ interface TaxChangePluginInterface
      * @return void
      */
     public function handleTaxSetChange($idTaxSet);
-
 }

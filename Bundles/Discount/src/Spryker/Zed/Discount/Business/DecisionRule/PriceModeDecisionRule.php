@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class PriceModeDecisionRule implements DecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -45,5 +44,4 @@ class PriceModeDecisionRule implements DecisionRuleInterface
 
         return $this->comparators->compare($clauseTransfer, $priceMode);
     }
-
 }

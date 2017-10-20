@@ -14,7 +14,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class DiscountDataHelper extends Module
 {
-
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
@@ -61,5 +60,4 @@ class DiscountDataHelper extends Module
     {
         return $this->getLocator()->discount()->queryContainer();
     }
-
 }

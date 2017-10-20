@@ -11,12 +11,10 @@ use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 
 interface ProductSetDataDeleterInterface
 {
-
     /**
      * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
      *
      * @return void
      */
     public function deleteProductSetData(SpyProductSet $productSetEntity);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Wishlist\Dependency\Facade;
 
 class WishlistToProductBridge implements WishlistToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -52,5 +51,4 @@ class WishlistToProductBridge implements WishlistToProductInterface
     {
         return $this->productFacade->hasProductConcrete($sku);
     }
-
 }

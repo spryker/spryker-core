@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -108,5 +107,4 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 
         return $countryTransfer;
     }
-
 }

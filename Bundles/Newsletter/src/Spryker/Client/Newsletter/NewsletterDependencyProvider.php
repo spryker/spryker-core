@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 
 class NewsletterDependencyProvider extends AbstractDependencyProvider
 {
-
     const SERVICE_ZED = 'zed service';
 
     /**
@@ -28,5 +27,4 @@ class NewsletterDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

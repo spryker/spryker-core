@@ -21,7 +21,6 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
  */
 class OmsPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */
@@ -69,5 +68,4 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(OmsDependencyProvider::QUERY_CONTAINER_SALES);
     }
-
 }

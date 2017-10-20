@@ -20,7 +20,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterfa
 
 class ProductTable extends AbstractProductTable
 {
-
     const COL_ACTIONS = 'Actions';
     const COL_STATUS = 'Status';
 
@@ -265,5 +264,4 @@ class ProductTable extends AbstractProductTable
             ]
         );
     }
-
 }

@@ -148,5 +148,4 @@ class PriceManager implements PriceManagerInterface
 
         return $priceFilterTransfer;
     }
-
 }

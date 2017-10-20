@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 interface ProductOptionToLocaleInterface
 {
-
     /**
      * @param string $localeName
      *
@@ -42,5 +41,4 @@ interface ProductOptionToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
-
 }

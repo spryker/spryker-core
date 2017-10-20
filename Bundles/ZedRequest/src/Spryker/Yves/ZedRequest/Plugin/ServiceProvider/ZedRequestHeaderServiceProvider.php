@@ -17,7 +17,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class ZedRequestHeaderServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -39,5 +38,4 @@ class ZedRequestHeaderServiceProvider extends AbstractPlugin implements ServiceP
             $this->getFactory()->createZedRequestHeaderMiddleware()
         );
     }
-
 }

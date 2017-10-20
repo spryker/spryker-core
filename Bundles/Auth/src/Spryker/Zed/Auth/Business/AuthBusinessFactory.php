@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class AuthBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Auth\Business\Model\Auth
      */
@@ -75,5 +74,4 @@ class AuthBusinessFactory extends AbstractBusinessFactory
 
         return $passwordReset;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Dependency\Facade;
 
 interface DiscountToCurrencyInterface
 {
-
     /**
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      *
@@ -30,5 +29,4 @@ interface DiscountToCurrencyInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
-
 }

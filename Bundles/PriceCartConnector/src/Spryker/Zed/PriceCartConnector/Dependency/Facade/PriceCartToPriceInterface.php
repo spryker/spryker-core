@@ -17,8 +17,7 @@ interface PriceCartToPriceInterface
      * @return string
      */
     public function getGrossPriceModeIdentifier();
-
-    /**
+/**
      * @return string
      */
     public function getDefaultPriceMode();

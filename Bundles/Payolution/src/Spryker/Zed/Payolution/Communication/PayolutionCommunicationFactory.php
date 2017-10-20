@@ -19,7 +19,6 @@ use Spryker\Zed\Payolution\PayolutionDependencyProvider;
  */
 class PayolutionCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Payolution\Communication\Table\Payments
      */
@@ -77,5 +76,4 @@ class PayolutionCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_SALES);
     }
-
 }

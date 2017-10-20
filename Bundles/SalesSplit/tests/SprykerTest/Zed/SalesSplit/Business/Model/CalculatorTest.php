@@ -23,7 +23,6 @@ use Spryker\Zed\SalesSplit\Business\Model\Calculator;
  */
 class CalculatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -37,5 +36,4 @@ class CalculatorTest extends Unit
 
         $this->assertEquals(1, $quantityAmountLeft);
     }
-
 }

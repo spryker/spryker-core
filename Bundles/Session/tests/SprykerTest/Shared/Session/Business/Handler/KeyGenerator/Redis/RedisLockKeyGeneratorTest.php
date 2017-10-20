@@ -24,7 +24,6 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
  */
 class RedisLockKeyGeneratorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -35,5 +34,4 @@ class RedisLockKeyGeneratorTest extends Unit
 
         $this->assertSame('session:foo-session-123:lock', $generatedKey);
     }
-
 }

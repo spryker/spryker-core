@@ -22,7 +22,6 @@ use SprykerTest\Zed\Cms\PageObject\CmsRedirectCreatePage;
  */
 class CmsRedirectCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Cms\CmsCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class CmsRedirectCreateCest
         $i->amOnPage(CmsRedirectCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects / Create new CMS Redirect');
     }
-
 }

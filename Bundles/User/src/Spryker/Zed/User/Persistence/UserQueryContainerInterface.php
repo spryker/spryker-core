@@ -9,7 +9,6 @@ namespace Spryker\Zed\User\Persistence;
 
 interface UserQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -41,5 +40,4 @@ interface UserQueryContainerInterface
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
     public function queryUser();
-
 }

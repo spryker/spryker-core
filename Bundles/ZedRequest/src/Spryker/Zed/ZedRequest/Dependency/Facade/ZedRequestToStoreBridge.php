@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedRequest\Dependency\Facade;
 
 class ZedRequestToStoreBridge implements ZedRequestToStoreInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
@@ -42,5 +41,4 @@ class ZedRequestToStoreBridge implements ZedRequestToStoreInterface
     {
         $this->store->setCurrentLocale($localeCode);
     }
-
 }

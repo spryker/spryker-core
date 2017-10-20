@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 
 class BaseMoneyCollectionDataProvider
 {
-
     /**
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
@@ -47,5 +46,4 @@ class BaseMoneyCollectionDataProvider
         }
         return $currencyIndex;
     }
-
 }

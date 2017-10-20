@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CurrencyBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
@@ -75,5 +74,4 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::INTERNATIONALIZATION);
     }
-
 }

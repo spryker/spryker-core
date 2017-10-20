@@ -9,7 +9,6 @@ namespace Spryker\Shared\Twig\TemplateNameExtractor;
 
 interface TemplateNameExtractorInterface
 {
-
     /**
      * @param string $name
      *
@@ -23,5 +22,4 @@ interface TemplateNameExtractorInterface
      * @return string
      */
     public function extractTemplatePath($name);
-
 }

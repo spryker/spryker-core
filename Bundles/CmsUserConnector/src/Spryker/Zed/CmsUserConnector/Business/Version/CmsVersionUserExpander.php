@@ -12,7 +12,6 @@ use Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterfa
 
 class CmsVersionUserExpander implements CmsVersionUserExpanderInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface
      */
@@ -43,5 +42,4 @@ class CmsVersionUserExpander implements CmsVersionUserExpanderInterface
 
         return $cmsVersionTransfer;
     }
-
 }

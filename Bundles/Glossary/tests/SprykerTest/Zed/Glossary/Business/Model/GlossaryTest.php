@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Touch\Business\TouchFacade;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
@@ -27,7 +26,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
  */
 class GlossaryTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacade|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -37,11 +35,6 @@ class GlossaryTest extends Unit
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     private $localeFacade;
-
-    /**
-     * @var \Spryker\Zed\Touch\Business\TouchFacade
-     */
-    private $touchFacade;
 
     /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer
@@ -62,7 +55,6 @@ class GlossaryTest extends Unit
 
         $this->glossaryQueryContainer = new GlossaryQueryContainer();
         $this->localeFacade = new LocaleFacade();
-        $this->touchFacade = new TouchFacade();
         $this->touchQueryContainer = new TouchQueryContainer();
         $this->glossaryFacade = new GlossaryFacade();
     }
@@ -373,5 +365,4 @@ class GlossaryTest extends Unit
         $this->assertEquals('setSomeOtherTranslation', $specificTranslationQuery->findOne()->getValue());
         $this->assertTrue($touchCountAfterCreation > $touchCountBeforeCreation);
     }
-
 }

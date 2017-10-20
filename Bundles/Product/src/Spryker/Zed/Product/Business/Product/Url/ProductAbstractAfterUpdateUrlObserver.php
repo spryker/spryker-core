@@ -13,7 +13,6 @@ use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInte
 
 class ProductAbstractAfterUpdateUrlObserver implements ProductAbstractUpdateObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface
      */
@@ -47,5 +46,4 @@ class ProductAbstractAfterUpdateUrlObserver implements ProductAbstractUpdateObse
 
         return $productAbstractTransfer;
     }
-
 }

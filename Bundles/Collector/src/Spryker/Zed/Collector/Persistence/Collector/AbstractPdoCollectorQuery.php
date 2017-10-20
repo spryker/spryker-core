@@ -11,7 +11,6 @@ use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 
 abstract class AbstractPdoCollectorQuery extends AbstractCollectorQuery
 {
-
     /**
      * @var \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface
      */
@@ -36,5 +35,4 @@ abstract class AbstractPdoCollectorQuery extends AbstractCollectorQuery
 
         return $this;
     }
-
 }

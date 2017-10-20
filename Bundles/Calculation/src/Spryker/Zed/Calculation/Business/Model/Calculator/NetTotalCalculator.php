@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class NetTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -27,5 +26,4 @@ class NetTotalCalculator implements CalculatorInterface
             $totalsTransfer->getGrandTotal() - $totalsTransfer->getTaxTotal()->getAmount()
         );
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnectorFacadeInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
     {
         return $this->getFactory()->createPriceManager()->addGrossPriceToItems($change);
     }
-
 }

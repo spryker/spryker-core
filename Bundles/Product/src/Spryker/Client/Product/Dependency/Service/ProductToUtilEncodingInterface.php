@@ -7,7 +7,6 @@ namespace Spryker\Client\Product\Dependency\Service;
 
 interface ProductToUtilEncodingInterface
 {
-
     /**
      * @param string $value
      * @param int|null $options
@@ -26,5 +25,4 @@ interface ProductToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null);
-
 }

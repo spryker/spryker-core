@@ -12,7 +12,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 interface ConfigurableSearchWriterInterface extends WriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer $collectorConfigurationTransfer
      *
@@ -24,5 +23,4 @@ interface ConfigurableSearchWriterInterface extends WriterInterface
      * @return \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
      */
     public function getSearchCollectorConfiguration();
-
 }

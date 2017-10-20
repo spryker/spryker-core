@@ -19,7 +19,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsGlossaryTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
     const REQUEST_ID_MAPPING = 'id-mapping';
     const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
@@ -204,5 +203,4 @@ class CmsGlossaryTable extends AbstractTable
 
         return $foundPlaceholders;
     }
-
 }

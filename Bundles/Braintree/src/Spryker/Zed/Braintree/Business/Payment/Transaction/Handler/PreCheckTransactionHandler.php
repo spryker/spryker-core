@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\TransactionMetaTransfer;
 
 class PreCheckTransactionHandler extends AbstractTransactionHandler
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -27,5 +26,4 @@ class PreCheckTransactionHandler extends AbstractTransactionHandler
 
         return $this->transaction->executeTransaction($transactionMetaTransfer);
     }
-
 }

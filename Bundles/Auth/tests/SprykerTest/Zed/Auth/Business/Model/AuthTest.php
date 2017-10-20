@@ -30,7 +30,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class AuthTest extends Unit
 {
-
     /**
      * @const string
      */
@@ -227,5 +226,4 @@ class AuthTest extends Unit
             ->method('migrate')
             ->will($this->returnValue(true));
     }
-
 }

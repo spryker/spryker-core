@@ -9,7 +9,6 @@ namespace Spryker\Yves\Currency\Dependency;
 
 interface CurrencyPostChangePluginInterface
 {
-
     /**
      *  Specification:
      * - Plugin executed when currency is changed
@@ -21,5 +20,4 @@ interface CurrencyPostChangePluginInterface
      * @return string
      */
     public function execute($currencyCode);
-
 }

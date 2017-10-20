@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class OrderTaxTotalCalculationPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class OrderTaxTotalCalculationPlugin extends AbstractPlugin implements Calculati
         $this->getFacade()
             ->calculateOrderTaxTotal($calculableObjectTransfer);
     }
-
 }

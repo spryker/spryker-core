@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -115,5 +114,4 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
             ->createCurrencyReader()
             ->getDefaultCurrencyForCurrentStore();
     }
-
 }

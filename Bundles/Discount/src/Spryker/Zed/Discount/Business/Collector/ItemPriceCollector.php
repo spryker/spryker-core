@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInter
 
 class ItemPriceCollector extends BaseCollector implements CollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -57,5 +56,4 @@ class ItemPriceCollector extends BaseCollector implements CollectorInterface
 
         return $discountableItems;
     }
-
 }

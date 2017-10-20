@@ -19,7 +19,6 @@ use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreBridge;
 
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const STORE = 'store';
 
     const FACADE_CURRENCY = 'currency facade';
@@ -154,5 +153,4 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

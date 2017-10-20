@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ProductRelationToPropelQueryBuilderInterface
 {
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $criteriaTransfer
@@ -20,5 +19,4 @@ interface ProductRelationToPropelQueryBuilderInterface
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer);
-
 }

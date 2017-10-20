@@ -13,7 +13,6 @@ use Elastica\Suggest\Term;
 
 class SuggestBuilder implements SuggestBuilderInterface
 {
-
     /**
      * @param string $name
      * @param string $field
@@ -46,5 +45,4 @@ class SuggestBuilder implements SuggestBuilderInterface
     {
         return new Phrase($name, $field);
     }
-
 }

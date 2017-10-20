@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class UsageInformationController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -45,5 +44,4 @@ class UsageInformationController extends AbstractController
                 ->encodeJson($cmsContentWidgetConfiguration)
         );
     }
-
 }

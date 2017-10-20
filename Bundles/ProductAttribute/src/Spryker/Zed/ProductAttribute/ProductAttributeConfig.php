@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductAttributeConfig extends AbstractBundleConfig
 {
-
     const DEFAULT_LOCALE = '_';
 
     /**
@@ -39,5 +38,4 @@ class ProductAttributeConfig extends AbstractBundleConfig
             'select' => 'select',
         ];
     }
-
 }

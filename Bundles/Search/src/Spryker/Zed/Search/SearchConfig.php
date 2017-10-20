@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SearchConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -53,5 +52,4 @@ class SearchConfig extends AbstractBundleConfig
     {
         return realpath(__DIR__ . '/../../../../../');
     }
-
 }

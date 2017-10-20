@@ -22,7 +22,6 @@ use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
  */
 class ProductReviewBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductReview\Business\Model\ProductReviewCreatorInterface
      */
@@ -86,5 +85,4 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::FACADE_PRODUCT);
     }
-
 }

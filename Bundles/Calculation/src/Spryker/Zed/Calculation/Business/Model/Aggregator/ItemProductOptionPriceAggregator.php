@@ -14,7 +14,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class ItemProductOptionPriceAggregator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -72,5 +71,4 @@ class ItemProductOptionPriceAggregator implements CalculatorInterface
             );
         }
     }
-
 }

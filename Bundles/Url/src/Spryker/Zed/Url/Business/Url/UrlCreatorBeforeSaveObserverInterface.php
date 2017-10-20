@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlCreatorBeforeSaveObserverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
     public function handleUrlCreation(UrlTransfer $urlTransfer);
-
 }

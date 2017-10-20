@@ -8,7 +8,6 @@ namespace Spryker\Zed\Oms\Dependency\Service;
 
 class OmsToUtilTextBridge implements OmsToUtilTextInterface
 {
-
     /**
      * @var \Spryker\Service\UtilText\UtilTextServiceInterface
      */
@@ -31,5 +30,4 @@ class OmsToUtilTextBridge implements OmsToUtilTextInterface
     {
         return $this->utilTextService->generateRandomString($length);
     }
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductSearchToCollectorBridge implements ProductSearchToCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
@@ -56,5 +55,4 @@ class ProductSearchToCollectorBridge implements ProductSearchToCollectorInterfac
     ) {
         $this->collectorFacade->runCollector($collector, $baseQuery, $locale, $result, $dataReader, $dataWriter, $touchUpdater, $output);
     }
-
 }

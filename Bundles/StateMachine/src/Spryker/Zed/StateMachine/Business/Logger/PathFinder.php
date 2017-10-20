@@ -8,7 +8,6 @@ namespace Spryker\Zed\StateMachine\Business\Logger;
 
 class PathFinder implements PathFinderInterface
 {
-
     const SAPI_CLI = 'cli';
     const SAPI_PHPDBG = 'phpdbg';
     const DOCUMENT_URI = 'DOCUMENT_URI';
@@ -30,5 +29,4 @@ class PathFinder implements PathFinderInterface
 
         return $path;
     }
-
 }

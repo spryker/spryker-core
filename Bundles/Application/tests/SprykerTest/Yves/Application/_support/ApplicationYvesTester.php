@@ -25,7 +25,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApplicationYvesTester extends Actor
 {
-
     use _generated\ApplicationYvesTesterActions;
 
     /**
@@ -56,5 +55,4 @@ class ApplicationYvesTester extends Actor
     {
         return Request::create('/foo');
     }
-
 }

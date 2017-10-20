@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class UtilNetworkService extends AbstractService implements UtilNetworkServiceInterface
 {
-
     /**
      * Specification:
      *  - Get current running script hostname
@@ -40,5 +39,4 @@ class UtilNetworkService extends AbstractService implements UtilNetworkServiceIn
     {
         return $this->getFactory()->createRequestId()->getRequestId();
     }
-
 }

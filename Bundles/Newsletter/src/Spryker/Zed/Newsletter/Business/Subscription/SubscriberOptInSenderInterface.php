@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 
 interface SubscriberOptInSenderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return bool
      */
     public function send(NewsletterSubscriberTransfer $newsletterSubscriber);
-
 }

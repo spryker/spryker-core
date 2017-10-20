@@ -7,16 +7,15 @@
 
 namespace Spryker\Shared\Kernel\Communication;
 
+use Silex\Application as SilexApplication;
 use Silex\Application\TranslationTrait;
 use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
-use Silex\Application as SilexApplication;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
 class Application extends SilexApplication
 {
-
     use TranslationTrait;
     use TwigTrait;
     use UrlGeneratorTrait;
@@ -42,5 +41,4 @@ class Application extends SilexApplication
             return $chainRouter;
         }));
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\KernelConstants;
 
 interface ApplicationConstants
 {
-
     const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
     const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
@@ -147,6 +146,8 @@ interface ApplicationConstants
 
     /**
      * RabbitMQ
+     *
+     * @deprecated use RabbitMQ module constants instead
      */
     /** @deprecated Use queue-adapter specific configuration constants */
     const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
@@ -306,5 +307,4 @@ interface ApplicationConstants
     const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     const FORM_FACTORY = 'FORM_FACTORY';
-
 }

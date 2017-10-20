@@ -14,7 +14,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class VersionFinder implements VersionFinderInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -155,5 +154,4 @@ class VersionFinder implements VersionFinderInterface
 
         return $cmsPageCollection->getFirst();
     }
-
 }

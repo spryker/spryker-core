@@ -12,7 +12,6 @@ use Spryker\Zed\ProductSetGui\ProductSetGuiConfig;
 
 abstract class AbstractProductSetFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductSetGui\ProductSetGuiConfig
      */
@@ -52,5 +51,4 @@ abstract class AbstractProductSetFormDataProvider
 
         return $languageCode;
     }
-
 }

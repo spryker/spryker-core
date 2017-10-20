@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cache\Business;
 
 interface CacheFacadeInterface
 {
-
     /**
      * @api
      *
@@ -47,5 +46,4 @@ interface CacheFacadeInterface
      * @return string[]
      */
     public function emptyAutoLoaderCache();
-
 }

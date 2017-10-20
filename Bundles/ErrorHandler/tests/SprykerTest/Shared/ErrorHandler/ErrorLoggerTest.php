@@ -23,7 +23,6 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
  */
 class ErrorLoggerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -98,5 +97,4 @@ class ErrorLoggerTest extends Unit
 
         return $newRelicApiMock;
     }
-
 }

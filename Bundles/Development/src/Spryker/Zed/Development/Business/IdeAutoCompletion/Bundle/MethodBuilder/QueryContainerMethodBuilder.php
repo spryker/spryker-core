@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 
 class QueryContainerMethodBuilder extends AbstractBundleMethodBuilder
 {
-
     /**
      * @return string
      */
@@ -32,5 +31,4 @@ class QueryContainerMethodBuilder extends AbstractBundleMethodBuilder
             $bundleTransfer->getName()
         );
     }
-
 }

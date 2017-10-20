@@ -9,7 +9,6 @@ namespace Spryker\Client\Catalog;
 
 interface CatalogClientInterface
 {
-
     /**
      * Specification:
      * - A query based on the given search string and request parameters will be executed
@@ -40,5 +39,4 @@ interface CatalogClientInterface
      * @return array
      */
     public function catalogSuggestSearch($searchString, array $requestParameters = []);
-
 }

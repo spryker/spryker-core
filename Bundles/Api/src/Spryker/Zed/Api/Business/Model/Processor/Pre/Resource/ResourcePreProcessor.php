@@ -16,7 +16,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
  */
 class ResourcePreProcessor implements PreProcessorInterface
 {
-
     /**
      * Resolves the first part of the URL path as resource.
      *
@@ -45,5 +44,4 @@ class ResourcePreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

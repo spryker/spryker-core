@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 
 interface PayolutionSessionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PayolutionCalculationResponseTransfer $payolutionCalculationResponseTransfer
      *
@@ -33,5 +32,4 @@ interface PayolutionSessionInterface
      * @return bool
      */
     public function removeInstallmentPayments();
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductGroup\Dependency\Facade;
 
 interface ProductGroupToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -25,5 +24,4 @@ interface ProductGroupToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
-
 }

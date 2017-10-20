@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface QueueQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -46,5 +45,4 @@ interface QueueQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
      */
     public function queryProcesses();
-
 }

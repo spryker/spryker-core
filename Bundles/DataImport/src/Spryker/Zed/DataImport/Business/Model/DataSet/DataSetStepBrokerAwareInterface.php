@@ -9,12 +9,10 @@ namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
 interface DataSetStepBrokerAwareInterface
 {
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface $dataSetStepBroker
      *
      * @return $this
      */
     public function addDataSetStepBroker(DataSetStepBrokerInterface $dataSetStepBroker);
-
 }

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface PriceFacadeInterface
 {
-
     /**
      * Specification:
      *  - Returns all available price modes

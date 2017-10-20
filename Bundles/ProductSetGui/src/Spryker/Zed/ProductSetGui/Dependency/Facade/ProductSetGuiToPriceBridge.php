@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
 class ProductSetGuiToPriceBridge implements ProductSetGuiToPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
@@ -33,5 +32,4 @@ class ProductSetGuiToPriceBridge implements ProductSetGuiToPriceInterface
     {
         return $this->priceFacade->findProductAbstractPrice($idAbstractProduct, $priceTypeName);
     }
-
 }

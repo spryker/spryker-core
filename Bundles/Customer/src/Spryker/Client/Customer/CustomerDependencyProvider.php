@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractDependencyProvider
 {
-
     const SERVICE_SESSION = 'session service';
     const SERVICE_ZED = 'zed service';
 
@@ -33,5 +32,4 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

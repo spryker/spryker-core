@@ -10,7 +10,6 @@ use Spryker\Shared\Kernel\Locator\LocatorInterface;
 
 class LocatorWithoutMatcher implements LocatorInterface
 {
-
     /**
      * @param string $bundle
      *
@@ -19,5 +18,4 @@ class LocatorWithoutMatcher implements LocatorInterface
     public function locate($bundle)
     {
     }
-
 }

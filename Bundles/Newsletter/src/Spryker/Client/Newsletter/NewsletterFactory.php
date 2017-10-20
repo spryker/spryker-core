@@ -12,7 +12,6 @@ use Spryker\Client\Newsletter\Zed\NewsletterStub;
 
 class NewsletterFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Newsletter\Zed\NewsletterStubInterface
      */
@@ -22,5 +21,4 @@ class NewsletterFactory extends AbstractFactory
             $this->getProvidedDependency(NewsletterDependencyProvider::SERVICE_ZED)
         );
     }
-
 }

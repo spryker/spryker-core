@@ -19,7 +19,6 @@ use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
  */
 class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @var string
      */
@@ -148,5 +147,4 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
             $idCategoryNode
         );
     }
-
 }

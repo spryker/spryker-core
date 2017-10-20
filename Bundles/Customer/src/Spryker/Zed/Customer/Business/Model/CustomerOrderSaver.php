@@ -16,7 +16,6 @@ use Spryker\Zed\Customer\Business\Customer\Customer;
 
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Business\Customer\Customer
      */
@@ -140,5 +139,4 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     {
         return $customerTransfer->getIdCustomer() === null;
     }
-
 }

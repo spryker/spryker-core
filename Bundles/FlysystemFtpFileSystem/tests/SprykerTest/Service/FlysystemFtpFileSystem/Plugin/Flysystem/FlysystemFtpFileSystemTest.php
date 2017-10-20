@@ -25,7 +25,6 @@ use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilder
  */
 class FlysystemFtpFileSystemTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -69,5 +68,4 @@ class FlysystemFtpFileSystemTest extends Unit
 
         $this->assertTrue($isTypeAccepted);
     }
-
 }

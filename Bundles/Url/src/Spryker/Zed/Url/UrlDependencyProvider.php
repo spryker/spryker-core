@@ -15,7 +15,6 @@ use Spryker\Zed\Url\Dependency\UrlToTouchBridge;
 
 class UrlDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'locale facade';
     const FACADE_TOUCH = 'touch facade';
 
@@ -123,5 +122,4 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

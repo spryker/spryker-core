@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Attribute;
 
 interface AttributeProcessorInterface
 {
-
     /**
      * @return array
      */
@@ -91,5 +90,4 @@ interface AttributeProcessorInterface
      * @return array
      */
     public function getAllKeys();
-
 }

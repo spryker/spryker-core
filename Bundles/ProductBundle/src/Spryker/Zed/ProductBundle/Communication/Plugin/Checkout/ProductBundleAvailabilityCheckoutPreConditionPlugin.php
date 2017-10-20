@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductBundleAvailabilityCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class ProductBundleAvailabilityCheckoutPreConditionPlugin extends AbstractPlugin
     {
         $this->getFacade()->preCheckCheckoutAvailability($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

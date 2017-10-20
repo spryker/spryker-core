@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface SubRequestHandlerInterface
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $url
@@ -20,5 +19,4 @@ interface SubRequestHandlerInterface
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleSubRequest(Request $request, $url, array $additionalSubRequestParameters = []);
-
 }

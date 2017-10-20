@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockCategoryReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
@@ -34,5 +33,4 @@ interface CmsBlockCategoryReaderInterface
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
-
 }

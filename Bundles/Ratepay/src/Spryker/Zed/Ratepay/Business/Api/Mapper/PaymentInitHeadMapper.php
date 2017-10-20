@@ -13,7 +13,6 @@ use Spryker\Zed\Ratepay\RatepayConfig;
 
 class PaymentInitHeadMapper extends BaseMapper
 {
-
     /**
      * @var \Generated\Shared\Transfer\RatepayPaymentInitTransfer
      */
@@ -58,5 +57,4 @@ class PaymentInitHeadMapper extends BaseMapper
             ->setProfileId($this->config->getProfileId())
             ->setSecurityCode($this->config->getSecurityCode());
     }
-
 }

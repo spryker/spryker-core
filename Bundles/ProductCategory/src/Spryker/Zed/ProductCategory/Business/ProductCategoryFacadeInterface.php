@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductCategoryFacadeInterface
 {
-
     /**
      * Specification:
      * - Creates and persists new category mapping entries to database.
@@ -102,5 +101,4 @@ interface ProductCategoryFacadeInterface
      * @return void
      */
     public function updateAllProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer);
-
 }

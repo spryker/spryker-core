@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 class ProductManagementToTaxBridge implements ProductManagementToTaxInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
@@ -48,5 +47,4 @@ class ProductManagementToTaxBridge implements ProductManagementToTaxInterface
     {
         return $this->taxFacade->getTaxSet($idTaxSet);
     }
-
 }

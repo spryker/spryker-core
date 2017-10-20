@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase;
 
 interface DatabaseCreatorCollectionInterface
 {
-
     /**
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface $databaseCreator
      *
@@ -30,5 +29,4 @@ interface DatabaseCreatorCollectionInterface
      * @return bool
      */
     public function has($engine);
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQue
 
 class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface
      */
@@ -87,5 +86,4 @@ class CmsBlockProductAbstractReader implements CmsBlockProductAbstractReaderInte
 
         return $cmsBlockList;
     }
-
 }

@@ -22,7 +22,6 @@ use Spryker\Yves\CartVariant\Mapper\CartItemsAvailabilityMapper;
  */
 class AttributeMapperTest extends CartItemsMapperBaseTest
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
         $this->assertArrayHasKey('chassis_type', $attributes);
         $this->assertSame(1, count($attributes['chassis_type']));
     }
-
 }

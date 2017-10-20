@@ -12,7 +12,6 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 
 class RequestPaymentTransaction extends BaseTransaction
 {
-
     const TRANSACTION_TYPE = ApiConstants::REQUEST_MODEL_PAYMENT_REQUEST;
 
     /**
@@ -38,5 +37,4 @@ class RequestPaymentTransaction extends BaseTransaction
 
         return $responseTransfer;
     }
-
 }

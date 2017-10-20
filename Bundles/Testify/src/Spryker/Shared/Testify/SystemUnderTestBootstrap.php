@@ -22,7 +22,6 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
 
 class SystemUnderTestBootstrap
 {
-
     const APPLICATION_ZED = 'Zed';
     const APPLICATION_YVES = 'Yves';
     const APPLICATION_SHARED = 'Shared';
@@ -172,5 +171,4 @@ class SystemUnderTestBootstrap
         $refProperty->setAccessible(true);
         $refProperty->setValue(null);
     }
-
 }

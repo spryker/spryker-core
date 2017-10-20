@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InvoiceSubForm extends SubFormAbstract
 {
-
     const PAYMENT_METHOD = 'invoice';
 
     /**
@@ -66,5 +65,4 @@ class InvoiceSubForm extends SubFormAbstract
     {
         return RatepayConstants::PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
     }
-
 }

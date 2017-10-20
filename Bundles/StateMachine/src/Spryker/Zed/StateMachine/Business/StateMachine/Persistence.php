@@ -19,7 +19,6 @@ use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Persistence implements PersistenceInterface
 {
-
     /**
      * @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess[]
      */
@@ -57,7 +56,6 @@ class Persistence implements PersistenceInterface
 
         $stateMachineItems = [];
         foreach ($stateMachineHistoryItems as $stateMachineHistoryItemEntity) {
-
             $stateMachineItemTransfer = $this->createItemTransferForStateHistory(
                 $itemIdentifier,
                 $stateMachineHistoryItemEntity
@@ -315,7 +313,6 @@ class Persistence implements PersistenceInterface
 
         $expiredStateMachineItemsTransfer = [];
         foreach ($stateMachineExpiredItems as $stateMachineEventTimeoutEntity) {
-
             $stateMachineItemTransfer = new StateMachineItemTransfer();
             $stateMachineItemTransfer->setEventName($stateMachineEventTimeoutEntity->getEvent());
             $stateMachineItemTransfer->setIdentifier($stateMachineEventTimeoutEntity->getIdentifier());
@@ -330,7 +327,6 @@ class Persistence implements PersistenceInterface
             $stateMachineItemTransfer->setStateMachineName($stateMachineProcessEntity->getStateMachineName());
 
             $expiredStateMachineItemsTransfer[] = $stateMachineItemTransfer;
-
         }
 
         return $expiredStateMachineItemsTransfer;
@@ -430,5 +426,4 @@ class Persistence implements PersistenceInterface
 
         return $stateMachineItemTransfer;
     }
-
 }

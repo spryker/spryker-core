@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class IsReversalApprovedPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsReversalApprovedPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isReversalApproved($orderTransfer);
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class DiscountPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
@@ -51,5 +50,4 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyDiscountAmountQuery::create();
     }
-
 }

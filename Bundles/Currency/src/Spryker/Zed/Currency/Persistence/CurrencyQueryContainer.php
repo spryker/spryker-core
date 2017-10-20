@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -57,5 +56,4 @@ class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQ
             ->createCurrencyQuery()
             ->filterByCode($isoCodes, Criteria::IN);
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailabilityTable extends AbstractTable
 {
-
     const TABLE_COL_ACTION = 'Actions';
     const URL_PARAM_ID_PRODUCT = 'id-product';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
@@ -116,7 +115,6 @@ class AvailabilityTable extends AbstractTable
         $queryResult = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
 
         foreach ($queryResult as $productItem) {
-
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
             $result[] = [
@@ -182,5 +180,4 @@ class AvailabilityTable extends AbstractTable
 
         return $buttons;
     }
-
 }

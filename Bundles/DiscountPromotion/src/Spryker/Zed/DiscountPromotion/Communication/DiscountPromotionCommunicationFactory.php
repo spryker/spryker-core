@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class DiscountPromotionCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\DiscountPromotion\Communication\Form\DiscountPromotionFormType|\Symfony\Component\Form\FormTypeInterface
      */
@@ -25,5 +24,4 @@ class DiscountPromotionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new DiscountPromotionFormType();
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 class ProductStockHelper implements ProductStockHelperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockTypeEntities
@@ -49,5 +48,4 @@ class ProductStockHelper implements ProductStockHelperInterface
 
         return false;
     }
-
 }

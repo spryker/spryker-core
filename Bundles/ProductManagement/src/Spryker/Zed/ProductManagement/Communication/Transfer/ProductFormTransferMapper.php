@@ -37,7 +37,6 @@ use Symfony\Component\Form\FormInterface;
 
 class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -532,5 +531,4 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         return $productConcreteTransfer;
     }
-
 }

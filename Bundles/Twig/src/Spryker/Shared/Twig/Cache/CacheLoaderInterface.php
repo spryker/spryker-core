@@ -9,10 +9,8 @@ namespace Spryker\Shared\Twig\Cache;
 
 interface CacheLoaderInterface
 {
-
     /**
      * @return array
      */
     public function load();
-
 }

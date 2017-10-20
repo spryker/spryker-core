@@ -29,7 +29,6 @@ use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
  */
 class ReaderTest extends Unit
 {
-
     const DUMMY_PRICE_TYPE_1 = 'TYPE1';
     const DUMMY_PRICE_TYPE_2 = 'TYPE2';
     const DUMMY_PRICE_TYPE_3 = 'TYPE3';
@@ -364,5 +363,4 @@ class ReaderTest extends Unit
         $this->productAbstractEntity = $productAbstractEntity;
         $this->productConcreteEntity = $productConcreteEntity;
     }
-
 }

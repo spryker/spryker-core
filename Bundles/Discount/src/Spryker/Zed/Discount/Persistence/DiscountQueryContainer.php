@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQueryContainerInterface
 {
-
     const ALIAS_COL_ID_DISCOUNT = 'id_discount';
     const ALIAS_COL_AMOUNT = 'amount';
     const ALIAS_COL_TYPE = 'type';
@@ -248,5 +247,4 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->createDiscountAmountQuery()
             ->filterByIdDiscountAmount($idDiscountAmount);
     }
-
 }

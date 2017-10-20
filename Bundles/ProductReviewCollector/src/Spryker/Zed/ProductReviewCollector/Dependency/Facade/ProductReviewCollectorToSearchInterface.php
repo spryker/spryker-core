@@ -12,7 +12,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 interface ProductReviewCollectorToSearchInterface
 {
-
     /**
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
@@ -21,5 +20,4 @@ interface ProductReviewCollectorToSearchInterface
      * @return array
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
-
 }

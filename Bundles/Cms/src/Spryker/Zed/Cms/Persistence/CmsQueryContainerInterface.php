@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -257,6 +256,13 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryAllCmsVersions();
+
+    /**
+     * @api
+     *
      * @param int $idPage
      * @param int $version
      *
@@ -272,5 +278,4 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys);
-
 }

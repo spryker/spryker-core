@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface NopaymentQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface NopaymentQueryContainerInterface
      * @return \Orm\Zed\Nopayment\Persistence\SpyNopaymentPaidQuery
      */
     public function queryOrderItem(SpySalesOrderItem $orderItem);
-
 }

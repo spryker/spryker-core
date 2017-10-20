@@ -7,7 +7,6 @@ namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
 interface HandlerResolverInterface
 {
-
     /**
      * @param string $stateMachineName
      *
@@ -16,5 +15,4 @@ interface HandlerResolverInterface
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
     public function get($stateMachineName);
-
 }

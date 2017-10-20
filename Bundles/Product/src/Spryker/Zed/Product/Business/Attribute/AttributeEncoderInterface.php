@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Business\Attribute;
 
 interface AttributeEncoderInterface
 {
-
     /**
      * @param array $attributes
      *
@@ -23,5 +22,4 @@ interface AttributeEncoderInterface
      * @return array
      */
     public function decodeAttributes($json);
-
 }

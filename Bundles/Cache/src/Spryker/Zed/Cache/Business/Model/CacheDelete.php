@@ -15,7 +15,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class CacheDelete
 {
-
     /**
      * @var \Spryker\Zed\Cache\CacheConfig
      */
@@ -50,5 +49,4 @@ class CacheDelete
 
         return $directories;
     }
-
 }

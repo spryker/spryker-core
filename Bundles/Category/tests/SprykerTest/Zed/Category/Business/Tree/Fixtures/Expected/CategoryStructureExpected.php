@@ -8,7 +8,6 @@ namespace SprykerTest\Zed\Category\Business\Tree\Fixtures\Expected;
 
 class CategoryStructureExpected
 {
-
     /**
      * @return array
      */
@@ -202,5 +201,4 @@ class CategoryStructureExpected
 
         return $categories;
     }
-
 }

@@ -34,7 +34,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class AbstractProductFormDataProvider
 {
-
     const LOCALE_NAME = 'locale_name';
 
     const FORM_FIELD_ID = 'id';
@@ -786,5 +785,4 @@ class AbstractProductFormDataProvider
 
         return $priceData;
     }
-
 }

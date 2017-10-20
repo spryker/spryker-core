@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -173,5 +172,4 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     {
         return $this->getFactory()->createSpyCustomerQuery();
     }
-
 }

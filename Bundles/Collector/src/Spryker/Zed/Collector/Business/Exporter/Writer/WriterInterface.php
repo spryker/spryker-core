@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
 interface WriterInterface
 {
-
     /**
      * @param array $dataSet
      *
@@ -28,5 +27,4 @@ interface WriterInterface
      * @return string
      */
     public function getName();
-
 }

@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class RunnerConsole extends Console
 {
-
     const COMMAND_NAME = 'application:npm';
 
     const NPM_COMMAND_TPL = 'npm run %s';
@@ -149,5 +148,4 @@ EOM
 
         return self::OPTION_TASK_BUILD_ALL;
     }
-
 }

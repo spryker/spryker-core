@@ -9,12 +9,10 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Extractor;
 
 interface PathExtractorInterface
 {
-
     /**
      * @param array $menu
      *
      * @return array
      */
     public function extractPathFromMenu(array $menu);
-
 }

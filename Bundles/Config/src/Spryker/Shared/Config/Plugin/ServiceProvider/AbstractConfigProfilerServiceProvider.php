@@ -18,7 +18,6 @@ use Spryker\Shared\Twig\TwigFilesystemLoader;
 
 abstract class AbstractConfigProfilerServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -142,5 +141,4 @@ abstract class AbstractConfigProfilerServiceProvider implements ServiceProviderI
 
         return $app;
     }
-
 }

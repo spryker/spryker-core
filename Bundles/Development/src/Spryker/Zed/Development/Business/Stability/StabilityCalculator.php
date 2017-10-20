@@ -15,7 +15,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class StabilityCalculator implements StabilityCalculatorInterface
 {
-
     /**
      * @var array
      */
@@ -196,5 +195,4 @@ class StabilityCalculator implements StabilityCalculatorInterface
             $this->buildIndirectIncomingDependencies($dependentBundle, $indirectIncomingDependencies);
         }
     }
-
 }

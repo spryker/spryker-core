@@ -16,7 +16,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTree implements CategoryTreeInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -138,5 +137,4 @@ class CategoryTree implements CategoryTreeInterface
 
         $this->categoryFacade->update($categoryTransfer);
     }
-
 }

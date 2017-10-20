@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Dependency\Service;
 
 class SearchToUtilEncodingBridge implements SearchToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -35,5 +34,4 @@ class SearchToUtilEncodingBridge implements SearchToUtilEncodingInterface
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterf
  */
 class BraintreeSaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -28,5 +27,4 @@ class BraintreeSaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSav
     {
         $this->getFacade()->saveOrderPayment($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

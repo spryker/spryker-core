@@ -13,7 +13,6 @@ use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
 class CommandCollection implements CommandCollectionInterface, ArrayAccess
 {
-
     /**
      * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface[]
      */
@@ -100,5 +99,4 @@ class CommandCollection implements CommandCollectionInterface, ArrayAccess
     {
         unset($this->commands[$offset]);
     }
-
 }

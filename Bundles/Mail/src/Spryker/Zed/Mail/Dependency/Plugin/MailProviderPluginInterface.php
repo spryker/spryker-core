@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 interface MailProviderPluginInterface
 {
-
     /**
      * Specification:
      * - Receives the fully configured MailTransfer
@@ -24,5 +23,4 @@ interface MailProviderPluginInterface
      * @return void
      */
     public function sendMail(MailTransfer $mailTransfer);
-
 }

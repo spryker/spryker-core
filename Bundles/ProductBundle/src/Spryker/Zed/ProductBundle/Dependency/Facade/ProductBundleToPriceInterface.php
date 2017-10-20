@@ -25,5 +25,4 @@ interface ProductBundleToPriceInterface
      * @return int
      */
     public function getPriceFor(PriceFilterTransfer $priceFilterTransfer);
-
 }

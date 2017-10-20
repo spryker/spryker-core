@@ -11,7 +11,5 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Base;
 
 class Configuration extends Base
 {
-
     const OPERATION = Constants::REQUEST_MODEL_CONFIGURATION_REQUEST;
-
 }

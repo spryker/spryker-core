@@ -12,10 +12,8 @@ namespace Spryker\Zed\Transfer\Business\Model;
  */
 interface TransferCleanerInterface
 {
-
     /**
      * @return void
      */
     public function cleanDirectory();
-
 }

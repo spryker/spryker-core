@@ -13,7 +13,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class LocaleDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     const LOCALE_NAME_LENGTH_LIMIT = 5;
@@ -57,5 +56,4 @@ class LocaleDataHelper extends Module
 
         return $localeTransfer;
     }
-
 }

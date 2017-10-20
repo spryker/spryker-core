@@ -31,7 +31,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class SessionServiceProviderTest extends Unit
 {
-
     use ConfigHelperTrait;
 
     /**
@@ -148,5 +147,4 @@ class SessionServiceProviderTest extends Unit
 
         $this->assertInstanceOf(SessionHandlerFile::class, $application['session.storage.handler']);
     }
-
 }

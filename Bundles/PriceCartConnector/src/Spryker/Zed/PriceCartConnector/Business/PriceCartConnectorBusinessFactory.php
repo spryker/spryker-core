@@ -17,7 +17,6 @@ use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
  */
 class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface
      */
@@ -44,5 +43,4 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_PRICE);
     }
-
 }

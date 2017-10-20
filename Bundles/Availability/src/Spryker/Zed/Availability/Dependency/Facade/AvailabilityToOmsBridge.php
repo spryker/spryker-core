@@ -9,7 +9,6 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 
 class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
@@ -32,5 +31,4 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
     {
         return $this->omsFacade->sumReservedProductQuantitiesForSku($sku);
     }
-
 }

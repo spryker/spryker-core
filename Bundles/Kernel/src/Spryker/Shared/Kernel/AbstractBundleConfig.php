@@ -11,7 +11,6 @@ use Spryker\Shared\Config\Config;
 
 abstract class AbstractBundleConfig
 {
-
     /**
      * @param string $key
      * @param mixed $default
@@ -30,5 +29,4 @@ abstract class AbstractBundleConfig
     {
         return Config::getInstance();
     }
-
 }

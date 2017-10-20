@@ -20,7 +20,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterf
  */
 class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPostCheckPluginInterface
 {
-
     const ERROR_CODE_PAYMENT_FAILED = 'payment failed';
 
     /**
@@ -58,5 +57,4 @@ class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPost
 
         return ($billingAddress->getLastName() !== DummyPaymentConstants::LAST_NAME_FOR_INVALID_TEST);
     }
-
 }

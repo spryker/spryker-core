@@ -26,7 +26,6 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
  */
 class UpdateProductReviewStatusTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\ProductReview\ProductReviewBusinessTester
      */
@@ -181,5 +180,4 @@ class UpdateProductReviewStatusTest extends Unit
         // Act
         $this->tester->getFacade()->updateProductReviewStatus($productReviewTransferToUpdate);
     }
-
 }

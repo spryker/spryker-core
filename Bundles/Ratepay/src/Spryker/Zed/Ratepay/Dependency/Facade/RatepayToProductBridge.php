@@ -9,7 +9,6 @@ namespace Spryker\Zed\Ratepay\Dependency\Facade;
 
 class RatepayToProductBridge implements RatepayToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -34,5 +33,4 @@ class RatepayToProductBridge implements RatepayToProductInterface
     {
         return $this->productFacade->getProductConcrete($concreteSku);
     }
-
 }

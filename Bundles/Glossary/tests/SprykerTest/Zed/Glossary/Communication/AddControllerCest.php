@@ -22,7 +22,6 @@ use SprykerTest\Zed\Glossary\GlossaryCommunicationTester;
  */
 class AddControllerCest
 {
-
     /**
      * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
@@ -66,5 +65,4 @@ class AddControllerCest
         $i->seeResponseCodeIs(302);
         $i->amOnPage('/glossary');
     }
-
 }

@@ -25,7 +25,6 @@ use Spryker\Zed\ProductRelationCollector\Persistence\Collector\Propel\ProductRel
 
 class ProductRelationCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @var \Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductImageInterface
      */
@@ -175,5 +174,4 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     {
         return ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION;
     }
-
 }

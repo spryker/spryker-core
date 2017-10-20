@@ -21,7 +21,6 @@ use Spryker\Zed\CmsContentWidgetProductConnector\Business\CmsContentWidgetProduc
  */
 class CmsContentWidgetProductConnectorFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -42,5 +41,4 @@ class CmsContentWidgetProductConnectorFacadeTest extends Unit
         $this->assertArrayHasKey($productAbstractTransfer2->getSku(), $map);
         $this->assertEquals($productAbstractTransfer2->getIdProductAbstract(), $map[$productAbstractTransfer2->getSku()]);
     }
-
 }

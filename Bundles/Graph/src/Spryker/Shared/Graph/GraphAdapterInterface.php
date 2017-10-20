@@ -9,7 +9,6 @@ namespace Spryker\Shared\Graph;
 
 interface GraphAdapterInterface extends GraphInterface
 {
-
     const GRAPH = 'graph';
     const GRAPH_STRICT = 'strict graph';
     const DIRECTED_GRAPH = 'digraph';
@@ -26,5 +25,4 @@ interface GraphAdapterInterface extends GraphInterface
      * @return $this
      */
     public function create($name, array $attributes = [], $directed = true, $strict = true);
-
 }

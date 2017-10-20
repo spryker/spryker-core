@@ -9,10 +9,8 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader;
 
 interface DependencyTreeReaderInterface
 {
-
     /**
      * @return array
      */
     public function read();
-
 }

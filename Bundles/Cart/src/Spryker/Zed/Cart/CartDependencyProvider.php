@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CartDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_CALCULATION = 'calculation facade';
     const FACADE_MESSENGER = 'messenger facade';
 
@@ -96,5 +95,4 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

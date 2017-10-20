@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QueryStringController extends AbstractController
 {
-
     const URL_PARAM_TYPE = 'type';
     const URL_PARAM_FIELD = 'field';
     const URL_PARAM_QUERY_STRING = 'query-string';
@@ -84,5 +83,4 @@ class QueryStringController extends AbstractController
                 ->validateQueryStringByType($type, $queryString)
         );
     }
-
 }

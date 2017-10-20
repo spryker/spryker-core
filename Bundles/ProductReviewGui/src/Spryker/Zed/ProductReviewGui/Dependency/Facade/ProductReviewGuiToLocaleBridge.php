@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewGui\Dependency\Facade;
 
 class ProductReviewGuiToLocaleBridge implements ProductReviewGuiToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -38,5 +37,4 @@ class ProductReviewGuiToLocaleBridge implements ProductReviewGuiToLocaleInterfac
     {
         return $this->localeFacade->getLocaleCollection();
     }
-
 }

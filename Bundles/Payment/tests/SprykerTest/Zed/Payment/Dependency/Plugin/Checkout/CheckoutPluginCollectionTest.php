@@ -26,7 +26,6 @@ use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
  */
 class CheckoutPluginCollectionTest extends Unit
 {
-
     const PROVIDER = 'provider';
     const PLUGIN_TYPE = 'plugin type';
 
@@ -112,5 +111,4 @@ class CheckoutPluginCollectionTest extends Unit
     {
         return $this->getMockBuilder(CheckoutPluginInterface::class)->getMock();
     }
-
 }

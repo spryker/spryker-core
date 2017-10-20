@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 
 class RemoveTotalsCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -44,5 +43,4 @@ class RemoveTotalsCalculator implements CalculatorInterface
     {
         return new TaxTotalTransfer();
     }
-
 }

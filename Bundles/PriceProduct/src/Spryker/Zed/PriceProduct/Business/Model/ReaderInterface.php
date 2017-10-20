@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceFilterTransfer;
 
 interface ReaderInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
      */
@@ -137,5 +136,4 @@ interface ReaderInterface
      * @return mixed
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
-
 }

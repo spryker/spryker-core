@@ -15,7 +15,6 @@ use Twig_SimpleFunction;
 
 class ProductGroupTwigExtension extends TwigExtension
 {
-
     const FUNCTION_NAME_PRODUCT_GROUP_ITEMS = 'spyProductGroupItems';
 
     /**
@@ -78,5 +77,4 @@ class ProductGroupTwigExtension extends TwigExtension
     {
         return $this->application['locale'];
     }
-
 }

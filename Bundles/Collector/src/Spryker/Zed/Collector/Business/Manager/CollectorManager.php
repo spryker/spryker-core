@@ -19,7 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CollectorManager implements CollectorManagerInterface
 {
-
     /**
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -48,5 +47,4 @@ class CollectorManager implements CollectorManagerInterface
         $batchCollection = $collector->collectDataFromDatabase($baseQuery, $locale);
         $collector->exportDataToStore($batchCollection, $touchUpdater, $result, $dataReader, $dataWriter, $locale, $output);
     }
-
 }

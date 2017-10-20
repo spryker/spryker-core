@@ -26,7 +26,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
  */
 class PageMapBuilderTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder
      */
@@ -431,5 +430,4 @@ class PageMapBuilderTest extends Unit
 
         return [$field, $attributeName, $attributeValue, $expectedResult];
     }
-
 }

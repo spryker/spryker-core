@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class LabelUpdater implements LabelUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -194,5 +193,4 @@ class LabelUpdater implements LabelUpdaterInterface
     {
         $this->dictionaryTouchManager->touchActive();
     }
-
 }

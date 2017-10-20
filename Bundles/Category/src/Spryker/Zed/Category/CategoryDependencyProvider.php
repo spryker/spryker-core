@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CATEGORY_QUERY_CONTAINER = 'category query container';
 
     const FACADE_TOUCH = 'touch facade';
@@ -143,5 +142,4 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

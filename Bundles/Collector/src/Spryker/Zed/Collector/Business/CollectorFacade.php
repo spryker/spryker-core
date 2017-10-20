@@ -22,7 +22,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Runs storage exporter collectors for all available stores, locales and collector types.
@@ -194,5 +193,4 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
                 $output
             );
     }
-
 }

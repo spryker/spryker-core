@@ -16,7 +16,6 @@ use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelati
 
 class ProductRelationCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_PRICE = 'FACADE_PRICE';
 
@@ -132,5 +131,4 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
 
         return $container;
     }
-
 }

@@ -45,7 +45,6 @@ use Spryker\Zed\Ratepay\RatepayDependencyProvider;
  */
 class RatepayBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param string $gatewayUrl
      *
@@ -449,5 +448,4 @@ class RatepayBusinessFactory extends AbstractBusinessFactory
     {
         return new RatepayRequestTransfer();
     }
-
 }

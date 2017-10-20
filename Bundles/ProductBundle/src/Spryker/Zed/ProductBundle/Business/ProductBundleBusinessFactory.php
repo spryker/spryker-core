@@ -31,7 +31,6 @@ use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
  */
 class ProductBundleBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriterInterface
      */
@@ -252,5 +251,4 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getProductQueryContainer()
         );
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Locator\LocatorInterface;
 
 abstract class AbstractLocator implements LocatorInterface
 {
-
     /**
      * @var string
      */
@@ -49,5 +48,4 @@ abstract class AbstractLocator implements LocatorInterface
      * @return object
      */
     abstract public function locate($bundle);
-
 }

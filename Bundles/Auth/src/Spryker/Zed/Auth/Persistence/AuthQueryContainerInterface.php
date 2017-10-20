@@ -9,7 +9,6 @@ namespace Spryker\Zed\Auth\Persistence;
 
 interface AuthQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -25,5 +24,4 @@ interface AuthQueryContainerInterface
      * @return \Orm\Zed\Auth\Persistence\SpyResetPasswordQuery
      */
     public function queryForActiveCode($code);
-
 }

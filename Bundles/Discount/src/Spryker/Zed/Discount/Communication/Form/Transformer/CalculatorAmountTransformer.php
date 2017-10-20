@@ -12,7 +12,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class CalculatorAmountTransformer implements DataTransformerInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
@@ -91,5 +90,4 @@ class CalculatorAmountTransformer implements DataTransformerInterface
     {
         return $value && $value->getCalculatorPlugin();
     }
-
 }

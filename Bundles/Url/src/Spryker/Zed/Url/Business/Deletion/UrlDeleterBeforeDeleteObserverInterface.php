@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlDeleterBeforeDeleteObserverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
     public function handleUrlDeletion(UrlTransfer $urlTransfer);
-
 }

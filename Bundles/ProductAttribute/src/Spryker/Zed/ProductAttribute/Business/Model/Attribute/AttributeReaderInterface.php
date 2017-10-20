@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Attribute;
 
 interface AttributeReaderInterface
 {
-
     /**
      * @param int $idProductManagementAttribute
      * @param int $idLocale
@@ -57,5 +56,4 @@ interface AttributeReaderInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection();
-
 }

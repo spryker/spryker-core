@@ -9,10 +9,8 @@ namespace Spryker\Zed\Development\Business\Stability;
 
 interface StabilityCalculatorInterface
 {
-
     /**
      * @return array
      */
     public function calculateStability();
-
 }

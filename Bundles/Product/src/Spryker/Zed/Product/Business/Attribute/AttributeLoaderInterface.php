@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface AttributeLoaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -29,5 +28,4 @@ interface AttributeLoaderInterface
      * @return array
      */
     public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null);
-
 }

@@ -12,7 +12,6 @@ use RuntimeException;
 
 class InvalidZedResponseException extends RuntimeException
 {
-
     /**
      * @param string $reason
      * @param \Psr\Http\Message\ResponseInterface $response
@@ -29,5 +28,4 @@ class InvalidZedResponseException extends RuntimeException
 
         parent::__construct($message);
     }
-
 }

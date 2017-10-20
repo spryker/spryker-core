@@ -12,7 +12,6 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class AllBundleFinder implements AllBundleFinderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -128,7 +127,6 @@ class AllBundleFinder implements AllBundleFinderInterface
     protected function loadOtherCoreBundles(array $allBundles)
     {
         foreach ($this->coreNamespaces as $coreNamespace) {
-
             $namespaceDir = $this->filter->filter($coreNamespace);
             $namespaceDir = strtolower($namespaceDir);
 
@@ -151,5 +149,4 @@ class AllBundleFinder implements AllBundleFinderInterface
         }
         return $allBundles;
     }
-
 }

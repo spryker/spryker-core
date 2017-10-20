@@ -16,7 +16,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductRelationStorage implements ProductRelationStorageInterface
 {
-
     /**
      * @var \Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageInterface
      */
@@ -140,9 +139,7 @@ class ProductRelationStorage implements ProductRelationStorageInterface
             $storageProductRelationsTransfer = $this->mapStorageProductRelationsTransfer($typeRelations, $type);
             $this->addAbstractProducts($typeRelations, $storageProductRelationsTransfer);
             $relations[$type] = $storageProductRelationsTransfer;
-
         }
         return $relations;
     }
-
 }

@@ -12,7 +12,6 @@ use Orm\Zed\Locale\Persistence\SpyLocale;
 
 class TransferGenerator implements TransferGeneratorInterface
 {
-
     /**
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
      *
@@ -38,5 +37,4 @@ class TransferGenerator implements TransferGeneratorInterface
 
         return $transferList;
     }
-
 }

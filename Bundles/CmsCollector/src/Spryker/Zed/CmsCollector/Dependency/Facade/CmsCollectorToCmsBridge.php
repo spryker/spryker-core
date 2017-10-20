@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsCollectorToCmsBridge implements CmsCollectorToCmsInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacadeInterface
      */
@@ -58,5 +57,4 @@ class CmsCollectorToCmsBridge implements CmsCollectorToCmsInterface
     {
         return $this->cmsFacade->calculateFlattenedLocaleCmsPageData($localeCmsPageDataTransfer, $localeTransfer);
     }
-
 }

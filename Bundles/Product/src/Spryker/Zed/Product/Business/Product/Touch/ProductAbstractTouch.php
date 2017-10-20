@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Business\Product\Touch;
 
 class ProductAbstractTouch extends AbstractProductTouch implements ProductAbstractTouchInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -40,5 +39,4 @@ class ProductAbstractTouch extends AbstractProductTouch implements ProductAbstra
             $this->touchConcreteByStatus($productEntity);
         }
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader;
 
 class JsonDependencyTreeReader implements DependencyTreeReaderInterface
 {
-
     /**
      * @var string
      */
@@ -30,5 +29,4 @@ class JsonDependencyTreeReader implements DependencyTreeReaderInterface
     {
         return json_decode(file_get_contents($this->pathToJson), true);
     }
-
 }

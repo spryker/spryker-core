@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesProductConnector\Dependency\QueryContainer;
 
 class ProductToSalesProductConnectorQueryContainerBridge implements ProductToSalesProductConnectorQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -40,5 +39,4 @@ class ProductToSalesProductConnectorQueryContainerBridge implements ProductToSal
     {
         return $this->ProductQueryContainer->queryProductAttributeKey();
     }
-
 }

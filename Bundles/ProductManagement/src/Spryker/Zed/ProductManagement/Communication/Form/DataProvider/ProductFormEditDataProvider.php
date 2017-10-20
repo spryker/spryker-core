@@ -17,7 +17,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 
 class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -176,5 +175,4 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         return false;
     }
-
 }

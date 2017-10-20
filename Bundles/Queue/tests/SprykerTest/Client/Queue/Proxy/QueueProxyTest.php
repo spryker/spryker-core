@@ -25,7 +25,6 @@ use Spryker\Shared\Queue\QueueConfig;
  */
 class QueueProxyTest extends Unit
 {
-
     const TEST_QUEUE_NAME = 'testQueueName';
 
     /**
@@ -43,7 +42,7 @@ class QueueProxyTest extends Unit
      */
     protected function _before()
     {
-        $this->queueAdapterMock = $this->getMockBuilder(AdapterInterface::class)->getMock();
+        $this->queueAdapterMock = clone $this->getMockBuilder(AdapterInterface::class)->getMock();
         $this->differentQueueAdapterMock = $this->getMockBuilder(AdapterInterface::class)->getMock();
 
         $this->queueProxy = new QueueProxy(
@@ -52,7 +51,8 @@ class QueueProxyTest extends Unit
                 self::TEST_QUEUE_NAME => [
                     QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($this->queueAdapterMock),
                 ],
-            ]
+            ],
+            []
         );
     }
 
@@ -138,7 +138,8 @@ class QueueProxyTest extends Unit
                 'betaQueue' => [
                     QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($betaQueueAdapterMock),
                 ],
-            ]
+            ],
+            []
         );
 
         $alphaMessage = $queueProxy->receiveMessage('alphaQueue')->setQueueName('alphaQueue');
@@ -165,5 +166,4 @@ class QueueProxyTest extends Unit
 
         return $queueMessageTransfer;
     }
-
 }

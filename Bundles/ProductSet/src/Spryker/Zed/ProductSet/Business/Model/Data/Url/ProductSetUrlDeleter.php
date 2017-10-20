@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetUrlDeleter implements ProductSetUrlDeleterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -52,5 +51,4 @@ class ProductSetUrlDeleter implements ProductSetUrlDeleterInterface
             $this->urlFacade->deleteUrl($urlTransfer);
         }
     }
-
 }

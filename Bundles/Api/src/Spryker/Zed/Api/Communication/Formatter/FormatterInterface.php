@@ -9,12 +9,10 @@ namespace Spryker\Zed\Api\Communication\Formatter;
 
 interface FormatterInterface
 {
-
     /**
      * @param mixed $value
      *
      * @return string
      */
     public function format($value);
-
 }

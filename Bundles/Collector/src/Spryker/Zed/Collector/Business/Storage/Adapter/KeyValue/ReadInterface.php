@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
 interface ReadInterface
 {
-
     /**
      * @param string $key
      *
@@ -48,5 +47,4 @@ interface ReadInterface
      * @return int
      */
     public function getCountItems();
-
 }

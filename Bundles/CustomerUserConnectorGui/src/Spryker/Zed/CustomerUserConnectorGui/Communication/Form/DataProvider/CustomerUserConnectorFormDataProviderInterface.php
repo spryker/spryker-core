@@ -9,10 +9,8 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Form\DataProvider;
 
 interface CustomerUserConnectorFormDataProviderInterface
 {
-
     /**
      * @return array
      */
     public function getOptions();
-
 }

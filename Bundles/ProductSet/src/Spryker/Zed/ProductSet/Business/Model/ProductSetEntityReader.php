@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetEntityReader implements ProductSetEntityReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -61,5 +60,4 @@ class ProductSetEntityReader implements ProductSetEntityReaderInterface
     {
         $productSetTransfer->requireIdProductSet();
     }
-
 }

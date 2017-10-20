@@ -9,10 +9,8 @@ namespace Spryker\Zed\ZedRequest\Dependency\Facade;
 
 interface ZedRequestToMessengerInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages();
-
 }

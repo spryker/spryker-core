@@ -20,7 +20,6 @@ use Spryker\Shared\Kernel\Store;
  */
 class StoreTest extends Unit
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
@@ -122,5 +121,4 @@ class StoreTest extends Unit
             ->setMethods(['getStoreSetup'])
             ->getMock();
     }
-
 }

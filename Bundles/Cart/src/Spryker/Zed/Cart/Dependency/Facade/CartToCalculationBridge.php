@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartToCalculationBridge implements CartToCalculationInterface
 {
-
     /**
      * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
      */
@@ -34,5 +33,4 @@ class CartToCalculationBridge implements CartToCalculationInterface
     {
         return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
-
 }

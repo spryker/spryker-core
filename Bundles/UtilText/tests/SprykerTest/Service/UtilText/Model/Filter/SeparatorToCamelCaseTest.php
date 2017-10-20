@@ -22,7 +22,6 @@ use Spryker\Service\UtilText\Model\Filter\SeparatorToCamelCase;
  */
 class SeparatorToCamelCaseTest extends Unit
 {
-
     /**
      * @return array
      */
@@ -59,5 +58,4 @@ class SeparatorToCamelCaseTest extends Unit
         $filter = new SeparatorToCamelCase();
         $this->assertEquals($expected, $filter->filter($string, $separator, $upperCase));
     }
-
 }

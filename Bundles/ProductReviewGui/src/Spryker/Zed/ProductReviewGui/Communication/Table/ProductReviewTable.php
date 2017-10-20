@@ -18,7 +18,6 @@ use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInter
 
 class ProductReviewTable extends AbstractTable
 {
-
     /**
      * @var \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface
      */
@@ -332,5 +331,4 @@ class ProductReviewTable extends AbstractTable
     {
         return $this->utilDateTimeService->formatDateTime($productReviewEntity->getCreatedAt());
     }
-
 }

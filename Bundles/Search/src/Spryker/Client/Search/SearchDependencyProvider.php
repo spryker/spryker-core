@@ -16,7 +16,6 @@ use Spryker\Shared\Kernel\Store;
 
 class SearchDependencyProvider extends AbstractDependencyProvider
 {
-
     const SEARCH_CONFIG_BUILDER = 'search config builder';
     const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
     const STORE = 'store';
@@ -98,5 +97,4 @@ class SearchDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

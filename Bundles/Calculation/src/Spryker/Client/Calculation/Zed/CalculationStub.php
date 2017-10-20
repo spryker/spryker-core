@@ -12,7 +12,6 @@ use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
 class CalculationStub extends ZedRequestStub implements CalculationStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -22,5 +21,4 @@ class CalculationStub extends ZedRequestStub implements CalculationStubInterface
     {
         return $this->zedStub->call('/calculation/gateway/recalculate', $quoteTransfer);
     }
-
 }

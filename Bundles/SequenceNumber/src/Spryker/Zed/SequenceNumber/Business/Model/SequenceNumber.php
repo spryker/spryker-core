@@ -17,7 +17,6 @@ use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface
 
 class SequenceNumber implements SequenceNumberInterface
 {
-
     /**
      * @var \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface
      */
@@ -79,7 +78,7 @@ class SequenceNumber implements SequenceNumberInterface
 
             $this->connection->commit();
         } catch (Exception $e) {
-            $this->connection->rollback();
+            $this->connection->rollBack();
 
             throw new InvalidSequenceNumberException(
                 'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage()
@@ -116,5 +115,4 @@ class SequenceNumber implements SequenceNumberInterface
 
         return $sequence;
     }
-
 }

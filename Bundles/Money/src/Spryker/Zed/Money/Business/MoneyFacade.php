@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
 {
-
     /**
      * Specification:
      * - Converts int amount and isoCode to MoneyTransfer Object
@@ -150,5 +149,4 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     {
         return $this->getFactory()->createDecimalToIntegerConverter()->convert($value);
     }
-
 }

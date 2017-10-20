@@ -11,7 +11,6 @@ use SplFileObject;
 
 class CsvMeta implements CsvMetaInterface
 {
-
     /**
      * @var \SplFileObject
      */
@@ -148,5 +147,4 @@ class CsvMeta implements CsvMetaInterface
         }
         return $this->columnsOffset;
     }
-
 }

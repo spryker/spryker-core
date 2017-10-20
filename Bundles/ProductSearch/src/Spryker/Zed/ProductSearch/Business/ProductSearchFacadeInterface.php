@@ -22,7 +22,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ProductSearchFacadeInterface
 {
-
     /**
      * Specification:
      * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes.
@@ -301,5 +300,4 @@ interface ProductSearchFacadeInterface
      * @return bool
      */
     public function isProductConcreteSearchable($idProductConcrete, LocaleTransfer $localeTransfer = null);
-
 }

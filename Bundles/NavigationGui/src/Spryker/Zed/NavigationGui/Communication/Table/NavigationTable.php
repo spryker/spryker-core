@@ -18,7 +18,6 @@ use Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface;
 
 class NavigationTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'navigation-table';
 
     const COL_ACTIONS = 'actions';
@@ -175,5 +174,4 @@ class NavigationTable extends AbstractTable
 
         return '<span class="label label-danger">Inactive</span>';
     }
-
 }

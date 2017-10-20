@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class ApiQueryBuilderPersistenceTester extends Actor
 {
-
     use _generated\ApiQueryBuilderPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

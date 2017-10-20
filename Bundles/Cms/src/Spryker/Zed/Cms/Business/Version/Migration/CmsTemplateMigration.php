@@ -9,13 +9,11 @@ namespace Spryker\Zed\Cms\Business\Version\Migration;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
-use Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsTemplateMigration implements MigrationInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -74,5 +72,4 @@ class CmsTemplateMigration implements MigrationInterface
         $cmsPageEntity->setFkTemplate($idCmsTemplate);
         $cmsPageEntity->save();
     }
-
 }

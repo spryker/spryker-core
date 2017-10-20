@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 interface ProductSetExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
     public function extendProductSet(ProductSetTransfer $productSetTransfer);
-
 }

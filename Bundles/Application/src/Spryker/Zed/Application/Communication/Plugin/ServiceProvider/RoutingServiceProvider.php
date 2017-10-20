@@ -18,7 +18,6 @@ use Symfony\Cmf\Component\Routing\ChainRouter;
  */
 class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -47,5 +46,4 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
     public function boot(Application $app)
     {
     }
-
 }

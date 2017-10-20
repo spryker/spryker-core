@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CartPostSaveUpdateBundlesPlugin extends AbstractPlugin implements PostSavePluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class CartPostSaveUpdateBundlesPlugin extends AbstractPlugin implements PostSave
     {
         return $this->getFacade()->postSaveCartUpdateBundles($quoteTransfer);
     }
-
 }

@@ -28,8 +28,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "Testify\\": "tests/_support/",
-      "SprykerTest\\Shared\\Testify\\": "tests/SprykerTest/Shared/Testify/_support/"
+      "SprykerTest\\Shared\\Testify\\": "tests/SprykerTest/Shared/Testify/_support/Helper/"
     }
   },
   "autoload-dev": {

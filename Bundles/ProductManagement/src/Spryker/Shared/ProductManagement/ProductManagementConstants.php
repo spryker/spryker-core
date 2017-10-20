@@ -9,7 +9,6 @@ namespace Spryker\Shared\ProductManagement;
 
 interface ProductManagementConstants
 {
-
     const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
 
     /** @deprecated Please use ProductManagementConstants::BASE_URL_YVES instead */

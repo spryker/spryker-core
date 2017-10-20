@@ -27,7 +27,6 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
  */
 class ErrorHandlerFactoryTest extends Unit
 {
-
     /**
      * @var array
      */
@@ -162,5 +161,4 @@ class ErrorHandlerFactoryTest extends Unit
 
         $configProperty->setValue($config);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductConcreteStorage implements ProductConcreteStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingInterface
      */
@@ -122,5 +121,4 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
 
         return $storageProduct;
     }
-
 }

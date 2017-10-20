@@ -12,7 +12,6 @@ namespace Spryker\Zed\Currency\Persistence;
  */
 interface CurrencyQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -39,5 +38,4 @@ interface CurrencyQueryContainerInterface
      * @return $this|\Orm\Zed\Currency\Persistence\SpyCurrencyQuery
      */
     public function queryCurrenciesByIsoCodes(array $isoCodes);
-
 }

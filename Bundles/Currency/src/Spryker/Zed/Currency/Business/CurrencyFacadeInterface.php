@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CurrencyTransfer;
  */
 interface CurrencyFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns CurrencyTransfer object for given ISO code
@@ -96,5 +95,4 @@ interface CurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getDefaultCurrencyForCurrentStore();
-
 }

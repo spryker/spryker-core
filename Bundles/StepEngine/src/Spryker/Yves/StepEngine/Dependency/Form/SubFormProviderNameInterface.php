@@ -9,10 +9,8 @@ namespace Spryker\Yves\StepEngine\Dependency\Form;
 
 interface SubFormProviderNameInterface
 {
-
     /**
      * @return string
      */
     public function getProviderName();
-
 }

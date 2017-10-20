@@ -12,7 +12,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageLocalizedAttributesFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -57,5 +56,4 @@ class CmsPageLocalizedAttributesFormDataProvider
     {
         return [];
     }
-
 }

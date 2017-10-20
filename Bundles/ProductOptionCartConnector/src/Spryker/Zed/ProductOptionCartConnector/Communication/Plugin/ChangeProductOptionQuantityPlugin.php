@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ChangeProductOptionQuantityPlugin extends AbstractPlugin implements PostSavePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -26,5 +25,4 @@ class ChangeProductOptionQuantityPlugin extends AbstractPlugin implements PostSa
     {
         return $this->getFacade()->changeProductOptionInCartQuantity($quoteTransfer);
     }
-
 }

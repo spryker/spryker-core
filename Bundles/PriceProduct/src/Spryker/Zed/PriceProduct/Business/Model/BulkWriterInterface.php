@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface BulkWriterInterface
 {
-
     /**
      * @param string $name
      *
@@ -40,5 +39,4 @@ interface BulkWriterInterface
      * @return void
      */
     public function flush();
-
 }

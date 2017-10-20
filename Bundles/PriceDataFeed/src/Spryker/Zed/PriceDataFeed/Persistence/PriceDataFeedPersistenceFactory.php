@@ -16,7 +16,6 @@ use Spryker\Zed\PriceDataFeed\PriceDataFeedDependencyProvider;
  */
 class PriceDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\PriceDataFeed\Dependency\QueryContainer\PriceDataFeedToPriceInterface
      */
@@ -24,5 +23,4 @@ class PriceDataFeedPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(PriceDataFeedDependencyProvider::PRICE_QUERY_CONTAINER);
     }
-
 }

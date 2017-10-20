@@ -14,7 +14,6 @@ use Spryker\Service\UtilText\UtilTextService;
  */
 class RequestDataCollector extends AbstractDataCollector
 {
-
     const TYPE = 'request';
     const FIELD_REQUEST_ID = 'request_id';
     const FIELD_MICROTIME = 'microtime';
@@ -68,5 +67,4 @@ class RequestDataCollector extends AbstractDataCollector
     {
         return $_REQUEST;
     }
-
 }

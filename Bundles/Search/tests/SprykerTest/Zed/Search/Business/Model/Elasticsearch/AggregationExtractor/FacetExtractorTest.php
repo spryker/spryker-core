@@ -23,7 +23,6 @@ use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTra
  */
 class FacetExtractorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -139,5 +138,4 @@ class FacetExtractorTest extends Unit
             ],
         ];
     }
-
 }

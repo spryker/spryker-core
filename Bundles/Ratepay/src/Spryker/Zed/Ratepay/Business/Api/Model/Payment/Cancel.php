@@ -13,7 +13,6 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Base;
 
 class Cancel extends Base
 {
-
     /**
      * @const Method operation.
      */
@@ -60,5 +59,4 @@ class Cancel extends Base
     {
         return $this->basket;
     }
-
 }

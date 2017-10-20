@@ -28,7 +28,6 @@ use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
  */
 class PriceManagerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -88,5 +87,4 @@ class PriceManagerTest extends Unit
     {
         return new PriceFacadeStub();
     }
-
 }

@@ -22,7 +22,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterfa
 
 class ProductRuleTable extends AbstractProductTable
 {
-
     const COL_ACTION = 'action';
     const COL_NAME = 'name';
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -331,5 +330,4 @@ class ProductRuleTable extends AbstractProductTable
             static::COL_CATEGORY_NAME,
         ]);
     }
-
 }

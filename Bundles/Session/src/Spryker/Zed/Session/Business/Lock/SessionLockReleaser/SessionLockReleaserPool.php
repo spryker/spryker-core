@@ -12,7 +12,6 @@ use Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface;
 
 class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
 {
-
     /**
      * @var array
      */
@@ -49,5 +48,4 @@ class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
             $handlerName
         ));
     }
-
 }

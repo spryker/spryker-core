@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SessionConfig extends AbstractBundleConfig
 {
-
     const PROTOCOL_TCP = 'tcp';
 
     const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
@@ -172,5 +171,4 @@ class SessionConfig extends AbstractBundleConfig
     {
         return $this->get(SessionConstants::ZED_SESSION_FILE_PATH);
     }
-
 }

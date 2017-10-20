@@ -11,11 +11,11 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventDispatcher implements EventDispatcherInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
@@ -65,8 +65,8 @@ class EventDispatcher implements EventDispatcherInterface
         foreach ($this->extractEventListeners($eventName) as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
                 $this->eventQueueProducer->enqueueListener($eventName, $eventTransfer, $eventListener->getListenerName());
-            } else {
-                $eventListener->handle($eventTransfer);
+            } elseif ($eventListener instanceof EventHandlerInterface) {
+                $eventListener->handle($eventTransfer, $eventName);
             }
             $this->logEventHandle($eventName, $eventTransfer, $eventListener);
         }
@@ -122,5 +122,4 @@ class EventDispatcher implements EventDispatcherInterface
 
         return '[sync] "%s" handled by "%s", event data: "%s" => "%s".';
     }
-
 }

@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface ProductOptionToMoneyInterface
 {
-
     /**
      * @param int $value
      *
@@ -61,5 +60,4 @@ interface ProductOptionToMoneyInterface
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function fromString($amount, $isoCode = null);
-
 }

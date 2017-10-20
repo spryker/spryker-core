@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 abstract class AbstractFacetAggregation implements FacetAggregationInterface
 {
-
     const FACET_VALUE = 'facet-value';
     const FACET_NAME = 'facet-name';
     const NAME_SUFFIX = '-name';
@@ -111,5 +110,4 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
 
         return $aggregation;
     }
-
 }

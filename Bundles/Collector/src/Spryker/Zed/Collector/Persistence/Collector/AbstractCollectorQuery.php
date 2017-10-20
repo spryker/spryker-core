@@ -12,7 +12,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 abstract class AbstractCollectorQuery
 {
-
     /**
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
@@ -77,5 +76,4 @@ abstract class AbstractCollectorQuery
 
         return $this;
     }
-
 }

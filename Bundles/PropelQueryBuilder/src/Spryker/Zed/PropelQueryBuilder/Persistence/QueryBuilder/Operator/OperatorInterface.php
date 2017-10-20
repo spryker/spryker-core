@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 
 interface OperatorInterface
 {
-
     /**
      * @return string
      */
@@ -28,5 +27,4 @@ interface OperatorInterface
      * @return mixed
      */
     public function getValue(PropelQueryBuilderRuleSetTransfer $rule);
-
 }

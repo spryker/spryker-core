@@ -14,7 +14,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class PriceToPayAggregator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -55,7 +54,6 @@ class PriceToPayAggregator implements CalculatorInterface
                     $itemTransfer->getSumTaxAmountFullAggregation()
                 )
             );
-
         }
     }
 
@@ -68,7 +66,6 @@ class PriceToPayAggregator implements CalculatorInterface
     protected function calculatePriceToPayAggregationForExpenses(ArrayObject $expenses, $priceMode)
     {
         foreach ($expenses as $expenseTransfer) {
-
             $expenseTransfer->setUnitPriceToPayAggregation(
                 $this->calculatePriceToPayAggregation(
                     $expenseTransfer->getUnitPrice(),
@@ -105,5 +102,4 @@ class PriceToPayAggregator implements CalculatorInterface
 
         return $price - $discountAmount;
     }
-
 }

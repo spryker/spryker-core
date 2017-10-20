@@ -2,7 +2,7 @@ namespace: Tax
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/Tax
+    - tests/SprykerTest/Zed/Tax
 
 paths:
     tests: tests

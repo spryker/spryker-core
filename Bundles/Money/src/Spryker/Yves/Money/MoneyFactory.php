@@ -22,7 +22,6 @@ use Spryker\Yves\Money\Mapper\MoneyToTransferMapper;
 
 class MoneyFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\Money\Builder\MoneyBuilderInterface
      */
@@ -152,5 +151,4 @@ class MoneyFactory extends AbstractFactory
     {
         return new DecimalToIntegerConverter();
     }
-
 }

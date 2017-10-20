@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PriceDataFeedQueryContainer extends AbstractQueryContainer implements PriceDataFeedQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -70,5 +69,4 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
 
         return $productPriceQuery;
     }
-
 }

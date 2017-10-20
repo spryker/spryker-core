@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 class TestCommandExceptionPlugin extends TestCommandPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
@@ -33,5 +32,4 @@ class TestCommandExceptionPlugin extends TestCommandPlugin
     {
         throw new Exception('Sry, something went wrong');
     }
-
 }

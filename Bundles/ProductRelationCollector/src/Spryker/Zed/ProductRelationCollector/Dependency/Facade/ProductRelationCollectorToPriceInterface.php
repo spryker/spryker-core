@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelationCollector\Dependency\Facade;
 
 interface ProductRelationCollectorToPriceInterface
 {
-
     /**
      * @param string $sku
      * @param string|null $priceTypeName
@@ -31,5 +30,4 @@ interface ProductRelationCollectorToPriceInterface
      * @return array
      */
     public function findPricesBySkuGrouped($sku);
-
 }

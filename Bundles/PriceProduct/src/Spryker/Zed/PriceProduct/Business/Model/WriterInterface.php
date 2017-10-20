@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface WriterInterface
 {
-
     /**
      * @param string $name
      *
@@ -51,5 +50,4 @@ interface WriterInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer);
-
 }

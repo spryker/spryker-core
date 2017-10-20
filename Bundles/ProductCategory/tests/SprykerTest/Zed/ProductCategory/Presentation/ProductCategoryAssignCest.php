@@ -20,7 +20,6 @@ use SprykerTest\Zed\ProductCategory\ProductCategoryPresentationTester;
  */
 class ProductCategoryAssignCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductCategory\ProductCategoryPresentationTester $i
      *
@@ -99,5 +98,4 @@ class ProductCategoryAssignCest
             $idAbstractProduct
         );
     }
-
 }

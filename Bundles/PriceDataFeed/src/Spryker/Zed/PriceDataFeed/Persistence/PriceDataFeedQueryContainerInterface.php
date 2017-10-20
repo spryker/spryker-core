@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface PriceDataFeedQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface PriceDataFeedQueryContainerInterface extends QueryContainerInterface
      * @return \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
     public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer = null);
-
 }

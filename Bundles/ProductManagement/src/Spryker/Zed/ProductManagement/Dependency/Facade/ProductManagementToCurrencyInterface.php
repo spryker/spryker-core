@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 interface ProductManagementToCurrencyInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
@@ -24,5 +23,4 @@ interface ProductManagementToCurrencyInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getDefaultCurrencyForCurrentStore();
-
 }

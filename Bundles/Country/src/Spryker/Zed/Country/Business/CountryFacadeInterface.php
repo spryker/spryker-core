@@ -9,7 +9,6 @@ namespace Spryker\Zed\Country\Business;
 
 interface CountryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -76,5 +75,4 @@ interface CountryFacadeInterface
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferredCountryByName($countryName);
-
 }

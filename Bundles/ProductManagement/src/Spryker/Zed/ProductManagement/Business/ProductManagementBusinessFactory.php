@@ -16,7 +16,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  */
 class ProductManagementBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
@@ -96,5 +95,4 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getLocaleFacade()->getCurrentLocale();
     }
-
 }

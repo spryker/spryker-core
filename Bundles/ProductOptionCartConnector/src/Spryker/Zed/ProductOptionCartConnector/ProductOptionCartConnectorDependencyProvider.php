@@ -13,7 +13,6 @@ use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartCo
 
 class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
 
     /**
@@ -29,5 +28,4 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
 
         return $container;
     }
-
 }

@@ -22,7 +22,6 @@ use Spryker\Shared\Money\Exception\InvalidConverterArgumentException;
  */
 class IntegerToDecimalConverterTest extends Unit
 {
-
     /**
      * @dataProvider convertValues
      *
@@ -65,5 +64,4 @@ class IntegerToDecimalConverterTest extends Unit
         $integerToDecimalConverter = new IntegerToDecimalConverter();
         $integerToDecimalConverter->convert(0.01);
     }
-
 }

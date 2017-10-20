@@ -9,7 +9,6 @@ namespace Spryker\Yves\CmsContentWidget\Dependency;
 
 interface CmsContentWidgetPluginInterface
 {
-
     /**
      * Specification:
      *  - Return callable function, that could be any callable which is accepted by Twig_SimpleFunction first parameter.
@@ -20,5 +19,4 @@ interface CmsContentWidgetPluginInterface
      * @return callable
      */
     public function getContentWidgetFunction();
-
 }

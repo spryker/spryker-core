@@ -17,7 +17,6 @@ use UnexpectedValueException;
 
 class TransitionLogTable extends AbstractTable
 {
-
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -145,5 +144,4 @@ class TransitionLogTable extends AbstractTable
 
         return $row;
     }
-
 }

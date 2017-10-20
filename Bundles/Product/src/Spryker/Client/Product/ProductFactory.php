@@ -17,7 +17,6 @@ use Spryker\Client\Product\Storage\ProductConcreteStorage;
 
 class ProductFactory extends AbstractFactory
 {
-
     /**
      * @param string $locale
      *
@@ -108,5 +107,4 @@ class ProductFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductDependencyProvider::CLIENT_LOCALE);
     }
-
 }

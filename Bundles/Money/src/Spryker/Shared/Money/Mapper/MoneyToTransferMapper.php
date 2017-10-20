@@ -13,7 +13,6 @@ use Money\Money;
 
 class MoneyToTransferMapper implements MoneyToTransferMapperInterface
 {
-
     /**
      * @param \Money\Money $money
      *
@@ -54,5 +53,4 @@ class MoneyToTransferMapper implements MoneyToTransferMapperInterface
 
         return $isoCodeTransfer;
     }
-
 }

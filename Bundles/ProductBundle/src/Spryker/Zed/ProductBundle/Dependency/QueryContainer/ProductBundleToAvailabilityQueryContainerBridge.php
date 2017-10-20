@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\QueryContainer;
 
 class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleToAvailabilityQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
@@ -52,5 +51,4 @@ class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleTo
     {
         return $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CategoryFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Category\Storage\CategoryNodeStorageInterface
      */
@@ -40,5 +39,4 @@ class CategoryFactory extends AbstractFactory
     {
         return new CategoryNodeKeyBuilder();
     }
-
 }

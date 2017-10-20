@@ -23,7 +23,6 @@ use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
  */
 class TwigToUtilTextServiceBridgeTest extends Unit
 {
-
     const STRING_TO_CONVERT = 'StringToConvert';
     const EXPECTED_STRING = 'string-to-convert';
 
@@ -37,5 +36,4 @@ class TwigToUtilTextServiceBridgeTest extends Unit
 
         $this->assertSame(static::EXPECTED_STRING, $twigToUtilTextBridge->camelCaseToDash(static::STRING_TO_CONVERT));
     }
-
 }

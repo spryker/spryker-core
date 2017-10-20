@@ -33,7 +33,6 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
  */
 class OmsBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param array $array
      *
@@ -105,7 +104,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createProcessState(),
             $this->createProcessTransition(),
             $this->createProcessProcess(),
-            $xmlFolder ?: $this->getConfig()->getProcessDefinitionLocation()
+            $xmlFolder ?: $this->getConfig()->getProcessDefinitionLocation(),
+            $this->getConfig()->getSubProcessPrefixDelimiter()
         );
     }
 
@@ -302,5 +302,4 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
     }
-
 }

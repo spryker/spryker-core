@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ApiPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\Api\Persistence\Mapper\ApiCollectionMapperInterface
      */
@@ -33,5 +32,4 @@ class ApiPersistenceFactory extends AbstractPersistenceFactory
     {
         return new ApiItemMapper();
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class AbstractTransfer extends ParentAbstractTransfer
 {
-
     const STRING = 'string';
 
     const INT = 'int';
@@ -321,5 +320,4 @@ class AbstractTransfer extends ParentAbstractTransfer
 
         return $this;
     }
-
 }

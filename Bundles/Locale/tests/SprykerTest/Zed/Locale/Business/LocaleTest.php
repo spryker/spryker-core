@@ -24,7 +24,6 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
  */
 class LocaleTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
@@ -90,5 +89,4 @@ class LocaleTest extends Unit
         $this->assertInstanceOf(LocaleTransfer::class, $localeTransfer);
         $this->assertSame($localeEntity->getLocaleName(), $localeTransfer->getLocaleName());
     }
-
 }

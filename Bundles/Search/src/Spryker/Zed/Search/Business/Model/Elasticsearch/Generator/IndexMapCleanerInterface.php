@@ -9,10 +9,8 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Generator;
 
 interface IndexMapCleanerInterface
 {
-
     /**
      * @return void
      */
     public function cleanDirectory();
-
 }

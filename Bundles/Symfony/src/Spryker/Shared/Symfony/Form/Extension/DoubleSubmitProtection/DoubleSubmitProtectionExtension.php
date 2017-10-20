@@ -14,7 +14,6 @@ use Symfony\Component\Form\AbstractExtension;
 
 class DoubleSubmitProtectionExtension extends AbstractExtension
 {
-
     /**
      * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenProvider
      */
@@ -67,5 +66,4 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
             ),
         ];
     }
-
 }

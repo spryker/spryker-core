@@ -15,7 +15,6 @@ use Spryker\Zed\ZedRequest\Business\Model\Repeater;
  */
 class ZedRequestBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ZedRequest\Business\Model\Repeater
      */
@@ -23,5 +22,4 @@ class ZedRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new Repeater();
     }
-
 }

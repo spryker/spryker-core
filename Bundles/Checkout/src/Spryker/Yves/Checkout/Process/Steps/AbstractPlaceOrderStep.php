@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWithExternalRedirectInterface, StepWithPostConditionErrorRouteInterface
 {
-
     /**
      * @var \Spryker\Client\Checkout\CheckoutClientInterface
      */
@@ -147,5 +146,4 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
             }
         }
     }
-
 }

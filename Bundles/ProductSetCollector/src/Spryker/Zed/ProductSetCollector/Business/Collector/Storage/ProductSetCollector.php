@@ -16,7 +16,6 @@ use Spryker\Zed\ProductSetCollector\Persistence\Storage\Propel\ProductSetCollect
 
 class ProductSetCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @var \Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReaderInterface
      */
@@ -112,5 +111,4 @@ class ProductSetCollector extends AbstractStoragePropelCollector
 
         return $productSetStorageTransfer;
     }
-
 }

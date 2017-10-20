@@ -12,7 +12,6 @@ use Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyInterface;
 
 class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProvider implements MoneyCollectionDataProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyInterface
      */
@@ -64,5 +63,4 @@ class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProv
 
         return $currentFormMoneyValueCollection;
     }
-
 }

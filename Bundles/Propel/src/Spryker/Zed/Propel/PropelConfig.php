@@ -14,7 +14,6 @@ use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
 
 class PropelConfig extends AbstractBundleConfig
 {
-
     const DB_ENGINE_MYSQL = 'mysql';
     const DB_ENGINE_PGSQL = 'pgsql';
 
@@ -114,5 +113,4 @@ class PropelConfig extends AbstractBundleConfig
 
         return $supportedEngines[$dbEngine];
     }
-
 }

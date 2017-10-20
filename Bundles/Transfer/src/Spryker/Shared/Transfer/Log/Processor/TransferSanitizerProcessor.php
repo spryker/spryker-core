@@ -13,7 +13,6 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 class TransferSanitizerProcessor
 {
-
     const EXTRA = 'transfer';
     const CONTEXT_KEY = 'transfer';
     const RECORD_EXTRA = 'extra';
@@ -93,5 +92,4 @@ class TransferSanitizerProcessor
 
         return null;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProduct\Dependency\Facade;
 
 interface PriceProductToProductInterface
 {
-
     /**
      * @param string $sku
      *
@@ -48,5 +47,4 @@ interface PriceProductToProductInterface
      * @return string
      */
     public function getAbstractSkuFromProductConcrete($sku);
-
 }

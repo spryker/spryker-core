@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class AvailabilityClient extends AbstractClient implements AvailabilityClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -49,5 +48,4 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
             ->createCurrentLocaleAvailabilityStorage()
             ->findProductAvailability($idProductAbstract);
     }
-
 }

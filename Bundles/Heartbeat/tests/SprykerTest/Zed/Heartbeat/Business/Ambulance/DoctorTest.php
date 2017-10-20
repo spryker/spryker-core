@@ -23,7 +23,6 @@ use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
  */
 class DoctorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -83,5 +82,4 @@ class DoctorTest extends Unit
 
         $this->assertFalse($doctor->doHealthCheck()->isPatientAlive());
     }
-
 }

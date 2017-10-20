@@ -14,7 +14,6 @@ use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 
 class BusinessHelper extends Module
 {
-
     /**
      * @var array
      */
@@ -87,5 +86,4 @@ class BusinessHelper extends Module
 
         return $dependencies;
     }
-
 }

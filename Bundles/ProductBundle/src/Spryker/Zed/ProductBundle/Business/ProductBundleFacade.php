@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -277,5 +276,4 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
             ->createProductBundlePreReloadUpdater()
             ->preReloadItems($quoteTransfer);
     }
-
 }

@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Container;
 class PriceDependencyProvider extends AbstractBundleDependencyProvider
 {
 
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -22,5 +23,4 @@ class PriceDependencyProvider extends AbstractBundleDependencyProvider
     {
         return $container;
     }
-
 }

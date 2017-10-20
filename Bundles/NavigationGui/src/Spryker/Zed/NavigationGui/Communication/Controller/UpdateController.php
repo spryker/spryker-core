@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UpdateController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
@@ -50,5 +49,4 @@ class UpdateController extends AbstractController
             'idNavigation' => $idNavigation,
         ]);
     }
-
 }

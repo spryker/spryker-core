@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PriceProductQueryContainer extends AbstractQueryContainer implements PriceProductQueryContainerInterface
 {
-
     const DATE_NOW = 'now';
 
     /**
@@ -44,6 +43,16 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     public function queryAllPriceTypes()
     {
         return $this->getFactory()->createPriceTypeQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     */
+    public function queryAllPriceProducts()
+    {
+        return $this->getFactory()->createPriceProductQuery();
     }
 
     /**
@@ -210,5 +219,4 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
             ->createPriceProductQuery()
             ->filterByIdPriceProduct($idPriceProduct);
     }
-
 }

@@ -9,10 +9,8 @@ namespace Spryker\Shared\Config\Profiler;
 
 interface ConfigProfilerCollectorInterface
 {
-
     /**
      * @return array
      */
     public function getConfigs();
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
 interface DiscountPostUpdatePluginInterface
 {
-
     /**
      * Specification:
      *
@@ -24,5 +23,4 @@ interface DiscountPostUpdatePluginInterface
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      */
     public function postUpdate(DiscountConfiguratorTransfer $discountConfiguratorTransfer);
-
 }

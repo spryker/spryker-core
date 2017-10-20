@@ -22,7 +22,6 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
  */
 class SanitizerTest extends Unit
 {
-
     const SANITIZED_VALUE = '***';
 
     /**
@@ -117,12 +116,11 @@ class SanitizerTest extends Unit
             [
                 ['sanitize' => 'sanitize me'],
                 ['baz' => 'bat'],
-            ]
+            ],
         ];
         $expected = $input;
         $expected[0][0]['sanitize'] = static::SANITIZED_VALUE;
 
         $this->assertSame($expected, $sanitizer->sanitize($input));
     }
-
 }

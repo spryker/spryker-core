@@ -12,7 +12,6 @@ use Iterator;
 
 class SubFormPluginCollection implements Iterator, Countable
 {
-
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
      */
@@ -82,5 +81,4 @@ class SubFormPluginCollection implements Iterator, Countable
     {
         return count($this->subForms);
     }
-
 }

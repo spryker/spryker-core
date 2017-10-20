@@ -18,7 +18,6 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
  */
 class Installment extends AbstractMethod
 {
-
     /**
      * @const Payment method code.
      */
@@ -137,5 +136,4 @@ class Installment extends AbstractMethod
     {
         return new RatepayPaymentInstallmentTransfer();
     }
-
 }

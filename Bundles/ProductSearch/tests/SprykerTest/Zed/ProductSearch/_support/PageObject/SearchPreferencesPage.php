@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductSearch\PageObject;
 
 class SearchPreferencesPage
 {
-
     const URL_LIST = '/product-search/search-preferences';
     const URL_CREATE = '/product-search/search-preferences/create';
     const URL_EDIT = '/product-search/search-preferences/edit?id=';
@@ -26,5 +25,4 @@ class SearchPreferencesPage
     const SELECTOR_TABLE_FIRST_CELL = '.dataTable tbody tr:first-child td:first-child';
     const SELECTOR_FIRST_ROW_DELETE = '.dataTable tbody tr:first-child td:last-child .btn-danger';
     const SELECTOR_TABLE_SEARCH = '.dataTables_filter input[type="search"]';
-
 }

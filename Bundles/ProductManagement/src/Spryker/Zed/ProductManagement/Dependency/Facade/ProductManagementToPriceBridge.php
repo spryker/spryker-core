@@ -44,5 +44,4 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     {
         return $this->priceFacade->getDefaultPriceMode();
     }
-
 }

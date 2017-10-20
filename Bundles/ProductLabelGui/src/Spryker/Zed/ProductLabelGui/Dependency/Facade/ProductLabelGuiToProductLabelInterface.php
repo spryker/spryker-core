@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 
 interface ProductLabelGuiToProductLabelInterface
 {
-
     /**
      * @param int $idProductLabel
      *
@@ -53,5 +52,4 @@ interface ProductLabelGuiToProductLabelInterface
      * @return void
      */
     public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
-
 }

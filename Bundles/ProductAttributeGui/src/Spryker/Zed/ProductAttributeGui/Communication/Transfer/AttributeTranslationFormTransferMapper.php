@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormInterface;
 
 class AttributeTranslationFormTransferMapper implements AttributeTranslationFormTransferMapperInterface
 {
-
     /**
      * @param \Symfony\Component\Form\FormInterface $translationForm
      *
@@ -120,5 +119,4 @@ class AttributeTranslationFormTransferMapper implements AttributeTranslationForm
 
         return $attributeValueTransfer;
     }
-
 }

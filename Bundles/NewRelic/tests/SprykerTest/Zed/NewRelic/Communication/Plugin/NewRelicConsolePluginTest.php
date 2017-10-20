@@ -29,7 +29,6 @@ use Symfony\Component\Console\Output\Output;
  */
 class NewRelicConsolePluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -145,5 +144,4 @@ class NewRelicConsolePluginTest extends Unit
 
         return $newRelicApiMock;
     }
-
 }

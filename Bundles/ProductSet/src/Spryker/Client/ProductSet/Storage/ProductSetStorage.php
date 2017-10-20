@@ -13,7 +13,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductSetStorage implements ProductSetStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
      */
@@ -68,5 +67,4 @@ class ProductSetStorage implements ProductSetStorageInterface
 
         return $this->productSetStorageMapper->mapDataToTransfer($productSet);
     }
-
 }

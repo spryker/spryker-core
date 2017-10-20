@@ -11,7 +11,6 @@ use ArrayObject;
 
 interface MoneyCollectionDataProviderInterface
 {
-
     /**
      * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
      */
@@ -23,5 +22,4 @@ interface MoneyCollectionDataProviderInterface
      * @return \ArrayObject
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection);
-
 }

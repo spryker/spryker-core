@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductNewQueryContainer extends AbstractQueryContainer implements ProductNewQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -107,5 +106,4 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
 
         return $criteria;
     }
-
 }

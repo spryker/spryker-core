@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Validator;
 
 class UrlUniqueValidator implements UrlUniqueValidatorInterface
 {
-
     /**
      * @var array
      */
@@ -38,5 +37,4 @@ class UrlUniqueValidator implements UrlUniqueValidatorInterface
     {
         $this->urls[] = $url;
     }
-
 }

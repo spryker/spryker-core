@@ -17,7 +17,6 @@ use Spryker\Zed\ProductRelationCollector\ProductRelationCollectorDependencyProvi
  */
 class ProductRelationCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductRelationCollector\Business\Collector\Storage\ProductRelationCollector
      */
@@ -95,5 +94,4 @@ class ProductRelationCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductRelationCollectorDependencyProvider::FACADE_COLLECTOR);
     }
-
 }

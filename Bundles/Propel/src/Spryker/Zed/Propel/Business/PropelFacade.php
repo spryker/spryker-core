@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PropelFacade extends AbstractFacade implements PropelFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -148,5 +147,4 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     {
         return $this->getFactory()->getConfig()->getCurrentDatabaseEngineName();
     }
-
 }

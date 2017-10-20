@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'CMS_BLOCK_CATEGORY_CONNECTOR:FACADE_LOCALE';
     const FACADE_TOUCH = 'CMS_BLOCK_CATEGORY_CONNECTOR:FACADE_TOUCH';
     const FACADE_COLLECTOR = 'CMS_BLOCK_CATEGORY_CONNECTOR:FACADE_COLLECTOR';
@@ -173,5 +172,4 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
 
         return $container;
     }
-
 }

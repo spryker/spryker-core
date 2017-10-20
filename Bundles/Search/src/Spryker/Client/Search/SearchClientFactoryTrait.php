@@ -11,7 +11,6 @@ use Spryker\Client\Search\ServiceProvider\SearchClientServiceProvider;
 
 trait SearchClientFactoryTrait
 {
-
     /**
      * @return \Spryker\Client\Search\SearchClientInterface
      */
@@ -28,5 +27,4 @@ trait SearchClientFactoryTrait
      * @return mixed
      */
     abstract public function getProvidedDependency($key);
-
 }

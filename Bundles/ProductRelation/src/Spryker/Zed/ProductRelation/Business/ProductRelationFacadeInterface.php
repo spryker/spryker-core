@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductRelationTransfer;
  */
 interface ProductRelationFacadeInterface
 {
-
     /**
      * Specification:
      *  - Create product relation type is not persisted
@@ -121,5 +120,4 @@ interface ProductRelationFacadeInterface
      * @return bool
      */
     public function deleteProductRelation($idProductRelation);
-
 }

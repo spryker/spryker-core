@@ -9,7 +9,6 @@ namespace Spryker\Zed\DataImport\Dependency\Propel;
 
 class DataImportToPropelConnectionBridge implements DataImportToPropelConnectionInterface
 {
-
     /**
      * @var \Propel\Runtime\Connection\ConnectionInterface
      */
@@ -46,5 +45,4 @@ class DataImportToPropelConnectionBridge implements DataImportToPropelConnection
     {
         $this->propelConnection->commit();
     }
-
 }

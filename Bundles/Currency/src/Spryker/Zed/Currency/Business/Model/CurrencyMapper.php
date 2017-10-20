@@ -13,7 +13,6 @@ use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternatio
 
 class CurrencyMapper implements CurrencyMapperInterface
 {
-
     /**
      * @var \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
@@ -53,5 +52,4 @@ class CurrencyMapper implements CurrencyMapperInterface
 
         return $currencyEntity;
     }
-
 }

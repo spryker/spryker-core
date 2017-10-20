@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class FixedType implements CalculatorTypeInterface
 {
-
     const PRICE_NET_MODE = 'NET_MODE';
 
     /**
@@ -52,5 +51,4 @@ class FixedType implements CalculatorTypeInterface
 
         return 0;
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetUrlReader implements ProductSetUrlReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -50,5 +49,4 @@ class ProductSetUrlReader implements ProductSetUrlReaderInterface
 
         return $urlEntity;
     }
-
 }

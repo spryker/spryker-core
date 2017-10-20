@@ -13,7 +13,6 @@ use PHPMD\Rule\Naming\ShortVariable as PHPMDShortVariable;
 
 class ShortVariable extends PHPMDShortVariable
 {
-
     /**
      * Template method that performs the real node image check.
      *
@@ -139,5 +138,4 @@ class ShortVariable extends PHPMDShortVariable
 
         return false;
     }
-
 }

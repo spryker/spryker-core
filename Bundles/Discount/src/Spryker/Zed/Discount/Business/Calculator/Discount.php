@@ -22,7 +22,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount implements DiscountInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -136,7 +135,6 @@ class Discount implements DiscountInterface
             foreach ($voucherDiscounts as $discountEntity) {
                 $discounts->append($discountEntity);
             }
-
         }
 
         return $discounts;
@@ -261,7 +259,6 @@ class Discount implements DiscountInterface
                     return true;
                 }
             }
-
         } catch (QueryStringException $exception) {
             $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
         }
@@ -298,5 +295,4 @@ class Discount implements DiscountInterface
     {
         $this->discountApplicableFilterPlugins = $discountApplicableFilterPlugins;
     }
-
 }

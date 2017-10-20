@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CmsPageDataExpanderPluginInterface
 {
-
     /**
      * Specification:
      * - Expands provided CMS page data.
@@ -24,5 +23,4 @@ interface CmsPageDataExpanderPluginInterface
      * @return array
      */
     public function expand(array $cmsPageData, LocaleTransfer $localeTransfer);
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MailFacade extends AbstractFacade implements MailFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -43,5 +42,4 @@ class MailFacade extends AbstractFacade implements MailFacadeInterface
     {
         $this->getFactory()->createMailer()->sendMail($mailTransfer);
     }
-
 }

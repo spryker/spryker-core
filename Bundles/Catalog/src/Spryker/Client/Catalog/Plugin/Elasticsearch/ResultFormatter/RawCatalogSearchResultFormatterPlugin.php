@@ -16,7 +16,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class RawCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-
     const NAME = 'products';
 
     /**
@@ -42,5 +41,4 @@ class RawCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultF
 
         return $products;
     }
-
 }

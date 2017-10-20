@@ -15,7 +15,6 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation
 
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -188,5 +187,4 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
 
         return $value;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Kernel\ContainerMocker;
 
 class ContainerGlobals
 {
-
     /**
      * @var array
      */
@@ -61,5 +60,4 @@ class ContainerGlobals
         static::$containerGlobals = [];
         static::$onlyFor = [];
     }
-
 }

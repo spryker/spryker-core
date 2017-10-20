@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CmsCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsCollector\Business\Collector\Storage\CmsVersionPageCollector
      */
@@ -117,5 +116,4 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CmsCollectorDependencyProvider::FACADE_CMS);
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Communication\Console\Console;
 
 abstract class AbstractCollectorConsole extends Console
 {
-
     /**
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $resultData
      *
@@ -69,5 +68,4 @@ abstract class AbstractCollectorConsole extends Console
 
         return $summary;
     }
-
 }

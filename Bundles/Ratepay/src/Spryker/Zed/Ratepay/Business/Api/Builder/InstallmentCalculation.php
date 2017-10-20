@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Api\Builder;
 
 class InstallmentCalculation extends AbstractBuilder implements BuilderInterface
 {
-
     const ROOT_TAG = 'installment-calculation';
 
     const SUBTYPE_RATE = 'calculation-by-rate';
@@ -50,5 +49,4 @@ class InstallmentCalculation extends AbstractBuilder implements BuilderInterface
     {
         return static::ROOT_TAG;
     }
-
 }

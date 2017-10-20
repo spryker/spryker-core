@@ -12,7 +12,6 @@ use Orm\Zed\Store\Persistence\SpyStore;
 
 interface StoreMapperInterface
 {
-
     /**
      * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
      *
@@ -27,5 +26,4 @@ interface StoreMapperInterface
      * @return \Orm\Zed\Store\Persistence\SpyStore
      */
     public function mapTransferToEntity(SpyStore $storeEntity, StoreTransfer $storeTransfer);
-
 }

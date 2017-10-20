@@ -13,7 +13,6 @@ use Spryker\Client\Kernel\Container;
 
 class CmsDependencyProvider extends AbstractDependencyProvider
 {
-
     const KV_STORAGE = 'kv storage';
 
     const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
@@ -47,5 +46,4 @@ class CmsDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

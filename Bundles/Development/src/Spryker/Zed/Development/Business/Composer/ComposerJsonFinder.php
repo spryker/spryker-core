@@ -8,11 +8,9 @@
 namespace Spryker\Zed\Development\Business\Composer;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -40,5 +38,4 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     {
         return $this->finder->in($this->pathToBundles)->name('composer.json')->depth('< 2');
     }
-
 }

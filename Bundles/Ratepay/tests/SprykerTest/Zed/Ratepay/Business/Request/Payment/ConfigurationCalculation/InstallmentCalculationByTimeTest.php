@@ -27,7 +27,6 @@ use SprykerTest\Zed\Ratepay\Business\Api\Adapter\Http\CalculationByTimeInstallme
  */
 class InstallmentCalculationByTimeTest extends InstallmentAbstractTest
 {
-
     /**
      * @return \SprykerTest\Zed\Ratepay\Business\Api\Adapter\Http\CalculationByTimeInstallmentAdapterMock
      */
@@ -97,5 +96,4 @@ class InstallmentCalculationByTimeTest extends InstallmentAbstractTest
             ->getInstallmentCalculationResponseConverter($expectedResponse, $this->getCalculationRequest())
             ->convert();
     }
-
 }

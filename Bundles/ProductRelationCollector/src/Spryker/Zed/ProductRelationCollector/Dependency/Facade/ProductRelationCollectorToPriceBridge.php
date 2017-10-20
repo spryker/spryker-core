@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelationCollector\Dependency\Facade;
 
 class ProductRelationCollectorToPriceBridge implements ProductRelationCollectorToPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
@@ -53,5 +52,4 @@ class ProductRelationCollectorToPriceBridge implements ProductRelationCollectorT
     {
         return $this->priceProductFacade->findPricesBySkuGrouped($sku);
     }
-
 }

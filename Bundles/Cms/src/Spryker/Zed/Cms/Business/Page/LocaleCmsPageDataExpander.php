@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
 {
-
     const PARAM_URL = 'url';
     const PARAM_VALID_FROM = 'valid_from';
     const PARAM_VALID_TO = 'valid_to';
@@ -85,5 +84,4 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
             static::PARAM_META_DESCRIPTION => $localeCmsPageDataTransfer->getMetaDescription(),
         ];
     }
-
 }

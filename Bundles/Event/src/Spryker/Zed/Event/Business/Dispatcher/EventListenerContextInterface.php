@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Event\Business\Dispatcher;
 
-use Spryker\Zed\Event\Dependency\Plugin\EventListenerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 
-interface EventListenerContextInterface extends EventListenerInterface
+interface EventListenerContextInterface extends EventHandlerInterface, EventBulkHandlerInterface
 {
-
     /**
      * @return bool
      */
@@ -21,5 +21,4 @@ interface EventListenerContextInterface extends EventListenerInterface
      * @return string
      */
     public function getListenerName();
-
 }

@@ -32,7 +32,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CustomerApi implements CustomerApiInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface
      */
@@ -330,5 +329,4 @@ class CustomerApi implements CustomerApiInterface
 
         return $this->customerFacade->findCustomerById($customerTransfer);
     }
-
 }

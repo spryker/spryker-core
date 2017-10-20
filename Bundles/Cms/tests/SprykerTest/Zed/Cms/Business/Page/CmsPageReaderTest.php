@@ -27,7 +27,6 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
  */
 class CmsPageReaderTest extends CmsMocks
 {
-
     /**
      * @return void
      */
@@ -129,5 +128,4 @@ class CmsPageReaderTest extends CmsMocks
 
         return $cmsPageEntity;
     }
-
 }

@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface ProductBundleFacadeInterface
 {
-
     /**
      *
      * Specification:
@@ -248,5 +247,4 @@ interface ProductBundleFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function filterBundleItemsOnCartReload(QuoteTransfer $quoteTransfer);
-
 }

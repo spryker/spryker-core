@@ -13,7 +13,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -178,5 +177,4 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
 
         $this->logger->debug($message);
     }
-
 }

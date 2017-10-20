@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductSet\Business\Model;
 
 interface ProductSetOrganizerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
      *
      * @return void
      */
     public function reorderProductSets(array $productSetTransfers);
-
 }

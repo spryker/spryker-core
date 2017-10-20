@@ -13,7 +13,6 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 class Locator implements LocatorLocatorInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\BundleProxy
      */
@@ -83,5 +82,4 @@ class Locator implements LocatorLocatorInterface
 
         return $bundleProxy;
     }
-
 }

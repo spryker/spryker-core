@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductClient extends AbstractClient implements ProductClientInterface
 {
-
     /**
      * Specification:
      * - Read abstract product data from yves storage, based on current shop selected locale
@@ -146,5 +145,4 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 
         return $productStorage->getProductConcreteCollection($idProductConcreteCollection);
     }
-
 }

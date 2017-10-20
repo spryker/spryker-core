@@ -13,7 +13,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductLabelDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -50,5 +49,4 @@ class ProductLabelDataHelper extends Module
     {
         return $this->getLocator()->productLabel()->facade();
     }
-
 }

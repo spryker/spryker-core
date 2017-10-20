@@ -14,7 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class UtilSanitizeService extends AbstractService implements UtilSanitizeServiceInterface
 {
-
     /**
      *
      * Specification:
@@ -35,4 +34,17 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
             ->escape($text, $double, $charset);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public function arrayFilterRecursive(array $array)
+    {
+        return $this->getFactory()->createArrayFilter()->arrayFilterRecursive($array);
+    }
 }

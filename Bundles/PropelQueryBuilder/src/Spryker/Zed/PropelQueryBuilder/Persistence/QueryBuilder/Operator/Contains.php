@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class Contains extends AbstractOperator
 {
-
     const TYPE = 'contains';
 
     /**
@@ -32,5 +31,4 @@ class Contains extends AbstractOperator
     {
         return sprintf('%%%s%%', $rule->getValue());
     }
-
 }

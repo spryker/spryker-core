@@ -15,7 +15,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryAttribute implements CategoryAttributeInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -163,5 +162,4 @@ class CategoryAttribute implements CategoryAttributeInterface
             ->queryAttributeByCategoryId($idCategory)
             ->delete();
     }
-
 }

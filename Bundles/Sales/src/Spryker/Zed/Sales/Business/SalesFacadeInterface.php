@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface SalesFacadeInterface
 {
-
     /**
      * Specification:
      * - Adds username to comment
@@ -149,5 +148,4 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ShipmentCarrierDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
-
     const DECISION_RULE_FIELD_NAME = 'shipment-carrier';
 
     /**
@@ -80,5 +79,4 @@ class ShipmentCarrierDecisionRulePlugin extends AbstractPlugin implements Decisi
     {
         return $this->getFacade()->getCarrierList();
     }
-
 }

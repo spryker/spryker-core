@@ -31,7 +31,6 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
  */
 class UniqueGlossaryUrlValidatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -217,5 +216,4 @@ class UniqueGlossaryUrlValidatorTest extends Unit
         $uniqueUrlValidator->initialize($executionContextMock);
         $uniqueUrlValidator->validate($cmsPageAttributeTransfer, $uniqueUrlConstraint);
     }
-
 }

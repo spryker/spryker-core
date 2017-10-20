@@ -16,7 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RelatedProductFormType extends AbstractType
 {
-
     const FIELD_ID_PRODUCT_LABEL = 'idProductLabel';
     const FIELD_IDS_PRODUCT_ABSTRACT_CSV = 'idsProductAbstractCsv';
     const FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV = 'idsProductAbstractToAssignCsv';
@@ -147,5 +146,4 @@ class RelatedProductFormType extends AbstractType
                 }
             ));
     }
-
 }

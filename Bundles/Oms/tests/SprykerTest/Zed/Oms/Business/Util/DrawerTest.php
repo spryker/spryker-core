@@ -31,7 +31,6 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
  */
 class DrawerTest extends Unit
 {
-
     const CONDITION_NAME = 'conditionName';
     const COMMAND_NAME = 'commandName';
 
@@ -152,5 +151,4 @@ class DrawerTest extends Unit
     {
         return $this->getMockBuilder(OmsToUtilTextInterface::class)->getMock();
     }
-
 }

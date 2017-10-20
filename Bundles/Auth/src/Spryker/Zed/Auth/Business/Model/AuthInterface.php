@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface AuthInterface
 {
-
     /**
      * @param string $username
      * @param string $password
@@ -82,5 +81,4 @@ interface AuthInterface
      * @return bool
      */
     public function isIgnorablePath($bundle, $controller, $action);
-
 }

@@ -44,7 +44,6 @@ use SprykerTest\Zed\Ratepay\Business\Payment\BasePaymentTest;
  */
 abstract class AbstractMethodMapperTest extends BasePaymentTest
 {
-
     /**
      * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory
      */
@@ -443,5 +442,4 @@ abstract class AbstractMethodMapperTest extends BasePaymentTest
      * @return void
      */
     abstract protected function setRatepayPaymentEntityData($ratepayPaymentEntity);
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\PostgreSq
 
 class PropelQueryBuilderConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -50,5 +49,4 @@ class PropelQueryBuilderConfig extends AbstractBundleConfig
 
         return $classList[$type];
     }
-
 }

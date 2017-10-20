@@ -16,4 +16,5 @@ use Spryker\Zed\Price\PriceDependencyProvider;
 class PriceBusinessFactory extends AbstractBusinessFactory
 {
 
+
 }

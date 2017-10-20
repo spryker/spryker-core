@@ -9,7 +9,6 @@ namespace Spryker\Shared\ZedRequest\Client;
 
 abstract class AbstractObject implements ObjectInterface
 {
-
     /**
      * @var array
      */
@@ -59,5 +58,4 @@ abstract class AbstractObject implements ObjectInterface
         $values = array_intersect_key($values, $this->values);
         $this->values = array_merge($this->values, $values);
     }
-
 }

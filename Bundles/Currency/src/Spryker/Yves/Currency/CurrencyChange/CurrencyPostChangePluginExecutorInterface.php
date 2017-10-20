@@ -9,12 +9,10 @@ namespace Spryker\Yves\Currency\CurrencyChange;
 
 interface CurrencyPostChangePluginExecutorInterface
 {
-
     /**
      * @param string $currencyIsoCode
      *
      * @return void
      */
     public function execute($currencyIsoCode);
-
 }

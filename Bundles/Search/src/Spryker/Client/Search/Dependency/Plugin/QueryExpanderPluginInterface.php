@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 interface QueryExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -19,5 +18,4 @@ interface QueryExpanderPluginInterface
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Dependency\Plugin;
 
 interface DiscountViewBlockProviderPluginInterface
 {
-
     /**
      * Specification:
      *
@@ -20,5 +19,4 @@ interface DiscountViewBlockProviderPluginInterface
      * @return string
      */
     public function getUrl();
-
 }

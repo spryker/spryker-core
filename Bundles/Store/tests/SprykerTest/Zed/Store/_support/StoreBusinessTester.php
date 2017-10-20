@@ -25,7 +25,5 @@ use Codeception\Actor;
  */
 class StoreBusinessTester extends Actor
 {
-
     use _generated\StoreBusinessTesterActions;
-
 }

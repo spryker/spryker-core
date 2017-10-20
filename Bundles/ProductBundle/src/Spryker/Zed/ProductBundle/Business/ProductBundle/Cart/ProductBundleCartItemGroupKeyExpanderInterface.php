@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface ProductBundleCartItemGroupKeyExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandExpandBundleItemGroupKey(CartChangeTransfer $cartChangeTransfer);
-
 }

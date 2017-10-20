@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class ProductFormAddTabs extends AbstractProductFormTabs
 {
-
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -48,5 +47,4 @@ class ProductFormAddTabs extends AbstractProductFormTabs
 
         return $this;
     }
-
 }

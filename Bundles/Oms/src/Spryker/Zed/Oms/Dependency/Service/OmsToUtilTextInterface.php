@@ -7,12 +7,10 @@ namespace Spryker\Zed\Oms\Dependency\Service;
 
 interface OmsToUtilTextInterface
 {
-
     /**
      * @param int $length
      *
      * @return string
      */
     public function generateRandomString($length);
-
 }

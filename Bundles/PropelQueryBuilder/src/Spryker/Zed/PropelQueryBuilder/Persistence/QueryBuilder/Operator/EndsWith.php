@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class EndsWith extends AbstractOperator
 {
-
     const TYPE = 'ends_with';
 
     /**
@@ -32,5 +31,4 @@ class EndsWith extends AbstractOperator
     {
         return sprintf('%%%s', $rule->getValue());
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Url\Business\Deletion\UrlDeleterBeforeDeleteObserverInterface;
 
 class UrlDeletePluginObserver implements UrlDeleterBeforeDeleteObserverInterface, UrlDeleterAfterDeleteObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
      */
@@ -38,5 +37,4 @@ class UrlDeletePluginObserver implements UrlDeleterBeforeDeleteObserverInterface
             $urlCreatePlugin->delete($urlTransfer);
         }
     }
-
 }

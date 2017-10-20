@@ -11,7 +11,6 @@ use Spryker\Shared\Calculation\Dependency\Transfer\PriceItemInterface;
 
 class PriceItemFixture extends CartItemFixture implements PriceItemInterface
 {
-
     /**
      * @var int
      */
@@ -54,5 +53,4 @@ class PriceItemFixture extends CartItemFixture implements PriceItemInterface
     {
         // TODO: Implement setPriceToPay() method.
     }
-
 }

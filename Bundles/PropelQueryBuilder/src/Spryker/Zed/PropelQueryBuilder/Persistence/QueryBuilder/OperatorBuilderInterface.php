@@ -9,7 +9,6 @@ namespace Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder;
 
 interface OperatorBuilderInterface
 {
-
     /**
      * @return \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[]
      */
@@ -93,5 +92,4 @@ interface OperatorBuilderInterface
      * @return \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\NotIn
      */
     public function buildNotIn();
-
 }

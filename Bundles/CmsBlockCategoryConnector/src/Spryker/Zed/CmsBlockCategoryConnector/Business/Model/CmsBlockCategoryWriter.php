@@ -19,7 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -281,5 +280,4 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     {
         return new SpyCmsBlockCategoryConnector();
     }
-
 }

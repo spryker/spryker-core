@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class CmsBlockProductBusinessTester extends Actor
 {
-
     use _generated\CmsBlockProductBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

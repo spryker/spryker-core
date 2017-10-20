@@ -13,7 +13,6 @@ use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
 class StoreReader implements StoreReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface
      */
@@ -147,5 +146,4 @@ class StoreReader implements StoreReaderInterface
 
         return $storeTransfer;
     }
-
 }

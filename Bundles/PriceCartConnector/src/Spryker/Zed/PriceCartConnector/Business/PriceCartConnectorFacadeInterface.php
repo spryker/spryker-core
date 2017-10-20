@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface PriceCartConnectorFacadeInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface PriceCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function addGrossPriceToItems(CartChangeTransfer $change, $grossPriceType = null);
-
 }

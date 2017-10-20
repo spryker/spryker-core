@@ -44,7 +44,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class CmsFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
@@ -518,5 +517,4 @@ class CmsFacadeTest extends Unit
 
         return $urlTransfer;
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 
 class PriceFacadeStub extends PriceProductFacade
 {
-
     /**
      * @var array
      */
@@ -73,5 +72,4 @@ class PriceFacadeStub extends PriceProductFacade
     {
         $this->validities[$sku] = $validity;
     }
-
 }

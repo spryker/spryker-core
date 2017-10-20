@@ -12,7 +12,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 
 class EntityMapper implements EntityMapperInterface
 {
-
     /**
      * @param array $data
      *
@@ -59,5 +58,4 @@ class EntityMapper implements EntityMapperInterface
 
         return $data;
     }
-
 }

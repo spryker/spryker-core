@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -65,5 +64,4 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
             ->createCmsBlockFinder()
             ->generateBlockNameKey($name, $localeName);
     }
-
 }

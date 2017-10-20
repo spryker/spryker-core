@@ -24,7 +24,6 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
  */
 class DatabaseCreatorCollectionTest extends Unit
 {
-
     const TEST_ENGINE = 'testEngine';
 
     /**
@@ -84,5 +83,4 @@ class DatabaseCreatorCollectionTest extends Unit
 
         return $databaseCreatorMock;
     }
-
 }

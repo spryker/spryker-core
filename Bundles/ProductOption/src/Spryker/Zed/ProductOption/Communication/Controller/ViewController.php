@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends BaseOptionController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -49,5 +48,4 @@ class ViewController extends BaseOptionController
             'taxSet' => $taxSetTransfer,
         ];
     }
-
 }

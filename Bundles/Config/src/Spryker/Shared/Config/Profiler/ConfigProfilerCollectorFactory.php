@@ -11,7 +11,6 @@ use Spryker\Shared\Config\Config;
 
 class ConfigProfilerCollectorFactory
 {
-
     /**
      * @return \Spryker\Shared\Config\Profiler\ConfigProfilerCollectorInterface
      */
@@ -19,5 +18,4 @@ class ConfigProfilerCollectorFactory
     {
         return new ConfigProfilerCollector(Config::getProfileData());
     }
-
 }

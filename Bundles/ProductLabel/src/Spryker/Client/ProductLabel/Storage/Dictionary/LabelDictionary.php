@@ -14,7 +14,6 @@ use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 class LabelDictionary implements LabelDictionaryInterface
 {
-
     /**
      * @var \Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageInterface
      */
@@ -114,5 +113,4 @@ class LabelDictionary implements LabelDictionaryInterface
 
         return $this->storageClient->get($storageKey);
     }
-
 }

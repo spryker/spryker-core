@@ -12,7 +12,6 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 
 class BulkWriter extends Writer implements BulkWriterInterface
 {
-
     /**
      * @var array
      */
@@ -81,5 +80,4 @@ class BulkWriter extends Writer implements BulkWriterInterface
         }
         $this->recordsToTouch = [];
     }
-
 }

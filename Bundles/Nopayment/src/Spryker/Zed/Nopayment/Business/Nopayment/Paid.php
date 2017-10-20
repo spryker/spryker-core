@@ -13,7 +13,6 @@ use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface;
 
 class Paid
 {
-
     /**
      * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface
      */
@@ -62,5 +61,4 @@ class Paid
     {
         return ($this->queryContainer->queryOrderItem($orderItem)->count() > 0);
     }
-
 }

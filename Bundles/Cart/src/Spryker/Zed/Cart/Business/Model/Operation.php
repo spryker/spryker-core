@@ -19,7 +19,6 @@ use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 
 class Operation implements OperationInterface
 {
-
     const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
     const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
 
@@ -255,5 +254,4 @@ class Operation implements OperationInterface
     {
         $this->preReloadPlugins = $preReloadPlugins;
     }
-
 }

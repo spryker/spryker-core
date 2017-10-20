@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class GroupForm extends AbstractType
 {
-
     const FIELD_TITLE = 'title';
     const FIELD_ROLES = 'roles';
 
@@ -147,5 +146,4 @@ class GroupForm extends AbstractType
 
         return $this;
     }
-
 }

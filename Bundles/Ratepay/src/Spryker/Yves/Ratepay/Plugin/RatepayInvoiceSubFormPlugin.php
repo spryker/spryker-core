@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
  */
 class RatepayInvoiceSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
-
     /**
      * @return \Spryker\Yves\Ratepay\Form\InvoiceSubForm
      */
@@ -31,5 +30,4 @@ class RatepayInvoiceSubFormPlugin extends AbstractPlugin implements SubFormPlugi
     {
         return $this->getFactory()->createInvoiceFormDataProvider();
     }
-
 }

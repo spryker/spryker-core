@@ -23,7 +23,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class SkuCollectorTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -64,5 +63,4 @@ class SkuCollectorTest extends BaseRuleTester
 
         return new SkuCollector($comparatorMock);
     }
-
 }

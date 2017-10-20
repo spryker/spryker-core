@@ -9,7 +9,6 @@ namespace Spryker\Zed\Twig\Business\Model;
 
 interface TemplatePathMapBuilderInterface
 {
-
     /**
      * Returns an array where the key is the template name
      * and the value is the path to this template.
@@ -17,5 +16,4 @@ interface TemplatePathMapBuilderInterface
      * @return array
      */
     public function build();
-
 }

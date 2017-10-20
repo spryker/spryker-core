@@ -12,7 +12,6 @@ use Spryker\Zed\Oms\Business\Process\StateInterface;
 
 interface DrawerInterface
 {
-
     /**
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|null $highlightState
@@ -58,5 +57,4 @@ interface DrawerInterface
      * @return void
      */
     public function drawClusters(ProcessInterface $process);
-
 }

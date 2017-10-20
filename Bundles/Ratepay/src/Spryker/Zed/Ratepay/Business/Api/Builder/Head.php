@@ -10,7 +10,6 @@ use Spryker\Zed\Ratepay\Business\Api\Constants;
 
 class Head extends AbstractBuilder implements BuilderInterface
 {
-
     const ROOT_TAG = 'head';
 
     /**
@@ -86,5 +85,4 @@ class Head extends AbstractBuilder implements BuilderInterface
     {
         $this->requestTransfer->getHead()->setOperationSubstring($subOperation);
     }
-
 }

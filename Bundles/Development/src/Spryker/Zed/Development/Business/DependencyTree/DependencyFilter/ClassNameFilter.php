@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class ClassNameFilter implements DependencyFilterInterface
 {
-
     /**
      * @var string
      */
@@ -40,5 +39,4 @@ class ClassNameFilter implements DependencyFilterInterface
 
         return false;
     }
-
 }

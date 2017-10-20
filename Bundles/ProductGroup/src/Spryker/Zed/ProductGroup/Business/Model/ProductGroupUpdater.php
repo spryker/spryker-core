@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductGroupUpdater implements ProductGroupUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -162,5 +161,4 @@ class ProductGroupUpdater implements ProductGroupUpdaterInterface
         $this->productGroupTouch->touchProductGroupActive($productGroupTransfer);
         $this->productGroupTouch->touchProductAbstractGroupsActive($productGroupTransfer);
     }
-
 }

@@ -7,7 +7,6 @@ namespace Spryker\Service\UtilSanitize;
 
 interface UtilSanitizeServiceInterface
 {
-
     /**
      *
      * Specification:
@@ -23,4 +22,15 @@ interface UtilSanitizeServiceInterface
      */
     public function escapeHtml($text, $double = true, $charset = null);
 
+    /**
+     * Specification:
+     *  - Filters null elements of an array recursively
+     *
+     * @api
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public function arrayFilterRecursive(array $array);
 }

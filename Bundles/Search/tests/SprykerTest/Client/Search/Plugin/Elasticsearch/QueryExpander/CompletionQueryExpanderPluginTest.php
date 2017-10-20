@@ -25,7 +25,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\CompletionQueryExpa
  */
 class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
-
     /**
      * @dataProvider CompletionQueryExpanderDataProvider
      *
@@ -74,5 +73,4 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         return [$expectedQuery];
     }
-
 }

@@ -13,7 +13,6 @@ namespace Spryker\Zed\ProductOption\Communication\Controller;
  */
 class ListController extends IndexController
 {
-
     /**
      * @return array
      */
@@ -37,5 +36,4 @@ class ListController extends IndexController
             $productOptionListTable->fetchData()
         );
     }
-
 }

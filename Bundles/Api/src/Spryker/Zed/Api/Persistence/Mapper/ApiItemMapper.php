@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class ApiItemMapper implements ApiItemMapperInterface
 {
-
     /**
      * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
      * @param int|null $id
@@ -34,5 +33,4 @@ class ApiItemMapper implements ApiItemMapperInterface
 
         return $apiItemTransfer;
     }
-
 }

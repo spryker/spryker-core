@@ -21,7 +21,6 @@ use SprykerTest\Yves\Braintree\PageObject\ProductDetailPage;
  */
 class CreditCardGuestCheckoutCest
 {
-
     /**
      * @skip Broken because of new checkout
      *
@@ -35,5 +34,4 @@ class CreditCardGuestCheckoutCest
         $i->addToCart(ProductDetailPage::URL);
         $i->checkoutWithCreditCardAsGuest();
     }
-
 }

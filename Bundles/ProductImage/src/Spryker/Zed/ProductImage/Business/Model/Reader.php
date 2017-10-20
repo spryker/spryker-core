@@ -15,7 +15,6 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Reader implements ReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -123,5 +122,4 @@ class Reader implements ReaderInterface
 
         return $productConcreteTransfer;
     }
-
 }

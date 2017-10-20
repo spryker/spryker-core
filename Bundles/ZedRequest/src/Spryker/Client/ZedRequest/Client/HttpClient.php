@@ -13,7 +13,6 @@ use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
 
 class HttpClient extends AbstractHttpClient implements HttpClientInterface
 {
-
     /**
      * @var string
      */
@@ -73,5 +72,4 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
 
         return $headers;
     }
-
 }

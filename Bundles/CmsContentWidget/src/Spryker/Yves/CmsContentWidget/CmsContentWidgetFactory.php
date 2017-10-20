@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class CmsContentWidgetFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\CmsContentWidget\Twig\TwigCmsContentRendererInterface
      */
@@ -36,5 +35,4 @@ class CmsContentWidgetFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CmsContentWidgetDependencyProvider::TWIG_ENVIRONMENT);
     }
-
 }

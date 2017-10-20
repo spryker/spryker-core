@@ -13,7 +13,6 @@ use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 
 class RefundCalculator implements RefundCalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[]
      */
@@ -67,5 +66,4 @@ class RefundCalculator implements RefundCalculatorInterface
     {
         return $this->salesFacade->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
     }
-
 }

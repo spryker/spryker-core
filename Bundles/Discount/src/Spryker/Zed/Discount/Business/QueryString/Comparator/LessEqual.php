@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class LessEqual implements ComparatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $compareWithValue
      * @param string $withValue
@@ -69,5 +68,4 @@ class LessEqual implements ComparatorInterface
 
         return true;
     }
-
 }

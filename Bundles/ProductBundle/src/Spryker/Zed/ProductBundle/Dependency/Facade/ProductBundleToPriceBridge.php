@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceFilterTransfer;
 
 class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
@@ -45,5 +44,4 @@ class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
     {
         return $this->priceFacade->getPriceFor($priceFilterTransfer);
     }
-
 }

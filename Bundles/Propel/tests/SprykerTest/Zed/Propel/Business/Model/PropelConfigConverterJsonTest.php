@@ -8,21 +8,22 @@
 namespace SprykerTest\Zed\Propel\Business\Model;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Propel\Business\Exception\ConfigDirectoryNotCreatedException;
 use Spryker\Zed\Propel\Business\Exception\ConfigFileNotCreatedException;
 use Spryker\Zed\Propel\Business\Exception\ConfigMissingPropertyException;
 use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
 
 /**
- * @group Spryker
+ * Auto-generated group annotations
+ * @group SprykerTest
  * @group Zed
  * @group Propel
  * @group Business
- * @group PropelConfigConverterJson
+ * @group Model
+ * @group PropelConfigConverterJsonTest
+ * Add your own group annotations below this line
  */
 class PropelConfigConverterJsonTest extends Unit
 {
-
     const FILE_NAME = 'propel.json';
 
     /**
@@ -63,13 +64,13 @@ class PropelConfigConverterJsonTest extends Unit
     {
         return [
             'paths' => [
-                'phpConfDir' => $this->getFixtureDirectory()
+                'phpConfDir' => $this->getFixtureDirectory(),
             ],
             'database' => [
                 'connections' => [
-                    'default' => ''
-                ]
-            ]
+                    'default' => '',
+                ],
+            ],
         ];
     }
 
@@ -130,5 +131,4 @@ class PropelConfigConverterJsonTest extends Unit
         $this->expectException(ConfigFileNotCreatedException::class);
         $propelConfigConverterJsonMock->convertConfig();
     }
-
 }

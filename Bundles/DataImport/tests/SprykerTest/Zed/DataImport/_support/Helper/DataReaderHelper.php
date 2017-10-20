@@ -14,7 +14,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class DataReaderHelper extends Module
 {
-
     /**
      * @param int $expectedRow
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -68,5 +67,4 @@ class DataReaderHelper extends Module
             'column3' => 'value-3-row-' . $expectedRow,
         ];
     }
-
 }

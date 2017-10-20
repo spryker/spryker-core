@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
  */
 class CategoryAssignProductsToCategoryCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
@@ -34,5 +33,4 @@ class CategoryAssignProductsToCategoryCest
         $i->click(CategoryListPage::getAssignProductsButtonSelector());
         $i->seeBreadcrumbNavigation('Dashboard / Category / Assign Products to Category');
     }
-
 }

@@ -56,5 +56,4 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
         };
         return $container;
     }
-
 }

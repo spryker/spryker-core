@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductBundleToProductInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
@@ -53,5 +52,4 @@ interface ProductBundleToProductInterface
      * @return string
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
-
 }

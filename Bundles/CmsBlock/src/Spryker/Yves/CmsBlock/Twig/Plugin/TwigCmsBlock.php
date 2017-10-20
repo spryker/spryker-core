@@ -20,7 +20,6 @@ use Twig_SimpleFunction;
  */
 class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
 {
-
     const OPTION_NAME = 'name';
     const OPTION_POSITION = 'position';
 
@@ -214,5 +213,4 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
 
         return true;
     }
-
 }

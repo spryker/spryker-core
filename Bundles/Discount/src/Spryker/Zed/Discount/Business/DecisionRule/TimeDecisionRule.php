@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class TimeDecisionRule implements DecisionRuleInterface
 {
-
     const TIME_FORMAT = 'H:i';
 
     /**
@@ -84,5 +83,4 @@ class TimeDecisionRule implements DecisionRuleInterface
     {
         return new DateTime();
     }
-
 }

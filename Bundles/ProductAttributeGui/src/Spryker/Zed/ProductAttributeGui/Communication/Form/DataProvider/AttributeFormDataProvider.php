@@ -14,7 +14,6 @@ use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGu
 
 class AttributeFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
@@ -113,5 +112,4 @@ class AttributeFormDataProvider
             ->queryProductManagementAttribute()
             ->findOneByIdProductManagementAttribute($idProductManagementAttribute);
     }
-
 }

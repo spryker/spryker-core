@@ -9,12 +9,10 @@ namespace Spryker\Zed\DataImport\Business\Model;
 
 interface DataImporterBeforeImportAwareInterface extends DataImporterBeforeImportInterface
 {
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface $beforeImportHook
      *
      * @return void
      */
     public function addBeforeImportHook(DataImporterBeforeImportInterface $beforeImportHook);
-
 }

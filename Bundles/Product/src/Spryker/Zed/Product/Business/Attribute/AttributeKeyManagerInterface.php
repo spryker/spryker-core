@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 
 interface AttributeKeyManagerInterface
 {
-
     /**
      * @param string $key
      *
@@ -39,5 +38,4 @@ interface AttributeKeyManagerInterface
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
      */
     public function updateAttributeKey(ProductAttributeKeyTransfer $attributeKeyTransfer);
-
 }

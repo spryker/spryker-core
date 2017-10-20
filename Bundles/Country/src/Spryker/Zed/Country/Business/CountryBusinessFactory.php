@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CountryBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Country\Business\Internal\Install
      */
@@ -72,5 +71,4 @@ class CountryBusinessFactory extends AbstractBusinessFactory
             $filePath
         );
     }
-
 }

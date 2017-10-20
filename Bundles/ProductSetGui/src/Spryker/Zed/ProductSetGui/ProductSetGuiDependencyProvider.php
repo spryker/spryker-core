@@ -21,7 +21,6 @@ use Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingBrid
 
 class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT_SET = 'FACADE_ProductSet';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_URL = 'FACADE_URL';
@@ -173,5 +172,4 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductSetGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
     }
-
 }

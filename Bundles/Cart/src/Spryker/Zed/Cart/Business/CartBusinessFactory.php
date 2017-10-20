@@ -17,13 +17,12 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CartBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Cart\Business\Model\OperationInterface
      */
     public function createCartOperation()
     {
-        $operation =  new Operation(
+        $operation = new Operation(
             $this->createStorageProvider(),
             $this->getCalculatorFacade(),
             $this->getMessengerFacade(),
@@ -92,5 +91,4 @@ class CartBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS);
     }
-
 }

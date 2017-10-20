@@ -1,5 +1,7 @@
 # CustomerGroupDiscountConnector Module
 
+CustomerGroupDiscountConnector provides discount plugin. This allows to define decision rules for specific customer groups.
+
 ## Installation
 
 ```
@@ -13,4 +15,4 @@ Make sure you have latest changes for Yves side. There was issue when customer l
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/customer_management/customer/customer.html)

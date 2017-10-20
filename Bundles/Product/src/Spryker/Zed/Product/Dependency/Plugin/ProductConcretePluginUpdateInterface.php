@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcretePluginUpdateInterface
 {
-
     /**
      * Specification:
      * - Executed before and after an concrete product is updated.
@@ -25,5 +24,4 @@ interface ProductConcretePluginUpdateInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer);
-
 }

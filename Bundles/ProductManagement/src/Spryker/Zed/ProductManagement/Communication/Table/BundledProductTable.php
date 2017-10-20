@@ -26,7 +26,6 @@ use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEnco
 
 class BundledProductTable extends AbstractTable
 {
-
     const COL_SELECT = 'select';
     const COL_PRICE = 'price';
     const COL_AVAILABILITY = 'availability';
@@ -173,7 +172,7 @@ class BundledProductTable extends AbstractTable
             ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), 'stockQuantity')
             ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, self::IS_NEVER_OUT_OF_STOCK)
             ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
-            ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, CRITERIA::ISNULL)
+            ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, Criteria::ISNULL)
             ->groupBy(SpyProductTableMap::COL_ID_PRODUCT)
             ->addGroupByColumn(self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
             ->addGroupByColumn(self::IS_NEVER_OUT_OF_STOCK);
@@ -182,7 +181,6 @@ class BundledProductTable extends AbstractTable
 
         $productAbstractCollection = [];
         foreach ($queryResults as $item) {
-
             $productAbstractCollection[] = [
                 static::COL_SELECT => $this->addCheckBox($item),
                 static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
@@ -269,5 +267,4 @@ class BundledProductTable extends AbstractTable
         }
         return $availability;
     }
-
 }

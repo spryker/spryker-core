@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewGui\Dependency\Service;
 
 class ProductReviewGuiToUtilDateTimeBridge implements ProductReviewGuiToUtilDateTimeInterface
 {
-
     /**
      * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
@@ -32,5 +31,4 @@ class ProductReviewGuiToUtilDateTimeBridge implements ProductReviewGuiToUtilDate
     {
         return $this->utilDateTimeService->formatDateTime($date);
     }
-
 }

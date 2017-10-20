@@ -13,7 +13,6 @@ use Spryker\Shared\ProductRelation\KeyBuilder\ProductRelationKeyBuilder;
 
 class ProductRelationFactory extends AbstractFactory
 {
-
     /**
      * @param string $localeName
      *
@@ -60,5 +59,4 @@ class ProductRelationFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::CLIENT_PRICE_PRODUCT);
     }
-
 }
