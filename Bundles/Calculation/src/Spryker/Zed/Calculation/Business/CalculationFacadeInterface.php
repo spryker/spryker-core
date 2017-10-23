@@ -305,4 +305,16 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function calculateNetTotal(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
+     *  - Calculates discount amount for items and options, using generic discount amount field CalculateDiscountTransfer.unitAmount
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateDiscountAmountAggregationForGenericAmount(CalculableObjectTransfer $calculableObjectTransfer)
 }
