@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationCollectionForm;
 use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeTranslationForm;
+use Spryker\Zed\ProductAttributeGui\Communication\Form\AttributeValueTranslationForm;
 use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface;
 use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProductAttributeInterface;
 use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface;
@@ -153,9 +153,17 @@ class AttributeTranslationFormCollectionDataProvider
     {
         $attributeValueEntities = $this->productAttributeQueryContainer
             ->queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale)
-            ->find()
-            ->toArray(null, false, TableMap::TYPE_FIELDNAME);
+            ->find();
 
-        return $attributeValueEntities;
+        $attributeValues = [];
+        foreach ($attributeValueEntities as $attributeValueEntity) {
+            $attributeValues[] = [
+                AttributeValueTranslationForm::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE => $attributeValueEntity->getIdProductManagementAttributeValue(),
+                AttributeValueTranslationForm::FIELD_VALUE => $attributeValueEntity->getValue(),
+                AttributeValueTranslationForm::FIELD_TRANSLATION => $attributeValueEntity->getVirtualColumn('translation'),
+            ];
+        }
+
+        return $attributeValues;
     }
 }
