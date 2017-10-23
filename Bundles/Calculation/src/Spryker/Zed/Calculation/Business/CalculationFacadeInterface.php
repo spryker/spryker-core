@@ -316,5 +316,5 @@ interface CalculationFacadeInterface
      *
      * @return void
      */
-    public function calculateDiscountAmountAggregationForGenericAmount(CalculableObjectTransfer $calculableObjectTransfer)
+    public function calculateDiscountAmountAggregationForGenericAmount(CalculableObjectTransfer $calculableObjectTransfer);
 }
