@@ -69,7 +69,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     protected function getOptionValueById($idProductOptionValue)
     {
         $productOptionValueEntity = $this->productOptionQueryContainer
-            ->queryProductOptionByValueId($idProductOptionValue)
+            ->queryProductOptionByValueId((int)$idProductOptionValue)
             ->findOne();
 
         return $productOptionValueEntity;
