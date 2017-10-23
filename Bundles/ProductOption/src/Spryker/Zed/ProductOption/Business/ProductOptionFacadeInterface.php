@@ -163,4 +163,28 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductOptionGroupIds(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     *  - Finds product option value in persistence by id.
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
+
+    /**
+     * Specification:
+     *  - Check if production value exists with given primary key
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function existProductOptionValueByIsProductOptionValue($idProductOptionValue);
 }

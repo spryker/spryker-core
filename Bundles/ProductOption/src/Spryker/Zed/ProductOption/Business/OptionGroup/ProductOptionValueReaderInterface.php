@@ -15,4 +15,18 @@ interface ProductOptionValueReaderInterface
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     public function getProductOption($idProductOptionValue);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function existProductOptionValueByIsProductOptionValue($idProductOptionValue);
 }

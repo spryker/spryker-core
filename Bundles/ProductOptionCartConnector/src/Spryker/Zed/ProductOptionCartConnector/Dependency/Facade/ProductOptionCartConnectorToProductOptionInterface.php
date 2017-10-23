@@ -15,4 +15,11 @@ interface ProductOptionCartConnectorToProductOptionInterface
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
     public function getProductOptionValue($idProductOptionValueUsage);
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function existProductOptionValueByIsProductOptionValue($idProductOptionValue);
 }

@@ -7,6 +7,7 @@
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -44,6 +45,37 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         }
 
         return $this->hydrateProductOptionTransfer($productOptionValueEntity);
+    }
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue)
+    {
+        $productOptionValueEntity = $this->getOptionValueById($idProductOptionValue);
+
+        if (!$productOptionValueEntity) {
+            return null;
+        }
+
+        return $this->hydrateProductOptionTransfer($productOptionValueEntity);
+    }
+
+    /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function existProductOptionValueByIsProductOptionValue($idProductOptionValue)
+    {
+        $persistedIdProductOptionValue = $this->productOptionQueryContainer
+            ->queryProductOptionByValueId((int)$idProductOptionValue)
+            ->select([SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE])
+            ->findOne();
+
+        return $persistedIdProductOptionValue !== null;
     }
 
     /**

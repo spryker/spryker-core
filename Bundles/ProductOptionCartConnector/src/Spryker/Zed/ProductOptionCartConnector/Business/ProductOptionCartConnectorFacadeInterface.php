@@ -53,4 +53,17 @@ interface ProductOptionCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function changeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Checks if given product option exists.
+     *  - If not terminates cart operation and write error messages
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkProductOptionExists(CartChangeTransfer $cartChangeTransfer);
 }

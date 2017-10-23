@@ -211,4 +211,36 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     {
         return $this->getFactory()->createProductOptionGroupIdHydrator()->hydrateProductOptionGroupIds($orderTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer|null
+     */
+    public function findProductOptionByIdProductOptionValue($idProductOptionValue)
+    {
+        return $this->getFactory()
+            ->createProductOptionValueReader()
+            ->findProductOptionByIdProductOptionValue($idProductOptionValue);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function existProductOptionValueByIsProductOptionValue($idProductOptionValue)
+    {
+        return $this->getFactory()
+            ->createProductOptionValueReader()
+            ->existProductOptionValueByIsProductOptionValue($idProductOptionValue);
+    }
 }
