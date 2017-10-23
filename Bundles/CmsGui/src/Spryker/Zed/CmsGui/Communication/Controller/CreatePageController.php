@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CreatePageController extends AbstractController
 {
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
-    const SUCCESS_MESSAGE_PAGE_CREATED = 'Page successfully created';
+    const MESSAGE_PAGE_CREATE_SUCCESS = 'Page successfully created';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -67,7 +67,7 @@ class CreatePageController extends AbstractController
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
         }
 
-        $this->addSuccessMessage(static::SUCCESS_MESSAGE_PAGE_CREATED);
+        $this->addSuccessMessage(static::MESSAGE_PAGE_CREATE_SUCCESS);
         return $this->redirectResponse($redirectUrl);
     }
 

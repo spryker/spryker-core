@@ -21,8 +21,8 @@ class FilterPreferencesController extends AbstractController
     const PARAM_ID = 'id';
     const PARAM_TERM = 'term';
 
-    const MESSAGE_SUCCESS_CREATE = 'Filter preference created successfully';
-    const MESSAGE_SUCCESS_UPDATE = 'Filter preference updated successfully';
+    const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference created successfully';
+    const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference updated successfully';
 
     /**
      * @return array
@@ -74,7 +74,7 @@ class FilterPreferencesController extends AbstractController
 
             $productSearchAttributeTransfer = $this->getFacade()->createProductSearchAttribute($productSearchAttributeTransfer);
 
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_CREATE);
+            $this->addSuccessMessage(static::MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS);
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
                 static::PARAM_ID,
@@ -116,7 +116,7 @@ class FilterPreferencesController extends AbstractController
 
             $productSearchAttributeTransfer = $this->getFacade()->updateProductSearchAttribute($productSearchAttributeTransfer);
 
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_UPDATE);
+            $this->addSuccessMessage(static::MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS);
             return $this->redirectResponse(sprintf(
                 '/product-search/filter-preferences/view?%s=%d',
                 static::PARAM_ID,

@@ -25,10 +25,10 @@ class GroupController extends AbstractController
     const PARAMETER_ID_GROUP = 'id-group';
     const PARAMETER_ID_USER = 'id-user';
 
-    const MESSAGE_SUCCESS_CREATE = 'Group created successfully';
-    const MESSAGE_SUCCESS_UPDATE = 'Group updated successfully';
-    const MESSAGE_SUCCESS_DELETE_USER_FROM_GROUP = 'Deleted user from group';
-    const MESSAGE_ERROR_DELETE_USER_FROM_GROUP = 'User and group not found';
+    const MESSAGE_GROUP_CREATE_SUCCESS = 'Group created successfully';
+    const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group updated successfully';
+    const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'Deleted user from group';
+    const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group not found';
 
     /**
      * @return array
@@ -80,8 +80,8 @@ class GroupController extends AbstractController
                 $roles
             );
 
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_CREATE);
-            return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
+            $this->addSuccessMessage(static::MESSAGE_GROUP_CREATE_SUCCESS);
+            return $this->redirectResponse('/acl/group/edit?' . static::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
         }
 
         return $this->viewResponse([
@@ -96,7 +96,7 @@ class GroupController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idAclGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
+        $idAclGroup = $this->castId($request->query->get(static::PARAMETER_ID_GROUP));
 
         $dataProvider = $this->getFactory()->createGroupFormDataProvider();
 
@@ -115,8 +115,8 @@ class GroupController extends AbstractController
             $groupTransfer->setName($formData[GroupForm::FIELD_TITLE]);
             $groupTransfer = $this->getFacade()->updateGroup($groupTransfer, $roles);
 
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_UPDATE);
-            $url = sprintf('/acl/group/edit?%s=%d', self::PARAMETER_ID_GROUP, $groupTransfer->getIdAclGroup());
+            $this->addSuccessMessage(static::MESSAGE_GROUP_UPDATE_SUCCESS);
+            $url = sprintf('/acl/group/edit?%s=%d', static::PARAMETER_ID_GROUP, $groupTransfer->getIdAclGroup());
             return $this->redirectResponse($url);
         }
 
@@ -154,7 +154,7 @@ class GroupController extends AbstractController
      */
     public function usersAction(Request $request)
     {
-        $idGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
+        $idGroup = $this->castId($request->query->get(static::PARAMETER_ID_GROUP));
 
         $usersTable = $this->getFactory()->createGroupUsersTable($idGroup);
 
@@ -168,7 +168,7 @@ class GroupController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteUserFromGroupAction(Request $request)
     {
@@ -176,14 +176,14 @@ class GroupController extends AbstractController
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
         }
 
-        $idGroup = $this->castId($request->request->get(self::PARAMETER_ID_GROUP));
-        $idUser = $this->castId($request->request->get(self::PARAMETER_ID_USER));
+        $idGroup = $this->castId($request->request->get(static::PARAMETER_ID_GROUP));
+        $idUser = $this->castId($request->request->get(static::PARAMETER_ID_USER));
 
         try {
             $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_DELETE_USER_FROM_GROUP);
+            $this->addSuccessMessage(static::MESSAGE_USER_IN_GROUP_DELETE_SUCCESS);
         } catch (UserAndGroupNotFoundException $e) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_DELETE_USER_FROM_GROUP);
+            $this->addErrorMessage(static::MESSAGE_USER_IN_GROUP_DELETE_ERROR);
         }
 
         return $this->redirectResponse('/acl/group/edit?id-group=' . $idGroup);
@@ -196,7 +196,7 @@ class GroupController extends AbstractController
      */
     public function rolesAction(Request $request)
     {
-        $idGroup = $this->castId($request->get(self::PARAMETER_ID_GROUP));
+        $idGroup = $this->castId($request->get(static::PARAMETER_ID_GROUP));
 
         $roles = $this->getFactory()->getGroupRoleListByGroupId($idGroup);
 

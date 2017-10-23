@@ -26,19 +26,19 @@ class EditController extends AbstractController
     const PARAM_ID_USER = 'id-user';
     const USER_LISTING_URL = '/user';
 
-    const MESSAGE_SUCCESS_CREATE = 'User created successfully';
-    const MESSAGE_SUCCESS_UPDATE = 'User updated successfully';
-    const MESSAGE_SUCCESS_ACTIVATE = 'User activated successfully';
-    const MESSAGE_SUCCESS_DEACTIVATE = 'User deactivated successfully';
-    const MESSAGE_SUCCESS_DELETE = 'User deleted successfully';
-    const MESSAGE_SUCCESS_PASSWORD_UPDATE = 'User password updated successfully';
+    const MESSAGE_USER_CREATE_SUCCESS = 'User created successfully';
+    const MESSAGE_USER_UPDATE_SUCCESS = 'User updated successfully';
+    const MESSAGE_USER_ACTIVATE_SUCCESS = 'User activated successfully';
+    const MESSAGE_USER_DEACTIVATE_SUCCESS = 'User deactivated successfully';
+    const MESSAGE_USER_DELETE_SUCCESS = 'User deleted successfully';
+    const MESSAGE_PASSWORD_UPDATE_SUCCESS = 'User password updated successfully';
 
-    const MESSAGE_ERROR_CREATE = 'User entity was not created';
-    const MESSAGE_ERROR_UPDATE = 'User entity was not updated';
-    const MESSAGE_ERROR_ACTIVATE = 'User was not activated';
-    const MESSAGE_ERROR_DEACTIVATE = 'User was not deactivated';
-    const MESSAGE_ERROR_DELETE = 'User was not deleted';
-    const MESSAGE_ERROR_MISSING_ID = 'Missing user id!';
+    const MESSAGE_USER_CREATE_ERROR = 'User entity was not created';
+    const MESSAGE_USER_UPDATE_ERROR = 'User entity was not updated';
+    const MESSAGE_USER_ACTIVATE_ERROR = 'User was not activated';
+    const MESSAGE_USER_DEACTIVATE_ERROR = 'User was not deactivated';
+    const MESSAGE_USER_DELETE_ERROR = 'User was not deleted';
+    const MESSAGE_ID_USER_EXTRACT_ERROR = 'Missing user id!';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -73,11 +73,11 @@ class EditController extends AbstractController
             if ($userTransfer->getIdUser()) {
                 $this->addAclGroups($formData, $userTransfer);
 
-                $this->addSuccessMessage(static::MESSAGE_SUCCESS_CREATE);
+                $this->addSuccessMessage(static::MESSAGE_USER_CREATE_SUCCESS);
                 return $this->redirectResponse(static::USER_LISTING_URL);
             }
 
-            $this->addErrorMessage(static::MESSAGE_ERROR_CREATE);
+            $this->addErrorMessage(static::MESSAGE_USER_CREATE_ERROR);
         }
 
         return $this->viewResponse($viewData);
@@ -93,7 +93,7 @@ class EditController extends AbstractController
         $idUser = $this->castId($request->get(static::PARAM_ID_USER));
 
         if (empty($idUser)) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_MISSING_ID);
+            $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
@@ -116,7 +116,7 @@ class EditController extends AbstractController
             $this->deleteAclGroups($idUser);
             $this->addAclGroups($formData, $userTransfer);
 
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_UPDATE);
+            $this->addSuccessMessage(static::MESSAGE_USER_UPDATE_SUCCESS);
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
@@ -136,18 +136,18 @@ class EditController extends AbstractController
         $idUser = $this->castId($request->get(static::PARAM_ID_USER));
 
         if (empty($idUser)) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_MISSING_ID);
+            $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $updateStatus = $this->getFacade()->activateUser($idUser);
 
         if ($updateStatus) {
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_ACTIVATE);
+            $this->addSuccessMessage(static::MESSAGE_USER_ACTIVATE_SUCCESS);
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        $this->addErrorMessage(static::MESSAGE_ERROR_ACTIVATE);
+        $this->addErrorMessage(static::MESSAGE_USER_ACTIVATE_ERROR);
         return $this->redirectResponse(static::USER_LISTING_URL);
     }
 
@@ -161,18 +161,18 @@ class EditController extends AbstractController
         $idUser = $this->castId($request->get(static::PARAM_ID_USER));
 
         if (empty($idUser)) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_MISSING_ID);
+            $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $updateStatus = $this->getFacade()->deactivateUser($idUser);
 
         if ($updateStatus) {
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_DEACTIVATE);
+            $this->addSuccessMessage(static::MESSAGE_USER_DEACTIVATE_SUCCESS);
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        $this->addErrorMessage(static::MESSAGE_ERROR_DEACTIVATE);
+        $this->addErrorMessage(static::MESSAGE_USER_DEACTIVATE_ERROR);
         return $this->redirectResponse(static::USER_LISTING_URL);
     }
 
@@ -192,18 +192,18 @@ class EditController extends AbstractController
         $idUser = $this->castId($request->request->get(static::PARAM_ID_USER));
 
         if (empty($idUser)) {
-            $this->addErrorMessage(static::MESSAGE_ERROR_MISSING_ID);
+            $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $userTransfer = $this->getFacade()->removeUser($idUser);
 
         if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_DELETED) {
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_DELETE);
+            $this->addSuccessMessage(static::MESSAGE_USER_DELETE_SUCCESS);
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        $this->addErrorMessage(static::MESSAGE_ERROR_DELETE);
+        $this->addErrorMessage(static::MESSAGE_USER_DELETE_ERROR);
         return $this->redirectResponse(static::USER_LISTING_URL);
     }
 
@@ -228,7 +228,7 @@ class EditController extends AbstractController
 
             try {
                 $this->getFacade()->updateUser($currentUserTransfer);
-                $this->addSuccessMessage(static::MESSAGE_SUCCESS_PASSWORD_UPDATE);
+                $this->addSuccessMessage(static::MESSAGE_PASSWORD_UPDATE_SUCCESS);
             } catch (UserNotFoundException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }

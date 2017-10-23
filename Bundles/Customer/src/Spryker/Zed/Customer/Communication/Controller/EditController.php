@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    const MESSAGE_ERROR_UPDATE = 'Customer was not updated';
-    const MESSAGE_SUCCESS_UPDATE = 'Customer updated successfully';
+    const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated';
+    const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer updated successfully';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -45,7 +45,7 @@ class EditController extends AbstractController
 
             $customerResponseTransfer = $this->getFacade()->updateCustomer($customerTransfer);
             if (!$customerResponseTransfer->getIsSuccess()) {
-                $this->addErrorMessage(static::MESSAGE_ERROR_UPDATE);
+                $this->addErrorMessage(static::MESSAGE_CUSTOMER_UPDATE_ERROR);
 
                 return $this->viewResponse([
                     'form' => $form->createView(),
@@ -55,7 +55,7 @@ class EditController extends AbstractController
 
             $this->updateCustomerAddresses($customerTransfer);
 
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_UPDATE);
+            $this->addSuccessMessage(static::MESSAGE_CUSTOMER_UPDATE_SUCCESS);
             return $this->redirectResponse(
                 sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
