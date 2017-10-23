@@ -76,7 +76,7 @@ class Reservation implements ReservationInterface
      *
      * @return int
      */
-    public function getOmsReservedProductQuantitiesForSku($sku)
+    public function getOmsReservedProductQuantityForSku($sku)
     {
         $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOne();
         if ($reservationEntity === null) {

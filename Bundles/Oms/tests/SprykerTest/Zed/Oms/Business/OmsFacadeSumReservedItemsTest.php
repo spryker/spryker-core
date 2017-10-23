@@ -48,14 +48,14 @@ class OmsFacadeSumReservedItemsTest extends Unit
     /**
      * @return void
      */
-    public function testGetOmsReservedProductQuantitiesForSkuSumAllItemsInReservedState()
+    public function testGetOmsReservedProductQuantityForSkuSumAllItemsInReservedState()
     {
         $this->createTestOrder();
 
         $omsFacade = $this->createOmsFacade();
-        $reservationQuantities = $omsFacade->getOmsReservedProductQuantitiesForSku(self::ORDER_ITEM_SKU);
+        $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU);
 
-        $this->assertEquals(50, $reservationQuantities);
+        $this->assertSame(50, $reservationQuantity);
     }
 
     /**

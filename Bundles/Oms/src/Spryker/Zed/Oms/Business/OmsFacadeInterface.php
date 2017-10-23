@@ -279,7 +279,7 @@ interface OmsFacadeInterface
      *
      * @return int
      */
-    public function getOmsReservedProductQuantitiesForSku($sku);
+    public function getOmsReservedProductQuantityForSku($sku);
 
     /**
      * Specification:

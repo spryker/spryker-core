@@ -11,7 +11,7 @@ interface AvailabilityToOmsInterface
 {
     /**
      * @deprecated Using this method will affect the performance,
-     * use AvailabilityToOmsInterface::getOmsReservedProductQuantitiesForSku() instead.
+     * use AvailabilityToOmsInterface::getOmsReservedProductQuantityForSku() instead.
      *
      * @param string $sku
      *
@@ -24,5 +24,5 @@ interface AvailabilityToOmsInterface
      *
      * @return int
      */
-    public function getOmsReservedProductQuantitiesForSku($sku);
+    public function getOmsReservedProductQuantityForSku($sku);
 }

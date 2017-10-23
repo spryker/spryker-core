@@ -312,11 +312,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return int
      */
-    public function getOmsReservedProductQuantitiesForSku($sku)
+    public function getOmsReservedProductQuantityForSku($sku)
     {
         return $this->getFactory()
             ->createUtilReservation()
-            ->getOmsReservedProductQuantitiesForSku($sku);
+            ->getOmsReservedProductQuantityForSku($sku);
     }
 
     /**
