@@ -17,8 +17,6 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
-use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -52,9 +50,6 @@ class ZedBootstrap
         $application['debug'] = true;
         $application['locale'] = $this->getCurrentLocale();
 
-//        $this->addFragmentControllerResolver();
-//        $this->enableHttpMethodParameterOverride();
-
         $this->registerServiceProvider();
         $application['session.test'] = true;
 
@@ -73,17 +68,6 @@ class ZedBootstrap
         $this->application = $application;
 
         return $this->application;
-    }
-
-    /**
-     * @return void
-     */
-    protected function addFragmentControllerResolver()
-    {
-        $application = $this->application;
-        $application['resolver'] = $application->share(function () use ($application) {
-            return new ZedFragmentControllerResolver($application);
-        });
     }
 
     /**
@@ -123,17 +107,6 @@ class ZedBootstrap
             new SessionServiceProvider(),
             new TwigServiceProvider(),
         ];
-    }
-
-    /**
-     * Allow overriding http method. Needed to use the "_method" parameter in forms.
-     * This should not be changeable by projects
-     *
-     * @return void
-     */
-    private function enableHttpMethodParameterOverride()
-    {
-        Request::enableHttpMethodParameterOverride();
     }
 
     /**
