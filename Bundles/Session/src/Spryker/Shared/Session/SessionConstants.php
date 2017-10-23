@@ -9,7 +9,6 @@ namespace Spryker\Shared\Session;
 
 interface SessionConstants
 {
-
     const SESSION_HANDLER_COUCHBASE = 'couchbase';
     const SESSION_HANDLER_REDIS = 'redis';
     const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
@@ -61,5 +60,4 @@ interface SessionConstants
     const ZED_SESSION_REDIS_PORT = 'ZED_SESSION_REDIS_PORT';
     const ZED_SESSION_REDIS_PASSWORD = 'ZED_SESSION_REDIS_PASSWORD';
     const ZED_SESSION_REDIS_DATABASE = 'ZED_SESSION_REDIS_DATABASE';
-
 }

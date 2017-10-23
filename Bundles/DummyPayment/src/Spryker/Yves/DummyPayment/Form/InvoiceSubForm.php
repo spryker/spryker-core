@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InvoiceSubForm extends AbstractSubForm
 {
-
     const PAYMENT_METHOD = 'invoice';
 
     /**
@@ -76,5 +75,4 @@ class InvoiceSubForm extends AbstractSubForm
     {
         $this->addDateOfBirth($builder);
     }
-
 }

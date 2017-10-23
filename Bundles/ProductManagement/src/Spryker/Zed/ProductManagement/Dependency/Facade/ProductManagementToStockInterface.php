@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 interface ProductManagementToStockInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
@@ -35,5 +34,4 @@ interface ProductManagementToStockInterface
      * @return bool
      */
     public function hasStockProduct($sku, $stockType);
-
 }

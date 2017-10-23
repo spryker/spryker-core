@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
  */
 interface StateMachineFacadeInterface
 {
-
     /**
      * @api
      *
@@ -164,5 +163,4 @@ interface StateMachineFacadeInterface
      * @return void
      */
     public function clearLocks();
-
 }

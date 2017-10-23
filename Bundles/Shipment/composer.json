@@ -7,7 +7,7 @@
     "spryker/kernel": "^3.4.0",
     "spryker/money": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^6.0.0 || ^7.0.0",
+    "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/session": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/tax": "^5.0.0",
@@ -15,6 +15,8 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/calculation": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/propel": "*",
@@ -26,20 +28,16 @@
     "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
     "psr-4": {
       "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
       "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

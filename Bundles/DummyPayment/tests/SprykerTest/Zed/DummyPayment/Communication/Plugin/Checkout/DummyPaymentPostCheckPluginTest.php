@@ -27,7 +27,6 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheck
  */
 class DummyPaymentPostCheckPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class DummyPaymentPostCheckPluginTest extends Unit
 
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
     }
-
 }

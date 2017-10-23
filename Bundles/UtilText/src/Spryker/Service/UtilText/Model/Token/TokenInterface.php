@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilText\Model\Token;
 
 interface TokenInterface
 {
-
     /**
      * @param string $rawToken
      * @param array $options
@@ -25,5 +24,4 @@ interface TokenInterface
      * @return bool
      */
     public function check($rawToken, $token);
-
 }

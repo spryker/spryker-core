@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductSetClient extends AbstractClient implements ProductSetClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -68,5 +67,4 @@ class ProductSetClient extends AbstractClient implements ProductSetClientInterfa
             ->createProductSetStorage()
             ->findProductSetByIdProductSet($idProductSet);
     }
-
 }

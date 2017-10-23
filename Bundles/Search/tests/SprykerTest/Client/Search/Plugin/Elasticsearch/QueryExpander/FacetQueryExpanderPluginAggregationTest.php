@@ -20,7 +20,6 @@ namespace SprykerTest\Client\Search\Plugin\Elasticsearch\QueryExpander;
  */
 class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpanderPluginAggregationTest
 {
-
     /**
      * @return array
      */
@@ -142,5 +141,4 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
 
         return [$searchConfig, $expectedAggregations];
     }
-
 }

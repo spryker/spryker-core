@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Business:
-        path: .
+        path: Business
         class_name: ApplicationBusinessTester
         modules:
             enabled:
@@ -21,7 +21,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
 
     Communication:
-        path: .
+        path: Communication
         class_name: ApplicationCommunicationTester
         modules:
             enabled:

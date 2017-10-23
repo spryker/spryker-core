@@ -14,7 +14,6 @@ use Throwable;
 
 trait StreamOperationHandlerTrait
 {
-
     /**
      * @param \Closure $callback
      *
@@ -38,5 +37,4 @@ trait StreamOperationHandlerTrait
             throw new FileSystemStreamException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
-
 }

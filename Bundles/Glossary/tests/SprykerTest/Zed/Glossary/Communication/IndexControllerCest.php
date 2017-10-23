@@ -21,7 +21,6 @@ use SprykerTest\Zed\Glossary\GlossaryCommunicationTester;
  */
 class IndexControllerCest
 {
-
     /**
      * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class IndexControllerCest
         $i->seeResponseCodeIs(200);
         $i->see('Translations', 'h5');
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithAttributesPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -66,5 +65,4 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
     {
         return $this->getFacade()->getAttributeTypes();
     }
-
 }

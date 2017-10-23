@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsBlockCollector\Business\Collector\Storage\CmsBlockCollector
      */
@@ -73,5 +72,4 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockCollectorQuery();
     }
-
 }

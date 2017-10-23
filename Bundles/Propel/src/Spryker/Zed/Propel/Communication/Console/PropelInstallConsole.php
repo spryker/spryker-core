@@ -15,7 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PropelInstallConsole extends Console
 {
-
     const OPTION_NO_DIFF = 'no-diff';
     const OPTION_NO_DIFF_SHORTCUT = 'o';
     const OPTION_NO_DIFF_DESCRIPTION = 'Runs without propel:diff';
@@ -95,5 +94,4 @@ class PropelInstallConsole extends Console
 
         return $dependingCommands;
     }
-
 }

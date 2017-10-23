@@ -7,12 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication;
 
-use Spryker\Shared\ProductManagement\Code\KeyBuilder\AttributeGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductManagement\Communication\Form\Attribute\AttributeTranslationCollectionForm;
-use Spryker\Zed\ProductManagement\Communication\Form\AttributeForm;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
@@ -21,7 +16,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
-use Spryker\Zed\ProductManagement\Communication\Table\AttributeTable;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
@@ -29,8 +23,6 @@ use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormAddTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
-use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMapper;
-use Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapper;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
@@ -41,7 +33,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  */
 class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param array $formData
      * @param array $formOptions
@@ -272,14 +263,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToGlossaryInterface
-     */
-    public function getGlossaryFacade()
-    {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_GLOSSARY);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface
      */
     public function getUtilEncoding()
@@ -293,7 +276,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductAttributeCollection()
     {
         return $this->reindexAttributeCollection(
-            $this->getFacade()->getProductAttributeCollection()
+            $this->getProductAttributeFacade()->getProductAttributeCollection()
         );
     }
 
@@ -328,98 +311,12 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable
-     */
-    public function createAttributeTable()
-    {
-        return new AttributeTable($this->getQueryContainer());
-    }
-
-    /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createAttributeForm(array $data = [], array $options = [])
-    {
-        $attributeFormType = $this->createAttributeFormType();
-
-        return $this->getFormFactory()->create($attributeFormType, $data, $options);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    protected function createAttributeFormType()
-    {
-        return new AttributeForm($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeFormDataProvider
-     */
-    public function createAttributeFormDataProvider()
-    {
-        return new AttributeFormDataProvider($this->getQueryContainer(), $this->getConfig());
-    }
-
-    /**
-     * @param array $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createAttributeTranslationFormCollection(array $data = [], array $options = [])
-    {
-        $attributeTranslationFormCollectionType = $this->createAttributeTranslationFormCollectionType();
-
-        return $this->getFormFactory()->create($attributeTranslationFormCollectionType, $data, $options);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\AbstractType
-     */
-    public function createAttributeTranslationFormCollectionType()
-    {
-        return new AttributeTranslationCollectionForm();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AttributeTranslationFormCollectionDataProvider
-     */
-    public function createAttributeTranslationFormCollectionDataProvider()
-    {
-        return new AttributeTranslationFormCollectionDataProvider(
-            $this->getQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->getGlossaryFacade(),
-            $this->createAttributeGlossaryKeyBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\AttributeFormTransferMapperInterface
-     */
-    public function createAttributeFormTransferGenerator()
-    {
-        return new AttributeFormTransferMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Transfer\AttributeTranslationFormTransferMapperInterface
-     */
-    public function createAttributeTranslationFormTransferGenerator()
-    {
-        return new AttributeTranslationFormTransferMapper();
-    }
-
-    /**
      * @return \Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper
      */
     public function createProductFormTransferGenerator()
     {
         return new ProductFormTransferMapper(
+            $this->getProductQueryContainer(),
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->getUtilTextService(),
@@ -503,11 +400,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\ProductManagement\Code\KeyBuilder\GlossaryKeyBuilderInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface
      */
-    protected function createAttributeGlossaryKeyBuilder()
+    public function getProductAttributeFacade()
     {
-        return new AttributeGlossaryKeyBuilder();
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
     }
 
     /**
@@ -565,5 +462,4 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::STORE);
     }
-
 }

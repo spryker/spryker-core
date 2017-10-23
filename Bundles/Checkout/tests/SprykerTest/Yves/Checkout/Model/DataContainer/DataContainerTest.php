@@ -24,7 +24,6 @@ use Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface;
  */
 class DataContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -70,5 +69,4 @@ class DataContainerTest extends Unit
     {
         return $this->getMockBuilder(CheckoutToQuoteInterface::class)->getMock();
     }
-
 }

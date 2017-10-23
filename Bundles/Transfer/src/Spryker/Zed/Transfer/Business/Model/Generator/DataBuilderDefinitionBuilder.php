@@ -7,13 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Spryker\Zed\Transfer\Business\Model\Generator\AbstractDefinitionBuilder;
-use Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface;
-use Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface;
-
 class DataBuilderDefinitionBuilder extends AbstractDefinitionBuilder
 {
-
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
      */
@@ -42,7 +37,7 @@ class DataBuilderDefinitionBuilder extends AbstractDefinitionBuilder
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface[]
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface[]
      */
     public function getDefinitions()
     {
@@ -51,5 +46,4 @@ class DataBuilderDefinitionBuilder extends AbstractDefinitionBuilder
 
         return $this->buildDefinitions($definitions, $this->dataBuilderDefinition);
     }
-
 }

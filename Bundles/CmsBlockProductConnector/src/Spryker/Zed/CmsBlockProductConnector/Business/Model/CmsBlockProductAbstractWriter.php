@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -104,5 +103,4 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
             );
         }
     }
-
 }

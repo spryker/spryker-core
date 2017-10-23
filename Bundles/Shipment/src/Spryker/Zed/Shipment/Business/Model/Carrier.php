@@ -12,7 +12,6 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
 
 class Carrier implements CarrierInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
@@ -28,5 +27,4 @@ class Carrier implements CarrierInterface
 
         return $carrierEntity->getPrimaryKey();
     }
-
 }

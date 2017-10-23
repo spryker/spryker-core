@@ -16,7 +16,6 @@ use Symfony\Component\Process\Process;
 
 class BuildModelConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:model:build';
 
     /**
@@ -55,5 +54,4 @@ class BuildModelConsole extends Console
             echo $buffer;
         });
     }
-
 }

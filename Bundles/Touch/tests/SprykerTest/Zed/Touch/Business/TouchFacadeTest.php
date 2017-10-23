@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Touch\Business;
 
 use Codeception\Test\Unit;
+use DateInterval;
 use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
@@ -26,7 +27,6 @@ use Spryker\Zed\Touch\Business\TouchFacade;
  */
 class TouchFacadeTest extends Unit
 {
-
     const ITEM_TYPE = 'test.item';
     const ITEM_ID_1 = 1;
     const ITEM_ID_2 = 2;
@@ -139,11 +139,14 @@ class TouchFacadeTest extends Unit
      */
     protected function createTouchEntity($itemEvent, $itemId)
     {
+        $date = new DateTime();
+        $date->sub(new DateInterval('PT1M'));
+
         $touchEntity = new SpyTouch();
         $touchEntity->setItemEvent($itemEvent)
             ->setItemId($itemId)
             ->setItemType(self::ITEM_TYPE)
-            ->setTouched(new DateTime());
+            ->setTouched($date);
 
         $touchEntity->save();
 
@@ -164,5 +167,4 @@ class TouchFacadeTest extends Unit
 
         return $touchQuery->findOne();
     }
-
 }

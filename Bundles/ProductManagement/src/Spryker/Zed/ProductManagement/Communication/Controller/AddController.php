@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
@@ -50,7 +49,7 @@ class AddController extends AbstractController
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
-                    ->buildProductAbstractTransfer($form);
+                    ->buildProductAbstractTransfer($form, null);
 
                 $concreteProductCollection = $this->createProductConcreteCollection(
                     $type,
@@ -68,7 +67,6 @@ class AddController extends AbstractController
                 ));
 
                 return $this->createRedirectResponseAfterAdd($idProductAbstract);
-
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -181,5 +179,4 @@ class AddController extends AbstractController
 
         return $concreteProductCollection;
     }
-
 }

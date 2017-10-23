@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-
     const FORM_ADD_TYPE = 'add';
-    const MESSAGE_SUCCESS_CREATE = 'Glossary entry created successfully';
+
+    const MESSAGE_CREATE_SUCCESS = 'Translation %d was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -42,8 +42,10 @@ class AddController extends AbstractController
 
             $glossaryFacade = $this->getFacade();
             $glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
+            $idGlossaryKey = $this->getFacade()->getKeyIdentifier($keyTranslationTransfer->getGlossaryKey());
 
-            $this->addSuccessMessage(static::MESSAGE_SUCCESS_CREATE);
+            $this->addSuccessMessage(sprintf(static::MESSAGE_CREATE_SUCCESS, $idGlossaryKey));
+
             return $this->redirectResponse('/glossary');
         }
 
@@ -51,5 +53,4 @@ class AddController extends AbstractController
             'form' => $glossaryForm->createView(),
         ]);
     }
-
 }

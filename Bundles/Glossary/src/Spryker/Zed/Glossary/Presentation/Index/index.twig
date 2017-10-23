@@ -1,12 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Translations' %}
+{% set widget_title = 'List of translations' %}
 
 {% block head_title widget_title %}
-{% block section_title widget_title %}
+{% block section_title 'Overview of Translations' %}
 
 {% block action %}
-    {{ createActionButton('/glossary/add', 'Add Translation' | trans) }}
+    {{ createActionButton('/glossary/add', 'Create Translation' | trans) }}
 {% endblock %}
 
 {% block content %}

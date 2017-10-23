@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Checkout\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
@@ -40,7 +41,9 @@ use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Communication\Plugin\Checkout\OmsPostSaveHookPlugin;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin;
@@ -62,7 +65,6 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
  */
 class CheckoutFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Checkout\Business\CheckoutFacade
      */
@@ -98,6 +100,7 @@ class CheckoutFacadeTest extends Unit
             ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withCustomer()
             ->withTotals()
+            ->withCurrency()
             ->withShippingAddress()
             ->withBillingAddress()
             ->build();
@@ -120,6 +123,7 @@ class CheckoutFacadeTest extends Unit
             ->withItem([ItemTransfer::SKU => $product->getSku()])
             ->withCustomer()
             ->withTotals()
+            ->withCurrency()
             ->withShippingAddress()
             ->withBillingAddress()
             ->build();
@@ -146,6 +150,7 @@ class CheckoutFacadeTest extends Unit
             ->withAnotherItem([ItemTransfer::SKU => $product2->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withCustomer()
             ->withTotals()
+            ->withCurrency()
             ->withShippingAddress()
             ->withBillingAddress()
             ->build();
@@ -277,6 +282,10 @@ class CheckoutFacadeTest extends Unit
     protected function getBaseQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer->setCurrency($currencyTransfer);
 
         $country = new SpyCountry();
         $country
@@ -420,7 +429,7 @@ class CheckoutFacadeTest extends Unit
 
         $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
             return [
-                new OmsPostSaveHookPlugin()
+                new OmsPostSaveHookPlugin(),
             ];
         };
 
@@ -475,27 +484,7 @@ class CheckoutFacadeTest extends Unit
     protected function createOrderSaverPlugin()
     {
         $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
-
-        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
-        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('Nopayment01');
-
-        $salesBusinessFactoryMock = $this->getMockBuilder(SalesBusinessFactory::class)->setMethods(['getConfig'])->getMock();
-        $salesBusinessFactoryMock->method('getConfig')->willReturn($salesConfigMock);
-
-        $container = new Container();
-        $container[SalesDependencyProvider::FACADE_COUNTRY] = function (Container $container) {
-              return new SalesToCountryBridge($container->getLocator()->country()->facade());
-        };
-        $container[SalesDependencyProvider::FACADE_OMS] = function (Container $container) {
-            return new SalesToOmsBridge($container->getLocator()->oms()->facade());
-        };
-        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
-            return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
-        };
-        $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
-        $container[SalesDependencyProvider::STORE] = Store::getInstance();
-
-        $salesBusinessFactoryMock->setContainer($container);
+        $salesBusinessFactoryMock = $this->createSalesBusinessFactoryMock();
 
         $salesFacade = new SalesFacade();
         $salesFacade->setFactory($salesBusinessFactoryMock);
@@ -505,4 +494,42 @@ class CheckoutFacadeTest extends Unit
         return $salesOrderSaverPlugin;
     }
 
+    /**
+     * @return \Spryker\Zed\Sales\Business\SalesBusinessFactory|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createSalesBusinessFactoryMock()
+    {
+        $salesConfigMock = $this->getMockBuilder(SalesConfig::class)->setMethods(['determineProcessForOrderItem'])->getMock();
+        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('Nopayment01');
+
+        $salesBusinessFactoryMock = $this->getMockBuilder(SalesBusinessFactory::class)->setMethods(['getConfig'])->getMock();
+        $salesBusinessFactoryMock->method('getConfig')->willReturn($salesConfigMock);
+
+        $container = new Container();
+        $container[SalesDependencyProvider::FACADE_COUNTRY] = function (Container $container) {
+            return new SalesToCountryBridge($container->getLocator()->country()->facade());
+        };
+        $container[SalesDependencyProvider::FACADE_OMS] = function (Container $container) {
+            $omsFacade = $container->getLocator()->oms()->facade();
+
+            $omsConfigMock = $this->getMockBuilder(OmsConfig::class)->setMethods(['getActiveProcesses'])->getMock();
+            $omsConfigMock->method('getActiveProcesses')->willReturn(['Nopayment01']);
+
+            $omsBusinessFactoryMock = $this->getMockBuilder(OmsBusinessFactory::class)->setMethods(['getConfig'])->getMock();
+            $omsBusinessFactoryMock->method('getConfig')->willReturn($omsConfigMock);
+
+            $omsFacade->setFactory($omsBusinessFactoryMock);
+
+            return new SalesToOmsBridge($omsFacade);
+        };
+        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
+            return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
+        };
+        $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
+        $container[SalesDependencyProvider::STORE] = Store::getInstance();
+
+        $salesBusinessFactoryMock->setContainer($container);
+
+        return $salesBusinessFactoryMock;
+    }
 }

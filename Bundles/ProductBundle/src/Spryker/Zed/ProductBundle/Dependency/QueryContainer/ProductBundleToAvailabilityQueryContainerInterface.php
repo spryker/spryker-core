@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\QueryContainer;
 
 interface ProductBundleToAvailabilityQueryContainerInterface
 {
-
     /**
      * @param string $sku
      *
@@ -30,5 +29,4 @@ interface ProductBundleToAvailabilityQueryContainerInterface
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
     public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract);
-
 }

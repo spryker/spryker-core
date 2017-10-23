@@ -12,7 +12,6 @@ use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolE
 
 class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
 {
-
     /**
      * @var array
      */
@@ -54,5 +53,4 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
 
         throw new SessionHandlerNotFoundInSessionHandlerPoolException($message);
     }
-
 }

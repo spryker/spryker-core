@@ -13,7 +13,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
      */
@@ -64,7 +63,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         $bundleProducts = $this->getBundlesUsingProductBySku($bundledProductSku);
 
         foreach ($bundleProducts as $productBundleEntity) {
-
             $bundleItems = $this->getBundleItemsByIdProduct($productBundleEntity->getFkProduct());
 
             $bundleProductSku = $productBundleEntity->getSpyProductRelatedByFkProduct()
@@ -82,13 +80,22 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     public function updateBundleAvailability($bundleProductSku)
     {
         $bundleProductEntity = $this->findBundleProductEntityBySku($bundleProductSku);
-
         if ($bundleProductEntity === null) {
             return;
         }
 
         $bundleItems = $this->getBundleItemsByIdProduct($bundleProductEntity->getFkProduct());
         $this->updateBundleProductAvailability($bundleItems, $bundleProductSku);
+    }
+
+    /**
+     * @param string $bundleProductSku
+     *
+     * @return void
+     */
+    public function removeBundleAvailability($bundleProductSku)
+    {
+        $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0);
     }
 
     /**
@@ -133,7 +140,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     {
         $bundleAvailabilityQuantity = 0;
         foreach ($bundleItems as $bundleItemEntity) {
-
             $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
                 ->getSku();
 
@@ -176,5 +182,4 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             ->querySpyAvailabilityBySku($bundledItemSku)
             ->findOne();
     }
-
 }

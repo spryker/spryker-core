@@ -10,38 +10,45 @@ use DateTime;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
-class DiscountFormDataProvider
+class DiscountFormDataProvider extends BaseDiscountFormDataProvider
 {
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface
+     */
+    protected $currencyFacade;
 
     /**
-     * @param int $idDiscount
-     *
-     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer|null
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface $currencyFacade
      */
-    public function getData($idDiscount)
+    public function __construct(DiscountToCurrencyInterface $currencyFacade)
     {
-        $discountConfiguratorTransfer = null;
-        if (!$idDiscount) {
-            $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
-
-            $discountGeneralTransfer = $this->createDiscountGeneralTransferDefaults();
-            $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
-
-            $calculatedDiscountTransfer = $this->createDiscountCalculatorTransfer();
-            $discountConfiguratorTransfer->setDiscountCalculator($calculatedDiscountTransfer);
-        }
-
-        return $discountConfiguratorTransfer;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
-     * @return array
+     * @param int|null $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
      */
-    public function getOptions()
+    public function getData($idDiscount = null)
     {
-        return [];
+        if ($idDiscount) {
+            return null;
+        }
+
+        $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
+
+        $discountGeneralTransfer = $this->createDiscountGeneralTransferDefaults();
+        $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
+
+        $calculatedDiscountTransfer = $this->createDiscountCalculatorTransfer();
+        $discountConfiguratorTransfer->setDiscountCalculator($calculatedDiscountTransfer);
+
+        return $discountConfiguratorTransfer;
     }
 
     /**
@@ -61,10 +68,10 @@ class DiscountFormDataProvider
      */
     protected function createDiscountCalculatorTransfer()
     {
-        $calculatedDiscountTransfer = new DiscountCalculatorTransfer();
-        $calculatedDiscountTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
+        $discountCalculatorTransfer = new DiscountCalculatorTransfer();
+        $discountCalculatorTransfer->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
+        $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
 
-        return $calculatedDiscountTransfer;
+        return $discountCalculatorTransfer;
     }
-
 }

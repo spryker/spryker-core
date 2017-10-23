@@ -16,7 +16,6 @@ use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 
 class Installer implements InstallerInterface
 {
-
     /**
      * @var \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
@@ -174,5 +173,4 @@ class Installer implements InstallerInterface
             }
         }
     }
-
 }

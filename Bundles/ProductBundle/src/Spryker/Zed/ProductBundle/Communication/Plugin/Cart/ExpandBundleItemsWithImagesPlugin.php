@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ExpandBundleItemsWithImagesPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class ExpandBundleItemsWithImagesPlugin extends AbstractPlugin implements ItemEx
     {
         return $this->getFacade()->expandBundleItemsWithImages($cartChangeTransfer);
     }
-
 }

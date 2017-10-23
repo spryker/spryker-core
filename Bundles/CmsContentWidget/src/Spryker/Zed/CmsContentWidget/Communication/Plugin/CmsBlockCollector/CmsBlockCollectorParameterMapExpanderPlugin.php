@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsBlockCollectorParameterMapExpanderPlugin extends AbstractPlugin implements CmsBlockCollectorDataExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -32,5 +31,4 @@ class CmsBlockCollectorParameterMapExpanderPlugin extends AbstractPlugin impleme
             ->getFacade()
             ->expandCmsBlockCollectorData($collectedData, $localeTransfer);
     }
-
 }

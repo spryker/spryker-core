@@ -12,7 +12,6 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Response\CalculationResponse;
 
 class InstallmentCalculationTransaction extends BaseTransaction implements QuoteTransactionInterface
 {
-
     const TRANSACTION_TYPE = ApiConstants::REQUEST_MODEL_CALCULATION_REQUEST;
 
     /**
@@ -51,5 +50,4 @@ class InstallmentCalculationTransaction extends BaseTransaction implements Quote
     {
         return new CalculationResponse($this->executionAdapter->sendRequest($xmlRequest));
     }
-
 }

@@ -14,7 +14,6 @@ use Symfony\Component\Finder\Finder;
 
 class CacheDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SYMFONY_FILE_SYSTEM = 'symfony_file_system';
     const SYMFONY_FINDER = 'symfony_finder';
 
@@ -58,5 +57,4 @@ class CacheDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

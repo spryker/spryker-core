@@ -9,7 +9,6 @@ namespace Spryker\Shared\Graph;
 
 class Graph implements GraphInterface
 {
-
     /**
      * @var \Spryker\Shared\Graph\GraphAdapterInterface
      */
@@ -79,5 +78,4 @@ class Graph implements GraphInterface
     {
         return $this->adapter->render($type, $fileName);
     }
-
 }

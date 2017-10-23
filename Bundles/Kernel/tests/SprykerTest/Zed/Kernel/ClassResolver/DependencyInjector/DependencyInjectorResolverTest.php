@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\Kernel\ClassResolver\DependencyInjector;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
 use Spryker\Shared\Kernel\ContainerInterface;
+use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
@@ -26,7 +28,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class DependencyInjectorResolverTest extends Unit
 {
-
     /**
      * The bundle which calls the `getProvidedDependency()`
      *
@@ -72,6 +73,11 @@ class DependencyInjectorResolverTest extends Unit
     public function tearDown()
     {
         parent::tearDown();
+
+        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
+        $reflectionProperty = $reflectionResolver->getProperty('cache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
 
         $this->deleteCreatedFiles();
     }
@@ -223,7 +229,7 @@ class DependencyInjectorResolverTest extends Unit
             $this->getBasePath(),
             implode(DIRECTORY_SEPARATOR, $classNameParts),
         ];
-        $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
+        $directory = implode(DIRECTORY_SEPARATOR, $directoryParts);
 
         if (!is_dir($directory)) {
             mkdir($directory, 0775, true);
@@ -248,5 +254,4 @@ class DependencyInjectorResolverTest extends Unit
 
         return $basePath;
     }
-
 }

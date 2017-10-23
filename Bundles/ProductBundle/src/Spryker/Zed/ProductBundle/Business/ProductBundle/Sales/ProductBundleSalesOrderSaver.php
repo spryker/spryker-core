@@ -18,7 +18,6 @@ use Throwable;
 
 class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
      */
@@ -77,7 +76,6 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
     {
         $bundleItemsSaved = [];
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-
             $salesOrderItemBundleEntity = $this->mapSalesOrderItemBundleEntity($itemTransfer);
             $salesOrderItemBundleEntity->save();
 
@@ -163,5 +161,4 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
     {
         return new SpySalesOrderItemBundle();
     }
-
 }

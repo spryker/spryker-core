@@ -15,7 +15,6 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutor implements PaymentPluginExecutorInterface
 {
-
     /**
      * @var \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface
      */
@@ -161,5 +160,4 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     {
         $this->salesPaymentSaver->saveOrderPayments($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

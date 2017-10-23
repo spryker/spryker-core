@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints\Range;
 
 class TaxRateForm extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_RATE = 'rate';
     const FIELD_COUNTRY = 'fkCountry';
@@ -72,7 +71,7 @@ class TaxRateForm extends AbstractType
                 'label' => 'Name',
                 'required' => true,
                 'constraints' => [
-                    new NotBlank()
+                    new NotBlank(),
                 ],
             ]
         );
@@ -141,5 +140,4 @@ class TaxRateForm extends AbstractType
     {
         return 'tax_rate';
     }
-
 }

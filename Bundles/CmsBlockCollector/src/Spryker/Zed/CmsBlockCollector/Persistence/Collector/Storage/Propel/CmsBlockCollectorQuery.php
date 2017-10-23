@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const COL_IS_ACTIVE = 'is_active';
     const COL_VALID_FROM = 'valid_from';
     const COL_VALID_TO = 'valid_to';
@@ -74,6 +73,6 @@ class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_NAME, static::COL_NAME);
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK, static::COL_ID_CMS_BLOCK);
         $this->touchQuery->addGroupByColumn(SpyCmsBlockTemplateTableMap::COL_TEMPLATE_PATH);
+        $this->touchQuery->addGroupByColumn(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK);
     }
-
 }

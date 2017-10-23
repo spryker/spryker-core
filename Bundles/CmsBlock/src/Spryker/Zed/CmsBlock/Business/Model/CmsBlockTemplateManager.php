@@ -16,7 +16,6 @@ use Symfony\Component\Finder\Finder;
 
 class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
 {
-
     const TEMPLATE_FILE_SUFFIX = '.twig';
 
     /**
@@ -109,6 +108,18 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
                 sprintf('Template file not found in "%s"', $path)
             );
         }
+    }
+
+    /**
+     * @param int $idCmsBlockTemplate
+     *
+     * @return bool
+     */
+    public function hasTemplateFileById($idCmsBlockTemplate)
+    {
+        $templateEntity = $this->getTemplateById($idCmsBlockTemplate);
+
+        return $this->isTemplateFileExists($templateEntity->getTemplatePath());
     }
 
     /**
@@ -230,5 +241,4 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
             $this->createTemplate($filename, $path);
         }
     }
-
 }

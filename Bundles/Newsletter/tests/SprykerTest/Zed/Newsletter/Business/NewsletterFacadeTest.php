@@ -33,7 +33,6 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
  */
 class NewsletterFacadeTest extends Unit
 {
-
     const TEST_TYPE1 = 'TEST_TYPE1';
     const TEST_TYPE2 = 'TEST_TYPE2';
 
@@ -325,5 +324,4 @@ class NewsletterFacadeTest extends Unit
 
         $request->addSubscriptionType($type2);
     }
-
 }

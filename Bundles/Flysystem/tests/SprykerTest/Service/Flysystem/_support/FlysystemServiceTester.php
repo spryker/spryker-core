@@ -21,11 +21,9 @@ use Codeception\Actor;
  */
 class FlysystemServiceTester extends Actor
 {
-
     use _generated\FlysystemServiceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

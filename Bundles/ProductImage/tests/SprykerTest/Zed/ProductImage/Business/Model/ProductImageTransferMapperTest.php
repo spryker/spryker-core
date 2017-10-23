@@ -27,7 +27,6 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
  */
 class ProductImageTransferMapperTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -81,5 +80,4 @@ class ProductImageTransferMapperTest extends Unit
             );
         }
     }
-
 }

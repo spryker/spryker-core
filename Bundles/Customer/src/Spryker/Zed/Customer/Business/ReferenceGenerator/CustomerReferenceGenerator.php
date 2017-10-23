@@ -13,7 +13,6 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface;
 
 class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface
      */
@@ -45,5 +44,4 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
     {
         return $this->facadeSequenceNumber->generate($this->sequenceNumberSettings);
     }
-
 }

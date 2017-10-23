@@ -26,7 +26,6 @@ use Spryker\Zed\Sales\SalesConfig;
 
 class OrderSaver implements OrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
@@ -210,6 +209,8 @@ class OrderSaver implements OrderSaverInterface
         $salesOrderEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
         $salesOrderEntity->setPriceMode($quoteTransfer->getPriceMode());
+        $salesOrderEntity->setStore($this->store->getStoreName());
+        $salesOrderEntity->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
     }
@@ -419,5 +420,4 @@ class OrderSaver implements OrderSaverInterface
         $quoteTransfer->requireItems()
             ->requireTotals();
     }
-
 }

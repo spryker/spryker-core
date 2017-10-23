@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ApiQueryBuilderToPropelQueryBuilderBridge implements ApiQueryBuilderToPropelQueryBuilderInterface
 {
-
     /**
      * @var \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface
      */
@@ -46,5 +45,4 @@ class ApiQueryBuilderToPropelQueryBuilderBridge implements ApiQueryBuilderToProp
     {
         return $this->propelQueryBuilderQueryContainer->createPropelQueryBuilderCriteriaFromJson($json);
     }
-
 }

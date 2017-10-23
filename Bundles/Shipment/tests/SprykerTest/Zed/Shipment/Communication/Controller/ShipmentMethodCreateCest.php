@@ -22,7 +22,6 @@ use SprykerTest\Zed\Shipment\ShipmentCommunicationTester;
  */
 class ShipmentMethodCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Shipment\ShipmentCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class ShipmentMethodCreateCest
         $i->amOnPage(ShipmentMethodCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Shipment / Shipment Methods / Create new Shipment Method');
     }
-
 }

@@ -27,7 +27,6 @@ use SprykerTest\Shared\ZedRequest\Client\Fixture\Transfer;
  */
 class AbstractHttpClientTest extends Unit
 {
-
     const TRANSFER_VALUE = 'catface';
 
     /**
@@ -60,5 +59,4 @@ class AbstractHttpClientTest extends Unit
 
         return $this->getMockBuilder(AbstractHttpClient::class)->setMethods(['sendRequest'])->setConstructorArgs([$url, $utilNetworkService])->getMock();
     }
-
 }

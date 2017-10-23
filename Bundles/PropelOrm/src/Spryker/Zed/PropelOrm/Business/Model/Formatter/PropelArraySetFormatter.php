@@ -14,7 +14,6 @@ use Propel\Runtime\Formatter\SimpleArrayFormatter;
 
 class PropelArraySetFormatter extends SimpleArrayFormatter
 {
-
     /**
      * Define the hydration schema based on a query object.
      * Fills the Formatter's properties using a Criteria as source
@@ -67,5 +66,4 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
 
         return $formattedArray;
     }
-
 }

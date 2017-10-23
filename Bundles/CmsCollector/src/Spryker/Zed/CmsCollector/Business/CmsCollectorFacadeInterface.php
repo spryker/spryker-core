@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface CmsCollectorFacadeInterface
 {
-
     /**
      * @api
      *
@@ -63,5 +62,4 @@ interface CmsCollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

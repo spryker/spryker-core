@@ -12,7 +12,6 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 
 class CmsBlockTemplateMapper implements CmsBlockTemplateMapperInterface
 {
-
     /**
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate $spyCmsBlockTemplate
      *
@@ -25,5 +24,4 @@ class CmsBlockTemplateMapper implements CmsBlockTemplateMapperInterface
 
         return $cmsBlockTemplateTransfer;
     }
-
 }

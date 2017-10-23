@@ -25,7 +25,6 @@ use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
  */
 class FilesystemCacheTest extends Unit
 {
-
     const EXISTING_CACHE_KEY = 'key';
     const EXISTING_CACHE_VALUE = 'value';
 
@@ -52,7 +51,7 @@ class FilesystemCacheTest extends Unit
      */
     protected function getCacheFile()
     {
-        $cacheFile = $this->getFixtureDirectory() . '/cache.php';
+        $cacheFile = $this->getFixtureDirectory() . 'cache.php';
 
         return $cacheFile;
     }
@@ -62,10 +61,8 @@ class FilesystemCacheTest extends Unit
      */
     protected function getFixtureDirectory()
     {
-        $directory = __DIR__ . '/Fixtures';
-        if (!is_dir($directory)) {
-            mkdir($directory);
-        }
+        //TODO: THis needs to be moved to tmp dir instead.
+        $directory = __DIR__ . DIRECTORY_SEPARATOR . 'test_files' . DIRECTORY_SEPARATOR;
 
         return $directory;
     }
@@ -75,12 +72,13 @@ class FilesystemCacheTest extends Unit
      */
     protected function buildTestCacheFile()
     {
-        file_put_contents($this->getCacheFile(), <<<EOL
+        file_put_contents($this->getCacheFile(), <<<TXT
 <?php return [
     'key' => 'value',
     'invalid key' => false,
 ];
-EOL
+
+TXT
         );
     }
 
@@ -252,5 +250,4 @@ EOL
     {
         return new FilesystemCacheWriter($pathToCacheFile);
     }
-
 }

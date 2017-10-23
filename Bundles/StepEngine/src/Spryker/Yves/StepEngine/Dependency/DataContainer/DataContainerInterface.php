@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface DataContainerInterface
 {
-
     /**
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
@@ -23,5 +22,4 @@ interface DataContainerInterface
      * @return void
      */
     public function set(AbstractTransfer $dataTransfer);
-
 }

@@ -15,7 +15,6 @@ use Spryker\Shared\Testify\TestifyConstants;
 
 class ZedHelper extends Module
 {
-
     /**
      * @var bool
      */
@@ -78,5 +77,4 @@ class ZedHelper extends Module
     {
         return $this->getModule('WebDriver');
     }
-
 }

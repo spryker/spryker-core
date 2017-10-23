@@ -11,7 +11,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class BridgeBuilder
 {
-
     const TEMPLATE_INTERFACE = 'interface';
     const TEMPLATE_BRIDGE = 'bridge';
 
@@ -144,5 +143,4 @@ class BridgeBuilder
 
         return implode(DIRECTORY_SEPARATOR, $pathParts);
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ReaderInterface
 {
-
     /**
      * @return array
      */
@@ -106,5 +105,4 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
-
 }

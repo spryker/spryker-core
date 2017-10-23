@@ -15,7 +15,6 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 
 class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -212,7 +211,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $itemTransfer->setRelatedBundleItemIdentifier($salesOrderItemEntity->getFkSalesOrderItemBundle());
 
             $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
-
         }
 
         return $bundledProducts;
@@ -226,7 +224,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function resetBundlePriceAmounts(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-
             $bundleItemTransfer->setUnitGrossPrice(0);
             $bundleItemTransfer->setSumGrossPrice(0);
             $bundleItemTransfer->setUnitPrice(0);
@@ -243,5 +240,4 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
             $bundleItemTransfer->setSumPriceToPayAggregation(0);
         }
     }
-
 }

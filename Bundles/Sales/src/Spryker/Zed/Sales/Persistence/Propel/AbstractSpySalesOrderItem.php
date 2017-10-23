@@ -23,7 +23,6 @@ use Propel\Runtime\Connection\ConnectionInterface;
  */
 class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
 {
-
     /**
      * @var bool
      */
@@ -75,5 +74,4 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
     {
         return new SpyOmsOrderItemStateHistory();
     }
-
 }

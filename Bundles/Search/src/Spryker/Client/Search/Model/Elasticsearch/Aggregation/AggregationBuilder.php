@@ -15,7 +15,6 @@ use Elastica\Aggregation\TopHits;
 
 class AggregationBuilder implements AggregationBuilderInterface
 {
-
     /**
      * @param string $name
      *
@@ -65,5 +64,4 @@ class AggregationBuilder implements AggregationBuilderInterface
     {
         return new TopHits($name);
     }
-
 }

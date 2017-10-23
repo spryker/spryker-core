@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 interface WishlistTransferMapperInterface
 {
-
     /**
      * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlistEntity
      *
@@ -41,5 +40,4 @@ interface WishlistTransferMapperInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
      */
     public function convertWishlistItemCollection(ObjectCollection $wishlistItemEntityCollection);
-
 }

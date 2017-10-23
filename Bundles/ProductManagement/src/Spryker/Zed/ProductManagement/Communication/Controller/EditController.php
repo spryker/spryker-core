@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AddController
 {
-
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     const PARAM_ID_PRODUCT = 'id-product';
     const PARAM_PRODUCT_TYPE = 'type';
@@ -64,7 +63,7 @@ class EditController extends AddController
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
-                    ->buildProductAbstractTransfer($form);
+                    ->buildProductAbstractTransfer($form, $idProductAbstract);
 
                 $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
@@ -226,5 +225,4 @@ class EditController extends AddController
             $variantTable->fetchData()
         );
     }
-
 }

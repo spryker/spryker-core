@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class Validator implements ValidatorInterface
 {
-
     /**
      * @var array
      */
@@ -111,5 +110,4 @@ class Validator implements ValidatorInterface
 
         return false;
     }
-
 }

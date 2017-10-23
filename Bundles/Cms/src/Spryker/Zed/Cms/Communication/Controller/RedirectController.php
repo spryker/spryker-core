@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class RedirectController extends AbstractController
 {
-
     const REDIRECT_ADDRESS = '/cms/redirect';
     const REQUEST_ID_URL = 'id-url';
     const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
@@ -201,5 +200,4 @@ class RedirectController extends AbstractController
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_DELETE);
         return $this->redirectResponse('/cms/redirect');
     }
-
 }

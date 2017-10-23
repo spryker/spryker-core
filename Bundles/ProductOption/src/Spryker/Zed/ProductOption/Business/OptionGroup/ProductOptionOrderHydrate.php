@@ -14,7 +14,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -109,5 +108,4 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
             ->filterByFkSalesOrder($idSalesOrder)
             ->find();
     }
-
 }

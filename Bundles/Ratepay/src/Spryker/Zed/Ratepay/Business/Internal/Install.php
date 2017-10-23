@@ -14,7 +14,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class Install implements InstallInterface
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Dependency\Facade\RatepayToGlossaryInterface
      */
@@ -110,5 +109,4 @@ class Install implements InstallInterface
 
         return $translation;
     }
-
 }

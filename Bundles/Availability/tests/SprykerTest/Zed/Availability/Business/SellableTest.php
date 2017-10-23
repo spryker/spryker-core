@@ -32,7 +32,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class SellableTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
@@ -178,5 +177,4 @@ class SellableTest extends Unit
             ->setFkProduct($productEntity->getIdProduct())
             ->save();
     }
-
 }

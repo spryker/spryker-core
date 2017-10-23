@@ -14,7 +14,6 @@ use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchBridge;
 
 class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
@@ -84,5 +83,4 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

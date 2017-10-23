@@ -14,7 +14,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
 {
-
     const RANGE = 'range';
 
     /**
@@ -103,5 +102,4 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
 
         throw new ApiDispatchingException('Invalid offset pagination - must be 0 based to translate into pages');
     }
-
 }

@@ -14,7 +14,6 @@ use Twig_Error_Syntax;
 
 class TwigContentValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed value is valid.
      *
@@ -68,5 +67,4 @@ class TwigContentValidator extends ConstraintValidator
     {
         return strpos($value, '{{') !== false || strpos($value, '}}') !== false;
     }
-
 }

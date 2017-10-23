@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductNew\Dependency\QueryContainer;
 
 class ProductNewToProductBridge implements ProductNewToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class ProductNewToProductBridge implements ProductNewToProductInterface
     {
         return $this->productQueryContainer->queryProductAbstract();
     }
-
 }

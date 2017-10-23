@@ -9,12 +9,10 @@ namespace Spryker\Zed\OmsDiscountConnector\Dependency\Facade;
 
 interface OmsDiscountConnectorToDiscountInterface
 {
-
     /**
      * @param string[] $codes
      *
      * @return bool
      */
     public function releaseUsedVoucherCodes(array $codes);
-
 }

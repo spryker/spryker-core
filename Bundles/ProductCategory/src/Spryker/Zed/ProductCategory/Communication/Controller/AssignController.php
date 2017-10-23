@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AssignController extends AbstractController
 {
-
     const PARAM_ID_CATEGORY = 'id-category';
 
     /**
@@ -208,5 +207,4 @@ class AssignController extends AbstractController
 
         return $this->jsonResponse($productTable->fetchData());
     }
-
 }

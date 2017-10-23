@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CategoryType extends AbstractType
 {
-
     const FIELD_CMS_BLOCKS = 'id_cms_blocks';
 
     const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
@@ -136,5 +135,4 @@ class CategoryType extends AbstractType
 
         return $warningMessage;
     }
-
 }

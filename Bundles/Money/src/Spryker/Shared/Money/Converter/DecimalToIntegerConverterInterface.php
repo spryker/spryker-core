@@ -9,12 +9,10 @@ namespace Spryker\Shared\Money\Converter;
 
 interface DecimalToIntegerConverterInterface
 {
-
     /**
      * @param float $value
      *
      * @return int
      */
     public function convert($value);
-
 }

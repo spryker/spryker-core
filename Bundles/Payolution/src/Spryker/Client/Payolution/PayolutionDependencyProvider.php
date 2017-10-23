@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 
 class PayolutionDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_SESSION = 'session client';
     const CLIENT_ZED_REQUEST = 'zed request client';
 
@@ -56,5 +55,4 @@ class PayolutionDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

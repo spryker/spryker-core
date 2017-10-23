@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\TranslationTransfer;
 
 interface TranslationManagerInterface
 {
-
     /**
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -180,5 +179,4 @@ interface TranslationManagerInterface
      * @return bool
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
-
 }

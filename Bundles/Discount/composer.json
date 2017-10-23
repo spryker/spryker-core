@@ -3,17 +3,20 @@
   "description": "Discount module",
   "license": "proprietary",
   "require": {
+    "spryker/currency": "^3.1.0",
     "spryker/gui": "^3.7.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.11.0",
     "spryker/log": "^3.0.0",
     "spryker/messenger": "^3.0.0",
     "spryker/money": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
@@ -26,17 +29,12 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Discount\\": "tests/SprykerTest/Shared/Discount/_support/",
-      "SprykerTest\\Zed\\Discount\\": "tests/SprykerTest/Zed/Discount/_support/"
+      "SprykerTest\\Shared\\Discount\\": "tests/SprykerTest/Shared/Discount/_support/Helper/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "SprykerTest\\": "tests/SprykerTest/"
-    },
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
     }
   },
   "minimum-stability": "dev",

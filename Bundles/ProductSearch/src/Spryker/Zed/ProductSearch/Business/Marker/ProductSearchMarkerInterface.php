@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearch\Business\Marker;
 
 interface ProductSearchMarkerInterface
 {
-
     /**
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
@@ -25,5 +24,4 @@ interface ProductSearchMarkerInterface
      * @return void
      */
     public function deactivateProductSearch($idProduct, array $localeCollection);
-
 }

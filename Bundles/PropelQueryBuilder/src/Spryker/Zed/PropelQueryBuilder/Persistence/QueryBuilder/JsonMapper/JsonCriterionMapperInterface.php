@@ -13,7 +13,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInt
 
 interface JsonCriterionMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $ruleSetTransfer
      *
@@ -38,5 +37,4 @@ interface JsonCriterionMapperInterface
      * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
      */
     public function createJsonCriterion(ModelCriteria $criteria, PropelQueryBuilderRuleSetTransfer $ruleSetTransfer, OperatorInterface $operator);
-
 }

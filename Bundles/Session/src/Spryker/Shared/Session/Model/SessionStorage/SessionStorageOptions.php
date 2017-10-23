@@ -7,11 +7,8 @@
 
 namespace Spryker\Shared\Session\Model\SessionStorage;
 
-use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptionsInterface;
-
 class SessionStorageOptions implements SessionStorageOptionsInterface
 {
-
     /**
      * @var array
      */
@@ -32,5 +29,4 @@ class SessionStorageOptions implements SessionStorageOptionsInterface
     {
         return $this->options;
     }
-
 }

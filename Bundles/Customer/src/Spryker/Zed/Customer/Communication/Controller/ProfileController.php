@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProfileController extends AbstractController
 {
-
     /**
      * @todo fix usage of old forms based on angularJs
      */
@@ -179,5 +178,4 @@ class ProfileController extends AbstractController
 
         return $this->redirectResponse('/customer/profile?id=' . $this->castId($request->query->get('customer_id')));
     }
-
 }

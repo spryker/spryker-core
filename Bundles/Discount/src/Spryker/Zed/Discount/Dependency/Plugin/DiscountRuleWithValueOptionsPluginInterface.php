@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Dependency\Plugin;
 
 interface DiscountRuleWithValueOptionsPluginInterface
 {
-
     /**
      * Specification:
      * - Returns a list of key-value pairs of the available select options.
@@ -19,5 +18,4 @@ interface DiscountRuleWithValueOptionsPluginInterface
      * @return array
      */
     public function getQueryStringValueOptions();
-
 }

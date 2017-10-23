@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueValue extends SymfonyConstraint
 {
-
     const OPTION_PRODUCT_OPTION_QUERY_CONTAINER = 'productOptionQueryContainer';
 
     /**
@@ -25,5 +24,4 @@ class UniqueValue extends SymfonyConstraint
     {
         return $this->productOptionQueryContainer;
     }
-
 }

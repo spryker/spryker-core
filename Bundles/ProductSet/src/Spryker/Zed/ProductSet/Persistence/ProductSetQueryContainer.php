@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductSetQueryContainer extends AbstractQueryContainer implements ProductSetQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -25,6 +24,17 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     {
         return $this->getFactory()
             ->createProductSetQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
+     */
+    public function queryAllProductSetData()
+    {
+        return $this->getFactory()
+            ->createProductSetDataQuery();
     }
 
     /**
@@ -187,5 +197,4 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
 
         return $query;
     }
-
 }

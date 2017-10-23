@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {
-
     const LOGGER_NAME = 'defaultLogger';
 
     /**
@@ -41,5 +40,4 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig()->getLogPath()
         );
     }
-
 }

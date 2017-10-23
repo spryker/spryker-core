@@ -8,11 +8,10 @@
 namespace Spryker\Zed\Kernel\Exception\Container;
 
 use Exception;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 class ContainerKeyNotFoundException extends Exception
 {
-
     /**
      * @param object $callerClass
      * @param string $key
@@ -26,7 +25,7 @@ class ContainerKeyNotFoundException extends Exception
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      * @param string $key
      *
      * @return string
@@ -47,5 +46,4 @@ class ContainerKeyNotFoundException extends Exception
 
         return $message;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\{bundle}\Dependency\Facade;
 
 class {bundle}To{toBundle}Bridge implements {bundle}To{toBundle}Interface
 {
-
     /**
      * @var \Spryker\Zed\{toBundle}\Business\{toBundle}FacadeInterface
      */
@@ -22,5 +21,4 @@ class {bundle}To{toBundle}Bridge implements {bundle}To{toBundle}Interface
     {
         $this->{toBundleVariable}Facade = ${toBundleVariable}Facade;
     }
-
 }

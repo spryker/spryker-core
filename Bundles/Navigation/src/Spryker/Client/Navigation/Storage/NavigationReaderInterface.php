@@ -9,7 +9,6 @@ namespace Spryker\Client\Navigation\Storage;
 
 interface NavigationReaderInterface
 {
-
     /**
      * @param string $navigationKey
      * @param string $localeName
@@ -17,5 +16,4 @@ interface NavigationReaderInterface
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer|null
      */
     public function findNavigationTreeByNavigationKey($navigationKey, $localeName);
-
 }

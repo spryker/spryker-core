@@ -15,7 +15,6 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class PartialBasketMapper extends BaseMapper
 {
-
     /**
      * @var \Generated\Shared\Transfer\OrderTransfer
      */
@@ -122,5 +121,4 @@ class PartialBasketMapper extends BaseMapper
             $this->requestTransfer->setShoppingBasket(new RatepayRequestShoppingBasketTransfer());
         }
     }
-
 }

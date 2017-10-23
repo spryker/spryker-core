@@ -23,7 +23,6 @@ use Spryker\Yves\Twig\Plugin\ServiceProvider\TwigServiceProvider;
  */
 class TwigServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -47,5 +46,4 @@ class TwigServiceProviderTest extends Unit
 
         $this->assertArrayNotHasKey('twig.loader.yves', $application);
     }
-
 }

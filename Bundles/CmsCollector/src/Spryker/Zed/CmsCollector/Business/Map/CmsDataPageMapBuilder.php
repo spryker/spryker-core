@@ -8,11 +8,10 @@
 namespace Spryker\Zed\CmsCollector\Business\Map;
 
 use DateTime;
-use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface;
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface;
 use Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
@@ -23,23 +22,22 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
  */
 class CmsDataPageMapBuilder implements PageMapInterface
 {
-
     const TYPE_CMS_PAGE = 'cms_page';
     const TYPE = 'type';
     const ID_CMS_PAGE = 'id_cms_page';
     const NAME = 'name';
 
     /**
-     * @var \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface
+     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface
      */
-    protected $dataExtractor;
+    protected $cmsFacade;
 
     /**
-     * @param \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractorInterface $dataExtractor
+     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface $cmsFacade
      */
-    public function __construct(DataExtractorInterface $dataExtractor)
+    public function __construct(CmsCollectorToCmsInterface $cmsFacade)
     {
-        $this->dataExtractor = $dataExtractor;
+        $this->cmsFacade = $cmsFacade;
     }
 
     /**
@@ -51,11 +49,8 @@ class CmsDataPageMapBuilder implements PageMapInterface
      */
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)
     {
-        $cmsVersionDataTransfer = $this->dataExtractor->extractCmsVersionDataTransfer($cmsPageData[CmsVersionPageCollectorQuery::COL_DATA]);
-        $localeName = $localeTransfer->getLocaleName();
-        $cmsPageTransfer = $cmsVersionDataTransfer->getCmsPage();
-        $cmsPageAttributeTransfer = $this->dataExtractor->extractPageAttributeByLocale($cmsPageTransfer, $localeName);
-        $cmsMetaAttributeTransfer = $this->dataExtractor->extractMetaAttributeByLocales($cmsPageTransfer, $localeName);
+        $cmsVersionDataTransfer = $this->cmsFacade->extractCmsVersionDataTransfer($cmsPageData[CmsVersionPageCollectorQuery::COL_DATA]);
+        $localeCmsPageDataTransfer = $this->cmsFacade->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $localeTransfer);
 
         $isActive = $cmsPageData[AbstractCmsVersionPageCollector::COL_IS_ACTIVE] && $cmsPageData[AbstractCmsVersionPageCollector::COL_IS_SEARCHABLE];
 
@@ -68,17 +63,17 @@ class CmsDataPageMapBuilder implements PageMapInterface
         $this->setActiveInDateRange($cmsPageData, $pageMapTransfer);
 
         $pageMapBuilder
-            ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $cmsPageTransfer->getFkPage())
-            ->addSearchResultData($pageMapTransfer, static::NAME, $cmsPageAttributeTransfer->getName())
+            ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $localeCmsPageDataTransfer->getIdCmsPage())
+            ->addSearchResultData($pageMapTransfer, static::NAME, $localeCmsPageDataTransfer->getName())
             ->addSearchResultData($pageMapTransfer, static::TYPE, static::TYPE_CMS_PAGE)
             ->addSearchResultData($pageMapTransfer, CmsVersionPageCollectorQuery::COL_URL, $cmsPageData[CmsVersionPageCollectorQuery::COL_URL])
-            ->addFullTextBoosted($pageMapTransfer, $cmsPageAttributeTransfer->getName())
-            ->addFullText($pageMapTransfer, $cmsMetaAttributeTransfer->getMetaTitle())
-            ->addFullText($pageMapTransfer, $cmsMetaAttributeTransfer->getMetaKeywords())
-            ->addFullText($pageMapTransfer, $cmsMetaAttributeTransfer->getMetaDescription())
-            ->addFullText($pageMapTransfer, $this->extractContents($cmsVersionDataTransfer->getCmsGlossary(), $localeName))
-            ->addSuggestionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName())
-            ->addCompletionTerms($pageMapTransfer, $cmsPageAttributeTransfer->getName());
+            ->addFullTextBoosted($pageMapTransfer, $localeCmsPageDataTransfer->getName())
+            ->addFullText($pageMapTransfer, $localeCmsPageDataTransfer->getMetaTitle())
+            ->addFullText($pageMapTransfer, $localeCmsPageDataTransfer->getMetaKeywords())
+            ->addFullText($pageMapTransfer, $localeCmsPageDataTransfer->getMetaDescription())
+            ->addFullText($pageMapTransfer, implode(',', $localeCmsPageDataTransfer->getPlaceholders()))
+            ->addSuggestionTerms($pageMapTransfer, $localeCmsPageDataTransfer->getName())
+            ->addCompletionTerms($pageMapTransfer, $localeCmsPageDataTransfer->getName());
 
         return $pageMapTransfer;
     }
@@ -103,18 +98,4 @@ class CmsDataPageMapBuilder implements PageMapInterface
             );
         }
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
-     * @param string $localeName
-     *
-     * @return string
-     */
-    public function extractContents(CmsGlossaryTransfer $cmsGlossaryTransfer, $localeName)
-    {
-        $placeholders = $this->dataExtractor->extractPlaceholdersByLocale($cmsGlossaryTransfer, $localeName);
-
-        return implode(',', $placeholders);
-    }
-
 }

@@ -26,7 +26,6 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
  */
 class ProductImageReaderTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -74,5 +73,4 @@ class ProductImageReaderTest extends Unit
 
         $this->assertNotEmpty($imageCollection);
     }
-
 }

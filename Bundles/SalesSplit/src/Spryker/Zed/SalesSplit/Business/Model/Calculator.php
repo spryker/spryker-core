@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class Calculator implements CalculatorInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param int $quantity
@@ -22,5 +21,4 @@ class Calculator implements CalculatorInterface
     {
         return $salesOrderItem->getQuantity() - $quantity;
     }
-
 }

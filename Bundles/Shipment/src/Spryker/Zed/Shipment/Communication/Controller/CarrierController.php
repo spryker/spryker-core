@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CarrierController extends AbstractController
 {
-
     const MESSAGE_SUCCESS_CREATE = 'Carrier created successfully';
 
     /**
@@ -53,5 +52,4 @@ class CarrierController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

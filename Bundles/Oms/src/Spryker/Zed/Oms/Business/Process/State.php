@@ -11,7 +11,6 @@ use Exception;
 
 class State implements StateInterface
 {
-
     /**
      * @var string
      */
@@ -384,5 +383,4 @@ class State implements StateInterface
     {
         $this->display = $display;
     }
-
 }

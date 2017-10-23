@@ -8,6 +8,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
+    "spryker/elastica": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -15,13 +17,8 @@
     "spryker/config": "If you want to use Elastica plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

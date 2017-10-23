@@ -20,7 +20,6 @@ use Spryker\Yves\Twig\TwigConfig;
  */
 class TwigConfigTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -48,5 +47,4 @@ class TwigConfigTest extends Unit
         $twigConfig = new TwigConfig();
         $this->assertInternalType('bool', $twigConfig->isPathCacheEnabled());
     }
-
 }

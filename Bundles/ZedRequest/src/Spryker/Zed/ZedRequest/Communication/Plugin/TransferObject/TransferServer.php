@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TransferServer
 {
-
     /**
      * @var self
      */
@@ -154,5 +153,4 @@ class TransferServer
 
         return $jsonResponse;
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class CurrencyClientTester extends Actor
 {
-
     use _generated\CurrencyClientTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

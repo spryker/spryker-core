@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 interface TransferGeneratorInterface
 {
-
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
@@ -41,5 +40,4 @@ interface TransferGeneratorInterface
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function convertCategoryNodeCollection(ObjectCollection $categoryNodeEntityList);
-
 }

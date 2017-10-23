@@ -18,7 +18,6 @@ use Throwable;
 
 class ProductBundleWriter implements ProductBundleWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
      */
@@ -79,7 +78,6 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
 
             $this->productBundleQueryContainer->getConnection()->commit();
-
         } catch (Exception $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -170,5 +168,4 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             ->filterByFkProduct($idProductBundle)
             ->findOne();
     }
-
 }

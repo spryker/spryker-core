@@ -17,14 +17,13 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\Word\SeparatorToCamelCase;
 
-$manualAutoload = getcwd() . '/vendor/squizlabs/php_codesniffer/autoload.php';
+$manualAutoload = APPLICATION_VENDOR_DIR . '/squizlabs/php_codesniffer/autoload.php';
 if (!class_exists(Config::class) && file_exists($manualAutoload)) {
     require $manualAutoload;
 }
 
 class ExternalDependency extends AbstractDependencyFinder
 {
-
     /**
      * @var array
      */
@@ -190,5 +189,4 @@ class ExternalDependency extends AbstractDependencyFinder
             spl_autoload_unregister($codeSnifferAutoloadFunction);
         }
     }
-
 }

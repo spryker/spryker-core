@@ -29,7 +29,6 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
  */
 class BuilderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -64,7 +63,7 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
         $process = $builder->createProcess($stateMachineProcessTransfer);
 
-        $this->assertCount(18, $process->getTransitions());
+        $this->assertCount(22, $process->getTransitions());
         $this->assertInstanceOf(Transition::class, $process->getTransitions()[0]);
     }
 
@@ -77,7 +76,7 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
         $process = $builder->createProcess($stateMachineProcessTransfer);
 
-        $this->assertCount(1, $process->getSubProcesses());
+        $this->assertCount(2, $process->getSubProcesses());
     }
 
     /**
@@ -120,6 +119,21 @@ class BuilderTest extends Unit
         $process = $builder->createProcess($stateMachineProcessTransfer);
 
         $this->assertTrue($process->getMain());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSubProcessPrefixIsApplied()
+    {
+        $builder = $this->createBuilder();
+        $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
+        $process = $builder->createProcess($stateMachineProcessTransfer);
+
+        $manualEventsBySource = $process->getManualEventsBySource();
+
+        $this->assertEquals('Foo 1 - action', $manualEventsBySource['Foo 1 - sub process state'][0]);
+        $this->assertEquals('Leave Sub-process 2', $manualEventsBySource['Foo 1 - done'][0]);
     }
 
     /**
@@ -177,6 +191,7 @@ class BuilderTest extends Unit
 
         $pathToStateMachineFixtures = realpath(__DIR__ . '/../../_support/Fixtures');
         $stateMachineConfigMock->method('getPathToStateMachineXmlFiles')->willReturn($pathToStateMachineFixtures);
+        $stateMachineConfigMock->method('getSubProcessPrefixDelimiter')->willReturn(' - ');
 
         return $stateMachineConfigMock;
     }
@@ -191,5 +206,4 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer->setStateMachineName('TestingSm');
         return $stateMachineProcessTransfer;
     }
-
 }

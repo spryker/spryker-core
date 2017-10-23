@@ -29,7 +29,6 @@ use Spryker\Zed\Navigation\NavigationDependencyProvider;
  */
 class NavigationBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Navigation\Business\Navigation\NavigationCreatorInterface
      */
@@ -141,5 +140,4 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new NavigationNodeUrlCleaner($this->getQueryContainer(), $this->createNavigationNodeUpdater());
     }
-
 }

@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-
     const MESSAGE_ERROR_UPDATE = 'Customer was not updated';
     const MESSAGE_SUCCESS_UPDATE = 'Customer updated successfully';
 
@@ -161,5 +160,4 @@ class EditController extends AbstractController
 
         return $addressTransfer;
     }
-
 }

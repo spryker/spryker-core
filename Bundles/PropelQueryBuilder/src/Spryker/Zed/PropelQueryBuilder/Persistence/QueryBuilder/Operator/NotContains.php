@@ -11,7 +11,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotContains extends Contains
 {
-
     const TYPE = 'not_contains';
 
     /**
@@ -21,5 +20,4 @@ class NotContains extends Contains
     {
         return Criteria::NOT_LIKE;
     }
-
 }

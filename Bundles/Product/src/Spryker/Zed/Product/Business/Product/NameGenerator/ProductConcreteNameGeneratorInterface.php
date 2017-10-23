@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcreteNameGeneratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -20,5 +19,4 @@ interface ProductConcreteNameGeneratorInterface
      * @return string
      */
     public function getLocalizedProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer);
-
 }

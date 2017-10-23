@@ -7,16 +7,18 @@
 
 namespace Spryker\Zed\Cart\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
+use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 
 class Operation implements OperationInterface
 {
-
     const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
     const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
 
@@ -109,6 +111,30 @@ class Operation implements OperationInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function reloadItems(QuoteTransfer $quoteTransfer)
+    {
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setItems($quoteTransfer->getItems());
+
+        $quoteTransfer->setItems(new ArrayObject());
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        if (!$this->preCheckCart($cartChangeTransfer)) {
+            return $cartChangeTransfer->getQuote();
+        }
+
+        $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
+        $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
+        $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
+
+        return $this->recalculate($quoteTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return bool
@@ -122,14 +148,28 @@ class Operation implements OperationInterface
                 continue;
             }
 
-            foreach ($cartPreCheckResponseTransfer->getMessages() as $messageTransfer) {
-                $this->messengerFacade->addErrorMessage($messageTransfer);
+            $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
+
+            if ($preCheck instanceof TerminationAwareCartPreCheckPluginInterface && $preCheck->terminateOnFailure()) {
+                return false;
             }
 
             $isCartValid = false;
         }
 
         return $isCartValid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     *
+     * @return void
+     */
+    protected function collectErrorsFromPreCheckResponse(CartPreCheckResponseTransfer $cartPreCheckResponseTransfer)
+    {
+        foreach ($cartPreCheckResponseTransfer->getMessages() as $messageTransfer) {
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+        }
     }
 
     /**
@@ -184,5 +224,4 @@ class Operation implements OperationInterface
     {
         return $this->calculationFacade->recalculate($quoteTransfer);
     }
-
 }

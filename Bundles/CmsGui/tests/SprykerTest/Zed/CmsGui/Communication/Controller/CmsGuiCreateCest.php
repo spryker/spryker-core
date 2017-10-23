@@ -22,7 +22,6 @@ use SprykerTest\Zed\CmsGui\PageObject\CmsGuiCreatePage;
  */
 class CmsGuiCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\CmsGui\CmsGuiCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class CmsGuiCreateCest
         $i->amOnPage(CmsGuiCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / Create new CMS Page');
     }
-
 }

@@ -25,7 +25,6 @@ use SprykerTest\Client\ZedRequest\Client\Fixture\TestTransfer;
  */
 class ResponseTest extends Unit
 {
-
     const MESSAGE_SUCCESS = 'success';
     const MESSAGE_INFO = 'info';
     const MESSAGE_ERROR = 'error';
@@ -138,5 +137,4 @@ class ResponseTest extends Unit
         $this->assertTrue($response->hasInfoMessage(self::MESSAGE_INFO), 'Info message could not be found in response.');
         $this->assertFalse($response->hasInfoMessage(self::MESSAGE_ERROR), 'Error message was not expected as info in response.');
     }
-
 }

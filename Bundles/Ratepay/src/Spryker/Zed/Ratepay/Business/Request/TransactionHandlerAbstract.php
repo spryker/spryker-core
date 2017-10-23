@@ -16,7 +16,6 @@ use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 abstract class TransactionHandlerAbstract implements TransactionHandlerInterface
 {
-
     use LoggerTrait;
 
     const TRANSACTION_TYPE = null;
@@ -91,5 +90,4 @@ abstract class TransactionHandlerAbstract implements TransactionHandlerInterface
 
         return $this->methodMappers[$method];
     }
-
 }

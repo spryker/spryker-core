@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SearchPreferencesController extends AbstractController
 {
-
     const PARAM_ID = 'id';
 
     /**
@@ -145,5 +144,4 @@ class SearchPreferencesController extends AbstractController
 
         return $this->redirectResponse('/product-search/search-preferences');
     }
-
 }

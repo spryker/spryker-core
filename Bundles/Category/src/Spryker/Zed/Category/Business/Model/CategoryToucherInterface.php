@@ -8,7 +8,6 @@ namespace Spryker\Zed\Category\Business\Model;
 
 interface CategoryToucherInterface
 {
-
     /**
      * @param int $idCategoryNode
      *
@@ -50,5 +49,4 @@ interface CategoryToucherInterface
      * @return void
      */
     public function touchFormerParentCategoryNodeActiveRecursively($idFormerParentCategoryNode);
-
 }

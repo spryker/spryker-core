@@ -12,7 +12,6 @@ use Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface;
 
 class RedisWriter implements WriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface|\Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\RedisReadWrite
      */
@@ -53,5 +52,4 @@ class RedisWriter implements WriterInterface
     {
         return 'redis-writer';
     }
-
 }

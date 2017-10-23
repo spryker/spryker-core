@@ -9,15 +9,14 @@ namespace Spryker\Zed\Kernel\ClassResolver\Factory;
 
 use Exception;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 class FactoryNotFoundException extends Exception
 {
-
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -25,7 +24,7 @@ class FactoryNotFoundException extends Exception
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */
@@ -51,5 +50,4 @@ class FactoryNotFoundException extends Exception
 
         return $message;
     }
-
 }

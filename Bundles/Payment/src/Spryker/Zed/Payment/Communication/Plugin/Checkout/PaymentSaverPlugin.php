@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PaymentSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -28,5 +27,4 @@ class PaymentSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInte
     {
         $this->getFacade()->savePaymentForCheckout($quoteTransfer, $checkoutResponse);
     }
-
 }

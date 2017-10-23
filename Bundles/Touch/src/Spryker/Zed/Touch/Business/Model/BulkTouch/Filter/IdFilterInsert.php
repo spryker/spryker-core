@@ -9,7 +9,6 @@ namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Filter;
 
 class IdFilterInsert extends AbstractIdFilter
 {
-
     const CHUNK_SIZE = 250;
 
     /**
@@ -30,5 +29,4 @@ class IdFilterInsert extends AbstractIdFilter
 
         return $filteredIds;
     }
-
 }

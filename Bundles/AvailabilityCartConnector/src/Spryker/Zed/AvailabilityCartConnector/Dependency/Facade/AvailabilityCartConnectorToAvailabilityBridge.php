@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
 class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartConnectorToAvailabilityInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
@@ -43,5 +42,4 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     {
         return $this->availabilityFacade->calculateStockForProduct($sku);
     }
-
 }

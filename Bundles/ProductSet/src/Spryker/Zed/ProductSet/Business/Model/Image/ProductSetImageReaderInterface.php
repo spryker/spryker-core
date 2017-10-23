@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductSet\Business\Model\Image;
 
 interface ProductSetImageReaderInterface
 {
-
     /**
      * @param int $idProductSet
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function findProductSetImageSets($idProductSet);
-
 }

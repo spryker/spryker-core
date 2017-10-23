@@ -11,7 +11,6 @@ use Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface;
 
 class CsvBatchIterator implements CountableIteratorInterface
 {
-
     /**
      * @var \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReaderInterface
      */
@@ -126,5 +125,4 @@ class CsvBatchIterator implements CountableIteratorInterface
     {
         return $this->getCsvReader()->getTotal();
     }
-
 }

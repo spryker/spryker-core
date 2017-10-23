@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class Pimple extends AbstractPlugin
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Communication\Application
      */
@@ -38,5 +37,4 @@ class Pimple extends AbstractPlugin
     {
         return self::$application;
     }
-
 }

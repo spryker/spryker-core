@@ -11,9 +11,8 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\NumericFacetAggregation;
 
-class RangeExtractor implements AggregationExtractorInterface
+class RangeExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -91,22 +90,31 @@ class RangeExtractor implements AggregationExtractorInterface
     protected function extractRangeData(array $aggregation)
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
-        $fieldName = $this->facetConfigTransfer->getFieldName();
+        $fieldName = $this->getNestedFieldName($this->facetConfigTransfer);
 
-        foreach ($aggregation[$fieldName . NumericFacetAggregation::NAME_SUFFIX]['buckets'] as $nameBucket) {
+        $nameFieldName = $fieldName . NumericFacetAggregation::NAME_SUFFIX;
+        $statsFieldName = $fieldName . NumericFacetAggregation::STATS_SUFFIX;
+
+        if (isset($aggregation[$nameFieldName][$statsFieldName])) {
+            return [
+                $aggregation[$nameFieldName][$statsFieldName]['min'],
+                $aggregation[$nameFieldName][$statsFieldName]['max'],
+            ];
+        }
+
+        foreach ($aggregation[$nameFieldName]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;
             }
 
-            if (isset($nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX])) {
+            if (isset($nameBucket[$statsFieldName])) {
                 return [
-                    $nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX]['min'],
-                    $nameBucket[$fieldName . NumericFacetAggregation::STATS_SUFFIX]['max'],
+                    $nameBucket[$statsFieldName]['min'],
+                    $nameBucket[$statsFieldName]['max'],
                 ];
             }
         }
 
         return [null, null];
     }
-
 }

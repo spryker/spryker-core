@@ -9,7 +9,6 @@ namespace Spryker\Shared\Twig\Cache;
 
 interface CacheInterface
 {
-
     /**
      * @param string $key
      *
@@ -38,5 +37,4 @@ interface CacheInterface
      * @return bool
      */
     public function isValid($key);
-
 }

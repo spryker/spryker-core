@@ -15,7 +15,6 @@ use Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlReaderInterface;
 
 class ProductSetDataReader implements ProductSetDataReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlReaderInterface
      */
@@ -76,5 +75,4 @@ class ProductSetDataReader implements ProductSetDataReaderInterface
 
         return $productSetDataTransfer;
     }
-
 }

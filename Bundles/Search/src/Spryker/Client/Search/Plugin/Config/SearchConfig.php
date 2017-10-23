@@ -16,7 +16,6 @@ use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
  */
 class SearchConfig extends AbstractPlugin implements SearchConfigInterface
 {
-
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
      */
@@ -118,5 +117,4 @@ class SearchConfig extends AbstractPlugin implements SearchConfigInterface
             $this->sortConfigBuilder->addSort($sortConfigTransfer);
         }
     }
-
 }

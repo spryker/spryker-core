@@ -13,7 +13,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class BasePreCheck
 {
-
     /**
      * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface
      */
@@ -103,5 +102,4 @@ class BasePreCheck
 
         return $quantity;
     }
-
 }

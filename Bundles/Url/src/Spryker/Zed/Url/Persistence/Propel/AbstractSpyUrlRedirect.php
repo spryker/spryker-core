@@ -22,7 +22,6 @@ use Spryker\Zed\Url\Business\Exception\RedirectLoopException;
  */
 abstract class AbstractSpyUrlRedirect extends BaseSpyUrlRedirect
 {
-
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
@@ -54,5 +53,4 @@ abstract class AbstractSpyUrlRedirect extends BaseSpyUrlRedirect
             }
         }
     }
-
 }

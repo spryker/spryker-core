@@ -14,7 +14,6 @@ use Spryker\Zed\ProductSet\Dependency\Facade\ProductSetToUrlInterface;
 
 class ProductSetUrlUpdater implements ProductSetUrlUpdaterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Business\Model\Data\Url\ProductSetUrlReaderInterface
      */
@@ -84,5 +83,4 @@ class ProductSetUrlUpdater implements ProductSetUrlUpdaterInterface
 
         return $urlTransfer;
     }
-
 }

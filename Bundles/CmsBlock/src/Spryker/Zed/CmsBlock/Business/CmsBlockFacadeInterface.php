@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns an CMS Block transfer by id
@@ -150,4 +149,16 @@ interface CmsBlockFacadeInterface
      */
     public function findTemplate($path);
 
+    /**
+     * Specification:
+     * - Finds a template in DB
+     * - Checks template file in template directories
+     *
+     * @api
+     *
+     * @param int $idCmsBlockTemplate
+     *
+     * @return bool
+     */
+    public function hasTemplateFileById($idCmsBlockTemplate);
 }

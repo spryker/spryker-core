@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class TaxRateAverageAggregatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class TaxRateAverageAggregatorPlugin extends AbstractPlugin implements Calculati
         $this->getFacade()
             ->calculateTaxRateAverageAggregation($calculableObjectTransfer);
     }
-
 }

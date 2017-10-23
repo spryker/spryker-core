@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class NotGatewayController
 {
-
     public function __construct()
     {
     }
@@ -38,5 +37,4 @@ class NotGatewayController
 
         return $bar;
     }
-
 }

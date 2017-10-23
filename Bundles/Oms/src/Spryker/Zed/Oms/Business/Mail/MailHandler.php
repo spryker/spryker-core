@@ -18,7 +18,6 @@ use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 
 class MailHandler
 {
-
     /**
      * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
      */
@@ -147,5 +146,4 @@ class MailHandler
 
         return $localeTransfer;
     }
-
 }

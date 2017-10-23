@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface TouchQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -141,5 +140,4 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */
     public function queryTouchStorageByTouchIds($touchIds);
-
 }

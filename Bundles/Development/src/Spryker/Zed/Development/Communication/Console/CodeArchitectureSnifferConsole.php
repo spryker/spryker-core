@@ -20,7 +20,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  */
 class CodeArchitectureSnifferConsole extends Console
 {
-
     const COMMAND_NAME = 'code:sniff:architecture';
     const OPTION_MODULE = 'module';
     const OPTION_CORE = 'core';
@@ -40,7 +39,7 @@ class CodeArchitectureSnifferConsole extends Console
         $this
             ->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Run PHPMD for project or core');
+            ->setDescription('Check architecture rules for project or core');
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to run architecture sniffer for');
         $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Core (instead of Project)');
@@ -76,23 +75,28 @@ class CodeArchitectureSnifferConsole extends Console
         $this->info($message);
 
         if ($isCore) {
-            $success = $this->runForCore($input, $output, $module, $path);
+            $success = $this->runForCore($output, $module, $path);
         } else {
-            $success = $this->runForProject($input, $output, $module, $path);
+            $pathToRoot = $this->getFactory()->getConfig()->getPathToRoot();
+            $customPath = $pathToRoot . $path;
+            if (file_exists($customPath)) {
+                $success = $this->runCustomPath($output, $customPath);
+            } else {
+                $success = $this->runForProject($output, $module, $path);
+            }
         }
 
         return $success ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string $module
      * @param string $subPath
      *
      * @return bool
      */
-    protected function runForCore(InputInterface $input, OutputInterface $output, $module, $subPath)
+    protected function runForCore(OutputInterface $output, $module, $subPath)
     {
         $path = $this->getFactory()->getConfig()->getPathToCore();
         if ($module) {
@@ -111,14 +115,13 @@ class CodeArchitectureSnifferConsole extends Console
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string $module
      * @param string $subPath
      *
      * @return bool
      */
-    protected function runForProject(InputInterface $input, OutputInterface $output, $module, $subPath)
+    protected function runForProject(OutputInterface $output, $module, $subPath)
     {
         $pathToRoot = $this->getFactory()->getConfig()->getPathToRoot();
         $projectNamespaces = $this->getFactory()->getConfig()->getProjectNamespaces();
@@ -160,6 +163,24 @@ class CodeArchitectureSnifferConsole extends Console
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string $customPath
+     *
+     * @return bool
+     */
+    protected function runCustomPath(OutputInterface $output, $customPath)
+    {
+        $output->writeln($customPath, OutputInterface::VERBOSITY_VERBOSE);
+
+        $violations = $this->getFacade()->runArchitectureSniffer($customPath, $this->input->getOptions());
+        $count = $this->displayViolations($output, $violations);
+
+        $output->writeln($count . ' violations found');
+
+        return $count === 0;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param array $violations
      *
      * @return int
@@ -191,5 +212,4 @@ class CodeArchitectureSnifferConsole extends Console
 
         return $normalized;
     }
-
 }

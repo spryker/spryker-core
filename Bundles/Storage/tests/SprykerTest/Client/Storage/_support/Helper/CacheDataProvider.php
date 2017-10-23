@@ -12,7 +12,6 @@ use Spryker\Client\Storage\StorageConfig;
 
 class CacheDataProvider
 {
-
     const TEST_TYPE_NEW_KEYS = 'TEST_TYPE_NEW_CACHE';
     const TEST_TYPE_USED_KEYS = 'TEST_TYPE_USED_KEYS';
     const TEST_TYPE_UNUSED_KEYS = 'TEST_TYPE_UNUSED_KEYS';
@@ -112,7 +111,6 @@ class CacheDataProvider
             case self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS:
                 $cacheData = self::generateOverLimitCacheInput(self::TEST_TYPE_OVER_LIMIT_WITH_NEW_AND_USED_AND_UNUSED_KEYS);
                 break;
-
         }
 
         return $cacheData;
@@ -356,5 +354,4 @@ class CacheDataProvider
 
         return $cache;
     }
-
 }

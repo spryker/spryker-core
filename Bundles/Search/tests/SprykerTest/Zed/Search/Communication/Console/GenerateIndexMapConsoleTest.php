@@ -24,7 +24,6 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class GenerateIndexMapConsoleTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -45,5 +44,4 @@ class GenerateIndexMapConsoleTest extends Unit
 
         $this->assertSame(GenerateIndexMapConsole::CODE_SUCCESS, $commandTester->getStatusCode());
     }
-
 }

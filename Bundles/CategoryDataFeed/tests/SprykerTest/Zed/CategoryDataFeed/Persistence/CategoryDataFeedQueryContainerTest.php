@@ -25,7 +25,6 @@ use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
  */
 class CategoryDataFeedQueryContainerTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer
      */
@@ -203,5 +202,4 @@ class CategoryDataFeedQueryContainerTest extends Unit
             ],
         ];
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class MockProvider extends Unit
 {
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
      */
@@ -92,5 +91,4 @@ class MockProvider extends Unit
             ->disableOriginalConstructor()
             ->getMock();
     }
-
 }

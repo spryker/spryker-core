@@ -19,7 +19,6 @@ use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface
      */
@@ -408,5 +407,4 @@ abstract class AbstractMethod implements MethodInterface, RequestMethodInterface
     {
         return $this->modelFactory->build(ApiConstants::REQUEST_MODEL_PAYMENT_REFUND);
     }
-
 }

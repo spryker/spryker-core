@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
@@ -82,5 +81,4 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     {
         return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
     }
-
 }

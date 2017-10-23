@@ -11,7 +11,6 @@ use Everon\Component\CriteriaBuilder\CriteriaBuilderFactoryWorker as EveronCrite
 
 class CriteriaBuilderFactoryWorker extends EveronCriteriaBuilderFactoryWorker implements CriteriaBuilderFactoryWorkerInterface
 {
-
     /**
      * @inheritdoc
      */
@@ -22,5 +21,4 @@ class CriteriaBuilderFactoryWorker extends EveronCriteriaBuilderFactoryWorker im
 
         return $CriteriaBuilder;
     }
-
 }

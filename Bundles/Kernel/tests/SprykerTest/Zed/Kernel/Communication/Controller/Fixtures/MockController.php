@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 class MockController extends AbstractController
 {
-
     /**
      * @param mixed $id
      *
@@ -21,5 +20,4 @@ class MockController extends AbstractController
     {
         return $this->castId($id);
     }
-
 }

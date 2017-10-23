@@ -16,7 +16,6 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class WishlistStub implements WishlistStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -33,7 +32,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createWishlist(WishlistTransfer $wishlistTransfer)
     {
@@ -43,7 +42,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
     {
@@ -53,7 +52,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function updateWishlist(WishlistTransfer $wishlistTransfer)
     {
@@ -63,7 +62,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer)
     {
@@ -73,7 +72,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer)
     {
@@ -83,7 +82,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function removeWishlistByName(WishlistTransfer $wishlistTransfer)
     {
@@ -93,7 +92,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function addItem(WishlistItemTransfer $wishlistItemTransfer)
     {
@@ -103,7 +102,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
@@ -113,7 +112,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
     {
@@ -123,7 +122,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getWishlist(WishlistTransfer $wishlistTransfer)
     {
@@ -133,7 +132,7 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
@@ -143,11 +142,10 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/wishlist/gateway/get-customer-wishlist-collection', $customerTransfer);
     }
-
 }

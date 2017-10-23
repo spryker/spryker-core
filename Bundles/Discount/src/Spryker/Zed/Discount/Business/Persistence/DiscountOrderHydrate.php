@@ -15,7 +15,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
@@ -42,7 +41,6 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
         $groupedDiscounts = [];
         foreach ($salesOrderDiscounts as $salesOrderDiscountEntity) {
-
             $calculatedDiscountTransfer = $this->hydrateCalculatedDiscountTransfer($salesOrderDiscountEntity);
 
             $this->addCalculatedDiscount($orderTransfer, $salesOrderDiscountEntity, $calculatedDiscountTransfer);
@@ -53,7 +51,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
             $calculatedDiscountTransfer = $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()];
 
-            $calculatedDiscountTransfer->setSumGrossAmount(
+            $calculatedDiscountTransfer->setSumAmount(
                 $calculatedDiscountTransfer->getSumGrossAmount() + (int)$salesOrderDiscountEntity->getAmount()
             );
 
@@ -182,7 +180,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount($salesOrderDiscountEntity->getIdSalesDiscount());
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
-        $calculatedDiscountTransfer->setUnitGrossAmount((int)$salesOrderDiscountEntity->getAmount());
+        $calculatedDiscountTransfer->setUnitAmount($salesOrderDiscountEntity->getAmount());
         $calculatedDiscountTransfer->setQuantity(1);
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
@@ -191,5 +189,4 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
         return $calculatedDiscountTransfer;
     }
-
 }

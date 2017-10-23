@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface SalesQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -131,10 +130,21 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed with the next major
+     *
+     * @param int $idSalesOrderItem
+     * @param int $idOmsOrderItemState
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    public function queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc($idSalesOrderItem, $idOmsOrderItemState);
+
+    /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryCountUniqueProductsForOrder($idSalesOrder);
-
 }

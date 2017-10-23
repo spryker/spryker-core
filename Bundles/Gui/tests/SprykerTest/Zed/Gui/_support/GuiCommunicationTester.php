@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class GuiCommunicationTester extends Actor
 {
-
     use _generated\GuiCommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

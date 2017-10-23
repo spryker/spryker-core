@@ -61,7 +61,7 @@
                                 <td{% if (not composerDependency.src and composerDependency.composerRequire) or (composerDependency.isOptional) %} style="color: red"{% endif %}>
                                     {{ composerDependency.composerRequire }}
                                 </td>
-                                <td{% if (composerDependency.tests and not composerDependency.composerRequireDev) or (composerDependency.src and composerDependency.tests and composerDependency.composerRequire) %} style="color: red"{% endif %}>
+                                <td{% if (composerDependency.tests and not composerDependency.composerRequireDev) or (composerDependency.src and composerDependency.tests and composerDependency.composerRequire) or (composerDependency.composerRequireDev and not composerDependency.tests and not composerDependency.isOptional) %} style="color: red"{% endif %}>
                                     {{ composerDependency.composerRequireDev }}
                                 </td>
                             </tr>

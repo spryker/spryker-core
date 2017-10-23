@@ -25,7 +25,6 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
  */
 class GlossaryFacadeTest extends Unit
 {
-
     const GLOSSARY_KEY = 'glossary_key';
 
     /**
@@ -138,5 +137,4 @@ class GlossaryFacadeTest extends Unit
 
         $this->assertNotSame($translatedKey->getValue(), $translatedKeyChanged->getValue());
     }
-
 }

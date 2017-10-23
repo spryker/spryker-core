@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CategoryPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
@@ -85,5 +84,4 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCategoryTemplateQuery::create();
     }
-
 }

@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryLocalizedAttributeType extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_FK_LOCALE = 'fk_locale';
     const FIELD_LOCALE_NAME = 'locale_name';
@@ -166,5 +165,4 @@ class CategoryLocalizedAttributeType extends AbstractType
 
         return $this;
     }
-
 }

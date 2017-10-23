@@ -26,7 +26,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class PageManager implements PageManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -421,5 +420,4 @@ class PageManager implements PageManagerInterface
 
         return $cmsPageLocalizedAttributesQuery->findOneOrCreate();
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class CheckoutModelTester extends Actor
 {
-
     use _generated\CheckoutModelTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

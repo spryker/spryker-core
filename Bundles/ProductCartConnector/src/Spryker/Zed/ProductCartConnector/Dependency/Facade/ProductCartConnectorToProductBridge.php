@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductCartConnectorToProductBridge implements ProductCartConnectorToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -47,4 +46,23 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
         return $this->productFacade->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
 
+    /**
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($concreteSku)
+    {
+        return $this->productFacade->hasProductConcrete($concreteSku);
+    }
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($abstractSku)
+    {
+        return $this->productFacade->hasProductAbstract($abstractSku);
+    }
 }

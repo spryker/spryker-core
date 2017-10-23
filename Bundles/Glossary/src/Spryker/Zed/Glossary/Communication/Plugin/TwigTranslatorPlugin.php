@@ -19,7 +19,6 @@ use Twig_SimpleFilter;
  */
 class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements TranslatorInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -170,5 +169,4 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
 
         return $this->localeTransfer;
     }
-
 }

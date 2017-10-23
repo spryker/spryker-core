@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'locale facade';
     const QUERY_CONTAINER_TOUCH = 'touch query container';
     const SEARCH_PLUGINS = 'search plugins';
@@ -61,5 +60,4 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

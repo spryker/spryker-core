@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class FlysystemLocalFileSystemServiceTester extends Actor
 {
-
     use _generated\FlysystemLocalFileSystemServiceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

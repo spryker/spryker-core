@@ -6,15 +6,6 @@ namespace SprykerTest\_generated;
 // @codingStandardsIgnoreFile
 
 use Codeception\Module\WebDriver;
-use SprykerTest\Shared\Propel\Helper\ConnectionHelper;
-use SprykerTest\Shared\Testify\Helper\Environment;
-use SprykerTest\Shared\Config\Helper\ConfigInit;
-use Transfer\Module\TransferGenerate;
-use SprykerTest\Shared\Propel\Helper\PropelInstallHelper;
-use SprykerTest\Shared\Application\Helper\YvesHelper;
-use SprykerTest\Shared\Application\Helper\ZedHelper;
-use SprykerTest\Shared\Sales\Helper\SalesHelper;
-use SprykerTest\Zed\Oms\Helper\OmsHelper;
 
 trait AcceptanceTesterActions
 {

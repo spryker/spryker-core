@@ -14,7 +14,6 @@ use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationInterfa
 
 class NavigationNodeFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationInterface
      */
@@ -79,5 +78,4 @@ class NavigationNodeFormDataProvider
 
         return $navigationNodeTransfer;
     }
-
 }

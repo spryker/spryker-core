@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class CmsTwigContentRendererPlugin extends AbstractPlugin implements CmsTwigContentRendererPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class CmsTwigContentRendererPlugin extends AbstractPlugin implements CmsTwigCont
             ->createTwigContentRenderer()
             ->render($contentList, $context);
     }
-
 }

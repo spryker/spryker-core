@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentClientInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface ShipmentClientInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
-
 }

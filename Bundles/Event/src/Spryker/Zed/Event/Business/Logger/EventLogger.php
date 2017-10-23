@@ -13,7 +13,6 @@ use Spryker\Zed\Event\EventConfig;
 
 class EventLogger implements EventLoggerInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -52,5 +51,4 @@ class EventLogger implements EventLoggerInterface
         $this->getLogger($this->loggerConfig)
             ->info($message);
     }
-
 }

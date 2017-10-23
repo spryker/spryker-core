@@ -29,7 +29,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
  */
 class ElasticsearchWriterTest extends Unit
 {
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\Elastica\Client
      */
@@ -168,5 +167,4 @@ class ElasticsearchWriterTest extends Unit
         $mockResponse->method('isOk')->willReturn(true);
         return $mockResponse;
     }
-
 }

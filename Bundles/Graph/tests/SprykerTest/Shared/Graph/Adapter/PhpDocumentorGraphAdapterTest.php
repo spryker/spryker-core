@@ -21,7 +21,6 @@ use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
  */
 class PhpDocumentorGraphAdapterTest extends Unit
 {
-
     const GRAPH_NAME = 'graph name';
     const NODE_A = 'node A';
     const NODE_B = 'node B';
@@ -164,5 +163,4 @@ class PhpDocumentorGraphAdapterTest extends Unit
     {
         return $this->getAdapter()->create(self::GRAPH_NAME);
     }
-
 }

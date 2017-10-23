@@ -12,7 +12,6 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 
 class EventSubscriberCollection implements EventSubscriberCollectionInterface
 {
-
     /**
      * @var array|\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface[]
      */
@@ -96,5 +95,4 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
     {
         return new ArrayIterator($this->eventSubscribers);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Mail\Dependency\Mailer;
 
 class MailToMailerBridge implements MailToMailerInterface
 {
-
     /**
      * @var \Swift_Message
      */
@@ -89,5 +88,4 @@ class MailToMailerBridge implements MailToMailerInterface
     {
         $this->mailer->send($this->message);
     }
-
 }

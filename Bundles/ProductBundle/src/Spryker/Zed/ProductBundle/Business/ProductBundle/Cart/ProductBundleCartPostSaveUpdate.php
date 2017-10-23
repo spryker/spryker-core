@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductBundleCartPostSaveUpdate implements ProductBundleCartPostSaveUpdateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -34,5 +33,4 @@ class ProductBundleCartPostSaveUpdate implements ProductBundleCartPostSaveUpdate
 
         return $quoteTransfer;
     }
-
 }

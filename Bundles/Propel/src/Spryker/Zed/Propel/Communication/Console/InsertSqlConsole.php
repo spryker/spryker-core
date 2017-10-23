@@ -14,7 +14,6 @@ use Symfony\Component\Process\Process;
 
 class InsertSqlConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:sql:insert';
 
     /**
@@ -46,5 +45,4 @@ class InsertSqlConsole extends Console
             echo $buffer;
         });
     }
-
 }

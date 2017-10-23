@@ -24,7 +24,6 @@ use Spryker\Zed\Tax\TaxDependencyProvider;
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Tax\Business\Model\TaxReaderInterface
      */
@@ -109,5 +108,4 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     {
         return new TaxAmountCalculator($this->createAccruedTaxCalculator());
     }
-
 }

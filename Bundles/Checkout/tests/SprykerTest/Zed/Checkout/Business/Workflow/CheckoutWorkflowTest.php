@@ -32,7 +32,6 @@ use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
  */
 class CheckoutWorkflowTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -188,5 +187,4 @@ class CheckoutWorkflowTest extends Unit
 
         return $checkoutResponseTransfer;
     }
-
 }

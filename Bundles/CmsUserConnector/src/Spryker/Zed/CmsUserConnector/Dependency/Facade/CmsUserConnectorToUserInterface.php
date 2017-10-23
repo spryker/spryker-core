@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsUserConnector\Dependency\Facade;
 
 interface CmsUserConnectorToUserInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
@@ -26,5 +25,4 @@ interface CmsUserConnectorToUserInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getUserById($idUser);
-
 }

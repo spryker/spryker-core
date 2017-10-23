@@ -16,7 +16,6 @@ use Spryker\Zed\Storage\StorageDependencyProvider;
  */
 class StorageBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Storage\Business\Model\Storage
      */
@@ -34,5 +33,4 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
     }
-
 }

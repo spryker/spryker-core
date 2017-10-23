@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RefundTransfer;
 
 class ExpenseRefundCalculator extends AbstractRefundCalculator
 {
-
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -68,5 +67,4 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
             }
         }
     }
-
 }

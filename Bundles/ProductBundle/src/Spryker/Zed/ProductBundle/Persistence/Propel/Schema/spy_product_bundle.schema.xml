@@ -18,6 +18,10 @@
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
 
+        <index name="spy_product_bundle-index-fk_product">
+            <index-column name="fk_product" />
+        </index>
+
         <id-method-parameter value="spy_product_bundle_pk_seq"/>
     </table>
 

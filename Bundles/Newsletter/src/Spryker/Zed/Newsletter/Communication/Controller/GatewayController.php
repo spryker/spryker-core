@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
@@ -66,5 +65,4 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->checkSubscription($newsletterUnsubscriptionRequest);
     }
-
 }

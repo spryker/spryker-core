@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 interface CategoryToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -48,5 +47,4 @@ interface CategoryToTouchInterface
      * @return \Generated\Shared\Transfer\TouchTransfer[]
      */
     public function getItemsByType($itemType);
-
 }

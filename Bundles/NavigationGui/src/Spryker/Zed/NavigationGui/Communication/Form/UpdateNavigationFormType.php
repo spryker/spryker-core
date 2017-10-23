@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UpdateNavigationFormType extends NavigationFormType
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -30,5 +29,4 @@ class UpdateNavigationFormType extends NavigationFormType
 
         return $this;
     }
-
 }

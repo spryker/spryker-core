@@ -20,8 +20,9 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
-
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -34,6 +35,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -46,6 +49,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -58,6 +63,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -70,6 +77,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -82,6 +91,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -94,6 +105,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
@@ -106,6 +119,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
@@ -118,6 +133,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
@@ -130,6 +147,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
@@ -142,18 +161,22 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
     {
-        $this->createCartHandler()->moveCollectionToCart($wishlistMoveToCartRequestCollectionTransfer);
+        return $this->createCartHandler()->moveCollectionToCart($wishlistMoveToCartRequestCollectionTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -166,6 +189,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
@@ -179,6 +204,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
@@ -210,5 +237,4 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
             $this
         );
     }
-
 }

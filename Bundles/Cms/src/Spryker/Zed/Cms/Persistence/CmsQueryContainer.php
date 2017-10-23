@@ -25,7 +25,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
-
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
     const CATEGORY_NODE_ID = 'categoryNodeId';
@@ -636,6 +635,17 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @api
      *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
+     */
+    public function queryAllCmsVersions()
+    {
+        return $this->getFactory()
+            ->createSpyCmsVersionQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idPage
      * @param int $version
      *
@@ -659,5 +669,4 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->queryGlossaryKeyMappings()
             ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
     }
-
 }

@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CarrierForm extends AbstractType
 {
-
     const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
     const FIELD_NAME_FIELD = 'name';
     const FIELD_IS_ACTIVE_FIELD = 'isActive';
@@ -147,5 +146,4 @@ class CarrierForm extends AbstractType
 
         return $count > 0;
     }
-
 }

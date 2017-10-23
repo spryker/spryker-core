@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 interface ProductAbstractRelationReaderInterface
 {
-
     /**
      * @param int $idProductLabel
      *
      * @return int[]
      */
     public function findIdsProductAbstractByIdProductLabel($idProductLabel);
-
 }

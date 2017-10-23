@@ -9,11 +9,9 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class SubtotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -43,5 +41,4 @@ class SubtotalCalculator implements CalculatorInterface
         }
         return $subtotal;
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 
 interface NewsletterClientInterface
 {
-
     /**
      * @api
      *
@@ -57,5 +56,4 @@ interface NewsletterClientInterface
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
-
 }

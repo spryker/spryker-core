@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Dependency\Plugin\Command;
 
 interface CommandCollectionInterface
 {
-
     /**
      *
      * Add new command to list of commands
@@ -36,5 +35,4 @@ interface CommandCollectionInterface
      * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
     public function get($name);
-
 }

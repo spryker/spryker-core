@@ -15,7 +15,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class QuoteClient extends AbstractClient implements QuoteClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -53,5 +52,4 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     {
         $this->getFactory()->createSession()->clearQuote();
     }
-
 }

@@ -48,7 +48,6 @@ use Spryker\Zed\Product\ProductDependencyProvider;
  */
 class ProductBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Product\Business\Product\ProductManagerInterface
      */
@@ -529,5 +528,4 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
     }
-
 }

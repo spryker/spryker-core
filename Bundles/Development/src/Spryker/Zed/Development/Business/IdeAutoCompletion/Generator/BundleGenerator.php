@@ -8,7 +8,6 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Generator;
 
 class BundleGenerator extends AbstractGenerator
 {
-
     /**
      * @return string
      */
@@ -16,5 +15,4 @@ class BundleGenerator extends AbstractGenerator
     {
         return 'AutoCompletion';
     }
-
 }

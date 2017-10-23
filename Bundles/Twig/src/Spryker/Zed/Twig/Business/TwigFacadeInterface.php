@@ -12,7 +12,6 @@ namespace Spryker\Zed\Twig\Business;
  */
 interface TwigFacadeInterface
 {
-
     /**
      * Specification:
      * - Creates twig template path cache file for all applied applications
@@ -22,5 +21,4 @@ interface TwigFacadeInterface
      * @return void
      */
     public function warmUpCache();
-
 }

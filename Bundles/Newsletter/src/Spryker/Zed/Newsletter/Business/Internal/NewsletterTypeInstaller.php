@@ -12,7 +12,6 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class NewsletterTypeInstaller implements NewsletterTypeInstallerInterface
 {
-
     /**
      * @var \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface
      */
@@ -56,5 +55,4 @@ class NewsletterTypeInstaller implements NewsletterTypeInstallerInterface
             $newsletterType->save();
         }
     }
-
 }

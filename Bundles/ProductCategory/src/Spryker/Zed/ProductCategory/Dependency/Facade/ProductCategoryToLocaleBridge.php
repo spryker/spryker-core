@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategory\Dependency\Facade;
 
 class ProductCategoryToLocaleBridge implements ProductCategoryToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -30,5 +29,4 @@ class ProductCategoryToLocaleBridge implements ProductCategoryToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
-
 }

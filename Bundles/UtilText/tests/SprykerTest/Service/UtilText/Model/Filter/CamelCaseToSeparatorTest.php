@@ -22,7 +22,6 @@ use Spryker\Service\UtilText\Model\Filter\CamelCaseToSeparator;
  */
 class CamelCaseToSeparatorTest extends Unit
 {
-
     /**
      * @return array
      */
@@ -52,5 +51,4 @@ class CamelCaseToSeparatorTest extends Unit
         $filter = new CamelCaseToSeparator();
         $this->assertEquals($expected, $filter->filter($camelCase, $separator));
     }
-
 }

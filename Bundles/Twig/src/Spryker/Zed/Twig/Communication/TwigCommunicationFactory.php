@@ -20,7 +20,6 @@ use Spryker\Zed\Twig\TwigDependencyProvider;
  */
 class TwigCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Twig_LoaderInterface
      */
@@ -78,5 +77,4 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(TwigDependencyProvider::SERVICE_UTIL_TEXT);
     }
-
 }

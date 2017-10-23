@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 interface ClassDefinitionInterface extends DefinitionInterface
 {
-
     /**
      * @return array
      */
@@ -19,6 +18,11 @@ interface ClassDefinitionInterface extends DefinitionInterface
      * @return array
      */
     public function getProperties();
+
+    /**
+     * @return array
+     */
+    public function getPropertyNameMap();
 
     /**
      * @return array
@@ -40,4 +44,8 @@ interface ClassDefinitionInterface extends DefinitionInterface
      */
     public function getDeprecationDescription();
 
+    /**
+     * @return bool
+     */
+    public function hasArrayObject();
 }

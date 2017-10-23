@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-
     const MESSAGE_SUCCESS_CREATE = 'Customer created successfully';
     const MESSAGE_ERROR_CREATE = 'Customer was not created';
 
@@ -64,5 +63,4 @@ class AddController extends AbstractController
     {
         return new CustomerTransfer();
     }
-
 }

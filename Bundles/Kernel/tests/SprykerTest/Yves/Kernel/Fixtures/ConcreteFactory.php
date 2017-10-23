@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\AbstractFactory;
 
 class ConcreteFactory extends AbstractFactory
 {
-
     /**
      * @param string $key
      *
@@ -21,5 +20,4 @@ class ConcreteFactory extends AbstractFactory
     {
         return parent::getProvidedDependency($key);
     }
-
 }

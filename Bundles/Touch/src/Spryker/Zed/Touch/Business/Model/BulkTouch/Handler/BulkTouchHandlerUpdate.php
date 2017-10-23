@@ -12,7 +12,6 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 
 class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
 {
-
     /**
      * @param string $itemType
      * @param string $itemEvent
@@ -65,5 +64,4 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
 
         return array_search($eventName, $itemEventValueSet);
     }
-
 }

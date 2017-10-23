@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PropelQueryBuilderQueryContainer extends AbstractQueryContainer implements PropelQueryBuilderQueryContainerInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -49,5 +48,4 @@ class PropelQueryBuilderQueryContainer extends AbstractQueryContainer implements
             ->createRuleTransferMapper()
             ->createRuleQuerySetFromJson($json);
     }
-
 }

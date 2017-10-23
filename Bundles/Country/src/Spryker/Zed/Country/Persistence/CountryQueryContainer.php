@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CountryQueryContainer extends AbstractQueryContainer implements CountryQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -82,5 +81,4 @@ class CountryQueryContainer extends AbstractQueryContainer implements CountryQue
 
         return $query;
     }
-
 }

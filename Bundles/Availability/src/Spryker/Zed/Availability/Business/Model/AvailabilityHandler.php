@@ -17,7 +17,6 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -267,5 +266,4 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         return $availableAbstractEntity;
     }
-
 }

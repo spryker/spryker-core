@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductSearch\PageObject;
 
 class FilterPreferencesPage
 {
-
     const URL_LIST = '/product-search/filter-preferences';
     const URL_CREATE = '/product-search/filter-preferences/create';
     const URL_VIEW = '/product-search/filter-preferences/view?id=';
@@ -26,5 +25,4 @@ class FilterPreferencesPage
     const SELECTOR_COPY_ATTRIBUTE_NAME_TRANSLATION_BUTTON = '.name-translation ~ span > button';
     const SELECTOR_BUTTON_EDIT = '.title-action > .btn-edit';
     const SELECTOR_BUTTON_DELETE = '.title-action > .btn-remove';
-
 }

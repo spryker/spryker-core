@@ -12,7 +12,6 @@ use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 
 class CustomerFormDataProvider extends AbstractCustomerDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
@@ -54,5 +53,4 @@ class CustomerFormDataProvider extends AbstractCustomerDataProvider
 
         return array_combine($genderSet, $genderSet);
     }
-
 }

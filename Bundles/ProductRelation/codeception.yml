@@ -2,7 +2,7 @@ namespace: ProductRelation
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/ProductRelation
+    - tests/SprykerTest/Zed/ProductRelation
 
 paths:
     tests: tests

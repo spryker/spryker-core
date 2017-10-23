@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 
 interface CmsVersionUserExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
     public function expandCmsVersionTransferWithUser(CmsVersionTransfer $cmsVersionTransfer);
-
 }

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 
 interface CategoryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -463,5 +462,4 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
      */
     public function findCategoryTemplateByName($name);
-
 }

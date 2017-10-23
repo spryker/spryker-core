@@ -18,7 +18,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryUrl implements CategoryUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -287,5 +286,4 @@ class CategoryUrl implements CategoryUrlInterface
 
         return $urlTransfer;
     }
-
 }

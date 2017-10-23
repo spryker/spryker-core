@@ -12,7 +12,6 @@ namespace Spryker\Shared\EventJournal\Model\Filter;
  */
 abstract class AbstractFilter implements FilterInterface
 {
-
     const TYPE = 'undefined';
 
     /**
@@ -35,5 +34,4 @@ abstract class AbstractFilter implements FilterInterface
     {
         return static::TYPE;
     }
-
 }

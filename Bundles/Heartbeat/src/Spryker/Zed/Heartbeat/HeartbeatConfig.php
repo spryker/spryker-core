@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class HeartbeatConfig extends AbstractBundleConfig
 {
-
     /**
      * @return \Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface[]
      */
@@ -19,5 +18,4 @@ class HeartbeatConfig extends AbstractBundleConfig
     {
         return [];
     }
-
 }

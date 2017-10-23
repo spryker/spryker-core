@@ -9,7 +9,6 @@ namespace Spryker\Yves\CmsContentWidgetProductSetConnector\Dependency\Client;
 
 class CmsContentWidgetProductSetConnectorToProductSetBridgeSet implements CmsContentWidgetProductSetConnectorToProductSetInterface
 {
-
     /**
      * @var \Spryker\Client\ProductSet\ProductSetClientInterface
      */
@@ -32,5 +31,4 @@ class CmsContentWidgetProductSetConnectorToProductSetBridgeSet implements CmsCon
     {
         return $this->productSetClient->findProductSetByIdProductSet($idProductAbstract);
     }
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SessionRemoveLockConsole extends Console
 {
-
     const COMMAND_NAME = 'session:lock:remove';
     const OPTION_HELP = 'help';
     const OPTION_APPLICATION_YVES = 'yves';
@@ -81,5 +80,4 @@ HELPTEXT;
 
         return 1;
     }
-
 }

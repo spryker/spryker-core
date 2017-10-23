@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Currency\Business;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,10 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
 {
-
     /**
-     * Specification:
-     * - Returns CurrencyTransfer object for given ISO code
+     * {@inheritdoc}
      *
      * @api
      *
@@ -27,12 +26,11 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      */
     public function fromIsoCode($isoCode)
     {
-        return $this->getFactory()->createCurrencyBuilder()->fromIsoCode($isoCode);
+        return $this->getFactory()->createCurrencyReader()->getByIsoCode($isoCode);
     }
 
     /**
-     * Specification:
-     * - Returns CurrencyTransfer object for current ISO code
+     * {@inheritdoc}
      *
      * @api
      *
@@ -43,4 +41,63 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
         return $this->getFactory()->createCurrencyBuilder()->getCurrent();
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    public function createCurrency(CurrencyTransfer $currencyTransfer)
+    {
+        return $this->getFactory()
+            ->createCurrencyWriter()
+            ->create($currencyTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCurrency
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getByIdCurrency($idCurrency)
+    {
+        return $this->getFactory()->createCurrencyReader()->getByIdCurrency($idCurrency);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getCurrentStoreWithCurrencies()
+    {
+        return $this->getFactory()->createCurrencyReader()->getCurrentStoreWithCurrencies();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies()
+    {
+        return $this->getFactory()->createCurrencyReader()->getAllStoresWithCurrencies();
+    }
 }

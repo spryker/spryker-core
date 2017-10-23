@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PaymentMethodExtractorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -20,5 +19,4 @@ interface PaymentMethodExtractorInterface
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
     public function extractPaymentMethod(QuoteTransfer $quoteTransfer);
-
 }

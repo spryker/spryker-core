@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 
 class YvesFragmentControllerResolver extends SilexControllerResolver
 {
-
     /**
      * @param string $controller
      *
@@ -58,5 +57,4 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
     {
         return $this->app['request_stack']->getCurrentRequest();
     }
-
 }

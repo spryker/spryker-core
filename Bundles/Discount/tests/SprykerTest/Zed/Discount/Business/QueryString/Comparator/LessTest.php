@@ -24,7 +24,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Less;
  */
 class LessTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -91,5 +90,4 @@ class LessTest extends Unit
     {
         return new Less();
     }
-
 }

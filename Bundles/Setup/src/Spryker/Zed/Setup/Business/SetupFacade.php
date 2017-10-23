@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SetupFacade extends AbstractFacade implements SetupFacadeInterface
 {
-
     /**
      * @api
      *
@@ -82,5 +81,4 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     {
         return $this->getFactory()->getConsoleCommands();
     }
-
 }

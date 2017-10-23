@@ -9,7 +9,6 @@ namespace Spryker\Shared\Currency\Dependency\Internationalization;
 
 interface CurrencyToInternationalizationInterface
 {
-
     /**
      * @param string $isoCode
      *
@@ -30,5 +29,4 @@ interface CurrencyToInternationalizationInterface
      * @return int|null
      */
     public function getFractionDigits($isoCode);
-
 }

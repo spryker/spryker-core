@@ -22,7 +22,6 @@ use SprykerTest\Zed\Glossary\PageObject\GlossaryListPage;
  */
 class GlossaryEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
@@ -32,7 +31,6 @@ class GlossaryEditCest
     {
         $i->listDataTable(GlossaryListPage::URL . '/index/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Glossary / Edit Glossary Translation');
+        $i->seeBreadcrumbNavigation('Dashboard / Glossary / Edit Translation');
     }
-
 }

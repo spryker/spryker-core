@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class ClientResolver extends AbstractClassResolver
 {
-
     const CLASS_NAME_PATTERN = '\\%1$s\\Client\\%2$s%3$s\\%2$sClient';
 
     /**
@@ -19,7 +18,7 @@ class ClientResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Client\Kernel\ClassResolver\Client\ClientNotFoundException
      *
-     * @return \Spryker\Client\Kernel\AbstractClient
+     * @return \Spryker\Client\Kernel\AbstractClient|object
      */
     public function resolve($callerClass)
     {
@@ -43,5 +42,4 @@ class ClientResolver extends AbstractClassResolver
             self::KEY_STORE
         );
     }
-
 }

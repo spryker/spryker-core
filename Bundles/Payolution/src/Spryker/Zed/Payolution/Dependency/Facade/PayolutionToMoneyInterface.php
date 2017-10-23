@@ -9,7 +9,6 @@ namespace Spryker\Zed\Payolution\Dependency\Facade;
 
 interface PayolutionToMoneyInterface
 {
-
     /**
      * @param float $value
      *
@@ -23,5 +22,4 @@ interface PayolutionToMoneyInterface
      * @return float
      */
     public function convertIntegerToDecimal($value);
-
 }

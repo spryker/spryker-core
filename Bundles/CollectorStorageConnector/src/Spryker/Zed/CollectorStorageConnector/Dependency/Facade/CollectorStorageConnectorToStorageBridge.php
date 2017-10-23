@@ -9,7 +9,6 @@ namespace Spryker\Zed\CollectorStorageConnector\Dependency\Facade;
 
 class CollectorStorageConnectorToStorageBridge implements CollectorStorageConnectorToStorageInterface
 {
-
     /**
      * @var \Spryker\Zed\Storage\Business\StorageFacadeInterface
      */
@@ -30,5 +29,4 @@ class CollectorStorageConnectorToStorageBridge implements CollectorStorageConnec
     {
         return $this->storageFacade->getTimestamps();
     }
-
 }

@@ -22,7 +22,6 @@ use Spryker\Zed\Twig\Business\TwigBusinessFactory;
  */
 class TwigBusinessFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -31,5 +30,4 @@ class TwigBusinessFactoryTest extends Unit
         $twigBusinessFactory = new TwigBusinessFactory();
         $this->assertInstanceOf(CacheWarmerInterface::class, $twigBusinessFactory->createCacheWarmer());
     }
-
 }

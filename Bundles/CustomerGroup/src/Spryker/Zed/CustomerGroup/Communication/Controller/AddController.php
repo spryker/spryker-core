@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-
     const MESSAGE_SUCCESS_CREATED = 'Customer group created successfully';
 
     /**
@@ -87,5 +86,4 @@ class AddController extends AbstractController
     {
         return new CustomerTransfer();
     }
-
 }

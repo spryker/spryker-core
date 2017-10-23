@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CreateDatabaseConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:database:create';
 
     /**
@@ -41,5 +40,4 @@ class CreateDatabaseConsole extends Console
         $this->info('Creating Database');
         $this->getFacade()->createDatabaseIfNotExists();
     }
-
 }

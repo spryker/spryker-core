@@ -9,7 +9,6 @@ namespace Spryker\Shared\Currency\Dependency\Internationalization;
 
 class CurrencyToInternationalizationBridge implements CurrencyToInternationalizationInterface
 {
-
     /**
      * @var \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface
      */
@@ -52,5 +51,4 @@ class CurrencyToInternationalizationBridge implements CurrencyToInternationaliza
     {
         return $this->currencyBundle->getFractionDigits($isoCode);
     }
-
 }

@@ -23,7 +23,6 @@ use Spryker\Zed\Refund\Business\Model\RefundCalculator\ExpenseRefundCalculator;
  */
 class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
 {
-
     /**
      * @return void
      */
@@ -32,7 +31,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
         $refundCalculationPlugin = new ExpenseRefundCalculator();
         $orderTransfer = $this->getOrderTransferWithoutRefundedItems();
         $salesOrderItems = [
-            $this->getSalesOrderItemOne()
+            $this->getSalesOrderItemOne(),
         ];
 
         $refundTransfer = new RefundTransfer();
@@ -50,7 +49,7 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
         $refundCalculationPlugin = new ExpenseRefundCalculator;
         $orderTransfer = $this->getOrderTransferWithRefundedItem();
         $salesOrderItems = [
-            $this->getSalesOrderItemTwo()
+            $this->getSalesOrderItemTwo(),
         ];
 
         $refundTransfer = new RefundTransfer();
@@ -59,5 +58,4 @@ class ExpenseRefundCalculatorTest extends AbstractRefundCalculatorTest
 
         $this->assertSame(10, $refundTransfer->getAmount());
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilText\Model\Token;
 
 class Token implements TokenInterface
 {
-
     /**
      * @param string $rawToken
      * @param array $options
@@ -31,5 +30,4 @@ class Token implements TokenInterface
     {
         return password_verify($rawToken, base64_decode($hash));
     }
-
 }

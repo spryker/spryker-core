@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductRelationFacade extends AbstractFacade implements ProductRelationFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -147,5 +146,4 @@ class ProductRelationFacade extends AbstractFacade implements ProductRelationFac
             ->createProductRelationUpdater()
             ->rebuildRelations();
     }
-
 }

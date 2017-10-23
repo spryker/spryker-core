@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class UtilDataReaderServiceTester extends Actor
 {
-
     use _generated\UtilDataReaderServiceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

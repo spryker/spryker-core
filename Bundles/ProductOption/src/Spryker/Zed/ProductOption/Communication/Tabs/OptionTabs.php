@@ -14,7 +14,6 @@ use Symfony\Component\Form\FormInterface;
 
 class OptionTabs extends AbstractTabs
 {
-
     /**
      * @var \Symfony\Component\Form\FormInterface
      */
@@ -100,5 +99,4 @@ class OptionTabs extends AbstractTabs
 
         return $this;
     }
-
 }

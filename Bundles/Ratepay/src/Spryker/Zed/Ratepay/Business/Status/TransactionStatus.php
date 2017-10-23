@@ -13,7 +13,6 @@ use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 
 class TransactionStatus implements TransactionStatusInterface
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface $queryContainer
      */
@@ -122,5 +121,4 @@ class TransactionStatus implements TransactionStatusInterface
             ]
         );
     }
-
 }

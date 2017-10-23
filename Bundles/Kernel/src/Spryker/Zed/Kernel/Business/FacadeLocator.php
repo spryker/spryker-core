@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 
 class FacadeLocator extends AbstractLocator
 {
-
     const FACADE_SUFFIX = 'Facade';
 
     /**
@@ -49,5 +48,4 @@ class FacadeLocator extends AbstractLocator
 
         return $facade;
     }
-
 }

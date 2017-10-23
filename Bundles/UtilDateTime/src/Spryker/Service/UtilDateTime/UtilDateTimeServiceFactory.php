@@ -12,7 +12,6 @@ use Spryker\Service\UtilDateTime\Model\DateTimeFormatter;
 
 class UtilDateTimeServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\UtilDateTime\Model\DateTimeFormatterInterface
      */
@@ -30,5 +29,4 @@ class UtilDateTimeServiceFactory extends AbstractServiceFactory
     {
         return $this->getProvidedDependency(UtilDateTimeDependencyProvider::CONFIG);
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class MatrixController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -26,5 +25,4 @@ class MatrixController extends AbstractController
             'matrix' => $matrix,
         ];
     }
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductAbstractReadObserverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function read(ProductAbstractTransfer $productAbstractTransfer);
-
 }

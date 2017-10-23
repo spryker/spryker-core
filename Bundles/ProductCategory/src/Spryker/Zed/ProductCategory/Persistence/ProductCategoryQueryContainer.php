@@ -21,13 +21,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductCategoryQueryContainer extends AbstractQueryContainer implements ProductCategoryQueryContainerInterface
 {
-
     const COL_CATEGORY_NAME = 'category_name';
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    protected function queryProductCategoryMappings()
+    public function queryProductCategoryMappings()
     {
         return $this->getFactory()->createProductCategoryQuery();
     }
@@ -248,5 +249,4 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 ->endUse()
             ->endUse();
     }
-
 }

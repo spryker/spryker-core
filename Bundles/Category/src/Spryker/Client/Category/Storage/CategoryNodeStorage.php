@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class CategoryNodeStorage implements CategoryNodeStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Category\Dependency\Client\CategoryToStorageClientInterface
      */
@@ -64,5 +63,4 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
 
         return $templatePath;
     }
-
 }

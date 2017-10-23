@@ -12,7 +12,6 @@ use Psr\Log\LoggerInterface;
 
 class LogHandler extends AbstractProcessingHandler
 {
-
     /**
      * @var \Psr\Log\LoggerInterface
      */
@@ -39,5 +38,4 @@ class LogHandler extends AbstractProcessingHandler
     {
         $this->logger->info($record['message'], $record['context']);
     }
-
 }

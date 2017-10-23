@@ -31,7 +31,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartFacadeTest extends Unit
 {
-
     const PRICE_TYPE_DEFAULT = 'DEFAULT';
     const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
     const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
@@ -261,5 +260,4 @@ class CartFacadeTest extends Unit
             ->setPrice(100)
             ->save();
     }
-
 }

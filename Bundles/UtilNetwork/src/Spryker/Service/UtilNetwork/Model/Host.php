@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilNetwork\Model;
 
 class Host implements HostInterface
 {
-
     /**
      * @var string
      */
@@ -26,5 +25,4 @@ class Host implements HostInterface
 
         return self::$hostname;
     }
-
 }

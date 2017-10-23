@@ -20,7 +20,5 @@ use Codeception\Actor;
  */
 class SalesCommunicationTester extends Actor
 {
-
     use _generated\SalesCommunicationTesterActions;
-
 }

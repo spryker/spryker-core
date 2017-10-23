@@ -27,7 +27,6 @@ use Spryker\Zed\ProductNew\ProductNewConfig;
  */
 class ProductNewFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\ProductNew\ProductNewBusinessTester
      */
@@ -313,5 +312,4 @@ class ProductNewFacadeTest extends Unit
             $newToFieldName => null,
         ]);
     }
-
 }

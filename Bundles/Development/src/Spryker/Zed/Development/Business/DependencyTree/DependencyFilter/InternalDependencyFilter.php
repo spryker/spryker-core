@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class InternalDependencyFilter implements DependencyFilterInterface
 {
-
     /**
      * @param array $dependency
      *
@@ -21,5 +20,4 @@ class InternalDependencyFilter implements DependencyFilterInterface
     {
         return !isset($dependency[DependencyTree::META_FOREIGN_IS_EXTERNAL]);
     }
-
 }

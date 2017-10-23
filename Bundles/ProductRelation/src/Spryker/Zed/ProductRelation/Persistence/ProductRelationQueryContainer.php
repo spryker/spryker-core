@@ -26,7 +26,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductRelationQueryContainer extends AbstractQueryContainer implements ProductRelationQueryContainerInterface
 {
-
     const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
     const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
     const COL_CATEGORY_NAME = 'category_name';
@@ -44,6 +43,17 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     {
         return $this->getFactory()
             ->createProductRelationTypeQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryAllProductRelations()
+    {
+        return $this->getFactory()
+            ->createProductRelationQuery();
     }
 
     /**
@@ -198,7 +208,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function queryProductRelationsWithProductCount($idLocale)
     {
-        return $this->getFactory()
+        $query = $this->getFactory()
             ->createProductRelationQuery()
             ->select([
                 SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION,
@@ -215,9 +225,11 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                     ->filterByFkLocale($idLocale)
                 ->endUse()
             ->endUse()
-            ->withColumn('COUNT(num_alias)', static::COL_NUMBER_OF_RELATED_PRODUCTS)
+            ->withColumn("COUNT('num_alias')", static::COL_NUMBER_OF_RELATED_PRODUCTS)
             ->joinSpyProductRelationType()
             ->groupByIdProductRelation();
+
+        return $query;
     }
 
     /**
@@ -355,5 +367,4 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 ->filterByFkProductRelation($idProductRelation)
             ->endUse();
     }
-
 }

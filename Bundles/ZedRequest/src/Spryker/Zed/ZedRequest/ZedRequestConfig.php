@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ZedRequestConfig extends AbstractBundleConfig
 {
-
     /**
      * @param string $fileName
      *
@@ -51,5 +50,4 @@ class ZedRequestConfig extends AbstractBundleConfig
 
         return $fileName . '.log';
     }
-
 }

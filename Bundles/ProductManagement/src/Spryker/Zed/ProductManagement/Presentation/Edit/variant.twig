@@ -33,6 +33,8 @@
                 'id-product-abstract': idProductAbstract}), 'Deactivate' | trans) }}
      {% endif %}
 
+    {{ editActionButton('/product-attribute-gui/view/product?id-product=' ~ idProduct, 'Manage Attributes' | trans) }}
+
     {{ backActionButton('/product-management/edit?id-product-abstract=' ~ idProductAbstract, 'Edit Product Abstract' | trans) }}
 {% endblock %}
 

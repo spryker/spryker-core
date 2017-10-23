@@ -19,7 +19,6 @@ use Twig_SimpleFunction;
  */
 class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -82,5 +81,4 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
     public function boot(Application $app)
     {
     }
-
 }

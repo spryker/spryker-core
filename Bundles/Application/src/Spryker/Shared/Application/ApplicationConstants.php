@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\KernelConstants;
 
 interface ApplicationConstants
 {
-
     const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
     const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
@@ -27,13 +26,49 @@ interface ApplicationConstants
      */
     const YVES_THEME = 'YVES_THEME';
 
+    /**
+     * Specification:
+     * - If option set to true, the application will check if the request is secure and not excluded from https.
+     * - If request is not secure and not excluded from https, the application will return a redirect response.
+     * - If request is secure and page is excluded from https, the application will allow http.
+     *
+     * @api
+     */
+    const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
+
+    /**
+     * Specification:
+     * - An array of HTTPS Excluded resources when ssl is enabled.
+     * - Example: `['route-name-a' => '/url-a', 'route-name-b' => '/url-b']`
+     *
+     * @api
+     */
+    const YVES_SSL_EXCLUDED = 'YVES_SSL_EXCLUDED';
+
+    /**
+     * Specification:
+     * - IP address (or range) of your proxy.
+     * - Example: `['192.0.0.1', '10.0.0.0/8']`.
+     *
+     * @api
+     */
     const YVES_TRUSTED_PROXIES = 'YVES_TRUSTED_PROXIES';
+
+    /**
+     * Specification:
+     * - List of trusted hosts managed by regexp.
+     *
+     * @api
+     */
     const YVES_TRUSTED_HOSTS = 'YVES_TRUSTED_HOSTS';
+
     const YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
     const YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
-    const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
+
+    /**
+     * @deprecated Use only `YVES_SSL_ENABLED` in combination with `YVES_SSL_EXCLUDED`. If `YVES_SSL_EXCLUDED` is empty the page is complete ssl enabled then.
+     */
     const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
-    const YVES_SSL_EXCLUDED = 'YVES_SSL_EXCLUDED';
 
     const YVES_COOKIE_VISITOR_ID_NAME = 'YVES_COOKIE_VISITOR_ID_NAME';
     const YVES_COOKIE_VISITOR_ID_VALID_FOR = 'YVES_COOKIE_VISITOR_ID_VALID_FOR';
@@ -46,6 +81,7 @@ interface ApplicationConstants
      * @deprecated Use `KernelConstants::PROJECT_NAMESPACES` instead
      */
     const PROJECT_NAMESPACES = KernelConstants::PROJECT_NAMESPACES;
+
     /**
      * @deprecated Use `KernelConstants::CORE_NAMESPACES` instead
      */
@@ -70,15 +106,48 @@ interface ApplicationConstants
     const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
-     * SSL
+     * Specification:
+     * - If option set to true, the application will check if the request is secure and not excluded from https.
+     * - If request is not secure and not excluded from https, the application will return a redirect response.
+     * - If request is secure and page is excluded from https, the application will allow http.
+     *
+     * @api
      */
     const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
+
+    /**
+     * Specification:
+     * - An array of HTTPS Excluded module/controller pairs when ssl is enabled.
+     * - Example: `['module-a/controller-a', 'module-b/controller-b']`
+     *
+     * @api
+     */
     const ZED_SSL_EXCLUDED = 'ZED_SSL_EXCLUDED';
+
+    /**
+     * Specification:
+     * - IP address (or range) of your proxy.
+     * - Example: `['192.0.0.1', '10.0.0.0/8']`.
+     *
+     * @api
+     */
+    const ZED_TRUSTED_PROXIES = 'ZED_TRUSTED_PROXIES';
+
+    /**
+     * Specification:
+     * - List of trusted hosts managed by regexp.
+     *
+     * @api
+     */
+    const ZED_TRUSTED_HOSTS = 'ZED_TRUSTED_HOSTS';
+
     const ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
     const ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 
     /**
      * RabbitMQ
+     *
+     * @deprecated use RabbitMQ module constants instead
      */
     /** @deprecated Use queue-adapter specific configuration constants */
     const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
@@ -238,5 +307,4 @@ interface ApplicationConstants
     const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     const FORM_FACTORY = 'FORM_FACTORY';
-
 }

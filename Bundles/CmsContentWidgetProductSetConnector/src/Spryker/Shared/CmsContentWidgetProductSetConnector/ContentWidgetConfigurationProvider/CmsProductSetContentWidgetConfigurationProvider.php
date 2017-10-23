@@ -11,7 +11,6 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 
 class CmsProductSetContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
-
     const FUNCTION_NAME = 'product_set';
 
     /**
@@ -39,5 +38,4 @@ class CmsProductSetContentWidgetConfigurationProvider implements CmsContentWidge
     {
         return "{{ product_set(['set_key1', 'set_key2']) }}, to use different template {{ product_set(['set_key1', 'set_key2'], 'default') }}";
     }
-
 }

@@ -21,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractDatabaseCollector extends AbstractCollector implements DatabaseCollectorInterface
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -163,6 +162,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
                 );
 
                 if ($keysToDelete) {
+                    $this->deleteTouchKeyEntities($keysToDelete, $touchUpdater);
                     $storeWriter->delete($keysToDelete);
                 }
             }
@@ -181,4 +181,17 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         $this->locale = $localeTransfer;
     }
 
+    /**
+     * @param string[] $keysToDelete
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
+     */
+    protected function deleteTouchKeyEntities(array $keysToDelete, TouchUpdaterInterface $touchUpdater)
+    {
+        $touchUpdater->deleteTouchKeyEntities(
+            array_keys($keysToDelete),
+            $this->locale->getIdLocale()
+        );
+    }
 }

@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Kernel\Transfer;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use InvalidArgumentException;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
@@ -24,7 +23,6 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
  */
 class AbstractTransferTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -167,6 +165,96 @@ class AbstractTransferTest extends Unit
         ];
 
         $this->assertEquals($expected, $given);
+    }
+
+    /**
+     * @return void
+     */
+    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndNullValuesWhenNoPropertyWasSetCamelCased()
+    {
+        $transfer = new AbstractTransfer();
+        $given = $transfer->toArray(true, true);
+        $expected = [
+            'string' => null,
+            'int' => null,
+            'bool' => null,
+            'array' => [],
+            'transfer' => null,
+            'transferCollection' => new ArrayObject(),
+        ];
+
+        $this->assertEquals($expected, $given);
+    }
+
+    /**
+     * @return void
+     */
+    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesCamelCasedAndRecursived()
+    {
+        $transfer = (new AbstractTransfer())
+            ->setInt(100)
+            ->setTransfer(
+                (new AbstractTransfer())
+                    ->setInt(200)
+            )
+            ->setTransferCollection(new ArrayObject([
+                (new AbstractTransfer())
+                    ->setInt(300),
+            ]));
+
+        $given = $transfer->toArray(true, true);
+        $expected = [
+            'string' => null,
+            'int' => 100,
+            'bool' => null,
+            'array' => [],
+            'transfer' => [
+                'string' => null,
+                'int' => 200,
+                'bool' => null,
+                'array' => [],
+                'transfer' => null,
+                'transferCollection' => new ArrayObject(),
+            ],
+            'transferCollection' => [
+                [
+                    'string' => null,
+                    'int' => 300,
+                    'bool' => null,
+                    'array' => [],
+                    'transfer' => null,
+                    'transferCollection' => new ArrayObject(),
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expected, $given);
+    }
+
+    /**
+     * @return void
+     */
+    public function testManyWaysToAccessAProperty()
+    {
+        $transfer = (new AbstractTransfer())
+            ->setInt(100)
+            ->setTransferCollection(new ArrayObject());
+
+        //Method call
+        $this->assertSame(100, $transfer->getInt());
+        $this->assertEquals(new ArrayObject(), $transfer->getTransferCollection());
+
+        //Transfer to array
+        $this->assertSame(100, $transfer->toArray()['int']);
+        $this->assertEquals(new ArrayObject(), $transfer->toArray()['transfer_collection']);
+
+        //Transfer to array with camelcase
+        $this->assertSame(100, $transfer->toArray(true, true)['int']);
+        $this->assertEquals(new ArrayObject(), $transfer->toArray(true, true)['transferCollection']);
+
+        //ArrayAccess
+        $this->assertSame(100, $transfer['int']);
+        $this->assertEquals(new ArrayObject(), $transfer['transferCollection']);
     }
 
     /**
@@ -450,25 +538,4 @@ class AbstractTransferTest extends Unit
 
         $this->assertCount(2, $transfer->getTransferCollection());
     }
-
-    /**
-     * @return void
-     */
-    public function testFromArrayShouldThrowInvalidArgumentExceptionWhenMissingPropertyCanBeIgnoredAndPropertyExistsButExpectedTypeDoesNotMatch()
-    {
-        if (version_compare(PHP_VERSION, '7.0') >= 0) {
-            $this->markTestSkipped('We must first upgrade PHPUnit to 5.6+');
-            return;
-        }
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Could not call "setArray(string)" (type string) in "%s". Maybe there is a type miss match.',
-            AbstractTransfer::class
-        ));
-
-        $abstractTransfer = new AbstractTransfer();
-        $abstractTransfer->fromArray(['array' => 'string']);
-    }
-
 }

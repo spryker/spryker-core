@@ -29,7 +29,6 @@ use Spryker\Shared\Search\SearchConfig;
  */
 class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpanderPluginQueryTest
 {
-
     /**
      * @return array
      */
@@ -490,5 +489,4 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
 
         return [$searchConfig, $expectedQuery, $parameters];
     }
-
 }

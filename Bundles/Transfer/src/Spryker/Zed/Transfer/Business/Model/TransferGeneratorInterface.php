@@ -9,10 +9,8 @@ namespace Spryker\Zed\Transfer\Business\Model;
 
 interface TransferGeneratorInterface
 {
-
     /**
      * @return void
      */
     public function execute();
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
  */
 class ResourceParametersPreProcessor implements PreProcessorInterface
 {
-
     /**
      * Maps all remaining path segments as resource params.
      *
@@ -41,5 +40,4 @@ class ResourceParametersPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

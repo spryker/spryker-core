@@ -9,12 +9,10 @@ namespace Spryker\Zed\Acl\Business\Model;
 
 interface InstallerInterface
 {
-
     /**
      * Main Installation Method
      *
      * @return void
      */
     public function install();
-
 }

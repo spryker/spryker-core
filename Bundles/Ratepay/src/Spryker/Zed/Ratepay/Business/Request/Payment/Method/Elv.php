@@ -17,7 +17,6 @@ use Spryker\Shared\Ratepay\RatepayConstants;
  */
 class Elv extends AbstractMethod
 {
-
     /**
      * @const Payment method code.
      */
@@ -65,5 +64,4 @@ class Elv extends AbstractMethod
     {
         return new RatepayPaymentElvTransfer();
     }
-
 }

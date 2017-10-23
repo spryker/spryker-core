@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 
 class NavigationDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**
@@ -38,5 +37,4 @@ class NavigationDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->storage()->client();
         };
     }
-
 }

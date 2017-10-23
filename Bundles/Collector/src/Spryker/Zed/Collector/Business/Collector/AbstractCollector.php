@@ -24,7 +24,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractCollector
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -367,5 +366,4 @@ abstract class AbstractCollector
         $progressBar->advance();
         $progressBar->finish();
     }
-
 }

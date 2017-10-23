@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Dependency\Facade;
 
 class OmsToSalesBridge implements OmsToSalesInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
@@ -32,5 +31,4 @@ class OmsToSalesBridge implements OmsToSalesInterface
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
     }
-
 }

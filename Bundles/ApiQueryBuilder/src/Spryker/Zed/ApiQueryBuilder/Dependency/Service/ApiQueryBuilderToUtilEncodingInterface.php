@@ -9,7 +9,6 @@ namespace Spryker\Zed\ApiQueryBuilder\Dependency\Service;
 
 interface ApiQueryBuilderToUtilEncodingInterface
 {
-
     /**
      * @param array $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface ApiQueryBuilderToUtilEncodingInterface
      * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

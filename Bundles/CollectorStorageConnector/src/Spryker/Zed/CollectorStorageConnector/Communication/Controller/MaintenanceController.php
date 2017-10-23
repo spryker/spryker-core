@@ -15,7 +15,6 @@ use Spryker\Zed\Storage\Communication\Controller\MaintenanceController as Storag
  */
 class MaintenanceController extends AbstractController
 {
-
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -34,5 +33,4 @@ class MaintenanceController extends AbstractController
 
         return $this->redirectResponse(StorageMaintenanceController::URL_STORAGE_MAINTENANCE);
     }
-
 }

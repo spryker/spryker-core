@@ -8,11 +8,11 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractPlugin
 {
-
     /**
      * @var \Spryker\Yves\Kernel\FactoryInterface
      */
@@ -22,6 +22,11 @@ abstract class AbstractPlugin
      * @var \Spryker\Client\Kernel\AbstractClient
      */
     private $client;
+
+    /**
+     * @var \Spryker\Yves\Kernel\AbstractBundleConfig
+     */
+    private $config;
 
     /**
      * @return \Spryker\Yves\Kernel\FactoryInterface
@@ -79,4 +84,31 @@ abstract class AbstractPlugin
         return new ClientResolver();
     }
 
+    /**
+     * @return \Spryker\Yves\Kernel\AbstractBundleConfig
+     */
+    protected function getConfig()
+    {
+        if ($this->config === null) {
+            $this->config = $this->resolveBundleConfig();
+        }
+
+        return $this->config;
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\AbstractBundleConfig
+     */
+    private function resolveBundleConfig()
+    {
+        return $this->getBundleConfigResolver()->resolve($this);
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver
+     */
+    private function getBundleConfigResolver()
+    {
+        return new BundleConfigResolver();
+    }
 }

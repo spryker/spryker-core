@@ -9,7 +9,6 @@ namespace Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder;
 
 interface TemplateNameBuilderInterface
 {
-
     /**
      * Extracts the template name from the given path for a given application.
      *
@@ -18,5 +17,4 @@ interface TemplateNameBuilderInterface
      * @return string
      */
     public function buildTemplateName($filePath);
-
 }

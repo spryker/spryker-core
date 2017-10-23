@@ -13,7 +13,6 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 class SessionHandlerRedis implements SessionHandlerInterface
 {
-
     const METRIC_SESSION_DELETE_TIME = 'Redis/Session_delete_time';
     const METRIC_SESSION_WRITE_TIME = 'Redis/Session_write_time';
     const METRIC_SESSION_READ_TIME = 'Redis/Session_read_time';
@@ -139,5 +138,4 @@ class SessionHandlerRedis implements SessionHandlerInterface
     {
         return true;
     }
-
 }

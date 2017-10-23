@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Plugin;
 
 interface CmsBlockViewPluginInterface
 {
-
     /**
      * Specification:
      * - Get a list of rendered subject statements
@@ -32,5 +31,4 @@ interface CmsBlockViewPluginInterface
      * @return string
      */
     public function getName();
-
 }

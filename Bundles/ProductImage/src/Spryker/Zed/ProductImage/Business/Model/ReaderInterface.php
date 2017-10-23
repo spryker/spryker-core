@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ReaderInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -47,5 +46,4 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer);
-
 }

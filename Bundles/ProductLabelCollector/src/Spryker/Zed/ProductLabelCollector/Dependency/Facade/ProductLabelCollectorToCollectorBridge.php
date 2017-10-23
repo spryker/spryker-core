@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductLabelCollectorToCollectorBridge implements ProductLabelCollectorToCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
@@ -65,5 +64,4 @@ class ProductLabelCollectorToCollectorBridge implements ProductLabelCollectorToC
             $output
         );
     }
-
 }

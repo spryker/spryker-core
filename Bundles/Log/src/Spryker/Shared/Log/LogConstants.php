@@ -9,7 +9,6 @@ namespace Spryker\Shared\Log;
 
 interface LogConstants
 {
-
     /**
      * Specification:
      * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
@@ -33,6 +32,14 @@ interface LogConstants
      * @api
      */
     const LOG_FILE_PATH = 'LOG_FILE_PATH';
+
+    /**
+     * Specification:
+     * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
+     *
+     * @api
+     */
+    const EXCEPTION_LOG_FILE_PATH = 'LOG:EXCEPTION_LOG_FILE_PATH';
 
     /**
      * Specification:
@@ -70,5 +77,4 @@ interface LogConstants
      * @api
      */
     const LOG_SANITIZED_VALUE = 'LOG_SANITIZED_VALUE';
-
 }

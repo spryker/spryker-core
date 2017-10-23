@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 
 class RelatedProductFormDataProvider
 {
-
     /**
      * @param int|null $idProductLabel
      *
@@ -32,5 +31,4 @@ class RelatedProductFormDataProvider
     {
         return [];
     }
-
 }

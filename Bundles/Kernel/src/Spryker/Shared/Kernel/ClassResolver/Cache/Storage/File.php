@@ -9,13 +9,13 @@ namespace Spryker\Shared\Kernel\ClassResolver\Cache\Storage;
 
 use Exception;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 
 class File implements StorageInterface
 {
-
     /**
      * @param array $data
      *
@@ -36,7 +36,12 @@ class File implements StorageInterface
                 '<?php return ' . $string . ';',
                 $flag
             );
+
+            if (function_exists('opcache_invalidate')) {
+                opcache_invalidate($this->getCacheFilename(), true);
+            }
         } catch (Exception $exception) {
+            ErrorLogger::getInstance()->log($exception);
         }
     }
 
@@ -59,7 +64,6 @@ class File implements StorageInterface
      */
     protected function getCacheFilename()
     {
-        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/' . APPLICATION . '/unresolvable.cache';
+        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/' . ucfirst(strtolower(APPLICATION)) . '/unresolvable.cache';
     }
-
 }

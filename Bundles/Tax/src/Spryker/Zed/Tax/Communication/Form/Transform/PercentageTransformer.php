@@ -11,7 +11,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class PercentageTransformer implements DataTransformerInterface
 {
-
     /**
      * Transforms a value from the original representation to a transformed representation.
      *
@@ -68,5 +67,4 @@ class PercentageTransformer implements DataTransformerInterface
     {
         return str_replace(',', '.', $value);
     }
-
 }

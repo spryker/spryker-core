@@ -6,7 +6,7 @@
     "braintree/braintree_php": "~3.15.0",
     "spryker/checkout": "^3.0.0",
     "spryker/config": "^3.0.0",
-    "spryker/currency": "^2.0.0",
+    "spryker/currency": "^2.0.0 || ^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/money": "^2.0.0",
@@ -14,7 +14,7 @@
     "spryker/payment": "^3.0.0 || ^4.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/refund": "^4.0.0 || ^5.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/step-engine": "^2.0.0 || ^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.1.0"
@@ -28,23 +28,21 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
     "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
+      "Acceptance": "tests/"
     },
     "psr-4": {
-      "Braintree\\Module\\": "tests/",
       "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
       "Oms\\Module\\": "vendor/spryker/oms/tests/_support/Module",
       "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
       "Sales\\Module\\": "vendor/spryker/sales/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

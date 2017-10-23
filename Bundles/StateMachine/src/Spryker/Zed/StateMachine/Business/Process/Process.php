@@ -11,7 +11,6 @@ use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 
 class Process implements ProcessInterface
 {
-
     /**
      * @var string
      */
@@ -388,5 +387,4 @@ class Process implements ProcessInterface
     {
         return $this->file;
     }
-
 }

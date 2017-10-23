@@ -13,7 +13,6 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 interface InvoiceInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -79,5 +78,4 @@ interface InvoiceInterface
      * @return int
      */
     public function getMaxGrandTotal();
-
 }

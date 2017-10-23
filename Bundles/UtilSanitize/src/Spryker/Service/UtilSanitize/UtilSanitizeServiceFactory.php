@@ -8,11 +8,11 @@
 namespace Spryker\Service\UtilSanitize;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\UtilSanitize\Model\ArrayFilter;
 use Spryker\Service\UtilSanitize\Model\Html;
 
 class UtilSanitizeServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @return \Spryker\Service\UtilSanitize\Model\HtmInterface
      */
@@ -21,4 +21,11 @@ class UtilSanitizeServiceFactory extends AbstractServiceFactory
         return new Html();
     }
 
+    /**
+     * @return \Spryker\Service\UtilSanitize\Model\ArrayFilterInterface
+     */
+    public function createArrayFilter()
+    {
+        return new ArrayFilter();
+    }
 }

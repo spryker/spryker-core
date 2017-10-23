@@ -32,7 +32,6 @@ use Spryker\Zed\Availability\Business\AvailabilityFacade;
  */
 class AvailabilityFacadeTest extends Unit
 {
-
     const ABSTRACT_SKU = '123_availability_test';
     const CONCRETE_SKU = '123_availability_test-concrete';
 
@@ -57,7 +56,7 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU,  ['quantity' => 0]);
+        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
 
         $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, 1);
 
@@ -273,5 +272,4 @@ class AvailabilityFacadeTest extends Unit
 
         return $availabilityEntity;
     }
-
 }

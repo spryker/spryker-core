@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BraintreeHandler
 {
-
     const PAYMENT_PROVIDER = 'braintree';
 
     /**
@@ -125,5 +124,4 @@ class BraintreeHandler
 
         return $braintreePaymentTransfer;
     }
-
 }

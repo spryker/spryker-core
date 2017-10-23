@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StateMachineConfig extends AbstractBundleConfig
 {
-
     const GRAPH_NAME = 'Statemachine';
 
     /**
@@ -70,4 +69,11 @@ class StateMachineConfig extends AbstractBundleConfig
         ];
     }
 
+    /**
+     * @return string
+     */
+    public function getSubProcessPrefixDelimiter()
+    {
+        return ' - ';
+    }
 }

@@ -16,7 +16,6 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
  */
 class FlysystemLocalFileSystemServiceFactory extends AbstractServiceFactory
 {
-
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
      * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
@@ -27,5 +26,4 @@ class FlysystemLocalFileSystemServiceFactory extends AbstractServiceFactory
     {
         return new LocalFilesystemBuilder($configTransfer);
     }
-
 }

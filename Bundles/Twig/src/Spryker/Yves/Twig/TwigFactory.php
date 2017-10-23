@@ -19,7 +19,6 @@ use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
  */
 class TwigFactory extends AbstractFactory
 {
-
     /**
      * @return \Twig_LoaderInterface
      */
@@ -77,5 +76,4 @@ class TwigFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(TwigDependencyProvider::SERVICE_UTIL_TEXT);
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 class FooType extends AbstractType
 {
-
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
@@ -35,5 +34,4 @@ class FooType extends AbstractType
     {
         return parent::getQueryContainer();
     }
-
 }

@@ -38,7 +38,6 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
  */
 class ShipmentTaxRateCalculationTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -299,5 +298,4 @@ class ShipmentTaxRateCalculationTest extends Unit
             ShipmentQueryContainer::COL_MAX_TAX_RATE => 12,
         ];
     }
-
 }

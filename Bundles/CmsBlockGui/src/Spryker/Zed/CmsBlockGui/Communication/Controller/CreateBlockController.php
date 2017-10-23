@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateBlockController extends AbstractController
 {
-
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
     const ERROR_MESSAGE_LOST_TEMPLATE = 'Selected template doesn\'t exist anymore';
     const MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED = 'CMS Block successfully created.';
@@ -82,7 +81,6 @@ class CreateBlockController extends AbstractController
                 ->createCmsBlock($cmsBlockForm->getData());
 
             $this->addSuccessMessage(static::MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED);
-
         } catch (CmsBlockTemplateNotFoundException $exception) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
 
@@ -106,5 +104,4 @@ class CreateBlockController extends AbstractController
         )
             ->build();
     }
-
 }

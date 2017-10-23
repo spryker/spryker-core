@@ -9,12 +9,10 @@ namespace Spryker\Shared\Session\Business\Handler\KeyGenerator;
 
 interface SessionKeyGeneratorInterface
 {
-
     /**
      * @param string $sessionId
      *
      * @return string
      */
     public function generateSessionKey($sessionId);
-
 }

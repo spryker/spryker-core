@@ -26,7 +26,6 @@ use SprykerTest\Zed\Customer\CustomerCommunicationTester;
  */
 class IndexControllerCest
 {
-
     /**
      * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i
      *
@@ -120,5 +119,4 @@ class IndexControllerCest
 
         return $customerBuilder->build();
     }
-
 }

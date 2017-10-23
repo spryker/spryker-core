@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductCartConnectorFacade extends AbstractFacade implements ProductCartConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Reads a persisted concrete product from database.
@@ -35,4 +34,21 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
             ->expandItems($cartChangeTransfer);
     }
 
+    /**
+     * Specification:
+     * - Checks added to cart products on existing
+     * - Returns pre-check transfer with error messages (in negative case)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItems(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createProductValidator()
+            ->validateItems($cartChangeTransfer);
+    }
 }

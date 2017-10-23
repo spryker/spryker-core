@@ -24,7 +24,6 @@ use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Elv;
  */
 class ElvTest extends AbstractMethodMapperTest
 {
-
     /**
      * @return \Spryker\Zed\Ratepay\Business\Request\Payment\Method\MethodInterface
      */
@@ -92,5 +91,4 @@ class ElvTest extends AbstractMethodMapperTest
         $this->assertEquals('bic', $this->requestTransfer->getBankAccount()->getBicSwift());
         $this->assertEquals('iban', $this->requestTransfer->getBankAccount()->getIban());
     }
-
 }

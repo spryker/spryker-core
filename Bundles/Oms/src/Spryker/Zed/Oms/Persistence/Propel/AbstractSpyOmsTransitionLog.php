@@ -21,7 +21,6 @@ use Propel\Runtime\Connection\ConnectionInterface;
  */
 abstract class AbstractSpyOmsTransitionLog extends BaseSpyOmsTransitionLog
 {
-
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
      *
@@ -39,5 +38,4 @@ abstract class AbstractSpyOmsTransitionLog extends BaseSpyOmsTransitionLog
 
         return true;
     }
-
 }

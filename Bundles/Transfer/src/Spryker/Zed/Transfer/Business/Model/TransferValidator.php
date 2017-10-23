@@ -14,7 +14,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class TransferValidator implements TransferValidatorInterface
 {
-
     const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
@@ -30,14 +29,34 @@ class TransferValidator implements TransferValidatorInterface
     /**
      * @var array
      */
-    protected $typeMap = [
-        'int' => 'int',
-        'bool' => 'bool',
+    protected $typeMap;
+
+    /**
+     * @var array
+     */
+    protected $simpleTypeMap = [
         'integer' => 'int',
         'boolean' => 'bool',
-        'string' => 'string',
-        'float' => 'float',
         'array' => 'array',
+        '[]' => 'array (or more concrete `type[]`)',
+        'mixed[]' => 'array (or more concrete `type[]`)',
+        'integer[]' => 'int[]',
+        'boolean[]' => 'bool[]',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $simpleTypeWhitelist = [
+        'int',
+        'float',
+        'string',
+        'bool',
+        'callable',
+        'iterable',
+        'iterator',
+        'resource',
+        'object',
     ];
 
     /**
@@ -48,6 +67,11 @@ class TransferValidator implements TransferValidatorInterface
     {
         $this->messenger = $messenger;
         $this->finder = $finder;
+
+        $this->typeMap = $this->simpleTypeMap;
+        foreach ($this->simpleTypeWhitelist as $type) {
+            $this->typeMap[$type] = $type;
+        }
     }
 
     /**
@@ -68,51 +92,104 @@ class TransferValidator implements TransferValidatorInterface
             $definition = Factory::fromFile($file->getPathname(), true)->toArray();
             $definition = $this->normalize($definition);
 
-            $bundle = $this->getBundleFromPathName($file->getFilename());
-            $result = $result & $this->validateDefinition($bundle, $definition, $options);
+            $module = $this->getModuleFromPathName($file->getFilename());
+            $result = $result & $this->validateDefinition($module, $definition, $options);
         }
 
         return (bool)$result;
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      * @param array $definition
      * @param array $options
      *
      * @return bool
      */
-    protected function validateDefinition($bundle, array $definition, array $options)
+    protected function validateDefinition($module, array $definition, array $options)
     {
         if ($options['verbose']) {
-            $this->messenger->info(sprintf('Checking %s bundle', $bundle));
+            $this->messenger->info(sprintf('Checking %s module', $module));
         }
 
         $ok = true;
         foreach ($definition as $transfer) {
             foreach ($transfer['property'] as $property) {
-                $type = strtolower($property['type']);
-                if (!isset($this->typeMap[$type])) {
+                $type = $property['type'];
+
+                if (!$this->isValidArrayType($type)) {
+                    $ok = false;
+                    $this->messenger->warning(sprintf(
+                        '%s.%s.%s: %s is an invalid array type',
+                        $module,
+                        $transfer['name'],
+                        $property['name'],
+                        $type
+                    ));
+
                     continue;
                 }
 
-                if ($type === $property['type'] && in_array($type, $this->typeMap)) {
+                if (!$this->isValidSimpleType($type)) {
+                    $ok = false;
+                    $this->messenger->warning(sprintf(
+                        '%s.%s.%s: %s is an invalid simple type',
+                        $module,
+                        $transfer['name'],
+                        $property['name'],
+                        $type
+                    ));
+
                     continue;
                 }
-
-                $ok = false;
-                $this->messenger->warning(sprintf(
-                    '%s.%s.%s: %s should be %s',
-                    $bundle,
-                    $transfer['name'],
-                    $property['name'],
-                    $property['type'],
-                    $this->typeMap[$type]
-                ));
             }
         }
 
         return $ok;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isValidSimpleType($type)
+    {
+        $whitelist = array_merge($this->simpleTypeWhitelist, ['array']);
+        if (in_array($type, $whitelist, true)) {
+            return true;
+        }
+
+        if (preg_match('/^[A-Z]/', $type) || substr($type, -2) === '[]') {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isValidArrayType($type)
+    {
+        if (!preg_match('#^([a-z]+)\[\]$#', $type, $matches)) {
+            return true;
+        }
+
+        $extractedType = $matches[1];
+        $extractedTypeLowercase = strtolower($extractedType);
+
+        if (!in_array($extractedTypeLowercase, $this->simpleTypeWhitelist)) {
+            return false;
+        }
+
+        if ($extractedTypeLowercase === $extractedType && in_array($extractedType, $this->simpleTypeWhitelist, true)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -145,11 +222,10 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return string
      */
-    protected function getBundleFromPathName($fileName)
+    protected function getModuleFromPathName($fileName)
     {
         $filter = new UnderscoreToCamelCase();
 
         return $filter->filter(str_replace(self::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
     }
-
 }

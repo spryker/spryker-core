@@ -11,7 +11,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class TestStateMachineHandler implements StateMachineHandlerInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\StateMachineItemTransfer
      */
@@ -124,5 +123,4 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     {
         $this->stateMachineItemsByStateIds = $stateMachineItemsByStateIds;
     }
-
 }

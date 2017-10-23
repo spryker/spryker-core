@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class IsDeliveryConfirmedPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsDeliveryConfirmedPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isDeliveryConfirmed($orderTransfer);
     }
-
 }

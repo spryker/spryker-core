@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade;
 
 class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConnectorToShipmentInterface
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
      */
@@ -48,5 +47,4 @@ class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConne
     {
         return $this->shipmentFacade->findMethodById($idShipmentMethod);
     }
-
 }

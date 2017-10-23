@@ -14,7 +14,6 @@ use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 class LoggerFactory
 {
-
     /**
      * @var array
      */
@@ -60,5 +59,4 @@ class LoggerFactory
     {
         return Config::get(LogConstants::LOGGER_CONFIG, DefaultLoggerConfig::class);
     }
-
 }

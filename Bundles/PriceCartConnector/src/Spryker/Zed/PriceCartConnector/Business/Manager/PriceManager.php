@@ -16,7 +16,6 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 
 class PriceManager implements PriceManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
      */
@@ -112,5 +111,4 @@ class PriceManager implements PriceManagerInterface
             $itemTransfer->setUnitNetPrice(0);
         }
     }
-
 }

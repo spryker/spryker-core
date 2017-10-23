@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-
     const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
     const MESSAGE_SUCCESS_UPDATED = 'Customer group updated successfully';
 
@@ -89,5 +88,4 @@ class EditController extends AbstractController
 
         return $this->jsonResponse($assignedCustomerTable->fetchData());
     }
-
 }

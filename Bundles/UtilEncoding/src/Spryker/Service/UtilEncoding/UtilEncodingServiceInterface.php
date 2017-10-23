@@ -10,7 +10,6 @@ namespace Spryker\Service\UtilEncoding;
  */
 interface UtilEncodingServiceInterface
 {
-
     /**
      * Specification:
      * - Encodes given value to JSON string.
@@ -39,5 +38,4 @@ interface UtilEncodingServiceInterface
      * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

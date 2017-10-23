@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CmsContentWidgetBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetParameterMapperInterface
      */
@@ -80,5 +79,4 @@ class CmsContentWidgetBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CmsContentWidgetDependencyProvider::FACADE_GLOSSARY);
     }
-
 }

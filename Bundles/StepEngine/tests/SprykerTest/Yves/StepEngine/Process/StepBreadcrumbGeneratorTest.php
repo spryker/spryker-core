@@ -21,7 +21,6 @@ use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
  */
 class StepBreadcrumbGeneratorTest extends AbstractStepEngineTest
 {
-
     /**
      * @return void
      */
@@ -142,5 +141,4 @@ class StepBreadcrumbGeneratorTest extends AbstractStepEngineTest
     {
         return new StepMockWithBreadcrumbs($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }
-
 }

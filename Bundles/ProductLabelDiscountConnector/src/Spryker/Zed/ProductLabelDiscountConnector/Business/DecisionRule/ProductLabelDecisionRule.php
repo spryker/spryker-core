@@ -15,7 +15,6 @@ use Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductL
 
 class ProductLabelDecisionRule implements ProductLabelDecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToDiscountInterface
      */
@@ -77,5 +76,4 @@ class ProductLabelDecisionRule implements ProductLabelDecisionRuleInterface
 
         return $productLabelEntities;
     }
-
 }

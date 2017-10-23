@@ -12,7 +12,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -99,5 +98,4 @@ class ProductManager implements ProductManagerInterface
 
         return $idProductAbstract;
     }
-
 }

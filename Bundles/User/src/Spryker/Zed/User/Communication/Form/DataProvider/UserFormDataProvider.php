@@ -13,7 +13,6 @@ use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
 
 class UserFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface
      */
@@ -106,5 +105,4 @@ class UserFormDataProvider
 
         return $formData;
     }
-
 }

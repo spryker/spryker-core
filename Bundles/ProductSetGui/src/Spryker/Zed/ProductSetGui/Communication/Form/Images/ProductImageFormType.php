@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductImageFormType extends AbstractType
 {
-
     const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
     const FIELD_IMAGE_SMALL = 'external_url_small';
     const FIELD_IMAGE_LARGE = 'external_url_large';
@@ -160,5 +159,4 @@ class ProductImageFormType extends AbstractType
 
         return $this;
     }
-
 }

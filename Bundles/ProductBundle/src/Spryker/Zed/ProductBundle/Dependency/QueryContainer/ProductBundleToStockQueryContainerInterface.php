@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductBundle\Dependency\QueryContainer;
 
 interface ProductBundleToStockQueryContainerInterface
 {
-
     /**
      * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockByProducts($idProduct);
-
 }

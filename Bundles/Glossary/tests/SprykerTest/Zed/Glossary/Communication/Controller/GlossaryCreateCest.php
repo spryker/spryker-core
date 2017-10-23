@@ -22,7 +22,6 @@ use SprykerTest\Zed\Glossary\PageObject\GlossaryCreatePage;
  */
 class GlossaryCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Glossary\GlossaryCommunicationTester $i
      *
@@ -31,7 +30,6 @@ class GlossaryCreateCest
     public function breadcrumbIsVisible(GlossaryCommunicationTester $i)
     {
         $i->amOnPage(GlossaryCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Glossary / Add Glossary Translation');
+        $i->seeBreadcrumbNavigation('Dashboard / Glossary / Create Translation');
     }
-
 }

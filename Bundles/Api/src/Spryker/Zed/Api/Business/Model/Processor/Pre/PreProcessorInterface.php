@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 
 interface PreProcessorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function process(ApiRequestTransfer $apiRequestTransfer);
-
 }

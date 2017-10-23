@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductAbstractPluginCreateInterface
 {
-
     /**
      * Specification:
      * - Executed before and after an abstract product is created.
@@ -26,5 +25,4 @@ interface ProductAbstractPluginCreateInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function create(ProductAbstractTransfer $productAbstractTransfer);
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class EnvironmentInformationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -38,5 +37,4 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
         $twig = $app['twig'];
         $twig->addFunction(new EnvironmentInfo());
     }
-
 }

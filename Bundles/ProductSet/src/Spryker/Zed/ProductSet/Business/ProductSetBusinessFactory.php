@@ -37,7 +37,6 @@ use Spryker\Zed\ProductSet\ProductSetDependencyProvider;
  */
 class ProductSetBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSet\Business\Model\ProductSetCreatorInterface
      */
@@ -250,5 +249,4 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductSetDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
-
 }

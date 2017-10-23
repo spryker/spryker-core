@@ -13,7 +13,6 @@ use Codeception\GroupObject;
 
 class ZedLogin extends GroupObject
 {
-
     public static $group = 'ZedLogin';
 
     /**
@@ -34,5 +33,4 @@ class ZedLogin extends GroupObject
     {
         return $this->getModule('\\' . Zed::class);
     }
-
 }

@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductManagement\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeQuery;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery;
-use Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -19,9 +19,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
 {
+    //to be removed
 
     /**
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */
     public function createProductManagementAttributeQuery()
     {
@@ -29,7 +30,7 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
     public function createProductManagementAttributeValueQuery()
     {
@@ -45,11 +46,10 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\ProductManagement\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
     public function createProductManagementAttributeValueTranslationQuery()
     {
         return SpyProductManagementAttributeValueTranslationQuery::create();
     }
-
 }

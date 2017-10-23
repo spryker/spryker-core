@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 class CmsBlockToGlossaryBridge implements CmsBlockToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -64,5 +63,4 @@ class CmsBlockToGlossaryBridge implements CmsBlockToGlossaryInterface
     {
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
-
 }

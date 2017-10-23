@@ -9,7 +9,6 @@ namespace Spryker\Shared\Collector\Code\Reader;
 
 interface ReaderInterface
 {
-
     /**
      * @param string $key
      *
@@ -21,5 +20,4 @@ interface ReaderInterface
      * @return string
      */
     public function getName();
-
 }

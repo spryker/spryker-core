@@ -26,8 +26,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^3.0.0",
-    "spryker/testify": "*"
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/event": "Required to listen for changes affecting product relations.",
@@ -35,15 +38,13 @@
     "spryker/twig": "Required because of the product relation component."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "Acceptance": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

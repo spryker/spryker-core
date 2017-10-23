@@ -14,7 +14,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class IndexMapGenerator implements IndexMapGeneratorInterface
 {
-
     const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
     const CLASS_NAME_SUFFIX = 'IndexMap';
@@ -245,5 +244,4 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
 
         return $constants;
     }
-
 }

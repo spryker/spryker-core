@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditPageController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
@@ -123,7 +122,6 @@ class EditPageController extends AbstractController
                 ->activatePage($idCmsPage);
 
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_PAGE_ACTIVATED);
-
         } catch (CannotActivatePageException $exception) {
              $this->addErrorMessage($exception->getMessage());
         } finally {
@@ -170,5 +168,4 @@ class EditPageController extends AbstractController
     {
         return new FormError(static::ERROR_MESSAGE_WRONG_TEMPLATE);
     }
-
 }

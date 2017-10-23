@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\TypeTransfer;
 
 interface WriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
@@ -59,5 +58,4 @@ interface WriterInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistStockProductCollection(ProductConcreteTransfer $productConcreteTransfer);
-
 }

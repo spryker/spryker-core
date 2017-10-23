@@ -14,7 +14,6 @@ use Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavig
 
 class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
 
@@ -84,5 +83,4 @@ class NavigationCollectorDependencyProvider extends AbstractBundleDependencyProv
             return $container->getLocator()->touch()->queryContainer();
         };
     }
-
 }

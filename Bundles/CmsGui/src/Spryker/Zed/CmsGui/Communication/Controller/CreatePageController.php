@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
-
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
     const SUCCESS_MESSAGE_PAGE_CREATED = 'Page successfully created';
 
@@ -102,5 +101,4 @@ class CreatePageController extends AbstractController
     {
         return new FormError("Selected template doesn't exist anymore");
     }
-
 }

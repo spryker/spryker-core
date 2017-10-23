@@ -11,7 +11,6 @@ use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDisc
 
 class LabelProvider implements LabelProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToProductLabelInterface
      */
@@ -39,5 +38,4 @@ class LabelProvider implements LabelProviderInterface
 
         return $productLabelOptions;
     }
-
 }

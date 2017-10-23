@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AuthFacade extends AbstractFacade implements AuthFacadeInterface
 {
-
     /**
      * @api
      *
@@ -160,5 +159,4 @@ class AuthFacade extends AbstractFacade implements AuthFacadeInterface
     {
         return $this->getFactory()->createPasswordReset()->resetPassword($token, $password);
     }
-
 }

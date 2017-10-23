@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
-
     /**
      * Specification:
      * - This plugin retrieves (its) data item metadata from the quote object and saves it to the database.
@@ -33,5 +32,4 @@ class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrde
     {
         $this->getFacade()->saveItemMetadata($quoteTransfer, $checkoutResponse);
     }
-
 }

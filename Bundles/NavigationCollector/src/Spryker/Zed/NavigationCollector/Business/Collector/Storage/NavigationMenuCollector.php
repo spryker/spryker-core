@@ -17,7 +17,6 @@ use Spryker\Zed\NavigationCollector\Persistence\Collector\Propel\NavigationMenuC
 
 class NavigationMenuCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @var \Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavigationInterface
      */
@@ -27,6 +26,19 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
     protected $keyBuilder;
+
+    /**
+     * @var array
+     */
+    protected $blackList = [
+        'id_navigation',
+        'fk_navigation',
+        'fk_navigation_node',
+        'fk_parent_navigation_node',
+        'id_navigation_node_localized_attributes',
+        'fk_locale',
+        'fk_url',
+    ];
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
@@ -61,7 +73,7 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
      */
     protected function collectKey($data, $localeName, array $collectedItemData)
     {
-        return $this->keyBuilder->generateKey($collectedItemData[NavigationMenuCollectorQuery::FIELD_KEY], $localeName);
+        return $this->keyBuilder->generateKey($collectedItemData[NavigationMenuCollectorQuery::FIELD_NAVIGATION_KEY], $localeName);
     }
 
     /**
@@ -75,9 +87,10 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($collectItemData[NavigationMenuCollectorQuery::FIELD_ID_NAVIGATION]);
 
-        $navigationTransfer = $this->navigationFacade->findNavigationTree($navigationTransfer, $this->locale);
+        $navigationTreeTransfer = $this->navigationFacade->findNavigationTree($navigationTransfer, $this->locale);
+        $navigationTreeArray = $navigationTreeTransfer->toArray();
 
-        return $navigationTransfer->toArray();
+        return $this->cleanNavigationArray($navigationTreeArray);
     }
 
     /**
@@ -88,4 +101,28 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
         return true;
     }
 
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    protected function cleanNavigationArray(array $array)
+    {
+        $filteredArray = [];
+
+        foreach ($array as $key => $value) {
+            if ($value === null || in_array($key, $this->blackList, true)) {
+                continue;
+            }
+
+            if (is_array($value)) {
+                $filteredArray[$key] = $this->cleanNavigationArray($value);
+                continue;
+            }
+
+            $filteredArray[$key] = $value;
+        }
+
+        return $filteredArray;
+    }
 }

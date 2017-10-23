@@ -19,7 +19,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -202,5 +201,4 @@ class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterfac
 
         $this->urlRedirectActivator->deactivateUrlRedirect($urlRedirectTransfer);
     }
-
 }

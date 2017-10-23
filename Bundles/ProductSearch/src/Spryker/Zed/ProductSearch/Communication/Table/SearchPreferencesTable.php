@@ -16,11 +16,10 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class SearchPreferencesTable extends AbstractTable
 {
-
     const COL_NAME = SpyProductAttributeKeyTableMap::COL_KEY;
     const COL_SUGGESTION_TERMS = 'suggestionTerms';
     const COL_COMPLETION_TERMS = 'completionTerms';
-    const COL_FULL_TEXT = 'fullText';
+    const COL_FULL_TEXT = 'full_Text';
     const COL_FULL_TEXT_BOOSTED = 'fullTextBoosted';
     const ACTIONS = 'actions';
 
@@ -171,5 +170,4 @@ class SearchPreferencesTable extends AbstractTable
 
         return implode(' ', $actions);
     }
-
 }

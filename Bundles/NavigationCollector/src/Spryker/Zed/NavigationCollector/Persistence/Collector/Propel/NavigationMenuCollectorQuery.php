@@ -14,9 +14,8 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const FIELD_ID_NAVIGATION = 'id_navigation';
-    const FIELD_KEY = 'key';
+    const FIELD_NAVIGATION_KEY = 'navigation_key';
 
     /**
      * @return void
@@ -30,7 +29,6 @@ class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
         );
 
         $this->touchQuery->withColumn(SpyNavigationTableMap::COL_ID_NAVIGATION, self::FIELD_ID_NAVIGATION);
-        $this->touchQuery->withColumn(SpyNavigationTableMap::COL_KEY, self::FIELD_KEY);
+        $this->touchQuery->withColumn(SpyNavigationTableMap::COL_KEY, self::FIELD_NAVIGATION_KEY);
     }
-
 }

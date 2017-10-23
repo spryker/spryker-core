@@ -2,6 +2,7 @@ namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Zed/Availability
+    - tests/SprykerTest/Client/Availability
 
 paths:
     tests: tests

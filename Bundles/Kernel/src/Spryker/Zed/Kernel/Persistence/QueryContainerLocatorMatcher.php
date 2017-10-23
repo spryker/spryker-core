@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class QueryContainerLocatorMatcher implements LocatorMatcherInterface
 {
-
     const METHOD_PREFIX = 'queryContainer';
 
     /**
@@ -25,5 +24,4 @@ class QueryContainerLocatorMatcher implements LocatorMatcherInterface
     {
         return (strpos($method, self::METHOD_PREFIX) === 0);
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NewRelicConfig extends AbstractBundleConfig
 {
-
     /**
      * @return mixed
      */
@@ -20,5 +19,4 @@ class NewRelicConfig extends AbstractBundleConfig
     {
         return $this->get(NewRelicConstants::IGNORABLE_TRANSACTIONS, []);
     }
-
 }

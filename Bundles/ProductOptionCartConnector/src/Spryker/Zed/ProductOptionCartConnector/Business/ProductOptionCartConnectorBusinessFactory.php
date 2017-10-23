@@ -19,7 +19,6 @@ use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyP
  */
 class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpanderInterface
      */
@@ -45,5 +44,4 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new GroupKeyExpander();
     }
-
 }

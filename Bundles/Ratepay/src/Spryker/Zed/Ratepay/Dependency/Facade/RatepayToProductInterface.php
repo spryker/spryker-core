@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Dependency\Facade;
 
 interface RatepayToProductInterface
 {
-
     /**
      * @api
      *
@@ -17,5 +16,4 @@ interface RatepayToProductInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
-
 }

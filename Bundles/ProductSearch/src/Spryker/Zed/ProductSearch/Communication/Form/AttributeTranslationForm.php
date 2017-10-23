@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AttributeTranslationForm extends AbstractType
 {
-
     const FIELD_KEY_TRANSLATION = 'key_translation';
 
     /**
@@ -51,5 +50,4 @@ class AttributeTranslationForm extends AbstractType
 
         return $this;
     }
-
 }

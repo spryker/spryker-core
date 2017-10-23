@@ -13,7 +13,6 @@ use Zend\Filter\Word\DashToCamelCase;
 
 class RouteNameResolver implements RouteNameResolverInterface
 {
-
     /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
@@ -50,5 +49,4 @@ class RouteNameResolver implements RouteNameResolverInterface
 
         return $filter->filter($dashedWord);
     }
-
 }

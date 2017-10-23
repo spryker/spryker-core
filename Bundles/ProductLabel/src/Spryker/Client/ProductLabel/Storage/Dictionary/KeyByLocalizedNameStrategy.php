@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StorageProductLabelTransfer;
 
 class KeyByLocalizedNameStrategy implements KeyStrategyInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StorageProductLabelTransfer $storageProductLabelTransfer
      *
@@ -21,5 +20,4 @@ class KeyByLocalizedNameStrategy implements KeyStrategyInterface
     {
         return $storageProductLabelTransfer->getName();
     }
-
 }

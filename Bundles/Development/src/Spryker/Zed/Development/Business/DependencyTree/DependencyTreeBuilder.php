@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeWriter\Depende
 
 class DependencyTreeBuilder
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\Finder
      */
@@ -78,5 +77,4 @@ class DependencyTreeBuilder
 
         $this->writer->write($this->dependencyTree->getDependencyTree());
     }
-
 }

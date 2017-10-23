@@ -6,6 +6,7 @@
 
 namespace Generated\Shared\Transfer;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
@@ -60,6 +61,24 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @var array
      */
+    protected $transferPropertyNameMap = [
+        'scalar_field' => 'scalarField',
+        'scalarField' => 'scalarField',
+        'ScalarField' => 'scalarField',
+        'array_field' => 'arrayField',
+        'arrayField' => 'arrayField',
+        'ArrayField' => 'arrayField',
+        'transfer_field' => 'transferField',
+        'transferField' => 'transferField',
+        'TransferField' => 'transferField',
+        'transfer_collection_field' => 'transferCollectionField',
+        'transferCollectionField' => 'transferCollectionField',
+        'TransferCollectionField' => 'transferCollectionField',
+    ];
+
+    /**
+     * @var array
+     */
     protected $transferMetadata = [
         self::SCALAR_FIELD => [
             'type' => 'string',
@@ -88,9 +107,9 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     ];
 
     /**
-     * @deprecated scalarField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated scalarField is deprecated.
      *
      * @param string $scalarField
      *
@@ -99,15 +118,15 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function setScalarField($scalarField)
     {
         $this->scalarField = $scalarField;
-        $this->addModifiedProperty(self::SCALAR_FIELD);
+        $this->modifiedProperties[self::SCALAR_FIELD] = true;
 
         return $this;
     }
 
     /**
-     * @deprecated scalarField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated scalarField is deprecated.
      *
      * @return string
      */
@@ -117,11 +136,9 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
+     * @module Test
+     *
      * @deprecated scalarField is deprecated.
-     *
-     * @bundle Test
-     *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -133,26 +150,30 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
+     * @module Test
+     *
      * @deprecated arrayField is deprecated.
      *
-     * @bundle Test
-     *
-     * @param array $arrayField
+     * @param array|null $arrayField
      *
      * @return $this
      */
-    public function setArrayField(array $arrayField)
+    public function setArrayField(array $arrayField = null)
     {
+        if ($arrayField === null) {
+            $arrayField = [];
+        }
+
         $this->arrayField = $arrayField;
-        $this->addModifiedProperty(self::ARRAY_FIELD);
+        $this->modifiedProperties[self::ARRAY_FIELD] = true;
 
         return $this;
     }
 
     /**
-     * @deprecated arrayField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated arrayField is deprecated.
      *
      * @return array
      */
@@ -162,9 +183,9 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated arrayField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated arrayField is deprecated.
      *
      * @param array $arrayField
      *
@@ -173,17 +194,15 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function addArrayField($arrayField)
     {
         $this->arrayField[] = $arrayField;
-        $this->addModifiedProperty(self::ARRAY_FIELD);
+        $this->modifiedProperties[self::ARRAY_FIELD] = true;
 
         return $this;
     }
 
     /**
+     * @module Test
+     *
      * @deprecated arrayField is deprecated.
-     *
-     * @bundle Test
-     *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -195,9 +214,9 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated transferField is deprecated.
      *
      * @param \Generated\Shared\Transfer\DeprecatedFooBarTransfer|null $transferField
      *
@@ -206,15 +225,15 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function setTransferField(DeprecatedFooBarTransfer $transferField = null)
     {
         $this->transferField = $transferField;
-        $this->addModifiedProperty(self::TRANSFER_FIELD);
+        $this->modifiedProperties[self::TRANSFER_FIELD] = true;
 
         return $this;
     }
 
     /**
-     * @deprecated transferField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated transferField is deprecated.
      *
      * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
      */
@@ -224,11 +243,9 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
+     * @module Test
+     *
      * @deprecated transferField is deprecated.
-     *
-     * @bundle Test
-     *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -240,26 +257,26 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferCollectionField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated transferCollectionField is deprecated.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[] $transferCollectionField
      *
      * @return $this
      */
-    public function setTransferCollectionField(\ArrayObject $transferCollectionField)
+    public function setTransferCollectionField(ArrayObject $transferCollectionField)
     {
         $this->transferCollectionField = $transferCollectionField;
-        $this->addModifiedProperty(self::TRANSFER_COLLECTION_FIELD);
+        $this->modifiedProperties[self::TRANSFER_COLLECTION_FIELD] = true;
 
         return $this;
     }
 
     /**
-     * @deprecated transferCollectionField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated transferCollectionField is deprecated.
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
      */
@@ -269,9 +286,9 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @deprecated transferCollectionField is deprecated.
+     * @module Test
      *
-     * @bundle Test
+     * @deprecated transferCollectionField is deprecated.
      *
      * @param \Generated\Shared\Transfer\DeprecatedFooBarTransfer $transferCollectionField
      *
@@ -280,17 +297,15 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function addTransferCollectionField(DeprecatedFooBarTransfer $transferCollectionField)
     {
         $this->transferCollectionField[] = $transferCollectionField;
-        $this->addModifiedProperty(self::TRANSFER_COLLECTION_FIELD);
+        $this->modifiedProperties[self::TRANSFER_COLLECTION_FIELD] = true;
 
         return $this;
     }
 
     /**
+     * @module Test
+     *
      * @deprecated transferCollectionField is deprecated.
-     *
-     * @bundle Test
-     *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

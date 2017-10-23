@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Navigation\Business\Tree;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
@@ -22,7 +23,6 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface;
 
 class NavigationTreeReader implements NavigationTreeReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface
      */
@@ -106,9 +106,20 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
         $navigationTreeTransfer->setNavigation($navigationTransfer);
 
         $rootNavigationNodes = $this->findRootNavigationNodes($navigationEntity);
+        $nodesWithoutPosition = new ArrayObject();
         foreach ($rootNavigationNodes as $navigationNodeEntity) {
             $navigationTreeNodeTransfer = $this->getNavigationTreeNodeRecursively($navigationNodeEntity, $localeTransfer);
+            if ($navigationNodeEntity->getPosition() === null) {
+                $nodesWithoutPosition[] = $navigationTreeNodeTransfer;
+
+                continue;
+            }
+
             $navigationTreeTransfer->addNode($navigationTreeNodeTransfer);
+        }
+
+        foreach ($nodesWithoutPosition as $item) {
+            $navigationTreeTransfer->getNodes()->append($item);
         }
 
         return $navigationTreeTransfer;
@@ -238,5 +249,4 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
             ->queryNavigationNodesByFkParentNavigationNode($navigationNodeTransfer->getIdNavigationNode())
             ->find();
     }
-
 }

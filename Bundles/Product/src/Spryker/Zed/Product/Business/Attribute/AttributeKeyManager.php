@@ -13,7 +13,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AttributeKeyManager implements AttributeKeyManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -103,5 +102,4 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
 
         return $attributeKeyTransfer;
     }
-
 }
