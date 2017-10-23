@@ -17,7 +17,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 /**
  * Old implementation of DiscountAmountAggregation not used since Discount module version 5, kept for BC reasons.
  *
- * @deprecated use \Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator instead
+ * @deprecated Use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator instead.
  */
 class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
 {
