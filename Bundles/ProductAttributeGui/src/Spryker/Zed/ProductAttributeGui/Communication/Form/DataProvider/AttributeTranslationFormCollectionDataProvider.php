@@ -161,6 +161,7 @@ class AttributeTranslationFormCollectionDataProvider
                 AttributeValueTranslationForm::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE => $attributeValueEntity->getIdProductManagementAttributeValue(),
                 AttributeValueTranslationForm::FIELD_VALUE => $attributeValueEntity->getValue(),
                 AttributeValueTranslationForm::FIELD_TRANSLATION => $attributeValueEntity->getVirtualColumn('translation'),
+                AttributeValueTranslationForm::FIELD_FK_LOCALE => $attributeValueEntity->getVirtualColumn('fk_locale'),
             ];
         }
 
