@@ -21,10 +21,10 @@ class AttributeController extends AbstractController
     const PARAM_TERM = 'term';
     const PARAM_LOCALE_CODE = 'locale_code';
 
-    const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Attribute has been created';
-    const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Attribute was not created';
-    const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Attribute has been updated';
-    const MESSAGE_TRANSLATION_UPDATE_SUCCESS = 'Translation has been updated';
+    const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
+    const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
+    const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
+    const MESSAGE_TRANSLATION_UPDATE_SUCCESS = 'Translation was updated successfully.';
 
     /**
      * @return array

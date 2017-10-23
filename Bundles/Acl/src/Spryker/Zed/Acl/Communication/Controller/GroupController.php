@@ -25,10 +25,10 @@ class GroupController extends AbstractController
     const PARAMETER_ID_GROUP = 'id-group';
     const PARAMETER_ID_USER = 'id-user';
 
-    const MESSAGE_GROUP_CREATE_SUCCESS = 'Group created successfully';
-    const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group updated successfully';
-    const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'Deleted user from group';
-    const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group not found';
+    const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
+    const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
+    const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'The User was removed from the group.';
+    const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group are not found.';
 
     /**
      * @return array

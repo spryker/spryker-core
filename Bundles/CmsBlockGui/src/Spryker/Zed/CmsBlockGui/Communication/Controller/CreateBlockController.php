@@ -23,7 +23,7 @@ class CreateBlockController extends AbstractController
 {
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
     const ERROR_MESSAGE_LOST_TEMPLATE = 'Selected template doesn\'t exist anymore';
-    const MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED = 'CMS Block successfully created.';
+    const MESSAGE_SUCCESSFUL_CMS_BLOCK_CREATED = 'CMS Block was created successfully';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

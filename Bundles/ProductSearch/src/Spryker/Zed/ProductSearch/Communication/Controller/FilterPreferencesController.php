@@ -21,8 +21,8 @@ class FilterPreferencesController extends AbstractController
     const PARAM_ID = 'id';
     const PARAM_TERM = 'term';
 
-    const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference created successfully';
-    const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference updated successfully';
+    const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference was created successfully.';
+    const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference was updated successfully.';
 
     /**
      * @return array

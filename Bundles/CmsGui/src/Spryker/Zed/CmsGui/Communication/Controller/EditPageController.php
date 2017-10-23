@@ -23,10 +23,10 @@ class EditPageController extends AbstractController
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
-    const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore';
-    const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page successfully updated.';
-    const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page successfully activated.';
-    const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page successfully deactivated.';
+    const MESSAGE_TEMPLATE_SELECT_ERROR = 'Selected template doesn\'t exist anymore.';
+    const MESSAGE_PAGE_UPDATE_SUCCESS = 'Page was updated successfully.';
+    const MESSAGE_PAGE_ACTIVATION_SUCCESS = 'Page was activated successfully.';
+    const MESSAGE_PAGE_DEACTIVATION_SUCCESS = 'Page was deactivated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

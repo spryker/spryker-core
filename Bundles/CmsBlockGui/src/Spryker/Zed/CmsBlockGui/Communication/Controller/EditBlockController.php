@@ -22,8 +22,12 @@ class EditBlockController extends AbstractController
 {
     const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
-
     const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
+
+    const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided';
+    const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully';
+    const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully';
+    const MESSAGE_CMS_BLOCK_DEACTIVATE_SUCCESS = 'CMS Block was deactivated successfully';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -84,7 +88,7 @@ class EditBlockController extends AbstractController
             ->getCmsBlockFacade()
             ->activateById($idCmsBlock);
 
-        $this->addSuccessMessage('Block successfully activated.');
+        $this->addSuccessMessage(static::MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS);
 
         return $this->redirectResponse($redirectUrl);
     }
@@ -103,7 +107,7 @@ class EditBlockController extends AbstractController
             ->getCmsBlockFacade()
             ->deactivateById($idCmsBlock);
 
-        $this->addSuccessMessage('Block successfully deactivated.');
+        $this->addSuccessMessage(static::MESSAGE_CMS_BLOCK_DEACTIVATE_SUCCESS);
 
         return $this->redirectResponse($redirectUrl);
     }
@@ -121,7 +125,7 @@ class EditBlockController extends AbstractController
                     ->getCmsBlockFacade()
                     ->updateCmsBlock($cmsBlockForm->getData());
 
-                $this->addSuccessMessage('Block is successfully updated.');
+                $this->addSuccessMessage(static::MESSAGE_CMS_BLOCK_UPDATE_SUCCESS);
 
                 return true;
             } catch (CmsBlockTemplateNotFoundException $exception) {
@@ -130,7 +134,7 @@ class EditBlockController extends AbstractController
                     ->addError(new FormError('Selected template doesn\'t exist anymore'));
             }
         } else {
-            $this->addErrorMessage('Invalid data provided');
+            $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_UPDATE_ERROR);
         }
 
         return false;
