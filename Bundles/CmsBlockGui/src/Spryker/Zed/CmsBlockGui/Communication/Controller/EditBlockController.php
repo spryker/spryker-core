@@ -24,10 +24,10 @@ class EditBlockController extends AbstractController
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
     const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
 
-    const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided';
-    const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully';
-    const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully';
-    const MESSAGE_CMS_BLOCK_DEACTIVATE_SUCCESS = 'CMS Block was deactivated successfully';
+    const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided.';
+    const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully.';
+    const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully.';
+    const MESSAGE_CMS_BLOCK_DEACTIVATE_SUCCESS = 'CMS Block was deactivated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
