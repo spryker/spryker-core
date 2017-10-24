@@ -40,6 +40,7 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade(),
             $this->getUtilEncodingService(),
             $this->getMoneyFacade(),
+            $this->getPriceProductFacade(),
             $idProductRelation
         );
     }
@@ -176,5 +177,13 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     public function getProductFacade()
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductInterface
+     */
+    protected function getPriceProductFacade()
+    {
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }

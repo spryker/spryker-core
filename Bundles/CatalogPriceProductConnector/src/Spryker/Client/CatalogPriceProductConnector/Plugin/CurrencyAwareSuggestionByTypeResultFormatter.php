@@ -7,53 +7,58 @@
 namespace Spryker\Client\CatalogPriceProductConnector\Plugin;
 
 use Elastica\ResultSet;
-use Spryker\Client\PriceProduct\PriceProductClient;
 use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**
  * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()
  */
-class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
+class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearchResultFormatterPlugin
 {
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface
      */
-    protected $rawCatalogSearchResultFormatterPlugin;
+    protected $suggestionByTypeResultFormatterPlugin;
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin
      */
     public function __construct(ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin)
     {
-        $this->rawCatalogSearchResultFormatterPlugin = $rawCatalogSearchResultFormatterPlugin;
+        $this->suggestionByTypeResultFormatterPlugin = $rawCatalogSearchResultFormatterPlugin;
     }
 
     /**
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return mixed
+     * @return array
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
-        $result = $this->rawCatalogSearchResultFormatterPlugin->formatResult($searchResult, $requestParameters);
+        $results = $this->suggestionByTypeResultFormatterPlugin->formatResult($searchResult, $requestParameters);
+
+        if (!isset($results['product_abstract'])) {
+            return $results;
+        }
 
         $priceProductClient = $this->getFactory()->getPriceProductClient();
-        foreach ($result as &$product) {
+        foreach ($results['product_abstract'] as &$product) {
             $currentProductPriceTransfer = $priceProductClient->resolveProductPrice($product['prices']);
             $product['price'] = $currentProductPriceTransfer->getPrice();
             $product['prices'] = $currentProductPriceTransfer->getPrices();
         }
 
-        return $result;
+        return $results;
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
     {
-        return $this->rawCatalogSearchResultFormatterPlugin->getName();
+        return $this->suggestionByTypeResultFormatterPlugin->getName();
     }
 }
