@@ -381,4 +381,97 @@ SCRIPT;
     }
 ";
     }
+
+    /**
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addClassBody(&$script)
+    {
+        $this->addRowLock($script);
+
+        parent::addClassBody($script);
+    }
+
+    /**
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addRowLock(&$script)
+    {
+        $script .= "
+    /**
+     * @var bool
+     */
+    protected \$isRowLockEnabled = false;
+    
+    /**
+     * @return \$this
+     */
+    public function enableRowLock()
+    {
+        \$this->setIsRowLockEnabled(true);
+
+        return \$this;
+    }
+
+    /**
+     * @return \$this
+     */
+    public function disableRowLock()
+    {
+        \$this->setIsRowLockEnabled(false);
+
+        return \$this;
+    }
+
+    /**
+     * @return void
+     */
+    public function setIsRowLockEnabled(\$isRowLockEnabled)
+    {
+        \$this->isRowLockEnabled = \$isRowLockEnabled;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsRowLockEnabled()
+    {
+        return \$this->isRowLockEnabled;
+    }
+
+    /**
+     * @param array \$params
+     *
+     * @return string
+     */
+    public function createSelectSql(&\$params)
+    {
+        \$sql = parent::createSelectSql(\$params);
+        if (\$this->isRowLockEnabled) {
+            \$sql .= ' FOR UPDATE';
+        }
+
+        return \$sql;
+    }
+    
+    /**
+     * Clear the conditions to allow the reuse of the query object.
+     * The ModelCriteria's Model and alias 'all the properties set by construct) will remain.
+     *
+     * @return \$this|ModelCriteria The primary criteria object
+     */
+    public function clear()
+    {
+        parent::clear();
+
+        \$this->setIsRowLockEnabled(false);
+        
+        return \$this;
+    }\n
+    ";
+    }
 }
