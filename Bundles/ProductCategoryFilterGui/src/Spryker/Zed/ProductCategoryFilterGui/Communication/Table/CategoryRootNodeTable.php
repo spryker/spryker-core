@@ -19,7 +19,7 @@ class CategoryRootNodeTable extends AbstractTable
     /**
      * @var \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface
      */
-    protected $categoryQueryContainer;
+    protected $productCategoryFilterGuiQueryContainer;
 
     /**
      * @var int
@@ -27,14 +27,13 @@ class CategoryRootNodeTable extends AbstractTable
     protected $idLocale;
 
     /**
-     * @param \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface $productCategoryQueryContainer
+     * @param \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface $productCategoryFilterGuiQueryContainer
      * @param int $idLocale
      */
-    public function __construct(ProductCategoryFilterGuiQueryContainerInterface $productCategoryQueryContainer, $idLocale)
+    public function __construct(ProductCategoryFilterGuiQueryContainerInterface $productCategoryFilterGuiQueryContainer, $idLocale)
     {
-        $this->categoryQueryContainer = $productCategoryQueryContainer;
+        $this->productCategoryFilterGuiQueryContainer = $productCategoryFilterGuiQueryContainer;
         $this->idLocale = $idLocale;
-        $this->defaultUrl = 'rootNodeTable';
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 
@@ -71,7 +70,7 @@ class CategoryRootNodeTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->categoryQueryContainer->queryRootNodes()
+        $query = $this->productCategoryFilterGuiQueryContainer->queryRootNodes()
             ->orderBy(SpyCategoryAttributeTableMap::COL_NAME)
             ->setModelAlias('spy_locale')
             ->filterByFkLocale($this->idLocale);

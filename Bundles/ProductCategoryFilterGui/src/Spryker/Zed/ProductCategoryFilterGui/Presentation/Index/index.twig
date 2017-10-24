@@ -1,11 +1,11 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Overview of Product Reviews' %}
+{% set widget_title = 'Overview of Category Filters' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of product reviews' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes list' } %}
 
         {% block widget_content %}
             {{ RootCategoriesTable | raw }}
@@ -17,6 +17,7 @@
 
 {% block head_css %}
     {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-product-category-filter-main.css" />
 {% endblock %}
 
 {% block footer_js %}
