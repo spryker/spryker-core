@@ -21,7 +21,7 @@ class EmailValidator implements EmailValidatorInterface
     /**
      * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface
      */
-    protected $utilValidatorService;
+    protected $utilValidateService;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
@@ -30,7 +30,7 @@ class EmailValidator implements EmailValidatorInterface
     public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToUtilValidateInterface $utilValidatorService)
     {
         $this->queryContainer = $queryContainer;
-        $this->utilValidatorService = $utilValidatorService;
+        $this->utilValidateService = $utilValidatorService;
     }
 
     /**
@@ -40,7 +40,7 @@ class EmailValidator implements EmailValidatorInterface
      */
     public function isFormatValid(SpyCustomer $customerEntity)
     {
-        return $this->utilValidatorService->isEmailFormatValid($customerEntity->getEmail());
+        return $this->utilValidateService->isEmailFormatValid($customerEntity->getEmail());
     }
 
     /**

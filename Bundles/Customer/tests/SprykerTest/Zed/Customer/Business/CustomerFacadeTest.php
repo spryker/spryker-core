@@ -203,7 +203,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider invalidEmailAddresses
+     * @dataProvider invalidEmailFormats
      *
      * @param string $invalidEmail
      *
@@ -225,7 +225,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return array
      */
-    public function invalidEmailAddresses()
+    public function invalidEmailFormats()
     {
         return [
             ['Abc.example.com'],
@@ -321,7 +321,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider invalidEmailAddresses
+     * @dataProvider invalidEmailFormats
      *
      * @param string $invalidEmail
      *
