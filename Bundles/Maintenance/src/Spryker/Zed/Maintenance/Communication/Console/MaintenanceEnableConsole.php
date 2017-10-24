@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Maintenance\Communication\Console;
 
-use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,15 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
  */
-class MaintenanceEnableConsole extends Console
+class MaintenanceEnableConsole extends AbstractMaintenanceConsole
 {
     const COMMAND_NAME = 'maintenance:enable';
     const COMMAND_DESCRIPTION = 'Will enable the maintenance mode while setup/deploy.';
-    const ARGUMENT_APPLICATION = 'application';
-
-    const APPLICATION_ALL = 'all';
-    const APPLICATION_YVES = 'yves';
-    const APPLICATION_ZED = 'zed';
 
     /**
      * @return void
@@ -45,14 +39,14 @@ class MaintenanceEnableConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $application = strtolower($input->getArgument(static::ARGUMENT_APPLICATION));
+        $application = $this->getApplicationName($input);
 
         if ($application === static::APPLICATION_ALL || $application === static::APPLICATION_YVES) {
-            file_put_contents(APPLICATION_ROOT_DIR . '/public/Yves/maintenance.marker', '');
+            $this->getFacade()->enableMaintenanceForYves();
         }
 
         if ($application === static::APPLICATION_ALL || $application === static::APPLICATION_ZED) {
-            file_put_contents(APPLICATION_ROOT_DIR . '/public/Zed/maintenance.marker', '');
+            $this->getFacade()->enableMaintenanceForZed();
         }
 
         return static::CODE_SUCCESS;

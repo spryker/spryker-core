@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Maintenance\Model\Maintenance;
+namespace Spryker\Zed\Maintenance\Business\Model\Maintenance;
 
 class MaintenanceMarkerFile implements MaintenanceInterface
 {
@@ -40,14 +40,6 @@ class MaintenanceMarkerFile implements MaintenanceInterface
     }
 
     /**
-     * @return bool
-     */
-    public function isMaintenanceEnabled()
-    {
-        return file_exists($this->getFilePath());
-    }
-
-    /**
      * @return void
      */
     public function enableMaintenance()
@@ -60,6 +52,8 @@ class MaintenanceMarkerFile implements MaintenanceInterface
      */
     public function disableMaintenance()
     {
-        unlink($this->getFilePath());
+        if (file_exists($this->getFilePath())) {
+            unlink($this->getFilePath());
+        }
     }
 }

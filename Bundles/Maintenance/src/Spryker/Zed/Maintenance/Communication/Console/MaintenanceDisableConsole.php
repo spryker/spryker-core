@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Maintenance\Communication\Console;
 
-use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,15 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
  */
-class MaintenanceDisableConsole extends Console
+class MaintenanceDisableConsole extends AbstractMaintenanceConsole
 {
     const COMMAND_NAME = 'maintenance:disable';
     const COMMAND_DESCRIPTION = 'Will disable the maintenance mode while setup/deploy.';
-    const ARGUMENT_APPLICATION = 'application';
-
-    const APPLICATION_ALL = 'all';
-    const APPLICATION_YVES = 'yves';
-    const APPLICATION_ZED = 'zed';
 
     /**
      * @return void
@@ -45,20 +39,14 @@ class MaintenanceDisableConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $application = strtolower($input->getArgument(static::ARGUMENT_APPLICATION));
+        $application = $this->getApplicationName($input);
 
         if ($application === static::APPLICATION_ALL || $application === static::APPLICATION_YVES) {
-            $fileName = APPLICATION_ROOT_DIR . '/public/Yves/maintenance.marker';
-            if (file_exists($fileName)) {
-                unlink($fileName);
-            }
+            $this->getFacade()->disableMaintenanceForYves();
         }
 
         if ($application === static::APPLICATION_ALL || $application === static::APPLICATION_ZED) {
-            $fileName = APPLICATION_ROOT_DIR . '/public/Zed/maintenance.marker';
-            if (file_exists($fileName)) {
-                unlink($fileName);
-            }
+            $this->getFacade()->disableMaintenanceForZed();
         }
 
         return static::CODE_SUCCESS;

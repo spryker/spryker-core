@@ -10,7 +10,7 @@ namespace Spryker\Zed\Maintenance\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- *
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceBusinessFactory getFactory()
  */
 class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInterface
 {
@@ -19,9 +19,9 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
      *
      * @return void
      */
-    public function enableMaintenance()
+    public function enableMaintenanceForZed()
     {
-//        get
+        $this->getFactory()->createMaintenanceForZed()->enableMaintenance();
     }
 
     /**
@@ -29,7 +29,28 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
      *
      * @return void
      */
-    public function disableMaintenance()
+    public function disableMaintenanceForZed()
     {
+        $this->getFactory()->createMaintenanceForZed()->disableMaintenance();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function enableMaintenanceForYves()
+    {
+        $this->getFactory()->createMaintenanceForYves()->enableMaintenance();
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function disableMaintenanceForYves()
+    {
+        $this->getFactory()->createMaintenanceForYves()->disableMaintenance();
     }
 }

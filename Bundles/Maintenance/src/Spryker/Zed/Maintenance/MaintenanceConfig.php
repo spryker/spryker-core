@@ -23,8 +23,24 @@ class MaintenanceConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getMaintenanceMarkerDirZed()
+    {
+        return APPLICATION_ROOT_DIR . '/public/Zed';
+    }
+
+    /**
+     * @return string
+     */
     public function getMaintenancePageYves()
     {
         return $this->get(MaintenanceConstants::MAINTENANCE_PAGE_YVES);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMaintenanceMarkerDirYves()
+    {
+        return APPLICATION_ROOT_DIR . '/public/Yves';
     }
 }

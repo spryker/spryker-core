@@ -11,21 +11,41 @@ interface MaintenanceFacadeInterface
 {
     /**
      * Specification:
-     * - Enables maintenance.
+     * - Enables maintenance for Zed.
      *
      * @api
      *
      * @return void
      */
-    public function enableMaintenance();
+    public function enableMaintenanceForZed();
 
     /**
      * Specification:
-     * - Disables maintenance.
+     * - Disables maintenance for Zed.
      *
      * @api
      *
      * @return void
      */
-    public function disableMaintenance();
+    public function disableMaintenanceForZed();
+
+    /**
+     * Specification:
+     * - Enables maintenance for Yves.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function enableMaintenanceForYves();
+
+    /**
+     * Specification:
+     * - Disables maintenance for Zed.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function disableMaintenanceForYves();
 }

@@ -10,11 +10,6 @@ namespace Spryker\Zed\Maintenance\Business\Model\Maintenance;
 interface MaintenanceInterface
 {
     /**
-     * @return bool
-     */
-    public function isMaintenanceEnabled();
-
-    /**
      * @return void
      */
     public function enableMaintenance();
