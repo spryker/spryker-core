@@ -12,6 +12,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -21,7 +22,10 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_COUNTRY = 'country facade';
     const FACADE_LOCALE = 'locale facade';
     const FACADE_MAIL = 'mail facade';
+
     const SERVICE_DATE_FORMATTER = 'date formatter service';
+    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+
     const QUERY_CONTAINER_LOCALE = 'locale query container';
     const STORE = 'store';
 
@@ -57,6 +61,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addStore($container);
         $container = $this->addCustomerAnonymizerPlugins($container);
+        $container = $this->addUtilValidateService($container);
 
         return $container;
     }
@@ -112,6 +117,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilValidateService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+            return new CustomerToUtilValidateBridge($container->getLocator()->utilValidate()->service());
         };
 
         return $container;

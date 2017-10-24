@@ -33,6 +33,7 @@ class CustomerFacadeTest extends Unit
 {
     const TESTER_EMAIL = 'tester@spryker.com';
     const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
+    const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
     const TESTER_PASSWORD = 'tester';
     const TESTER_NAME = 'Tester';
     const TESTER_CITY = 'Testcity';
@@ -202,6 +203,60 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider invalidEmailAddresses
+     *
+     * @param string $invalidEmail
+     *
+     * @return void
+     */
+    public function testRegisterCustomerFailsWhenInvalidEmailFormatIsProvided($invalidEmail)
+    {
+        // Assign
+        $customerTransfer = $this->createTestCustomerTransfer();
+        $customerTransfer->setEmail($invalidEmail);
+
+        // Act
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidEmailAddresses()
+    {
+        return [
+            ['Abc.example.com'],
+            ['A@b@c@example.com'],
+            ['a\"b(c)d,e:f;g<h>i[j\k]l@example.com'],
+            ['just\"not\"right@example.com'],
+            ['this is"not\allowed@example.com'],
+            ['this\ still\"not\\allowed@example.com'],
+            ['john..doe@example.com'],
+            ['john.doe@example..com'],
+            ["te'<i>sting@twelvebeaufort.com"],
+        ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testRegisterCustomerRegistersCustomerWithValidEmail()
+    {
+        // Assign
+        $customerTransfer = $this->createTestCustomerTransfer();
+        $customerTransfer->setEmail(static::TESTER_UPDATE_EMAIL);
+
+        // Act
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+    }
+
+    /**
      * @return void
      */
     public function testConfirmRegistration()
@@ -263,6 +318,42 @@ class CustomerFacadeTest extends Unit
         $this->assertTrue($customerResponse->getIsSuccess());
         $customerTransfer = $customerResponse->getCustomerTransfer();
         $this->assertEquals(self::TESTER_NAME, $customerTransfer->getLastName());
+    }
+
+    /**
+     * @dataProvider invalidEmailAddresses
+     *
+     * @param string $invalidEmail
+     *
+     * @return void
+     */
+    public function testUpdateCustomerFailsWhenInvalidEmailFormatIsProvided($invalidEmail)
+    {
+        // Assign
+        $customerTransfer = $this->createTestCustomer();
+        $customerTransfer->setEmail($invalidEmail);
+
+        // Act
+        $customerResponse = $this->customerFacade->updateCustomer($customerTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponse->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCustomerUpdatesValidEmail()
+    {
+        // Assign
+        $customerTransfer = $this->createTestCustomer();
+        $customerTransfer->setEmail(static::TESTER_UPDATE_EMAIL);
+
+        // Act
+        $customerResponse = $this->customerFacade->updateCustomer($customerTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponse->getIsSuccess());
     }
 
     /**

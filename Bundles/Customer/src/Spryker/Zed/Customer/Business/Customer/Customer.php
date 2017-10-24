@@ -53,6 +53,11 @@ class Customer implements CustomerInterface
     protected $customerConfig;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface
+     */
+    protected $emailValidator;
+
+    /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
      */
     protected $mailFacade;
@@ -71,6 +76,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
+     * @param \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface $emailValidator
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacade
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
@@ -79,6 +85,7 @@ class Customer implements CustomerInterface
         CustomerQueryContainerInterface $queryContainer,
         CustomerReferenceGeneratorInterface $customerReferenceGenerator,
         CustomerConfig $customerConfig,
+        EmailValidatorInterface $emailValidator,
         CustomerToMailInterface $mailFacade,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store
@@ -86,6 +93,7 @@ class Customer implements CustomerInterface
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
         $this->customerConfig = $customerConfig;
+        $this->emailValidator = $emailValidator;
         $this->mailFacade = $mailFacade;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
@@ -153,10 +161,9 @@ class Customer implements CustomerInterface
 
         $this->addLocale($customerEntity);
 
-        if (!$this->isEmailAvailableForCustomer($customerEntity)) {
-            $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
-
-            return $customerResponseTransfer;
+        $errorCustomerResponseTransfer = $this->validateCustomerEmail($customerEntity);
+        if ($errorCustomerResponseTransfer !== null) {
+            return $errorCustomerResponseTransfer;
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
@@ -406,8 +413,9 @@ class Customer implements CustomerInterface
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
-        if (!$this->isEmailAvailableForCustomer($customerEntity)) {
-            return $this->createCustomerEmailAlreadyUsedResponse();
+        $errorCustomerResponseTransfer = $this->validateCustomerEmail($customerEntity);
+        if ($errorCustomerResponseTransfer !== null) {
+            return $errorCustomerResponseTransfer;
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
@@ -439,31 +447,37 @@ class Customer implements CustomerInterface
     }
 
     /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer|null
+     */
+    protected function validateCustomerEmail(SpyCustomer $customerEntity)
+    {
+        if (!$this->emailValidator->isFormatValid($customerEntity)) {
+            return $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_FORMAT_INVALID);
+        }
+
+        if (!$this->emailValidator->isEmailAvailableForCustomer($customerEntity)) {
+            return $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_ALREADY_USED);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $message
+     *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function createCustomerEmailAlreadyUsedResponse()
+    protected function createErrorCustomerResponseTransfer($message)
     {
         $customerErrorTransfer = new CustomerErrorTransfer();
-        $customerErrorTransfer->setMessage(Messages::CUSTOMER_EMAIL_ALREADY_USED);
+        $customerErrorTransfer->setMessage($message);
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer(false);
         $customerResponseTransfer->addError($customerErrorTransfer);
 
         return $customerResponseTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
-     *
-     * @return bool
-     */
-    protected function isEmailAvailableForCustomer(SpyCustomer $customerEntity)
-    {
-        $count = $this->queryContainer
-            ->queryCustomerByEmailApartFromIdCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())
-            ->count();
-
-        return ($count === 0);
     }
 
     /**
