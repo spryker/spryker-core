@@ -20,8 +20,8 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $rootCategoriesTable = $this
-            ->getFactory()->
-            createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocale());
+            ->getFactory()
+            ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocale());
         return $this->viewResponse([
             'RootCategoriesTable' => $rootCategoriesTable->render(),
         ]);
