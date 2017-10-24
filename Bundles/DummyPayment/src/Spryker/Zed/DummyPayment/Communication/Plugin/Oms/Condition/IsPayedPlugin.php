@@ -24,6 +24,6 @@ class IsPayedPlugin extends AbstractPlugin implements ConditionInterface
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        return true;
+        return false;
     }
 }

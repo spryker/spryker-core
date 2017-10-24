@@ -120,7 +120,6 @@ class SalesFacadeTest extends Unit
      */
     protected function createSalesFacade()
     {
-//        return new SalesFacade();
         return $this->tester->getLocator()->sales()->facade();
     }
 }

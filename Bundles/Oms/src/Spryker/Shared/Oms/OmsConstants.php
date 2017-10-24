@@ -15,4 +15,12 @@ interface OmsConstants
     const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
 
     const NAME_CREDIT_MEMO_REFERENCE = 'CreditMemoReference';
+
+    /**
+     * Predefined enumerated state flag list as defined in oms.xsd file.
+     */
+    const STATE_TYPE_FLAG_EXCLUDE_FROM_CUSTOMER = 'exclude from customer';
+    const STATE_TYPE_FLAG_EXCLUDE_FROM_INVOICE = 'exclude from invoice';
+    const STATE_TYPE_FLAG_READY_FOR_INVOICE = 'ready for invoice';
+    const STATE_TYPE_FLAG_WAITING_FOR_EXPORT = 'waiting for export';
 }

@@ -9,8 +9,10 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CustomerOrderReader implements CustomerOrderReaderInterface
@@ -26,15 +28,23 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $orderHydrator;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
+     */
+    protected $omsFacade;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface|null $omsFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
-        OrderHydratorInterface $orderHydrator
+        OrderHydratorInterface $orderHydrator,
+        SalesToOmsInterface $omsFacade = null
     ) {
         $this->queryContainer = $queryContainer;
         $this->orderHydrator = $orderHydrator;
+        $this->omsFacade = $omsFacade;
     }
 
     /**
@@ -70,6 +80,10 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
                 continue;
             }
 
+            if ($this->excludeOrder($salesOrderEntity)) {
+                continue;
+            }
+
             $orderTransfer = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder(
                 $salesOrderEntity->getIdSalesOrder()
             );
@@ -77,5 +91,23 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
         }
 
         return $orders;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return bool
+     */
+    protected function excludeOrder(SpySalesOrder $salesOrderEntity)
+    {
+        if (!$this->omsFacade) {
+            return false;
+        }
+
+        $excludeFromCustomer = $this->omsFacade->isOrderFlaggedExcludeFromCustomer(
+            $salesOrderEntity->getIdSalesOrder()
+        );
+
+        return $excludeFromCustomer;
     }
 }

@@ -33,7 +33,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerOrderReader(
             $this->getQueryContainer(),
-            $this->createOrderHydrator()
+            $this->createOrderHydrator(),
+            $this->getOmsFacade()
         );
     }
 

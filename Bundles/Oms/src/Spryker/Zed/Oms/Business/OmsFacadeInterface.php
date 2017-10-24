@@ -57,6 +57,19 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     *  - Checks if all order items are flag to exclude order from customer,
+     *  - This useful when need to filter out orders which not supposed to display in YVES customer profile
+     *
+     * @api
+     *
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
+
+    /**
+     * Specification:
      *  - Triggers even for given order items, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Logs state machine transitions
