@@ -22,7 +22,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\ZedNavigation\\": "tests/SprykerTest/Zed/ZedNavigation/_support/Helper/"
+      "SprykerTest\\Zed\\ZedNavigation\\Helper\\": "tests/SprykerTest/Zed/ZedNavigation/_support/Helper/"
     }
   },
   "autoload-dev": {

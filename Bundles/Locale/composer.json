@@ -19,7 +19,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Locale\\": "tests/SprykerTest/Zed/Locale/_support/Helper/"
+      "SprykerTest\\Zed\\Locale\\Helper\\": "tests/SprykerTest/Zed/Locale/_support/Helper/"
     }
   },
   "autoload-dev": {
