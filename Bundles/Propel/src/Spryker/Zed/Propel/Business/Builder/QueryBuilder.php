@@ -389,7 +389,7 @@ SCRIPT;
      */
     protected function addClassBody(&$script)
     {
-        $this->addRowLock($script);
+        $this->addForUpdate($script);
 
         parent::addClassBody($script);
     }
@@ -399,48 +399,22 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addRowLock(&$script)
+    protected function addForUpdate(&$script)
     {
         $script .= "
     /**
      * @var bool
      */
-    protected \$isRowLockEnabled = false;
-    
-    /**
-     * @return \$this
-     */
-    public function enableRowLock()
-    {
-        \$this->setIsRowLockEnabled(true);
-
-        return \$this;
-    }
+    protected \$isForUpdateEnabled = false;
 
     /**
      * @return \$this
      */
-    public function disableRowLock()
+    public function forUpdate(\$isForUpdateEnabled)
     {
-        \$this->setIsRowLockEnabled(false);
-
+        \$this->isForUpdateEnabled = \$isForUpdateEnabled;
+        
         return \$this;
-    }
-
-    /**
-     * @return void
-     */
-    public function setIsRowLockEnabled(\$isRowLockEnabled)
-    {
-        \$this->isRowLockEnabled = \$isRowLockEnabled;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getIsRowLockEnabled()
-    {
-        return \$this->isRowLockEnabled;
     }
 
     /**
@@ -451,7 +425,7 @@ SCRIPT;
     public function createSelectSql(&\$params)
     {
         \$sql = parent::createSelectSql(\$params);
-        if (\$this->isRowLockEnabled) {
+        if (\$this->isForUpdateEnabled) {
             \$sql .= ' FOR UPDATE';
         }
 
@@ -468,7 +442,7 @@ SCRIPT;
     {
         parent::clear();
 
-        \$this->setIsRowLockEnabled(false);
+        \$this->forUpdate(false);
         
         return \$this;
     }\n
