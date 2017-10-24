@@ -2,8 +2,13 @@
   "name": "spryker/util-data-reader",
   "description": "UtilDataReader module",
   "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.3.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/sql-criteria-builder": "^1.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
   "require-dev": {
-    "spryker/symfony": "*"
   },
   "autoload": {
     "psr-4": {
