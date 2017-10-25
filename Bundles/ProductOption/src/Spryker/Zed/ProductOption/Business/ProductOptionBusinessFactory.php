@@ -17,6 +17,7 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorter;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderHydrate;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydrator;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
@@ -104,7 +105,10 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionValueReader()
     {
-        return new ProductOptionValueReader($this->getQueryContainer());
+        return new ProductOptionValueReader(
+            $this->createProductOptionValuePriceReader(),
+            $this->getQueryContainer()
+        );
     }
 
     /**
@@ -137,6 +141,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function getCurrencyFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_STORE);
     }
 
     /**
@@ -193,5 +205,16 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function createProductOptionPriceHydrator()
     {
         return new ProductOptionValuePriceHydrator($this->getCurrencyFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface
+     */
+    protected function createProductOptionValuePriceReader()
+    {
+        return new ProductOptionValuePriceReader(
+            $this->getCurrencyFacade(),
+            $this->getStoreFacade()
+        );
     }
 }

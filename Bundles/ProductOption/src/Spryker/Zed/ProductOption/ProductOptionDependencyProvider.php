@@ -13,6 +13,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryBridge;
@@ -26,7 +27,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_MONEY = 'FACADE_MONEY';
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
-
+    const FACADE_STORE = 'FACADE_STORE';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
@@ -58,6 +59,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -71,6 +73,20 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CURRENCY] = function (Container $container) {
             return new ProductOptionToCurrencyBridge($container->getLocator()->currency()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new ProductOptionToStoreBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

@@ -49,7 +49,7 @@ class ProductOptionValuePriceSaver implements ProductOptionValuePriceSaverInterf
      *
      * @return array First level keys are store ids,
      *               second level keys are currency ids,
-     *               values are SpyProductOptionPrice entities.
+     *               values are SpyProductOptionValuePrice entities.
      */
     protected function getPriceEntityMap($idProductOptionValue)
     {

@@ -70,7 +70,8 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Reads product option from persistence
+     *  - Reads product option from persistence.
+     *  - Prices are calculated using current store, and current currency.
      *
      * @api
      *

@@ -14,4 +14,9 @@ interface ProductOptionToCurrencyInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getByIdCurrency($idCurrency);
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getCurrent();
 }
