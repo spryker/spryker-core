@@ -10,6 +10,12 @@ namespace Spryker\Zed\PriceProduct\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductAbstractReader;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductConcreteReader;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductMapper;
+use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeMapper;
+use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReader;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
@@ -27,12 +33,12 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createReaderModel()
     {
         return new Reader(
-            $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->getConfig(),
-            $this->getCurrencyFacade(),
             $this->getPriceFacade(),
-            $this->getStoreFacade()
+            $this->createPriceTypeReader(),
+            $this->createPriceProductConcreteReader(),
+            $this->createPriceProductAbstractReader(),
+            $this->createProductCriteriaBuilder()
         );
     }
 
@@ -45,7 +51,9 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createReaderModel(),
             $this->getTouchFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getProductFacade(),
+            $this->createPriceTypeReader()
         );
     }
 
@@ -58,8 +66,71 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createReaderModel(),
             $this->getTouchFacade(),
+            $this->getConfig(),
+            $this->getProductFacade(),
+            $this->createPriceTypeReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface
+     */
+    public function createPriceTypeReader()
+    {
+        return new PriceProductTypeReader(
+            $this->getQueryContainer(),
+            $this->createPriceTypeMapper(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductMapperInterface
+     */
+    public function createPriceProductMapper()
+    {
+        return new PriceProductMapper($this->getCurrencyFacade(), $this->createPriceTypeMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface
+     */
+    public function createPriceTypeMapper()
+    {
+        return new PriceProductTypeMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductAbstractReaderInterface
+     */
+    public function createPriceProductAbstractReader()
+    {
+        return new PriceProductAbstractReader(
+            $this->getQueryContainer(),
+            $this->createPriceProductMapper(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface
+     */
+    public function createProductCriteriaBuilder()
+    {
+        return new PriceProductCriteriaBuilder(
+            $this->getCurrencyFacade(),
+            $this->getPriceFacade(),
+            $this->getStoreFacade(),
+            $this->createPriceTypeReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductConcreteReaderInterface
+     */
+    public function createPriceProductConcreteReader()
+    {
+        return new PriceProductConcreteReader($this->getQueryContainer(), $this->createPriceProductMapper());
     }
 
     /**

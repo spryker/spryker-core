@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\PriceFilterTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -486,11 +486,11 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @param string $currencyIsoCode
      * @param string $priceMode
      *
-     * @return \Generated\Shared\Transfer\PriceFilterTransfer
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function createPriceFilterTransfer($sku, $currencyIsoCode, $priceMode)
     {
-        return (new PriceFilterTransfer())
+        return (new PriceProductFilterTransfer())
             ->setSku($sku)
             ->setCurrencyIsoCode($currencyIsoCode)
             ->setPriceMode($priceMode);

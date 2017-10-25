@@ -18,6 +18,8 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Spryker\Zed\PriceProduct\Business\Exception\ProductPriceChangeException;
 use Spryker\Zed\PriceProduct\Business\Exception\UndefinedPriceTypeException;
+use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
@@ -53,21 +55,37 @@ class Writer implements WriterInterface
     protected $priceConfig;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface
+     */
+    protected $priceTypeReader;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface $reader
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceConfig
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface $productFacade
+     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      */
     public function __construct(
         PriceProductQueryContainerInterface $queryContainer,
         ReaderInterface $reader,
         PriceProductToTouchInterface $touchFacade,
-        PriceProductConfig $priceConfig
+        PriceProductConfig $priceConfig,
+        PriceProductToProductInterface $productFacade,
+        PriceProductTypeReaderInterface $priceTypeReader
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
         $this->touchFacade = $touchFacade;
         $this->priceConfig = $priceConfig;
+        $this->productFacade = $productFacade;
+        $this->priceTypeReader = $priceTypeReader;
     }
 
     /**
@@ -153,11 +171,13 @@ class Writer implements WriterInterface
      */
     protected function loadProductAbstractIdForPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
     {
-        if ($priceProductTransfer->getIdProductAbstract() === null) {
-            $priceProductTransfer->setIdProductAbstract(
-                $this->reader->getProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract())
-            );
+        if ($priceProductTransfer->getIdProductAbstract() !== null) {
+            return;
         }
+
+        $priceProductTransfer->setIdProductAbstract(
+            $this->productFacade->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract())
+        );
     }
 
     /**
@@ -168,10 +188,10 @@ class Writer implements WriterInterface
     protected function loadProductConcreteIdForPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
     {
         if ($priceProductTransfer->getIdProduct() === null &&
-            $this->reader->hasProductConcrete($priceProductTransfer->getSkuProduct())
+            $this->productFacade->hasProductConcrete($priceProductTransfer->getSkuProduct())
         ) {
             $priceProductTransfer->setIdProduct(
-                $this->reader->getProductConcreteIdBySku($priceProductTransfer->getSkuProduct())
+                $this->productFacade->getProductConcreteIdBySku($priceProductTransfer->getSkuProduct())
             );
         }
     }
@@ -301,7 +321,7 @@ class Writer implements WriterInterface
      */
     protected function getPriceTypeEntity($priceTypeName)
     {
-        $priceTypeName = $this->reader->handleDefaultPriceType($priceTypeName);
+        $priceTypeName = $this->priceTypeReader->handleDefaultPriceType($priceTypeName);
         $priceTypeEntity = $this->queryContainer
             ->queryPriceType($priceTypeName)
             ->findOne();

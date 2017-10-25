@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceCartConnector\Business\Manager;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PriceFilterTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
@@ -89,14 +89,14 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      * @param string $priceMode
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return void
      */
-    protected function setPrice(ItemTransfer $itemTransfer, PriceFilterTransfer $priceFilterTransfer, $priceMode)
+    protected function setPrice(ItemTransfer $itemTransfer, PriceProductFilterTransfer $priceFilterTransfer, $priceMode)
     {
         $price = $this->priceProductFacade->getPriceFor($priceFilterTransfer);
 
@@ -136,11 +136,11 @@ class PriceManager implements PriceManagerInterface
      * @param string $priceMode
      * @param string $currencyIsoCode
      *
-     * @return \Generated\Shared\Transfer\PriceFilterTransfer
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function createPriceFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
     {
-        $priceFilterTransfer = new PriceFilterTransfer();
+        $priceFilterTransfer = new PriceProductFilterTransfer();
         $priceFilterTransfer->setPriceMode($priceMode);
         $priceFilterTransfer->setCurrencyIsoCode($currencyIsoCode);
         $priceFilterTransfer->setSku($itemTransfer->getSku());

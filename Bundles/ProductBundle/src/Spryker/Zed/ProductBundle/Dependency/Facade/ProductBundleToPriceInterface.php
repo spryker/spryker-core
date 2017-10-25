@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-use Generated\Shared\Transfer\PriceFilterTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface ProductBundleToPriceInterface
 {
@@ -20,9 +20,9 @@ interface ProductBundleToPriceInterface
     public function getPriceBySku($sku, $priceType = null);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceFilterTransfer $priceFilterTransfer);
+    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 }
