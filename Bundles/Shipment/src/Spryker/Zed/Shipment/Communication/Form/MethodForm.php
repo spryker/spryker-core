@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
+use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -20,12 +20,12 @@ class MethodForm extends AbstractType
     const FIELD_NAME_FIELD = 'name';
     const FIELD_ID_FIELD = 'idShipmentMethod';
     const FIELD_IS_ACTIVE = 'isActive';
-    const FIELD_DEFAULT_PRICE = 'defaultPrice';
     const FIELD_AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
     const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
     const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
     const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
     const FIELD_TAX_SET_FIELD = 'fkTaxSet';
+    const FIELD_PRICES = 'prices';
 
     const OPTION_CARRIER_CHOICES = 'carrier_choices';
     const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
@@ -33,7 +33,20 @@ class MethodForm extends AbstractType
     const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
     const OPTION_TAX_SETS = 'option_tax_sets';
     const OPTION_MONEY_FACADE = 'money facade';
-    const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+    const OPTION_DATA_CLASS = 'data_class';
+
+    /**
+     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected $moneyCollectionFormTypePlugin;
+
+    /**
+     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $moneyCollectionFormTypePlugin
+     */
+    public function __construct(FormTypeInterface $moneyCollectionFormTypePlugin)
+    {
+        $this->moneyCollectionFormTypePlugin = $moneyCollectionFormTypePlugin;
+    }
 
     /**
      * @return string
@@ -53,13 +66,13 @@ class MethodForm extends AbstractType
     {
         $this->addCarrierField($builder, $options)
             ->addNameField($builder)
-            ->addDefaultPriceField($builder, $options)
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
             ->addIsActiveField($builder)
             ->addIdField($builder)
-            ->addTaxSetField($builder, $options);
+            ->addTaxSetField($builder, $options)
+            ->addMoneyCollectionField($builder);
     }
 
     /**
@@ -80,22 +93,6 @@ class MethodForm extends AbstractType
         $resolver->setAllowedTypes(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST, 'array');
         $resolver->setAllowedTypes(self::OPTION_PRICE_PLUGIN_CHOICE_LIST, 'array');
         $resolver->setAllowedTypes(self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST, 'array');
-
-        $resolver->setDefaults([
-            static::OPTION_CURRENCY_ISO_CODE => null,
-        ]);
-    }
-
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 
     /**
@@ -115,46 +112,6 @@ class MethodForm extends AbstractType
                 new Required(),
             ],
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addDefaultPriceField(FormBuilderInterface $builder, $options)
-    {
-        $fieldOptions = [
-            'label' => 'Default price',
-            'required' => false,
-        ];
-
-        if ($options[static::OPTION_CURRENCY_ISO_CODE] !== null) {
-            $fieldOptions['currency'] = $options[static::OPTION_CURRENCY_ISO_CODE];
-        }
-
-        $builder->add(self::FIELD_DEFAULT_PRICE, 'money', $fieldOptions);
-
-        $moneyFacade = $this->getMoneyFacade($options);
-
-        $builder->get(self::FIELD_DEFAULT_PRICE)->addModelTransformer(new CallbackTransformer(
-            function ($originalPrice) use ($moneyFacade) {
-                if ($originalPrice === null) {
-                    return $originalPrice;
-                }
-
-                return $moneyFacade->convertIntegerToDecimal($originalPrice);
-            },
-            function ($submittedPrice) use ($moneyFacade) {
-                if ($submittedPrice === null) {
-                    return $submittedPrice;
-                }
-                return $moneyFacade->convertDecimalToInteger($submittedPrice);
-            }
-        ));
 
         return $this;
     }
@@ -183,6 +140,24 @@ class MethodForm extends AbstractType
                 new Required(),
             ],
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addMoneyCollectionField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_PRICES,
+            $this->moneyCollectionFormTypePlugin->getType(),
+            [
+                ShipmentConstants::OPTION_AMOUNT_PER_STORE => true,
+            ]
+        );
 
         return $this;
     }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Calculation\Business;
 
 use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator;
+use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator\DiscountAmountAggregatorForGrossAmount;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemDiscountAmountFullAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemProductOptionPriceAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemSubtotalAggregator;
@@ -132,9 +133,17 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator\DiscountAmountAggregatorForGrossAmount
      */
     public function createDiscountAmountAggregator()
+    {
+        return new DiscountAmountAggregatorForGrossAmount();
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator
+     */
+    public function createDiscountAmountAggregatorForGenericAmount()
     {
         return new DiscountAmountAggregator();
     }

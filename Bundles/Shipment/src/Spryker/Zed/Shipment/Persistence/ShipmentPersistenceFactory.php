@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Persistence;
 
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -40,5 +41,13 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesShipmentQuery()
     {
         return SpySalesShipmentQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function createShipmentMethodPriceQuery()
+    {
+        return SpyShipmentMethodPriceQuery::create();
     }
 }
