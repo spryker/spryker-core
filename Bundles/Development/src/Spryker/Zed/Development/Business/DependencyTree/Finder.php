@@ -111,7 +111,6 @@ class Finder
 
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Zed/' . $this->bundle . '/' . $this->layer,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
             $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
         ];
@@ -124,7 +123,8 @@ class Finder
     {
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Service/' . $this->bundle,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Service/' . $this->bundle,
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
+            $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
         ];
     }
 
@@ -135,7 +135,6 @@ class Finder
     {
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Yves/' . $this->bundle,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Yves/' . $this->bundle,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
             $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
         ];
@@ -148,7 +147,6 @@ class Finder
     {
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Client/' . $this->bundle,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Client/' . $this->bundle,
             $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
             $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
         ];
@@ -161,7 +159,6 @@ class Finder
     {
         return [
             $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Shared/' . $this->bundle . '/',
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/*/Spryker/Shared/' . $this->bundle . '/',
             $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
             $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
         ];
