@@ -49,4 +49,31 @@
         <id-method-parameter value="spy_product_option_value_pk_seq"/>
     </table>
 
+    <table name="spy_product_option_value_price" identifierQuoting="true">
+        <column name="id_product_option_value_price" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_currency" required="true" type="INTEGER"/>
+        <column name="fk_store" required="false" type="INTEGER"/>
+        <column name="fk_product_option_value" required="true" type="INTEGER"/>
+        <column name="gross_price" required="false" type="INTEGER"/>
+        <column name="net_price" required="false" type="INTEGER"/>
+
+        <foreign-key name="spy_product_option_value_price-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="ProductOptionValuePrice">
+            <reference local="fk_currency" foreign="id_currency"/>
+        </foreign-key>
+        <foreign-key name="spy_product_option_value_price-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="ProductOptionValuePrice">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+        <foreign-key name="spy_product_option_value_price-fk_product_option_value" foreignTable="spy_product_option_value" phpName="ProductOptionValue" refPhpName="ProductOptionValuePrice">
+            <reference local="fk_product_option_value" foreign="id_product_option_value"/>
+        </foreign-key>
+
+        <unique name="spy_product_option_value_price-fk_product_option_value-fk_store-fk_currency">
+            <unique-column name="fk_product_option_value"/>
+            <unique-column name="fk_store"/>
+            <unique-column name="fk_currency"/>
+        </unique>
+
+        <id-method-parameter value="spy_product_option_value_price_pk_seq"/>
+    </table>
+
 </database>

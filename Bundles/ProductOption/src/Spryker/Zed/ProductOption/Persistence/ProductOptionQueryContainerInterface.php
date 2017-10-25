@@ -93,6 +93,33 @@ interface ProductOptionQueryContainerInterface
      * @api
      *
      * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryActiveProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery
+     */
+    public function queryProductOptionValuePricesByIdProductOptionValue($idProductOptionValue);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
@@ -122,6 +149,8 @@ interface ProductOptionQueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Unnecessary method will be removed without replacement.
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */

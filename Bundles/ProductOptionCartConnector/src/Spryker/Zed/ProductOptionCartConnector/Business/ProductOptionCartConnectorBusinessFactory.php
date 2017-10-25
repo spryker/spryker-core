@@ -25,8 +25,25 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionValueExpander()
     {
         return new ProductOptionValueExpander(
-            $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION)
+            $this->getProductOptionFacade(),
+            $this->getPriceFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     */
+    protected function getProductOptionFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceInterface
+     */
+    protected function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRICE);
     }
 
     /**

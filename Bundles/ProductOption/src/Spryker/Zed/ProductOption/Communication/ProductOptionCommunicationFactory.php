@@ -128,6 +128,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductOptionListTable(
             $this->getQueryContainer(),
+            $this->getCurrencyFacade(),
             $this->getMoneyFacade()
         );
     }
@@ -196,6 +197,14 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     public function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_CURRENCY);
     }
 
     /**

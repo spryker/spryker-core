@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOption;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyBridge;
@@ -24,6 +25,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_MONEY = 'FACADE_MONEY';
+    const FACADE_CURRENCY = 'FACADE_CURRENCY';
 
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
@@ -53,6 +55,22 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TAX] = function (Container $container) {
             return new ProductOptionToTaxBridge($container->getLocator()->tax()->facade());
+        };
+
+        $container = $this->addCurrencyFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCurrencyFacade(Container $container)
+    {
+        $container[static::FACADE_CURRENCY] = function (Container $container) {
+            return new ProductOptionToCurrencyBridge($container->getLocator()->currency()->facade());
         };
 
         return $container;
@@ -102,6 +120,8 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ProductOptionToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
+
+        $container = $this->addCurrencyFacade($container);
 
         return $container;
     }

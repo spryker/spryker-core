@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface ProductOptionCartConnectorFacadeInterface
 {
     /**
-     *
      * Specification:
      *  - Expand product option transfer object with additional data from persistence
      *  - Returns CartChangeTransfer transfer with option data included
@@ -27,7 +26,6 @@ interface ProductOptionCartConnectorFacadeInterface
     public function expandProductOptions(CartChangeTransfer $changeTransfer);
 
     /**
-     *
      * Specification:
      *  - Set group key to itemTransfer to contain product option identifiers.
      *  - Returns CartChangeTransfer with modified group key for each item, which includes options
@@ -41,7 +39,6 @@ interface ProductOptionCartConnectorFacadeInterface
     public function expandGroupKey(CartChangeTransfer $changeTransfer);
 
     /**
-     *
      * Specification:
      *  - Sets each product quantity to item quantity
      *  - Returns CartChangeTransfer with modified item quantity

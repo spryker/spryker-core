@@ -1,6 +1,7 @@
 <?php
 namespace SprykerTest\Zed\ProductOption;
 
+use ArrayObject;
 use Codeception\Actor;
 use Codeception\Scenario;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
@@ -160,7 +161,7 @@ class ProductOptionPresentationTester extends Actor
 
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('option.value.translation.key.edit');
-        $productOptionValueTransfer->setPrice(1000);
+        $productOptionValueTransfer->setPrices(new ArrayObject());
         $productOptionValueTransfer->setSku('testing_sky_' . rand(1, 999));
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
@@ -168,7 +169,7 @@ class ProductOptionPresentationTester extends Actor
 
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('option.value.translation.key.edit.second');
-        $productOptionValueTransfer->setPrice(2000);
+        $productOptionValueTransfer->setPrices(new ArrayObject());
         $productOptionValueTransfer->setSku('testing_sky_second' . rand(1, 999));
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 

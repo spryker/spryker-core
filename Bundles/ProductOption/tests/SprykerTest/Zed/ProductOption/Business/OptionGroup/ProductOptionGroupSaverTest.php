@@ -6,6 +6,7 @@
 
 namespace SprykerTest\Zed\ProductOption\Business\OptionGroup;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
@@ -64,7 +65,7 @@ class ProductOptionGroupSaverTest extends MockProvider
 
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('value123');
-        $productOptionValueTransfer->setPrice(120);
+        $productOptionValueTransfer->setPrices(new ArrayObject());
         $productOptionValueTransfer->setSku('sku123');
 
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);

@@ -146,6 +146,49 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+    {
+        return $this->queryProductOptionGroupById($idProductOptionGroup)
+            ->leftJoinWithSpyProductOptionValue()
+            ->useSpyProductOptionValueQuery()
+                ->leftJoinWithProductOptionValuePrice()
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryActiveProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+    {
+        return $this->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+            ->filterByActive(true);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery
+     */
+    public function queryProductOptionValuePricesByIdProductOptionValue($idProductOptionValue)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceQuery()
+            ->filterByFkProductOptionValue($idProductOptionValue);
+    }
+
+    /**
+     * @api
+     *
      * @param string $groupName
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
@@ -302,6 +345,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @api
+     *
+     * @deprecated Unnecessary method will be removed without replacement.
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
      */

@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\ProductOption\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
@@ -88,6 +90,26 @@ class MockProvider extends Unit
     protected function createTranslationSaverMock()
     {
         return $this->getMockBuilder(TranslationSaverInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface
+     */
+    protected function createProductOptionValuePriceHydratorMock()
+    {
+        return $this->getMockBuilder(ProductOptionValuePriceHydratorInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface
+     */
+    protected function createProductOptionValuePriceSaverMock()
+    {
+        return $this->getMockBuilder(ProductOptionValuePriceSaverInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

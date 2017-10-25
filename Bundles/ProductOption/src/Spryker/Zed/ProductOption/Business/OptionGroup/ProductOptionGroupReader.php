@@ -20,6 +20,11 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
 {
     /**
+     * @var \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface
+     */
+    protected $productOptionValuePriceHydrator;
+
+    /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected $productOptionQueryContainer;
@@ -35,15 +40,18 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     protected $localeFacade;
 
     /**
+     * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface $productOptionValuePriceHydrator
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
      */
     public function __construct(
+        ProductOptionValuePriceHydratorInterface $productOptionValuePriceHydrator,
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         ProductOptionToGlossaryInterface $glossaryFacade,
         ProductOptionToLocaleInterface $localeFacade
     ) {
+        $this->productOptionValuePriceHydrator = $productOptionValuePriceHydrator;
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->glossaryFacade = $glossaryFacade;
         $this->localeFacade = $localeFacade;
@@ -157,6 +165,8 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
         $productOptionValueTranslations = [];
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
             $productOptionValueTransfer = $this->hydrateProductOptionValueTransfer($productOptionValueEntity);
+            $moneyValueCollection = $this->productOptionValuePriceHydrator->getMoneyValueCollection($productOptionValueEntity->getProductOptionValuePrices());
+            $productOptionValueTransfer->setPrices($moneyValueCollection);
 
             $relatedOptionHash = $this->createRelatedKeyHash($productOptionValueEntity->getIdProductOptionValue());
             $productOptionValueTransfer->setOptionHash($relatedOptionHash);
@@ -194,10 +204,10 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      */
     protected function queryProductGroupById($idProductOptionGroup)
     {
-        $productOptionGroupEntity = $this->productOptionQueryContainer
-            ->queryProductOptionGroupById($idProductOptionGroup)
-            ->findOne();
+        $productOptionGroupCollection = $this->productOptionQueryContainer
+            ->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+            ->find();
 
-        return $productOptionGroupEntity;
+        return $productOptionGroupCollection->getFirst();
     }
 }

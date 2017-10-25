@@ -17,6 +17,11 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 class ProductOptionValueSaver implements ProductOptionValueSaverInterface
 {
     /**
+     * @var \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface
+     */
+    protected $productOptionPriceSaver;
+
+    /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected $productOptionQueryContainer;
@@ -32,15 +37,18 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     protected $translationSaver;
 
     /**
+     * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface $productOptionPriceSaver
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface $touchFacade
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaver
      */
     public function __construct(
+        ProductOptionValuePriceSaverInterface $productOptionPriceSaver,
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         ProductOptionToTouchInterface $touchFacade,
         TranslationSaverInterface $translationSaver
     ) {
+        $this->productOptionPriceSaver = $productOptionPriceSaver;
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->translationSaver = $translationSaver;
@@ -54,7 +62,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     public function saveProductOptionValue(ProductOptionValueTransfer $productOptionValueTransfer)
     {
         $productOptionValueTransfer->requireFkProductOptionGroup()
-            ->requirePrice()
+            ->requirePrices()
             ->requireSku()
             ->requireValue();
 
@@ -63,6 +71,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
         $producOptionValueEntity->save();
 
         $productOptionValueTransfer->setIdProductOptionValue($producOptionValueEntity->getIdProductOptionValue());
+        $this->productOptionPriceSaver->save($productOptionValueTransfer);
 
         return $producOptionValueEntity->getIdProductOptionValue();
     }

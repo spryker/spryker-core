@@ -56,9 +56,39 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->fromArray($productOptionValueEntity->toArray(), true);
         $productOptionTransfer->setGroupName($productOptionValueEntity->getSpyProductOptionGroup()->getName());
-        $productOptionTransfer->setUnitGrossPrice($productOptionValueEntity->getPrice());
+        $productOptionTransfer->setUnitGrossPrice($this->getGrossPrice($productOptionValueEntity));
+        $productOptionTransfer->setUnitNetPrice($this->getNetPrice($productOptionValueEntity));
 
         return $productOptionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     *
+     * @return int|null
+     */
+    protected function getGrossPrice(SpyProductOptionValue $productOptionValueEntity)
+    {
+        // TODO: retrieve the expected price instead of first
+        foreach ($productOptionValueEntity->getProductOptionValuePrices() as $priceEntity) {
+            return $priceEntity->getGrossPrice();
+        }
+        return null;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     *
+     * @return int|null
+     */
+    protected function getNetPrice(SpyProductOptionValue $productOptionValueEntity)
+    {
+        // TODO: retrieve the expected price instead of first
+        foreach ($productOptionValueEntity->getProductOptionValuePrices() as $priceEntity) {
+            return $priceEntity->getNetPrice();
+        }
+
+        return null;
     }
 
     /**

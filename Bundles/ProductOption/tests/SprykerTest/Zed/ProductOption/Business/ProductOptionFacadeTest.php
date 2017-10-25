@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductOption\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -38,6 +39,8 @@ use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 class ProductOptionFacadeTest extends Unit
 {
     const DEFAULT_LOCALE_ISO_CODE = 'en_US';
+
+    // TODO: add test to save prices
 
     /**
      * @return void
@@ -395,7 +398,7 @@ class ProductOptionFacadeTest extends Unit
     {
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('value.translation.key');
-        $productOptionValueTransfer->setPrice(1000);
+        $productOptionValueTransfer->setPrices(new ArrayObject());
         $productOptionValueTransfer->setSku('sku_for_testing');
 
         return $productOptionValueTransfer;

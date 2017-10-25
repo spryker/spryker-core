@@ -81,7 +81,6 @@ interface ProductOptionFacadeInterface
     public function getProductOptionValueById($idProductOptionValue);
 
     /**
-     *
      * Specification:
      *  - Gets product option group from persistence
      *  - Gets all related product option values
@@ -147,6 +146,13 @@ interface ProductOptionFacadeInterface
     public function hydrateSalesOrderProductOptions(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Sorts sales order items within the provided transfer object.
+     * - 3 level sorting is applied:
+     *   - items without options come first,
+     *   - items are ordered by SKU,
+     *   - items are ordered by ID.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -156,6 +162,9 @@ interface ProductOptionFacadeInterface
     public function sortSalesOrderItemsByOptions(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Hydrates existing production option group ids within the provided OrderTransfer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

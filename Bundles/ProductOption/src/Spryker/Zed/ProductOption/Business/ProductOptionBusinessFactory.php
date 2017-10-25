@@ -16,6 +16,8 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorter;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderHydrate;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydrator;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
@@ -33,6 +35,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionGroupReader()
     {
         return new ProductOptionGroupReader(
+            $this->createProductOptionPriceHydrator(),
             $this->getQueryContainer(),
             $this->getGlossaryFacade(),
             $this->getLocaleFacade()
@@ -59,6 +62,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionValueSaver()
     {
         return new ProductOptionValueSaver(
+            $this->createProductOptionPriceSaver(),
             $this->getQueryContainer(),
             $this->getTouchFacade(),
             $this->createTranslationSaver()
@@ -128,6 +132,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface
+     */
+    protected function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
      */
     protected function getTouchFacade()
@@ -165,5 +177,21 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionGroupIdHydrator()
     {
         return new ProductOptionGroupIdHydrator($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface
+     */
+    protected function createProductOptionPriceSaver()
+    {
+        return new ProductOptionValuePriceSaver($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface
+     */
+    protected function createProductOptionPriceHydrator()
+    {
+        return new ProductOptionValuePriceHydrator($this->getCurrencyFacade());
     }
 }

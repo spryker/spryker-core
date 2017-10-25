@@ -11,7 +11,6 @@ namespace Spryker\Client\ProductOption;
 interface ProductOptionClientInterface
 {
     /**
-     *
      * Specification:
      *   - Reads product option from Yves store
      *
