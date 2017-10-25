@@ -59,8 +59,11 @@ class ProductOptionListTable extends AbstractTable
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface $currencyFacade
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface $moneyFacade
      */
-    public function __construct(ProductOptionQueryContainerInterface $productOptionQueryContainer, ProductOptionToCurrencyInterface $currencyFacade, ProductOptionToMoneyInterface $moneyFacade)
-    {
+    public function __construct(
+        ProductOptionQueryContainerInterface $productOptionQueryContainer,
+        ProductOptionToCurrencyInterface $currencyFacade,
+        ProductOptionToMoneyInterface $moneyFacade
+    ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->currencyFacade = $currencyFacade;
         $this->moneyFacade = $moneyFacade;
@@ -79,12 +82,12 @@ class ProductOptionListTable extends AbstractTable
         $config->setHeader([
             SpyProductOptionGroupTableMap::COL_ID_PRODUCT_OPTION_GROUP => 'Option group ID',
             SpyProductOptionGroupTableMap::COL_NAME => 'Group name',
-            self::TABLE_COL_SKU => 'SKU',
-            self::TABLE_COL_NAME => 'Name',
+            static::TABLE_COL_SKU => 'SKU',
+            static::TABLE_COL_NAME => 'Name',
             static::TABLE_COL_GROSS_PRICE => 'Gross Price',
             static::TABLE_COL_NET_PRICE => 'Net Price',
             SpyProductOptionGroupTableMap::COL_ACTIVE => 'Status',
-            self::TABLE_COL_ACTIONS => 'Actions',
+            static::TABLE_COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -103,11 +106,11 @@ class ProductOptionListTable extends AbstractTable
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
-        $config->addRawColumn(self::TABLE_COL_ACTIONS);
-        $config->addRawColumn(self::TABLE_COL_SKU);
-        $config->addRawColumn(self::TABLE_COL_GROSS_PRICE);
-        $config->addRawColumn(self::TABLE_COL_NET_PRICE);
-        $config->addRawColumn(self::TABLE_COL_NAME);
+        $config->addRawColumn(static::TABLE_COL_ACTIONS);
+        $config->addRawColumn(static::TABLE_COL_SKU);
+        $config->addRawColumn(static::TABLE_COL_GROSS_PRICE);
+        $config->addRawColumn(static::TABLE_COL_NET_PRICE);
+        $config->addRawColumn(static::TABLE_COL_NAME);
         $config->addRawColumn(SpyProductOptionGroupTableMap::COL_ACTIVE);
 
         return $config;
@@ -329,7 +332,7 @@ class ProductOptionListTable extends AbstractTable
         $viewProductOptionUrl = Url::generate(
             '/product-option/view/index',
             [
-                self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
+                static::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
             ]
         );
 
@@ -346,7 +349,7 @@ class ProductOptionListTable extends AbstractTable
         $editProductOptionUrl = Url::generate(
             '/product-option/edit/index',
             [
-                self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
+                static::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
             ]
         );
 
@@ -365,9 +368,9 @@ class ProductOptionListTable extends AbstractTable
         $editProductOptionUrl = Url::generate(
             '/product-option/index/toggle-active',
             [
-                self::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
-                self::URL_PARAM_ACTIVE => $productOptionGroupEntity->getActive() ? 0 : 1,
-                self::URL_PARAM_REDIRECT_URL => $redirectUrl,
+                static::URL_PARAM_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
+                static::URL_PARAM_ACTIVE => $productOptionGroupEntity->getActive() ? 0 : 1,
+                static::URL_PARAM_REDIRECT_URL => $redirectUrl,
             ]
         );
 

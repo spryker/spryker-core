@@ -14,6 +14,8 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreInterface;
 
 class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInterface
 {
+    const DEFAULT_PRICE = null;
+
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface
      */
@@ -50,8 +52,8 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
             return $priceMap[$currentIdStore]->getGrossPrice();
         }
 
-        if (isset($priceMap[null])) {
-            return $priceMap[null]->getGrossPrice();
+        if (isset($priceMap[static::DEFAULT_PRICE])) {
+            return $priceMap[static::DEFAULT_PRICE]->getGrossPrice();
         }
 
         return null;
@@ -73,8 +75,8 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
             return $priceMap[$currentIdStore]->getNetPrice();
         }
 
-        if (isset($priceMap[null])) {
-            return $priceMap[null]->getNetPrice();
+        if (isset($priceMap[static::DEFAULT_PRICE])) {
+            return $priceMap[static::DEFAULT_PRICE]->getNetPrice();
         }
 
         return null;

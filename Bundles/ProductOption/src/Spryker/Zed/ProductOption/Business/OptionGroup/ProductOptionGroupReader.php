@@ -165,8 +165,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
         $productOptionValueTranslations = [];
         foreach ($productOptionGroupEntity->getSpyProductOptionValues() as $productOptionValueEntity) {
             $productOptionValueTransfer = $this->hydrateProductOptionValueTransfer($productOptionValueEntity);
-            $moneyValueCollection = $this->productOptionValuePriceHydrator->getMoneyValueCollection($productOptionValueEntity->getProductOptionValuePrices());
-            $productOptionValueTransfer->setPrices($moneyValueCollection);
+            $productOptionValueTransfer->setPrices($this->getPriceCollection($productOptionValueEntity));
 
             $relatedOptionHash = $this->createRelatedKeyHash($productOptionValueEntity->getIdProductOptionValue());
             $productOptionValueTransfer->setOptionHash($relatedOptionHash);
@@ -182,6 +181,18 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
             $productOptionValueTranslations = array_merge($productOptionValueTranslations, $valueTranslations);
         }
         return $productOptionValueTranslations;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     */
+    protected function getPriceCollection(SpyProductOptionValue $productOptionValueEntity)
+    {
+        return $this->productOptionValuePriceHydrator->getMoneyValueCollection(
+            $productOptionValueEntity->getProductOptionValuePrices()
+        );
     }
 
     /**
