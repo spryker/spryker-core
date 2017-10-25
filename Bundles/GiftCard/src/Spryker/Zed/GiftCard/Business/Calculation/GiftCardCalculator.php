@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
+use Spryker\Shared\GiftCard\GiftCardConfig;
 use Spryker\Shared\GiftCard\GiftCardConstants;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
@@ -161,9 +162,9 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
                 continue;
             }
             $giftCardPayment = new PaymentTransfer();
-            $giftCardPayment->setPaymentProvider(GiftCardConstants::PROVIDER_NAME);
-            $giftCardPayment->setPaymentSelection(GiftCardConstants::PROVIDER_NAME);
-            $giftCardPayment->setPaymentMethod(GiftCardConstants::PROVIDER_NAME);
+            $giftCardPayment->setPaymentProvider(GiftCardConfig::PROVIDER_NAME);
+            $giftCardPayment->setPaymentSelection(GiftCardConfig::PROVIDER_NAME);
+            $giftCardPayment->setPaymentMethod(GiftCardConfig::PROVIDER_NAME);
             $giftCardPayment->setAmount($this->giftCardValueProvider->getValue($giftCard));
             $giftCardPayment->setIsLimitedAmount(true);
             $giftCardPayment->setGiftCard($giftCard);

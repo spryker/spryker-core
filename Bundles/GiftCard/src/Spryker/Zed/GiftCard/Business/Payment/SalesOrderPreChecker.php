@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\GiftCard\GiftCardConfig;
 use Spryker\Shared\GiftCard\GiftCardConstants;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
@@ -67,7 +68,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         $validPayments = new ArrayObject();
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
-            if (!($paymentTransfer->getPaymentProvider() === GiftCardConstants::PROVIDER_NAME)) {
+            if (!($paymentTransfer->getPaymentProvider() === GiftCardConfig::PROVIDER_NAME)) {
                 $validPayments[] = $paymentTransfer;
                 continue;
             }
@@ -98,7 +99,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     protected function hasGiftCardPayments(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
-            if ($paymentTransfer->getPaymentProvider() === GiftCardConstants::PROVIDER_NAME) {
+            if ($paymentTransfer->getPaymentProvider() === GiftCardConfig::PROVIDER_NAME) {
                 return true;
             }
         }
@@ -120,7 +121,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         if (!$this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $quoteTransfer)) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' already used');
-            $error->setErrorCode(GiftCardConstants::ERROR_GIFT_CARD_ALREADY_USED);
+            $error->setErrorCode(GiftCardConfig::ERROR_GIFT_CARD_ALREADY_USED);
 
             $result[] = $error;
         }
@@ -128,7 +129,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         if ($this->giftCardValueProvider->getValue($giftCardTransfer) < $paymentTransfer->getAmount()) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' used amount too high');
-            $error->setErrorCode(GiftCardConstants::ERROR_GIFT_CARD_AMOUNT_TOO_HIGH);
+            $error->setErrorCode(GiftCardConfig::ERROR_GIFT_CARD_AMOUNT_TOO_HIGH);
 
             $result[] = $error;
         }
