@@ -24,7 +24,7 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group Price
+ * @group PriceProduct
  * @group Business
  * @group Model
  * @group WriterTest

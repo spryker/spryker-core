@@ -294,8 +294,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $bundleItemIdentifier,
         $priceMode,
         $currencyIsoCode
-    )
-    {
+    ) {
         $bundledConcreteProductEntity = $bundleProductEntity->getSpyProductRelatedByFkBundledProduct();
 
         $productConcreteTransfer = $this->getProductConcreteTransfer(
@@ -337,7 +336,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected function getProductPrice($sku, $currencyIsoCode, $priceMode)
     {
         if (!isset(static::$productPriceCache[$sku])) {
-            $priceFilterTransfer = $this->createPriceFilterTransfer($sku, $currencyIsoCode, $priceMode);
+            $priceFilterTransfer = $this->createPriceProductFilterTransfer($sku, $currencyIsoCode, $priceMode);
             static::$productPriceCache[$sku] = $this->priceFacade->getPriceFor($priceFilterTransfer);
         }
 
@@ -389,7 +388,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function calculateBundleTotalUnitPrice(array $bundledProducts, $priceMode)
     {
-        $totalBundleItemAmount = (int)array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) use($priceMode) {
+        $totalBundleItemAmount = (int)array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) use ($priceMode) {
             if ($priceMode === PriceMode::PRICE_MODE_NET) {
                 $total += $itemTransfer->getUnitNetPrice();
             } else {
@@ -463,7 +462,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         }
 
         $itemTransfer->requireUnitGrossPrice();
-
     }
 
     /**
@@ -488,7 +486,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceFilterTransfer($sku, $currencyIsoCode, $priceMode)
+    protected function createPriceProductFilterTransfer($sku, $currencyIsoCode, $priceMode)
     {
         return (new PriceProductFilterTransfer())
             ->setSku($sku)

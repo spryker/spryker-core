@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -60,34 +61,38 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      */
     public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer)
     {
-        $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
-        $priceProductCriteriaTransfer->setIdCurrency(
-            $this->getCurrencyFromFilter($priceProductFilterTransfer)->getIdCurrency()
-        );
-        $priceProductCriteriaTransfer->setIdStore($priceProductCriteriaTransfer->getIdStore());
-        $priceProductCriteriaTransfer->setPriceMode($this->getPriceModeFromFilter($priceProductFilterTransfer));
-        $priceProductCriteriaTransfer->setPriceType(
-            $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName())
-        );
-
-        return $priceProductCriteriaTransfer;
+        return (new PriceProductCriteriaTransfer())
+            ->setIdCurrency(
+                $this->getCurrencyFromFilter($priceProductFilterTransfer)->getIdCurrency()
+            )->setIdStore(
+                $this->getStoreFromFilter($priceProductFilterTransfer)->getIdStore()
+            )->setPriceMode(
+                $this->getPriceModeFromFilter($priceProductFilterTransfer)
+            )->setPriceType(
+                $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName())
+            );
     }
 
     /**
+     * @param string|null $priceTypeName
+     *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaWithDefaultValues()
+    public function buildCriteriaWithDefaultValues($priceTypeName = null)
     {
-        $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
-
-        $priceProductCriteriaTransfer->setPriceMode($this->priceFacade->getDefaultPriceMode());
-        $priceProductCriteriaTransfer->setIdCurrency(
+        return (new PriceProductCriteriaTransfer())
+        ->setPriceMode(
+            $this->priceFacade->getDefaultPriceMode()
+        )
+        ->setIdCurrency(
             $this->currencyFacade->getDefaultCurrencyForCurrentStore()->getIdCurrency()
+        )
+        ->setIdStore(
+            $this->storeFacade->getCurrentStore()->getIdStore()
+        )
+        ->setPriceType(
+            $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
         );
-        $priceProductCriteriaTransfer->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
-        $priceProductCriteriaTransfer->setPriceType($this->priceProductTypeReader->handleDefaultPriceType());
-
-        return $priceProductCriteriaTransfer;
     }
 
     /**
@@ -131,6 +136,4 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
 
         return $this->storeFacade->getCurrentStore();
     }
-
-
 }

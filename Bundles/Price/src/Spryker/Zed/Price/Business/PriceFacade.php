@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Price\Business;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -71,7 +68,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      */
     public function getGrossPriceModeIdentifier()
     {
-       return $this->getFactory()
+        return $this->getFactory()
            ->getConfig()
            ->createSharedConfig()
            ->getGrossPriceModeIdentifier();

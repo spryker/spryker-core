@@ -21,7 +21,7 @@ use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group Price
+ * @group PriceProduct
  * @group Business
  * @group Model
  * @group ReaderTest

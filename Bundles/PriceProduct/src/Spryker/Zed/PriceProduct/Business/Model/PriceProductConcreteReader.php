@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -14,9 +15,6 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 {
-    const COL_GROSS_PRICE = 'gross_price';
-    const COL_NET_PRICE = 'net_price';
-
     /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
      */
@@ -41,7 +39,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 
     /**
      * @param string $sku
-     * @param PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return bool
      */
@@ -54,7 +52,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 
         return $productConcrete !== null;
     }
-
 
     /**
      * @param string $sku
@@ -94,8 +91,8 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     {
         return $this->priceProductQueryContainer
             ->queryPriceEntityForProductConcrete($sku, $priceProductCriteriaTransfer)
-            ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, static::COL_GROSS_PRICE)
-            ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, static::COL_NET_PRICE)
+            ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, PriceProductQueryContainerInterface::COL_GROSS_PRICE)
+            ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, PriceProductQueryContainerInterface::COL_NET_PRICE)
             ->setFormatter(ArrayFormatter::class)
             ->findOne();
     }

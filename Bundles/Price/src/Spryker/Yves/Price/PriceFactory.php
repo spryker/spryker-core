@@ -15,7 +15,6 @@ use Spryker\Yves\Price\PriceModeSwitcher\PriceModeSwitcher;
  */
 class PriceFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\Price\PriceModeSwitcher\PriceModeSwitcherInterface
      */
@@ -34,5 +33,4 @@ class PriceFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(PriceDependencyProvider::CLIENT_QUOTE);
     }
-
 }

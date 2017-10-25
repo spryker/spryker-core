@@ -60,6 +60,7 @@ interface ReaderInterface
      * @param string $sku
      * @param string $priceTypeName
      * @param string $currencyIsoCode
+     *
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName, $currencyIsoCode);
@@ -70,5 +71,4 @@ interface ReaderInterface
      * @return array
      */
     public function findPricesBySkuGrouped($sku);
-
 }

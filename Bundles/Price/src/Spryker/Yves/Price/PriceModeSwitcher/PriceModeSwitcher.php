@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,7 +13,6 @@ use Spryker\Yves\Price\PriceConfig;
 
 class PriceModeSwitcher implements PriceModeSwitcherInterface
 {
-
     /**
      * @var \Spryker\Yves\Price\Dependency\Client\PriceToQuoteClientInterface
      */
@@ -48,12 +48,11 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
 
         if (!isset($priceModes[$priceMode])) {
             throw new UnknownPriceModeException(
-                sprintf('Unknown price mode "%s".'. $priceMode)
+                sprintf('Unknown price mode "%s".' . $priceMode)
             );
         }
         $quoteTransfer = $this->quoteClient->getQuote();
         $quoteTransfer->setPriceMode($priceMode);
         $this->quoteClient->setQuote($quoteTransfer);
     }
-
 }

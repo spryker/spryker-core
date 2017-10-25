@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -306,5 +305,4 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
             ->createPriceProductAbstractReader()
             ->findProductAbstractPrice($idAbstractProduct, $priceTypeName);
     }
-
 }

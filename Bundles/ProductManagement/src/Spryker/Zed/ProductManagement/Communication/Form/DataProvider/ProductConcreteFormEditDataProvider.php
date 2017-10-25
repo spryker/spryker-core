@@ -22,7 +22,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -204,7 +203,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      */
     protected function appendVariantPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
-        $formData[ProductFormAdd::FIELD_PRICES] = $productAbstractTransfer->getPrices();
+        $formData[ProductFormAdd::FIELD_PRICES] = $productTransfer->getPrices();
         $stockType = $this->stockQueryContainer->queryAllStockTypes()->find()->getData();
         $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
 

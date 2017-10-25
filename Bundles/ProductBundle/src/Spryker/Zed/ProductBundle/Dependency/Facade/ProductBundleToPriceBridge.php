@@ -36,12 +36,12 @@ class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
+    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
     {
-        return $this->priceFacade->getPriceFor($priceFilterTransfer);
+        return $this->priceFacade->getPriceFor($priceProductFilterTransfer);
     }
 }

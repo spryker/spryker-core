@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -13,8 +14,9 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CurrencyClient extends AbstractClient implements CurrencyClientInterface
 {
-
     /**
+     * @api
+     *
      * @param string $isoCode
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
@@ -25,6 +27,8 @@ class CurrencyClient extends AbstractClient implements CurrencyClientInterface
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent()

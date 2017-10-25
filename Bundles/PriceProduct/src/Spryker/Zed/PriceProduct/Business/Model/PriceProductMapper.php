@@ -1,12 +1,12 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
@@ -33,8 +33,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     public function __construct(
         PriceProductToCurrencyInterface $currencyFacade,
         ProductPriceTypeMapperInterface $priceProductTypeMapper
-    )
-    {
+    ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceProductTypeMapper = $priceProductTypeMapper;
     }
@@ -99,7 +98,6 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setGrossAmount($priceProductStoreEntity->getGrossPrice())
             ->setCurrency($currencyTransfer);
     }
-
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity

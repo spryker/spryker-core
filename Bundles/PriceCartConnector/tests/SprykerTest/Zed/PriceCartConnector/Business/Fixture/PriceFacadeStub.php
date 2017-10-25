@@ -24,9 +24,9 @@ class PriceFacadeStub extends PriceProductFacade
     /**
      * @param string $sku
      * @param string|null $priceType
-     *
      * @param string $currencyCode
      * @param string $priceMode
+     *
      * @return mixed
      */
     public function getPriceBySku($sku, $priceType, $currencyCode, $priceMode)

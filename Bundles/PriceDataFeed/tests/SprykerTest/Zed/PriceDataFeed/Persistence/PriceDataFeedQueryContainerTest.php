@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\PriceDataFeed\Persistence;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
 use Orm\Zed\PriceProduct\Persistence\Base\SpyPriceProductQuery;
-use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainer;
 use Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainer;
 
 /**
  * Auto-generated group annotations

@@ -9,10 +9,9 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 interface ProductManagementToPriceProductInterface
 {
-
     /**
      * @param string $sku
-     * @param string $priceTypeName
+     * @param string|null $priceTypeName
      *
      * @return int
      */
@@ -35,5 +34,4 @@ interface ProductManagementToPriceProductInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
-
 }

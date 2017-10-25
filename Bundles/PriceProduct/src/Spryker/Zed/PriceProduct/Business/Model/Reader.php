@@ -7,35 +7,17 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
-use ArrayObject;
-use Exception;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\PriceTypeTransfer;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceType;
-use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class Reader implements ReaderInterface
 {
-
     const PRICE_TYPE_UNKNOWN = 'price type unknown: ';
-    const COL_GROSS_PRICE = 'gross_price';
-    const COL_NET_PRICE = 'net_price';
 
     /**
      * @var string
@@ -103,13 +85,13 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     * @param string $priceTypeName
+     * @param string|null $priceTypeName
      *
      * @return int
      */
     public function getPriceBySku($sku, $priceTypeName = null)
     {
-        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues();
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues($priceTypeName);
         $productPrice = $this->getProductPrice($sku, $priceProductCriteriaTransfer);
 
         return $this->findPriceByPriceMode($priceProductCriteriaTransfer, $productPrice);
@@ -340,9 +322,9 @@ class Reader implements ReaderInterface
     protected function findPriceByPriceMode(PriceProductCriteriaTransfer $priceProductCriteriaTransfer, array $productPrice)
     {
         if ($priceProductCriteriaTransfer->getPriceMode() === $this->getNetPriceModeIdentifier()) {
-            return $productPrice[static::COL_NET_PRICE];
+            return $productPrice[PriceProductQueryContainerInterface::COL_NET_PRICE];
         }
 
-        return $productPrice[static::COL_GROSS_PRICE];
+        return $productPrice[PriceProductQueryContainerInterface::COL_GROSS_PRICE];
     }
 }

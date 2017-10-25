@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 class PriceCartToPriceProductBridge implements PriceCartToPriceProductInterface
 {
-
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */

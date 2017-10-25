@@ -8,11 +8,11 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceType;
 
 interface PriceProductQueryContainerInterface
 {
+    const COL_GROSS_PRICE = 'gross_price';
+    const COL_NET_PRICE = 'net_price';
 
     /**
      * @api
@@ -101,5 +101,4 @@ interface PriceProductQueryContainerInterface
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryPriceProductEntity($idPriceProduct);
-
 }

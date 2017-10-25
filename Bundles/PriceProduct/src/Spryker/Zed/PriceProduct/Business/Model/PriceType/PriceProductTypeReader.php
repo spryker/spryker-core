@@ -1,12 +1,12 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceProduct\Business\Model\PriceType;
 
-use Spryker\Zed\Price\PriceConfig;
 use Spryker\Zed\PriceProduct\Business\Exception\UnknownPriceProductTypeException;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
@@ -42,8 +42,7 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         ProductPriceTypeMapperInterface $productPriceTypeMapper,
         PriceProductConfig $priceProductConfig
-    )
-    {
+    ) {
         $this->queryContainer = $priceProductQueryContainer;
         $this->productPriceTypeMapper = $productPriceTypeMapper;
         $this->priceProductConfig = $priceProductConfig;
@@ -54,18 +53,17 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
      */
     public function getPriceTypes()
     {
-        $priceTypes = [];
         $priceTypeEntities = $this->queryContainer
             ->queryAllPriceTypes()
             ->find();
 
+        $priceTypes = [];
         foreach ($priceTypeEntities as $priceTypeEntity) {
             $priceTypes[] = $this->productPriceTypeMapper->mapFromEntity($priceTypeEntity);
         }
 
         return $priceTypes;
     }
-
 
     /**
      * @param string|null $priceType
@@ -84,7 +82,7 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
     /**
      * @param string $priceTypeName
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\PriceProduct\Business\Exception\UnknownPriceProductTypeException
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceType
      */
@@ -121,6 +119,5 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
         static::$priceTypeCache[$priceTypeName] = $priceTypeEntity;
 
         return true;
-
     }
 }

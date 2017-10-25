@@ -26,7 +26,6 @@ use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
  */
 class PriceProductBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface
      */
@@ -49,7 +48,6 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new Writer(
             $this->getQueryContainer(),
-            $this->createReaderModel(),
             $this->getTouchFacade(),
             $this->getConfig(),
             $this->getProductFacade(),
@@ -64,7 +62,6 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new BulkWriter(
             $this->getQueryContainer(),
-            $this->createReaderModel(),
             $this->getTouchFacade(),
             $this->getConfig(),
             $this->getProductFacade(),
@@ -108,7 +105,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductAbstractReader(
             $this->getQueryContainer(),
             $this->createPriceProductMapper(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
+            $this->createProductCriteriaBuilder()
         );
     }
 
@@ -180,5 +178,4 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_STORE);
     }
-
 }

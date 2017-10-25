@@ -20,9 +20,9 @@ interface ProductBundleToPriceInterface
     public function getPriceBySku($sku, $priceType = null);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
+    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
 }

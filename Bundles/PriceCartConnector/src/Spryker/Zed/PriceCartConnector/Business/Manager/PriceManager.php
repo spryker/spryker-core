@@ -52,8 +52,6 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
-     *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function addGrossPriceToItems(CartChangeTransfer $cartChangeTransfer)
@@ -66,8 +64,8 @@ class PriceManager implements PriceManagerInterface
         $currencyIsoCode = $cartChangeTransfer->getQuote()->getCurrency()->getCode();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceFilterTransfer = $this->createPriceFilter($itemTransfer, $priceMode, $currencyIsoCode);
-            $this->setPrice($itemTransfer, $priceFilterTransfer, $priceMode);
+            $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode);
+            $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
         }
 
         return $cartChangeTransfer;
@@ -89,16 +87,20 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      * @param string $priceMode
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return void
      */
-    protected function setPrice(ItemTransfer $itemTransfer, PriceProductFilterTransfer $priceFilterTransfer, $priceMode)
-    {
-        $price = $this->priceProductFacade->getPriceFor($priceFilterTransfer);
+    protected function setPrice(
+        ItemTransfer $itemTransfer,
+        PriceProductFilterTransfer $priceProductFilterTransfer,
+        $priceMode
+    ) {
+
+        $price = $this->priceProductFacade->getPriceFor($priceProductFilterTransfer);
 
         if ($price === null) {
             throw new PriceMissingException(
@@ -138,14 +140,12 @@ class PriceManager implements PriceManagerInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
+    protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
     {
-        $priceFilterTransfer = new PriceProductFilterTransfer();
-        $priceFilterTransfer->setPriceMode($priceMode);
-        $priceFilterTransfer->setCurrencyIsoCode($currencyIsoCode);
-        $priceFilterTransfer->setSku($itemTransfer->getSku());
-        $priceFilterTransfer->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
-
-        return $priceFilterTransfer;
+        return (new PriceProductFilterTransfer())
+            ->setPriceMode($priceMode)
+            ->setCurrencyIsoCode($currencyIsoCode)
+            ->setSku($itemTransfer->getSku())
+            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
     }
 }

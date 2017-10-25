@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -17,7 +18,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProd
 
 class ProductMoneyCollectionDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface
      */
@@ -35,8 +35,7 @@ class ProductMoneyCollectionDataProvider
     public function __construct(
         ProductManagementToCurrencyInterface $currencyFacade,
         ProductManagementToPriceProductInterface $priceProductFacade
-    )
-    {
+    ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceFacade = $priceProductFacade;
     }
@@ -101,8 +100,11 @@ class ProductMoneyCollectionDataProvider
             $storeTransfer = $storeWithCurrencyTransfer->getStore();
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 foreach ($priceTypes as $priceTypeTransfer) {
-
-                    $index = $currencyTransfer->getIdCurrency() . '-' . $storeTransfer->getIdStore() . '-' . $priceTypeTransfer->getName();
+                    $index = $this->createBucketIndex(
+                        $currencyTransfer->getIdCurrency(),
+                        $storeTransfer->getIdStore(),
+                        $priceTypeTransfer->getName()
+                    );
 
                     if (isset($existingCurrencyMap[$index])) {
                         continue;
@@ -112,7 +114,6 @@ class ProductMoneyCollectionDataProvider
                         $this->mapProductMoneyValueTransfer($currencyTransfer, $storeTransfer, $priceTypeTransfer)
                     );
                 }
-
             }
         }
 
@@ -130,8 +131,7 @@ class ProductMoneyCollectionDataProvider
         CurrencyTransfer $currencyTransfer,
         StoreTransfer $storeTransfer,
         PriceTypeTransfer $priceTypeTransfer
-    )
-    {
+    ) {
         $productMoneyValueTransfer = new PriceProductTransfer();
 
         $moneyValueTransfer = new MoneyValueTransfer();
@@ -157,10 +157,26 @@ class ProductMoneyCollectionDataProvider
         $currencyIndex = [];
         foreach ($submittedMoneyValueCollection as $priceProductTransfer) {
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-            $index = $moneyValueTransfer->getFkCurrency() . '-' . $moneyValueTransfer->getFkStore() . '-' . $priceProductTransfer->getPriceTypeName();
+            $index = $this->createBucketIndex(
+                $moneyValueTransfer->getFkCurrency(),
+                $moneyValueTransfer->getFkStore(),
+                $priceProductTransfer->getPriceTypeName()
+            );
+
             $currencyIndex[$index] = true;
         }
         return $currencyIndex;
     }
 
+    /**
+     * @param int $idCurrency
+     * @param int $idStore
+     * @param string $priceType
+     *
+     * @return string
+     */
+    protected function createBucketIndex($idCurrency, $idStore, $priceType)
+    {
+        return $idCurrency . '-' . $idStore . '-' . $priceType;
+    }
 }

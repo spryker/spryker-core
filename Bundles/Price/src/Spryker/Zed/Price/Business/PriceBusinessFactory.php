@@ -8,13 +8,10 @@
 namespace Spryker\Zed\Price\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {
-
-
 }

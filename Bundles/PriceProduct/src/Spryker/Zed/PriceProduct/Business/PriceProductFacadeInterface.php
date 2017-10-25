@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface PriceProductFacadeInterface
 {
-
     /**
      * Specification:
      * - Reads all persisted price types and returns their names in an array.
@@ -36,7 +35,7 @@ interface PriceProductFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param string $priceTypeName
+     * @param string|null $priceTypeName
      *
      * @return int
      */
@@ -263,5 +262,4 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
-
 }

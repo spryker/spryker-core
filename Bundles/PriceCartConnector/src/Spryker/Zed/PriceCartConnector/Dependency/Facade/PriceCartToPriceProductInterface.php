@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface PriceCartToPriceProductInterface
 {
-
     /**
      * @param string $sku
      * @param string|null $priceType
@@ -46,5 +45,4 @@ interface PriceCartToPriceProductInterface
      * @return bool
      */
     public function hasValidPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
-
 }

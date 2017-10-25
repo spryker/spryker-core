@@ -24,7 +24,7 @@ class ProductSetGuiToPriceProductBridge implements ProductSetGuiToPriceInterface
 
     /**
      * @param string $sku
-     * @param string $priceTypeName
+     * @param string|null $priceTypeName
      *
      * @return int
      */
