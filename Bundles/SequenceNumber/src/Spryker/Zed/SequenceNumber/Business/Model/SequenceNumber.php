@@ -95,8 +95,7 @@ class SequenceNumber implements SequenceNumberInterface
     {
         $sequence = SpySequenceNumberQuery::create()
             ->forUpdate(true) // `forUpdate` will lock the row when select query executes
-            ->findOneByName($this->sequenceNumberSettings->getName())
-        ;
+            ->findOneByName($this->sequenceNumberSettings->getName());
 
         $offset = $this->sequenceNumberSettings->getOffset();
 
