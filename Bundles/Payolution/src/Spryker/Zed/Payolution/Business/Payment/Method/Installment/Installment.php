@@ -16,7 +16,6 @@ use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 class Installment extends AbstractPaymentMethod implements InstallmentInterface
 {
-
     /**
      * @return string
      */
@@ -295,5 +294,4 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
             $uniqueId
         );
     }
-
 }

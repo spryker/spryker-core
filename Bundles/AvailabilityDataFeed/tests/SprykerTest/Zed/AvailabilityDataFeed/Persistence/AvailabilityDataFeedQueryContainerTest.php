@@ -25,7 +25,6 @@ use Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContai
  */
 class AvailabilityDataFeedQueryContainerTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContainer
      */
@@ -237,5 +236,4 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
             ],
         ];
     }
-
 }

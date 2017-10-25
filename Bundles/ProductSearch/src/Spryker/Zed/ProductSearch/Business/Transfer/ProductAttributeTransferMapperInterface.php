@@ -11,12 +11,10 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute;
 
 interface ProductAttributeTransferMapperInterface
 {
-
     /**
      * @param \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute $productAttributeEntity
      *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer
      */
     public function convertProductAttribute(SpyProductSearchAttribute $productAttributeEntity);
-
 }

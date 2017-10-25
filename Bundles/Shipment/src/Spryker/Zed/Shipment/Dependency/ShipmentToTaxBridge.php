@@ -8,7 +8,6 @@ namespace Spryker\Zed\Shipment\Dependency;
 
 class ShipmentToTaxBridge implements ShipmentToTaxInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
@@ -45,5 +44,4 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
     {
         return $this->taxFacade->getTaxSets();
     }
-
 }

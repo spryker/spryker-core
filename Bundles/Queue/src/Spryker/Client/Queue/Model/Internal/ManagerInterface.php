@@ -9,7 +9,6 @@ namespace Spryker\Client\Queue\Model\Internal;
 
 interface ManagerInterface
 {
-
     /**
      * Specification
      *  - Creates a queue with the given queue name and returns the queue information
@@ -48,5 +47,4 @@ interface ManagerInterface
      * @return bool
      */
     public function deleteQueue($queueName, array $options = []);
-
 }

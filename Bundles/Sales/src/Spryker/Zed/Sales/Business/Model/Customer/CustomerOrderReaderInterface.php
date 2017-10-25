@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderListTransfer;
 
 interface CustomerOrderReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
@@ -19,5 +18,4 @@ interface CustomerOrderReaderInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer, $idCustomer);
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class ButtonGroupFunction extends TwigFunction
 {
-
     /**
      * @return callable
      */
@@ -67,5 +66,4 @@ class ButtonGroupFunction extends TwigFunction
     {
         return 'groupActionButtons';
     }
-
 }

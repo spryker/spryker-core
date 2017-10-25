@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Business\Version;
 
 interface VersionRollbackInterface
 {
-
     /**
      * @param int $idCmsPage
      * @param int $version
@@ -28,5 +27,4 @@ interface VersionRollbackInterface
      * @return bool
      */
     public function revert($idCmsPage);
-
 }

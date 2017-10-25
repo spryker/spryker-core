@@ -24,7 +24,6 @@ use SprykerTest\Shared\Application\Log\Processor\Fixtures\Entity;
  */
 class EntitySanitizerProcessorTest extends Unit
 {
-
     /**
      * @dataProvider getContext
      *
@@ -36,7 +35,7 @@ class EntitySanitizerProcessorTest extends Unit
     {
         $record = ['message' => 'message', 'context' => $context];
         $filterFields = [
-            'first_name'
+            'first_name',
         ];
         $sanitizer = new Sanitizer($filterFields, '***');
         $processor = new EntitySanitizerProcessor($sanitizer);
@@ -70,5 +69,4 @@ class EntitySanitizerProcessorTest extends Unit
 
         $this->assertSame($record, $result);
     }
-
 }

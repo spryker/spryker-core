@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -119,5 +118,4 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

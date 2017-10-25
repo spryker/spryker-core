@@ -21,7 +21,6 @@ use Spryker\Service\UtilText\UtilTextService;
  */
 class UtilTextFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Service\UtilText\UtilTextService
      */
@@ -48,5 +47,4 @@ class UtilTextFacadeTest extends Unit
 
         $this->assertEquals($expectedSlug, $slug);
     }
-
 }

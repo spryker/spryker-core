@@ -13,7 +13,6 @@ use Spryker\Zed\Setup\SetupConfig;
 
 class Cronjobs
 {
-
     const ROLE_ADMIN = 'admin';
     const ROLE_REPORTING = 'reporting';
     const ROLE_EMPTY = 'empty';
@@ -285,9 +284,9 @@ class Cronjobs
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $curl_response = curl_exec($ch);
+        $curlResponse = curl_exec($ch);
 
-        if ($curl_response === false) {
+        if ($curlResponse === false) {
             throw new ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
         }
 
@@ -493,5 +492,4 @@ $command</command>";
     {
         return $this->config->getJenkinsJobsDirectory();
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Reservation implements ReservationInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */
@@ -73,6 +72,21 @@ class Reservation implements ReservationInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku)
+    {
+        $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOne();
+        if ($reservationEntity === null) {
+            return 0;
+        }
+
+        return $reservationEntity->getReservationQuantity();
+    }
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -126,5 +140,4 @@ class Reservation implements ReservationInterface
             $reservationHandlerPluginInterface->handle($sku);
         }
     }
-
 }

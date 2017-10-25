@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductRelation\ProductRelationCommunicationTester;
  */
 class ProductRelationEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductRelation\ProductRelationCommunicationTester $i
      *
@@ -35,5 +34,4 @@ class ProductRelationEditCest
 
         $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / Edit Product Relation');
     }
-
 }

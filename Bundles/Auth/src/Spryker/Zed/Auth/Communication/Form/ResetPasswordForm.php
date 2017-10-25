@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class ResetPasswordForm extends AbstractType
 {
-
     const FIELD_PASSWORD = 'password';
 
     /**
@@ -71,5 +70,4 @@ class ResetPasswordForm extends AbstractType
     {
         return 'reset_password';
     }
-
 }

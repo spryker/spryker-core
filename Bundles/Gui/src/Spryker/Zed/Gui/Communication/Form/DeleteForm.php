@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class DeleteForm extends AbstractType
 {
-
     /**
      * @return string
      */
@@ -83,5 +82,4 @@ class DeleteForm extends AbstractType
 
         return $this;
     }
-
 }

@@ -22,7 +22,6 @@ use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterfa
 
 class ProductLabelTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-label-table';
     const COL_ID_PRODUCT_LABEL = SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL;
     const COL_POSITION = SpyProductLabelTableMap::COL_POSITION;
@@ -324,5 +323,4 @@ class ProductLabelTable extends AbstractTable
             ]
         );
     }
-
 }

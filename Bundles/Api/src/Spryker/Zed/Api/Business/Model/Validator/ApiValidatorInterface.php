@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 
 interface ApiValidatorInterface
 {
-
     /**
      * @param string $resourceName
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
@@ -19,5 +18,4 @@ interface ApiValidatorInterface
      * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer[]
      */
     public function validate($resourceName, ApiDataTransfer $apiDataTransfer);
-
 }

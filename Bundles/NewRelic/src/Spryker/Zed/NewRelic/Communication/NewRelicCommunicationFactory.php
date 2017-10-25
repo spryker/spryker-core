@@ -17,7 +17,6 @@ use Spryker\Zed\NewRelic\NewRelicDependencyProvider;
  */
 class NewRelicCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\NewRelic\Communication\Plugin\GatewayControllerListener
      */
@@ -64,5 +63,4 @@ class NewRelicCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(NewRelicDependencyProvider::SERVICE_NETWORK);
     }
-
 }

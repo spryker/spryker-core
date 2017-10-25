@@ -23,7 +23,6 @@ use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
  */
 class FilesystemCacheLoaderTest extends Unit
 {
-
     /**
      * @return string
      */
@@ -71,5 +70,4 @@ class FilesystemCacheLoaderTest extends Unit
 
         $this->assertNotCount(0, $cacheLoader->load());
     }
-
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,18 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
-
     /**
-     * Adds item(s) to the quote. Each item gets additional information (e.g. price).
-     *
-     * Specification:
-     * - Run cart pre check plugins
-     * - For each new item run the item expander plugins (requires a SKU for each new item)
-     * - Add new item(s) to quote (Requires a quantity > 0 for each new item)
-     * - Group items in quote (-> ItemGrouper)
-     * - Recalculate quote (-> Calculation)
-     * - Add success message to messenger (-> Messenger)
-     * - Return updated quote
+     * {@inheritdoc}
      *
      * @api
      *
@@ -40,14 +31,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * Removes item(s) from the quote.
-     *
-     * Specification:
-     * - For each new item run the item expander plugins (requires a SKU for each new item)
-     * - Decreases the given quantity for the given item(s) from the quote
-     * - Recalculate quote (-> Calculation)
-     * - Add success message to messenger (-> Messenger)
-     * - Return updated quote
+     * {@inheritdoc}
      *
      * @api
      *
@@ -60,4 +44,17 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
         return $this->getFactory()->createCartOperation()->remove($cartChangeTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function reloadItems(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createCartOperation()->reloadItems($quoteTransfer);
+    }
 }

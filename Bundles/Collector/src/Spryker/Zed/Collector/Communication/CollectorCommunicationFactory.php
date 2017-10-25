@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CollectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface
      */
@@ -23,5 +22,4 @@ class CollectorCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_LOCALE);
     }
-
 }

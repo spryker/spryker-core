@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategory\Dependency\QueryContainer;
 
 class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -32,5 +31,4 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
     {
         return $this->categoryQueryContainer->queryCategoryById($idCategory);
     }
-
 }

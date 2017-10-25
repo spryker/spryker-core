@@ -13,7 +13,6 @@ use Spryker\Shared\Search\SearchConfig;
 
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
@@ -101,5 +100,4 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     {
         return new FacetValueTransformerFactory();
     }
-
 }

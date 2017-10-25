@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 
 interface CmsVersionMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
     public function mapToCmsVersionDataTransfer(CmsVersionTransfer $cmsVersionTransfer);
-
 }

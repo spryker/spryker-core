@@ -20,7 +20,6 @@ use Spryker\Zed\Newsletter\NewsletterConfig;
  */
 class DoubleOptInSubscriptionSender extends AbstractPlugin implements SubscriberOptInSenderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
@@ -161,5 +160,4 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
 
         return $keyName;
     }
-
 }

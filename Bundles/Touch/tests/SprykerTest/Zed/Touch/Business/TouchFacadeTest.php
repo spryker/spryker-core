@@ -27,7 +27,6 @@ use Spryker\Zed\Touch\Business\TouchFacade;
  */
 class TouchFacadeTest extends Unit
 {
-
     const ITEM_TYPE = 'test.item';
     const ITEM_ID_1 = 1;
     const ITEM_ID_2 = 2;
@@ -168,5 +167,4 @@ class TouchFacadeTest extends Unit
 
         return $touchQuery->findOne();
     }
-
 }

@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -139,5 +138,4 @@ class EditController extends AbstractController
 
         return $addressTransfer;
     }
-
 }

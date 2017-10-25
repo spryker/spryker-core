@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -96,5 +95,4 @@ class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetF
             ->createCmsPageCollectorParameterMapExpander()
             ->map($collectedData, $localeTransfer);
     }
-
 }

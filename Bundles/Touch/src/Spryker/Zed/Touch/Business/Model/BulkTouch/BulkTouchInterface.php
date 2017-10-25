@@ -9,7 +9,6 @@ namespace Spryker\Zed\Touch\Business\Model\BulkTouch;
 
 interface BulkTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param string $itemEvent
@@ -18,5 +17,4 @@ interface BulkTouchInterface
      * @return int
      */
     public function bulkTouch($itemType, $itemEvent, array $itemIds);
-
 }

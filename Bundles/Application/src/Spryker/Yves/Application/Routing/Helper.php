@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Store;
 
 class Helper
 {
-
     /**
      * @var \Silex\Application
      */
@@ -55,5 +54,4 @@ class Helper
 
         return $bundle . '/' . $controller . '/' . $action;
     }
-
 }

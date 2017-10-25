@@ -14,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageType extends AbstractType
 {
-
     const OPTION_IMAGE_WIDTH = 'image_width';
     const OPTION_IMAGE_HEIGHT = 'image_height';
     const OPTION_IMAGE_TITLE = 'image_title';
@@ -65,5 +64,4 @@ class ImageType extends AbstractType
     {
         return 'image';
     }
-
 }

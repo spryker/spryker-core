@@ -7,7 +7,6 @@ namespace Spryker\Zed\CmsGui\Communication\Autocomplete;
 
 interface AutocompleteDataProviderInterface
 {
-
     /**
      * @param string $translationKey
      *
@@ -21,5 +20,4 @@ interface AutocompleteDataProviderInterface
      * @return array
      */
     public function getAutocompleteDataForTranslationValue($translationValue);
-
 }

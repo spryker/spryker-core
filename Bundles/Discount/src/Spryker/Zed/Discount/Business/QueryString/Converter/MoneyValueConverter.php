@@ -15,7 +15,6 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface;
 
 class MoneyValueConverter implements MoneyValueConverterInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
      */
@@ -87,5 +86,4 @@ class MoneyValueConverter implements MoneyValueConverterInterface
     {
         return (float)str_replace(',', '.', trim($value));
     }
-
 }

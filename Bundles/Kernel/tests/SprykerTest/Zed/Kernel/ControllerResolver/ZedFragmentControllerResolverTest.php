@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ZedFragmentControllerResolverTest extends Unit
 {
-
     /**
      * @dataProvider getController
      *
@@ -93,5 +92,4 @@ class ZedFragmentControllerResolverTest extends Unit
     {
         return new Request([], [], ['_controller' => $controller]);
     }
-
 }

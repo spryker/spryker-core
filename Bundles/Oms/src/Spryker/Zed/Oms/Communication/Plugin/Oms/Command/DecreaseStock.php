@@ -13,7 +13,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 
 class DecreaseStock implements CommandByItemInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
@@ -24,5 +23,4 @@ class DecreaseStock implements CommandByItemInterface
     {
         return [];
     }
-
 }

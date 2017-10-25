@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface PayolutionQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -98,5 +97,4 @@ interface PayolutionQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery
      */
     public function queryTransactionRequestLogByPaymentId($idPayment);
-
 }

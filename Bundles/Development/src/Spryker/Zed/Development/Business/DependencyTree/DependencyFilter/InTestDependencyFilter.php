@@ -14,7 +14,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
  */
 class InTestDependencyFilter implements DependencyFilterInterface
 {
-
     /**
      * @param array $dependency
      *
@@ -24,5 +23,4 @@ class InTestDependencyFilter implements DependencyFilterInterface
     {
         return $dependency[DependencyTree::META_IN_TEST];
     }
-
 }

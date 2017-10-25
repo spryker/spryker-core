@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\TranslationTransfer;
 
 interface GlossaryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -298,5 +297,4 @@ interface GlossaryFacadeInterface
      * @return array
      */
     public function getKeySuggestions($keyFragment);
-
 }

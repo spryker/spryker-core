@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchConsole extends Console
 {
-
     const COMMAND_NAME = 'setup:search';
     const DESCRIPTION = 'This command will run installer for search';
 
@@ -41,5 +40,4 @@ class SearchConsole extends Console
     {
         $this->getFacade()->install($this->getMessenger());
     }
-
 }

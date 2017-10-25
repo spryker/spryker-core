@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 
 interface CustomerApiFacadeInterface
 {
-
     /**
      * Specification:
      *  - Adds new customer.
@@ -92,5 +91,4 @@ interface CustomerApiFacadeInterface
      * @return array
      */
     public function validate(ApiDataTransfer $apiDataTransfer);
-
 }

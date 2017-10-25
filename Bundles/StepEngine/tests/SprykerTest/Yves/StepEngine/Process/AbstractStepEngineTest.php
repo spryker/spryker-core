@@ -26,7 +26,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 abstract class AbstractStepEngineTest extends Unit
 {
-
     const ERROR_ROUTE = 'error-route';
     const ERROR_URL = '/error/url';
 
@@ -129,5 +128,4 @@ abstract class AbstractStepEngineTest extends Unit
 
         return $stepMock;
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Search\Business\SearchFacadeInterface;
 
 class SearchTable extends AbstractTable
 {
-
     const COL_ID = 'id';
     const COL_INDEX = 'index';
     const COL_TYPE = 'type';
@@ -87,5 +86,4 @@ class SearchTable extends AbstractTable
 
         return $tableData;
     }
-
 }

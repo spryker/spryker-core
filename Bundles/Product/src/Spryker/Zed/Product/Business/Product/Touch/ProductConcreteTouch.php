@@ -11,7 +11,6 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class ProductConcreteTouch extends AbstractProductTouch implements ProductConcreteTouchInterface
 {
-
     /**
      * @param int $idProductConcrete
      *
@@ -51,5 +50,4 @@ class ProductConcreteTouch extends AbstractProductTouch implements ProductConcre
 
         return $concreteProductEntity;
     }
-
 }

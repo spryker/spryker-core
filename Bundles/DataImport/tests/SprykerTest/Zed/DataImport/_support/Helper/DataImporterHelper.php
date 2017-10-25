@@ -21,7 +21,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
 
 class DataImporterHelper extends Module
 {
-
     /**
      * @param string $importType
      * @param bool $isCalled
@@ -128,5 +127,4 @@ class DataImporterHelper extends Module
 
         return new DataReaderStub($dataSets);
     }
-
 }

@@ -3,11 +3,13 @@
   "description": "OmsDiscountConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/discount": "^4.0.0",
+    "spryker/discount": "^4.0.0 || ^5.0.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
+    "spryker/sales": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -15,13 +17,8 @@
     "spryker/sales": "If you want to use ReleaseUsedVoucherCodes plugin."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

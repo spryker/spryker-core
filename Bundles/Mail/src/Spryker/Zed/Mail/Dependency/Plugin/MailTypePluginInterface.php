@@ -11,7 +11,6 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 
 interface MailTypePluginInterface
 {
-
     /**
      * Specification:
      * - Returns the name of the MailType
@@ -33,5 +32,4 @@ interface MailTypePluginInterface
      * @return void
      */
     public function build(MailBuilderInterface $mailBuilder);
-
 }

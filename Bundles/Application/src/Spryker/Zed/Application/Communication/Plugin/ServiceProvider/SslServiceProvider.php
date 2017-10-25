@@ -9,8 +9,6 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config\Config;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -29,6 +27,9 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     public function register(Application $app)
     {
+        $this->setTrustedProxies();
+        $this->setTrustedHosts();
+        $this->addProtocolCheck($app);
     }
 
     /**
@@ -38,13 +39,48 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     public function boot(Application $app)
     {
-        $app->before(function (Request $request) {
-            if ($this->shouldBeSsl($request)) {
-                $url = 'https://' . $request->getHttpHost() . $request->getRequestUri();
+    }
 
-                return new RedirectResponse($url, 301);
-            }
-        });
+    /**
+     * @return void
+     */
+    protected function setTrustedProxies()
+    {
+        Request::setTrustedProxies($this->getConfig()->getTrustedProxies());
+    }
+
+    /**
+     * @return void
+     */
+    protected function setTrustedHosts()
+    {
+        Request::setTrustedHosts($this->getConfig()->getTrustedHosts());
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    protected function addProtocolCheck(Application $app)
+    {
+        if (!$this->getConfig()->isSslEnabled()) {
+            return;
+        }
+
+        $app->before(
+            function (Request $request) {
+                if ($this->shouldBeSsl($request)) {
+                    $fakeRequest = clone $request;
+                    $fakeRequest->server->set('HTTPS', true);
+
+                    return new RedirectResponse($fakeRequest->getUri(), 301);
+                }
+
+                return null;
+            },
+            255
+        );
     }
 
     /**
@@ -54,10 +90,11 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     protected function shouldBeSsl(Request $request)
     {
-        return Config::get(ApplicationConstants::ZED_SSL_ENABLED)
-            && !$this->isSecure($request)
-            && !$this->isYvesRequest($request)
-            && !$this->isExcludedFromRedirection($request, Config::get(ApplicationConstants::ZED_SSL_EXCLUDED));
+        $isSecure = $request->isSecure();
+        $isYvesRequest = $this->isYvesRequest($request);
+        $isSslExcludedResource = $this->isSslExcludedResource($request);
+
+        return (!$isSecure && !$isYvesRequest && !$isSslExcludedResource);
     }
 
     /**
@@ -75,23 +112,8 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      *
      * @return bool
      */
-    protected function isSecure(Request $request)
+    protected function isSslExcludedResource(Request $request)
     {
-        $https = $request->server->get('HTTPS', false);
-        $xForwardedProto = $request->server->get('X-Forwarded-Proto', false);
-
-        return ($https && ($https === 'on' || $https === 1) || $xForwardedProto && $xForwardedProto === 'https');
+        return in_array($request->attributes->get('module') . '/' . $request->attributes->get('controller'), $this->getConfig()->getSslExcludedResources());
     }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $excluded
-     *
-     * @return bool
-     */
-    protected function isExcludedFromRedirection(Request $request, array $excluded)
-    {
-        return in_array($request->attributes->get('module') . '/' . $request->attributes->get('controller'), $excluded);
-    }
-
 }

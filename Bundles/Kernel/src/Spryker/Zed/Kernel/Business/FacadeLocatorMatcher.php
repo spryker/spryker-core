@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class FacadeLocatorMatcher implements LocatorMatcherInterface
 {
-
     const METHOD_PREFIX = 'facade';
 
     /**
@@ -25,5 +24,4 @@ class FacadeLocatorMatcher implements LocatorMatcherInterface
     {
         return (strpos($method, self::METHOD_PREFIX) === 0);
     }
-
 }

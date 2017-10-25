@@ -13,7 +13,6 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQ
 
 class CmsBlockCategoryPositionSync implements CmsBlockCategoryPositionSyncInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
@@ -64,5 +63,4 @@ class CmsBlockCategoryPositionSync implements CmsBlockCategoryPositionSyncInterf
     {
         return new SpyCmsBlockCategoryPosition();
     }
-
 }

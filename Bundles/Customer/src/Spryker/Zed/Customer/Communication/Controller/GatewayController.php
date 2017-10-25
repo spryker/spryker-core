@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -297,5 +296,4 @@ class GatewayController extends AbstractGatewayController
 
         return $customerTransfer;
     }
-
 }

@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueUrlValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed url is unique.
      *
@@ -119,5 +118,4 @@ class UniqueUrlValidator extends ConstraintValidator
 
         return $urlTransfer;
     }
-
 }

@@ -15,7 +15,6 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class CategoryNameExistsValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed value is valid.
      *
@@ -55,5 +54,4 @@ class CategoryNameExistsValidator extends ConstraintValidator
             ->setParameter('{{ value }}', $value)
             ->addViolation();
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class StateMachineQueryContainer extends AbstractQueryContainer implements StateMachineQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -246,5 +245,4 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
             ->orderByIdStateMachineItemStateHistory(Criteria::DESC)
             ->limit(1);
     }
-
 }

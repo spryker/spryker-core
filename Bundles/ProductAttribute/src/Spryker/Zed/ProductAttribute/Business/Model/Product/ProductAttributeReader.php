@@ -17,7 +17,6 @@ use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInter
 
 class ProductAttributeReader implements ProductAttributeReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface
      */
@@ -116,5 +115,4 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
 
         return $query;
     }
-
 }

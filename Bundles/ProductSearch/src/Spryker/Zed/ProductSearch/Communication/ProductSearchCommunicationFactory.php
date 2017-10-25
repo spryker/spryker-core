@@ -26,7 +26,6 @@ use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
  */
 class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable
      */
@@ -130,5 +129,4 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SortedProductSearchTransferListMapper();
     }
-
 }

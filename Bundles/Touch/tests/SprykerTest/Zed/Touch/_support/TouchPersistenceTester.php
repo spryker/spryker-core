@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class TouchPersistenceTester extends Actor
 {
-
     use _generated\TouchPersistenceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
  */
 class ProductBundleAvailabilityHandlerPlugin extends AbstractPlugin implements StockUpdateHandlerPluginInterface
 {
-
     /**
      * @api
      *
@@ -32,5 +31,4 @@ class ProductBundleAvailabilityHandlerPlugin extends AbstractPlugin implements S
         $this->getFacade()
             ->updateAffectedBundlesAvailability($sku);
     }
-
 }

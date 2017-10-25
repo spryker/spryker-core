@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerGroupTransfer;
 
 class CustomerGroupFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
      */
@@ -59,5 +58,4 @@ class CustomerGroupFormDataProvider
     {
         return [];
     }
-
 }

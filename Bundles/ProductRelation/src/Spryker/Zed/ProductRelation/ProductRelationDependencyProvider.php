@@ -19,7 +19,6 @@ use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncoding
 
 class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'locale facade';
     const FACADE_TOUCH = 'touch facade';
     const FACADE_MONEY = 'money facade';
@@ -187,5 +186,4 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\MailTransfer;
 
 interface NewsletterToMailInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return mixed
      */
     public function handleMail(MailTransfer $mailTransfer);
-
 }

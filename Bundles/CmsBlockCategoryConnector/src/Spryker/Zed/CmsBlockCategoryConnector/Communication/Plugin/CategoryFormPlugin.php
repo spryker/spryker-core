@@ -19,7 +19,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface, CategoryRelationUpdatePluginInterface
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -52,5 +51,4 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
         $this->getFacade()
             ->updateCategoryCmsBlockRelations($categoryTransfer);
     }
-
 }

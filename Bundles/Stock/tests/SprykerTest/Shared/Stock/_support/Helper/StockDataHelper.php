@@ -14,7 +14,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StockDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -22,7 +21,7 @@ class StockDataHelper extends Module
      *
      * @return void
      */
-    public function haveProductInStock($override = [])
+    public function haveProductInStock(array $override = [])
     {
         $stockFacade = $this->getStockFacade();
         $stockType = (new TypeBuilder())->build();
@@ -37,5 +36,4 @@ class StockDataHelper extends Module
     {
         return $this->getLocator()->stock()->facade();
     }
-
 }

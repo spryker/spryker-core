@@ -12,7 +12,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class CalculatorAmountTransformer implements DataTransformerInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
@@ -33,7 +32,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if (!$value || !$value->getCalculatorPlugin()) {
+        if (!$this->isValueSet($value)) {
             return null;
         }
 
@@ -51,7 +50,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (!$value || !$value->getCalculatorPlugin()) {
+        if (!$this->isValueSet($value)) {
             return null;
         }
 
@@ -82,4 +81,13 @@ class CalculatorAmountTransformer implements DataTransformerInterface
         ));
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\DiscountCalculatorTransfer|null $value
+     *
+     * @return bool
+     */
+    protected function isValueSet($value)
+    {
+        return $value && $value->getCalculatorPlugin();
+    }
 }

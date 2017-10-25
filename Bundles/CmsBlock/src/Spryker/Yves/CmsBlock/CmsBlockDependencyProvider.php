@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Container;
 
 class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CMS_BLOCK_TWIG_CONTENT_RENDERER_PLUGIN = 'cms twig content renderer plugin';
 
     /**
@@ -35,5 +34,4 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCmsBlockTwigContentRendererPlugin()
     {
     }
-
 }

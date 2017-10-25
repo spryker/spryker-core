@@ -12,7 +12,6 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 class LocaleInstaller implements LocaleInstallerInterface
 {
-
     /**
      * @var string
      */
@@ -67,5 +66,4 @@ class LocaleInstaller implements LocaleInstallerInterface
         $this->localeQueryContainer->getConnection()
             ->commit();
     }
-
 }

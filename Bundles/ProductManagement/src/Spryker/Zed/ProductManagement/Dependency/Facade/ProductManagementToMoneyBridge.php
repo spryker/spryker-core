@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class ProductManagementToMoneyBridge implements ProductManagementToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -65,5 +64,4 @@ class ProductManagementToMoneyBridge implements ProductManagementToMoneyInterfac
     {
          return $this->moneyFacade->fromInteger($amount, $isoCode);
     }
-
 }

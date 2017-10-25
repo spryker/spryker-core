@@ -20,7 +20,6 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
  */
 abstract class AbstractZedClientProvider extends AbstractClientProvider
 {
-
     /**
      * @deprecated Will be removed in the next major version. Please use ZedRequestFactory->createClient().
      *
@@ -48,5 +47,4 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
 
         return Config::get(ZedRequestConstants::BASE_URL_ZED_API);
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\BundleConfigMock\BundleConfigMock;
 
 class BundleConfig extends Module
 {
-
     /**
      * @var \Spryker\Shared\Kernel\BundleConfigMock\BundleConfigMock
      */
@@ -68,5 +67,4 @@ class BundleConfig extends Module
     {
         $this->bundleConfigMock->reset();
     }
-
 }

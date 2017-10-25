@@ -9,7 +9,6 @@ namespace Spryker\Shared\ErrorHandler;
 
 interface ErrorHandlerConstants
 {
-
     /**
      * Specification:
      * - Absolute path to an HTML file which contains the error page for Zed. E.g. /var/www/public/Zed/error-page.html
@@ -97,5 +96,4 @@ interface ErrorHandlerConstants
      * @api
      */
     const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
-
 }

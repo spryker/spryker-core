@@ -26,7 +26,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CmsPageForm extends AbstractType
 {
-
     const FIELD_ID_CMS_PAGE = 'idCmsPage';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_URL = 'url';
@@ -246,5 +245,4 @@ class CmsPageForm extends AbstractType
 
         return $urlConstraints;
     }
-
 }

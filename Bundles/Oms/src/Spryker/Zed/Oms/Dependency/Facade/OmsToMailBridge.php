@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 class OmsToMailBridge implements OmsToMailInterface
 {
-
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
@@ -34,5 +33,4 @@ class OmsToMailBridge implements OmsToMailInterface
     {
         $this->mailFacade->handleMail($mailTransfer);
     }
-
 }

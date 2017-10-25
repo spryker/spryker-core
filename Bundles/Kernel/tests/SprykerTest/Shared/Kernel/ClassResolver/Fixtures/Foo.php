@@ -4,7 +4,6 @@ namespace SprykerTest\Shared\Kernel\ClassResolver\Fixtures;
 
 class Foo
 {
-
     /**
      * @var mixed|null
      */
@@ -25,5 +24,4 @@ class Foo
     {
         return $this->data;
     }
-
 }

@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class StabilityUpdater implements UpdaterInterface
 {
-
     const KEY_MINIMUM_STABILITY = 'minimum-stability';
     const KEY_PREFER_STABLE = 'prefer-stable';
 
@@ -65,5 +64,4 @@ class StabilityUpdater implements UpdaterInterface
 
         return $composerJson;
     }
-
 }

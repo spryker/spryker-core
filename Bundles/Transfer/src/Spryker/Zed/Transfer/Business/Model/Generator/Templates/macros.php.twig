@@ -34,6 +34,18 @@
     protected ${{ property.name }}{% if property.type == 'array' %} = []{% endif %};
 {% endmacro %}
 
+{# propertyNamesMap #}
+{% macro addPropertyNameMap(propertyNameMap) %}
+    /**
+     * @var array
+     */
+    protected $transferPropertyNameMap = [
+    {% for propertyNameUnderScore, propertyNameCamelCase  in propertyNameMap %}
+    '{{ propertyNameUnderScore }}' => '{{ propertyNameCamelCase }}',
+    {% endfor -%}
+    ];
+{%- endmacro %}
+
 {# constructor #}
 {% macro addConstructor(properties) %}
 {% if properties %}
@@ -53,7 +65,7 @@
 {%- macro addSet(method) %}
     /**
      {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
      {% if method.deprecationDescription is not null -%}
@@ -66,8 +78,14 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
+        {% if method.typeHint == "array" -%}
+        if (${{ method.property }} === null) {
+            ${{ method.property }} = [];
+        }
+
+        {% endif -%}
         $this->{{ method.property }} = ${{ method.property }};
-        $this->addModifiedProperty(self::{{ method.propertyConst }});
+        $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
     }
@@ -77,7 +95,7 @@
 {%- macro addGet(method) %}
     /**
      {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
      {% if method.deprecationDescription is not null -%}
@@ -96,7 +114,7 @@
 {%- macro addAdd(method) %}
     /**
      {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
      {% if method.deprecationDescription is not null -%}
@@ -110,7 +128,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
         $this->{{ method.parent }}[] = ${{ method.property }};
-        $this->addModifiedProperty(self::{{ method.propertyConst }});
+        $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
     }
@@ -120,7 +138,7 @@
 {%- macro addRequire(method) %}
     /**
      {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
      {% if method.deprecationDescription is not null -%}
@@ -131,7 +149,7 @@
      */
     public function {{ method.name }}()
     {
-{% if method.isCollection %}
+{% if method.isCollection and method.typeHint != "array" %}
         $this->assertCollectionPropertyIsSet(self::{{ method.propertyConst }});
 {% else %}
         $this->assertPropertyIsSet(self::{{ method.propertyConst }});

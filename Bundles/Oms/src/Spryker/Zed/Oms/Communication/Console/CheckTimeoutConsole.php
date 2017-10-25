@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckTimeoutConsole extends Console
 {
-
     const COMMAND_NAME = 'oms:check-timeout';
     const COMMAND_DESCRIPTION = 'Check timeouts';
 
@@ -41,5 +40,4 @@ class CheckTimeoutConsole extends Console
     {
         $this->getFacade()->checkTimeouts();
     }
-
 }

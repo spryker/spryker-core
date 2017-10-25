@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class QueueClient extends AbstractClient implements QueueClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -164,5 +163,4 @@ class QueueClient extends AbstractClient implements QueueClientInterface
     {
         return $this->getFactory()->createQueueProxy()->deleteQueue($queueName, $options);
     }
-
 }

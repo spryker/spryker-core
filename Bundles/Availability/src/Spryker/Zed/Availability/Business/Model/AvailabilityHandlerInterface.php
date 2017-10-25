@@ -8,7 +8,6 @@ namespace Spryker\Zed\Availability\Business\Model;
 
 interface AvailabilityHandlerInterface
 {
-
     /**
      * @param string $sku
      *
@@ -30,5 +29,4 @@ interface AvailabilityHandlerInterface
      * @return int
      */
     public function saveCurrentAvailability($sku, $quantity);
-
 }

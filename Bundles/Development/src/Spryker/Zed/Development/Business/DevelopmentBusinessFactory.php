@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
-use Spryker\Zed\Development\Business\CodeBuilder\Bundle\BundleBuilder;
+use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
@@ -86,16 +86,13 @@ use Zend\Filter\Word\CamelCaseToDash;
  */
 class DevelopmentBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
     public function createCodeStyleSniffer()
     {
         return new CodeStyleSniffer(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory(),
-            $this->getConfig()->getCodingStandard()
+            $this->getConfig()
         );
     }
 
@@ -133,11 +130,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\CodeBuilder\Bundle\BundleBuilder
+     * @return \Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder
      */
-    public function createBundleBuilder()
+    public function createModuleBuilder()
     {
-        return new BundleBuilder(
+        return new ModuleBuilder(
             $this->getConfig()->getBundleDirectory()
         );
     }
@@ -1066,7 +1063,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createArchitectureSniffer()
     {
-        $xml = $this->getXmlReader();
+        $xml = $this->createXmlReader();
         $command = $this->getConfig()->getArchitectureSnifferCommand();
         $defaultPriority = $this->getConfig()->getArchitectureSnifferDefaultPriority();
 
@@ -1074,9 +1071,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createXmlReader() instead.
+     *
      * @return \Zend\Config\Reader\Xml
      */
     protected function getXmlReader()
+    {
+        return $this->createXmlReader();
+    }
+
+    /**
+     * @return \Zend\Config\Reader\Xml
+     */
+    protected function createXmlReader()
     {
         return new Xml();
     }
@@ -1088,18 +1095,27 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new AllBundleFinder(
             $this->createFinder(),
-            $this->getCamelCaseToDashFilter(),
+            $this->createCamelCaseToDashFilter(),
             $this->getConfig()->getProjectNamespaces(),
             $this->getConfig()->getCoreNamespaces()
         );
     }
 
     /**
+     * @deprecated Use createCamelCaseToDashFilter() instead.
+     *
      * @return \Zend\Filter\Word\CamelCaseToDash
      */
     protected function getCamelCaseToDashFilter()
     {
-        return new CamelCaseToDash();
+        return $this->createCamelCaseToDashFilter();
     }
 
+    /**
+     * @return \Zend\Filter\Word\CamelCaseToDash
+     */
+    protected function createCamelCaseToDashFilter()
+    {
+        return new CamelCaseToDash();
+    }
 }

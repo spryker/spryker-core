@@ -19,7 +19,6 @@ use Spryker\Zed\ProductSetGui\ProductSetGuiConfig;
 
 class CreateFormDataProvider extends AbstractProductSetFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleInterface
      */
@@ -122,5 +121,4 @@ class CreateFormDataProvider extends AbstractProductSetFormDataProvider
             LocalizedProductImageSetFormType::FIELD_PRODUCT_IMAGE_COLLECTION => [[]],
         ];
     }
-
 }

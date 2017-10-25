@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search;
 
+use Elastica\Client;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
@@ -15,7 +16,9 @@ use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationEx
 use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactory;
+use Spryker\Client\Search\Model\Elasticsearch\Reader\Reader;
 use Spryker\Client\Search\Model\Elasticsearch\Suggest\SuggestBuilder;
+use Spryker\Client\Search\Model\Elasticsearch\Writer\Writer;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
@@ -25,13 +28,20 @@ use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 
+/**
+ * @method \Spryker\Client\Search\SearchConfig getConfig()
+ */
 class SearchFactory extends AbstractFactory
 {
-
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     protected static $searchConfigInstance;
+
+    /**
+     * @var \Elastica\Client
+     */
+    protected static $searchClient;
 
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
@@ -219,4 +229,49 @@ class SearchFactory extends AbstractFactory
         return $this->getProvidedDependency(SearchDependencyProvider::STORE);
     }
 
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface
+     */
+    public function createWriter()
+    {
+        return new Writer(
+            $this->createCachedElasticsearchClient(),
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface
+     */
+    public function createReader()
+    {
+        return new Reader(
+            $this->createCachedElasticsearchClient(),
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
+        );
+    }
+
+    /**
+     * @return \Elastica\Client
+     */
+    public function createCachedElasticsearchClient()
+    {
+        if (static::$searchClient === null) {
+            static::$searchClient = $this->createElasticsearchClient();
+        }
+
+        return static::$searchClient;
+    }
+
+    /**
+     * @return \Elastica\Client
+     */
+    public function createElasticsearchClient()
+    {
+        return new Client(
+            $this->getConfig()->getElasticsearchConfig()
+        );
+    }
 }

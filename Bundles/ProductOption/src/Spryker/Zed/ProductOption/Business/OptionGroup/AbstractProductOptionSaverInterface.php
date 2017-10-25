@@ -10,7 +10,6 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 
 interface AbstractProductOptionSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
@@ -37,5 +36,4 @@ interface AbstractProductOptionSaverInterface
      * @return bool
      */
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup);
-
 }

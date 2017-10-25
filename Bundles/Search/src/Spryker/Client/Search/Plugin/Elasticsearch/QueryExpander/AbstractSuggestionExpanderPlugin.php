@@ -19,7 +19,6 @@ use Spryker\Client\Search\Exception\MissingSuggestionQueryException;
  */
 abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
@@ -94,5 +93,4 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
      * @return \Elastica\Suggest\AbstractSuggest|null
      */
     abstract protected function createSuggestion(Query $query, array $requestParameters = []);
-
 }

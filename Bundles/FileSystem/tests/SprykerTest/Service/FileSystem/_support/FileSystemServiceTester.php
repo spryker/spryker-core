@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class FileSystemServiceTester extends Actor
 {
-
     use _generated\FileSystemServiceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

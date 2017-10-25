@@ -17,7 +17,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
  */
 class OptionsActionPostProcessor implements PostProcessorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
@@ -38,5 +37,4 @@ class OptionsActionPostProcessor implements PostProcessorInterface
 
         return $apiResponseTransfer;
     }
-
 }

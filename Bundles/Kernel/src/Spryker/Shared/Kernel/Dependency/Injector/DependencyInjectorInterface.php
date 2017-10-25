@@ -11,12 +11,10 @@ use Spryker\Shared\Kernel\ContainerInterface;
 
 interface DependencyInjectorInterface
 {
-
     /**
      * @param \Spryker\Shared\Kernel\ContainerInterface $container
      *
      * @return \Spryker\Shared\Kernel\ContainerInterface
      */
     public function inject(ContainerInterface $container);
-
 }

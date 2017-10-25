@@ -22,6 +22,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     const ITEMS = 'items';
 
+    const TYPED_ARRAY = 'typedArray';
+
     /**
      * @var string
      */
@@ -36,6 +38,26 @@ class CatFaceTransfer extends AbstractTransfer
      * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected $items;
+
+    /**
+     * @var string[]
+     */
+    protected $typedArray;
+
+    /**
+     * @var array
+     */
+    protected $transferPropertyNameMap = [
+        'name' => 'name',
+        'Name' => 'name',
+        'item' => 'item',
+        'Item' => 'item',
+        'items' => 'items',
+        'Items' => 'items',
+        'typed_array' => 'typedArray',
+        'typedArray' => 'typedArray',
+        'TypedArray' => 'typedArray',
+    ];
 
     /**
      * @var array
@@ -59,10 +81,16 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => true,
             'is_transfer' => true,
         ],
+        self::TYPED_ARRAY => [
+            'type' => 'string[]',
+            'name_underscore' => 'typed_array',
+            'is_collection' => false,
+            'is_transfer' => false,
+        ],
     ];
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param string $name
      *
@@ -71,13 +99,13 @@ class CatFaceTransfer extends AbstractTransfer
     public function setName($name)
     {
         $this->name = $name;
-        $this->addModifiedProperty(self::NAME);
+        $this->modifiedProperties[self::NAME] = true;
 
         return $this;
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return string
      */
@@ -87,7 +115,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return $this
      */
@@ -99,7 +127,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param \Generated\Shared\Transfer\ItemTransfer|null $item
      *
@@ -108,13 +136,13 @@ class CatFaceTransfer extends AbstractTransfer
     public function setItem(ItemTransfer $item = null)
     {
         $this->item = $item;
-        $this->addModifiedProperty(self::ITEM);
+        $this->modifiedProperties[self::ITEM] = true;
 
         return $this;
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -124,7 +152,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return $this
      */
@@ -136,7 +164,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
@@ -145,13 +173,13 @@ class CatFaceTransfer extends AbstractTransfer
     public function setItems(ArrayObject $items)
     {
         $this->items = $items;
-        $this->addModifiedProperty(self::ITEMS);
+        $this->modifiedProperties[self::ITEMS] = true;
 
         return $this;
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
@@ -161,7 +189,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      *
@@ -170,19 +198,75 @@ class CatFaceTransfer extends AbstractTransfer
     public function addItem(ItemTransfer $item)
     {
         $this->items[] = $item;
-        $this->addModifiedProperty(self::ITEMS);
+        $this->modifiedProperties[self::ITEMS] = true;
 
         return $this;
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return $this
      */
     public function requireItems()
     {
         $this->assertCollectionPropertyIsSet(self::ITEMS);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string[]|null $typedArray
+     *
+     * @return $this
+     */
+    public function setTypedArray(array $typedArray = null)
+    {
+        if ($typedArray === null) {
+            $typedArray = [];
+        }
+
+        $this->typedArray = $typedArray;
+        $this->modifiedProperties[self::TYPED_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return string[]
+     */
+    public function getTypedArray()
+    {
+        return $this->typedArray;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string $typedArray
+     *
+     * @return $this
+     */
+    public function addTypedArray($typedArray)
+    {
+        $this->typedArray[] = $typedArray;
+        $this->modifiedProperties[self::TYPED_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requireTypedArray()
+    {
+        $this->assertPropertyIsSet(self::TYPED_ARRAY);
 
         return $this;
     }

@@ -24,7 +24,6 @@ use Spryker\Zed\Ratepay\Business\Request\Payment\Method\Invoice;
  */
 class InvoiceTest extends AbstractMethodMapperTest
 {
-
     /**
      * @return \Spryker\Zed\Ratepay\Business\Request\Payment\Method\MethodInterface
      */
@@ -84,5 +83,4 @@ class InvoiceTest extends AbstractMethodMapperTest
         $this->assertNull($this->requestTransfer->getPayment()->getInstallmentDetails());
         $this->assertNull($this->requestTransfer->getPayment()->getDebitPayType());
     }
-
 }

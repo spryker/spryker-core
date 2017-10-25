@@ -15,7 +15,6 @@ use Spryker\Yves\Kernel\Container;
 
 class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PRODUCT_CLIENT = 'PRODUCT_CLIENT';
     const AVAILABILITY_CLIENT = 'AVAILABILITY_CLIENT';
     const PRODUCT_MAPPER_PLUGIN = 'PRODUCT_MAPPER_PLUGIN';
@@ -78,5 +77,4 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
             'DiscountPromotionDependencyProvider::getProductMapperPlugin'
         ));
     }
-
 }

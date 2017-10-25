@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductSearch\Business\Map\Collector;
 
 interface ProductSearchAttributeMapCollectorInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
      */
     public function getProductSearchAttributeMap();
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class UpdateStockPlugin extends AbstractPlugin
 {
-
     // TODO not sure this Connector/Plugin will be needed after refactor sales Bundle!
 
     /**
@@ -51,5 +50,4 @@ class UpdateStockPlugin extends AbstractPlugin
     {
         return $this->getFactory()->getStockFacade()->updateStockProduct($transferStockProduct);
     }
-
 }

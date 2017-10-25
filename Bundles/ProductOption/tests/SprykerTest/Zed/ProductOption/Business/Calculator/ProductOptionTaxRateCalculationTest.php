@@ -27,7 +27,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  */
 class ProductOptionTaxRateCalculationTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -263,5 +262,4 @@ class ProductOptionTaxRateCalculationTest extends Unit
 
         return $taxSum;
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerApiToCustomerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -39,5 +38,4 @@ interface CustomerApiToCustomerInterface
      * @return bool
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer);
-
 }

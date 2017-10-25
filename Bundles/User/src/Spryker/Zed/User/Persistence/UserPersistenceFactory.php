@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class UserPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
@@ -24,5 +23,4 @@ class UserPersistenceFactory extends AbstractPersistenceFactory
     {
         return new SpyUserQuery();
     }
-
 }

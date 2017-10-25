@@ -23,7 +23,6 @@ use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
  */
 class AbstractDependencyInjectorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class AbstractDependencyInjectorTest extends Unit
 
         $this->assertInstanceOf(Container::class, $container);
     }
-
 }

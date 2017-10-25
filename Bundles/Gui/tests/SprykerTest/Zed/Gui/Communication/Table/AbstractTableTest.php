@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractTableTest extends Unit
 {
-
     const COL_ONE = 'one';
     const COL_TWO = 'two';
 
@@ -152,5 +151,4 @@ class AbstractTableTest extends Unit
         ];
         $this->assertSame($expected, $result);
     }
-
 }

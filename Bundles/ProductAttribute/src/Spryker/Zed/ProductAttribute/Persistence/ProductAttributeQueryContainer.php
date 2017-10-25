@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductAttributeQueryContainer extends AbstractQueryContainer implements ProductAttributeQueryContainerInterface
 {
-
     const KEY = 'product_attribute_key';
     const IS_SUPER = 'is_super';
     const ATTRIBUTE_ID = 'attribute_id';
@@ -387,5 +386,4 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
 
         return $productAttributeKeyCriterion;
     }
-
 }

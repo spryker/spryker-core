@@ -9,7 +9,6 @@ namespace Spryker\Zed\Availability\Business\Model;
 
 interface SellableInterface
 {
-
     /**
      * @param string $sku
      * @param int $quantity
@@ -24,5 +23,4 @@ interface SellableInterface
      * @return int
      */
     public function calculateStockForProduct($sku);
-
 }

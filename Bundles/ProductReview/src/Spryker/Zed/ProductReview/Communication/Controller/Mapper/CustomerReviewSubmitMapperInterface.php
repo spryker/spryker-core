@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 
 interface CustomerReviewSubmitMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
     public function mapRequestTransfer(ProductReviewRequestTransfer $productReviewRequestTransfer);
-
 }

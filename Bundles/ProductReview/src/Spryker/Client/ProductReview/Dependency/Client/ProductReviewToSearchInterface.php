@@ -11,7 +11,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 interface ProductReviewToSearchInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $searchQueryExpanders
@@ -29,5 +28,4 @@ interface ProductReviewToSearchInterface
      * @return array
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
-
 }

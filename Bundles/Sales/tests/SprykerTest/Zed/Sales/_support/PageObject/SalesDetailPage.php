@@ -11,7 +11,6 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 class SalesDetailPage
 {
-
     const URL = '/sales/detail?id-sales-order=';
 
     const SELECTOR_ID_SALES_ORDER_ITEM = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
@@ -110,5 +109,4 @@ class SalesDetailPage
 
         return $idSalesOrderItem;
     }
-
 }

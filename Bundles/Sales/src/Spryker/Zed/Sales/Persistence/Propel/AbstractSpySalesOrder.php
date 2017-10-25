@@ -28,7 +28,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
 {
-
     const COL_FK_CUSTOMER = 'fk_customer';
 
     /**
@@ -115,14 +114,12 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     }
 
     /**
-     *
-     * This is for bc reasons, because we don't have database foreign key from fk_customer.
-     * Will be removed in the future.
-     *
      * Exports the object as an array.
      *
-     * You can specify the key type of the array by passing one of the class
-     * type constants.
+     * This is for BC reasons, because we don't have database foreign key from fk_customer anymore.
+     * Will be removed in the future. Please migrate away from requiring this field.
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param string $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
      *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
@@ -139,14 +136,17 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
         $alreadyDumpedObjects = [],
         $includeForeignObjects = false
     ) {
+        if (isset($alreadyDumpedObjects['SpySalesOrder'][$this->hashCode()])) {
+            return '*RECURSION*';
+        }
+
         $array = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
 
         if (!property_exists($this, static::COL_FK_CUSTOMER) || isset($array[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-            $array[static::COL_FK_CUSTOMER] = $this->getFkCustomer();
+            $idCustomer = $this->getFkCustomer();
+            $array[static::COL_FK_CUSTOMER] = $idCustomer;
         }
 
         return $array;
-
     }
-
 }

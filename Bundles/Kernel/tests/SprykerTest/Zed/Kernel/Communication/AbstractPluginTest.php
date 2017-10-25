@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\Kernel\Communication;
 
 use Codeception\Test\Unit;
 use ReflectionClass;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
@@ -29,7 +29,6 @@ use SprykerTest\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugi
  */
 class AbstractPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -125,5 +124,4 @@ class AbstractPluginTest extends Unit
 
         return $pluginMock;
     }
-
 }

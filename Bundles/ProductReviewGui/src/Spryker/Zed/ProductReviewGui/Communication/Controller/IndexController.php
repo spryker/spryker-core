@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -52,5 +51,4 @@ class IndexController extends AbstractController
             ->getLocaleFacade()
             ->getCurrentLocale();
     }
-
 }

@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {
-
     const FIELD_FK_CMS_BLOCK = 'fkCmsBlock';
     const FIELD_PLACEHOLDER = 'placeholder';
     const FIELD_ID_GLOSSARY_KEY_MAPPING = 'idCmsBlockGlossaryKeyMapping';
@@ -146,5 +145,4 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
 
         return $this;
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Navigation\Dependency\Facade\NavigationToTouchBridge;
 
 class NavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'FACADE_TOUCH';
 
     /**
@@ -39,5 +38,4 @@ class NavigationDependencyProvider extends AbstractBundleDependencyProvider
             return new NavigationToTouchBridge($container->getLocator()->touch()->facade());
         };
     }
-
 }

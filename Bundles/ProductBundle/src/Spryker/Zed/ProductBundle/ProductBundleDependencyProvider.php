@@ -21,7 +21,6 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQuer
 
 class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT = 'product facade';
     const FACADE_PRICE = 'price facade';
     const FACADE_LOCALE = 'locale facade';
@@ -98,5 +97,4 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     {
         return $container;
     }
-
 }

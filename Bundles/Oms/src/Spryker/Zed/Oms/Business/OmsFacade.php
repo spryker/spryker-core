@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -309,6 +308,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku)
+    {
+        return $this->getFactory()
+            ->createUtilReservation()
+            ->getOmsReservedProductQuantityForSku($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $stateName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
@@ -507,5 +522,4 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     {
         $this->getFactory()->createMailHandler()->sendOrderShippedMail($salesOrderEntity);
     }
-
 }

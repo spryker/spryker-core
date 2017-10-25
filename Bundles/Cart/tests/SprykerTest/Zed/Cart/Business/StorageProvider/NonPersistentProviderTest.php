@@ -25,7 +25,6 @@ use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
  */
 class NonPersistentProviderTest extends Unit
 {
-
     const COUPON_CODE_1 = 'coupon code 1';
     const COUPON_CODE_2 = 'coupon code 2';
 
@@ -308,5 +307,4 @@ class NonPersistentProviderTest extends Unit
     {
         return new QuoteTransfer();
     }
-
 }

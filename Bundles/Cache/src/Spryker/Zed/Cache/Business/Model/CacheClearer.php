@@ -13,7 +13,6 @@ use Symfony\Component\Finder\Finder;
 
 class CacheClearer implements CacheClearerInterface
 {
-
     /**
      * @var \Spryker\Zed\Cache\CacheConfig
      */
@@ -122,5 +121,4 @@ class CacheClearer implements CacheClearerInterface
 
         return $finder;
     }
-
 }

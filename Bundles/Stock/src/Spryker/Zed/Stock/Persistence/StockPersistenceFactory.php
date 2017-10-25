@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class StockPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
@@ -33,5 +32,4 @@ class StockPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyStockQuery::create();
     }
-
 }

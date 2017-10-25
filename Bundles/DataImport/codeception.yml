@@ -2,7 +2,7 @@ namespace: DataImport
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/DataImport
+    - tests/SprykerTest/Zed/DataImport
 
 paths:
     tests: tests

@@ -27,7 +27,6 @@ use Spryker\Zed\User\Business\UserFacade;
  */
 class PasswordResetTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -76,5 +75,4 @@ class PasswordResetTest extends Unit
 
         return $passwordReset;
     }
-
 }

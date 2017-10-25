@@ -8,19 +8,15 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

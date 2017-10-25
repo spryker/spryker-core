@@ -12,7 +12,6 @@ namespace Spryker\Zed\Api\Dependency\Plugin;
  */
 interface OptionsForItemInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface OptionsForItemInterface
      * @return array
      */
     public function getHttpMethodsForItem(array $params);
-
 }

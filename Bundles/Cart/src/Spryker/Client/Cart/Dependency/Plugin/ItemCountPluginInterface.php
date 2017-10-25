@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ItemCountPluginInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface ItemCountPluginInterface
      * @return int
      */
     public function getItemCount(QuoteTransfer $quoteTransfer);
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 abstract class AbstractPersistenceFactory extends AbstractFactory implements PersistenceFactoryInterface
 {
-
     /**
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,5 +39,4 @@ abstract class AbstractPersistenceFactory extends AbstractFactory implements Per
     ) {
         return $dependencyInjector->injectPersistenceLayerDependencies($container);
     }
-
 }

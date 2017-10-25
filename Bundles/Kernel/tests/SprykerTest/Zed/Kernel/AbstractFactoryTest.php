@@ -26,7 +26,6 @@ use SprykerTest\Zed\Kernel\Fixtures\Factory;
  */
 class AbstractFactoryTest extends Unit
 {
-
     const CONTAINER_KEY = 'key';
     const CONTAINER_VALUE = 'value';
 
@@ -64,17 +63,6 @@ class AbstractFactoryTest extends Unit
         $factory = new Factory();
 
         $factory->setContainer($container);
-        $this->assertSame(self::CONTAINER_VALUE, $factory->getProvidedDependency(self::CONTAINER_KEY));
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProvidedDependencyProvideExternalDependencies()
-    {
-        $this->markTestSkipped();
-        $factory = new Factory();
-
         $this->assertSame(self::CONTAINER_VALUE, $factory->getProvidedDependency(self::CONTAINER_KEY));
     }
 
@@ -140,5 +128,4 @@ class AbstractFactoryTest extends Unit
 
         return $factoryMock;
     }
-
 }

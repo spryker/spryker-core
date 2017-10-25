@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPasswordResetSenderInterface
 {
-
     const SUBJECT = 'Password reset request';
     const TEMPLATE = 'Auth.password.reset';
 
@@ -46,5 +45,4 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
             ->getMailFacade()
             ->sendMail($mailTransfer);
     }
-
 }

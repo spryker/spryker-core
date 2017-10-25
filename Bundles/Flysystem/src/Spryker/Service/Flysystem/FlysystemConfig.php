@@ -12,7 +12,6 @@ use Spryker\Shared\Flysystem\FlysystemConstants;
 
 class FlysystemConfig extends AbstractBundleConfig
 {
-
     /**
      * @return array
      */
@@ -28,5 +27,4 @@ class FlysystemConfig extends AbstractBundleConfig
     {
         return [];
     }
-
 }

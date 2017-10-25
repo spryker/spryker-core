@@ -13,7 +13,6 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQ
 
 class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
@@ -106,5 +105,4 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
 
         return $cmsBlockTransfer;
     }
-
 }

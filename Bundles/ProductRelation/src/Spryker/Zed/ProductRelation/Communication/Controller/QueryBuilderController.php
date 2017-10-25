@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class QueryBuilderController extends AbstractController
 {
-
     const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
 
     /**
@@ -30,5 +29,4 @@ class QueryBuilderController extends AbstractController
 
         return new JsonResponse($queryBuilderFilterProvider->getFilters());
     }
-
 }

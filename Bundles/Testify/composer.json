@@ -3,7 +3,7 @@
   "description": "Testify module",
   "license": "proprietary",
   "require": {
-    "codeception/codeception": "^2.2.10",
+    "codeception/codeception": "^2.3.5",
     "php-mock/php-mock": "^1.0.1",
     "satooshi/php-coveralls": "^1.0.0",
     "spryker/application": "^3.0.0",
@@ -28,8 +28,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "Testify\\": "tests/_support/",
-      "SprykerTest\\Shared\\Testify\\": "tests/SprykerTest/Shared/Testify/_support/"
+      "SprykerTest\\Shared\\Testify\\": "tests/SprykerTest/Shared/Testify/_support/Helper/"
     }
   },
   "autoload-dev": {

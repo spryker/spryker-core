@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class TotalQuantityDecisionRule implements DecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
@@ -58,5 +57,4 @@ class TotalQuantityDecisionRule implements DecisionRuleInterface
         }
         return $totalQuantity;
     }
-
 }

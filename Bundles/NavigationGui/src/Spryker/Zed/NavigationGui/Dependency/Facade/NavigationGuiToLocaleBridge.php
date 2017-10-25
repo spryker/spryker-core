@@ -9,7 +9,6 @@ namespace Spryker\Zed\NavigationGui\Dependency\Facade;
 
 class NavigationGuiToLocaleBridge implements NavigationGuiToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -38,5 +37,4 @@ class NavigationGuiToLocaleBridge implements NavigationGuiToLocaleInterface
     {
         return $this->localeFacade->getLocaleCollection();
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class SalesStub implements SalesStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -30,7 +29,7 @@ class SalesStub implements SalesStubInterface
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
@@ -40,11 +39,10 @@ class SalesStub implements SalesStubInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
         return $this->zedStub->call('/sales/gateway/get-order-details', $orderTransfer);
     }
-
 }

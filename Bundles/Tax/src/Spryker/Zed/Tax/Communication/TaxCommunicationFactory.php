@@ -26,7 +26,6 @@ use Spryker\Zed\Tax\TaxDependencyProvider;
  */
 class TaxCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider $taxRateFormDataProvider
      *
@@ -126,5 +125,4 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(TaxDependencyProvider::SERVICE_DATE_FORMATTER);
     }
-
 }

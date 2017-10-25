@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 interface ProductSetFacadeInterface
 {
-
     /**
      * Specification:
      * - Persists new product set entity into database.
@@ -127,5 +126,4 @@ interface ProductSetFacadeInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getCombinedProductSetImageSets($idProductSet, $idLocale);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTo
 
 interface StorageInterface
 {
-
     /**
      * @param string $formName
      *
@@ -31,5 +30,4 @@ interface StorageInterface
      * @return string
      */
     public function setToken($formName, $token);
-
 }

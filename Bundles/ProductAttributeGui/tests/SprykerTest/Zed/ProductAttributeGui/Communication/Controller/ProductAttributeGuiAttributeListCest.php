@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester;
  */
 class ProductAttributeGuiAttributeListCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class ProductAttributeGuiAttributeListCest
         $i->amOnPage(ProductAttributeGuiAttributeListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes');
     }
-
 }

@@ -15,7 +15,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class WishlistTransferMapper implements WishlistTransferMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface
      */
@@ -89,5 +88,4 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
 
         return $transferCollection;
     }
-
 }

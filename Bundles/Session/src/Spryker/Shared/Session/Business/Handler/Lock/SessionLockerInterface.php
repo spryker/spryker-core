@@ -9,7 +9,6 @@ namespace Spryker\Shared\Session\Business\Handler\Lock;
 
 interface SessionLockerInterface
 {
-
     /**
      * @param string $sessionId
      *
@@ -29,5 +28,4 @@ interface SessionLockerInterface
      * @return bool
      */
     public function unlock($sessionId, $token);
-
 }

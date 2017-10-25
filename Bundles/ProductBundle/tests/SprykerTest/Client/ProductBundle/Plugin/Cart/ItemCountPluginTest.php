@@ -24,7 +24,6 @@ use Spryker\Client\ProductBundle\Plugin\Cart\ItemCountPlugin;
  */
 class ItemCountPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -72,5 +71,4 @@ class ItemCountPluginTest extends Unit
 
         $this->assertSame(2, $itemCountPlugin->getItemCount($quoteTransfer));
     }
-
 }

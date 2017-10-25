@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -623,5 +622,4 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->createCategoryTemplateReader()
             ->findCategoryTemplateByName($name);
     }
-
 }

@@ -16,8 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ToggleStatusController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
+
+    const MESSAGE_MAP_UPDATE_SUCCESS = [
+        true => 'Navigation element %d was activated successfully.',
+        false => 'Navigation element %d was deactivated successfully.',
+    ];
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,12 +45,13 @@ class ToggleStatusController extends AbstractController
                 ->getNavigationFacade()
                 ->updateNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation #%d successfully updated.', $idNavigation));
+            $this->addSuccessMessage(
+                sprintf(static::MESSAGE_MAP_UPDATE_SUCCESS[$navigationTransfer->getIsActive()], $idNavigation)
+            );
         } else {
-            $this->addErrorMessage(sprintf('Navigation #%d not found.', $idNavigation));
+            $this->addErrorMessage(sprintf('Navigation element %d was not found.', $idNavigation));
         }
 
         return $this->redirectResponse('/navigation-gui');
     }
-
 }

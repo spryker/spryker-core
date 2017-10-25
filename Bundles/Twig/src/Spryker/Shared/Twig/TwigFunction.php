@@ -11,7 +11,6 @@ use Twig_SimpleFunction;
 
 abstract class TwigFunction extends Twig_SimpleFunction
 {
-
     public function __construct()
     {
         parent::__construct($this->getFunctionName(), $this->getFunction(), $this->getOptions());
@@ -34,5 +33,4 @@ abstract class TwigFunction extends Twig_SimpleFunction
     {
         return ['is_safe' => ['html']];
     }
-
 }

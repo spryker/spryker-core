@@ -13,7 +13,6 @@ use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingInterfa
 
 class ZedNavigationCache implements ZedNavigationCacheInterface
 {
-
     /**
      * @var string
      */
@@ -79,5 +78,4 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
 
         return $this->utilEncodingService->decodeJson($content, true);
     }
-
 }

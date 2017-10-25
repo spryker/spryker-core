@@ -22,7 +22,6 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\AssociativeArrayFormatter;
 
 class ApiRequestMapper implements ApiRequestMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ApiQueryBuilder\Dependency\QueryContainer\ApiQueryBuilderToPropelQueryBuilderInterface
      */
@@ -188,5 +187,4 @@ class ApiRequestMapper implements ApiRequestMapperInterface
 
         return null;
     }
-
 }

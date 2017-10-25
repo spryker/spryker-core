@@ -24,7 +24,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQueryContainerInterface
 {
-
     const TRANSLATION = 'translation';
     const TRANSLATION_IS_ACTIVE = 'translation_is_active';
     const KEY_IS_ACTIVE = 'key_is_active';
@@ -347,7 +346,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     public function queryDistinctKeysFromQuery(ModelCriteria $query)
     {
         $query
-            ->distinct('key')
+            ->distinct()
             ->withColumn(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, 'value')
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'label');
 
@@ -364,7 +363,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     public function queryDistinctLocalesFromQuery(ModelCriteria $query)
     {
         $query
-            ->distinct('locale_name')
+            ->distinct()
             ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, 'value')
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, 'label');
 
@@ -476,5 +475,4 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         return $this->queryTranslations()
             ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
     }
-
 }

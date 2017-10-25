@@ -14,7 +14,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlRedirectUpdater implements UrlRedirectUpdaterInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -91,5 +90,4 @@ class UrlRedirectUpdater implements UrlRedirectUpdaterInterface
 
         return $urlRedirectEntity;
     }
-
 }

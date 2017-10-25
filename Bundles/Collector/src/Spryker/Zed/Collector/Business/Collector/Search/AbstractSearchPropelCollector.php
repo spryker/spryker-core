@@ -17,7 +17,6 @@ use Spryker\Zed\Collector\CollectorConfig;
 
 abstract class AbstractSearchPropelCollector extends AbstractPropelCollector
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -36,5 +35,4 @@ abstract class AbstractSearchPropelCollector extends AbstractPropelCollector
 
         parent::prepareCollectorScope($touchQuery, $locale);
     }
-
 }

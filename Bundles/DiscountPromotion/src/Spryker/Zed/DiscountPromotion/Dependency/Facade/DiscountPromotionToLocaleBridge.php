@@ -9,7 +9,6 @@ namespace Spryker\Zed\DiscountPromotion\Dependency\Facade;
 
 class DiscountPromotionToLocaleBridge implements DiscountPromotionToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -30,5 +29,4 @@ class DiscountPromotionToLocaleBridge implements DiscountPromotionToLocaleInterf
     {
         return $this->localeFacade->getCurrentLocale();
     }
-
 }

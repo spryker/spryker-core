@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ExceptionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -76,5 +75,4 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
             throw $exception;
         }
     }
-
 }

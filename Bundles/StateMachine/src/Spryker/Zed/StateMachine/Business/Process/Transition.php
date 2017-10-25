@@ -9,7 +9,6 @@ namespace Spryker\Zed\StateMachine\Business\Process;
 
 class Transition implements TransitionInterface
 {
-
     /**
      * @var \Spryker\Zed\StateMachine\Business\Process\EventInterface
      */
@@ -140,5 +139,4 @@ class Transition implements TransitionInterface
     {
         return $this->target;
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class DummyPaymentCommunicationTester extends Actor
 {
-
     use _generated\DummyPaymentCommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

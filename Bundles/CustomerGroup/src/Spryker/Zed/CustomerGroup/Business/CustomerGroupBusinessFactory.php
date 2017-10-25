@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CustomerGroupBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerGroup\Business\Model\CustomerGroupInterface
      */
@@ -24,5 +23,4 @@ class CustomerGroupBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerGroup($this->getQueryContainer());
     }
-
 }

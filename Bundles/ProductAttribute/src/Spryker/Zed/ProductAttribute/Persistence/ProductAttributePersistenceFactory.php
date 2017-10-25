@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductAttributePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */
@@ -51,5 +50,4 @@ class ProductAttributePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductManagementAttributeValueTranslationQuery::create();
     }
-
 }

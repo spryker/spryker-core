@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductSet\Business\Model\Image;
 
 interface ProductSetImageDeleterInterface
 {
-
     /**
      * @param int $idProductSet
      *
      * @return void
      */
     public function deleteImageSets($idProductSet);
-
 }

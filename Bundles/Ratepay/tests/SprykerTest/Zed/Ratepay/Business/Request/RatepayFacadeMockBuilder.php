@@ -18,7 +18,6 @@ use Spryker\Zed\Ratepay\RatepayDependencyProvider;
 
 class RatepayFacadeMockBuilder
 {
-
     /**
      * @param \Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface $adapter
      * @param \PHPUnit_Framework_TestCase $testCase
@@ -85,5 +84,4 @@ class RatepayFacadeMockBuilder
     {
         return new RatepayRequestTransfer();
     }
-
 }

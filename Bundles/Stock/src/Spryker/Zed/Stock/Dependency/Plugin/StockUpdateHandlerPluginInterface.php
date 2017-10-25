@@ -8,7 +8,6 @@ namespace Spryker\Zed\Stock\Dependency\Plugin;
 
 interface StockUpdateHandlerPluginInterface
 {
-
     /**
      * @api
      *
@@ -19,5 +18,4 @@ interface StockUpdateHandlerPluginInterface
      * @return void
      */
     public function handle($sku);
-
 }

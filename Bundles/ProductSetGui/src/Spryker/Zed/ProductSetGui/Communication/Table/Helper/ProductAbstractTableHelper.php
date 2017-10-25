@@ -14,7 +14,6 @@ use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInter
 
 class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInterface
      */
@@ -129,5 +128,4 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
 
         return '<span class="label label-info">Active</span>';
     }
-
 }

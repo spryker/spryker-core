@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class DoubleSubmitProtectionServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -50,11 +49,11 @@ class DoubleSubmitProtectionServiceProviderTest extends Unit
     {
         $application = new Application();
         $application['form.extensions'] = $application->share(
-            function ($app) {}
+            function ($app) {
+            }
         );
         $application['session'] = $this->getMockBuilder(SessionInterface::class)->getMock();
 
         return $application;
     }
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 
 interface CarrierInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
      *
      * @return int
      */
     public function create(ShipmentCarrierTransfer $carrierTransfer);
-
 }

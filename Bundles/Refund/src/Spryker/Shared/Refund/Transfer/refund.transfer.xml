@@ -27,4 +27,8 @@
         <property name="refundTotal" type="int" />
     </transfer>
 
+    <transfer name="Order">
+        <property name="currencyIsoCode" type="string" />
+    </transfer>
+
 </transfers>

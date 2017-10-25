@@ -8,7 +8,6 @@ namespace Spryker\Zed\CustomerGroup\Dependency\Service;
 
 class CustomerGroupToUtilEncodingBridge implements CustomerGroupToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class CustomerGroupToUtilEncodingBridge implements CustomerGroupToUtilEncodingIn
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

@@ -9,13 +9,19 @@ namespace Spryker\Zed\ProductSet\Persistence;
 
 interface ProductSetQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
     public function queryProductSet();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
+     */
+    public function queryAllProductSetData();
 
     /**
      * @api
@@ -100,5 +106,4 @@ interface ProductSetQueryContainerInterface
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
      */
     public function queryProductSetDataByProductSetId($idProductSet, $idLocale = null);
-
 }

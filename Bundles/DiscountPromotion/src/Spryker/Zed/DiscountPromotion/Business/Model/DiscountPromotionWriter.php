@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class DiscountPromotionWriter implements DiscountPromotionWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -141,5 +140,4 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
         $discountEntity->setCollectorQueryString('');
         $discountEntity->save();
     }
-
 }

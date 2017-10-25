@@ -13,7 +13,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTemplateSync implements CategoryTemplateSyncInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -44,7 +43,6 @@ class CategoryTemplateSync implements CategoryTemplateSyncInterface
         $templateList = $this->categoryConfig->getTemplateList();
 
         foreach ($templateList as $templateName => $templatePath) {
-
             $spyCategoryTemplate = $this->categoryQueryContainer
                 ->queryCategoryTemplateByName($templateName)
                 ->findOne();
@@ -65,5 +63,4 @@ class CategoryTemplateSync implements CategoryTemplateSyncInterface
     {
         return new SpyCategoryTemplate();
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -71,14 +70,14 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string $bundle
+     * @param string $module
      * @param array $options
      *
      * @return void
      */
-    public function createBundle($bundle, $options)
+    public function createModule($module, $options)
     {
-        $this->getFactory()->createBundleBuilder()->build($bundle, $options);
+        $this->getFactory()->createModuleBuilder()->build($module, $options);
     }
 
     /**
@@ -333,5 +332,4 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     {
         return $this->getFactory()->createArchitectureSniffer()->getRules();
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
 
 class OrdersTable extends AbstractTable
 {
-
     const URL = 'URL';
     const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
@@ -134,11 +133,12 @@ class OrdersTable extends AbstractTable
      */
     protected function getGrandTotal(array $item)
     {
+        $currencyIsoCode = $item[SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE];
         if (!isset($item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL])) {
-            return $this->formatPrice(0);
+            return $this->formatPrice(0, true, $currencyIsoCode);
         }
 
-        return $this->formatPrice((int)$item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL]);
+        return $this->formatPrice((int)$item[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL], true, $currencyIsoCode);
     }
 
     /**
@@ -160,7 +160,6 @@ class OrdersTable extends AbstractTable
         $customer = $this->sanitizeService->escapeHtml($customer);
 
         if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-
             $customerTransfer = $this->customerFacade->findCustomerByReference(
                 $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
             );
@@ -208,12 +207,13 @@ class OrdersTable extends AbstractTable
     /**
      * @param int $value
      * @param bool $includeSymbol
+     * @param null|string $currencyIsoCode
      *
      * @return string
      */
-    protected function formatPrice($value, $includeSymbol = true)
+    protected function formatPrice($value, $includeSymbol = true, $currencyIsoCode = null)
     {
-        $moneyTransfer = $this->moneyFacade->fromInteger($value);
+        $moneyTransfer = $this->moneyFacade->fromInteger($value, $currencyIsoCode);
 
         if ($includeSymbol) {
             return $this->moneyFacade->formatWithSymbol($moneyTransfer);
@@ -320,5 +320,4 @@ class OrdersTable extends AbstractTable
             static::NUMBER_OF_ORDER_ITEMS,
         ];
     }
-
 }

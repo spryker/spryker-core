@@ -24,7 +24,6 @@ use Spryker\Zed\Cms\Business\CmsFacade;
  */
 class CmsFacadePageTest extends Unit
 {
-
     const CMS_PAGE_NEW_TITLE = 'new title';
     const CMS_PAGE_NEW_KEY_WORDS = 'new key words';
     const CMS_PAGE_NEW_DESCRIPTION = 'new description';
@@ -33,6 +32,11 @@ class CmsFacadePageTest extends Unit
      * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
     protected $cmsFacade;
+
+    /**
+     * @var \SprykerTest\Zed\Cms\CmsBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -191,13 +195,13 @@ class CmsFacadePageTest extends Unit
 
          $urlPrefix = $this->cmsFacade->getPageUrlPrefix($cmsPageAttributeTransfer);
 
-         $this->assertEquals('/en/', $urlPrefix);
+         $this->assertSame('', $urlPrefix);
     }
 
     /**
      * @return void
      */
-    public function testBuildPageUrlWhenUrlWithouPrefixGivenShouldBuildValidUrl()
+    public function testBuildPageUrlWhenUrlWithoutPrefixGivenShouldBuildValidUrl()
     {
         $cmsPageAttributesTransfer = new CmsPageAttributesTransfer();
         $cmsPageAttributesTransfer->setLocaleName('en_US');
@@ -205,7 +209,7 @@ class CmsFacadePageTest extends Unit
 
         $url = $this->cmsFacade->buildPageUrl($cmsPageAttributesTransfer);
 
-        $this->assertEquals('/en/' . $cmsPageAttributesTransfer->getUrl(), $url);
+        $this->assertSame($cmsPageAttributesTransfer->getUrl(), $url);
     }
 
     /**
@@ -358,6 +362,34 @@ class CmsFacadePageTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetCmsVersionDataRetrievesDraftDataFromDatabase()
+    {
+        // Arrange
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+
+        foreach ($persistedCmsPageTransfer->getMetaAttributes() as $metaAttribute) {
+            $metaAttribute->setMetaTitle(static::CMS_PAGE_NEW_TITLE);
+            $metaAttribute->setMetaKeywords(static::CMS_PAGE_NEW_KEY_WORDS);
+            $metaAttribute->setMetaDescription(static::CMS_PAGE_NEW_DESCRIPTION);
+        }
+
+        $expectedCmsVersionData = $this->cmsFacade->updatePage($persistedCmsPageTransfer);
+
+        // Act
+        $actualCmsVersionData = $this->cmsFacade->getCmsVersionData($idCmsPage);
+
+        // Assert
+        $expectedCmsPageVersionMetaAttributes = $expectedCmsVersionData->getMetaAttributes()[0];
+        $actualCmsPageVersionMetaAttributes = $actualCmsVersionData->getCmsPage()->getMetaAttributes()[0];
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaDescription(), $actualCmsPageVersionMetaAttributes->getMetaDescription());
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaKeywords(), $actualCmsPageVersionMetaAttributes->getMetaKeywords());
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaTitle(), $actualCmsPageVersionMetaAttributes->getMetaTitle());
+    }
+
+    /**
      * @return int
      */
     protected function createCmsPageWithGlossaryAttributes()
@@ -408,14 +440,14 @@ class CmsFacadePageTest extends Unit
                     CmsPageAttributesTransfer::URL => '/en/function-test',
                     CmsPageAttributesTransfer::NAME => 'functional test',
                     CmsPageAttributesTransfer::LOCALE_NAME => 'en_US',
-                    CmsPageAttributesTransfer::URL_PREFIX => '/en/',
+                    CmsPageAttributesTransfer::URL_PREFIX => '',
                     CmsPageAttributesTransfer::FK_LOCALE => 66,
                 ],
                 [
                     CmsPageAttributesTransfer::URL => '/de/function-test',
                     CmsPageAttributesTransfer::NAME => 'functional test',
                     CmsPageAttributesTransfer::LOCALE_NAME => 'de_DE',
-                    CmsPageAttributesTransfer::URL_PREFIX => '/de/',
+                    CmsPageAttributesTransfer::URL_PREFIX => '',
                     CmsPageAttributesTransfer::FK_LOCALE => 46,
                 ],
             ],
@@ -448,14 +480,14 @@ class CmsFacadePageTest extends Unit
     protected function assertPageAttributes(CmsPageTransfer $cmsPageTransfer, CmsPageTransfer $persistedCmsPageTransfer)
     {
         foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
-            foreach ($persistedCmsPageTransfer->getPageAttributes() as $persisteCmsPageAttributesTransfer) {
-                if ($cmsPageAttributesTransfer->getLocaleName() !== $persisteCmsPageAttributesTransfer->getLocaleName()) {
+            foreach ($persistedCmsPageTransfer->getPageAttributes() as $persistedCmsPageAttributesTransfer) {
+                if ($cmsPageAttributesTransfer->getLocaleName() !== $persistedCmsPageAttributesTransfer->getLocaleName()) {
                     continue;
                 }
-                $this->assertEquals($cmsPageAttributesTransfer->getName(), $persisteCmsPageAttributesTransfer->getName());
-                $this->assertEquals($cmsPageAttributesTransfer->getUrlPrefix(), $persisteCmsPageAttributesTransfer->getUrlPrefix());
-                $this->assertEquals($cmsPageAttributesTransfer->getUrl(), $persisteCmsPageAttributesTransfer->getUrl());
-                $this->assertEquals($persistedCmsPageTransfer->getFkPage(), $persisteCmsPageAttributesTransfer->getIdCmsPage());
+                $this->assertEquals($cmsPageAttributesTransfer->getName(), $persistedCmsPageAttributesTransfer->getName());
+                $this->assertEquals($cmsPageAttributesTransfer->getUrlPrefix(), $persistedCmsPageAttributesTransfer->getUrlPrefix());
+                $this->assertEquals($cmsPageAttributesTransfer->getUrl(), $persistedCmsPageAttributesTransfer->getUrl());
+                $this->assertEquals($persistedCmsPageTransfer->getFkPage(), $persistedCmsPageAttributesTransfer->getIdCmsPage());
             }
         }
     }
@@ -492,5 +524,4 @@ class CmsFacadePageTest extends Unit
 
         return $translationFixtures;
     }
-
 }

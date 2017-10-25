@@ -15,7 +15,6 @@ use Spryker\Zed\ProductSearch\ProductSearchConfig;
 
 class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface
      */
@@ -92,5 +91,4 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
             ));
         }
     }
-
 }

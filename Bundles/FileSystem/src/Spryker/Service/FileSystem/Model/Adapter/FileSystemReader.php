@@ -14,7 +14,6 @@ use Spryker\Service\FileSystem\Model\FileSystemReaderInterface;
 
 class FileSystemReader implements FileSystemReaderInterface
 {
-
     /**
      * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface
      */
@@ -45,7 +44,7 @@ class FileSystemReader implements FileSystemReaderInterface
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        return $this->fileSystemReader->getMimetype($fileSystemQueryTransfer);
+        return $this->fileSystemReader->getMimeType($fileSystemQueryTransfer);
     }
 
     /**
@@ -107,5 +106,4 @@ class FileSystemReader implements FileSystemReaderInterface
     {
         return $this->fileSystemReader->has($fileSystemQueryTransfer);
     }
-
 }

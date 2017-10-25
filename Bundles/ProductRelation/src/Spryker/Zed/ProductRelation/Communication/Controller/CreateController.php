@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends BaseProductRelationController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -79,5 +78,4 @@ class CreateController extends BaseProductRelationController
             $productTable->fetchData()
         );
     }
-
 }

@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SalesController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -23,7 +22,7 @@ class SalesController extends AbstractController
         $orderTransfer = $request->request->get('orderTransfer');
         return [
             'payments' => $orderTransfer->getPayments(),
+            'order' => $orderTransfer,
         ];
     }
-
 }

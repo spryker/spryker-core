@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ShipmentDiscountConnectorFacade extends AbstractFacade implements ShipmentDiscountConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -150,5 +149,4 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
             ->createShipmentPriceDiscountDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
-
 }

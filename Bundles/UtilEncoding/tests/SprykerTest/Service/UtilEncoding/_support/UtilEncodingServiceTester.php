@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class UtilEncodingServiceTester extends Actor
 {
-
     use _generated\UtilEncodingServiceTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

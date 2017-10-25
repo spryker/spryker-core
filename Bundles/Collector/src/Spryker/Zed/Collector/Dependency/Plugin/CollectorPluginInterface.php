@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface CollectorPluginInterface
 {
-
     /**
      * @api
      *
@@ -61,5 +60,4 @@ interface CollectorPluginInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

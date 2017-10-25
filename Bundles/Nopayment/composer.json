@@ -4,24 +4,19 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0"
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/oms": "If you want to use Oms command plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Function": "tests/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

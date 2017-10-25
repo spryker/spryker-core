@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 interface CategoryToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -31,5 +30,4 @@ interface CategoryToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();
-
 }

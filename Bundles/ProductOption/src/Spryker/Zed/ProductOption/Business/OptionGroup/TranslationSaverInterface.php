@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 
 interface TranslationSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      *
@@ -30,5 +29,4 @@ interface TranslationSaverInterface
      * @return bool
      */
     public function deleteTranslation($translationKey);
-
 }

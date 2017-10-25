@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductGroupQueryContainer extends AbstractQueryContainer implements ProductGroupQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -28,6 +27,28 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
         return $this->getFactory()
             ->createProductGroupQuery()
             ->filterByIdProductGroup($idProductGroup);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
+     */
+    public function queryAllProductAbstractGroups()
+    {
+        return $this->getFactory()
+            ->createProductAbstractGroupQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
+     */
+    public function queryAllProductGroups()
+    {
+        return $this->getFactory()
+            ->createProductGroupQuery();
     }
 
     /**
@@ -66,5 +87,4 @@ class ProductGroupQueryContainer extends AbstractQueryContainer implements Produ
 
         return $query;
     }
-
 }

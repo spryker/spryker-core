@@ -3,35 +3,38 @@
   "description": "Currency module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.11.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/session": "^3.0.0",
+    "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/transfer": "*",
-    "spryker/twig": "*"
+    "spryker/twig": "*",
+    "spryker/zed-request": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider.",
-    "spryker/twig": "If you want to use currency in Twig."
+    "spryker/twig": "If you want to use currency in Twig.",
+    "spryker/zed-request": "If you want to use Zed request meta data provider plugin which adds currency to each request."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Currency\\": "tests/SprykerTest/Shared/Currency/_support/Helper/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
     "psr-4": {
       "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
       "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module"
+      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

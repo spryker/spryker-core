@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface TaxProductConnectorQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -57,5 +56,4 @@ interface TaxProductConnectorQueryContainerInterface extends QueryContainerInter
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code);
-
 }

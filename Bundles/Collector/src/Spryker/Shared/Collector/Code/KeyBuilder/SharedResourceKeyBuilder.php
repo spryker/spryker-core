@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -37,5 +36,4 @@ abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
      * @return string
      */
     abstract protected function getResourceType();
-
 }

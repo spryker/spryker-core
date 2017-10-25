@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
 {
-
     /**
      * @api
      *
@@ -74,5 +73,4 @@ class HeartbeatFacade extends AbstractFacade implements HeartbeatFacadeInterface
     {
         return $this->getFactory()->createStorageHealthIndicator()->doHealthCheck();
     }
-
 }

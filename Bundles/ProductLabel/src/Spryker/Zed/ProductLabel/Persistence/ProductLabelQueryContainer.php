@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductLabelQueryContainer extends AbstractQueryContainer implements ProductLabelQueryContainerInterface
 {
-
     const COL_MAX_POSITION = 'max_position';
 
     /**
@@ -97,6 +96,17 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function queryAllLocalizedAttributesLabels()
+    {
+        return $this->getFactory()
+            ->createLocalizedAttributesQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductLabel
      * @param int $idLocale
      *
@@ -141,6 +151,18 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->getFactory()
             ->createProductRelationQuery()
             ->filterByFkProductLabel($idProductLabel);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryAllProductLabelProductAbstractRelations()
+    {
+        return $this
+            ->getFactory()
+            ->createProductRelationQuery();
     }
 
     /**
@@ -215,5 +237,4 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
             ->orderByIsExclusive(Criteria::DESC)
             ->orderByPosition(Criteria::ASC);
     }
-
 }

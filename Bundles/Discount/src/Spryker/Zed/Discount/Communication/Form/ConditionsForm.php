@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ConditionsForm extends AbstractType
 {
-
     const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
 
     /**
@@ -51,7 +50,7 @@ class ConditionsForm extends AbstractType
     {
         $label = 'Apply when';
 
-        $builder->add(self::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
+        $builder->add(static::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
             'label' => $label,
             'constraints' => [
                 new QueryString([
@@ -82,5 +81,4 @@ class ConditionsForm extends AbstractType
     {
         return 'discount_conditions';
     }
-
 }

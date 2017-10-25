@@ -22,7 +22,6 @@ use Spryker\Zed\Propel\PropelConfig;
  */
 class PropelConfigTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\Propel\PropelConfig
      */
@@ -108,5 +107,4 @@ class PropelConfigTest extends Unit
         $propelConfigMock->expects($this->once())->method('getCurrentDatabaseEngine')->willReturn('Un supported database engine');
         return $propelConfigMock;
     }
-
 }

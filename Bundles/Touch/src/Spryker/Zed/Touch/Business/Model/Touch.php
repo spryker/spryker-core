@@ -13,7 +13,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class Touch implements TouchInterface
 {
-
     const BULK_UPDATE_CHUNK_SIZE = 250;
 
     /**
@@ -71,5 +70,4 @@ class Touch implements TouchInterface
 
         return $items;
     }
-
 }

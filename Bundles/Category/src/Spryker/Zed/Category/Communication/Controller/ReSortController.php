@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ReSortController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -74,5 +73,4 @@ class ReSortController extends AbstractController
             'message' => 'Category nodes successfully re-sorted.',
         ]);
     }
-
 }

@@ -29,7 +29,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CategoryNodeTest extends Unit
 {
-
     const CATEGORY_ID_COMPUTER = 5;
     const CATEGORY_ID_TABLETS = 8;
 
@@ -197,5 +196,4 @@ class CategoryNodeTest extends Unit
 
         return $categoryTransfer;
     }
-
 }

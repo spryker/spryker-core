@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
 
 class CalculatorFormDataProvider extends BaseDiscountFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
@@ -60,5 +59,4 @@ class CalculatorFormDataProvider extends BaseDiscountFormDataProvider
             CalculatorForm::FIELD_CALCULATOR_PLUGIN => $this->getCalculatorPlugins(),
         ];
     }
-
 }

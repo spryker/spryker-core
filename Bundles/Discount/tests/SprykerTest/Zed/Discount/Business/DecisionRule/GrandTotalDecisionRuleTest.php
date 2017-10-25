@@ -24,7 +24,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class GrandTotalDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -111,5 +110,4 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
 
         return new GrandTotalDecisionRule($comparatorMock, $currencyConverterMock);
     }
-
 }

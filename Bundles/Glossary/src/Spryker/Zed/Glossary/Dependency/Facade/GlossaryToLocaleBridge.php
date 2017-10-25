@@ -9,7 +9,6 @@ namespace Spryker\Zed\Glossary\Dependency\Facade;
 
 class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -58,5 +57,4 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     {
         return $this->localeFacade->createLocale($localeName);
     }
-
 }

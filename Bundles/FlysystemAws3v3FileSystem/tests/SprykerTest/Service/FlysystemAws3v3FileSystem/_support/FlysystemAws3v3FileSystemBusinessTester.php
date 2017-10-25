@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class FlysystemAws3v3FileSystemBusinessTester extends Actor
 {
-
     use _generated\FlysystemAws3v3FileSystemBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

@@ -12,12 +12,13 @@ use Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPlugi
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use CmsPageParameterMapExpanderPlugin instead
+ *
  * @method \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacade getFacade()
  * @method \Spryker\Zed\CmsContentWidget\Communication\CmsContentWidgetCommunicationFactory getFactory()
  */
 class CmsPageCollectorParameterMapExpanderPlugin extends AbstractPlugin implements CmsPageCollectorDataExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +32,4 @@ class CmsPageCollectorParameterMapExpanderPlugin extends AbstractPlugin implemen
         return $this->getFacade()
             ->expandCmsPageCollectorData($collectedData, $localeTransfer);
     }
-
 }

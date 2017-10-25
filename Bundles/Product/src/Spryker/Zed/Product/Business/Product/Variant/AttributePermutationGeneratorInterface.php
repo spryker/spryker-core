@@ -7,7 +7,6 @@ namespace Spryker\Zed\Product\Business\Product\Variant;
 
 interface AttributePermutationGeneratorInterface
 {
-
     /**
      * Generatate all possible permutations for given attribute.
      * Leaf node of a tree is concrete id.
@@ -31,5 +30,4 @@ interface AttributePermutationGeneratorInterface
      * @return array
      */
     public function generateAttributePermutations(array $superAttributes, $idProductConcrete, array $variants = []);
-
 }

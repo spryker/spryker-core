@@ -21,7 +21,6 @@ use Spryker\Zed\Payolution\PayolutionConfig;
  */
 class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
@@ -117,5 +116,4 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
 
         return $keyName;
     }
-
 }

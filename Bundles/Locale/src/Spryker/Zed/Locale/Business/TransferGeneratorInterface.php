@@ -11,7 +11,6 @@ use Orm\Zed\Locale\Persistence\SpyLocale;
 
 interface TransferGeneratorInterface
 {
-
     /**
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
      *
@@ -25,5 +24,4 @@ interface TransferGeneratorInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function convertLocaleCollection(SpyLocale $localeEntityList);
-
 }

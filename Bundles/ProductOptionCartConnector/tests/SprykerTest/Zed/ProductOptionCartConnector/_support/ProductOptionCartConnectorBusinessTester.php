@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class ProductOptionCartConnectorBusinessTester extends Actor
 {
-
     use _generated\ProductOptionCartConnectorBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

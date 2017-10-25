@@ -12,7 +12,6 @@ use LogicException;
 
 class ReadOnlyArrayObject extends ArrayObject
 {
-
     /**
      * @param mixed $value
      *
@@ -61,5 +60,4 @@ class ReadOnlyArrayObject extends ArrayObject
     {
         throw new LogicException('Attempting to write to an immutable array');
     }
-
 }

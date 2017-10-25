@@ -9,7 +9,6 @@ namespace Spryker\Zed\Braintree\Dependency\Facade;
 
 class BraintreeToMoneyBridge implements BraintreeToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -32,5 +31,4 @@ class BraintreeToMoneyBridge implements BraintreeToMoneyInterface
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }
-
 }

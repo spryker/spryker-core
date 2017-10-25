@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface DummyPaymentFacadeInterface
 {
-
     /**
      * Specification:
      * - Calculate refund amount for given order items and order entity
@@ -24,5 +23,4 @@ interface DummyPaymentFacadeInterface
      * @return mixed
      */
     public function refund(array $salesOrderItems, SpySalesOrder $salesOrderEntity);
-
 }

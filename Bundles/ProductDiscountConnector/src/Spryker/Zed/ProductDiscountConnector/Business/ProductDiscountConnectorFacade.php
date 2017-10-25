@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductDiscountConnectorFacade extends AbstractFacade implements ProductDiscountConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -70,5 +69,4 @@ class ProductDiscountConnectorFacade extends AbstractFacade implements ProductDi
             ->createAttributeProvider()
             ->getAllAttributeTypes();
     }
-
 }

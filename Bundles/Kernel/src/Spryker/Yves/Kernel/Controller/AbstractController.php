@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 abstract class AbstractController
 {
-
     /**
      * @var \Silex\Application
      */
@@ -239,5 +238,4 @@ abstract class AbstractController
     {
         return $this->getApplication()->render($viewPath, $parameters);
     }
-
 }

@@ -17,7 +17,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
  */
 class PaginationQueryMapper implements PaginationQueryMapperInterface
 {
-
     /**
      * @var int
      */
@@ -131,5 +130,4 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
 
         return $itemsPerPage;
     }
-
 }

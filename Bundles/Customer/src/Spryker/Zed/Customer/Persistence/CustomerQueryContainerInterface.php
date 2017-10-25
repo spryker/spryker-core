@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CustomerQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -121,5 +120,4 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddressByIdCustomer($idCustomer);
-
 }

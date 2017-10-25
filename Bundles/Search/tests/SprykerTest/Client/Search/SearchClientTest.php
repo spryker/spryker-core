@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Client;
+namespace SprykerTest\Client\Search;
 
 use Codeception\Test\Unit;
 use Elastica\Client;
@@ -22,15 +22,14 @@ use Spryker\Client\Search\SearchFactory;
 
 /**
  * Auto-generated group annotations
- * @group Functional
- * @group Spryker
+ * @group SprykerTest
  * @group Client
+ * @group Search
  * @group SearchClientTest
  * Add your own group annotations below this line
  */
 class SearchClientTest extends Unit
 {
-
     /**
      * @var \Spryker\Client\Search\SearchClientInterface|\Spryker\Client\Kernel\AbstractClient
      */
@@ -156,7 +155,7 @@ class SearchClientTest extends Unit
             ->willReturn($this->getMockBuilder(QueryInterface::class)->getMock());
 
         $queryExpanders = [
-            $queryExpanderMock
+            $queryExpanderMock,
         ];
 
         $result = $this->searchClient->expandQuery($queryMock, $queryExpanders);
@@ -209,5 +208,4 @@ class SearchClientTest extends Unit
 
         $this->searchClient->setFactory($searchFactoryMock);
     }
-
 }

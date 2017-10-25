@@ -23,7 +23,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemPriceDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -62,5 +61,4 @@ class ItemPriceDecisionRuleTest extends BaseRuleTester
 
         return new ItemPriceDecisionRule($comparatorMock, $currencyConverterMock);
     }
-
 }

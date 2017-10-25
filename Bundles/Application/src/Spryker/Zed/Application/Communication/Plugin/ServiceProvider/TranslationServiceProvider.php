@@ -19,7 +19,6 @@ use Symfony\Component\Translation\Translator;
  */
 class TranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -44,5 +43,4 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
     public function boot(Application $app)
     {
     }
-
 }

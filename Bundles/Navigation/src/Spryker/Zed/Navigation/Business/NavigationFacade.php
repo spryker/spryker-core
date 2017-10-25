@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class NavigationFacade extends AbstractFacade implements NavigationFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -212,5 +211,4 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
             ->createNavigationNodeUrlCleaner()
             ->detachUrlFromNavigationNodes($urlTransfer);
     }
-
 }

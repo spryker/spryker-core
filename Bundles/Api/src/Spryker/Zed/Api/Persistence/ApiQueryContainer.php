@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -43,5 +42,4 @@ class ApiQueryContainer extends AbstractQueryContainer implements ApiQueryContai
             ->createApiItemMapper()
             ->toItem($data, $id);
     }
-
 }

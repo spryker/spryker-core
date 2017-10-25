@@ -13,7 +13,6 @@ use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollec
 
 class CmsBlockProductCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @param string $touchKey
      * @param array $collectItemData
@@ -53,5 +52,4 @@ class CmsBlockProductCollector extends AbstractStoragePropelCollector
     {
         return true;
     }
-
 }

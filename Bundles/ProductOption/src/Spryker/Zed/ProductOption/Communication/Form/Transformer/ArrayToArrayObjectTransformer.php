@@ -12,7 +12,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class ArrayToArrayObjectTransformer implements DataTransformerInterface
 {
-
     /**
      * Transforms a value from the original representation to a transformed representation.
      *
@@ -72,5 +71,4 @@ class ArrayToArrayObjectTransformer implements DataTransformerInterface
     {
         return new ArrayObject($value);
     }
-
 }

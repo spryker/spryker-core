@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface ProductLabelGuiToMoneyInterface
 {
-
     /**
      * @param int $price
      *
@@ -25,5 +24,4 @@ interface ProductLabelGuiToMoneyInterface
      * @return string
      */
     public function formatWithSymbol(MoneyTransfer $moneyTransfer);
-
 }

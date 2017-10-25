@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Dependency\Plugin;
 
 interface CategoryRelationDeletePluginInterface
 {
-
     /**
      * Specification:
      *  - Cleans up related entities
@@ -21,5 +20,4 @@ interface CategoryRelationDeletePluginInterface
      * @return void
      */
     public function delete($idCategory);
-
 }

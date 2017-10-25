@@ -11,7 +11,6 @@ use Spryker\Zed\Tax\Business\Model\Exception\CalculationException;
 
 class PriceCalculationHelper implements PriceCalculationHelperInterface
 {
-
     /**
      * Get the tax value from a given gross price and given tax percentage
      * in rounded integer representation.
@@ -115,5 +114,4 @@ class PriceCalculationHelper implements PriceCalculationHelperInterface
 
         return (int)round($amount);
     }
-
 }

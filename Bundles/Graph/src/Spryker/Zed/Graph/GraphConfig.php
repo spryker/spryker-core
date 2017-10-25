@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GraphConfig extends AbstractBundleConfig
 {
-
     /**
      * @return \Spryker\Shared\Graph\GraphAdapterInterface
      */
@@ -20,5 +19,4 @@ class GraphConfig extends AbstractBundleConfig
     {
         return PhpDocumentorGraphAdapter::class;
     }
-
 }

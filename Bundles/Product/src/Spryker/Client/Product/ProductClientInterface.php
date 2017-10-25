@@ -9,7 +9,6 @@ namespace Spryker\Client\Product;
 
 interface ProductClientInterface
 {
-
     /**
      * @api
      *
@@ -78,5 +77,4 @@ interface ProductClientInterface
      * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection);
-
 }

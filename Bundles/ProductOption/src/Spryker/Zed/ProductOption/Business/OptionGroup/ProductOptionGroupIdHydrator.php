@@ -12,7 +12,6 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionGroupIdHydrator implements ProductOptionGroupIdHydratorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -56,5 +55,4 @@ class ProductOptionGroupIdHydrator implements ProductOptionGroupIdHydratorInterf
     {
         return $this->productOptionQueryContainer->queryProductOptionValueBySku($sku)->findOne();
     }
-
 }

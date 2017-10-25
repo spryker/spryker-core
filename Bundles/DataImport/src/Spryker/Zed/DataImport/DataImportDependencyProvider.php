@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 
 class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'touch facade';
     const PROPEL_CONNECTION = 'propel connection';
 
@@ -59,5 +58,4 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
             );
         };
     }
-
 }

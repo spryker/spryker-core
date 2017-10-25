@@ -8,12 +8,12 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 
 abstract class AbstractPlugin
 {
-
     /**
      * @var \Spryker\Yves\Kernel\FactoryInterface
      */
@@ -23,6 +23,11 @@ abstract class AbstractPlugin
      * @var \Spryker\Client\Kernel\AbstractClient
      */
     private $client;
+
+    /**
+     * @var \Spryker\Yves\Kernel\AbstractBundleConfig
+     */
+    private $config;
 
     /**
      * @return \Spryker\Yves\Kernel\FactoryInterface
@@ -81,6 +86,34 @@ abstract class AbstractPlugin
     }
 
     /**
+     * @return \Spryker\Yves\Kernel\AbstractBundleConfig
+     */
+    protected function getConfig()
+    {
+        if ($this->config === null) {
+            $this->config = $this->resolveBundleConfig();
+        }
+
+        return $this->config;
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\AbstractBundleConfig
+     */
+    private function resolveBundleConfig()
+    {
+        return $this->getBundleConfigResolver()->resolve($this);
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver
+     */
+    private function getBundleConfigResolver()
+    {
+        return new BundleConfigResolver();
+    }
+
+    /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function getApplication()
@@ -96,5 +129,4 @@ abstract class AbstractPlugin
     {
         return $this->getApplication()['locale'];
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 class NestedPriceRangeQuery extends NestedRangeQuery
 {
-
     /**
      * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
@@ -48,5 +47,4 @@ class NestedPriceRangeQuery extends NestedRangeQuery
             $this->maxValue = $this->moneyPlugin->convertDecimalToInteger((float)$this->maxValue);
         }
     }
-
 }

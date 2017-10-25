@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
@@ -104,5 +103,4 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
 
         return ($productLabelEntity ? false : true);
     }
-
 }

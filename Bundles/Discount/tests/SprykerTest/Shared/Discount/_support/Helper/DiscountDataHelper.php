@@ -14,7 +14,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class DiscountDataHelper extends Module
 {
-
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
@@ -23,7 +22,7 @@ class DiscountDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
      */
-    public function haveDiscount($override = [])
+    public function haveDiscount(array $override = [])
     {
         $discountFacade = $this->getDiscountFacade();
 
@@ -61,5 +60,4 @@ class DiscountDataHelper extends Module
     {
         return $this->getLocator()->discount()->queryContainer();
     }
-
 }

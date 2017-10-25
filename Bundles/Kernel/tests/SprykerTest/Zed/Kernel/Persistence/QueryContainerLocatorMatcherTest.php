@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainerLocatorMatcher;
  */
 class QueryContainerLocatorMatcherTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -45,5 +44,4 @@ class QueryContainerLocatorMatcherTest extends Unit
     {
         $this->assertFalse((new QueryContainerLocatorMatcher())->match('locatorQueryContainer'));
     }
-
 }

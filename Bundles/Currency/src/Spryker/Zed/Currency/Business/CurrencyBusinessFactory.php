@@ -8,12 +8,18 @@
 namespace Spryker\Zed\Currency\Business;
 
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
+use Spryker\Zed\Currency\Business\Model\CurrencyMapper;
+use Spryker\Zed\Currency\Business\Model\CurrencyReader;
+use Spryker\Zed\Currency\Business\Model\CurrencyWriter;
 use Spryker\Zed\Currency\CurrencyDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
+ */
 class CurrencyBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
@@ -21,16 +27,44 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
-            $this->getStore()->getCurrencyIsoCode()
+            $this->getStoreFacade()->getCurrentStore()->getSelectedCurrencyIsoCode()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\Currency\Business\Model\CurrencyReaderInterface
      */
-    protected function getStore()
+    public function createCurrencyReader()
     {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
+        return new CurrencyReader(
+            $this->getQueryContainer(),
+            $this->createCurrencyMapper(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Currency\Business\Model\CurrencyWriterInterface
+     */
+    public function createCurrencyWriter()
+    {
+        return new CurrencyWriter($this->createCurrencyMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\Currency\Business\Model\CurrencyMapperInterface
+     */
+    protected function createCurrencyMapper()
+    {
+        return new CurrencyMapper($this->getInternationalization());
+    }
+
+    /**
+     * @return \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::FACADE_STORE);
     }
 
     /**
@@ -40,5 +74,4 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::INTERNATIONALIZATION);
     }
-
 }

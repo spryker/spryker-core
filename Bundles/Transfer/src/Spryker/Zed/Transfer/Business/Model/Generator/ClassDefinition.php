@@ -13,7 +13,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
-
     const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
 
     /**
@@ -57,6 +56,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private $hasArrayObject = false;
 
     /**
+     * @var array
+     */
+    private $propertyNameMap = [];
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -73,6 +77,7 @@ class ClassDefinition implements ClassDefinitionInterface
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
             $this->addProperties($properties);
+            $this->setPropertyNameMap($properties);
             $this->addMethods($properties);
         }
 
@@ -166,6 +171,21 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
+    }
+
+    /**
+     * @param array $properties
+     *
+     * @return void
+     */
+    private function setPropertyNameMap(array $properties)
+    {
+        foreach ($properties as $property) {
+            $nameCamelCase = $this->getPropertyName($property);
+            $this->propertyNameMap[$property['name_underscore']] = $nameCamelCase;
+            $this->propertyNameMap[$nameCamelCase] = $nameCamelCase;
+            $this->propertyNameMap[ucfirst($nameCamelCase)] = $nameCamelCase;
+        }
     }
 
     /**
@@ -339,6 +359,14 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @return array
+     */
+    public function getPropertyNameMap()
+    {
+        return $this->propertyNameMap;
+    }
+
+    /**
      * @param array $properties
      *
      * @return void
@@ -488,7 +516,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function isTypedArray(array $property)
     {
-        return preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
+        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
     }
 
     /**
@@ -632,7 +660,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['hasDefaultNull'] = false;
 
-        if ($typeHint !== null && $this->isCollection($property) !== true && $this->isArray($property) !== true) {
+        if ($typeHint && (!$this->isCollection($property) || $typeHint === 'array')) {
             $method['hasDefaultNull'] = true;
         }
 
@@ -652,7 +680,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'isCollection' => $this->isCollection($property),
+            'isCollection' => ($this->isCollection($property) && !$this->isArray($property)),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
@@ -696,5 +724,4 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         return isset($property['deprecated']) ? $property['deprecated'] : null;
     }
-
 }

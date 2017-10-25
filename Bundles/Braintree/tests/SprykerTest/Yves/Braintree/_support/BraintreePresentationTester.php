@@ -23,7 +23,6 @@ use SprykerTest\Yves\Braintree\PageObject\ProductDetailPage;
  */
 class BraintreePresentationTester extends Actor
 {
-
     use _generated\BraintreePresentationTesterActions;
 
     /**
@@ -241,5 +240,4 @@ class BraintreePresentationTester extends Actor
 
         $i->canSeeCurrentUrlEquals(CheckoutPage::URL_SUCCESS);
     }
-
 }

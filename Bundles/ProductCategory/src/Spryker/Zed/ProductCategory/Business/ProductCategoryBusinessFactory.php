@@ -17,7 +17,6 @@ use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
  */
 class ProductCategoryBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductCategory\Business\Manager\ProductCategoryManagerInterface
      */
@@ -54,5 +53,4 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
     }
-
 }

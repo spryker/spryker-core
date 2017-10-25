@@ -35,7 +35,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleCartExpanderTest extends Unit
 {
-
     /**
      * @var array
      */
@@ -233,5 +232,4 @@ class ProductBundleCartExpanderTest extends Unit
     {
         return $this->getMockBuilder(ProductBundleToLocaleInterface::class)->getMock();
     }
-
 }

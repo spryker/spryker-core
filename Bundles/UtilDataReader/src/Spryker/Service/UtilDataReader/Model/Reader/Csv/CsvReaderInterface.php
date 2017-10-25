@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilDataReader\Model\Reader\Csv;
 
 interface CsvReaderInterface
 {
-
     /**
      * @param array $columns
      * @param array $data
@@ -63,5 +62,4 @@ interface CsvReaderInterface
      * @return array
      */
     public function toArray();
-
 }

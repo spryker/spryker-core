@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
-
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
 
     /**
@@ -89,5 +88,4 @@ class ViewController extends AbstractController
 
         return $this->jsonResponse($relatedProductTable->fetchData());
     }
-
 }

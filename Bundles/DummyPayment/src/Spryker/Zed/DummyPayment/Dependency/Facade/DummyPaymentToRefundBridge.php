@@ -12,7 +12,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class DummyPaymentToRefundBridge implements DummyPaymentToRefundInterface
 {
-
     /**
      * @var \Spryker\Zed\Refund\Business\RefundFacadeInterface
      */
@@ -46,5 +45,4 @@ class DummyPaymentToRefundBridge implements DummyPaymentToRefundInterface
     {
         return $this->refundFacade->saveRefund($refundTransfer);
     }
-
 }

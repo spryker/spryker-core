@@ -14,7 +14,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class UrlTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'url_table';
 
     /**
@@ -74,5 +73,4 @@ class UrlTable extends AbstractTable
 
         return $results;
     }
-
 }

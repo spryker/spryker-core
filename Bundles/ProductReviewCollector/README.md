@@ -1,7 +1,8 @@
 # ProductReviewCollector Module
 [![Build Status](https://travis-ci.org/spryker/ProductReviewCollector.svg)](https://travis-ci.org/spryker/ProductReviewCollector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/ProductReviewCollector/badge.svg)](https://coveralls.io/github/spryker/ProductReviewCollector)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductReviewCollector/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductReviewCollector/?branch=master)
+
+ProductReviewCollector provides product review data for Yves by exporting it to key-value storage and search.
 
 ## Installation
 
@@ -11,4 +12,4 @@ composer require spryker/product-review-collector
 
 ## Documentation
 
-[Spryker Documentation](https://spryker.github.io)
+[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/products/product_reviews/product_review.html)

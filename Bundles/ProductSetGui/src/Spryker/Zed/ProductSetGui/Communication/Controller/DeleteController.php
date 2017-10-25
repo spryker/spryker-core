@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
-
     const PARAM_ID = 'id';
 
     /**
@@ -45,5 +44,4 @@ class DeleteController extends AbstractController
             Url::generate('/product-set-gui')->build()
         );
     }
-
 }

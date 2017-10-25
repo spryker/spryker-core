@@ -9,12 +9,20 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 
 interface AvailabilityToOmsInterface
 {
-
     /**
+     * @deprecated Using this method will affect the performance,
+     * use AvailabilityToOmsInterface::getOmsReservedProductQuantityForSku() instead.
+     *
      * @param string $sku
      *
      * @return int
      */
     public function sumReservedProductQuantitiesForSku($sku);
 
+    /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku);
 }

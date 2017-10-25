@@ -9,7 +9,6 @@ namespace Spryker\Shared\Twig\Dependency\Service;
 
 interface TwigToUtilTextServiceInterface
 {
-
     /**
      * @param string $string
      *
@@ -23,5 +22,4 @@ interface TwigToUtilTextServiceInterface
      * @return string
      */
     public function dashToCamelCase($string);
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     const DEFAULT_TRANSLATION = '';
@@ -338,5 +337,4 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
         $this->glossaryFacade->deleteTranslationsByFkKeys($glossaryKeys);
         $this->glossaryFacade->deleteKeys($glossaryKeys);
     }
-
 }

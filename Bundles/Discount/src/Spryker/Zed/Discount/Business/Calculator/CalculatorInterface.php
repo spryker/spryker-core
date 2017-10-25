@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -19,5 +18,4 @@ interface CalculatorInterface
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
      */
     public function calculate(array $discounts, QuoteTransfer $quoteTransfer);
-
 }

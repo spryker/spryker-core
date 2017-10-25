@@ -12,7 +12,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class FormatTypeByPathPreProcessor implements PreProcessorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -35,5 +34,4 @@ class FormatTypeByPathPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

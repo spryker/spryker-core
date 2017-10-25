@@ -12,7 +12,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class PositionUpdater implements PositionUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -79,5 +78,4 @@ class PositionUpdater implements PositionUpdaterInterface
             $this->productLabelFacade->updateLabel($productLabelTransfer);
         }
     }
-
 }

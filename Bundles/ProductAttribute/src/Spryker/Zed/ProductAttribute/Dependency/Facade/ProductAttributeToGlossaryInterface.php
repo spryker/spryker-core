@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductAttributeToGlossaryInterface
 {
-
     /**
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -77,5 +76,4 @@ interface ProductAttributeToGlossaryInterface
      * @return int
      */
     public function createKey($keyName);
-
 }

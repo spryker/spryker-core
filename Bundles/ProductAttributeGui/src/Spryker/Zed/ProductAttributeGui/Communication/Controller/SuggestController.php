@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuggestController extends AbstractController
 {
-
     const PARAM_SEARCH_TEXT = 'q';
 
     /**
@@ -34,5 +33,4 @@ class SuggestController extends AbstractController
 
         return $this->jsonResponse($keys);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
@@ -33,5 +32,4 @@ class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
     {
         return $this->priceFacade->getPriceBySku($sku, $priceType);
     }
-
 }

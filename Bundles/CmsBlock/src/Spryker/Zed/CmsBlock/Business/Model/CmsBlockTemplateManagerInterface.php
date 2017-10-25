@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlock\Business\Model;
 
 interface CmsBlockTemplateManagerInterface
 {
-
     /**
      * @param string $templatePath
      *
@@ -54,5 +53,4 @@ interface CmsBlockTemplateManagerInterface
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer|null
      */
     public function findTemplateByPath($path);
-
 }

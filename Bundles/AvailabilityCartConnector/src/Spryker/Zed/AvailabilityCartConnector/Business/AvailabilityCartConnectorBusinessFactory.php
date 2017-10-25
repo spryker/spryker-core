@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\AvailabilityCartConnector\Business\Cart\CheckCartAvailabilityInterface
      */
@@ -29,5 +28,4 @@ class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(AvailabilityCartConnectorDependencyProvider::FACADE_AVAILABILITY);
     }
-
 }

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\DataImportStep;
 
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface;
 
 class TouchAwareStep implements DataImportStepAfterExecuteInterface
 {
-
     /**
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface
      */
@@ -20,12 +20,12 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
     /**
      * @var array
      */
-    protected $mainTouchables = [];
+    protected $touchables = [];
 
     /**
-     * @var array
+     * @var int
      */
-    protected $subTouchables = [];
+    protected $touchableCount = 0;
 
     /**
      * @var int|null
@@ -45,23 +45,47 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
     /**
      * @param string $itemType
      * @param int $itemId
+     * @param string $itemEvent
      *
      * @return void
      */
-    public function addMainTouchable($itemType, $itemId)
+    public function addMainTouchable($itemType, $itemId, $itemEvent = SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
     {
-        $this->mainTouchables[$itemType][] = $itemId;
+        $this->touchableCount++;
+
+        $this->addTouchable($itemType, $itemId, $itemEvent);
     }
 
     /**
      * @param string $itemType
      * @param int $itemId
+     * @param string $itemEvent
      *
      * @return void
      */
-    public function addSubTouchable($itemType, $itemId)
+    public function addSubTouchable($itemType, $itemId, $itemEvent = SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
     {
-        $this->subTouchables[$itemType][] = $itemId;
+        $this->addTouchable($itemType, $itemId, $itemEvent);
+    }
+
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     * @param string $itemEvent
+     *
+     * @return void
+     */
+    protected function addTouchable($itemType, $itemId, $itemEvent = SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+    {
+        if (!isset($this->touchables[$itemEvent])) {
+            $this->touchables[$itemEvent] = [];
+        }
+
+        if (!isset($this->touchables[$itemEvent][$itemType])) {
+            $this->touchables[$itemEvent][$itemType] = [];
+        }
+
+        $this->touchables[$itemEvent][$itemType][] = $itemId;
     }
 
     /**
@@ -69,27 +93,41 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function afterExecute()
     {
-        if (empty($this->mainTouchables)) {
+        if ($this->touchableCount === 0) {
             return;
         }
 
-        $mainTouchAblesItemKey = key($this->mainTouchables);
+        if (!$this->bulkSize || $this->bulkSize === 1 || $this->touchableCount >= $this->bulkSize) {
+            $this->flushTouchables();
+        }
+    }
 
-        if (!$this->bulkSize || $this->bulkSize === 1 || count($this->mainTouchables[$mainTouchAblesItemKey]) >= $this->bulkSize) {
-            $itemIds = $this->mainTouchables[$mainTouchAblesItemKey];
-            if ($itemIds) {
-                $this->touchFacade->bulkTouchSetActive($mainTouchAblesItemKey, array_unique($itemIds));
-            }
-            $this->mainTouchables = [];
+    /**
+     * @return void
+     */
+    public function flush()
+    {
+        $this->flushTouchables();
+    }
 
-            if (count($this->subTouchables) > 0) {
-                foreach ($this->subTouchables as $subTouchAbleItemKey => $itemIds) {
-                    if ($itemIds) {
-                        $this->touchFacade->bulkTouchSetActive($subTouchAbleItemKey, array_unique($itemIds));
-                    }
+    /**
+     * @return void
+     */
+    protected function flushTouchables()
+    {
+        foreach ($this->touchables as $itemEvent => $touchableTypes) {
+            foreach ($touchableTypes as $itemType => $touchables) {
+                if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE) {
+                    $this->touchFacade->bulkTouchSetActive($itemType, array_unique($touchables));
                 }
-                $this->subTouchables = [];
+                if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE) {
+                    $this->touchFacade->bulkTouchSetInactive($itemType, array_unique($touchables));
+                }
+                if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
+                    $this->touchFacade->bulkTouchSetDeleted($itemType, array_unique($touchables));
+                }
             }
+            $this->touchables[$itemEvent] = [];
         }
     }
 
@@ -98,15 +136,6 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
      */
     public function __destruct()
     {
-        foreach ($this->mainTouchables as $touchType => $itemIds) {
-            $this->touchFacade->bulkTouchSetActive($touchType, array_unique($itemIds));
-            $this->mainTouchables = [];
-        }
-
-        foreach ($this->subTouchables as $touchType => $itemIds) {
-            $this->touchFacade->bulkTouchSetActive($touchType, array_unique($itemIds));
-        }
-        $this->mainTouchables = [];
+        $this->flush();
     }
-
 }

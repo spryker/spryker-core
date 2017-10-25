@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CheckoutBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflowInterface
      */
@@ -29,5 +28,4 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS)
         );
     }
-
 }

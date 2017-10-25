@@ -19,7 +19,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterfa
 
 class ProductRelationReader implements ProductRelationReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
@@ -189,5 +188,4 @@ class ProductRelationReader implements ProductRelationReaderInterface
 
         return $productRelationRelatedProductTransfer;
     }
-
 }

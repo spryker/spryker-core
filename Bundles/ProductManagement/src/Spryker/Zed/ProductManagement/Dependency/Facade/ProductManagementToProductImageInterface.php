@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 
 interface ProductManagementToProductImageInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
      *
@@ -40,5 +39,4 @@ interface ProductManagementToProductImageInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getProductImagesSetCollectionByProductId($idProduct);
-
 }

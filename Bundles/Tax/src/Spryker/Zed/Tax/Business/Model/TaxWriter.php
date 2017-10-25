@@ -18,7 +18,6 @@ use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 class TaxWriter implements TaxWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface
      */
@@ -280,5 +279,4 @@ class TaxWriter implements TaxWriterInterface
 
         return $taxRateEntity;
     }
-
 }

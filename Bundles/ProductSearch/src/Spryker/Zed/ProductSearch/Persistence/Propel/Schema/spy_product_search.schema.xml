@@ -12,6 +12,13 @@
         <foreign-key name="spy_product_search-fk_locale" foreignTable="spy_locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
+
+        <index name="spy_product_search-index-fk-product-fk-locale-is_searchable">
+            <index-column name="fk_product" />
+            <index-column name="fk_locale" />
+            <index-column name="is_searchable" />
+        </index>
+
         <id-method-parameter value="spy_product_search_pk_seq"/>
     </table>
 

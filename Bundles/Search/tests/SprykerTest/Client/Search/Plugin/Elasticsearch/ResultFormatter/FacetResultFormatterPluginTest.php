@@ -34,7 +34,6 @@ use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
  */
 class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {
-
     /**
      * @dataProvider resultFormatterDataProvider
      *
@@ -518,5 +517,4 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 
         return [$searchConfig, $aggregationResult, $expectedResult];
     }
-
 }

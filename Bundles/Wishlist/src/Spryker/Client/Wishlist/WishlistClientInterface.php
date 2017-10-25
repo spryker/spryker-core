@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
  */
 interface WishlistClientInterface
 {
-
     /**
      * @api
      *
@@ -104,6 +103,8 @@ interface WishlistClientInterface
     /**
      * @api
      *
+     * @deprecated Use moveCollectionToCart() instead
+     *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
@@ -115,7 +116,7 @@ interface WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer);
 
@@ -143,5 +144,4 @@ interface WishlistClientInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getCustomerWishlistCollection();
-
 }

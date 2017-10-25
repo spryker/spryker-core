@@ -14,7 +14,6 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 class TranslationFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
@@ -75,5 +74,4 @@ class TranslationFormDataProvider
     {
         return $this->glossaryQueryContainer->queryKeys()->findOneByIdGlossaryKey($fkGlossaryKey);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Url\UrlConfig;
 
 class UrlActivator implements UrlActivatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Dependency\UrlToTouchInterface
      */
@@ -54,5 +53,4 @@ class UrlActivator implements UrlActivatorInterface
 
         $this->touchFacade->touchDeleted(UrlConfig::RESOURCE_TYPE_URL, $idUrl);
     }
-
 }

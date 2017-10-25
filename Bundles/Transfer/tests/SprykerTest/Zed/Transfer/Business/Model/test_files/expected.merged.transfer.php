@@ -40,6 +40,19 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @var array
      */
+    protected $transferPropertyNameMap = [
+        'name' => 'name',
+        'Name' => 'name',
+        'bla' => 'bla',
+        'Bla' => 'bla',
+        'self_reference' => 'selfReference',
+        'selfReference' => 'selfReference',
+        'SelfReference' => 'selfReference',
+    ];
+
+    /**
+     * @var array
+     */
     protected $transferMetadata = [
         self::NAME => [
             'type' => 'string',
@@ -62,7 +75,7 @@ class FooBarTransfer extends AbstractTransfer
     ];
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @param string $name
      *
@@ -71,13 +84,13 @@ class FooBarTransfer extends AbstractTransfer
     public function setName($name)
     {
         $this->name = $name;
-        $this->addModifiedProperty(self::NAME);
+        $this->modifiedProperties[self::NAME] = true;
 
         return $this;
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return string
      */
@@ -87,7 +100,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test
+     * @module Test
      *
      * @return $this
      */
@@ -99,7 +112,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test|Test2
+     * @module Test|Test2
      *
      * @param int $bla
      *
@@ -108,13 +121,13 @@ class FooBarTransfer extends AbstractTransfer
     public function setBla($bla)
     {
         $this->bla = $bla;
-        $this->addModifiedProperty(self::BLA);
+        $this->modifiedProperties[self::BLA] = true;
 
         return $this;
     }
 
     /**
-     * @bundle Test|Test2
+     * @module Test|Test2
      *
      * @return int
      */
@@ -124,7 +137,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test|Test2
+     * @module Test|Test2
      *
      * @return $this
      */
@@ -136,7 +149,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test2
+     * @module Test2
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[] $selfReference
      *
@@ -145,13 +158,13 @@ class FooBarTransfer extends AbstractTransfer
     public function setSelfReference(ArrayObject $selfReference)
     {
         $this->selfReference = $selfReference;
-        $this->addModifiedProperty(self::SELF_REFERENCE);
+        $this->modifiedProperties[self::SELF_REFERENCE] = true;
 
         return $this;
     }
 
     /**
-     * @bundle Test2
+     * @module Test2
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
      */
@@ -161,7 +174,7 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @bundle Test2
+     * @module Test2
      *
      * @param \Generated\Shared\Transfer\FooBarTransfer $selfReference
      *
@@ -170,13 +183,13 @@ class FooBarTransfer extends AbstractTransfer
     public function addSelfReference(FooBarTransfer $selfReference)
     {
         $this->selfReference[] = $selfReference;
-        $this->addModifiedProperty(self::SELF_REFERENCE);
+        $this->modifiedProperties[self::SELF_REFERENCE] = true;
 
         return $this;
     }
 
     /**
-     * @bundle Test2
+     * @module Test2
      *
      * @return $this
      */

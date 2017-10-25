@@ -15,7 +15,6 @@ use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConn
 
 class CheckCartAvailability implements CheckCartAvailabilityInterface
 {
-
     const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
     const CART_PRE_CHECK_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
     const STOCK_TRANSLATION_PARAMETER = 'stock';
@@ -118,5 +117,4 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         }
         return $translationKey;
     }
-
 }

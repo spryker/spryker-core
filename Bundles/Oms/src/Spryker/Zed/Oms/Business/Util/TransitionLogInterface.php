@@ -15,7 +15,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 interface TransitionLogInterface
 {
-
     /**
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
@@ -94,5 +93,4 @@ interface TransitionLogInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order);
-
 }

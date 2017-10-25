@@ -22,7 +22,6 @@ use Generated\Shared\DataBuilder\ProductReviewBuilder;
  */
 class ReadProductReviewTest extends Test
 {
-
     /**
      * @var \SprykerTest\Zed\ProductReview\ProductReviewBusinessTester
      */
@@ -64,5 +63,4 @@ class ReadProductReviewTest extends Test
             'Create should return the updated entity'
         );
     }
-
 }

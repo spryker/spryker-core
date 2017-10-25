@@ -11,12 +11,10 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 class ReleaseExpiredLocksController extends AbstractController
 {
-
     /**
      * @return void
      */
     public function indexAction()
     {
     }
-
 }

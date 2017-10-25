@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UserTransfer;
 
 class AclToUserBridge implements AclToUserInterface
 {
-
     /**
      * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
@@ -60,5 +59,4 @@ class AclToUserBridge implements AclToUserInterface
     {
         return $this->userFacade->getCurrentUser();
     }
-
 }

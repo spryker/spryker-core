@@ -16,7 +16,6 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
 
 class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
      */
@@ -88,7 +87,6 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     protected function saveOptions(ItemTransfer $itemTransfer)
     {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-
             $this->translateOption($productOptionTransfer);
 
             $salesOrderItemOptionEntity = $this->createSalesOrderItemOptionEntity();
@@ -134,5 +132,4 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     {
         return new SpySalesOrderItemOption();
     }
-
 }

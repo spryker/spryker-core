@@ -8,7 +8,5 @@ namespace Spryker\Shared\Availability;
 
 interface AvailabilityConfig
 {
-
     const RESOURCE_TYPE_AVAILABILITY_ABSTRACT = 'availability_abstract';
-
 }

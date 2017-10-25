@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\Container;
 
 class CatalogDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_SEARCH = 'search client';
     const CATALOG_SEARCH_QUERY_PLUGIN = 'catalog search query plugin';
     const CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS = 'catalog search query expander plugins';
@@ -110,5 +109,4 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     {
         return [];
     }
-
 }

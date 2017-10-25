@@ -3,6 +3,7 @@
   "description": "Quote module",
   "license": "proprietary",
   "require": {
+    "spryker/currency": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/session": "^3.0.0",
     "spryker/symfony": "^3.0.0"
@@ -12,13 +13,13 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

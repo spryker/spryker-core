@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class TaxProductConnectorQueryContainer extends AbstractQueryContainer implements TaxProductConnectorQueryContainerInterface
 {
-
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
     const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
 
@@ -128,5 +127,4 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
             ->endUse()
             ->select([self::COL_MAX_TAX_RATE]);
     }
-
 }

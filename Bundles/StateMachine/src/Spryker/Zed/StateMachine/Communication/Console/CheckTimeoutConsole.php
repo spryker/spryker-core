@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckTimeoutConsole extends Console
 {
-
     const COMMAND_NAME = 'state-machine:check-timeout';
     const COMMAND_DESCRIPTION = 'Check timeouts';
     const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
@@ -52,5 +51,4 @@ class CheckTimeoutConsole extends Console
 
         $this->getFacade()->checkTimeouts($stateMachineName);
     }
-
 }

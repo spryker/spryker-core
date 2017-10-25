@@ -14,7 +14,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class AddressFormDataProvider extends AbstractSalesFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface
      */
@@ -86,5 +85,4 @@ class AddressFormDataProvider extends AbstractSalesFormDataProvider
 
         return $countryList;
     }
-
 }

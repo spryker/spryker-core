@@ -14,7 +14,6 @@ use Spryker\Shared\Testify\TestifyConstants;
 
 class YvesHelper extends Module
 {
-
     /**
      * @return $this
      */
@@ -35,5 +34,4 @@ class YvesHelper extends Module
     {
         return $this->getModule('WebDriver');
     }
-
 }

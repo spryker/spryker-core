@@ -22,7 +22,6 @@ use Spryker\Yves\Session\SessionConfig;
  */
 class SessionConfigTest extends Unit
 {
-
     const EXPECTED_DSN_TCP_WITHOUT_PASSWORD = 'tcp://10.10.0.1:6435?database=0';
     const EXPECTED_DSN_TCP_WITH_PASSWORD = 'tcp://10.10.0.1:6435?database=0&password=secret';
 
@@ -86,5 +85,4 @@ class SessionConfigTest extends Unit
         $sessionConfig = new SessionConfig();
         $this->assertSame(static::EXPECTED_DSN_REDIS_WITH_PASSWORD, $sessionConfig->getSessionHandlerRedisDataSourceName());
     }
-
 }

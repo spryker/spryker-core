@@ -10,7 +10,6 @@ use Spryker\Shared\Log\Config\LoggerConfigInterface;
 
 class TestLoggerConfig implements LoggerConfigInterface
 {
-
     /**
      * @return string
      */
@@ -34,5 +33,4 @@ class TestLoggerConfig implements LoggerConfigInterface
     {
         return [];
     }
-
 }

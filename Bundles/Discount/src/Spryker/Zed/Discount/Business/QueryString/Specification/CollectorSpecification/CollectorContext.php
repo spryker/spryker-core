@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 
 class CollectorContext implements CollectorSpecificationInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface
      */
@@ -51,5 +50,4 @@ class CollectorContext implements CollectorSpecificationInterface
     {
         return $this->clauseTransfer->setAcceptedTypes($this->collectorPlugin->acceptedDataTypes());
     }
-
 }

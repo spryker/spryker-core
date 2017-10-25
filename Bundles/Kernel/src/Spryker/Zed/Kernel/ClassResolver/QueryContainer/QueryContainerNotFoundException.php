@@ -9,15 +9,14 @@ namespace Spryker\Zed\Kernel\ClassResolver\QueryContainer;
 
 use Exception;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 class QueryContainerNotFoundException extends Exception
 {
-
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -25,7 +24,7 @@ class QueryContainerNotFoundException extends Exception
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */
@@ -49,5 +48,4 @@ class QueryContainerNotFoundException extends Exception
 
         return $message;
     }
-
 }

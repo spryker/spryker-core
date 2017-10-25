@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
 class DecisionRuleContext implements DecisionRuleSpecificationInterface
 {
-
      /**
       * @var \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
       */
@@ -47,11 +46,10 @@ class DecisionRuleContext implements DecisionRuleSpecificationInterface
     }
 
      /**
-      * @return $this
+      * @return void
       */
     protected function setAcceptedDataTypes()
     {
-        return $this->clauseTransfer->setAcceptedTypes($this->rulePlugin->acceptedDataTypes());
+        $this->clauseTransfer->setAcceptedTypes($this->rulePlugin->acceptedDataTypes());
     }
-
 }

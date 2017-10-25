@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class NodeController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -91,5 +90,4 @@ class NodeController extends AbstractController
             'message' => 'Category nodes successfully reordered.',
         ]);
     }
-
 }

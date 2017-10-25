@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class BaseDiscountPromotionSaverPlugin extends AbstractPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
@@ -41,5 +40,4 @@ class BaseDiscountPromotionSaverPlugin extends AbstractPlugin
 
         return $discountPromotionTransfer;
     }
-
 }

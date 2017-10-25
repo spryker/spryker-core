@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InitializeDatabaseConsole extends Console
 {
-
     const COMMAND_NAME = 'setup:init-db';
     const DESCRIPTION = 'Fill the database with required data';
 
@@ -74,5 +73,4 @@ class InitializeDatabaseConsole extends Console
         $pattern = '#^(.+)\\\(.+)\\\(.+)\\\(.+)\\\(.*)$#i';
         return preg_replace($pattern, '${2}', $className);
     }
-
 }

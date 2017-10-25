@@ -15,7 +15,6 @@ use Zend\Config\Factory;
 
 class ZedNavigationCollector implements ZedNavigationCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface
      */
@@ -63,5 +62,4 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
 
         return $navigationDefinition->toArray();
     }
-
 }

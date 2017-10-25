@@ -16,7 +16,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
  */
 class TaxSetProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -26,5 +25,4 @@ class TaxSetProductAbstractAfterCreatePlugin extends AbstractPlugin implements P
     {
         return $this->getFacade()->saveTaxSetToProductAbstract($productAbstractTransfer);
     }
-
 }

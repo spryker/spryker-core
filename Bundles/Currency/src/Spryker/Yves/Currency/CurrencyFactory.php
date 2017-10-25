@@ -8,11 +8,12 @@
 namespace Spryker\Yves\Currency;
 
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
+use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
+use Spryker\Yves\Currency\CurrencyChange\CurrencyPostChangePluginExecutor;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class CurrencyFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
@@ -20,8 +21,24 @@ class CurrencyFactory extends AbstractFactory
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
-            $this->getStore()->getCurrencyIsoCode()
+            $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
+     */
+    public function createCurrencyPersistence()
+    {
+        return new CurrencyPersistence($this->getSessionClient(), $this->getStore());
+    }
+
+    /**
+     * @return \Spryker\Yves\Currency\CurrencyChange\CurrencyPostChangePluginExecutorInterface
+     */
+    public function createCurrencyPostChangePluginExecutor()
+    {
+        return new CurrencyPostChangePluginExecutor($this->getCurrencyPostChangePlugins());
     }
 
     /**
@@ -35,9 +52,24 @@ class CurrencyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    protected function getStore()
+    public function getStore()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
     }
 
+    /**
+     * @return \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[]
+     */
+    protected function getCurrencyPostChangePlugins()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CURRENCY_POST_CHANGE_PLUGINS);
+    }
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\ProductSet\ProductSetDependencyProvider;
  */
 class ProductSetPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
@@ -59,5 +58,4 @@ class ProductSetPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductSetDependencyProvider::QUERY_CONTAINER_PRODUCT_IMAGE);
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerGroupInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
      *
@@ -61,5 +60,4 @@ interface CustomerGroupInterface
      * @return void
      */
     public function removeCustomerFromAllGroups(CustomerTransfer $customerTransfer);
-
 }

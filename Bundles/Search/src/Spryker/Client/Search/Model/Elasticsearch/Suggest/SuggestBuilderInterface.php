@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Suggest;
 
 interface SuggestBuilderInterface
 {
-
     /**
      * @param string $name
      * @param string $field
@@ -33,5 +32,4 @@ interface SuggestBuilderInterface
      * @return \Elastica\Suggest\Phrase
      */
     public function createPhrase($name, $field);
-
 }

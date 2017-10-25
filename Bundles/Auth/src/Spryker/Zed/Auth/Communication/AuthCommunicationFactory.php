@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class AuthCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -57,5 +56,4 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(AuthDependencyProvider::FACADE_USER);
     }
-
 }

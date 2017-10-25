@@ -25,7 +25,6 @@ use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
  */
 class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\NavigationGui\Communication\Table\NavigationTable
      */
@@ -138,5 +137,4 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(NavigationGuiDependencyProvider::FACADE_URL);
     }
-
 }

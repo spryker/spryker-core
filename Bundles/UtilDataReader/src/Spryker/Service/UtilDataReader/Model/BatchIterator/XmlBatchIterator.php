@@ -7,9 +7,10 @@
 
 namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 
+use Exception;
+
 class XmlBatchIterator implements CountableIteratorInterface
 {
-
     /**
      * @var string
      */
@@ -71,11 +72,12 @@ class XmlBatchIterator implements CountableIteratorInterface
                 );
 
                 $this->batchData = json_decode(
-                    json_encode($xml), true
+                    json_encode($xml),
+                    true
                 );
 
                 $this->batchData = $this->batchData[$this->rootNodeName];
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $this->batchData = [];
             }
         }
@@ -117,5 +119,4 @@ class XmlBatchIterator implements CountableIteratorInterface
         $this->next();
         return count($this->batchData);
     }
-
 }

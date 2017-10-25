@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\ClassResolver\Cache\Storage\File as FileStorage;
 
 class File extends AbstractProvider
 {
-
     /**
      * @return \Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface
      */
@@ -20,5 +19,4 @@ class File extends AbstractProvider
     {
         return new FileStorage();
     }
-
 }

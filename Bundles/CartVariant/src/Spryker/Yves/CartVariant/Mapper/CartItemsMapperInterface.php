@@ -11,12 +11,10 @@ use ArrayObject;
 
 interface CartItemsMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      *
      * @return array
      */
     public function buildMap(ArrayObject $items);
-
 }

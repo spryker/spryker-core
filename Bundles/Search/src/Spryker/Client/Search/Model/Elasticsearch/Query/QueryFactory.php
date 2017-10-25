@@ -13,7 +13,6 @@ use Spryker\Shared\Search\SearchConfig;
 
 class QueryFactory implements QueryFactoryInterface
 {
-
     /**
      * @var \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
      */
@@ -147,5 +146,4 @@ class QueryFactory implements QueryFactoryInterface
             ->queryBuilder
             ->createTermQuery($facetConfigTransfer->getFieldName(), $filterValue);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Shared\NewRelicApi;
 
 trait NewRelicApiTrait
 {
-
     /**
      * @return \Spryker\Shared\NewRelicApi\NewRelicApiInterface
      */
@@ -17,5 +16,4 @@ trait NewRelicApiTrait
     {
         return new NewRelicApi();
     }
-
 }

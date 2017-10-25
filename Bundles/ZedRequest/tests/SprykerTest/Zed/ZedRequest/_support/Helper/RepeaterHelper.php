@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RepeaterHelper extends Module
 {
-
     const BUNDLE = 'module';
     const CONTROLLER = 'controller';
     const ACTION = 'action';
@@ -145,5 +144,4 @@ class RepeaterHelper extends Module
 
         return $httpRequest;
     }
-
 }

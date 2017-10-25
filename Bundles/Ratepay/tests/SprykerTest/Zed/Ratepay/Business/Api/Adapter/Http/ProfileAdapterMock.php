@@ -8,7 +8,6 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Adapter\Http;
 
 class ProfileAdapterMock extends AbstractAdapterMock
 {
-
     /**
      * @return array
      */
@@ -120,5 +119,4 @@ class ProfileAdapterMock extends AbstractAdapterMock
             <content />
         </response>';
     }
-
 }

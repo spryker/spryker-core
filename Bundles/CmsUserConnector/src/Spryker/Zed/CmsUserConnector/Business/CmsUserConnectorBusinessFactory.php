@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CmsUserConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsUserConnector\Business\Version\CmsVersionUserUpdaterInterface
      */
@@ -54,5 +53,4 @@ class CmsUserConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CmsUserConnectorDependencyProvider::QUERY_CONTAINER_CMS);
     }
-
 }

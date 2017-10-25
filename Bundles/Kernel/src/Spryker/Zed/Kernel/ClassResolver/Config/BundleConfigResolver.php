@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class BundleConfigResolver extends AbstractClassResolver
 {
-
     const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\%2$sConfig';
 
     /**
@@ -43,5 +42,4 @@ class BundleConfigResolver extends AbstractClassResolver
             self::KEY_STORE
         );
     }
-
 }

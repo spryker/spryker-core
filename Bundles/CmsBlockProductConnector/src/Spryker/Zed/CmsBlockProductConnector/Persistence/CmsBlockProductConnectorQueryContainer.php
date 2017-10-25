@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer implements CmsBlockProductConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -74,5 +73,4 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
         return $this->queryCmsBlockProductConnector()
             ->filterByFkProductAbstract($idProductAbstract);
     }
-
 }

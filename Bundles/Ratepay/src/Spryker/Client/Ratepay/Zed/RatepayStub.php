@@ -12,7 +12,6 @@ use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class RatepayStub implements RatepayStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -45,5 +44,4 @@ class RatepayStub implements RatepayStubInterface
     {
         return $this->zedRequestClient->call('/ratepay/gateway/installment-calculation', $quoteTransfer);
     }
-
 }

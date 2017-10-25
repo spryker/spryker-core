@@ -15,7 +15,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed productRelationTransfer is valid.
      *
@@ -68,7 +67,6 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
         }
 
         return true;
-
     }
 
     /**
@@ -88,5 +86,4 @@ class UniqueRelationTypeForProductAbstractValidator extends ConstraintValidator
             ->atPath(ProductRelationTransfer::PRODUCT_RELATION_TYPE . '.' . ProductRelationTypeTransfer::KEY)
             ->addViolation();
     }
-
 }

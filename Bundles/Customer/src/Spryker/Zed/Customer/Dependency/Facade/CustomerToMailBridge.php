@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 class CustomerToMailBridge implements CustomerToMailInterface
 {
-
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
@@ -34,5 +33,4 @@ class CustomerToMailBridge implements CustomerToMailInterface
     {
         $this->mailFacade->handleMail($mailTransfer);
     }
-
 }

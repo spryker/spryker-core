@@ -17,7 +17,6 @@ use Spryker\Zed\Oms\OmsConfig;
 
 class PersistenceManager implements PersistenceManagerInterface
 {
-
     protected static $stateEntityBuffer = [];
 
     protected static $processEntityBuffer = [];
@@ -109,5 +108,4 @@ class PersistenceManager implements PersistenceManagerInterface
     {
         return $this->getStateEntity(OmsConstants::INITIAL_STATUS);
     }
-
 }

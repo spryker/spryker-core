@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\NewRelicApi;
 
-use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
-
 /**
  * The PHP API for New Relic
  *
@@ -16,7 +14,6 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
  */
 class NewRelicApi implements NewRelicApiInterface
 {
-
     /**
      * @var bool
      */
@@ -297,5 +294,4 @@ class NewRelicApi implements NewRelicApiInterface
 
         return $this;
     }
-
 }

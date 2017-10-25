@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface ProductReviewCollectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Collects touched product reviews for the current local and stores them in Search.
@@ -71,5 +70,4 @@ interface ProductReviewCollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

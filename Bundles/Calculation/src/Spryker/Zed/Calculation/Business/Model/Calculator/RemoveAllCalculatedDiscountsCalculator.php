@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class RemoveAllCalculatedDiscountsCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -31,5 +30,4 @@ class RemoveAllCalculatedDiscountsCalculator implements CalculatorInterface
             $expense->setCalculatedDiscounts(new ArrayObject());
         }
     }
-
 }

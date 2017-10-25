@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductDiscountConnectorQueryContainer extends AbstractQueryContainer implements ProductDiscountConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -27,5 +26,4 @@ class ProductDiscountConnectorQueryContainer extends AbstractQueryContainer impl
             ->createProductAttributesKeyQuery()
             ->select(SpyProductAttributeKeyTableMap::COL_KEY);
     }
-
 }

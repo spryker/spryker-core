@@ -9,7 +9,5 @@ namespace SprykerTest\Zed\Customer\PageObject;
 
 class CustomerIndexPage
 {
-
     const URL = '/customer';
-
 }

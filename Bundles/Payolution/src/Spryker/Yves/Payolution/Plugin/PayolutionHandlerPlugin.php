@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PayolutionHandlerPlugin extends AbstractPlugin implements StepHandlerPluginInterface
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
@@ -28,5 +27,4 @@ class PayolutionHandlerPlugin extends AbstractPlugin implements StepHandlerPlugi
     {
         $this->getFactory()->createPayolutionHandler()->addPaymentToQuote($request, $quoteTransfer);
     }
-
 }

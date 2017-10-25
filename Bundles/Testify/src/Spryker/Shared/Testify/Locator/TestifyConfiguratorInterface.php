@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\ContainerInterface;
 
 interface TestifyConfiguratorInterface
 {
-
     /**
      * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Zed\Kernel\Container|\Spryker\Zed\Testify\Locator\Business\Container
      */
@@ -28,5 +27,4 @@ interface TestifyConfiguratorInterface
      * @return \Spryker\Shared\Testify\Config\TestifyConfigInterface
      */
     public function getConfig();
-
 }

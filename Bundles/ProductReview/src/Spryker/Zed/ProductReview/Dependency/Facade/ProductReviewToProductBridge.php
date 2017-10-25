@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReview\Dependency\Facade;
 
 class ProductReviewToProductBridge implements ProductReviewToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -32,5 +31,4 @@ class ProductReviewToProductBridge implements ProductReviewToProductInterface
     {
         $this->productFacade->touchProductAbstract($idProductAbstract);
     }
-
 }

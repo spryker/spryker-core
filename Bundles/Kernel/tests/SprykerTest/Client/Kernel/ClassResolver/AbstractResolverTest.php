@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\Kernel\ClassResolver;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -21,7 +23,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 abstract class AbstractResolverTest extends Unit
 {
-
     /**
      * @var string
      */
@@ -63,6 +64,11 @@ abstract class AbstractResolverTest extends Unit
     public function tearDown()
     {
         parent::tearDown();
+
+        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
+        $reflectionProperty = $reflectionResolver->getProperty('cache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
 
         $this->deleteCreatedFiles();
     }
@@ -143,7 +149,7 @@ abstract class AbstractResolverTest extends Unit
             $this->getBasePath(),
             implode(DIRECTORY_SEPARATOR, $classNameParts),
         ];
-        $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
+        $directory = implode(DIRECTORY_SEPARATOR, $directoryParts);
 
         if (!is_dir($directory)) {
             mkdir($directory, 0775, true);
@@ -168,5 +174,4 @@ abstract class AbstractResolverTest extends Unit
 
         return $basePath;
     }
-
 }

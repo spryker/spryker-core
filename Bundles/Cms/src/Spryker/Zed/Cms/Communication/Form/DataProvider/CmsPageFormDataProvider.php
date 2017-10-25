@@ -13,7 +13,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsPageFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -109,5 +108,4 @@ class CmsPageFormDataProvider
 
         return $result;
     }
-
 }

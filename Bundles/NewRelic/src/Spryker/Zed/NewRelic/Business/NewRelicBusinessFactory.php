@@ -15,7 +15,6 @@ use Spryker\Zed\NewRelic\Business\Model\RecordDeployment;
  */
 class NewRelicBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\NewRelic\Business\Model\RecordDeploymentInterface
      */
@@ -23,5 +22,4 @@ class NewRelicBusinessFactory extends AbstractBusinessFactory
     {
         return new RecordDeployment();
     }
-
 }

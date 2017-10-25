@@ -9,7 +9,6 @@ namespace Spryker\Zed\CustomerGroup\Dependency\Service;
 
 interface CustomerGroupToUtilEncodingInterface
 {
-
     /**
      * @param string $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface CustomerGroupToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

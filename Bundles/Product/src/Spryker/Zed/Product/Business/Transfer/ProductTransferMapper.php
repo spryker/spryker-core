@@ -16,7 +16,6 @@ use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 
 class ProductTransferMapper implements ProductTransferMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
      */
@@ -121,5 +120,4 @@ class ProductTransferMapper implements ProductTransferMapperInterface
 
         return $productTransfer;
     }
-
 }

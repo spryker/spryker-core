@@ -34,3 +34,4 @@ node_modules/
 yarn.lock
 /vendor/*
 composer.phar
+composer.lock

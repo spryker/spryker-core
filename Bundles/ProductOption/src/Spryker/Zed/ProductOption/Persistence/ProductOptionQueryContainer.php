@@ -25,7 +25,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
-
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
     const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
 
@@ -41,6 +40,39 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return $this->getFactory()
             ->createProductAbstractQuery()
             ->filterBySku($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
+     */
+    public function queryAllProductAbstractProductOptionGroups()
+    {
+        return $this->getFactory()
+            ->createProductAbstractProductOptionGroupQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryAllProductOptionGroups()
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryAllProductOptionValues()
+    {
+        return $this->getFactory()
+            ->createProductOptionValueQuery();
     }
 
     /**
@@ -327,5 +359,4 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->queryCountries()
             ->filterByIso2Code($countryIso2Code);
     }
-
 }

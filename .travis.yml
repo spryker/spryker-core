@@ -1,6 +1,6 @@
 language: php
 php:
-  - 7.0
+  - 7.1
 
 cache:
   directories:
@@ -14,10 +14,10 @@ env:
 
 install:
   - composer self-update && composer --version
-  - composer install --no-interaction --prefer-dist --no-autoloader
+  - composer update --no-interaction --prefer-dist --no-autoloader
 
 script:
-  - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml --ignore=/test_files/
+  - composer cs-check
 
 notifications:
   email: false

@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProgressBarBuilder
 {
-
     /**
      * @var \Symfony\Component\Console\Output\OutputInterface
      */
@@ -105,5 +104,4 @@ class ProgressBarBuilder
 
         return $progressBar;
     }
-
 }

@@ -7,7 +7,6 @@ namespace Spryker\Zed\Cms\Business\Page;
 
 interface CmsPageReaderInterface
 {
-
     /**
      * @param int $idCmsPage
      *
@@ -16,5 +15,4 @@ interface CmsPageReaderInterface
      * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
     public function findCmsPageById($idCmsPage);
-
 }

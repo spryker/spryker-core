@@ -17,7 +17,6 @@ use Spryker\Zed\ProductImageCartConnector\ProductImageCartConnectorDependencyPro
  */
 class ProductImageCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductImageCartConnector\Business\Expander\ProductImageExpanderInterface
      */
@@ -35,5 +34,4 @@ class ProductImageCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductImageCartConnectorDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
-
 }

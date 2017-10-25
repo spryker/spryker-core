@@ -19,7 +19,6 @@ use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface;
 
 class ProductImageTransferMapper implements ProductImageTransferMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface
      */
@@ -153,5 +152,4 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
         $imageTransferCollection = $this->mapProductImageCollection(new ObjectCollection($imageEntityCollection), $productImageSetEntity);
         $productImageSetTransfer->setProductImages(new ArrayObject($imageTransferCollection));
     }
-
 }

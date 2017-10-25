@@ -14,7 +14,6 @@ use Twig_LoaderInterface;
 
 class TwigFilesystemLoader implements Twig_LoaderInterface
 {
-
     /**
      * @var array
      */
@@ -40,6 +39,18 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
         $this->paths = $paths;
         $this->cache = $cache;
         $this->templateNameExtractor = $templateNameExtractor;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return $this
+     */
+    public function addPath($path)
+    {
+        $this->paths[] = rtrim($path, '/\\');
+
+        return $this;
     }
 
     /**
@@ -201,5 +212,4 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1' . addcslashes('-', '$') . '$2', $bundleName));
     }
-
 }

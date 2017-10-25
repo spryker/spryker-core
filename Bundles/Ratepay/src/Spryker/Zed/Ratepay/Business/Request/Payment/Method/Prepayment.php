@@ -16,7 +16,6 @@ use Spryker\Shared\Ratepay\RatepayConstants;
  */
 class Prepayment extends AbstractMethod
 {
-
     /**
      * @const Payment method code.
      */
@@ -52,5 +51,4 @@ class Prepayment extends AbstractMethod
     {
         return new RatepayPaymentPrepaymentTransfer();
     }
-
 }

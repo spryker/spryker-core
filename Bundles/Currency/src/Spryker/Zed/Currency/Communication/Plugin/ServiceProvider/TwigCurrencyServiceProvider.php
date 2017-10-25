@@ -17,7 +17,6 @@ use Twig_SimpleFunction;
  */
 class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const NO_SYMBOL_FOUND = '-';
     const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
 
@@ -96,5 +95,4 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
 
         return $this->getFacade()->getCurrent();
     }
-
 }

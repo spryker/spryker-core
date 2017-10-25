@@ -14,7 +14,6 @@ use Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConn
 
 class ProductImageExpander implements ProductImageExpanderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConnectorToProductImageInterface
      */
@@ -74,5 +73,4 @@ class ProductImageExpander implements ProductImageExpanderInterface
 
         return $imageSets[0]->getProductImages();
     }
-
 }

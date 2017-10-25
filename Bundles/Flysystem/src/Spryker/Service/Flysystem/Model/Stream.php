@@ -12,7 +12,6 @@ use Spryker\Shared\Flysystem\OperationHandler\StreamOperationHandlerTrait;
 
 class Stream implements StreamInterface
 {
-
     use StreamOperationHandlerTrait;
 
     /**
@@ -93,5 +92,4 @@ class Stream implements StreamInterface
                 ->writeStream($path, $resource, $config);
         });
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TransferConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -63,6 +62,14 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getEntityFileNamePattern()
+    {
+        return '/(.*?).(schema).xml/';
+    }
+
+    /**
      * @deprecated please use TransferConfig::getCoreSourceDirectoryGlobPatterns() instead
      *
      * @return string
@@ -108,4 +115,11 @@ class TransferConfig extends AbstractBundleConfig
         return [];
     }
 
+    /**
+     * @return array
+     */
+    public function getEntitiesSourceDirectories()
+    {
+        return [];
+    }
 }

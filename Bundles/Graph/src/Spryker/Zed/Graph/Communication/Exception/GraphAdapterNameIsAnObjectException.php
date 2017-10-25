@@ -11,7 +11,6 @@ use Exception;
 
 class GraphAdapterNameIsAnObjectException extends AbstractGraphAdapterException
 {
-
     /**
      * @param string $message
      * @param int $code
@@ -23,5 +22,4 @@ class GraphAdapterNameIsAnObjectException extends AbstractGraphAdapterException
 
         parent::__construct($message, $code, $previous);
     }
-
 }

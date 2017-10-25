@@ -13,7 +13,6 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 
 class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRICE = 'price facade';
 
     /**
@@ -29,5 +28,4 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
 
         return $container;
     }
-
 }

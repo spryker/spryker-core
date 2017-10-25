@@ -24,7 +24,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @var string
      */
@@ -211,5 +210,4 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_PLUGINS);
     }
-
 }

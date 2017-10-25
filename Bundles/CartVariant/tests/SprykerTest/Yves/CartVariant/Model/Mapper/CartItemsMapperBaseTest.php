@@ -28,7 +28,6 @@ use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
  */
 class CartItemsMapperBaseTest extends Unit
 {
-
     /**
      * @param string $jsonFileToLoad
      *
@@ -145,5 +144,4 @@ class CartItemsMapperBaseTest extends Unit
 
         return $total;
     }
-
 }

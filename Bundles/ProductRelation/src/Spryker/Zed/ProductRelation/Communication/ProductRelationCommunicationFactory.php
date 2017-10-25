@@ -28,7 +28,6 @@ use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
  */
 class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param int|null $idProductRelation
      *
@@ -178,5 +177,4 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_PRODUCT);
     }
-
 }

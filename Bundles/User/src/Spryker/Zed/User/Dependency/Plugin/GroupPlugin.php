@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\GroupsTransfer;
 
 class GroupPlugin implements GroupPluginInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\GroupsTransfer
      */
@@ -49,5 +48,4 @@ class GroupPlugin implements GroupPluginInterface
     public function removeUserFromGroup($idUser, $idGroup)
     {
     }
-
 }

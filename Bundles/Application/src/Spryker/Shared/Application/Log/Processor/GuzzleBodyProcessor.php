@@ -12,7 +12,6 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 class GuzzleBodyProcessor
 {
-
     const EXTRA = 'guzzle-body';
     const RECORD_CONTEXT = 'context';
     const RECORD_EXTRA = 'extra';
@@ -102,5 +101,4 @@ class GuzzleBodyProcessor
 
         return (json_last_error() === JSON_ERROR_NONE);
     }
-
 }

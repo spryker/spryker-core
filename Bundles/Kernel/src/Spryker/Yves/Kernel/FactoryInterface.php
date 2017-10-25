@@ -9,12 +9,10 @@ namespace Spryker\Yves\Kernel;
 
 interface FactoryInterface
 {
-
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return $this
      */
     public function setContainer(Container $container);
-
 }

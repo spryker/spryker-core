@@ -9,8 +9,6 @@ namespace Spryker\Shared\Queue;
 
 interface QueueConfig
 {
-
     const CONFIG_QUEUE_ADAPTER = 'queue_adapter';
     const CONFIG_MAX_WORKER_NUMBER = 'max_worker_number';
-
 }

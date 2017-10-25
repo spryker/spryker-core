@@ -21,7 +21,6 @@ use SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractRequest;
  */
 class AbstractRequestTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class AbstractRequestTest extends Unit
 
         $this->assertInstanceOf('Spryker\Shared\Kernel\Transfer\AbstractTransfer', $abstractRequest->getTransfer());
     }
-
 }

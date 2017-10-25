@@ -23,7 +23,6 @@ use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 
 class Group implements GroupInterface
 {
-
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
      */
@@ -395,5 +394,4 @@ class Group implements GroupInterface
             throw new GroupNotFoundException();
         }
     }
-
 }
