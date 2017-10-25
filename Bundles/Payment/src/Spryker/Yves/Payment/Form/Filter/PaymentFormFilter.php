@@ -43,6 +43,7 @@ class PaymentFormFilter
 
         $availableMethods = $this->paymentClient->getAvailableMethods($data);
 
+        //todo: use just remove function instead of re-creation
         $collection = new SubFormPluginCollection();
 
         foreach ($formPluginCollection as $formPlugin) {

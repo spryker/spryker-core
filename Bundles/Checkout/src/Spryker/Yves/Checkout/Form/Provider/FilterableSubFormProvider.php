@@ -8,11 +8,11 @@
 namespace Spryker\Yves\Checkout\Form\Provider;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
 class FilterableSubFormProvider
 {
-
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
@@ -21,7 +21,12 @@ class FilterableSubFormProvider
     /**
      * @var \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
      */
-    protected $subFormFilters;
+    protected $subFormFilterPlugins;
+
+    /**
+     * @var DataContainerInterface
+     */
+    protected $dataContainer;
 
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection|null
@@ -30,41 +35,43 @@ class FilterableSubFormProvider
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subFormPlugins
-     * @param \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[] $subFormFilters
+     * @param \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[] $subFormFilterPlugins
+     * @param DataContainerInterface $dataContainer
      */
-    public function __construct(SubFormPluginCollection $subFormPlugins, array $subFormFilters)
-    {
+    public function __construct(
+        SubFormPluginCollection $subFormPlugins,
+        array $subFormFilterPlugins,
+        DataContainerInterface $dataContainer
+    ) {
         $this->subFormPlugins = $subFormPlugins;
-        $this->subFormFilters = $subFormFilters;
+        $this->subFormFilterPlugins = $subFormFilterPlugins;
+        $this->dataContainer = $dataContainer;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
-    public function getSubForms(AbstractTransfer $dataTransfer)
+    public function getSubForms()
     {
         if (!$this->filteredSubFormPlugins) {
-            $this->filteredSubFormPlugins = $this->applyFilters($dataTransfer);
+            $this->filteredSubFormPlugins = $this->applyFilters();
         }
 
         return $this->filteredSubFormPlugins;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
-    protected function applyFilters(AbstractTransfer $data)
+    protected function applyFilters()
     {
-        $filteredSubFormPlugins = $this->subFormPlugins;
-        foreach ($this->subFormFilters as $filter) {
-            $filteredSubFormPlugins = $filter->filter($filteredSubFormPlugins, $data);
+        $dataTransfer = $this->dataContainer->get();
+        $filteredSubFormPlugins = clone $this->subFormPlugins;
+
+        foreach ($this->subFormFilterPlugins as $filter) {
+            $filteredSubFormPlugins = $filter->filter($filteredSubFormPlugins, $dataTransfer);
         }
 
         return $filteredSubFormPlugins;
     }
-
 }

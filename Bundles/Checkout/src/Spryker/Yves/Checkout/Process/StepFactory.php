@@ -36,7 +36,7 @@ class StepFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Checkout\DataContainer\DataContainer
      */
-    protected function createDataContainer()
+    public function createDataContainer()
     {
         return new DataContainer($this->getQuoteClient());
     }

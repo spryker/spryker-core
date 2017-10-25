@@ -37,6 +37,7 @@ class FormFactoryTest extends Unit
         $formFactory = new FormFactory();
         $formFactory->setContainer($container);
 
+        $this->assertSame(self::SUB_FORMS, $formFactory->getPaymentMethodSubFormPluginCollection());
         $this->assertSame(self::SUB_FORMS, $formFactory->getPaymentMethodSubForms());
     }
 }

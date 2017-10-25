@@ -14,18 +14,17 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
 class SubFormDataProviders implements StepEngineFormDataProviderInterface
 {
+    /**
+     * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     */
+    protected $subFormPlugins;
 
     /**
-     * @var \Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subFormPlugins
      */
-    protected $subFormProvider;
-
-    /**
-     * @param \Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider $subFormProvider
-     */
-    public function __construct(FilterableSubFormProvider $subFormProvider)
+    public function __construct(SubFormPluginCollection $subFormPlugins)
     {
-        $this->subFormProvider = $subFormProvider;
+        $this->subFormPlugins = $subFormPlugins;
     }
 
     /**
@@ -35,18 +34,7 @@ class SubFormDataProviders implements StepEngineFormDataProviderInterface
      */
     public function getData(AbstractTransfer $quoteTransfer)
     {
-        return $this->getDataFromPlugins($this->subFormProvider->getSubForms($quoteTransfer), $quoteTransfer);
-    }
-
-    /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $formPluginCollection
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    protected function getDataFromPlugins(SubFormPluginCollection $formPluginCollection, AbstractTransfer $quoteTransfer)
-    {
-        foreach ($formPluginCollection as $subForm) {
+        foreach ($this->subFormPlugins as $subForm) {
             $quoteTransfer = $subForm->createSubFormDataProvider()->getData($quoteTransfer);
         }
 
@@ -60,19 +48,8 @@ class SubFormDataProviders implements StepEngineFormDataProviderInterface
      */
     public function getOptions(AbstractTransfer $quoteTransfer)
     {
-        return $this->getOptionsFromPlugins($this->subFormProvider->getSubForms($quoteTransfer), $quoteTransfer);
-    }
-
-    /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $formPluginCollection
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getOptionsFromPlugins(SubFormPluginCollection $formPluginCollection, AbstractTransfer $quoteTransfer)
-    {
         $options = [];
-        foreach ($formPluginCollection as $subForm) {
+        foreach ($this->subFormPlugins as $subForm) {
             $options = array_merge(
                 $options,
                 $subForm->createSubFormDataProvider()->getOptions($quoteTransfer)
@@ -83,5 +60,4 @@ class SubFormDataProviders implements StepEngineFormDataProviderInterface
             SubFormInterface::OPTIONS_FIELD_NAME => $options,
         ];
     }
-
 }

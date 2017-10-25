@@ -7,30 +7,47 @@
 
 namespace Spryker\Yves\Checkout\Form;
 
+use Pyz\Yves\Checkout\Form\Steps\PaymentForm;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
+use Spryker\Yves\Checkout\DataContainer\DataContainer;
 use Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider;
 use Spryker\Yves\Checkout\Form\Provider\SubFormDataProviders;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
+use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 
 class FormFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
-    protected function createPaymentMethodSubFormProvider()
+    public function getPaymentMethodSubFormPluginCollection()
     {
-        return new FilterableSubFormProvider(
-            $this->getPaymentMethodSubForms(),
-            $this->getMethodFormFilters()
-        );
+        return $this->getProvidedDependency(CheckoutDependencyProvider::PAYMENT_SUB_FORMS);
     }
 
     /**
+     * @deprecated Use getPaymentMethodSubFormPluginCollection instead.
+     * Will be removed in the next major release.
+     *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
     public function getPaymentMethodSubForms()
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::PAYMENT_SUB_FORMS);
+        return $this->getPaymentMethodSubFormPluginCollection();
+    }
+
+    /**
+     * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
+     */
+    public function createPaymentFormCollection()
+    {
+        $subFormCollection = $this->createPaymentSubFormFilter()->getSubForms();
+        $paymentFormType = $this->createPaymentForm($subFormCollection);
+        $subFormDataProvider = $this->createSubFormDataProvider($subFormCollection);
+
+        return $this->createSubFormCollection($paymentFormType, $subFormDataProvider);
     }
 
     /**
@@ -42,12 +59,56 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider $subFormProvider
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subForms
      *
-     * @return \Spryker\Yves\Checkout\Form\Provider\SubFormDataProviders
+     * @return \Pyz\Yves\Checkout\Form\Steps\PaymentForm
      */
-    protected function createSubFormDataProvider(FilterableSubFormProvider $subFormProvider)
+    protected function createPaymentForm(SubFormPluginCollection $subForms)
+    {
+        return new PaymentForm($subForms);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormTypeInterface $formType
+     * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface $dataProvider
+     *
+     * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
+     */
+    protected function createSubFormCollection($formType, StepEngineFormDataProviderInterface $dataProvider)
+    {
+        return new FormCollectionHandler([$formType], $this->getFormFactory(), $dataProvider);
+    }
+
+    /**
+     * @return FilterableSubFormProvider
+     */
+    public function createPaymentSubFormFilter()
+    {
+        return new FilterableSubFormProvider(
+            $this->getPaymentMethodSubFormPluginCollection(),
+            $this->getMethodFormFilters(),
+            $this->createDataContainer()
+        );
+    }
+
+    protected function createSubFormDataProvider($subFormProvider)
     {
         return new SubFormDataProviders($subFormProvider);
+    }
+
+    /**
+     * @return \Spryker\Yves\Checkout\DataContainer\DataContainer
+     */
+    protected function createDataContainer()
+    {
+        return new DataContainer($this->getQuoteClient());
+    }
+
+    /**
+     * @return \Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
+     */
+    protected function getQuoteClient()
+    {
+        return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_QUOTE);
     }
 }

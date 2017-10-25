@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
-use Spryker\Yves\StepEngine\Form\FormCollectionHandlerProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -59,23 +58,6 @@ class StepEngine implements StepEngineInterface
     public function process(Request $request, FormCollectionHandlerInterface $formCollection = null)
     {
         $dataTransfer = $this->dataContainer->get();
-        $response = $this->runProcess($request, $dataTransfer, $formCollection);
-
-        return $response;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerProviderInterface $formCollectionHandlerProvider
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function processProvided(
-        Request $request,
-        FormCollectionHandlerProviderInterface $formCollectionHandlerProvider
-    ) {
-        $dataTransfer = $this->dataContainer->get();
-        $formCollection = $formCollectionHandlerProvider->provideFormCollectionHandler($dataTransfer);
         $response = $this->runProcess($request, $dataTransfer, $formCollection);
 
         return $response;
