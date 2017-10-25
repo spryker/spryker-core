@@ -9,7 +9,6 @@ namespace Spryker\Zed\GiftCard\Persistence;
 
 interface GiftCardQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -88,5 +87,4 @@ interface GiftCardQueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCardQuery
      */
     public function queryGiftCardOrderItemMetadata($idSalesOrderItem);
-
 }

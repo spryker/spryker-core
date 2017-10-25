@@ -12,7 +12,6 @@ use Spryker\Yves\Nopayment\Handler\NopaymentHandler;
 
 class NopaymentFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\Nopayment\Handler\NopaymentHandler
      */
@@ -20,5 +19,4 @@ class NopaymentFactory extends AbstractFactory
     {
         return new NopaymentHandler();
     }
-
 }

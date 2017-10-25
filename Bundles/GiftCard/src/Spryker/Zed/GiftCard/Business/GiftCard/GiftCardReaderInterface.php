@@ -9,7 +9,6 @@ namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
 interface GiftCardReaderInterface
 {
-
     /**
      * @param int $idGiftCard
      *
@@ -74,5 +73,4 @@ interface GiftCardReaderInterface
      * @return \ArrayObject|\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
      */
     public function getGiftCardPaymentsForOrder($idSalesOrder);
-
 }

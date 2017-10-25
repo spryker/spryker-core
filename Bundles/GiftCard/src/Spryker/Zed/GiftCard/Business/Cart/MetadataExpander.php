@@ -14,7 +14,6 @@ use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 
 class MetadataExpander implements MetadataExpanderInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
@@ -68,5 +67,4 @@ class MetadataExpander implements MetadataExpanderInterface
 
         return $metadata;
     }
-
 }

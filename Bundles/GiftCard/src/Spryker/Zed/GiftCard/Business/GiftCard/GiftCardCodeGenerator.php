@@ -11,7 +11,6 @@ use Spryker\Zed\GiftCard\GiftCardConfig;
 
 class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCard\GiftCardConfig
      */
@@ -127,5 +126,4 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
 
         return true;
     }
-
 }

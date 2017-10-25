@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ShipmentMethodFilterPluginInterface
 {
-
     /**
      * @api
      *
@@ -22,5 +21,4 @@ interface ShipmentMethodFilterPluginInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer);
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 
 interface GiftCardDiscountableItemFilterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
      * @return \Generated\Shared\Transfer\CollectedDiscountTransfer
      */
     public function filterGiftCardDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer);
-
 }

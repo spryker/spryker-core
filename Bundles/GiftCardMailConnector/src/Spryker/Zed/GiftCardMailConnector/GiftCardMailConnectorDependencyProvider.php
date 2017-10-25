@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 
 class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const MAIL_FACADE = 'MAIL_FACADE';
     const CUSTOMER_FACADE = 'CUSTOMER_FACADE';
     const GIFT_CARD_QUERY_CONTAINER = 'GIFT_CARD_QUERY_CONTAINER';
@@ -75,5 +74,4 @@ class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyPr
 
         return $container;
     }
-
 }

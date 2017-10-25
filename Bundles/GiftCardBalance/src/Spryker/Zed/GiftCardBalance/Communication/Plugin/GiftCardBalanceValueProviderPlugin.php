@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GiftCardBalanceValueProviderPlugin extends AbstractPlugin implements GiftCardValueProviderPluginInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ class GiftCardBalanceValueProviderPlugin extends AbstractPlugin implements GiftC
     {
         return $this->getFacade()->getRemainingValue($giftCardTransfer);
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class GiftCardDecisionRuleChecker implements GiftCardDecisionRuleCheckerInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface[]
      */
@@ -38,10 +37,8 @@ class GiftCardDecisionRuleChecker implements GiftCardDecisionRuleCheckerInterfac
             if (!$giftCardDecisionRulePlugin->isApplicable($giftCardTransfer, $quoteTransfer)) {
                 return false;
             }
-
         }
 
         return true;
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GiftCardOrderItemSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
-
     /**
      * This plugin retrieves (its) data from the quote object and saves it to the database.
      *
@@ -33,5 +32,4 @@ class GiftCardOrderItemSaverPlugin extends AbstractPlugin implements CheckoutSav
     {
         $this->getFacade()->saveSalesOrderGiftCardItems($quoteTransfer, $checkoutResponse);
     }
-
 }

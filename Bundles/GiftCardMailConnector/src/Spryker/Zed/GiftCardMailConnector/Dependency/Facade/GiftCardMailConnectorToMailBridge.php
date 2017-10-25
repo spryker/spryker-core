@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 class GiftCardMailConnectorToMailBridge implements GiftCardMailConnectorToMailInterface
 {
-
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
@@ -34,5 +33,4 @@ class GiftCardMailConnectorToMailBridge implements GiftCardMailConnectorToMailIn
     {
         $this->mailFacade->handleMail($mailTransfer);
     }
-
 }

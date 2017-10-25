@@ -9,12 +9,10 @@ namespace Spryker\Zed\GiftCardMailConnector\Dependency\Facade;
 
 interface GiftCardMailConnectorToCustomerInterface
 {
-
     /**
      * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference);
-
 }

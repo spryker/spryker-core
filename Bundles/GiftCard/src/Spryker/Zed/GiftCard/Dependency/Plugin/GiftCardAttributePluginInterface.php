@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 interface GiftCardAttributePluginInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface GiftCardAttributePluginInterface
      * @return array
      */
     public function getAttributes(ItemTransfer $itemTransfer);
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\GiftCard\Business\Exception\GiftCardMissingCodeException;
 
 class GiftCardCreator implements GiftCardCreatorInterface
 {
-
     const ATTRIBUTES = 'attributes';
 
     /**
@@ -187,5 +186,4 @@ class GiftCardCreator implements GiftCardCreatorInterface
 
         return $this->giftCardCodeGenerator->generateGiftCardCode($giftCardOrderItemMetadata->getPattern());
     }
-
 }

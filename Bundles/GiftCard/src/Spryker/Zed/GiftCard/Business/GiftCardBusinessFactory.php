@@ -29,7 +29,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class GiftCardBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
@@ -202,5 +201,4 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodFilter();
     }
-
 }

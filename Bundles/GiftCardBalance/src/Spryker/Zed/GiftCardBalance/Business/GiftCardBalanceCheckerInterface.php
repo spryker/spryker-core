@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 
 interface GiftCardBalanceCheckerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
@@ -25,5 +24,4 @@ interface GiftCardBalanceCheckerInterface
      * @return int
      */
     public function getRemainingValue(GiftCardTransfer $giftCardTransfer);
-
 }

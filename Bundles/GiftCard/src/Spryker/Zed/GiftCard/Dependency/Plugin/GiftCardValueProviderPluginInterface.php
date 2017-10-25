@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 
 interface GiftCardValueProviderPluginInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface GiftCardValueProviderPluginInterface
      * @return int
      */
     public function getValue(GiftCardTransfer $giftCardTransfer);
-
 }

@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface GiftCardFacadeInterface
 {
-
     /**
      * @api
      *
@@ -148,5 +147,4 @@ interface GiftCardFacadeInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer);
-
 }

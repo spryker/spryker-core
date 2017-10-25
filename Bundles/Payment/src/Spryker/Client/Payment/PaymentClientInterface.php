@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PaymentClientInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface PaymentClientInterface
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
-
 }

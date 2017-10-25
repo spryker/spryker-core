@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -119,5 +118,4 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
 
         return $salesOrderGiftCardEntity;
     }
-
 }

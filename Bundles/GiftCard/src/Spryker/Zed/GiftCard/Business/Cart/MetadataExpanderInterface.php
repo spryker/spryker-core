@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface MetadataExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandGiftCardMetadata(CartChangeTransfer $cartChangeTransfer);
-
 }

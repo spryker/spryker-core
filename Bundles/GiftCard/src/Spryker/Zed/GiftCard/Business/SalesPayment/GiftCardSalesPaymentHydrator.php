@@ -14,7 +14,6 @@ use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
 
 class GiftCardSalesPaymentHydrator
 {
-
     /**
      * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface
      */
@@ -58,5 +57,4 @@ class GiftCardSalesPaymentHydrator
     {
         return $this->giftCardQueryContainer->queryPaymentGiftCardsForIdSalesPayment($paymentTransfer->getIdSalesPayment())->findOne();
     }
-
 }

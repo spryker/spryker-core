@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 class PaymentCalculator implements PaymentCalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -62,5 +61,4 @@ class PaymentCalculator implements PaymentCalculatorInterface
 
         return $result;
     }
-
 }

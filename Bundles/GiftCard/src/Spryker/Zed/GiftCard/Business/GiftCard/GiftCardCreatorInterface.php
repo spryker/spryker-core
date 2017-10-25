@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 
 interface GiftCardCreatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
@@ -25,5 +24,4 @@ interface GiftCardCreatorInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
     public function createGiftCardForOrderItem($idSalesOrderItem);
-
 }

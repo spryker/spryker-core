@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Checkout\Form\Provider;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
@@ -24,7 +23,7 @@ class FilterableSubFormProvider
     protected $subFormFilterPlugins;
 
     /**
-     * @var DataContainerInterface
+     * @var \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
     protected $dataContainer;
 
@@ -36,7 +35,7 @@ class FilterableSubFormProvider
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subFormPlugins
      * @param \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[] $subFormFilterPlugins
-     * @param DataContainerInterface $dataContainer
+     * @param \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface $dataContainer
      */
     public function __construct(
         SubFormPluginCollection $subFormPlugins,

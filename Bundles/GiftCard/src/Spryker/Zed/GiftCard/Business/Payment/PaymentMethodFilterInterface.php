@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PaymentMethodFilterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -20,5 +19,4 @@ interface PaymentMethodFilterInterface
      * @return \ArrayObject
      */
     public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer);
-
 }

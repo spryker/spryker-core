@@ -18,7 +18,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
  */
 class GiftCardPreCheckPlugin extends AbstractPlugin implements CheckoutPluginInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class GiftCardPreCheckPlugin extends AbstractPlugin implements CheckoutPluginInt
     {
         $this->getFacade()->precheckSalesOrderGiftCards($quoteTransfer, $checkoutResponse);
     }
-
 }

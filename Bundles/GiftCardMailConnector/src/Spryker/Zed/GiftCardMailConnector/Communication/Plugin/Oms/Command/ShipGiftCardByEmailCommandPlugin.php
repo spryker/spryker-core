@@ -18,7 +18,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
  */
 class ShipGiftCardByEmailCommandPlugin extends AbstractPlugin implements CommandByItemInterface
 {
-
     /**
      *
      * Command which is executed per order item basis
@@ -36,5 +35,4 @@ class ShipGiftCardByEmailCommandPlugin extends AbstractPlugin implements Command
 
         return [];
     }
-
 }

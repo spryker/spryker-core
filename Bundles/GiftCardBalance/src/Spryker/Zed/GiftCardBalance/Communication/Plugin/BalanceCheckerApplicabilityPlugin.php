@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class BalanceCheckerApplicabilityPlugin extends AbstractPlugin implements GiftCardDecisionRulePluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class BalanceCheckerApplicabilityPlugin extends AbstractPlugin implements GiftCa
     {
         return $this->getFacade()->hasPositiveBalance($giftCardTransfer);
     }
-
 }

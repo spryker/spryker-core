@@ -12,7 +12,6 @@ use Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterfa
 
 class GiftCardBalanceChecker implements GiftCardBalanceCheckerInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface
      */
@@ -64,5 +63,4 @@ class GiftCardBalanceChecker implements GiftCardBalanceCheckerInterface
 
         return $giftCardTransfer->getValue() - $transactionLogBalanceSum;
     }
-
 }

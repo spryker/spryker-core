@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
 class PaymentFormFilter
 {
-
     /**
      * @var \Spryker\Client\Payment\PaymentClientInterface
      */
@@ -73,5 +72,4 @@ class PaymentFormFilter
 
         return false;
     }
-
 }

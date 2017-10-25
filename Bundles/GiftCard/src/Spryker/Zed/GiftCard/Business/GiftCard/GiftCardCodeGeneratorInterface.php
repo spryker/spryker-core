@@ -9,12 +9,10 @@ namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
 interface GiftCardCodeGeneratorInterface
 {
-
     /**
      * @param string $pattern
      *
      * @return string
      */
     public function generateGiftCardCode($pattern);
-
 }

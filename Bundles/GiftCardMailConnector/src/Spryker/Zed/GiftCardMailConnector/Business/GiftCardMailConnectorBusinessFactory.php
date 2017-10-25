@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\GiftCardMailConnector\Business\Carrier\GiftCardCarrierInterface
      */
@@ -52,5 +51,4 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(GiftCardMailConnectorDependencyProvider::GIFT_CARD_QUERY_CONTAINER);
     }
-
 }

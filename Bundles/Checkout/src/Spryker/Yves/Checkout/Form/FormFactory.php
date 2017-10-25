@@ -80,7 +80,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return FilterableSubFormProvider
+     * @return \Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider
      */
     public function createPaymentSubFormFilter()
     {

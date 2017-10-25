@@ -20,7 +20,6 @@ use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
 
 class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
@@ -136,5 +135,4 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
 
         return $result;
     }
-
 }

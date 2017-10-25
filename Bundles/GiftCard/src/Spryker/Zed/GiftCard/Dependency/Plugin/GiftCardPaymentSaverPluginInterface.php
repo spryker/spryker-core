@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PaymentTransfer;
 
 interface GiftCardPaymentSaverPluginInterface
 {
-
     /**
      * @api
      *
@@ -22,5 +21,4 @@ interface GiftCardPaymentSaverPluginInterface
      * @return void
      */
     public function savePayment(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

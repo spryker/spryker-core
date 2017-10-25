@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class GiftCardBalancePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLogQuery
      */
@@ -24,5 +23,4 @@ class GiftCardBalancePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyGiftCardBalanceLogQuery::create();
     }
-
 }

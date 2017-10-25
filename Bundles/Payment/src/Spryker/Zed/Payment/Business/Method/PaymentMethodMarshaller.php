@@ -15,7 +15,6 @@ use Spryker\Zed\Payment\PaymentConfig;
 
 class PaymentMethodMarshaller
 {
-
     /**
      * @var \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
      */
@@ -85,5 +84,4 @@ class PaymentMethodMarshaller
 
         return $paymentMethodTransfer;
     }
-
 }

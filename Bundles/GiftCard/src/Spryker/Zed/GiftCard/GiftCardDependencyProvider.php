@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 
 class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
     const ATTRIBUTE_PROVIDER_PLUGINS = 'ATTRIBUTE_PROVIDER_PLUGINS';
     const GIFT_CARD_DECISION_RULE_PLUGINS = 'GIFT_CARD_DECISION_RULE_PLUGINS';
@@ -150,5 +149,4 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
             new GiftCardIsUsedDecisionRulePlugin(),
         ];
     }
-
 }

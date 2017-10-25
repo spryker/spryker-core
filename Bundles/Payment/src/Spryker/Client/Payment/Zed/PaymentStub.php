@@ -12,7 +12,6 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class PaymentStub implements PaymentStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -35,5 +34,4 @@ class PaymentStub implements PaymentStubInterface
     {
         return $this->zedStub->call('/payment/gateway/get-available-methods', $quoteTransfer, null, true);
     }
-
 }

@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 {
-
     /**
      * @api
      *
@@ -206,5 +205,4 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     {
         return $this->getFactory()->createShipmentMethodFilter()->filterShipmentMethods($shipmentMethods, $quoteTransfer);
     }
-
 }

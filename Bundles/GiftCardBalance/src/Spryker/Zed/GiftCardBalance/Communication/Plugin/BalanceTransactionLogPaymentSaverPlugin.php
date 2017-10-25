@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class BalanceTransactionLogPaymentSaverPlugin extends AbstractPlugin implements GiftCardPaymentSaverPluginInterface
 {
-
     /**
      * @api
      *
@@ -42,5 +41,4 @@ class BalanceTransactionLogPaymentSaverPlugin extends AbstractPlugin implements 
     {
         $this->getFacade()->saveTransactionLog($paymentTransfer, $checkoutResponse);
     }
-
 }

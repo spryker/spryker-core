@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class GiftCardBalanceFacade extends AbstractFacade implements GiftCardBalanceFacadeInterface
 {
-
     /**
      * @api
      *
@@ -54,5 +53,4 @@ class GiftCardBalanceFacade extends AbstractFacade implements GiftCardBalanceFac
     {
         $this->getFactory()->createGiftCardBalanceSaver()->saveTransactionLog($paymentTransfer, $checkoutResponse);
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
 
 class GiftCardReader implements GiftCardReaderInterface
 {
-
     const ATTRIBUTES = 'attributes';
 
     /**
@@ -251,5 +250,4 @@ class GiftCardReader implements GiftCardReaderInterface
 
         return $result;
     }
-
 }

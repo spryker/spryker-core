@@ -9,9 +9,7 @@ namespace Spryker\Shared\GiftCard;
 
 interface GiftCardConstants
 {
-
     const PROVIDER_NAME = 'GiftCard';
     const ERROR_GIFT_CARD_ALREADY_USED = 407;
     const ERROR_GIFT_CARD_AMOUNT_TOO_HIGH = 408;
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceCheckerInterface
      */
@@ -33,5 +32,4 @@ class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
     {
         return new GiftCardBalanceSaver();
     }
-
 }

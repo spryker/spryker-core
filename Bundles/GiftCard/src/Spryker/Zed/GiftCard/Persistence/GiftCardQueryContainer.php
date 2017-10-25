@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -159,5 +158,4 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
             ->createSpySalesOrderItemGiftCardQuery()
             ->filterByFkSalesOrderItem($idSalesOrderItem);
     }
-
 }

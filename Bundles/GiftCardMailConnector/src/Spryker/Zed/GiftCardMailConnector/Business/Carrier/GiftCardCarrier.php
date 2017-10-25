@@ -19,7 +19,6 @@ use Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConn
 
 class GiftCardCarrier implements GiftCardCarrierInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface
      */
@@ -148,5 +147,4 @@ class GiftCardCarrier implements GiftCardCarrierInterface
 
         return $giftCardTransfer;
     }
-
 }

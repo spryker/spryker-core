@@ -22,7 +22,6 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class GiftCardFacadeTest extends Test
 {
-
     /**
      * @var \SprykerTest\Zed\GiftCard\GiftCardBusinessTester
      */
@@ -84,5 +83,4 @@ class GiftCardFacadeTest extends Test
     {
         return $this->tester->getFacade();
     }
-
 }

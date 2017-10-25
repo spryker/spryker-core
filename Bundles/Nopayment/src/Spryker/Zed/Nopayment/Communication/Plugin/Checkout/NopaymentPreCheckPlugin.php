@@ -19,7 +19,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterfa
  */
 class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
-
     const ERROR_CODE_NOPAYMENT_NOT_ALLOWED = 403;
 
     /**
@@ -41,5 +40,4 @@ class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheck
 
         return $checkoutResponseTransfer;
     }
-
 }

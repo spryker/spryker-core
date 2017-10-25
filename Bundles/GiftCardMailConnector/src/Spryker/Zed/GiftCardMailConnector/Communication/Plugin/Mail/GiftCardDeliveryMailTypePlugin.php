@@ -17,7 +17,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-
     const MAIL_TYPE = 'gift card delivery mail';
 
     /**
@@ -109,5 +108,4 @@ class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypeP
 
         return $this;
     }
-
 }

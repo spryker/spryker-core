@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class GiftCardMailConnectorFacade extends AbstractFacade implements GiftCardMailConnectorFacadeInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class GiftCardMailConnectorFacade extends AbstractFacade implements GiftCardMail
             ->createGiftCardCarrier()
             ->deliverByIdSalesOrderItem($idSalesOrderItem);
     }
-
 }

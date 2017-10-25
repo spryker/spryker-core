@@ -9,7 +9,5 @@ namespace Spryker\Shared\Payment;
 
 interface PaymentConstants
 {
-
     const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
-
 }

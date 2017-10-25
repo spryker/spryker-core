@@ -18,7 +18,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInter
  */
 class GiftCardPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,5 +28,4 @@ class GiftCardPaymentMethodFilterPlugin extends AbstractPlugin implements Paymen
     {
         return $this->getFacade()->filterPaymentMethods($paymentMethods, $quoteTransfer);
     }
-
 }

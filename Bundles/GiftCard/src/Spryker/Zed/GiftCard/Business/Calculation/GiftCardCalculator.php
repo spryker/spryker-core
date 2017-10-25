@@ -19,7 +19,6 @@ use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
 
 class GiftCardCalculator implements GiftCardCalculatorInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
@@ -230,5 +229,4 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
 
         $calculableObjectTransfer->setPayments(new ArrayObject($payments));
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Nopayment\NopaymentConfig;
 
 class NopaymentMethodFilter
 {
-
     /**
      * @var \Spryker\Zed\Nopayment\NopaymentConfig
      */
@@ -85,5 +84,4 @@ class NopaymentMethodFilter
 
         return $allowedMethods;
     }
-
 }

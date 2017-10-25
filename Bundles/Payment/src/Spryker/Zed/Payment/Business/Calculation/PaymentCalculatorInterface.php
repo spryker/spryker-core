@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 
 interface PaymentCalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
     public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer);
-
 }

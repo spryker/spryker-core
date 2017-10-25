@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class IndexController extends AbstractController
 {
-
     /**
      * @throws \Exception
      *
@@ -39,5 +38,4 @@ class IndexController extends AbstractController
         //TODO implement
         throw new Exception('not implemented');
     }
-
 }

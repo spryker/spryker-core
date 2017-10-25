@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GiftCardDiscountableItemFilterPlugin extends AbstractPlugin implements DiscountableItemFilterPluginInterface
 {
-
     /**
      * Specification:
      *
@@ -34,5 +33,4 @@ class GiftCardDiscountableItemFilterPlugin extends AbstractPlugin implements Dis
     {
         return $this->getFacade()->filterGiftCardDiscountableItems($collectedDiscountTransfer);
     }
-
 }

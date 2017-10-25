@@ -13,7 +13,6 @@ use Spryker\Shared\Nopayment\NopaymentConfig;
 
 class NopaymentHandler
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -32,5 +31,4 @@ class NopaymentHandler
 
         return $quoteTransfer;
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PaymentTransfer;
 
 interface GiftCardBalanceSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -20,5 +19,4 @@ interface GiftCardBalanceSaverInterface
      * @return void
      */
     public function saveTransactionLog(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
 }

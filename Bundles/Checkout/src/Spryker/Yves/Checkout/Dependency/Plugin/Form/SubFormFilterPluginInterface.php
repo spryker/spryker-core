@@ -12,7 +12,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
 interface SubFormFilterPluginInterface
 {
-
     /**
      * @api
      *
@@ -22,5 +21,4 @@ interface SubFormFilterPluginInterface
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
      */
     public function filter(SubFormPluginCollection $formPluginCollection, AbstractTransfer $data);
-
 }

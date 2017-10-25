@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface GiftCardDecisionRulePluginInterface
 {
-
     /**
      * @api
      *
@@ -22,5 +21,4 @@ interface GiftCardDecisionRulePluginInterface
      * @return bool
      */
     public function isApplicable(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer);
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class GiftCardReplacer implements GiftCardReplacerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -94,5 +93,4 @@ class GiftCardReplacer implements GiftCardReplacerInterface
             }
         }
     }
-
 }

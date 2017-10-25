@@ -15,7 +15,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class PaymentClient extends AbstractClient implements PaymentClientInterface
 {
-
     /**
      * @api
      *
@@ -27,5 +26,4 @@ class PaymentClient extends AbstractClient implements PaymentClientInterface
     {
         return $this->getFactory()->createZedStub()->getAvailableMethods($quoteTransfer);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NopaymentConfig extends AbstractBundleConfig
 {
-
     /**
      * @return array
      */
@@ -40,8 +39,7 @@ class NopaymentConfig extends AbstractBundleConfig
     protected function getNopaymentMethodsDefaults()
     {
         return [
-            NopaymentNopaymentConfig::PAYMENT_PROVIDER_NAME
+            NopaymentNopaymentConfig::PAYMENT_PROVIDER_NAME,
         ];
     }
-
 }

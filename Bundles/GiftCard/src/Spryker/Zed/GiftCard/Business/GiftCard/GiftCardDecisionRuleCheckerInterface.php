@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface GiftCardDecisionRuleCheckerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -20,5 +19,4 @@ interface GiftCardDecisionRuleCheckerInterface
      * @return bool
      */
     public function isApplicable(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer);
-
 }

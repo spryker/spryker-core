@@ -15,7 +15,6 @@ use Spryker\Yves\Payment\Form\Filter\PaymentFormFilter;
  */
 class PaymentFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\Payment\Form\Filter\PaymentFormFilter
      */
@@ -25,5 +24,4 @@ class PaymentFactory extends AbstractFactory
             $this->getClient()
         );
     }
-
 }

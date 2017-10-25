@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class SalesOrderItemSaver implements SalesOrderItemSaverInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -112,5 +111,4 @@ class SalesOrderItemSaver implements SalesOrderItemSaverInterface
 
         return $attributes;
     }
-
 }

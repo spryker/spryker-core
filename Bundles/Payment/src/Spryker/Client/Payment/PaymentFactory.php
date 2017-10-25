@@ -12,7 +12,6 @@ use Spryker\Client\Payment\Zed\PaymentStub;
 
 class PaymentFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Payment\Zed\PaymentStubInterface
      */
@@ -23,5 +22,4 @@ class PaymentFactory extends AbstractFactory
 
         return $cartStub;
     }
-
 }

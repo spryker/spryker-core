@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PaymentCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ class PaymentCalculatorPlugin extends AbstractPlugin implements CalculationPlugi
     {
         $this->getFacade()->recalculatePayments($calculableObjectTransfer);
     }
-
 }

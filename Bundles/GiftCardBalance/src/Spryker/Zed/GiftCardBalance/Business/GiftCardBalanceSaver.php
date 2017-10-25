@@ -13,7 +13,6 @@ use Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLog;
 
 class GiftCardBalanceSaver implements GiftCardBalanceSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -34,5 +33,4 @@ class GiftCardBalanceSaver implements GiftCardBalanceSaverInterface
 
         $transactionLogEntity->save();
     }
-
 }

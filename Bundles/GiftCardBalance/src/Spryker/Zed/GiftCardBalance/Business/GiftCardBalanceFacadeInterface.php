@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\PaymentTransfer;
 
 interface GiftCardBalanceFacadeInterface
 {
-
     /**
      * @api
      *
@@ -41,5 +40,4 @@ interface GiftCardBalanceFacadeInterface
      * @return void
      */
     public function saveTransactionLog(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

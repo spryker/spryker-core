@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer;
 
-use Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface;
-
 class GiftCardMailConnectorToGiftCardQueryContainerBridge implements GiftCardMailConnectorToGiftCardQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface
      */
@@ -34,5 +31,4 @@ class GiftCardMailConnectorToGiftCardQueryContainerBridge implements GiftCardMai
     {
         return $this->giftCardQueryContainer->queryGiftCardOrderItemMetadata($idSalesOrderItem);
     }
-
 }

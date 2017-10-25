@@ -9,12 +9,10 @@ namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
 interface GiftCardReplacerInterface
 {
-
     /**
      * @param int $idSalesOrder
      *
      * @return void
      */
     public function replaceGiftCards($idSalesOrder);
-
 }

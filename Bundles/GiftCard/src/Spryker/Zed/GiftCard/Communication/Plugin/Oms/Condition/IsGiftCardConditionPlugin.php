@@ -17,7 +17,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
  */
 class IsGiftCardConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class IsGiftCardConditionPlugin extends AbstractPlugin implements ConditionInter
     {
         return $this->getFacade()->isGiftCardOrderItem($orderItem->getIdSalesOrderItem());
     }
-
 }

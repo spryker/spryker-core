@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class GiftCardCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @throws \Exception
      *
@@ -28,5 +27,4 @@ class GiftCardCommunicationFactory extends AbstractCommunicationFactory
         //TODO implement
         throw new Exception('not implemented');
     }
-
 }

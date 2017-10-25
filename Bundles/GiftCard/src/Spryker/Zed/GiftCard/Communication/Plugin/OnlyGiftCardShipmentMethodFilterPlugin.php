@@ -18,7 +18,6 @@ use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
  */
 class OnlyGiftCardShipmentMethodFilterPlugin extends AbstractPlugin implements ShipmentMethodFilterPluginInterface
 {
-
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,5 +28,4 @@ class OnlyGiftCardShipmentMethodFilterPlugin extends AbstractPlugin implements S
     {
         return $this->getFacade()->filterShipmentMethods($shipmentMethods, $quoteTransfer);
     }
-
 }

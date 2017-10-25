@@ -18,7 +18,6 @@ use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInter
  */
 class PriceToPayPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class PriceToPayPaymentMethodFilterPlugin extends AbstractPlugin implements Paym
     {
         return $this->getFacade()->filterPaymentMethods($paymentMethods, $quoteTransfer);
     }
-
 }

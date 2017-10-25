@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class GiftCardBalanceQueryContainer extends AbstractQueryContainer implements GiftCardBalanceQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class GiftCardBalanceQueryContainer extends AbstractQueryContainer implements Gi
             ->filterByCode($giftCardCode)
             ->endUse();
     }
-
 }

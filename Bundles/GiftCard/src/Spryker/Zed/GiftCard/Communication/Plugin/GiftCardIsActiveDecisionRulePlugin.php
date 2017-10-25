@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GiftCardIsActiveDecisionRulePlugin extends AbstractPlugin implements GiftCardDecisionRulePluginInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class GiftCardIsActiveDecisionRulePlugin extends AbstractPlugin implements GiftC
     {
         return $giftCardTransfer->getIsActive();
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PaymentConfig extends AbstractBundleConfig
 {
-
     /**
      * @return array
      */
@@ -20,5 +19,4 @@ class PaymentConfig extends AbstractBundleConfig
     {
         return $this->get(PaymentConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING);
     }
-
 }

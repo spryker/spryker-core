@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SalesOrderPreCheckerInterface
 {
-
     /**
      * @void
      *
@@ -22,5 +21,4 @@ interface SalesOrderPreCheckerInterface
      * @return void
      */
     public function precheckSalesOrderGiftCards(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

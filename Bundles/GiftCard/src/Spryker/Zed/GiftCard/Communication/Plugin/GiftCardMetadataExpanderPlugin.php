@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GiftCardMetadataExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -27,5 +26,4 @@ class GiftCardMetadataExpanderPlugin extends AbstractPlugin implements ItemExpan
     {
         return $this->getFacade()->expandGiftCardMetadata($cartChangeTransfer);
     }
-
 }

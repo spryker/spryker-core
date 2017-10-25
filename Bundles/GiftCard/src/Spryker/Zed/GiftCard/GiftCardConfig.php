@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GiftCardConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -28,5 +27,4 @@ class GiftCardConfig extends AbstractBundleConfig
     {
         return [];
     }
-
 }

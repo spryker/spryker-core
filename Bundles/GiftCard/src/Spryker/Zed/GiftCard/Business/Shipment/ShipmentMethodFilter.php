@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ShipmentMethodFilter implements ShipmentMethodFilterInterface
 {
-
     const NO_SHIPMENT_METHOD = 'Email';
 
     /**
@@ -96,5 +95,4 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
 
         return $result;
     }
-
 }

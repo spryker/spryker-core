@@ -15,7 +15,6 @@ use Spryker\Zed\GiftCard\GiftCardConfig;
 
 class PaymentMethodFilter implements PaymentMethodFilterInterface
 {
-
     /**
      * @var \Spryker\Zed\GiftCard\GiftCardConfig
      */
@@ -110,5 +109,4 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
 
         return false;
     }
-
 }

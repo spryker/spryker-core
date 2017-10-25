@@ -9,7 +9,6 @@ namespace Spryker\Zed\GiftCardMailConnector\Dependency\Facade;
 
 class GiftCardMailConnectorToCustomerBridge implements GiftCardMailConnectorToCustomerInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
@@ -32,5 +31,4 @@ class GiftCardMailConnectorToCustomerBridge implements GiftCardMailConnectorToCu
     {
         return $this->customerFacade->findByReference($customerReference);
     }
-
 }

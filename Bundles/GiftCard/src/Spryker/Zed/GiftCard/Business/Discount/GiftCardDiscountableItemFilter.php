@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\DiscountableItemTransfer;
 
 class GiftCardDiscountableItemFilter implements GiftCardDiscountableItemFilterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
@@ -55,5 +54,4 @@ class GiftCardDiscountableItemFilter implements GiftCardDiscountableItemFilterIn
 
         return $giftCardMetadata->getIsGiftCard();
     }
-
 }

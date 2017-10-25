@@ -9,7 +9,6 @@ namespace Spryker\Zed\GiftCardMailConnector\Business;
 
 interface GiftCardMailConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Finds data about related to the order item gift card
@@ -23,5 +22,4 @@ interface GiftCardMailConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
     public function deliverGiftCardByEmail($idSalesOrderItem);
-
 }

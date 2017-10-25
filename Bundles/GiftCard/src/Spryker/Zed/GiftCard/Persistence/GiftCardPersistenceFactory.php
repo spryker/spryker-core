@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class GiftCardPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
      */
@@ -60,5 +59,4 @@ class GiftCardPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpySalesOrderItemGiftCardQuery::create();
     }
-
 }

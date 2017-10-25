@@ -12,7 +12,6 @@ use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
 
 class GiftCardRecreateValueProviderPlugin implements GiftCardValueProviderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
@@ -22,5 +21,4 @@ class GiftCardRecreateValueProviderPlugin implements GiftCardValueProviderPlugin
     {
         return $giftCardTransfer->getValue();
     }
-
 }

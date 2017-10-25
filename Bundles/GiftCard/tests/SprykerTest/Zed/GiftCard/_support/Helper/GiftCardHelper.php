@@ -12,7 +12,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class GiftCardHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -29,5 +28,4 @@ class GiftCardHelper extends Module
 
         return $giftCardTransfer;
     }
-
 }

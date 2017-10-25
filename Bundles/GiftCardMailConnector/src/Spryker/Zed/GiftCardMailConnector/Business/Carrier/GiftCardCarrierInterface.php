@@ -9,12 +9,10 @@ namespace Spryker\Zed\GiftCardMailConnector\Business\Carrier;
 
 interface GiftCardCarrierInterface
 {
-
     /**
      * @param int $idSalesOrderItem
      *
      * @return mixed
      */
     public function deliverByIdSalesOrderItem($idSalesOrderItem);
-
 }
