@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "league/flysystem": "^1.0",
-    "spryker/kernel": "^3.5.0",
-    "spryker/file-system": "^1.0.0"
+    "spryker/file-system": "^1.0.0",
+    "spryker/kernel": "^3.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
