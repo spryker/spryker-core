@@ -18,7 +18,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\ProductAttribute\\": "tests/SprykerTest/Zed/ProductAttribute/_support/Helper/"
+      "SprykerTest\\Zed\\ProductAttribute\\Helper\\": "tests/SprykerTest/Zed/ProductAttribute/_support/Helper/"
     }
   },
   "autoload-dev": {
