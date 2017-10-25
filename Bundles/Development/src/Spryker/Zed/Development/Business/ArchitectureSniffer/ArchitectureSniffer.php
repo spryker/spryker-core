@@ -72,12 +72,12 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         }
 
         $sortAlphabetically = function ($a, $b) {
-            return strcasecmp($a["name"], $b["name"]) < 0;
+            return strcasecmp($a['name'], $b['name']) < 0;
         };
         usort($rules, $sortAlphabetically);
 
         $sortPriority = function ($a, $b) {
-            return $a["priority"] - $b["priority"];
+            return $a['priority'] - $b['priority'];
         };
         usort($rules, $sortPriority);
 
