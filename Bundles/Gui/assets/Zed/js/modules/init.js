@@ -76,7 +76,7 @@ $(document).ready(function() {
     new Ibox();
 
     /* Prevent .save-submit items to be pressed twice */
-    $('.safe-submit').on('click', function () {
+    $('body').on('click', '.safe-submit', function () {
         var $item = $(this);
         var $forms = $item.parents('form');
         var isValid = true;
