@@ -2,7 +2,9 @@
 [![Build Status](https://travis-ci.org/spryker/EmailValidator.svg)](https://travis-ci.org/spryker/EmailValidator)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/EmailValidator/badge.svg)](https://coveralls.io/github/spryker/EmailValidator)
 
-{{ADD DESCRIPTION HERE}}
+EmailValidator is a wrapper module for the "egulias/email-validator" library.
+The role of this module is to improve dependency management and decoupling between modules.
+"egulias/email-validator" provides multiple commonly used email validation procedures.
 
 ## Installation
 

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/UtilValidate.svg)](https://travis-ci.org/spryker/UtilValidate)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/UtilValidate/badge.svg)](https://coveralls.io/github/spryker/UtilValidate)
 
-{{ADD DESCRIPTION HERE}}
+UtilValidate provides low level input validation functionality.
 
 ## Installation
 

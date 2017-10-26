@@ -167,7 +167,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\Customer\EmailValidator
+     * @return \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface
      */
     protected function createEmailValidator()
     {
