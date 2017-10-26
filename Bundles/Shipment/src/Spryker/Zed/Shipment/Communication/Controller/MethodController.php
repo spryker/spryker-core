@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Communication\Controller;
 
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 class MethodController extends AbstractController
 {
     const ID_METHOD_PARAMETER = 'id-method';
+
+    const MESSAGE_UPDATE_SUCCESS = 'Shipment method "%s" was updated successfully.';
+    const MESSAGE_CREATE_SUCCESS = 'Shipment method "%s" was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -33,13 +35,10 @@ class MethodController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $data = $form->getData();
-            $methodTransfer = new ShipmentMethodTransfer();
-            $methodTransfer->fromArray($data, true);
-            $this->getFacade()
-                ->createMethod($methodTransfer);
+            $shipmentMethodTransfer = $form->getData();
+            $this->getFacade()->createMethod($shipmentMethodTransfer);
 
-            $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' saved');
+            $this->addSuccessMessage(sprintf(static::MESSAGE_CREATE_SUCCESS, $shipmentMethodTransfer->getName()));
 
             return $this->redirectResponse('/shipment');
         }
@@ -66,13 +65,11 @@ class MethodController extends AbstractController
                 ->handleRequest($request);
 
             if ($form->isValid()) {
-                $data = $form->getData();
-                $methodTransfer = new ShipmentMethodTransfer();
-                $methodTransfer->fromArray($data, true);
+                $shipmentMethodTransfer = $form->getData();
 
                 $this->getFacade()
-                    ->updateMethod($methodTransfer);
-                $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' updated');
+                    ->updateMethod($shipmentMethodTransfer);
+                $this->addSuccessMessage(sprintf(static::MESSAGE_UPDATE_SUCCESS, $shipmentMethodTransfer->getName()));
 
                 return $this->redirectResponse('/shipment');
             }

@@ -104,6 +104,22 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateDiscountAmountAggregationForGenericAmount(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createDiscountAmountAggregatorForGenericAmount()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
      *
      * @return void
