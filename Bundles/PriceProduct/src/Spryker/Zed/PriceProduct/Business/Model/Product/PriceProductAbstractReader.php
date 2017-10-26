@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Business\Model;
+namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
@@ -22,7 +23,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     protected $priceProductQueryContainer;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceProductMapperInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface
      */
     protected $priceProductMapper;
 
@@ -38,7 +39,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 
     /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
-     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductMapperInterface $priceProductMapper
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      */
@@ -153,12 +154,16 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
-        $priceProductEntity = $this->priceProductQueryContainer
-            ->queryPricesForProductAbstractById($idAbstractProduct)
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder
+            ->buildCriteriaWithDefaultValues($priceTypeName);
+
+        $priceProductStoreEntity = $this->priceProductQueryContainer
+            ->queryPriceEntityForProductAbstractById($idAbstractProduct, $priceProductCriteriaTransfer)
             ->findOne();
 
-        $priceProductStore = $priceProductEntity->getPriceProductStores()->getFirst();
-
-        return $this->priceProductMapper->mapProductPriceTransfer($priceProductStore, $priceProductEntity);
+        return $this->priceProductMapper->mapProductPriceTransfer(
+            $priceProductStoreEntity,
+            $priceProductStoreEntity->getPriceProduct()
+        );
     }
 }

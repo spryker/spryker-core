@@ -34,7 +34,7 @@ class RawCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultF
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
-        $products = [    ];
+        $products = [];
         foreach ($searchResult->getResults() as $document) {
             $products[] = $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA];
         }

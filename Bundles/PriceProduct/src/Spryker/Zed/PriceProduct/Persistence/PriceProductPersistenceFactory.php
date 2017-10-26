@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -31,5 +32,13 @@ class PriceProductPersistenceFactory extends AbstractPersistenceFactory
     public function createPriceProductQuery()
     {
         return SpyPriceProductQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    public function createPriceProductStoreQuery()
+    {
+        return SpyPriceProductStoreQuery::create();
     }
 }

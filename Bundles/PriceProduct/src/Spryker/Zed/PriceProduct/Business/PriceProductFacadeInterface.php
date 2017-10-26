@@ -135,11 +135,11 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
      * Specification:

@@ -10,10 +10,10 @@ namespace Spryker\Zed\PriceProduct\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
-use Spryker\Zed\PriceProduct\Business\Model\PriceProductAbstractReader;
-use Spryker\Zed\PriceProduct\Business\Model\PriceProductConcreteReader;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReader;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReader;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
-use Spryker\Zed\PriceProduct\Business\Model\PriceProductMapper;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeMapper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReader;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
@@ -51,7 +51,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getConfig(),
             $this->getProductFacade(),
-            $this->createPriceTypeReader()
+            $this->createPriceTypeReader(),
+            $this->createPriceProductMapper()
         );
     }
 
@@ -65,7 +66,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getConfig(),
             $this->getProductFacade(),
-            $this->createPriceTypeReader()
+            $this->createPriceTypeReader(),
+            $this->createPriceProductMapper()
         );
     }
 
@@ -82,7 +84,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductMapperInterface
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface
      */
     public function createPriceProductMapper()
     {
@@ -98,7 +100,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductAbstractReaderInterface
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface
      */
     public function createPriceProductAbstractReader()
     {
@@ -124,7 +126,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductConcreteReaderInterface
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface
      */
     public function createPriceProductConcreteReader()
     {

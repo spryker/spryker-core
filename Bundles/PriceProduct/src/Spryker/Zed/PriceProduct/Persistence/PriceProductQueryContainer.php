@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Orm\Zed\Price\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -85,6 +86,45 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
                 (int)$priceProductCriteriaTransfer->getIdCurrency(),
                 (int)$priceProductCriteriaTransfer->getIdStore(),
             ]);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idAbstractProduct
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    public function queryPriceEntityForProductAbstractById(
+        $idAbstractProduct,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ) {
+        return $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->addJoin([
+                SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT,
+                SpyPriceProductStoreTableMap::COL_FK_CURRENCY,
+                SpyPriceProductStoreTableMap::COL_FK_STORE,
+            ], [
+                SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT,
+                (int)$priceProductCriteriaTransfer->getIdCurrency(),
+                (int)$priceProductCriteriaTransfer->getIdStore(),
+            ])
+            ->addJoin([
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            ], [
+                SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+            ])
+            ->addJoin([
+                SpyPriceTypeTableMap::COL_ID_PRICE_TYPE,
+                SpyPriceTypeTableMap::COL_NAME
+            ],[
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                $this->getConnection()->quote($priceProductCriteriaTransfer->getPriceType())
+            ])
+
+            ->where(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT .' = ?', $idAbstractProduct);
     }
 
     /**

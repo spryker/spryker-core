@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
@@ -45,12 +47,12 @@ class Reader implements ReaderInterface
     protected $priceProductTypeReader;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceProductConcreteReaderInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Model\\Product\PriceProductConcreteReaderInterface
      */
     protected $priceProductConcreteReader;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceProductAbstractReaderInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Model\\Product\PriceProductAbstractReaderInterface
      */
     protected $priceProductAbstractReader;
 
@@ -63,8 +65,8 @@ class Reader implements ReaderInterface
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
-     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductConcreteReaderInterface $priceProductConcreteReader
-     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductAbstractReaderInterface $priceProductAbstractReader
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface $priceProductConcreteReader
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface $priceProductAbstractReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      */
     public function __construct(
@@ -156,7 +158,11 @@ class Reader implements ReaderInterface
     {
         $priceProductFilterTransfer->requireSku();
 
-        if (!$this->priceProductTypeReader->hasPriceType($priceProductFilterTransfer->getPriceTypeName())) {
+        $priceTypeName = $this->priceProductTypeReader->handleDefaultPriceType(
+            $priceProductFilterTransfer->getPriceTypeName()
+        );
+
+        if (!$this->priceProductTypeReader->hasPriceType($priceTypeName)) {
             return false;
         }
 
@@ -260,7 +266,7 @@ class Reader implements ReaderInterface
         }
 
         throw new MissingPriceException(sprintf(
-            'Price not found for product with SKU: %s!',
+            'Price not found for product with SKU: "%s".',
             $sku
         ));
     }

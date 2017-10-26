@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Business\Model;
+namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
@@ -21,13 +21,13 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     protected $priceProductQueryContainer;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceProductMapperInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface
      */
     protected $priceProductMapper;
 
     /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
-     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductMapperInterface $priceProductMapper
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,

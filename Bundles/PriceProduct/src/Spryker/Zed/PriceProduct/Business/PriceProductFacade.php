@@ -149,15 +149,15 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createWriterModel()
-            ->createPriceForProduct($transferPriceProduct);
+            ->createPriceForProduct($priceProductTransfer);
     }
 
     /**

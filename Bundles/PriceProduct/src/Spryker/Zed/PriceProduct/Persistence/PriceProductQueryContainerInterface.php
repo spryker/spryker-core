@@ -43,6 +43,16 @@ interface PriceProductQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idAbstractProduct
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    public function queryPriceEntityForProductAbstractById($idAbstractProduct, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
+
+    /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
