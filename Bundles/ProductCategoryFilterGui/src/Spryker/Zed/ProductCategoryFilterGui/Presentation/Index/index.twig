@@ -13,6 +13,15 @@
 
     {% endembed %}
 
+    <div class="row">
+        <div class="col-lg-6">
+            {% include '@ProductCategoryFilterGui/Index/_partials/category-tree.twig' %}
+        </div>
+
+        <div class="col-lg-6">
+            {% include '@ProductCategoryFilterGui/Index/_partials/category-node-form-container.twig' %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block head_css %}

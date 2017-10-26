@@ -19,8 +19,10 @@ class ProductCategoryFilterGuiPersistenceFactory extends AbstractPersistenceFact
     /**
      * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryInterface
      */
-    public function getProductCategoryFilterQueryContainer()
+    public function getCategoryQueryContainer()
     {
         return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
+
+
 }

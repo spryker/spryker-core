@@ -1,0 +1,13 @@
+<div id="category-tree">
+    <ul>
+        <li id="category-node-0"
+            data-id-category-node="{{ mainCategory.fkCategory }}"
+            class="jstree-open"
+            data-jstree='{"type":"category"}'
+            data-root-node="true"
+        >
+            {{ mainCategory.name }}
+            {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {categoryTree: categoryTree} %}
+        </li>
+    </ul>
+</div>

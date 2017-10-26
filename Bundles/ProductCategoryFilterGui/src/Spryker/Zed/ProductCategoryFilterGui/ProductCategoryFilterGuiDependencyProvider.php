@@ -11,12 +11,14 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToLocaleBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterBridge;
-use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryBridge as ProductCategoryFilterGuiToCategoryQueryContainerBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToCategoryBridge as ProductCategoryFilterGuiToCategoryFacadeBridge;
 
 class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_PRODUCT_CATEGORY_FILTER = 'FACADE_PRODUCT_CATEGORY_FILTER';
     const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_CATEGORY = 'FACADE_CATEGORY';
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
 
     /**
@@ -28,6 +30,8 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     {
         $this->addProductCategoryFilterFacade($container);
         $this->addLocaleFacade($container);
+        $this->addCategoryFacade($container);
+        $this->addCategoryQueryContainer($container);
 
         return $container;
     }
@@ -66,7 +70,7 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     protected function addCategoryQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
-            return new ProductCategoryFilterGuiToCategoryBridge($container->getLocator()->category()->queryContainer());
+            return new ProductCategoryFilterGuiToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
         return $container;
@@ -81,6 +85,18 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductCategoryFilterGuiToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addCategoryFacade(Container $container)
+    {
+        $container[static::FACADE_CATEGORY] = function (Container $container) {
+            return new ProductCategoryFilterGuiToCategoryFacadeBridge($container->getLocator()->category()->facade());
         };
     }
 }

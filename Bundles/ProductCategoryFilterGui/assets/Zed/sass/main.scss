@@ -5,10 +5,6 @@
 
 @import '~jstree/dist/themes/default/style';
 
-#root-node-table {
-  width: 100% !important;
-}
-
 /*
  * Inactive nodes
  */
@@ -16,16 +12,31 @@
   opacity: 0.5;
 }
 
-.navigation-progress {
+.product-category-filter-progress {
   width: 100%;
 }
 
-.navigation-progress-container {
+.product-category-filter-progress-container {
   &.progress-inline {
     margin: 5px 0;
   }
 }
 
-.ui-datepicker {
-  z-index: 2 !important;
+#root-node-table {
+  width: 100% !important;
+  tbody {
+    tr {
+      &.selected {
+        background-color: rgba(#0088cc, .2);
+        color: inherit;
+      }
+    }
+  }
+}
+
+#category-tree {
+  .dd-handle:hover {
+    cursor: inherit;
+    font-weight: inherit;
+  }
 }

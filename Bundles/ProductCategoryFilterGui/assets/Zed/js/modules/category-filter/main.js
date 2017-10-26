@@ -6,4 +6,8 @@
 'use strict';
 
 require('ZedGui');
-require('./root-category-table');
+var categoryTable = require('./category-table');
+
+$(document).ready(function() {
+    categoryTable.initialize('#root-node-table');
+});
