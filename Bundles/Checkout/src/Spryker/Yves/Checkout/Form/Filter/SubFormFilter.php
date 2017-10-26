@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Checkout\Form\Provider;
+namespace Spryker\Yves\Checkout\Form\Filter;
 
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
-class FilterableSubFormProvider
+class SubFormFilter implements SubFormFilterInterface
 {
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection

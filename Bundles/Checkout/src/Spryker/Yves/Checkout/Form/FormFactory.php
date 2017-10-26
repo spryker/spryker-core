@@ -8,9 +8,10 @@
 namespace Spryker\Yves\Checkout\Form;
 
 use Pyz\Yves\Checkout\Form\Steps\PaymentForm;
+use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\DataContainer\DataContainer;
-use Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider;
+use Spryker\Yves\Checkout\Form\Filter\SubFormFilter;
 use Spryker\Yves\Checkout\Form\Provider\SubFormDataProviders;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
@@ -59,6 +60,18 @@ class FormFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Yves\Checkout\Form\Filter\SubFormFilter
+     */
+    protected function createPaymentSubFormFilter()
+    {
+        return new SubFormFilter(
+            $this->getPaymentMethodSubFormPluginCollection(),
+            $this->getMethodFormFilters(), //todo: they are subForm filters, can it work if there are form filters too??
+            $this->createDataContainer()
+        );
+    }
+
+    /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subForms
      *
      * @return \Pyz\Yves\Checkout\Form\Steps\PaymentForm
@@ -80,15 +93,11 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Checkout\Form\Provider\FilterableSubFormProvider
+     * @return \Symfony\Component\Form\FormFactoryInterface
      */
-    public function createPaymentSubFormFilter()
+    protected function getFormFactory()
     {
-        return new FilterableSubFormProvider(
-            $this->getPaymentMethodSubFormPluginCollection(),
-            $this->getMethodFormFilters(),
-            $this->createDataContainer()
-        );
+        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
     }
 
     protected function createSubFormDataProvider($subFormProvider)
