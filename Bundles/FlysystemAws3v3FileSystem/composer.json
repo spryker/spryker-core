@@ -3,10 +3,12 @@
   "description": "FlysystemAws3v3FileSystem module",
   "license": "proprietary",
   "require": {
-    "league/flysystem-aws-s3-v3": "^1.0"
+    "league/flysystem-aws-s3-v3": "^1.0",
+    "spryker/kernel": "^3.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/flysystem": "*",
     "spryker/testify": "*"
   },
   "suggest": {

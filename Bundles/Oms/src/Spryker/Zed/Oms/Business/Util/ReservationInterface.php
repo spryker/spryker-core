@@ -21,4 +21,11 @@ interface ReservationInterface
      * @return int
      */
     public function sumReservedProductQuantitiesForSku($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku);
 }
