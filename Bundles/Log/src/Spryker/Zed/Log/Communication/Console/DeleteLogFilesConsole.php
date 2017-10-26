@@ -39,6 +39,8 @@ class DeleteLogFilesConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->info('Clear logs');
+        $this->getFacade()->stopListener();
         $this->getFacade()->clearLogs();
+        $this->getFacade()->startListener();
     }
 }

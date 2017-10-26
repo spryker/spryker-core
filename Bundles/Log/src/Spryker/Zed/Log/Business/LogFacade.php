@@ -25,4 +25,28 @@ class LogFacade extends AbstractFacade implements LogFacadeInterface
     {
         $this->getFactory()->createLogClearer()->clearLogs();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function startListener()
+    {
+        $this->getFactory()->createLogListener()->startListener();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function stopListener()
+    {
+        $this->getFactory()->createLogListener()->stopListener();
+    }
 }

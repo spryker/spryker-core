@@ -18,4 +18,24 @@ interface LogFacadeInterface
      * @return void
      */
     public function clearLogs();
+
+    /**
+     * Specification:
+     * - Executes all LogListenerInterfaces to start services like filebeat.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function startListener();
+
+    /**
+     * Specification:
+     * - Executes all LogListenerInterfaces to stop services like filebeat.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function stopListener();
 }

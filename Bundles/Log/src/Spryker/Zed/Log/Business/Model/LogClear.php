@@ -30,7 +30,6 @@ class LogClear implements LogClearInterface
     public function clearLogs()
     {
         $filesystem = new Filesystem();
-
         foreach ($this->logFileDirectories as $logFileDirectory) {
             if (is_dir($logFileDirectory)) {
                 $filesystem->remove($logFileDirectory);

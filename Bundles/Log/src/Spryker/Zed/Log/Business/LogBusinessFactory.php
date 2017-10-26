@@ -9,6 +9,8 @@ namespace Spryker\Zed\Log\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Log\Business\Model\LogClear;
+use Spryker\Zed\Log\Business\Model\LogListener\LogListenerCollection;
+use Spryker\Zed\Log\LogDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Log\LogConfig getConfig()
@@ -23,5 +25,13 @@ class LogBusinessFactory extends AbstractBusinessFactory
         return new LogClear(
             $this->getConfig()->getLogFileDirectories()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface
+     */
+    public function createLogListener()
+    {
+        return new LogListenerCollection($this->getProvidedDependency(LogDependencyProvider::LOG_LISTENER));
     }
 }
