@@ -13,4 +13,11 @@ interface ProductCategoryFilterGuiToCategoryInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryRootNodes();
+
+    /**
+     * @param int $idNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryAttributeByCategoryId($idNode);
 }

@@ -29,4 +29,14 @@ class ProductCategoryFilterGuiToCategoryBridge implements ProductCategoryFilterG
     {
         return $this->categoryQueryContainer->queryRootNodes();
     }
+
+    /**
+     * @param int $idNode
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryAttributeByCategoryId($idNode)
+    {
+        return $this->categoryQueryContainer->queryAttributeByCategoryId($idNode);
+    }
 }

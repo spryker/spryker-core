@@ -12,7 +12,7 @@ use Spryker\Zed\ProductCategoryFilterGui\Communication\Table\CategoryRootNodeTab
 use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiConfig getConfig()
  */
 class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -40,6 +40,41 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
      */
     public function createCategoryRootNodeTable($idLocale)
     {
-        return new CategoryRootNodeTable($this->getQueryContainer(), $idLocale);
+        return new CategoryRootNodeTable($this->getCategoryQueryContainer(), $idLocale);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToCategoryInterface
+     */
+    public function getCategoryFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::FACADE_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryInterface
+     */
+    public function getCategoryQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::QUERY_CONTAINER_CATEGORY);
+    }
+
+    /**
+     * @param array|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createNavigationNodeForm($data = null, array $options = [])
+    {
+        return $this->getFormFactory()->create($this->createNavigationNodeFormType(), $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType
+     */
+    protected function createNavigationNodeFormType()
+    {
+        return new NavigationNodeFormType($this->createNavigationNodeLocalizedAttributesFormType());
     }
 }

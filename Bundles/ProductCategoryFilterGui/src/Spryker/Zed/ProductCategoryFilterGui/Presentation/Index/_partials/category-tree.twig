@@ -1,0 +1,15 @@
+{% include '@ProductCategoryFilterGui/_partials/progressbar.twig' with {idProgressbar: 'category-tree-loader'} %}
+
+<div id="category-tree-container" class="ibox hidden">
+
+    <div class="ibox-title">
+        <h5>{{ 'Category tree' | trans }}</h5>
+        <div class="pull-right">
+            <label>{{ 'Search' | trans }}: <input type="text" id="category-tree-search-field" class="input" /></label>
+        </div>
+    </div>
+
+    <div class="ibox-content sk-loading">
+        <div id="category-tree-content"></div>
+    </div>
+</div>

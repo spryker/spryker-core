@@ -1,0 +1,10 @@
+<ul>
+    {% for categoryNode in categoryTree %}
+        <li id="category-{{ categoryNode.id }}" data-id-category-node="{{ categoryNode.id }}"
+            class="jstree-open {% if not categoryNode.is_active %}node-inactive{% endif %}"
+        >
+            {{ categoryNode.text }}
+            {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {categoryTree: categoryNode.children} %}
+        </li>
+    {% endfor %}
+</ul>
