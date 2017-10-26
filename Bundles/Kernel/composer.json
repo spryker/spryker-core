@@ -27,6 +27,9 @@
   "autoload-dev": {
     "psr-4": {
       "SprykerTest\\": "tests/SprykerTest/"
+    },
+    "psr-0": {
+      "Unit": "tests/"
     }
   },
   "minimum-stability": "dev",
