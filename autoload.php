@@ -3,7 +3,7 @@
 $autoloader = function ($className) {
 
     $namespaces = [
-        'Spryker'
+        'Spryker',
     ];
 
     $codeceptionSupportDirectories = [
@@ -13,12 +13,21 @@ $autoloader = function ($className) {
 
     $testingNamespaces = [
         'SprykerTest',
-        'Acceptance',           // old, to be removed when all files moved
-        'Functional',           // old, to be removed when all files moved
-        'Unit',                 // old, to be removed when all files moved
+    ];
 
-        'Yves',                 // new-old to be removed when all files moved
-        'Client',               // new-old to be removed when all files moved
+    $applicationAccessRules = [
+        'ZED' => [
+            'Shared',
+            'Client',
+            'Service',
+            'Zed',
+        ],
+        'YVES' => [
+            'Shared',
+            'Client',
+            'Service',
+            'Yves',
+        ],
     ];
 
     $className = ltrim($className, '\\');
@@ -34,7 +43,22 @@ $autoloader = function ($className) {
         return false;
     }
 
+    $validateApplicationAccess = function (array $classNameParts) use ($applicationAccessRules) {
+        if (!defined('APPLICATION') || !isset($applicationAccessRules[APPLICATION])) {
+            return;
+        }
+        $allowedApplications = $applicationAccessRules[APPLICATION];
+        $application = $classNameParts[1];
+        if (in_array($application, $allowedApplications)) {
+            return;
+        }
+
+        throw new Exception(sprintf('Failed to load "%s", it is not allowed to access "%s" inside "%s".', implode('\\', $classNameParts), $application, ucfirst(strtolower(APPLICATION))));
+    };
+
+    // File in Spryker\\ namespace
     if (in_array($classNameParts[0], $namespaces)) {
+        $validateApplicationAccess($classNameParts);
         $className = str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
         $bundle = $classNameParts[2];
         $filePathParts = [
@@ -46,6 +70,7 @@ $autoloader = function ($className) {
         ];
     }
 
+    // File in Helper/Module namespace of codeception
     if (in_array($classNameParts[1], $codeceptionSupportDirectories)) {
         $bundle = array_shift($classNameParts);
         $className = implode(DIRECTORY_SEPARATOR, $classNameParts) . '.php';
@@ -58,28 +83,6 @@ $autoloader = function ($className) {
             $className,
         ];
     }
-
-    // This block can completely be removed when all bundles have the new test structure
-    if (in_array($classNameParts[0], $testingNamespaces)) {
-        if ($classNameParts[0] === 'Acceptance') {
-            $bundle = $classNameParts[1];
-        }
-        if (in_array($classNameParts[0], ['Functional', 'Unit'])) {
-            $bundle = $classNameParts[3];
-        }
-
-        if (isset($bundle)) {
-            $className = implode(DIRECTORY_SEPARATOR, $classNameParts) . '.php';
-            $filePathParts = [
-                __DIR__,
-                'Bundles',
-                $bundle,
-                'tests',
-                $className,
-            ];
-        }
-    }
-    // This block can completely be removed when all bundles have the new test structure
 
     // Helper in new structure
     if ($classNameParts[0] === 'SprykerTest') {
