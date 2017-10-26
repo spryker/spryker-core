@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @project Only needed for project.
+ *
+ * @param string $className
+ *
+ * @return bool
+ */
 $autoloader = function ($className) {
 
     $namespaces = [
