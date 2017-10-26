@@ -22,7 +22,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class {{ className }} extends AbstractTransfer
 {
-
 {% for constant in constants %}
 {{ macro.addConstant(constant) -}}
 {% endfor %}
@@ -32,19 +31,20 @@ class {{ className }} extends AbstractTransfer
 {{ macro.addPropertyNameMap(propertyNameMap) }}
 
 {{ macro.addMetadata(normalizedProperties) }}
-{{ macro.addConstructor(constructorDefinition) }}
+{{ macro.addConstructor(constructorDefinition) -}}
 {% for methodName, method  in methods %}
+
 {% if methodName starts with 'set' %}
-{{ macro.addSet(method) }}
+{{ macro.addSet(method) -}}
 {% endif %}
 {% if methodName starts with 'get' %}
-{{ macro.addGet(method) }}
+{{ macro.addGet(method) -}}
 {% endif %}
 {% if methodName starts with 'add' %}
-{{ macro.addAdd(method) }}
+{{ macro.addAdd(method) -}}
 {% endif %}
 {% if methodName starts with 'require' %}
-{{ macro.addRequire(method) }}
+{{ macro.addRequire(method) -}}
 {% endif %}
 {% endfor %}
 }
