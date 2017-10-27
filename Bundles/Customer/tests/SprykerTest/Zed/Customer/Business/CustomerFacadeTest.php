@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Customer\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Service\UtilValidate\UtilValidateServiceInterface;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
@@ -18,6 +17,7 @@ use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -42,14 +42,14 @@ class CustomerFacadeTest extends Unit
     const TESTER_ZIP_CODE = '42';
 
     /**
-     * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
     protected $customerFacade;
+
+    /**
+     * @var \Spryker\Zed\Kernel\Container
+     */
+    protected $businessLayerDependencies;
 
     /**
      * @return void
@@ -78,13 +78,13 @@ class CustomerFacadeTest extends Unit
     protected function getContainer()
     {
         $dependencyProvider = new CustomerDependencyProvider();
-        $container = new Container();
+        $this->businessLayerDependencies = new Container();
 
-        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideBusinessLayerDependencies($this->businessLayerDependencies);
 
-        $container[CustomerDependencyProvider::FACADE_MAIL] = $this->getMockBuilder(CustomerToMailInterface::class)->getMock();
+        $this->businessLayerDependencies[CustomerDependencyProvider::FACADE_MAIL] = $this->getMockBuilder(CustomerToMailInterface::class)->getMock();
 
-        return $container;
+        return $this->businessLayerDependencies;
     }
 
     /**
@@ -233,7 +233,7 @@ class CustomerFacadeTest extends Unit
      */
     protected function mockUtilValidateService($isEmailFormatValid)
     {
-        $serviceMock = $this->getMockBuilder(UtilValidateServiceInterface::class)
+        $serviceMock = $this->getMockBuilder(CustomerToUtilValidateInterface::class)
             ->setMethods(['isEmailFormatValid'])
             ->getMock();
 
@@ -242,7 +242,7 @@ class CustomerFacadeTest extends Unit
             ->method('isEmailFormatValid')
             ->willReturn($isEmailFormatValid);
 
-        $this->tester->setDependency(CustomerDependencyProvider::SERVICE_UTIL_VALIDATE, $serviceMock);
+        $this->businessLayerDependencies[CustomerDependencyProvider::SERVICE_UTIL_VALIDATE] = $serviceMock;
     }
 
     /**
