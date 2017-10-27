@@ -25,4 +25,8 @@ class ProductCategoryFilterGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
 
+    public function createFilterQuery()
+    {
+        return SpyCategoryAttributeQuery::create();
+    }
 }

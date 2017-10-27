@@ -41,7 +41,7 @@ class ProductCategoryFilterGuiQueryContainer extends AbstractQueryContainer impl
         $searchTerm = trim($searchTerm);
 
         $query = $this->getFactory()
-            ->createCategoryAttributeQuery()
+            ->createFilterQuery()
             ->addJoin(
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY,

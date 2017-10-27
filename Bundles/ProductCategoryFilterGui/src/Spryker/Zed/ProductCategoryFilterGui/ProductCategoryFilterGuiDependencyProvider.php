@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCategoryFilterGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductSearchBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToLocaleBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryBridge as ProductCategoryFilterGuiToCategoryQueryContainerBridge;
@@ -19,6 +20,7 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     const FACADE_PRODUCT_CATEGORY_FILTER = 'FACADE_PRODUCT_CATEGORY_FILTER';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
 
     /**
@@ -31,6 +33,7 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
         $this->addProductCategoryFilterFacade($container);
         $this->addLocaleFacade($container);
         $this->addCategoryFacade($container);
+        $this->addProductSearchFacade($container);
         $this->addCategoryQueryContainer($container);
 
         return $container;
@@ -97,6 +100,18 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductCategoryFilterGuiToCategoryFacadeBridge($container->getLocator()->category()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addProductSearchFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
+            return new ProductCategoryFilterGuiToProductSearchBridge($container->getLocator()->productSearch()->facade());
         };
     }
 }

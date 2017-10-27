@@ -12,15 +12,16 @@ var $treeContent = $('#category-tree-content');
 var $treeProgressBar = $('#category-tree-loader');
 var $treeSearchField = $('#category-tree-search-field');
 var $formProgressBar = $('#product-category-filter-form-loader');
-var $iframe = $('#category-node-form-iframe');
+var $iframe = $('#product-category-filter-iframe');
 
 
 var ajaxRequest;
+var currentlySelectedNodeId;
 var treeSearchTimeout = false;
 
 var config = {
     categoryTreeUrl: '/product-category-filter-gui/category-tree',
-    productCategoryFilterUrl: '/product-category-filter-gui/product-category-filters',
+    productCategoryFilterUrl: '/product-category-filter-gui/product-category-filter',
     categoryTreeNodeTypes: {
         'default': {
             'icon': 'fa fa-folder'
@@ -88,9 +89,9 @@ function createTreeLoadHandler(idCategory, selected, skipFormLoad) {
 
         if (skipFormLoad) {
             selectNode(selected);
-            setNodeSelectListener(idCategory);
+            setNodeListeners(idCategory);
         } else {
-            setNodeSelectListener(idCategory);
+            setNodeListeners(idCategory);
             selectNode(selected);
         }
     }
@@ -115,14 +116,22 @@ function initJsTree() {
  * @return {void}
  */
 function selectNode(idCategoryNode) {
-    var nodeToSelect = 'category-node-' + (idCategoryNode ? idCategoryNode : 0);
-    $('#category-tree').jstree(true).select_node(nodeToSelect);
+    $('#category-tree').jstree(true).select_node(getNodeName((idCategoryNode ? idCategoryNode : 0)));
+}
+
+/**
+ * @param {int} id
+ *
+ * @return string
+ */
+function getNodeName(id) {
+    return 'category-node-' + id;
 }
 
 /**
  * @return {void}
  */
-function setNodeSelectListener() {
+function setNodeListeners() {
     $('#category-tree').on('select_node.jstree', function(e, data) {
         if(data.node.data.rootNode) {
             $('#category-tree').jstree(true).deselect_node(data.node);
@@ -130,9 +139,22 @@ function setNodeSelectListener() {
             return;
         }
 
-        var idCategoryNode = data.node.data.idCategoryNode;
+        var idCategory = data.node.data.idCategory;
+        var nodesWithSameCategoryId = document.querySelectorAll('[data-id-category="' + idCategory + '"]');
+        var nodeIds = [];
 
-        loadForm(idCategoryNode);
+        for(var i=0; i < nodesWithSameCategoryId.length; i++) {
+            nodeIds.push(nodesWithSameCategoryId[i].id)
+        }
+
+
+        $('#category-tree').jstree(true).select_node(nodeIds, true);
+        if(currentlySelectedNodeId === idCategory) {
+            return;
+        }
+
+        currentlySelectedNodeId = idCategory;
+        loadForm(idCategory);
     });
 }
 

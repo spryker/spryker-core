@@ -43,4 +43,15 @@ class ProductCategoryFilterGuiToProductCategoryFilterBridge implements ProductCa
     {
         $this->productCategoryFilterFacade->deleteProductCategoryFilterByCategoryId($categoryId);
     }
+
+
+    /**
+     * @param int $categoryId
+     *
+     * @return ProductCategoryFilterTransfer
+     */
+    public function findProductCategoryFilterByCategoryId($categoryId)
+    {
+        return $this->productCategoryFilterFacade->findProductCategoryFilterByCategoryId($categoryId);
+    }
 }

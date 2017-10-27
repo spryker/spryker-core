@@ -1,0 +1,41 @@
+{% extends '@Gui/Layout/iframe-layout.twig' %}
+
+{% block content %}
+    <div class="ibox float-e-margins">
+        {% block widget_content %}
+            {{ form_start(productCategoryFilterForm) }}
+            <table width="100%">
+                <tr>
+                    <td width="100%">
+                        {{ form_errors(form) }}
+                        {{ form_widget(form) }}
+                    </td>
+                    <td>&nbsp;</td>
+                    <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" /></td>
+                </tr>
+            </table>
+            {{ form_end(productCategoryFilterForm) }}
+        {% endblock %}
+        {#<div class="ibox-title">#}
+            {#<h5>{{ 'Create child node' | trans }}</h5>#}
+        {#</div>#}
+
+        {#<div class="ibox-content">#}
+            {#{% include '@NavigationGui/Node/_partials/navigation-node-form-content.twig' %}#}
+        {#</div>#}
+
+        {#<div class="ibox-footer">#}
+            {#<input id="navigation-node-form-submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />#}
+        {#</div>#}
+    </div>
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+{% endblock %}
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-product-category-filter-form.js"></script>
+{% endblock %}
+
