@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider\ProductCategoryFilterDataProvider;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Table\CategoryRootNodeTable;
 use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvider;
 
@@ -60,21 +62,30 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductSearchInterface
+     */
+    public function getProductSearchFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::FACADE_PRODUCT_SEARCH);
+    }
+
+    /**
      * @param array|null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createNavigationNodeForm($data = null, array $options = [])
+    public function createProductCategoryFilterForm($data = null, array $options = [])
     {
-        return $this->getFormFactory()->create($this->createNavigationNodeFormType(), $data, $options);
+        $form = new ProductCategoryFilterForm();
+        return $this->getFormFactory()->create($form, $data, $options);
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType
+     * @return ProductCategoryFilterDataProvider
      */
-    protected function createNavigationNodeFormType()
+    public function createProductCategoryFilterDataProvider()
     {
-        return new NavigationNodeFormType($this->createNavigationNodeLocalizedAttributesFormType());
+        return new ProductCategoryFilterDataProvider($this->getProductCategoryFilterFacade());
     }
 }

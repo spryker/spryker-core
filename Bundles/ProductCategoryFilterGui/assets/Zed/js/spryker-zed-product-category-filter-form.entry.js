@@ -5,5 +5,4 @@
 
 'use strict';
 
-require('./modules/category-filter/main');
-require('../sass/main.scss');
+require('./modules/product-category-filter-form/main');

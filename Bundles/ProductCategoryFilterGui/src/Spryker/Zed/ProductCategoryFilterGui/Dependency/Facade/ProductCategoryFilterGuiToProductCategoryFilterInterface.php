@@ -19,11 +19,16 @@ interface ProductCategoryFilterGuiToProductCategoryFilterInterface
     public function createProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer);
 
     /**
-     * @api
-     *
      * @param int $categoryId
      *
      * @return void
      */
     public function deleteProductCategoryFilterByCategoryId($categoryId);
+
+    /**
+     * @param int $categoryId
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
+     */
+    public function findProductCategoryFilterByCategoryId($categoryId);
 }
