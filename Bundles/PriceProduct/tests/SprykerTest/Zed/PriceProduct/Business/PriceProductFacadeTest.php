@@ -221,7 +221,6 @@ class PriceProductFacadeTest extends Unit
 
         $prices = new ArrayObject();
         $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10 ,9 ,'EUR');
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11 ,10 ,'USD');
 
         $productConcreteTransfer->setPrices($prices);
 
