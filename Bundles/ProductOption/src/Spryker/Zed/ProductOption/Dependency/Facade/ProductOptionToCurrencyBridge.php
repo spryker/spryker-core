@@ -30,4 +30,12 @@ class ProductOptionToCurrencyBridge implements ProductOptionToCurrencyInterface
     {
         return $this->currencyFacade->getByIdCurrency($idCurrency);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getCurrent()
+    {
+        return $this->currencyFacade->getCurrent();
+    }
 }

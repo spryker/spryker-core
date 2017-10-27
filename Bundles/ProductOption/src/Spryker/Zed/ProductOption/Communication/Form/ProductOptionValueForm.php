@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
-use Spryker\Shared\ProductOption\ProductOptionConstants;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
@@ -27,6 +26,8 @@ class ProductOptionValueForm extends AbstractType
     const FIELD_PRICES = 'prices';
     const FIELD_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
     const FIELD_OPTION_HASH = 'optionHash';
+
+    const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
 
@@ -137,8 +138,8 @@ class ProductOptionValueForm extends AbstractType
             static::FIELD_PRICES,
             MoneyCollectionType::class,
             [
-                    ProductOptionConstants::OPTION_AMOUNT_PER_STORE => true,
-                ]
+                    static::OPTION_AMOUNT_PER_STORE => true,
+            ]
         );
 
         return $this;
