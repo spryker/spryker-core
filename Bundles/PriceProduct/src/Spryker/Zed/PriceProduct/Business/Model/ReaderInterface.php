@@ -7,15 +7,10 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
-use Generated\Shared\Transfer\PriceFilterTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface ReaderInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
-     */
-    public function getPriceTypes();
-
     /**
      * @param string $sku
      * @param string|null $priceTypeName
@@ -25,11 +20,11 @@ interface ReaderInterface
     public function getPriceBySku($sku, $priceTypeName = null);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceFilterTransfer $priceFilterTransfer);
+    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
 
     /**
      * @param string $sku
@@ -37,13 +32,6 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findPricesBySku($sku);
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function findProductAbstractPrices($idProductAbstract);
 
     /**
      * @param int $idProductConcrete
@@ -54,13 +42,6 @@ interface ReaderInterface
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
 
     /**
-     * @param string $priceTypeNameName
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceType
-     */
-    public function getPriceTypeByName($priceTypeNameName);
-
-    /**
      * @param string $sku
      * @param string|null $priceTypeName
      *
@@ -69,58 +50,20 @@ interface ReaderInterface
     public function hasValidPrice($sku, $priceTypeName = null);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return bool
      */
-    public function hasValidPriceFor(PriceFilterTransfer $priceFilterTransfer);
-
-    /**
-     * @param string $sku
-     *
-     * @return bool
-     */
-    public function hasProductAbstract($sku);
-
-    /**
-     * @param string $sku
-     *
-     * @return bool
-     */
-    public function hasProductConcrete($sku);
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
-     */
-    public function getProductAbstractIdBySku($sku);
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
-     */
-    public function getProductConcreteIdBySku($sku);
+    public function hasValidPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
 
     /**
      * @param string $sku
      * @param string $priceTypeName
      * @param string $currencyIsoCode
+     *
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName, $currencyIsoCode);
-
-    /**
-     * @param string|null $priceType
-     *
-     * @return string
-     */
-    public function handleDefaultPriceType($priceType = null);
 
     /**
      * @param string $sku
@@ -128,12 +71,4 @@ interface ReaderInterface
      * @return array
      */
     public function findPricesBySkuGrouped($sku);
-
-    /**
-     * @param int $idAbstractProduct
-     * @param string|null $priceTypeName
-     *
-     * @return mixed
-     */
-    public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
 }

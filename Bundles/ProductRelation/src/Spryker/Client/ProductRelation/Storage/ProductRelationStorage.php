@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductRelation\Storage;
 
 use Generated\Shared\Transfer\StorageProductAbstractRelationTransfer;
 use Generated\Shared\Transfer\StorageProductRelationsTransfer;
-use Spryker\Client\PriceProduct\PriceProductClientInterface;
 use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToPriceProductInterface;
 use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;

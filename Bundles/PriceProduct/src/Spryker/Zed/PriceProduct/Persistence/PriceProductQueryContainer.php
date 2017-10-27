@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Orm\Zed\Price\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceType;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -48,7 +48,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     /**
      * @api
      *
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryAllPriceProducts()
     {
@@ -59,18 +59,16 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      * @api
      *
      * @param string $sku
-     * @param string $priceType
-     * @param int $idCurrency
-     * @param int $idStore
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductAbstract($sku, $priceType, $idCurrency, $idStore)
+    public function queryPriceEntityForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
             ->usePriceTypeQuery()
-                ->filterByName($priceType)
+                ->filterByName($priceProductCriteriaTransfer->getPriceType())
             ->endUse()
             ->addJoin([
                 SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
@@ -85,9 +83,48 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
                 SpyPriceProductStoreTableMap::COL_FK_STORE,
             ], [
                 SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT,
-                (int)$idCurrency,
-                (int)$idStore
+                (int)$priceProductCriteriaTransfer->getIdCurrency(),
+                (int)$priceProductCriteriaTransfer->getIdStore(),
             ]);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idAbstractProduct
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    public function queryPriceEntityForProductAbstractById(
+        $idAbstractProduct,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ) {
+        return $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->addJoin([
+                SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT,
+                SpyPriceProductStoreTableMap::COL_FK_CURRENCY,
+                SpyPriceProductStoreTableMap::COL_FK_STORE,
+            ], [
+                SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT,
+                (int)$priceProductCriteriaTransfer->getIdCurrency(),
+                (int)$priceProductCriteriaTransfer->getIdStore(),
+            ])
+            ->addJoin([
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            ], [
+                SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+            ])
+            ->addJoin([
+                SpyPriceTypeTableMap::COL_ID_PRICE_TYPE,
+                SpyPriceTypeTableMap::COL_NAME
+            ],[
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                $this->getConnection()->quote($priceProductCriteriaTransfer->getPriceType())
+            ])
+
+            ->where(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT .' = ?', $idAbstractProduct);
     }
 
     /**
@@ -140,23 +177,21 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      * @api
      *
      * @param string $sku
-     * @param string $priceType
-     * @param int $idCurrency
-     * @param int $idStore
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductConcrete($sku, $priceType, $idCurrency, $idStore)
+    public function queryPriceEntityForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
             ->usePriceTypeQuery()
-               ->filterByName($priceType)
+               ->filterByName($priceProductCriteriaTransfer->getPriceType())
             ->endUse()
             ->addJoin([
                 SpyPriceProductTableMap::COL_FK_PRODUCT,
                 SpyProductTableMap::COL_SKU,
-            ],[
+            ], [
                 SpyProductTableMap::COL_ID_PRODUCT,
                 $this->getConnection()->quote($sku),
             ])
@@ -164,10 +199,10 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
                 SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT,
                 SpyPriceProductStoreTableMap::COL_FK_CURRENCY,
                 SpyPriceProductStoreTableMap::COL_FK_STORE,
-            ],[
+            ], [
                 SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT,
-                (int)$idCurrency,
-                (int)$idStore
+                (int)$priceProductCriteriaTransfer->getIdCurrency(),
+                (int)$priceProductCriteriaTransfer->getIdStore(),
             ]);
     }
 

@@ -14,7 +14,6 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBrid
 
 class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRICE_PRODUCT = 'price product facade';
     const FACADE_PRICE = 'price facade';
 

@@ -33,7 +33,7 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 

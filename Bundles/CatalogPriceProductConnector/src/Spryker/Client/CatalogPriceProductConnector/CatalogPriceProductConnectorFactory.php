@@ -8,7 +8,6 @@
 namespace Spryker\Client\CatalogPriceProductConnector;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
 class CatalogPriceProductConnectorFactory extends AbstractFactory
 {

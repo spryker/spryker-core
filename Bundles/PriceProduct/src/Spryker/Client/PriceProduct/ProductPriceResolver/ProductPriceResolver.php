@@ -1,19 +1,19 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\PriceProduct\ProductPriceResolver;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceInterface;
+use Spryker\Client\PriceProduct\PriceProductConfig;
 
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
-
     /**
      * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceInterface
      */
@@ -38,8 +38,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         PriceProductToPriceInterface $priceClient,
         PriceProductToCurrencyInterface $currencyClient,
         PriceProductConfig $priceProductConfig
-    )
-    {
+    ) {
         $this->priceProductConfig = $priceProductConfig;
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;

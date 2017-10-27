@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -17,7 +18,7 @@ use Symfony\Component\Form\FormView;
 
 class ProductMoneyType extends AbstractType
 {
-    const FIELD_FK_PRICE_TYPE = 'fk_price_type' ;
+    const FIELD_FK_PRICE_TYPE = 'fk_price_type';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -33,7 +34,7 @@ class ProductMoneyType extends AbstractType
             PriceProductTransfer::MONEY_VALUE,
             MoneyType::class,
             [
-                'data_class' =>  MoneyValueTransfer::class,
+                'data_class' => MoneyValueTransfer::class,
             ]
         );
     }
@@ -53,7 +54,6 @@ class ProductMoneyType extends AbstractType
     /**
      * {@inheritdoc}
      *
-     * @throws \Exception
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

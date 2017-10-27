@@ -18,6 +18,10 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

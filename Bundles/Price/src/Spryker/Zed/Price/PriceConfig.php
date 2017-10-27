@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\Price;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Price\PriceMode;
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Price\PriceConfig as SharedPriceConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceConfig extends AbstractBundleConfig
 {

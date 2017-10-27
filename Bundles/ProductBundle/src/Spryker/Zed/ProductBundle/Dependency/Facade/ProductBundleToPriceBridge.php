@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-use Generated\Shared\Transfer\PriceFilterTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
 {
@@ -36,12 +36,12 @@ class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceFilterTransfer $priceFilterTransfer)
+    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
     {
-        return $this->priceFacade->getPriceFor($priceFilterTransfer);
+        return $this->priceFacade->getPriceFor($priceProductFilterTransfer);
     }
 }

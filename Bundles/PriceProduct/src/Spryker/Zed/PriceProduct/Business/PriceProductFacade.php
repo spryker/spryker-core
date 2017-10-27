@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
-use Generated\Shared\Transfer\PriceFilterTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -29,7 +28,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function getPriceTypeValues()
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createPriceTypeReader()
             ->getPriceTypes();
     }
 
@@ -55,11 +54,11 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceFilterTransfer $priceFilterTransfer)
+    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
     {
         return $this->getFactory()
             ->createReaderModel()
@@ -134,11 +133,11 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return bool
      */
-    public function hasValidPriceFor(PriceFilterTransfer $priceFilterTransfer)
+    public function hasValidPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
     {
         return $this->getFactory()
             ->createReaderModel()
@@ -150,15 +149,15 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createWriterModel()
-            ->createPriceForProduct($transferPriceProduct);
+            ->createPriceForProduct($priceProductTransfer);
     }
 
     /**
@@ -269,8 +268,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function findProductAbstractPrices($idProductAbstract)
     {
         return $this->getFactory()
-            ->createReaderModel()
-            ->findProductAbstractPrices($idProductAbstract);
+            ->createPriceProductAbstractReader()
+            ->findProductAbstractPricesById($idProductAbstract);
     }
 
     /**
@@ -303,8 +302,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createPriceProductAbstractReader()
             ->findProductAbstractPrice($idAbstractProduct, $priceTypeName);
     }
-
 }

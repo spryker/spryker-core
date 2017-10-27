@@ -52,7 +52,7 @@ class PriceProductToTouchBridge implements PriceProductToTouchInterface
      */
     public function bulkTouchActive($itemType, array $itemIds)
     {
-        return $this->touchFacade->bulkTouchActive($itemType, $itemIds);
+        return $this->touchFacade->bulkTouchSetActive($itemType, $itemIds);
     }
 
     /**
@@ -63,6 +63,6 @@ class PriceProductToTouchBridge implements PriceProductToTouchInterface
      */
     public function bulkTouchDeleted($itemType, array $itemIds)
     {
-        return $this->touchFacade->bulkTouchDeleted($itemType, $itemIds);
+        return $this->touchFacade->bulkTouchSetDeleted($itemType, $itemIds);
     }
 }

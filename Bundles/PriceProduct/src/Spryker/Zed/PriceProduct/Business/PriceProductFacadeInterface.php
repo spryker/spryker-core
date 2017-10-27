@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
-use Generated\Shared\Transfer\PriceFilterTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface PriceProductFacadeInterface
 {
-
     /**
      * Specification:
      * - Reads all persisted price types and returns their names in an array.
@@ -36,7 +35,7 @@ interface PriceProductFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param string $priceTypeName
+     * @param string|null $priceTypeName
      *
      * @return int
      */
@@ -52,11 +51,11 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceFilterTransfer $priceFilterTransfer);
+    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 
     /**
      * Specification:
@@ -120,11 +119,11 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return bool
      */
-    public function hasValidPriceFor(PriceFilterTransfer $priceFilterTransfer);
+    public function hasValidPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 
     /**
      * Specification:
@@ -136,11 +135,11 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
      * Specification:
@@ -263,5 +262,4 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
-
 }

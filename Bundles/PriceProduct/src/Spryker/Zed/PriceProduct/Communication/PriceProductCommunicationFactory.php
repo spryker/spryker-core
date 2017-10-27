@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProduct\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\PriceProduct\PriceConfig getConfig()
+ * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainer getQueryContainer()
  */
 class PriceProductCommunicationFactory extends AbstractCommunicationFactory

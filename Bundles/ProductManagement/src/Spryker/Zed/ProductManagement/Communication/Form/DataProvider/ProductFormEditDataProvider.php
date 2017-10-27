@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;

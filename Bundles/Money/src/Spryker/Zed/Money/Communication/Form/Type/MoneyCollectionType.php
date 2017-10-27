@@ -134,5 +134,4 @@ class MoneyCollectionType extends AbstractCollectionType
         }
         return $options;
     }
-
 }

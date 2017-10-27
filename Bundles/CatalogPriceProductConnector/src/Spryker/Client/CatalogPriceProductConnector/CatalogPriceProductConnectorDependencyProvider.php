@@ -34,8 +34,8 @@ class CatalogPriceProductConnectorDependencyProvider extends AbstractDependencyP
      */
     protected function addPriceProductClient(Container $container)
     {
-        $container[static::CLIENT_PRICE_PRODUCT] = function(Container $container) {
-           return new CatalogPriceProductConnectorToPriceProductBridge($container->getLocator()->priceProduct()->client());
+        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+            return new CatalogPriceProductConnectorToPriceProductBridge($container->getLocator()->priceProduct()->client());
         };
 
         return $container;

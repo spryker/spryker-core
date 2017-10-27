@@ -14,5 +14,4 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CatalogPriceProductConnectorClient extends AbstractClient
 {
-
 }

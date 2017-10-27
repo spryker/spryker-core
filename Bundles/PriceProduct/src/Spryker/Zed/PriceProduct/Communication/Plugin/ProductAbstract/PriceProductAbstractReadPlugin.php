@@ -19,6 +19,10 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
 class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

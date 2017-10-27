@@ -43,6 +43,13 @@
         <property name="sku" type="string" />
     </transfer>
 
+    <transfer name="PriceProductCriteria">
+        <property name="idStore" type="int" />
+        <property name="idCurrency" type="int" />
+        <property name="priceMode" type="string" />
+        <property name="priceType" type="string" />
+    </transfer>
+
     <transfer name="CurrentProductPrice">
         <property name="price" type="int" />
         <property name="prices" type="array" singular="price" />

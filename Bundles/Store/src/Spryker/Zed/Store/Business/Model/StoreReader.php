@@ -80,7 +80,7 @@ class StoreReader implements StoreReaderInterface
             ->queryStoreByName($currentStore)
             ->findOne();
 
-        $storeTransfer =  $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
 
         static::$storeCache[$currentStore] = $storeTransfer;
 
@@ -96,9 +96,9 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreById($idStore)
     {
-         if (isset(static::$storeCache[$idStore])) {
-             return static::$storeCache[$idStore];
-         }
+        if (isset(static::$storeCache[$idStore])) {
+            return static::$storeCache[$idStore];
+        }
 
          $storeEntity = $this->storeQueryContainer
              ->queryStoreById($idStore)
@@ -110,7 +110,7 @@ class StoreReader implements StoreReaderInterface
             );
         }
 
-        $storeTransfer =  $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
 
         static::$storeCache[$idStore] = $storeTransfer;
 
@@ -140,7 +140,7 @@ class StoreReader implements StoreReaderInterface
             );
         }
 
-        $storeTransfer =  $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
 
         static::$storeCache[$storeName] = $storeTransfer;
 

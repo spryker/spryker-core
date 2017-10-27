@@ -1,15 +1,16 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Price;
 
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
@@ -50,13 +51,13 @@ class ProductMoneyCollectionType extends MoneyCollectionType
 
         $priceTypes = [
             $grossPriceModeIdentifier => [],
-            $netPriceModeIdentifier => []
+            $netPriceModeIdentifier => [],
         ];
 
         foreach ($view as $item) {
             $moneyValue = $item['moneyValue'];
 
-            /* @var $priceTypeTransfer \Generated\Shared\Transfer\PriceTypeTransfer  */
+            /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
             $priceTypeTransfer = $item->vars['price_type'];
 
             $priceType = $priceTypeTransfer->getName();
@@ -71,7 +72,6 @@ class ProductMoneyCollectionType extends MoneyCollectionType
 
                 $priceTable[$storeName][$currencySymbol][$netPriceModeIdentifier][$priceType] = $item;
                 $priceTable[$storeName][$currencySymbol][$grossPriceModeIdentifier][$priceType] = $item;
-
             } else {
                 if (!isset($priceTypes[$priceModeConfiguration][$priceType])) {
                     $priceTypes[$priceModeConfiguration][$priceType] = $priceTypeTransfer;

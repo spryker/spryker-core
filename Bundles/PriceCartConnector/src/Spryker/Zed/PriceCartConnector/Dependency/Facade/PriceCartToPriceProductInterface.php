@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\PriceFilterTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface PriceCartToPriceProductInterface
 {
-
     /**
      * @param string $sku
      * @param string|null $priceType
@@ -34,17 +33,16 @@ interface PriceCartToPriceProductInterface
     public function getDefaultPriceTypeName();
 
     /**
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceFilterTransfer $priceFilterTransfer);
+    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceFilterTransfer $priceFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return bool
      */
-    public function hasValidPriceFor(PriceFilterTransfer $priceFilterTransfer);
-
+    public function hasValidPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 }

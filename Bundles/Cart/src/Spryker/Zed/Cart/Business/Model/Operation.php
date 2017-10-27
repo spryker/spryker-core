@@ -249,6 +249,8 @@ class Operation implements OperationInterface
 
     /**
      * @param array $preReloadPlugins
+     *
+     * @return void
      */
     public function setPreReloadLoadPlugins(array $preReloadPlugins)
     {

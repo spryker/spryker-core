@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
@@ -16,9 +15,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyT
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductConcreteFormEdit extends ProductFormAdd
 {
@@ -148,7 +144,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'entry_options' => [
                     'data_class' => PriceProductTransfer::class,
                 ],
-                'entry_type' => ProductMoneyType::class
+                'entry_type' => ProductMoneyType::class,
             ]
         );
         return $this;

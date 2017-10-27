@@ -8,22 +8,19 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use DateTime;
-use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
@@ -522,7 +519,7 @@ class ProductFormAdd extends AbstractType
                 'entry_options' => [
                     'data_class' => PriceProductTransfer::class,
                 ],
-                'entry_type' => ProductMoneyType::class
+                'entry_type' => ProductMoneyType::class,
             ]
         );
         return $this;

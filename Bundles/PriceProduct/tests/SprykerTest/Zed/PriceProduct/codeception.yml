@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\Price
+namespace: SprykerTest\Zed\PriceProduct
 
 paths:
     tests: .
@@ -12,12 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Persistence:
-        path: Persistence
-        class_name: PricePersistenceTester
     Business:
         path: Business
-        class_name: PriceBusinessTester
+        class_name: PriceProductBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -25,4 +22,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper

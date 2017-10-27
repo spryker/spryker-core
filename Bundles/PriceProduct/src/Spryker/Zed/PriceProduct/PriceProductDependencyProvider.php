@@ -10,14 +10,13 @@ namespace Spryker\Zed\PriceProduct;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyBridge;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchBridge;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceBridge;
 
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'facade touch';
     const FACADE_PRODUCT = 'product facade';
     const FACADE_CURRENCY = 'currency facade';
@@ -109,6 +108,4 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
-
 }

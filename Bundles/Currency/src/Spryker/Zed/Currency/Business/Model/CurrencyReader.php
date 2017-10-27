@@ -136,7 +136,6 @@ class CurrencyReader implements CurrencyReaderInterface
     }
 
     /**
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */

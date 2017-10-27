@@ -7,16 +7,12 @@
 
 namespace Spryker\Yves\Price;
 
-use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Yves\Currency\Dependency\Client\CurrencyToSessionBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Price\Dependency\Client\PriceToQuoteClientBridge;
 
 class PriceDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
@@ -31,7 +27,6 @@ class PriceDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -45,5 +40,4 @@ class PriceDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

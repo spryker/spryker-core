@@ -20,7 +20,6 @@ use Twig_SimpleFunction;
  */
 class PriceModeSwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     protected static $functionName = 'spyPriceModeSwitch';
 
     /**
@@ -65,7 +64,7 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
                 $this->getTemplatePath(),
                 [
                     'price_modes' => $this->getPriceModes(),
-                    'current_price_mode' => $this->getCurrentPriceMode()
+                    'current_price_mode' => $this->getCurrentPriceMode(),
                 ]
             );
         }, $options);
@@ -97,5 +96,4 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
             ->createSharedConfig()
             ->getPriceModes();
     }
-
 }

@@ -10,6 +10,12 @@ namespace Spryker\Zed\PriceProduct\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReader;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReader;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
+use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeMapper;
+use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReader;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
@@ -20,19 +26,18 @@ use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
  */
 class PriceProductBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface
      */
     public function createReaderModel()
     {
         return new Reader(
-            $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->getConfig(),
-            $this->getCurrencyFacade(),
             $this->getPriceFacade(),
-            $this->getStoreFacade()
+            $this->createPriceTypeReader(),
+            $this->createPriceProductConcreteReader(),
+            $this->createPriceProductAbstractReader(),
+            $this->createProductCriteriaBuilder()
         );
     }
 
@@ -43,9 +48,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new Writer(
             $this->getQueryContainer(),
-            $this->createReaderModel(),
             $this->getTouchFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getProductFacade(),
+            $this->createPriceTypeReader(),
+            $this->createPriceProductMapper()
         );
     }
 
@@ -56,10 +63,74 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new BulkWriter(
             $this->getQueryContainer(),
-            $this->createReaderModel(),
             $this->getTouchFacade(),
+            $this->getConfig(),
+            $this->getProductFacade(),
+            $this->createPriceTypeReader(),
+            $this->createPriceProductMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface
+     */
+    public function createPriceTypeReader()
+    {
+        return new PriceProductTypeReader(
+            $this->getQueryContainer(),
+            $this->createPriceTypeMapper(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface
+     */
+    public function createPriceProductMapper()
+    {
+        return new PriceProductMapper($this->getCurrencyFacade(), $this->createPriceTypeMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface
+     */
+    public function createPriceTypeMapper()
+    {
+        return new PriceProductTypeMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface
+     */
+    public function createPriceProductAbstractReader()
+    {
+        return new PriceProductAbstractReader(
+            $this->getQueryContainer(),
+            $this->createPriceProductMapper(),
+            $this->getProductFacade(),
+            $this->createProductCriteriaBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface
+     */
+    public function createProductCriteriaBuilder()
+    {
+        return new PriceProductCriteriaBuilder(
+            $this->getCurrencyFacade(),
+            $this->getPriceFacade(),
+            $this->getStoreFacade(),
+            $this->createPriceTypeReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface
+     */
+    public function createPriceProductConcreteReader()
+    {
+        return new PriceProductConcreteReader($this->getQueryContainer(), $this->createPriceProductMapper());
     }
 
     /**
@@ -109,5 +180,4 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_STORE);
     }
-
 }
