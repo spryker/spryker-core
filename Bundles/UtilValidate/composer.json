@@ -3,8 +3,8 @@
   "description": "UtilValidate module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel" : "^3.0.0",
-    "spryker/email-validator": "^1.0.0"
+    "spryker/email-validator": "^1.0.0",
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
