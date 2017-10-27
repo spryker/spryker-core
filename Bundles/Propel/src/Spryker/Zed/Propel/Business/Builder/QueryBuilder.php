@@ -408,7 +408,9 @@ SCRIPT;
     protected \$isForUpdateEnabled = false;
 
     /**
-     * @return \$this
+     * @param bool \$isForUpdateEnabled
+     *
+     * @return \$this|" . $this->getQueryClassName() . " The primary criteria object
      */
     public function forUpdate(\$isForUpdateEnabled)
     {
