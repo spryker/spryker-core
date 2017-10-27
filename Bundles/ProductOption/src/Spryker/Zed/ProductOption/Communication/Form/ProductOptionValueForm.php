@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
-use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -42,13 +42,21 @@ class ProductOptionValueForm extends AbstractType
     protected $priceTransformer;
 
     /**
+     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected $moneyCollectionFormTypePlugin;
+
+    /**
+     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $moneyCollectionFormTypePlugin
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Symfony\Component\Form\DataTransformerInterface $priceTransformer
      */
     public function __construct(
+        FormTypeInterface $moneyCollectionFormTypePlugin,
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         DataTransformerInterface $priceTransformer
     ) {
+        $this->moneyCollectionFormTypePlugin = $moneyCollectionFormTypePlugin;
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->priceTransformer = $priceTransformer;
     }
@@ -133,10 +141,9 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addPricesField(FormBuilderInterface $builder)
     {
-        // TODO: replace it with the new solution
         $builder->add(
             static::FIELD_PRICES,
-            MoneyCollectionType::class,
+            $this->moneyCollectionFormTypePlugin->getType(),
             [
                     static::OPTION_AMOUNT_PER_STORE => true,
             ]

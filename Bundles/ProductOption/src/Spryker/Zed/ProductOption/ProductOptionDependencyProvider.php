@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryBridge;
@@ -19,6 +20,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesBridge;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingBridge;
+use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginException;
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -29,6 +31,8 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
     const FACADE_STORE = 'FACADE_STORE';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
+    const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
     const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
@@ -115,6 +119,39 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addMoneyCollectionFormTypePlugin(Container $container)
+    {
+        $container[static::MONEY_COLLECTION_FORM_TYPE_PLUGIN] = function (Container $container) {
+            return $this->createMoneyCollectionFormTypePlugin($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @throws \Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function createMoneyCollectionFormTypePlugin(Container $container)
+    {
+        throw new MissingMoneyCollectionFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure MoneyCollectionFormType ' .
+                'in your own ProductOptionDependencyProvider::createMoneyCollectionFormTypePlugin() ' .
+                'to be able to manage shipment prices.',
+                FormTypeInterface::class
+            )
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_TAX] = function (Container $container) {
@@ -138,6 +175,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addMoneyCollectionFormTypePlugin($container);
 
         return $container;
     }

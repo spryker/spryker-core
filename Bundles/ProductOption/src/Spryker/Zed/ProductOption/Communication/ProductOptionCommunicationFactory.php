@@ -64,7 +64,11 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductOptionValueForm()
     {
-        return new ProductOptionValueForm($this->getQueryContainer(), $this->createPriceTranformer());
+        return new ProductOptionValueForm(
+            $this->getMoneyCollectionFormTypePlugin(),
+            $this->getQueryContainer(),
+            $this->createPriceTranformer()
+        );
     }
 
     /**
@@ -221,5 +225,13 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getMoneyCollectionFormTypePlugin()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN);
     }
 }
