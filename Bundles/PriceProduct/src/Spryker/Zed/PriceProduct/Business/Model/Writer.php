@@ -397,6 +397,7 @@ class Writer implements WriterInterface
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
             $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
             $this->persistPriceProductStore($priceProductTransfer);
+            $priceProductTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
 
         return $productAbstractTransfer;
@@ -416,6 +417,9 @@ class Writer implements WriterInterface
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
             $this->persistProductConcretePriceEntity($priceProductTransfer, $idProductConcrete);
             $this->persistPriceProductStore($priceProductTransfer);
+
+            $priceProductTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
+            $priceProductTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
         }
 
         return $productConcreteTransfer;
@@ -446,14 +450,14 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function persistProductConcretePriceEntity(PriceProductTransfer $priceTransfer, $idProductConcrete)
+    protected function persistProductConcretePriceEntity(PriceProductTransfer $priceProductTransfer, $idProductConcrete)
     {
-        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceType()->getName());
+        $priceTypeEntity = $this->getPriceTypeEntity($priceProductTransfer->getPriceType()->getName());
 
         $priceProductEntity = $this->queryContainer
             ->queryPriceProduct()
@@ -465,9 +469,9 @@ class Writer implements WriterInterface
         $priceProductEntity->setFkProduct($idProductConcrete);
         $priceProductEntity->save();
 
-        $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+        $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
 
-        return $priceTransfer;
+        return $priceProductTransfer;
     }
 
     /**

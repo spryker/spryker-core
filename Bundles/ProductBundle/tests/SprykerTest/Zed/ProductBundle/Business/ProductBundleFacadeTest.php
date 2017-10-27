@@ -438,7 +438,7 @@ class ProductBundleFacadeTest extends Unit
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
 
-        $productAbstractTransfer->addPrices($priceProductTransfer);
+        $productAbstractTransfer->addPrice($priceProductTransfer);
         $productAbstractTransfer->setAttributes([]);
 
         $concreteProductCollection = [];
