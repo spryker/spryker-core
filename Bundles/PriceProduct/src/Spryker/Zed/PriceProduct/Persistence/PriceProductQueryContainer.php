@@ -118,13 +118,13 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
             ])
             ->addJoin([
                 SpyPriceTypeTableMap::COL_ID_PRICE_TYPE,
-                SpyPriceTypeTableMap::COL_NAME
-            ],[
+                SpyPriceTypeTableMap::COL_NAME,
+            ], [
                 SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
-                $this->getConnection()->quote($priceProductCriteriaTransfer->getPriceType())
+                $this->getConnection()->quote($priceProductCriteriaTransfer->getPriceType()),
             ])
 
-            ->where(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT .' = ?', $idAbstractProduct);
+            ->where(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ?', $idAbstractProduct);
     }
 
     /**
