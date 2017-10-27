@@ -25,12 +25,12 @@ class EmailValidator implements EmailValidatorInterface
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface $utilValidatorService
+     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface $utilValidateService
      */
-    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToUtilValidateInterface $utilValidatorService)
+    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToUtilValidateInterface $utilValidateService)
     {
         $this->queryContainer = $queryContainer;
-        $this->utilValidateService = $utilValidatorService;
+        $this->utilValidateService = $utilValidateService;
     }
 
     /**

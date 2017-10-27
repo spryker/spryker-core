@@ -159,14 +159,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface
-     */
-    protected function getUtilValidateService()
-    {
-        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_VALIDATE);
-    }
-
-    /**
      * @return \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface
      */
     protected function createEmailValidator()
@@ -175,5 +167,13 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getUtilValidateService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface
+     */
+    protected function getUtilValidateService()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
 }
