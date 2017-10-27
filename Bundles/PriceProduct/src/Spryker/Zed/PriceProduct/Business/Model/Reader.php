@@ -328,9 +328,9 @@ class Reader implements ReaderInterface
     protected function findPriceByPriceMode(PriceProductCriteriaTransfer $priceProductCriteriaTransfer, array $productPrice)
     {
         if ($priceProductCriteriaTransfer->getPriceMode() === $this->getNetPriceModeIdentifier()) {
-            return $productPrice[PriceProductQueryContainerInterface::COL_NET_PRICE];
+            return (int)$productPrice[PriceProductQueryContainerInterface::COL_NET_PRICE];
         }
 
-        return $productPrice[PriceProductQueryContainerInterface::COL_GROSS_PRICE];
+        return (int)$productPrice[PriceProductQueryContainerInterface::COL_GROSS_PRICE];
     }
 }
