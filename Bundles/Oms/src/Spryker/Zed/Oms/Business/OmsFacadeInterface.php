@@ -57,8 +57,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if all order items are flag to exclude order from customer,
-     *  - This useful when need to filter out orders which not supposed to display in YVES customer profile
+     *  - Checks if all order items are flagged to exclude order from customer.
      *
      * @api
      *
