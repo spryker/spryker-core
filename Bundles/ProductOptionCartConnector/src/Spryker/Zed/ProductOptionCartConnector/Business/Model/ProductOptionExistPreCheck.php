@@ -95,7 +95,7 @@ class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
             return static::$productOptionBySkuActiveCache[$idProductOptionValue];
         }
 
-        static::$productOptionBySkuActiveCache[$idProductOptionValue] = $this->productOptionFacade->existProductOptionValueByIsProductOptionValue($idProductOptionValue);
+        static::$productOptionBySkuActiveCache[$idProductOptionValue] = $this->productOptionFacade->existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
 
         return static::$productOptionBySkuActiveCache[$idProductOptionValue];
     }

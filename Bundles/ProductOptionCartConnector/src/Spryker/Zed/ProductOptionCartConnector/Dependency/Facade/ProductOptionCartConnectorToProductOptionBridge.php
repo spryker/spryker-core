@@ -37,8 +37,8 @@ class ProductOptionCartConnectorToProductOptionBridge implements ProductOptionCa
      *
      * @return bool
      */
-    public function existProductOptionValueByIsProductOptionValue($idProductOptionValue)
+    public function existsProductOptionValueByIdProductOptionValue($idProductOptionValue)
     {
-        return $this->productOptionFacade->existProductOptionValueByIsProductOptionValue($idProductOptionValue);
+        return $this->productOptionFacade->existsProductOptionValueByIdProductOptionValue($idProductOptionValue);
     }
 }
