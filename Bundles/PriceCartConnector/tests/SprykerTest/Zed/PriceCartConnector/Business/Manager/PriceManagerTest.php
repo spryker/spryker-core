@@ -9,12 +9,14 @@ namespace SprykerTest\Zed\PriceCartConnector\Business\Manager;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Price\PriceMode;
+use Spryker\Zed\Price\Business\PriceProductFacade;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
-use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
+use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 
 /**
  * Auto-generated group annotations
@@ -33,21 +35,15 @@ class PriceManagerTest extends Unit
      */
     public function testAddPriceToItems()
     {
-        $priceFacadeStub = $this->createPriceFacadeStub();
-        $priceFacadeStub->addPriceStub('123', 1000);
-        $priceFacadeStub->addValidityStub('123', true);
+        $priceProductFacadeStub = $this->createPriceProductFacadeStub();
+        $priceProductFacadeStub->addPriceStub('123', 1000);
+        $priceProductFacadeStub->addValidityStub('123', true);
 
-        $itemCollection = new CartChangeTransfer();
-        $itemCollection->setQuote(new QuoteTransfer());
-        $item = new ItemTransfer();
-        $item->setSku(123);
-        $item->setId(123);
-        $itemCollection->addItem($item);
+        $cartChangeTransfer = $this->createCartChangeTransfer();
 
-        $priceCartToPriceBridge = new PriceCartToPriceProductBridge($priceFacadeStub);
-        $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice', PriceMode::PRICE_MODE_GROSS);
+        $priceManager = $this->createPriceManager($priceProductFacadeStub);
 
-        $modifiedItemCollection = $priceManager->addGrossPriceToItems($itemCollection);
+        $modifiedItemCollection = $priceManager->addGrossPriceToItems($cartChangeTransfer);
 
         $this->assertSame(1, $modifiedItemCollection->getItems()->count());
 
@@ -58,33 +54,77 @@ class PriceManagerTest extends Unit
 
     /**
      * @expectedException \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
-     * @expectedExceptionMessage Cart item 123 can not be priced
      *
      * @return void
      */
     public function testIsNotPriceAbleWithInvalidPrice()
     {
-        $priceFacadeStub = $this->createPriceFacadeStub();
-        $priceFacadeStub->addPriceStub('123', 1000);
-        $priceFacadeStub->addValidityStub('123', false);
+        $priceProductFacadeStub = $this->createPriceProductFacadeStub();
+        $priceProductFacadeStub->addPriceStub('123', 1000);
+        $priceProductFacadeStub->addValidityStub('123', false);
 
-        $itemCollection = new CartChangeTransfer();
-        $itemCollection->setQuote(new QuoteTransfer());
-        $item = new ItemTransfer();
-        $item->setId(123);
-        $item->setSku(123);
-        $itemCollection->addItem($item);
+        $cartChangeTransfer = $this->createCartChangeTransfer();
 
-        $priceCartToPriceBridge = new PriceCartToPriceProductBridge($priceFacadeStub);
-        $priceManager = new PriceManager($priceCartToPriceBridge, 'grossPrice', PriceMode::PRICE_MODE_GROSS);
-        $priceManager->addGrossPriceToItems($itemCollection);
+        $cartChangeTransfer->getItems()[0]->setSku('non existing');
+
+        $priceManager = $this->createPriceManager($priceProductFacadeStub);
+        $priceManager->addGrossPriceToItems($cartChangeTransfer);
     }
 
     /**
-     * @return \SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub|\Spryker\Zed\PriceProduct\Business\PriceProductFacade
+     * @return \SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub|\Spryker\Zed\PriceProduct\Business\PriceProductFacade
      */
-    private function createPriceFacadeStub()
+    protected function createPriceProductFacadeStub()
     {
-        return new PriceFacadeStub();
+        return new PriceProductFacadeStub();
     }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
+     */
+    protected function createPriceFacadeBridgeMock()
+    {
+        return $this->getMockBuilder(PriceCartToPriceInterface::class)->getMock();
+    }
+
+    /**
+     * @param \SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub $priceProductFacadeStub
+     *
+     * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager
+     */
+    protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub)
+    {
+        $priceProductCartToPriceBridge = new PriceCartToPriceProductBridge($priceProductFacadeStub);
+
+        $priceFacadeMock = $this->createPriceFacadeBridgeMock();
+
+        $priceFacadeMock->method('getNetPriceModeIdentifier')
+            ->willReturn('NET_MODE');
+
+        $priceFacadeMock->method('getGrossPriceModeIdentifier')
+            ->willReturn('GROSS_MODE');
+
+        return new PriceManager($priceProductCartToPriceBridge, $priceFacadeMock);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function createCartChangeTransfer()
+    {
+        $itemCollection = new CartChangeTransfer();
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setCurrency($currencyTransfer);
+
+        $itemCollection->setQuote($quoteTransfer);
+        $item = new ItemTransfer();
+        $item->setSku(123);
+        $item->setId(123);
+        $itemCollection->addItem($item);
+        return $itemCollection;
+    }
+
 }

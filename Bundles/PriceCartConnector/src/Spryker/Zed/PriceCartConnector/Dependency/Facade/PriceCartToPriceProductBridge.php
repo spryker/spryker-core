@@ -71,6 +71,6 @@ class PriceCartToPriceProductBridge implements PriceCartToPriceProductInterface
      */
     public function getDefaultPriceTypeName()
     {
-        return $this->priceProductFacade->getDefaultPriceTypeName();
+        return 'DEFAULT';
     }
 }

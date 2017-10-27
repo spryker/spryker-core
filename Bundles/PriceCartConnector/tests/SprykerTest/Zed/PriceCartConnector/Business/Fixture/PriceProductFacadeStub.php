@@ -7,9 +7,10 @@
 
 namespace SprykerTest\Zed\PriceCartConnector\Business\Fixture;
 
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 
-class PriceFacadeStub extends PriceProductFacade
+class PriceProductFacadeStub extends PriceProductFacade
 {
     /**
      * @var array
@@ -24,25 +25,35 @@ class PriceFacadeStub extends PriceProductFacade
     /**
      * @param string $sku
      * @param string|null $priceType
-     * @param string $currencyCode
-     * @param string $priceMode
      *
      * @return mixed
      */
-    public function getPriceBySku($sku, $priceType, $currencyCode, $priceMode)
+    public function getPriceBySku($sku, $priceType = null)
     {
         return $this->prices[$sku];
     }
 
     /**
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     *
+     * @return mixed
+     */
+    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
+    {
+        if (!isset($this->prices[$priceFilterTransfer->getSku()])) {
+            return null;
+        }
+        return $this->prices[$priceFilterTransfer->getSku()];
+    }
+
+    /**
      * @param string $sku
      * @param string|null $priceType
-     * @param string $currencyCode
-     * @param string $priceMode
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceType, $currencyCode, $priceMode)
+    public function hasValidPrice($sku, $priceType = null)
     {
         if (!isset($this->validities[$sku])) {
             return false;
