@@ -26,7 +26,7 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
     public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer = null)
     {
         $productPriceQuery = $this->getFactory()
-            ->getPriceQueryContainer()
+            ->getPriceProductQueryContainer()
             ->queryPriceProduct();
 
         $productPriceQuery = $this->applyJoins($productPriceQuery, $priceDataFeedTransfer);

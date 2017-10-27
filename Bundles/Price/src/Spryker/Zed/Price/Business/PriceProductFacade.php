@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Price\Business\PriceBusinessFactory getFactory()
  */
-class PriceFacade extends AbstractFacade implements PriceFacadeInterface
+class PriceProductFacade extends AbstractFacade implements PriceFacadeInterface
 {
     /**
      * {@inheritdoc}

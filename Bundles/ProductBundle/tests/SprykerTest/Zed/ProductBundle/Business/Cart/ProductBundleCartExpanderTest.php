@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductBundle\Business\Cart;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -17,6 +18,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit_Framework_MockObject_MockObject;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
@@ -145,7 +147,7 @@ class ProductBundleCartExpanderTest extends Unit
         $localeFacadeMock->method('getCurrentLocale')->willReturn($localeTransfer);
 
         $priceFacadeMock = $this->createPriceFacadeMock();
-        $priceFacadeMock->method('getPriceBySku')->willReturn(25);
+        $priceFacadeMock->method('getPriceFor')->willReturn(25);
 
         $productExpanderMock = $this->createProductExpanderMock($priceFacadeMock, $productFacadeMock, $localeFacadeMock);
 
@@ -160,11 +162,19 @@ class ProductBundleCartExpanderTest extends Unit
         $cartChangeTransfer = new CartChangeTransfer();
 
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+
+        $quoteTransfer->setCurrency($currencyTransfer);
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(2);
         $itemTransfer->setUnitGrossPrice(300);
+        $itemTransfer->setUnitPrice(300);
+        $itemTransfer->setUnitNetPrice(300);
         $itemTransfer->setSku('sku-123');
         $itemTransfer->setId(1);
 

@@ -259,7 +259,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected function distributeBundleUnitPrice(array $bundledProducts, $bundleUnitPrice, $priceMode)
     {
         $totalBundledItemUnitGrossPrice = $this->calculateBundleTotalUnitPrice($bundledProducts, $priceMode);
-        if ($totalBundledItemUnitGrossPrice < 0) {
+        if ($totalBundledItemUnitGrossPrice <= 0) {
             return;
         }
 
