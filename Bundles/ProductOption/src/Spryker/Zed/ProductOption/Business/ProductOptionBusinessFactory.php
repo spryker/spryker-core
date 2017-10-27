@@ -36,7 +36,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionGroupReader()
     {
         return new ProductOptionGroupReader(
-            $this->createProductOptionPriceHydrator(),
+            $this->createProductOptionValuePriceHydrator(),
             $this->getQueryContainer(),
             $this->getGlossaryFacade(),
             $this->getLocaleFacade()
@@ -202,7 +202,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface
      */
-    protected function createProductOptionPriceHydrator()
+    protected function createProductOptionValuePriceHydrator()
     {
         return new ProductOptionValuePriceHydrator($this->getCurrencyFacade());
     }
