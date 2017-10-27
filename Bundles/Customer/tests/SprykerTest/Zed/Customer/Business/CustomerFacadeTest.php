@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Customer\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Service\UtilValidate\UtilValidateServiceInterface;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
@@ -39,6 +40,11 @@ class CustomerFacadeTest extends Unit
     const TESTER_CITY = 'Testcity';
     const TESTER_ADDRESS1 = 'Testerstreet 23';
     const TESTER_ZIP_CODE = '42';
+
+    /**
+     * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
@@ -203,17 +209,13 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider invalidEmailFormats
-     *
-     * @param string $invalidEmail
-     *
      * @return void
      */
-    public function testRegisterCustomerFailsWhenInvalidEmailFormatIsProvided($invalidEmail)
+    public function testRegisterCustomerFailsWhenInvalidEmailFormatIsProvided()
     {
         // Assign
+        $this->mockUtilValidateService(false);
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerTransfer->setEmail($invalidEmail);
 
         // Act
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -223,21 +225,24 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @return array
+     * @uses UtilValidateServiceInterface::isEmailFormatValid()
+     *
+     * @param bool $isEmailFormatValid
+     *
+     * @return void
      */
-    public function invalidEmailFormats()
+    protected function mockUtilValidateService($isEmailFormatValid)
     {
-        return [
-            ['Abc.example.com'],
-            ['A@b@c@example.com'],
-            ['a\"b(c)d,e:f;g<h>i[j\k]l@example.com'],
-            ['just\"not\"right@example.com'],
-            ['this is"not\allowed@example.com'],
-            ['this\ still\"not\\allowed@example.com'],
-            ['john..doe@example.com'],
-            ['john.doe@example..com'],
-            ["te'<i>sting@twelvebeaufort.com"],
-        ];
+        $serviceMock = $this->getMockBuilder(UtilValidateServiceInterface::class)
+            ->setMethods(['isEmailFormatValid'])
+            ->getMock();
+
+        $serviceMock
+            ->expects($this->any())
+            ->method('isEmailFormatValid')
+            ->willReturn($isEmailFormatValid);
+
+        $this->tester->setDependency(CustomerDependencyProvider::SERVICE_UTIL_VALIDATE, $serviceMock);
     }
 
     /**
@@ -247,7 +252,7 @@ class CustomerFacadeTest extends Unit
     {
         // Assign
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerTransfer->setEmail(static::TESTER_UPDATE_EMAIL);
+        $this->mockUtilValidateService(true);
 
         // Act
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -321,17 +326,13 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider invalidEmailFormats
-     *
-     * @param string $invalidEmail
-     *
      * @return void
      */
-    public function testUpdateCustomerFailsWhenInvalidEmailFormatIsProvided($invalidEmail)
+    public function testUpdateCustomerFailsWhenInvalidEmailFormatIsProvided()
     {
         // Assign
         $customerTransfer = $this->createTestCustomer();
-        $customerTransfer->setEmail($invalidEmail);
+        $this->mockUtilValidateService(false);
 
         // Act
         $customerResponse = $this->customerFacade->updateCustomer($customerTransfer);
@@ -347,7 +348,7 @@ class CustomerFacadeTest extends Unit
     {
         // Assign
         $customerTransfer = $this->createTestCustomer();
-        $customerTransfer->setEmail(static::TESTER_UPDATE_EMAIL);
+        $this->mockUtilValidateService(true);
 
         // Act
         $customerResponse = $this->customerFacade->updateCustomer($customerTransfer);
