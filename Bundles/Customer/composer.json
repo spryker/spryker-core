@@ -13,6 +13,7 @@
     "spryker/session": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
+    "spryker/util-sanitize": "^2.0.0",
     "spryker/util-text": "^1.1.0",
     "spryker/zed-request": "^3.0.0"
   },
@@ -36,7 +37,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Customer\\": "tests/SprykerTest/Shared/Customer/_support/Helper/"
+      "SprykerTest\\Shared\\Customer\\Helper\\": "tests/SprykerTest/Shared/Customer/_support/Helper/"
     }
   },
   "autoload-dev": {

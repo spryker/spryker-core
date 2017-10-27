@@ -23,10 +23,11 @@
         <property name="deliveryTimePlugin" type="string" />
         <property name="name" type="string" />
         <property name="carrierName" type="string" />
-        <property name="defaultPrice" type="int" />
         <property name="taxRate" type="float" />
         <property name="isActive" type="bool" />
         <property name="deliveryTime" type="int" />
+        <property name="prices" type="MoneyValue[]" singular="price" />
+        <property name="storeCurrencyPrice" type="int" />
     </transfer>
 
     <transfer name="Order">
@@ -100,6 +101,20 @@
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int" />
         <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="idEntity" type="int" />
+        <property name="fkCurrency" type="int" />
+        <property name="fkStore"  type="int"/>
+        <property name="currency" type="Currency" />
+        <property name="netAmount" type="int" />
+        <property name="grossAmount" type="int" />
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string" />
+        <property name="currency" type="Currency" />
     </transfer>
 
 </transfers>

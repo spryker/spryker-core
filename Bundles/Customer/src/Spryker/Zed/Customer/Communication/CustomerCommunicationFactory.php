@@ -42,7 +42,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerAddressTable($idCustomer)
     {
-        return new AddressTable($this->getQueryContainer(), $idCustomer);
+        return new AddressTable($this->getQueryContainer(), $idCustomer, $this->getUtilSanitizeService());
     }
 
     /**
@@ -126,5 +126,13 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     public function getCustomerTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeInterface
+     */
+    protected function getUtilSanitizeService()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 }

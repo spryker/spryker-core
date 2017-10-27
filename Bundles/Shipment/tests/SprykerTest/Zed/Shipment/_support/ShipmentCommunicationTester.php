@@ -2,6 +2,8 @@
 namespace SprykerTest\Zed\Shipment;
 
 use Codeception\Actor;
+use Spryker\Zed\Money\Communication\Plugin\Form\MoneyCollectionFormTypePlugin;
+use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * Inherited Methods
@@ -25,4 +27,14 @@ class ShipmentCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function registerMoneyCollectionFormTypePlugin()
+    {
+        $this->setDependency(ShipmentDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN, function () {
+            return new MoneyCollectionFormTypePlugin();
+        });
+    }
 }

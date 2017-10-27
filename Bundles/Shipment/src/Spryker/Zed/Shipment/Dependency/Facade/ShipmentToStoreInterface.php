@@ -10,7 +10,12 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 interface ShipmentToStoreInterface
 {
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrencyIsoCode();
+    public function getCurrentStore();
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores();
 }
