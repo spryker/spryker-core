@@ -134,14 +134,14 @@ class GiftCardReader implements GiftCardReaderInterface
         $giftCardTransfer = new GiftCardTransfer();
 
         $giftCardData = $giftCardEntity->toArray();
-        $attributes = $this->encodingService->decodeJson($giftCardData[self::ATTRIBUTES], true);
+        $attributes = $this->encodingService->decodeJson($giftCardData[static::ATTRIBUTES], true);
 
         if (!$attributes) {
             $attributes = [];
         }
 
         $giftCardTransfer->setAttributes($attributes);
-        unset($giftCardData[self::ATTRIBUTES]);
+        unset($giftCardData[static::ATTRIBUTES]);
 
         $giftCardTransfer->fromArray($giftCardData, true);
 

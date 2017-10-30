@@ -71,7 +71,7 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
     {
         $result = new ArrayObject();
         foreach ($shipmentMethods as $shipmentMethod) {
-            if ($shipmentMethod->getName() === self::NO_SHIPMENT_METHOD) {
+            if ($shipmentMethod->getName() === static::NO_SHIPMENT_METHOD) {
                 $result[] = $shipmentMethod;
             }
         }
@@ -88,7 +88,7 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
     {
         $result = new ArrayObject();
         foreach ($shipmentMethods as $shipmentMethod) {
-            if ($shipmentMethod->getName() !== self::NO_SHIPMENT_METHOD) {
+            if ($shipmentMethod->getName() !== static::NO_SHIPMENT_METHOD) {
                 $result[] = $shipmentMethod;
             }
         }
