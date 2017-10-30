@@ -45,22 +45,22 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $coreClass = 'Spryker\\Zed\\Kernel\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $projectClass = 'ProjectNamespace\\Zed\\Kernel\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $storeClass = 'ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $classPattern = 'Unit\\%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\Fixtures\\%bundle%DependencyInjector';
+    protected $classPattern = '%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\%bundle%DependencyInjector';
 
     /**
      * @var array
@@ -251,6 +251,7 @@ class DependencyInjectorResolverTest extends Unit
         $testsDirectoryPosition = array_search('tests', $directoryParts);
 
         $basePath = implode(DIRECTORY_SEPARATOR, array_slice($directoryParts, 0, $testsDirectoryPosition + 1));
+        $basePath = $basePath . DIRECTORY_SEPARATOR . '_data' . DIRECTORY_SEPARATOR . 'Generated';
 
         return $basePath;
     }
