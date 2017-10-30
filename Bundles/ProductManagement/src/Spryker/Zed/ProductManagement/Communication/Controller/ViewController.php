@@ -69,6 +69,14 @@ class ViewController extends AddController
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
+        $isProductBundle = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isProductBundleByProductAbstract($productAbstractTransfer);
+
+        $isGiftCard = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
+        
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -84,6 +92,8 @@ class ViewController extends AddController
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
             'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
+            'isProductBundle' => $isProductBundle,
+            'isGiftCard' => $isGiftCard,
         ]);
     }
 

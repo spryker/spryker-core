@@ -16,6 +16,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface;
 
 class ProductTable extends AbstractProductTable
 {
@@ -40,15 +41,23 @@ class ProductTable extends AbstractProductTable
     protected $localeTransfer;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface
+     */
+    protected $productTypeHelper;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
-        LocaleTransfer $localeTransfer
+        LocaleTransfer $localeTransfer,
+        ProductTypeHelperInterface $productTypeHelper
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
+        $this->productTypeHelper = $productTypeHelper;
     }
 
     /**
@@ -146,11 +155,11 @@ class ProductTable extends AbstractProductTable
      */
     protected function getTypeName(SpyProductAbstract $productAbstractEntity)
     {
-        if ($this->getIsBundleProduct($productAbstractEntity)) {
+        if ($this->productTypeHelper->isProductBundleByProductAbstractEntity($productAbstractEntity)) {
             return 'Product Bundle';
         }
 
-        if ($this->getIsGiftCard($productAbstractEntity)) {
+        if ($this->productTypeHelper->isGiftCardByProductAbstractEntity($productAbstractEntity)) {
             return 'Gift card';
         }
 
@@ -208,7 +217,7 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
-     * @deprecated Use getIsBundleProduct instead
+     * @deprecated Use ProductTypeHelperInterface::isProductBundleByProductAbstractEntity() instead
      *
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
@@ -223,39 +232,5 @@ class ProductTable extends AbstractProductTable
         }
 
         return 'No';
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    protected function getIsBundleProduct(SpyProductAbstract $productAbstractEntity)
-    {
-        foreach ($productAbstractEntity->getSpyProducts() as $productEntity) {
-            if ($productEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return bool
-     */
-    protected function getIsGiftCard(SpyProductAbstract $productAbstractEntity)
-    {
-        if (!method_exists($productAbstractEntity, 'getSpyGiftCardProductAbstractConfigurationLinks')) {
-            return false;
-        }
-
-        if (!$productAbstractEntity->getSpyGiftCardProductAbstractConfigurationLinks()->getFirst()) {
-            return false;
-        }
-
-        return true;
     }
 }

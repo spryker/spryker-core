@@ -1,9 +1,24 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General Information' } %}
     {% block widget_content %}
 
+        {% set productType = 'Product' %}
+
+        {% if isGiftCard == true %}
+            {% set productType = 'GiftCard' %}
+        {% endif %}
+
+        {% if isProductBundle == true %}
+            {% set productType = 'Product Bundle' %}
+        {% endif %}
+
         <div class="row">
             <div class="col-xs-2"><b>Sku</b></div>
             <div class="col-xs-10">{{ currentProduct.sku }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2"><b>Type</b></div>
+            <div class="col-xs-10">{{ productType }}</div>
         </div>
 
         <div class="m-t">
