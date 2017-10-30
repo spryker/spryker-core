@@ -32,7 +32,7 @@ class Builder implements BuilderInterface
      */
     public function build(LoggerInterface $logger)
     {
-        $process = new Process($this->buildCommand, APPLICATION_ROOT_DIR);
+        $process = new Process($this->buildCommand, APPLICATION_ROOT_DIR, null, null, 3600);
         $process->run(function ($type, $buffer) use ($logger) {
             $logger->info($buffer);
         });
