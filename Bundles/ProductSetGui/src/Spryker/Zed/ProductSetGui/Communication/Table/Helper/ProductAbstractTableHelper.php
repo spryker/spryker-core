@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductSetGui\Communication\Table\Helper;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface;
+use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductInterface;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInterface;
 
 class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
@@ -20,7 +20,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
     protected $productImageFacade;
 
     /**
-     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface
+     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductInterface
      */
     protected $priceProductFacade;
 
@@ -31,12 +31,12 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
 
     /**
      * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageInterface $productImageFacade
-     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyInterface $moneyFacade
      */
     public function __construct(
         ProductSetGuiToProductImageInterface $productImageFacade,
-        ProductSetGuiToPriceInterface $priceProductFacade,
+        ProductSetGuiToPriceProductInterface $priceProductFacade,
         ProductSetGuiToMoneyInterface $moneyFacade
     ) {
         $this->productImageFacade = $productImageFacade;

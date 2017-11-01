@@ -15,7 +15,7 @@ interface PriceProductClientInterface
 {
     /**
      * Specification:
-     *  - Returns default price type as configured for current shop
+     *  - Returns default price type as configured for current environment
      *
      * @api
      *
@@ -25,7 +25,8 @@ interface PriceProductClientInterface
 
     /**
      * Specification:
-     *  - Resolves current product price as per current customer state, that means it will select price based on customer select currency and price mode.
+     *  - Resolves current product price as per current customer state, it will try to resolve price based on customer selected currency and price mode.
+     *  - Defaults to price mode defined in environment configuration if customer not yet selected.
      *
      * @api
      *

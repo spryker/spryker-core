@@ -45,19 +45,19 @@ class ProductMoneyCollectionDataProvider
      */
     public function getInitialData()
     {
-        $productMoneyValueCollection = new ArrayObject();
         $storeCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
         $priceTypes = $this->priceFacade->getPriceTypeValues();
+
+        $productMoneyValueCollection = new ArrayObject();
         foreach ($storeCurrencyCollection as $storeWithCurrencyTransfer) {
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 foreach ($priceTypes as $priceTypeTransfer) {
-                    $productMoneyValueCollection->append(
-                        $this->mapProductMoneyValueTransfer(
-                            $currencyTransfer,
-                            $storeWithCurrencyTransfer->getStore(),
-                            $priceTypeTransfer
-                        )
+                    $priceProductTransfer = $this->mapProductMoneyValueTransfer(
+                        $currencyTransfer,
+                        $storeWithCurrencyTransfer->getStore(),
+                        $priceTypeTransfer
                     );
+                    $productMoneyValueCollection->append($priceProductTransfer);
                 }
             }
         }
@@ -132,19 +132,16 @@ class ProductMoneyCollectionDataProvider
         StoreTransfer $storeTransfer,
         PriceTypeTransfer $priceTypeTransfer
     ) {
-        $productMoneyValueTransfer = new PriceProductTransfer();
 
-        $moneyValueTransfer = new MoneyValueTransfer();
-        $moneyValueTransfer->setCurrency($currencyTransfer);
-        $moneyValueTransfer->setFkCurrency($currencyTransfer->getIdCurrency());
-        $moneyValueTransfer->setFkStore($storeTransfer->getIdStore());
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->setCurrency($currencyTransfer)
+            ->setFkCurrency($currencyTransfer->getIdCurrency())
+            ->setFkStore($storeTransfer->getIdStore());
 
-        $productMoneyValueTransfer->setMoneyValue($moneyValueTransfer);
-        $productMoneyValueTransfer->setFkPriceType($priceTypeTransfer->getIdPriceType()); //@todo use id from PriceTypeTransfer
-
-        $productMoneyValueTransfer->setPriceType($priceTypeTransfer);
-
-        return $productMoneyValueTransfer;
+        return (new PriceProductTransfer())
+            ->setMoneyValue($moneyValueTransfer)
+            ->setFkPriceType($priceTypeTransfer->getIdPriceType())
+            ->setPriceType($priceTypeTransfer);
     }
 
     /**

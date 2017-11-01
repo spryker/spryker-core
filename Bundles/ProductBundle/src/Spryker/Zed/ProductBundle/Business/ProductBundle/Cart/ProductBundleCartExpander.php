@@ -480,7 +480,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param string$sku
+     * @param string $sku
      * @param string $currencyIsoCode
      * @param string $priceMode
      *

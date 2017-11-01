@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToLocaleBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToMoneyBridge;
-use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductBridge;
+use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductBridgeProduct;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductImageBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToProductSetBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToUrlBridge;
@@ -121,7 +121,7 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function providePriceProductFacade(Container $container)
     {
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
-            return new ProductSetGuiToPriceProductBridge($container->getLocator()->priceProduct()->facade());
+            return new ProductSetGuiToPriceProductBridgeProduct($container->getLocator()->priceProduct()->facade());
         };
     }
 
