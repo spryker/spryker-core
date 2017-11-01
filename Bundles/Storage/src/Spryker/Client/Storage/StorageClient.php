@@ -384,16 +384,11 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $storageCacheStrategyName
-     * @param array $allowedGetParameters
      *
      * @return void
      */
-    public function persistCacheForRequest(
-        Request $request,
-        $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE,
-        array $allowedGetParameters = []
-    ) {
-        $cacheKey = static::generateCacheKey($request, $allowedGetParameters);
+    public function persistCacheForRequest(Request $request, $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE) {
+        $cacheKey = static::generateCacheKey($request);
 
         if ($cacheKey && is_array(self::$cachedKeys)) {
             $this->updateCache($storageCacheStrategyName, $cacheKey);
@@ -437,11 +432,10 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request|null $request
-     * @param array $allowedGetParameters
      *
      * @return string
      */
-    protected static function generateCacheKey(Request $request = null, array $allowedGetParameters = [])
+    protected static function generateCacheKey(Request $request = null)
     {
         if ($request) {
             $requestUri = $request->getRequestUri();
@@ -458,7 +452,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         }
 
         $urlSegments = strtok($requestUri, '?');
-        $getParametersKey = static::filterGetParameters($getParameters, $allowedGetParameters);
+        $getParametersKey = static::filterGetParameters($getParameters);
 
         $cacheKey = static::assembleCacheKey($urlSegments, $getParametersKey);
 
@@ -467,13 +461,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
     /**
      * @param array $getParameters
-     * @param array $allowedGetParameters
      *
      * @return string
      */
-    protected static function filterGetParameters(array $getParameters, array $allowedGetParameters)
+    protected static function filterGetParameters(array $getParameters)
     {
-        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParameters));
+        $allowedGetParametersConfig = static::getAllowedGetParametersList();
+
+        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersConfig));
         ksort($allowedGetParameters);
         $getParametersKey = count($allowedGetParameters) > 0
             ? '?' . http_build_query($allowedGetParameters)
@@ -496,6 +491,17 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             $urlSegments . $getParametersKey;
 
         return $cacheKey;
+    }
+
+
+    /**
+     * @return string[]
+     */
+    protected function getAllowedGetParametersList()
+    {
+        return (new static())->getFactory()
+            ->getStorageClientConfig()
+            ->getAllowedGetParametersList();
     }
 
     /**
