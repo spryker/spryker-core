@@ -468,9 +468,12 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static function generateGetParametersKey(array $getParameters)
     {
         $allowedGetParametersConfig = static::getAllowedGetParametersConfig();
-        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersConfig));
+        if (count($allowedGetParametersConfig) === 0) {
+            return '';
+        }
 
-        if (count($allowedGetParameters) < 1) {
+        $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersConfig));
+        if (count($allowedGetParameters) === 0) {
             return '';
         }
 
