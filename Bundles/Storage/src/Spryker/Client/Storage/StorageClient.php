@@ -387,7 +387,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return void
      */
-    public function persistCacheForRequest(Request $request, $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE) {
+    public function persistCacheForRequest(Request $request, $storageCacheStrategyName = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE)
+    {
         $cacheKey = static::generateCacheKey($request);
 
         if ($cacheKey && is_array(self::$cachedKeys)) {
@@ -452,8 +453,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         }
 
         $urlSegments = strtok($requestUri, '?');
-        $getParametersKey = static::filterGetParameters($getParameters);
 
+        $getParametersKey = static::generateGetParametersKey($getParameters);
         $cacheKey = static::assembleCacheKey($urlSegments, $getParametersKey);
 
         return $cacheKey;
@@ -464,17 +465,17 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return string
      */
-    protected static function filterGetParameters(array $getParameters)
+    protected static function generateGetParametersKey(array $getParameters)
     {
-        $allowedGetParametersConfig = static::getAllowedGetParametersList();
-
+        $allowedGetParametersConfig = static::getAllowedGetParametersConfig();
         $allowedGetParameters = array_intersect_key($getParameters, array_flip($allowedGetParametersConfig));
-        ksort($allowedGetParameters);
-        $getParametersKey = count($allowedGetParameters) > 0
-            ? '?' . http_build_query($allowedGetParameters)
-            : '';
 
-        return $getParametersKey;
+        if (count($allowedGetParameters) < 1) {
+            return '';
+        }
+
+        ksort($allowedGetParameters);
+        return http_build_query($allowedGetParameters);
     }
 
     /**
@@ -493,11 +494,10 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         return $cacheKey;
     }
 
-
     /**
      * @return string[]
      */
-    protected function getAllowedGetParametersList()
+    protected static function getAllowedGetParametersConfig()
     {
         return (new static())->getFactory()
             ->getStorageClientConfig()
