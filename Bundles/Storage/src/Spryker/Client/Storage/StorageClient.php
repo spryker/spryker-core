@@ -478,7 +478,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         }
 
         ksort($allowedGetParameters);
-        return http_build_query($allowedGetParameters);
+        return '?' . http_build_query($allowedGetParameters);
     }
 
     /**
