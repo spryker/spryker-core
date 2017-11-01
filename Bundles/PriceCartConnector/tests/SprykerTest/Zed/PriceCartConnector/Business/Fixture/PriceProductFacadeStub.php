@@ -90,5 +90,4 @@ class PriceProductFacadeStub extends PriceProductFacade
     {
         return 'DEFAULT';
     }
-
 }
