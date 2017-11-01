@@ -19,9 +19,7 @@ class PriceProductTypeMapper implements ProductPriceTypeMapperInterface
      */
     public function mapFromEntity(SpyPriceType $priceTypeEntity)
     {
-        $priceTypeTransfer = new PriceTypeTransfer();
-        $priceTypeTransfer->fromArray($priceTypeEntity->toArray(), true);
-
-        return $priceTypeTransfer;
+        return (new PriceTypeTransfer())
+          ->fromArray($priceTypeEntity->toArray(), true);
     }
 }

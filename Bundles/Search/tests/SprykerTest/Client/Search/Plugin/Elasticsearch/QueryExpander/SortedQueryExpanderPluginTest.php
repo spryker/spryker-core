@@ -130,7 +130,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             ->addSort(
                 (new SortConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_SORT)
             );
 

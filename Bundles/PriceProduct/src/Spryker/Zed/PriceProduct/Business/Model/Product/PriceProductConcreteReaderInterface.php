@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -27,6 +27,13 @@ interface PriceProductConcreteReaderInterface
     public function findProductConcretePricesBySku($sku);
 
     /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesById($idProductConcrete);
+
+    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -41,11 +48,4 @@ interface PriceProductConcreteReaderInterface
      * @return int
      */
     public function findPriceProductId($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function findProductConcretePricesById($idProductConcrete);
 }

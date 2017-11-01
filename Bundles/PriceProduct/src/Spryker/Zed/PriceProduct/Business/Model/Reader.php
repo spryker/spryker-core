@@ -47,12 +47,12 @@ class Reader implements ReaderInterface
     protected $priceProductTypeReader;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\\Product\PriceProductConcreteReaderInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface
      */
     protected $priceProductConcreteReader;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\\Product\PriceProductAbstractReaderInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface
      */
     protected $priceProductAbstractReader;
 

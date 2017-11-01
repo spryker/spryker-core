@@ -35,7 +35,7 @@ class BulkWriter extends Writer implements BulkWriterInterface
             $this->addRecordToTouch(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
         }
 
-        return $priceProductEntity;
+        return $priceProductEntity->getPriceProduct();
     }
 
     /**
