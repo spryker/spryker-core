@@ -379,13 +379,13 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function validateCheckoutGrandTotal(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $this->getFactory()
+        return $this->getFactory()
             ->createCheckoutGrandTotalPreCondition()
             ->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }

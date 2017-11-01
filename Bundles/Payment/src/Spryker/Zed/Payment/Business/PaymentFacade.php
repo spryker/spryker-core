@@ -39,11 +39,11 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createCheckoutPaymentPluginExecutor()
             ->executePreCheckPlugin($quoteTransfer, $checkoutResponseTransfer);
     }

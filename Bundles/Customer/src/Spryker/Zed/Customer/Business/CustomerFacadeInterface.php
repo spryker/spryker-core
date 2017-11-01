@@ -273,6 +273,9 @@ interface CustomerFacadeInterface
     );
 
     /**
+     * Specification:
+     * - Checks required for an order placement fields in a customer in the quote
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

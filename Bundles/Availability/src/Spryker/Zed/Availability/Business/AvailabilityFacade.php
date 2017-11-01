@@ -57,7 +57,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkoutAvailabilityPreCondition(
         QuoteTransfer $quoteTransfer,

@@ -107,13 +107,13 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function preCheckCheckoutAvailability(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-         $this->getFactory()
+         return $this->getFactory()
             ->createProductBundleCheckoutPreCheck()
             ->checkCheckoutAvailability($quoteTransfer, $checkoutResponseTransfer);
     }

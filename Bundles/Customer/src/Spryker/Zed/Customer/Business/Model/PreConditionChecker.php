@@ -32,16 +32,16 @@ class PreConditionChecker implements PreConditionCheckerInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkPreConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         if ($quoteTransfer->getCustomer() !== null && $quoteTransfer->getCustomer()->getIdCustomer() !== null) {
-            return;
+            return true;
         }
 
         if ($quoteTransfer->getCustomer()->getIsGuest() === true) {
-            return;
+            return true;
         }
 
         if ($this->customer->hasEmail($quoteTransfer->getCustomer()->getEmail())) {
@@ -53,7 +53,11 @@ class PreConditionChecker implements PreConditionCheckerInterface
             $checkoutResponseTransfer
                 ->setIsSuccess(false)
                 ->addError($checkoutErrorTransfer);
+
+            return false;
         }
+
+        return true;
     }
 
     /**

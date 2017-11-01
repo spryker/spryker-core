@@ -62,21 +62,24 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $checkoutResponse = $this->createCheckoutResponseTransfer();
         $checkoutResponse->setIsSuccess(false);
 
-        $this->checkPreConditions($quoteTransfer, $checkoutResponse);
+        $isPassed = $this->checkPreConditions($quoteTransfer, $checkoutResponse);
 
+        if (!$isPassed) {
+            return $checkoutResponse;
+        }
+
+        $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponse);
+        //check that we don't change response in Save and post hooks
+        if ($this->hasErrors($checkoutResponse)) {
+            return $checkoutResponse;
+        }
+
+        $orderTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
         if (!$this->hasErrors($checkoutResponse)) {
-            $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponse);
-            if ($this->hasErrors($checkoutResponse)) {
-                return $checkoutResponse;
-            }
+            $this->executePostHooks($orderTransfer, $checkoutResponse);
 
-            $orderTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
-            if (!$this->hasErrors($checkoutResponse)) {
-                $this->executePostHooks($orderTransfer, $checkoutResponse);
-
-                $isSuccess = !$this->hasErrors($checkoutResponse);
-                $checkoutResponse->setIsSuccess($isSuccess);
-            }
+            $isSuccess = !$this->hasErrors($checkoutResponse);
+            $checkoutResponse->setIsSuccess($isSuccess);
         }
 
         return $checkoutResponse;
@@ -86,13 +89,17 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return void
+     * @return bool
      */
     protected function checkPreConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
+        $isPassed = true;
+
         foreach ($this->preConditionStack as $preCondition) {
-            $preCondition->checkCondition($quoteTransfer, $checkoutResponse);
+            $isPassed &= $preCondition->checkCondition($quoteTransfer, $checkoutResponse);
         }
+
+        return (bool)$isPassed;
     }
 
     /**
