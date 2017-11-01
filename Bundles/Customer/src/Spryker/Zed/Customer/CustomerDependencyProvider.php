@@ -19,21 +19,21 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_SEQUENCE_NUMBER = 'sequence number facade';
-    const FACADE_COUNTRY = 'country facade';
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_MAIL = 'mail facade';
+    const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_MAIL = 'FACADE_MAIL';
 
-    const SERVICE_DATE_FORMATTER = 'date formatter service';
+    const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
-    const QUERY_CONTAINER_LOCALE = 'locale query container';
-    const STORE = 'store';
+    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+
+    const STORE = 'STORE';
 
     const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
-
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
