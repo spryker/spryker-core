@@ -39,9 +39,7 @@ use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 class ProductOptionFacadeTest extends Unit
 {
     const DEFAULT_LOCALE_ISO_CODE = 'en_US';
-
-    // TODO: add test to save prices
-
+    
     /**
      * @return void
      */
