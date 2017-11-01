@@ -19,4 +19,11 @@ interface ProductOptionToCurrencyInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
+
+    /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function fromIsoCode($isoCode);
 }

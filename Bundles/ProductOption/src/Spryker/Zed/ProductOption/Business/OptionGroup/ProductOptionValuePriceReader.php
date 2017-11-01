@@ -43,11 +43,12 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     public function getCurrentGrossPrice(SpyProductOptionValue $productOptionValueEntity)
     {
-        $currentIdCurrency = $this->currencyFacade->getCurrent()->getIdCurrency();
+        $priceMap = $this->getCurrencyFilteredPriceMap(
+            $productOptionValueEntity->getProductOptionValuePrices(),
+            $this->getCurrentIdCurrency()
+        );
+
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
-
-        $priceMap = $this->getCurrencyFilteredPriceMap($productOptionValueEntity->getProductOptionValuePrices(), $currentIdCurrency);
-
         if (isset($priceMap[$currentIdStore])) {
             return $priceMap[$currentIdStore]->getGrossPrice();
         }
@@ -66,11 +67,12 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     public function getCurrentNetPrice(SpyProductOptionValue $productOptionValueEntity)
     {
-        $currentIdCurrency = $this->currencyFacade->getCurrent()->getIdCurrency();
+        $priceMap = $this->getCurrencyFilteredPriceMap(
+            $productOptionValueEntity->getProductOptionValuePrices(),
+            $this->getCurrentIdCurrency()
+        );
+
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
-
-        $priceMap = $this->getCurrencyFilteredPriceMap($productOptionValueEntity->getProductOptionValuePrices(), $currentIdCurrency);
-
         if (isset($priceMap[$currentIdStore])) {
             return $priceMap[$currentIdStore]->getNetPrice();
         }
@@ -100,5 +102,15 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
         }
 
         return $priceMap;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getCurrentIdCurrency()
+    {
+        $currency = $this->currencyFacade->getCurrent();
+
+        return $this->currencyFacade->fromIsoCode($currency->getCode())->getIdCurrency();
     }
 }

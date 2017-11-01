@@ -38,4 +38,14 @@ class ProductOptionToCurrencyBridge implements ProductOptionToCurrencyInterface
     {
         return $this->currencyFacade->getCurrent();
     }
+
+    /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function fromIsoCode($isoCode)
+    {
+        return $this->currencyFacade->fromIsoCode($isoCode);
+    }
 }
