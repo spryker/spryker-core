@@ -31,7 +31,8 @@ class WishlistFactory extends AbstractFactory
     public function createProductStorage()
     {
         return new ProductStorage(
-            $this->createProductClient()
+            $this->createProductClient(),
+            $this->getPriceProductClient()
         );
     }
 
@@ -71,5 +72,13 @@ class WishlistFactory extends AbstractFactory
     public function getCustomerClient()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductInterface
+     */
+    protected function getPriceProductClient()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_PRICE_PRODUCT);
     }
 }

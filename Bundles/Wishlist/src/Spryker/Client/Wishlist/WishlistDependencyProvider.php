@@ -11,14 +11,17 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToCartBridge;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToCustomerBridge;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductBridge;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
     const SERVICE_ZED = 'SERVICE_ZED';
+
     const CLIENT_CART = 'CLIENT_CART';
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -27,22 +30,77 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_ZED] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
-        };
+        $container = $this->addZedRequestClient($container);
+        $container = $this->addProductClient($container);
+        $container = $this->addCartClient($container);
+        $container = $this->addCustomerClient($container);
+        $container = $this->addPriceProductClient($container);
 
-        $container[self::CLIENT_PRODUCT] = function (Container $container) {
-            return new WishlistToProductBridge($container->getLocator()->product()->client());
-        };
+        return $container;
+    }
 
-        $container[self::CLIENT_CART] = function (Container $container) {
-            return new WishlistToCartBridge($container->getLocator()->cart()->client());
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductClient(Container $container)
+    {
+        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+            return new WishlistToPriceProductBridge($container->getLocator()->priceProduct()->client());
         };
+        return $container;
+    }
 
-        $container[self::CLIENT_CUSTOMER] = function (Container $container) {
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container)
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new WishlistToCustomerBridge($container->getLocator()->customer()->client());
         };
+        return $container;
+    }
 
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCartClient(Container $container)
+    {
+        $container[static::CLIENT_CART] = function (Container $container) {
+            return new WishlistToCartBridge($container->getLocator()->cart()->client());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductClient(Container $container)
+    {
+        $container[static::CLIENT_PRODUCT] = function (Container $container) {
+            return new WishlistToProductBridge($container->getLocator()->product()->client());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container)
+    {
+        $container[static::SERVICE_ZED] = function (Container $container) {
+            return $container->getLocator()->zedRequest()->client();
+        };
         return $container;
     }
 }
