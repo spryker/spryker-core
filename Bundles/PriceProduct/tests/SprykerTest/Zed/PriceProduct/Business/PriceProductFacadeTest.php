@@ -117,7 +117,7 @@ class PriceProductFacadeTest extends Unit
 
         $price = $priceProductFacade->getPriceBySku($priceProductTransfer->getSkuProduct());
 
-        $this->assertSame(100 , $price);
+        $this->assertSame(100, $price);
     }
 
     /**
@@ -191,8 +191,8 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10 ,9 ,'EUR');
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11 ,10 ,'USD');
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, 'EUR');
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, 'USD');
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
@@ -220,7 +220,7 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10 ,9 ,'EUR');
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, 'EUR');
 
         $productConcreteTransfer->setPrices($prices);
 
@@ -247,8 +247,7 @@ class PriceProductFacadeTest extends Unit
         $skuAbstract = '',
         $skuConcrete = '',
         $currencyIsoCode = ''
-    )
-    {
+    ) {
         $priceProductTransfer = new PriceProductTransfer();
         $priceProductTransfer->setSkuProductAbstract($skuAbstract);
         $priceProductTransfer->setSkuProduct($skuConcrete);
@@ -262,7 +261,7 @@ class PriceProductFacadeTest extends Unit
         $storeTransfer = $this->createStoreFacade()->getCurrentStore();
         if (!$currencyIsoCode) {
             $currencyTransfer = $this->createCurrencyFacade()->getDefaultCurrencyForCurrentStore();
-        }  else {
+        } else {
             $currencyTransfer = $this->createCurrencyFacade()->fromIsoCode($currencyIsoCode);
         }
 

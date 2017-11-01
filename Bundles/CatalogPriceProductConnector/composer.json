@@ -3,10 +3,19 @@
   "description": "CatalogPriceProductConnector module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/price-product" : "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/elastica": "*",
+    "spryker/search": "*"
+  },
+  "suggest": {
+    "spryker/search": "If you want to use Elastica plugins",
+    "spryker/elastica": "If you want to use Elastica plugins.",
+    "spryker/config": "If you want to use Elastica plugins."
   },
   "autoload": {
     "psr-4": {

@@ -136,7 +136,6 @@ class CurrencyReader implements CurrencyReaderInterface
     }
 
     /**
-     *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getDefaultCurrencyForCurrentStore()

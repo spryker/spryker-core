@@ -54,6 +54,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
         return (new PriceProductTransfer())
             ->fromArray($priceProductEntity->toArray(), true)
+            ->setIdProduct($priceProductEntity->getFkProduct())
             ->setIdProductAbstract($priceProductEntity->getFkProductAbstract())
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setPriceType($priceTypeTransfer)

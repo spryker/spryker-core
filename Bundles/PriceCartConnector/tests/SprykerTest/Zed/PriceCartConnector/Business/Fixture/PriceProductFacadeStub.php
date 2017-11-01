@@ -34,7 +34,6 @@ class PriceProductFacadeStub extends PriceProductFacade
     }
 
     /**
-     *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return mixed

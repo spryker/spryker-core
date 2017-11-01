@@ -427,7 +427,7 @@ class ProductBundleFacadeTest extends Unit
         $priceProductTransfer->setPriceType($priceTypeTransfer);
 
         $currencyTransfer = $this->getLocator()->currency()->facade()->fromIsoCode('EUR');
-        $storeTransfer =  $this->getLocator()->store()->facade()->getCurrentStore();
+        $storeTransfer = $this->getLocator()->store()->facade()->getCurrentStore();
 
         $moneyValueTransfer = (new MoneyValueTransfer())
             ->setCurrency($currencyTransfer)
@@ -438,7 +438,7 @@ class ProductBundleFacadeTest extends Unit
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
 
-        $productAbstractTransfer->addPrices($priceProductTransfer);
+        $productAbstractTransfer->addPrice($priceProductTransfer);
         $productAbstractTransfer->setAttributes([]);
 
         $concreteProductCollection = [];
