@@ -31,6 +31,7 @@ use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyP
 class ProductOptionCartConnectorFacadeTest extends Unit
 {
     const ID_PRODUCT_OPTION = 5;
+    const DUMMY_PRICE = 1500;
 
     /**
      * @var \SprykerTest\Zed\ProductOptionCartConnector\ProductOptionCartConnectorBusinessTester
@@ -136,7 +137,11 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     public function testExpandProductOptionsSanitizesNetPriceWhenGrossPriceModeIsActive()
     {
         // Assign
-        $this->mockProductOptionFacade((new ProductOptionTransfer())->setIdProductOptionValue(static::ID_PRODUCT_OPTION));
+        $this->mockProductOptionFacade(
+            (new ProductOptionTransfer())
+                ->setIdProductOptionValue(static::ID_PRODUCT_OPTION)
+                ->setUnitNetPrice(static::DUMMY_PRICE)
+        );
 
         $cartChangeTransfer = $this->createCartChangeTransferWithDefaultItem($this->getGrossPriceModeIdentifier());
         $expectedResult = 0;
@@ -154,7 +159,11 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     public function testExpandProductOptionsSanitizesGrossPriceWhenNetPriceModeIsActive()
     {
         // Assign
-        $this->mockProductOptionFacade((new ProductOptionTransfer())->setIdProductOptionValue(static::ID_PRODUCT_OPTION));
+        $this->mockProductOptionFacade(
+            (new ProductOptionTransfer())
+                ->setIdProductOptionValue(static::ID_PRODUCT_OPTION)
+                ->setUnitGrossPrice(static::DUMMY_PRICE)
+        );
 
         $cartChangeTransfer = $this->createCartChangeTransferWithDefaultItem($this->getNetPriceModeIdentifier());
         $expectedResult = 0;

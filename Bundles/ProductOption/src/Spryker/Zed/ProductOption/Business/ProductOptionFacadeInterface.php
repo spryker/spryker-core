@@ -24,6 +24,7 @@ interface ProductOptionFacadeInterface
      *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys
      *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys
      *  - Persists value and group name translations, add to glossary
+     *  - Persists multi-currency value prices.
      *  - Returns id of option group
      *
      * @api
@@ -38,8 +39,9 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Persist new product option value, updates existing value if idOptionValue is set
-     *  - Returns id of option value
+     * - Persist new product option value, updates existing value if idOptionValue is set.
+     * - Persists multi-currency value prices.
+     * - Returns id of option value.
      *
      * @api
      *
@@ -70,8 +72,9 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Reads product option from persistence.
-     *  - Prices are calculated using current store, and current currency.
+     * - Reads product option from persistence.
+     * - Net and gross prices are calculated using current store, and current currency.
+     * - Uses default store (fkStore = NULL) prices when the option has no currency definition for the current store.
      *
      * @api
      *
@@ -83,8 +86,8 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Gets product option group from persistence
-     *  - Gets all related product option values
+     * - Retrieves all product option group related production values from persistence.
+     * - Populates all multi-currency prices for each product option value.
      *
      * @api
      *
