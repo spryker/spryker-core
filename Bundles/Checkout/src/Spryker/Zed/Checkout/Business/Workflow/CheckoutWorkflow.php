@@ -68,11 +68,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             return $checkoutResponse;
         }
 
-        $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponse);
-        //check that we don't change response in Save and post hooks
-        if ($this->hasErrors($checkoutResponse)) {
-            return $checkoutResponse;
-        }
+        $quoteTransfer = $this->doPreSave($quoteTransfer);
 
         $orderTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
         if (!$this->hasErrors($checkoutResponse)) {
@@ -162,14 +158,13 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function doPreSave(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    protected function doPreSave(QuoteTransfer $quoteTransfer)
     {
         foreach ($this->preSaveStack as $preSavePlugin) {
-            $quoteTransfer = $preSavePlugin->preSave($quoteTransfer, $checkoutResponse);
+            $quoteTransfer = $preSavePlugin->preSave($quoteTransfer);
         }
 
         return $quoteTransfer;
