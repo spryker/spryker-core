@@ -39,7 +39,17 @@ use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 class ProductOptionFacadeTest extends Unit
 {
     const DEFAULT_LOCALE_ISO_CODE = 'en_US';
-    
+
+    const DEFAULT_ID_CURRENCY = 5;
+    const DEFAULT_ID_STORE = null;
+    const DEFAULT_NET_PRICE = 100;
+    const DEFAULT_GROSS_PRICE = 200;
+
+    /**
+     * @var \SprykerTest\Zed\ProductOption\ProductOptionBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -63,9 +73,70 @@ class ProductOptionFacadeTest extends Unit
         $productOptionValues = $productOptionGroupEntity->getSpyProductOptionValues();
         $productOptionValueEntity = $productOptionValues[0];
 
-        $this->assertSame($productOptionValueEntity->getPrice(), $productOptionValueTransfer->getPrice());
         $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
         $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductOptionGroupUpdatesCurrencyPrices()
+    {
+        // Assign
+        $expectedNetResult = 5;
+        $expectedGrossResult = 6;
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+        $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $productOptionValueTransfer->setPrices(new ArrayObject());
+        $this->tester->addPrice(
+            $productOptionValueTransfer,
+            static::DEFAULT_ID_STORE,
+            static::DEFAULT_ID_CURRENCY,
+            $expectedNetResult,
+            $expectedGrossResult
+        );
+
+        // Act
+        $idProductOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        // Assert
+        $productOptionPriceEntity = $this->tester->getFirstProductOptionValueByIdProductOptionGroup($idProductOptionGroup);
+        $actualNetPrice = $productOptionPriceEntity->getNetPrice();
+        $actualGrossPrice = $productOptionPriceEntity->getGrossPrice();
+
+        $this->assertSame($expectedNetResult, $actualNetPrice);
+        $this->assertSame($expectedGrossResult, $actualGrossPrice);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductOptionGroupInsertsNewCurrencyPrices()
+    {
+        // Assign
+        $expectedNetResult = static::DEFAULT_NET_PRICE;
+        $expectedGrossResult = static::DEFAULT_GROSS_PRICE;
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
+        // Act
+        $idProductOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        // Assert
+        $productOptionPriceEntity = $this->tester->getFirstProductOptionValueByIdProductOptionGroup($idProductOptionGroup);
+        $actualNetPrice = $productOptionPriceEntity->getNetPrice();
+        $actualGrossPrice = $productOptionPriceEntity->getGrossPrice();
+
+        $this->assertSame($expectedNetResult, $actualNetPrice);
+        $this->assertSame($expectedGrossResult, $actualGrossPrice);
     }
 
     /**
@@ -174,7 +245,6 @@ class ProductOptionFacadeTest extends Unit
 
         $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
         $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
-        $this->assertSame($productOptionValueTransfer->getPrice(), $productOptionValueEntity->getPrice());
     }
 
     /**
@@ -196,7 +266,6 @@ class ProductOptionFacadeTest extends Unit
 
         $this->assertEquals($idOfPersistedOptionValue, $productOptionTransfer->getIdProductOptionValue());
         $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionTransfer->getValue());
-        $this->assertSame($productOptionValueTransfer->getPrice(), $productOptionTransfer->getUnitGrossPrice());
         $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionTransfer->getSku());
     }
 
@@ -398,6 +467,14 @@ class ProductOptionFacadeTest extends Unit
         $productOptionValueTransfer->setValue('value.translation.key');
         $productOptionValueTransfer->setPrices(new ArrayObject());
         $productOptionValueTransfer->setSku('sku_for_testing');
+
+        $this->tester->addPrice(
+            $productOptionValueTransfer,
+            static::DEFAULT_ID_STORE,
+            static::DEFAULT_ID_CURRENCY,
+            static::DEFAULT_NET_PRICE,
+            static::DEFAULT_GROSS_PRICE
+        );
 
         return $productOptionValueTransfer;
     }

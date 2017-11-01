@@ -63,7 +63,7 @@
         <foreign-key name="spy_product_option_value_price-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="ProductOptionValuePrice">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
-        <foreign-key name="spy_product_option_value_price-fk_product_option_value" foreignTable="spy_product_option_value" phpName="ProductOptionValue" refPhpName="ProductOptionValuePrice">
+        <foreign-key name="spy_product_option_value_price-fk_product_option_value" foreignTable="spy_product_option_value" phpName="ProductOptionValue" refPhpName="ProductOptionValuePrice" onDelete="cascade">
             <reference local="fk_product_option_value" foreign="id_product_option_value"/>
         </foreign-key>
 
