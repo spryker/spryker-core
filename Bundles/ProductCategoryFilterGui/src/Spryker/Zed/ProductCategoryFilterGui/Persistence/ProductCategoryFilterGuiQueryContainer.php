@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductCategoryFilterGuiQueryContainer extends AbstractQueryContainer implements ProductCategoryFilterGuiQueryContainerInterface
 {
     /**
+     * @api
+     *
      * @param int $idCategory
      * @param int $idLocale
      *
@@ -28,39 +30,5 @@ class ProductCategoryFilterGuiQueryContainer extends AbstractQueryContainer impl
                 ->joinLocale()
                 ->filterByFkLocale($idLocale)
                 ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME);
-    }
-
-    /**
-     * @param string $searchText
-     * @param int $idLocale
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryFilterSuggestions($searchTerm, $idLocale)
-    {
-        $searchTerm = trim($searchTerm);
-
-        $query = $this->getFactory()
-            ->createFilterQuery()
-            ->addJoin(
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
-                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
-                Criteria::RIGHT_JOIN
-            )
-            ->addJoin(
-                [SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, SpyCategoryAttributeTableMap::COL_FK_LOCALE],
-                [SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, SpyUrlTableMap::COL_FK_LOCALE],
-                Criteria::RIGHT_JOIN
-            )
-            ->filterByFkLocale($idLocale)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ->withColumn(SpyUrlTableMap::COL_URL, 'url')
-            ->setFormatter(new PropelArraySetFormatter())
-            ->where(
-                'LOWER(' . SpyCategoryAttributeTableMap::COL_NAME . ') LIKE ?',
-                '%' . mb_strtolower($$searchTerm) . '%'
-            );
-
-        return $query;
     }
 }

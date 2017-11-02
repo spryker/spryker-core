@@ -1,0 +1,33 @@
+{% set widget_title = 'Active filters' %}
+
+{% embed '@Gui/Partials/widget.twig' with {widget_title: widget_title | trans} %}
+
+    {% block widget_content %}
+        <button id="save" class="btn btn-sm btn-danger">{{ 'Remove all' | trans }}</button>
+        <div class="form-group">
+            <div id="filter-container" class="dd">
+                <ol class="dd-list">
+                    {% for filter in filters %}
+                        <li data-filter="{{ filter.name }}" class="filter-item dd-item">
+                            <div class="dd-handle">
+                                <a class="btn btn-xs btn-outline btn-danger" title="Remove Filter">
+                                    <i class="fa fa-fw fa-trash"></i>
+                                </a>
+                                {{ filter.name }} ({{ filter.docCount }})
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+
+        <div class="progress progress-striped active hidden">
+            <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-warning"></div>
+        </div>
+
+        <button id="save" class="btn btn-sm btn-primary">{{ 'Save' | trans }}</button>
+        <input type="hidden" id="filters"/>
+
+    {% endblock %}
+
+{% endembed %}

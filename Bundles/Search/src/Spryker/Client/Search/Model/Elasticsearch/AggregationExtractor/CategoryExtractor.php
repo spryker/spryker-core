@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 
 class CategoryExtractor implements AggregationExtractorInterface
 {
+    const DOC_COUNT = 'doc_count';
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -38,12 +39,15 @@ class CategoryExtractor implements AggregationExtractorInterface
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
         $facetResultValueTransfers = $this->extractFacetData($aggregations);
+        $totalDocCount = $facetResultValueTransfers[static::DOC_COUNT];
+        unset($facetResultValueTransfers[static::DOC_COUNT]);
 
         $facetResultTransfer = new FacetSearchResultTransfer();
         $facetResultTransfer
             ->setName($parameterName)
             ->setValues($facetResultValueTransfers)
-            ->setConfig(clone $this->facetConfigTransfer);
+            ->setConfig(clone $this->facetConfigTransfer)
+            ->setDocCount($totalDocCount);
 
         if (isset($requestParameters[$parameterName])) {
             $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
@@ -60,14 +64,18 @@ class CategoryExtractor implements AggregationExtractorInterface
     protected function extractFacetData(array $aggregation)
     {
         $facetValues = new ArrayObject();
+        $totalDocCount = 0;
         foreach ($aggregation['buckets'] as $bucket) {
             $facetResultValueTransfer = new FacetSearchResultValueTransfer();
             $facetResultValueTransfer
                 ->setValue($bucket['key'])
-                ->setDocCount($bucket['doc_count']);
+                ->setDocCount($bucket[static::DOC_COUNT]);
 
             $facetValues->append($facetResultValueTransfer);
+            $totalDocCount += $bucket[static::DOC_COUNT];
         }
+
+        $facetValues[static::DOC_COUNT] = $totalDocCount;
 
         return $facetValues;
     }

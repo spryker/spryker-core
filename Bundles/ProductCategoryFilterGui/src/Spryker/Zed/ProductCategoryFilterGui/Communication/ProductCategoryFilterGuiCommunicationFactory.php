@@ -82,10 +82,26 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return ProductCategoryFilterDataProvider
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider\ProductCategoryFilterDataProvider
      */
     public function createProductCategoryFilterDataProvider()
     {
         return new ProductCategoryFilterDataProvider($this->getProductCategoryFilterFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\Client\ProductCategoryFilterGuiToCatalogInterface
+     */
+    public function getCatalogClient()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::CLIENT_CATALOG);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\Client\ProductCategoryFilterGuiToProductCategoryFilterInterface
+     */
+    public function getProductCategoyFilterClient()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::CLIENT_PRODUCT_CATEGORY_FILTER);
     }
 }

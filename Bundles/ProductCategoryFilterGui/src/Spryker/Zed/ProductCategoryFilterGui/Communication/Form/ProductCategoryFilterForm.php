@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +21,7 @@ class ProductCategoryFilterForm extends AbstractType
      */
     public function getName()
     {
-        return 'filterForm';
+        return 'category_filter';
     }
 
     /**
@@ -46,18 +46,18 @@ class ProductCategoryFilterForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
     protected function addFilterField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_FILTER, new AutosuggestType(), [
-            'label' => 'Attribute key',
+            'label' => 'Add filter',
             'url' => '/product-category-filter-gui/filter-suggestion',
             'attr' => [
                 'placeholder' => 'Type first three letters of an existing filter key for suggestions.',
             ],
+            'required' => false,
         ]);
 
         return $this;

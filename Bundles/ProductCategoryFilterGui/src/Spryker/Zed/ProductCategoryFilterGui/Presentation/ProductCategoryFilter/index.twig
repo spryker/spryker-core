@@ -3,36 +3,43 @@
 {% block content %}
     <div class="ibox float-e-margins">
         {% block widget_content %}
+            <div class="ibox-title">
+                <h5>{{ 'Category Filters for' | trans }} {{ mainCategory.name }}</h5>
+            </div>
+            <div class="ibox-content sk-loading">
+                <div class="alert alert-info alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                    {% filter trans|raw %}
+                        <div>
+                            There are no manual filter preferences defined for this category, The filters listed bellow are global settings, To define manual references for this category, modify the filters below
+                        </div>
+                    {% endfilter %}
+                </div>
+            </div>
             {{ form_start(productCategoryFilterForm) }}
-            <table width="100%">
-                <tr>
-                    <td width="100%">
-                        {{ form_errors(form) }}
-                        {{ form_widget(form) }}
-                    </td>
-                    <td>&nbsp;</td>
-                    <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" /></td>
-                </tr>
-            </table>
+            <div class="ibox-content">
+                <table width="100%">
+                    <tr>
+                        <td width="100%">
+                            {{ form_errors(productCategoryFilterForm) }}
+                            {{ form_widget(productCategoryFilterForm) }}
+                        </td>
+                        <td>&nbsp</td>
+                        <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" /></td>
+                    </tr>
+                </table>
+            </div>
             {{ form_end(productCategoryFilterForm) }}
         {% endblock %}
-        {#<div class="ibox-title">#}
-            {#<h5>{{ 'Create child node' | trans }}</h5>#}
-        {#</div>#}
-
-        {#<div class="ibox-content">#}
-            {#{% include '@NavigationGui/Node/_partials/navigation-node-form-content.twig' %}#}
-        {#</div>#}
-
-        {#<div class="ibox-footer">#}
-            {#<input id="navigation-node-form-submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />#}
-        {#</div>#}
     </div>
+
+    {% include '@ProductCategoryFilterGui/ProductCategoryFilter/_partials/filters.twig' %}
 
 {% endblock %}
 
 {% block head_css %}
     {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-product-category-filter-form.css" />
 {% endblock %}
 {% block footer_js %}
     {{ parent() }}
