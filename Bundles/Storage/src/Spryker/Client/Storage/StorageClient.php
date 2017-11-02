@@ -9,7 +9,6 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -489,10 +488,12 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     protected static function assembleCacheKey($urlSegments, $getParametersKey)
     {
-        $cacheKey = strtolower(Store::getInstance()->getStoreName()) . self::KEY_NAME_SEPARATOR .
-            strtolower(Store::getInstance()->getCurrentLocale()) . self::KEY_NAME_SEPARATOR .
+        $cacheKey = strtolower(
+            static::getStoreName() . self::KEY_NAME_SEPARATOR .
+            static::getCurrentLocale() . self::KEY_NAME_SEPARATOR .
             self::KEY_NAME_PREFIX . self::KEY_NAME_SEPARATOR .
-            $urlSegments . $getParametersKey;
+            $urlSegments . $getParametersKey
+        );
 
         return $cacheKey;
     }
@@ -505,6 +506,26 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         return (new static())->getFactory()
             ->getStorageClientConfig()
             ->getAllowedGetParametersList();
+    }
+
+    /**
+     * @return string
+     */
+    protected static function getStoreName()
+    {
+        return (new static())->getFactory()
+            ->getStoreInstance()
+            ->getStoreName();
+    }
+
+    /**
+     * @return string
+     */
+    protected static function getCurrentLocale()
+    {
+        return (new static())->getFactory()
+            ->getStoreInstance()
+            ->getCurrentLocale();
     }
 
     /**

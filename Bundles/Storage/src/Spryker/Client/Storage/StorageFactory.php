@@ -80,6 +80,14 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStoreInstance()
+    {
+        return $this->getProvidedDependency(StorageDependencyProvider::STORE_INSTANCE);
+    }
+
+    /**
      * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyFactory
      */
     protected function createStorageClientStrategyFactory()
