@@ -26,11 +26,11 @@ class StorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container[self::STORAGE_CLIENT] = function (Container $container) {
+        $container[static::STORAGE_CLIENT] = function (Container $container) {
             return $container->getLocator()->storage()->client();
         };
 
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return new StorageToStoreClientBridge(Store::getInstance());
         };
 
