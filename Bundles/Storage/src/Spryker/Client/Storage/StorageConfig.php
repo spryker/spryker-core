@@ -27,6 +27,9 @@ class StorageConfig extends AbstractBundleConfig
         return 86400;
     }
 
+    /**
+     * @return array
+     */
     public function getAllowedGetParametersList()
     {
         return [];
