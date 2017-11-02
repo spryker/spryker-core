@@ -15,7 +15,8 @@ use Spryker\Zed\NewRelic\Business\Exception\RecordDeploymentException;
 class RecordDeployment implements RecordDeploymentInterface
 {
     const NEWRELIC_DEPLOYMENT_API_URL = 'https://api.newrelic.com/deployments.xml';
-    const STATUS_CODE_OK = 200;
+    const STATUS_CODE_SUCCESS = 200;
+    const STATUS_CODE_REDIRECTION = 300;
 
     /**
      * @param array $arguments
@@ -27,8 +28,8 @@ class RecordDeployment implements RecordDeploymentInterface
     public function recordDeployment(array $arguments = [])
     {
         $response = $this->createRecordDeploymentRequest($arguments);
-
-        if ($response->getStatusCode() !== static::STATUS_CODE_OK) {
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < static::STATUS_CODE_SUCCESS || $statusCode >= static::STATUS_CODE_REDIRECTION) {
             throw new RecordDeploymentException(sprintf(
                 'Record deployment to New Relic request failed with code %d. %s',
                 $response->getStatusCode(),
