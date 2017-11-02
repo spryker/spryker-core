@@ -8,13 +8,10 @@
 namespace Spryker\Zed\Customer\Business\Checkout;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
-use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 
 class CustomerOrderSaver implements CustomerOrderSaverInterface
@@ -41,7 +38,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */

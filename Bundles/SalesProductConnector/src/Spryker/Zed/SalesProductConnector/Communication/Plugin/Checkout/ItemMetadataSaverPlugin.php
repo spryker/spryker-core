@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutSaveOrderInterface;
@@ -25,7 +24,7 @@ class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrde
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */

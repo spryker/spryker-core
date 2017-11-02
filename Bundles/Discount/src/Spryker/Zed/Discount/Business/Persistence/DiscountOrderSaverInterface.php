@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * @deprecated Use \Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaverInterface instead
- * Will be remove with the next major
  */
 interface DiscountOrderSaverInterface
 {

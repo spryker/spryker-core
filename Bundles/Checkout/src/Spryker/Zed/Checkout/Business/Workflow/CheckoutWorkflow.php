@@ -10,8 +10,6 @@ namespace Spryker\Zed\Checkout\Business\Workflow;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Propel\Runtime\Propel;
-use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutSaveOrderInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -25,7 +23,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $preConditionStack;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|CheckoutSaveOrderInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutSaveOrderInterface[]
      */
     protected $saveOrderStack;
 
@@ -107,7 +105,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
@@ -133,8 +131,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */

@@ -7,7 +7,6 @@
 namespace Spryker\Zed\Discount\Business\Checkout;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -47,7 +46,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
@@ -60,7 +59,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     }
 
     /**
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
@@ -222,7 +221,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     }
 
     /**
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */

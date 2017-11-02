@@ -20,8 +20,7 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ::saveOrderItemMetadata() instead.
-     * Will be removed with the next major release.
+     * @deprecated Use saveOrderItemMetadata() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -36,8 +35,8 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */

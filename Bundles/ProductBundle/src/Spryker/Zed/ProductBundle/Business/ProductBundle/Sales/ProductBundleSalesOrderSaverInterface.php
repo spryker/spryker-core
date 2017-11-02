@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * @deprecated Use \Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleSalesOrderSaverInterface instead
- * Will be removed in the next major release
  */
 interface ProductBundleSalesOrderSaverInterface
 {

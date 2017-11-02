@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @deprecated Use \Spryker\Zed\ProductOption\Communication\Plugin\Checkout\ProductOptionOrderSaverPlugin instead
- * Will be removed with the next major.
  *
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()

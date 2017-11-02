@@ -7,23 +7,9 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
-use Propel\Runtime\Propel;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\Sales\Business\Model\Checkout\SalesOrderSaver;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\SalesConfig;
 
 class OrderSaver extends SalesOrderSaver implements OrderSaverInterface
 {

@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\Payment\Communication\Plugin\Checkout;
-
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -11,13 +14,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * Checkout place order plugin adapter.
  * From Checkout ^4 changes during the save execution in the CheckoutResponse are forbidden.
+ * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
  */
 class AbstractPaymentOrderPlugin extends AbstractPlugin
 {
     /**
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected function createCheckoutResponse(SaveOrderTransfer $saveOrderTransfer)
     {

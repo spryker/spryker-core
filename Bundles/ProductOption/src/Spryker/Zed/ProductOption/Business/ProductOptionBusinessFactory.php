@@ -20,7 +20,6 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaverInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -98,7 +97,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionOrderSaverInterface
+     * @return \Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaverInterface
      */
     public function createPlaceOrderProductOptionOrderSaver()
     {

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout;
 
-use Exception;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -16,8 +14,6 @@ use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use SprykerTest\Zed\Sales\Presentation\SalesDetailCest;
-use Throwable;
 
 class ProductBundleOrderSaver implements ProductBundleOrderSaverInterface
 {
@@ -47,10 +43,7 @@ class ProductBundleOrderSaver implements ProductBundleOrderSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
-     *
-     * @throws \Exception
-     * @throws \Throwable
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
@@ -62,8 +55,8 @@ class ProductBundleOrderSaver implements ProductBundleOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */

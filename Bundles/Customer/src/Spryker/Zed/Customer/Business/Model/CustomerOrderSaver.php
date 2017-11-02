@@ -7,17 +7,12 @@
 
 namespace Spryker\Zed\Customer\Business\Model;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Customer\Business\Customer\Address;
-use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver as CheckoutCustomerOrderSaver;
 
 /**
  * @deprecated Use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver instead
- * Will be removed with the next major release
  */
 class CustomerOrderSaver extends CheckoutCustomerOrderSaver implements CustomerOrderSaverInterface
 {

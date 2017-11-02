@@ -8,11 +8,10 @@
 namespace Spryker\Zed\Customer\Business;
 
 use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
+use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
-use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
-use Spryker\Zed\Customer\Business\Model\CustomerOrderSaverInterface;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;

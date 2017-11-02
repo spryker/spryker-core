@@ -162,7 +162,6 @@ interface ProductBundleFacadeInterface
      * @api
      *
      * @deprecated Use saveOrderBundleItems() instead
-     * Will be removed with the next major release
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -178,7 +177,7 @@ interface ProductBundleFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */

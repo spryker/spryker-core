@@ -12,7 +12,7 @@ use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
 use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
-use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaverInterface;
+use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
@@ -34,7 +34,6 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver as ObsoleteDiscountOrderSaver;
-use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
@@ -141,7 +140,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @deprecated Use createCheckoutDiscountOrderSaver() instead
-     * Will be removed with the next major
      *
      * @return \Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaverInterface
      */
@@ -154,7 +152,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return DiscountOrderSaverInterface
+     * @return \Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaverInterface
      */
     public function createCheckoutDiscountOrderSaver()
     {

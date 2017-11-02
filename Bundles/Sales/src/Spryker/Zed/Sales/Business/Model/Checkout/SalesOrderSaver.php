@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Business\Model\Checkout;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,7 +16,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
-use Propel\Runtime\Propel;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -86,7 +84,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
@@ -102,9 +100,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return SpySalesOrder
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
     protected function saveSalesOrderTransaction(QuoteTransfer $quoteTransfer)
     {
@@ -320,7 +318,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param SpySalesOrder $salesOrderEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return void
      */
@@ -336,7 +334,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     }
 
     /**
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */

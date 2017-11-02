@@ -122,7 +122,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      * @api
      *
      * @deprecated Use saveOrderProductOptions instead
-     * Will be removed with the next major release
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -141,8 +140,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
@@ -152,7 +151,6 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->createPlaceOrderProductOptionOrderSaver()
             ->saveOrder($quoteTransfer, $saveOrderTransfer);
     }
-
 
     /**
      * Specification:

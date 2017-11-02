@@ -17,7 +17,6 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemG
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleImageCartExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaverInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
@@ -86,7 +85,6 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @deprecated Use createProductBundleOrderSaver instead
-     * Will be removed in the next major release
      *
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaverInterface
      */
@@ -96,7 +94,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductBundleOrderSaverInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaverInterface
      */
     public function createProductBundleOrderSaver()
     {

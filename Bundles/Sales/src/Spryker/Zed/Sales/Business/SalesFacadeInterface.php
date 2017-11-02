@@ -64,8 +64,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ::saveSalesOrder() instead
-     * Will be removed with the next major
+     * @deprecated Use saveSalesOrder() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -84,7 +83,7 @@ interface SalesFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */

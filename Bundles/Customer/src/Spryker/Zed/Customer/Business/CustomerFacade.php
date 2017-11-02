@@ -394,8 +394,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @api
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
