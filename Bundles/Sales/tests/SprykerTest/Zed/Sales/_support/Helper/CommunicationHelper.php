@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Sales\Communication\Helper;
+namespace SprykerTest\Zed\Sales\Helper;
 
 use Codeception\Module;
 
