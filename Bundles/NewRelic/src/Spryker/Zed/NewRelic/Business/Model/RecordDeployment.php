@@ -28,9 +28,8 @@ class RecordDeployment implements RecordDeploymentInterface
     public function recordDeployment(array $arguments = [])
     {
         $response = $this->createRecordDeploymentRequest($arguments);
-        $successStatuses = range(static::STATUS_CODE_SUCCESS, static::STATUS_CODE_REDIRECTION - 1);
-
-        if (!in_array($response->getStatusCode(), $successStatuses, true)) {
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < static::STATUS_CODE_SUCCESS || $statusCode >= static::STATUS_CODE_REDIRECTION) {
             throw new RecordDeploymentException(sprintf(
                 'Record deployment to New Relic request failed with code %d. %s',
                 $response->getStatusCode(),
