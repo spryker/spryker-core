@@ -26,7 +26,7 @@ class StorageClientTest extends Unit
     const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
 
     /**
-     * @var \Spryker\Client\Storage\StorageClient
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $storageClientMock;
 
