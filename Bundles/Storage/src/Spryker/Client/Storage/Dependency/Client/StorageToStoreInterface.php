@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Storage\Dependency\Client;
 
-interface StorageToStoreBridgeInterface
+interface StorageToStoreInterface
 {
     /**
      * @return string

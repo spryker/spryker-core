@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Storage\Dependency\Client;
 
-class StorageToStoreBridge implements StorageToStoreBridgeInterface
+class StorageToStoreBridge implements StorageToStoreInterface
 {
     /**
      * @var \Spryker\Shared\Kernel\Store
