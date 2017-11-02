@@ -80,7 +80,7 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface
      */
     public function getStore()
     {
