@@ -150,8 +150,10 @@ abstract class AbstractResolverTest extends Unit
      */
     private function deleteCreatedFiles()
     {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->getBasePath());
+        if (is_dir($this->getBasePath())) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getBasePath());
+        }
     }
 
     /**
