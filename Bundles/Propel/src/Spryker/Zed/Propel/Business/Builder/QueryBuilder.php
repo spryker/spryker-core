@@ -381,4 +381,73 @@ SCRIPT;
     }
 ";
     }
+
+    /**
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addClassBody(&$script)
+    {
+        $this->addForUpdate($script);
+
+        parent::addClassBody($script);
+    }
+
+    /**
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addForUpdate(&$script)
+    {
+        $script .= "
+    /**
+     * @var bool
+     */
+    protected \$isForUpdateEnabled = false;
+
+    /**
+     * @param bool \$isForUpdateEnabled
+     *
+     * @return \$this|" . $this->getQueryClassName() . " The primary criteria object
+     */
+    public function forUpdate(\$isForUpdateEnabled)
+    {
+        \$this->isForUpdateEnabled = \$isForUpdateEnabled;
+        
+        return \$this;
+    }
+
+    /**
+     * @param array \$params
+     *
+     * @return string
+     */
+    public function createSelectSql(&\$params)
+    {
+        \$sql = parent::createSelectSql(\$params);
+        if (\$this->isForUpdateEnabled) {
+            \$sql .= ' FOR UPDATE';
+        }
+
+        return \$sql;
+    }
+    
+    /**
+     * Clear the conditions to allow the reuse of the query object.
+     * The ModelCriteria's Model and alias 'all the properties set by construct) will remain.
+     *
+     * @return \$this|ModelCriteria The primary criteria object
+     */
+    public function clear()
+    {
+        parent::clear();
+
+        \$this->forUpdate(false);
+        
+        return \$this;
+    }\n
+    ";
+    }
 }
