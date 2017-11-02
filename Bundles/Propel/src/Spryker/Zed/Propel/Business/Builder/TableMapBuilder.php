@@ -13,7 +13,7 @@ namespace Spryker\Zed\Propel\Business\Builder;
 use Spryker\Zed\PropelOrm\Business\Builder\TableMapBuilder as PropelOrmTableMapBuilder;
 
 /**
- * @deprecated use Spryker\Zed\PropelOrm\Business\Builder\TableMapBuilder class instead.
+ * @deprecated Use Spryker\Zed\PropelOrm\Business\Builder\TableMapBuilder class instead.
  */
 class TableMapBuilder extends PropelOrmTableMapBuilder
 {

@@ -26,7 +26,7 @@ interface PropelConstants
     const PROPEL_DEBUG = 'PROPEL_DEBUG';
 
     /**
-     * @deprecated use Spryker\Shared\PropelOrm\PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION instead.
+     * @deprecated Use Spryker\Shared\PropelOrm\PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION instead.
      *
      * Specification:
      * - Enable this to get a better exception message when an error occurs.
