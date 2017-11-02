@@ -137,7 +137,7 @@ class ProductBundleCartExpanderTest extends Unit
                 $priceProductFacadeMock,
                 $productFacadeMock,
                 $localeFacadeMock,
-                $priceFacadeMock
+                $priceFacadeMock,
             ])
             ->setMethods(['findBundledItemsByIdProductConcrete'])
             ->getMock();
