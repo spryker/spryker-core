@@ -31,17 +31,6 @@ class StorageClientTest extends Unit
     protected $storageClientMock;
 
     /**
-     * @return void
-     */
-    protected function _before()
-    {
-//        $this->storageClientMock = $this
-//            ->getMockBuilder(StorageClient::class)
-//            ->setMethods(['updateCache'])
-//            ->getMock();
-    }
-
-    /**
      * @param string $uri
      * @param string $expectedCacheKey
      * @param array $getParameters
