@@ -7,17 +7,15 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-use Generated\Shared\Transfer\PriceProductFilterTransfer;
-
 class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
     protected $priceFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceFacade
+     * @param \Spryker\Zed\Price\Business\PriceFacadeInterface $priceFacade
      */
     public function __construct($priceFacade)
     {
@@ -25,23 +23,18 @@ class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
     }
 
     /**
-     * @param string $sku
-     * @param string|null $priceType
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceType = null)
+    public function getNetPriceModeIdentifier()
     {
-        return $this->priceFacade->getPriceBySku($sku, $priceType);
+        return $this->priceFacade->getNetPriceModeIdentifier();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
+    public function getGrossPriceModeIdentifier()
     {
-        return $this->priceFacade->getPriceFor($priceProductFilterTransfer);
+        return $this->priceFacade->getGrossPriceModeIdentifier();
     }
 }
