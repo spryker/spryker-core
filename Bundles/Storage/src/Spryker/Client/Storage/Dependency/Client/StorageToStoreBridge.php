@@ -15,7 +15,7 @@ class StorageToStoreBridge implements StorageToStoreBridgeInterface
     protected $storeInstance;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store
+     * @param \Spryker\Shared\Kernel\Store $storeInstance
      */
     public function __construct($storeInstance)
     {
