@@ -9,13 +9,13 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Storage\Dependency\Client\StorageToStoreBridge;
+use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientBridge;
 use Spryker\Shared\Kernel\Store;
 
 class StorageDependencyProvider extends AbstractDependencyProvider
 {
     const STORAGE_CLIENT = 'storage client';
-    const STORE_INSTANCE = 'storage instance';
+    const STORE = 'storage';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -30,8 +30,8 @@ class StorageDependencyProvider extends AbstractDependencyProvider
             return $container->getLocator()->storage()->client();
         };
 
-        $container[self::STORE_INSTANCE] = function () {
-            return new StorageToStoreBridge(Store::getInstance());
+        $container[self::STORE] = function () {
+            return new StorageToStoreClientBridge(Store::getInstance());
         };
 
         return $container;
