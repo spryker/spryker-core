@@ -11,16 +11,21 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutSaveOrderInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     /**
      * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
      */
     protected $preConditionStack;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|CheckoutSaveOrderInterface[]
      */
     protected $saveOrderStack;
 
@@ -60,23 +65,16 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         $checkoutResponse = $this->createCheckoutResponseTransfer();
-        $checkoutResponse->setIsSuccess(false);
 
-        $isPassed = $this->checkPreConditions($quoteTransfer, $checkoutResponse);
-
-        if (!$isPassed) {
+        if (!$this->checkPreConditions($quoteTransfer, $checkoutResponse)) {
             return $checkoutResponse;
         }
 
         $quoteTransfer = $this->doPreSave($quoteTransfer);
+        $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
 
-        $orderTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
-        if (!$this->hasErrors($checkoutResponse)) {
-            $this->executePostHooks($orderTransfer, $checkoutResponse);
-
-            $isSuccess = !$this->hasErrors($checkoutResponse);
-            $checkoutResponse->setIsSuccess($isSuccess);
-        }
+        $this->executePostHooks($quoteTransfer, $checkoutResponse);
+        $this->setCheckoutResponseSuccess($checkoutResponse);
 
         return $checkoutResponse;
     }
@@ -109,6 +107,17 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function setCheckoutResponseSuccess(CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        $isSuccess = !$this->hasErrors($checkoutResponseTransfer);
+        $checkoutResponseTransfer->setIsSuccess($isSuccess);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -116,20 +125,29 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     protected function doSaveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        Propel::getConnection()->beginTransaction();
-
-        foreach ($this->saveOrderStack as $orderSaver) {
-            $orderSaver->saveOrder($quoteTransfer, $checkoutResponse);
-        }
-
-        if ($this->hasErrors($checkoutResponse)) {
-            Propel::getConnection()->rollBack();
-            return $quoteTransfer;
-        }
-
-        Propel::getConnection()->commit();
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $checkoutResponse) {
+            $this->doSaveOrderTransaction($quoteTransfer, $checkoutResponse);
+        });
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    protected function doSaveOrderTransaction(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    {
+        foreach ($this->saveOrderStack as $orderSaver) {
+            if ($orderSaver instanceof ObsoleteCheckoutSaveOrderInterface) {
+                $orderSaver->saveOrder($quoteTransfer, $checkoutResponse);
+                continue;
+            }
+
+            $orderSaver->saveOrder($quoteTransfer, $checkoutResponse->getSaveOrder());
+        }
     }
 
     /**
@@ -150,8 +168,9 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     protected function createCheckoutResponseTransfer()
     {
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
-        $checkoutResponseTransfer->setSaveOrder(new SaveOrderTransfer());
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())
+            ->setSaveOrder(new SaveOrderTransfer())
+            ->setIsSuccess(false);
 
         return $checkoutResponseTransfer;
     }

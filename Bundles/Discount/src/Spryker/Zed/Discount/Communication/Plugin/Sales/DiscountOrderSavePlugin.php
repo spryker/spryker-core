@@ -13,6 +13,9 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use \Spryker\Zed\Discount\Communication\Plugin\Checkout\DiscountOrderSavePlugin instead
+ * Will be removed with the next major.
+ *
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */

@@ -15,31 +15,14 @@ use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Throwable;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
 
-class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterface
+/**
+ * @deprecated Use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleSalesOrderSaver instead
+ * Will be removed in the next major release
+ */
+class ProductBundleSalesOrderSaver extends ProductBundleOrderSaver implements ProductBundleSalesOrderSaverInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface
-     */
-    protected $salesQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
-     */
-    protected $productBundleQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerInterface $salesQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     */
-    public function __construct(
-        ProductBundleToSalesQueryContainerInterface $salesQueryContainer,
-        ProductBundleQueryContainerInterface $productBundleQueryContainer
-    ) {
-        $this->salesQueryContainer = $salesQueryContainer;
-        $this->productBundleQueryContainer = $productBundleQueryContainer;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -51,114 +34,6 @@ class ProductBundleSalesOrderSaver implements ProductBundleSalesOrderSaverInterf
      */
     public function saveSaleOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        try {
-            $this->productBundleQueryContainer->getConnection()->beginTransaction();
-
-            $bundleItemsSaved = $this->saveSalesBundleProducts($quoteTransfer);
-            $this->updateRelatedSalesOrderItems($checkoutResponse, $bundleItemsSaved);
-
-            $this->productBundleQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->productBundleQueryContainer->getConnection()->rollBack();
-            throw $exception;
-        } catch (Throwable $exception) {
-            $this->productBundleQueryContainer->getConnection()->rollBack();
-            throw $exception;
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function saveSalesBundleProducts(QuoteTransfer $quoteTransfer)
-    {
-        $bundleItemsSaved = [];
-        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            $salesOrderItemBundleEntity = $this->mapSalesOrderItemBundleEntity($itemTransfer);
-            $salesOrderItemBundleEntity->save();
-
-            $bundleItemsSaved[$itemTransfer->getBundleItemIdentifier()] = $salesOrderItemBundleEntity->getIdSalesOrderItemBundle();
-        }
-
-        return $bundleItemsSaved;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle
-     */
-    protected function mapSalesOrderItemBundleEntity(ItemTransfer $itemTransfer)
-    {
-        $salesOrderItemBundleEntity = $this->createSalesOrderItemBundleEntity();
-        $salesOrderItemBundleEntity->fromArray($itemTransfer->toArray());
-        $salesOrderItemBundleEntity->setGrossPrice($itemTransfer->getUnitGrossPrice());
-        $salesOrderItemBundleEntity->setNetPrice($itemTransfer->getUnitNetPrice());
-        $salesOrderItemBundleEntity->setPrice($itemTransfer->getUnitPrice());
-        $salesOrderItemBundleEntity->setImage($this->determineImage($itemTransfer));
-
-        return $salesOrderItemBundleEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return null|string
-     */
-    protected function determineImage(ItemTransfer $itemTransfer)
-    {
-        $images = $itemTransfer->getImages();
-
-        if (count($images) === 0) {
-            return null;
-        }
-
-        return $images[0]->getExternalUrlSmall();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     * @param array $bundleItemsSaved
-     *
-     * @return void
-     */
-    protected function updateRelatedSalesOrderItems(CheckoutResponseTransfer $checkoutResponse, array $bundleItemsSaved)
-    {
-        $checkoutResponse->requireSaveOrder();
-        $checkoutResponse->getSaveOrder()->requireOrderItems();
-
-        $orderItems = $checkoutResponse->getSaveOrder()->getOrderItems();
-        foreach ($orderItems as $itemTransfer) {
-            if (!$itemTransfer->getRelatedBundleItemIdentifier() || !isset($bundleItemsSaved[$itemTransfer->getRelatedBundleItemIdentifier()])) {
-                continue;
-            }
-            $itemTransfer->requireIdSalesOrderItem();
-
-            $salesOrderItemEntity = $this->findSalesOrderItem($itemTransfer->getIdSalesOrderItem());
-            $salesOrderItemEntity->setFkSalesOrderItemBundle($bundleItemsSaved[$itemTransfer->getRelatedBundleItemIdentifier()]);
-            $salesOrderItemEntity->save();
-        }
-    }
-
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
-     */
-    protected function findSalesOrderItem($idSalesOrderItem)
-    {
-        return $this->salesQueryContainer
-            ->querySalesOrderItem()
-            ->findOneByIdSalesOrderItem($idSalesOrderItem);
-    }
-
-    /**
-     * @return \Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle
-     */
-    protected function createSalesOrderItemBundleEntity()
-    {
-        return new SpySalesOrderItemBundle();
+        parent::saveOrderBundleItems($quoteTransfer, $checkoutResponse->getSaveOrder());
     }
 }

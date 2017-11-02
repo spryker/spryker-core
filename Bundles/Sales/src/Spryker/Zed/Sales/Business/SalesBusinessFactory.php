@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
+use Spryker\Zed\Sales\Business\Model\Checkout\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
@@ -43,6 +44,21 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderSaver()
     {
         return new OrderSaver(
+            $this->getCountryFacade(),
+            $this->getOmsFacade(),
+            $this->createReferenceGenerator(),
+            $this->getConfig(),
+            $this->getLocaleQueryContainer(),
+            $this->getStore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Checkout\SalesOrderSaverInterface
+     */
+    public function createSalesOrderSaver()
+    {
+        return new SalesOrderSaver(
             $this->getCountryFacade(),
             $this->getOmsFacade(),
             $this->createReferenceGenerator(),

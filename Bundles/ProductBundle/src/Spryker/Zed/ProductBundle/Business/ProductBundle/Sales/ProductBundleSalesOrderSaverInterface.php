@@ -10,6 +10,10 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Sales;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleSalesOrderSaverInterface instead
+ * Will be removed in the next major release
+ */
 interface ProductBundleSalesOrderSaverInterface
 {
     /**

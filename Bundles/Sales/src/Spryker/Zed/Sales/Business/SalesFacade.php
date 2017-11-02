@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -94,6 +95,27 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         $this->getFactory()
             ->createOrderSaver()
             ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Saves order and items to database
+     * - Sets "is test" flag
+     * - Updates checkout response with saved order data
+     * - Sets initial state for state machine
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $this->getFactory()
+            ->createSalesOrderSaver()
+            ->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
     }
 
     /**

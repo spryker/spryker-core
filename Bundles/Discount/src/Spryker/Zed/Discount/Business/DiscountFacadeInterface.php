@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
@@ -458,6 +459,21 @@ interface DiscountFacadeInterface
      * @return void
      */
     public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     * Specification:
+     * - Loops over all quote items, take calculated discounts and persist them discount amount is for single item
+     * - Loops over all quote expenses, take calculated discounts and persist them discount amount is for single item
+     * - If there is voucher codes marks them as already used by incrementing number of uses.
+     *
+     * @api
+     *
+     * @param QuoteTransfer $quoteTransfer
+     * @param SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderDiscountsForCheckout(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      * Specification:

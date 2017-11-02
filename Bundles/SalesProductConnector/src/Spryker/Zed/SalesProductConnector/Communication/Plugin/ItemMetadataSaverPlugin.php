@@ -13,6 +13,9 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use \Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout\ItemMetadataSaverPlugin instead
+ * Will be removed with the next major.
+ *
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacade getFacade()
  */
 class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface

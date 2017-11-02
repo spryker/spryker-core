@@ -9,6 +9,10 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaverInterface instead
+ * Will be removed with the next major release
+ */
 interface ProductOptionOrderSaverInterface
 {
     /**

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleBusinessFactory getFactory()
@@ -155,12 +156,13 @@ interface ProductBundleFacadeInterface
     public function updateBundleAvailability($productBundleSku);
 
     /**
-     *
      * Specification:
-     *
      * - Persists bundled product to sales database tables, from QuoteTransfer
      *
      * @api
+     *
+     * @deprecated Use saveOrderBundleItems() instead
+     * Will be removed with the next major release
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -168,6 +170,19 @@ interface ProductBundleFacadeInterface
      * @return void
      */
     public function saveSalesOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+
+    /**
+     * Specification:
+     * - Persists bundled product to sales database tables, from QuoteTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderBundleItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      *

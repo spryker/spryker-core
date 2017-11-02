@@ -13,6 +13,9 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Please use \Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentOrderSaverPlugin instead
+ * Will be removed in the next major.
+ *
  * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
  */
 class PaymentSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface

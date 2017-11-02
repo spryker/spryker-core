@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface CustomerFacadeInterface
 {
@@ -260,6 +261,9 @@ interface CustomerFacadeInterface
     public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Persists customer's data
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -271,6 +275,19 @@ interface CustomerFacadeInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer  $checkoutResponseTransfer
     );
+
+    /**
+     * Specification:
+     * - Persists customer's data
+     *
+     * @api
+     *
+     * @param QuoteTransfer $quoteTransfer
+     * @param SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderCustomer(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      * Specification:
