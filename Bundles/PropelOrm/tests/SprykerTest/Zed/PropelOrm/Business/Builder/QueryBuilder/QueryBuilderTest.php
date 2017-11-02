@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Propel\Business\Builder\QueryBuilder;
+namespace SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
 use Codeception\Test\Unit;
 use Propel\Generator\Builder\Om\AbstractOMBuilder;
@@ -18,13 +18,13 @@ use Propel\Generator\Model\PropelTypes;
 use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\DefaultPlatform;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Propel\Business\Builder\QueryBuilder;
+use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group Propel
+ * @group PropelOrm
  * @group Business
  * @group Builder
  * @group QueryBuilder
@@ -54,7 +54,7 @@ class QueryBuilderTest extends Unit
         $table = new Table('Foo');
         $column = new Column('testColumn', PropelTypes::INTEGER);
         $table->addColumn($column);
-        $table->setNamespace('SprykerTest\Zed\Propel\Business\Builder\QueryBuilder');
+        $table->setNamespace('SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder');
         $table->setDatabase(new Database('TestDB', new DefaultPlatform()));
 
         foreach ($this->getFilesToGenerate() as $fileName => $builderClass) {
