@@ -82,7 +82,7 @@ class StorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStoreInstance()
+    public function getStore()
     {
         return $this->getProvidedDependency(StorageDependencyProvider::STORE);
     }

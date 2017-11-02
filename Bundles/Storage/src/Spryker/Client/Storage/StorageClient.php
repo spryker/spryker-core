@@ -514,7 +514,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static function getStoreName()
     {
         return (new static())->getFactory()
-            ->getStoreInstance()
+            ->getStore()
             ->getStoreName();
     }
 
@@ -524,7 +524,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static function getCurrentLocale()
     {
         return (new static())->getFactory()
-            ->getStoreInstance()
+            ->getStore()
             ->getCurrentLocale();
     }
 
