@@ -54,7 +54,6 @@ class ProductMoneyCollectionType extends MoneyCollectionType
 
         $priceTable = [];
         foreach ($formViewCollection as $productMoneyTypeFormView) {
-
             $moneyValueFormView = $productMoneyTypeFormView['moneyValue'];
 
             /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
