@@ -36,16 +36,14 @@ class ProductMoneyCollectionType extends MoneyCollectionType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormView $formViewCollection
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      *
      * @return void
      */
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $formViewCollection, FormInterface $form, array $options)
     {
-        $priceTable = [];
-
         $grossPriceModeIdentifier = $this->getGrossPriceModeIdentifier();
         $netPriceModeIdentifier = $this->getNetPriceModeIdentifier();
 
@@ -54,35 +52,37 @@ class ProductMoneyCollectionType extends MoneyCollectionType
             $netPriceModeIdentifier => [],
         ];
 
-        foreach ($view as $item) {
-            $moneyValue = $item['moneyValue'];
+        $priceTable = [];
+        foreach ($formViewCollection as $productMoneyTypeFormView) {
+
+            $moneyValueFormView = $productMoneyTypeFormView['moneyValue'];
 
             /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
-            $priceTypeTransfer = $item->vars['price_type'];
+            $priceTypeTransfer = $productMoneyTypeFormView->vars['price_type'];
 
             $priceType = $priceTypeTransfer->getName();
             $priceModeConfiguration = $priceTypeTransfer->getPriceModeConfiguration();
 
-            $storeName = $moneyValue->vars['store_name'];
-            $currencySymbol = $moneyValue->vars['currency_symbol'];
+            $storeName = $moneyValueFormView->vars['store_name'];
+            $currencySymbol = $moneyValueFormView->vars['currency_symbol'];
 
-            if ($priceModeConfiguration == ProductManagementConstants::PRICE_MODE_BOTH) {
+            if ($priceModeConfiguration === ProductManagementConstants::PRICE_MODE_BOTH) {
                 $priceTypes[$netPriceModeIdentifier][$priceType] = $priceTypeTransfer;
                 $priceTypes[$grossPriceModeIdentifier][$priceType] = $priceTypeTransfer;
 
-                $priceTable[$storeName][$currencySymbol][$netPriceModeIdentifier][$priceType] = $item;
-                $priceTable[$storeName][$currencySymbol][$grossPriceModeIdentifier][$priceType] = $item;
+                $priceTable[$storeName][$currencySymbol][$netPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
+                $priceTable[$storeName][$currencySymbol][$grossPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
             } else {
                 if (!isset($priceTypes[$priceModeConfiguration][$priceType])) {
                     $priceTypes[$priceModeConfiguration][$priceType] = $priceTypeTransfer;
                 }
 
-                $priceTable[$storeName][$currencySymbol][$priceModeConfiguration][$priceType] = $item;
+                $priceTable[$storeName][$currencySymbol][$priceModeConfiguration][$priceType] = $productMoneyTypeFormView;
             }
         }
 
-        $view->vars['priceTable'] = $priceTable;
-        $view->vars['priceTypes'] = $priceTypes;
+        $formViewCollection->vars['priceTable'] = $priceTable;
+        $formViewCollection->vars['priceTypes'] = $priceTypes;
     }
 
     /**

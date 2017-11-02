@@ -100,13 +100,13 @@ class ProductMoneyCollectionDataProvider
             $storeTransfer = $storeWithCurrencyTransfer->getStore();
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 foreach ($priceTypes as $priceTypeTransfer) {
-                    $index = $this->createBucketIndex(
+                    $identifier = $this->buildItemIdentifier(
                         $currencyTransfer->getIdCurrency(),
                         $storeTransfer->getIdStore(),
                         $priceTypeTransfer->getName()
                     );
 
-                    if (isset($existingCurrencyMap[$index])) {
+                    if (isset($existingCurrencyMap[$identifier])) {
                         continue;
                     }
 
@@ -154,13 +154,13 @@ class ProductMoneyCollectionDataProvider
         $currencyIndex = [];
         foreach ($submittedMoneyValueCollection as $priceProductTransfer) {
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-            $index = $this->createBucketIndex(
+            $identifier = $this->buildItemIdentifier(
                 $moneyValueTransfer->getFkCurrency(),
                 $moneyValueTransfer->getFkStore(),
                 $priceProductTransfer->getPriceTypeName()
             );
 
-            $currencyIndex[$index] = true;
+            $currencyIndex[$identifier] = true;
         }
         return $currencyIndex;
     }
@@ -172,7 +172,7 @@ class ProductMoneyCollectionDataProvider
      *
      * @return string
      */
-    protected function createBucketIndex($idCurrency, $idStore, $priceType)
+    protected function buildItemIdentifier($idCurrency, $idStore, $priceType)
     {
         return $idCurrency . '-' . $idStore . '-' . $priceType;
     }

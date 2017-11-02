@@ -12,7 +12,7 @@ interface CatalogPriceProductConnectorToPriceProductInterface
     /**
      * @param array $priceMap
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPrice(array $priceMap);
 }
