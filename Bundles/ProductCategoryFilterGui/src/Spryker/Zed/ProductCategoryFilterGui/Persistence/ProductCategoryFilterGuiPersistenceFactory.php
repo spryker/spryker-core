@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvider;
 
@@ -24,7 +25,9 @@ class ProductCategoryFilterGuiPersistenceFactory extends AbstractPersistenceFact
         return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
-
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
     public function createFilterQuery()
     {
         return SpyCategoryAttributeQuery::create();

@@ -1,7 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Controller;
 
+use Generated\Shared\Search\PageIndexMap;
+use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,6 +21,8 @@ class ProductCategoryFilterController extends AbstractController
     const PARAM_ID_CATEGORY_NODE = 'id-category-node';
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
     public function indexAction(Request $request)
@@ -34,6 +43,14 @@ class ProductCategoryFilterController extends AbstractController
                 $productCategoryFilterDataProvider->getOptions()
             )
             ->handleRequest($request);
+
+        $searchResultsForCategory = $this->getFactory()
+            ->getCatalogClient()
+            ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
+
+        $filters = $this->getFactory()
+            ->getProductCategoyFilterClient()
+            ->updateFacetsByCategory($searchResultsForCategory[FacetResultFormatterPlugin::NAME], $idCategory, $localeTransfer->getLocaleName());
 
 //        if ($productCategoryFilterForm->isValid()) {
             /** @var \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer */
@@ -69,6 +86,7 @@ class ProductCategoryFilterController extends AbstractController
         return $this->viewResponse([
             'productCategoryFilterForm' => $productCategoryFilterForm->createView(),
             'mainCategory' => $mainCategory,
+            'filters' => $filters,
         ]);
     }
 

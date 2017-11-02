@@ -15,6 +15,7 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation
 
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
+    const DOC_COUNT = 'doc_count';
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -53,12 +54,15 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
         $facetResultValueTransfers = $this->extractFacetData($aggregations, $parameterName, $fieldName);
+        $totalDocCount = $facetResultValueTransfers[static::DOC_COUNT];
+        unset($facetResultValueTransfers[static::DOC_COUNT]);
 
         $facetResultTransfer = new FacetSearchResultTransfer();
         $facetResultTransfer
             ->setName($parameterName)
             ->setValues($facetResultValueTransfers)
-            ->setConfig(clone $this->facetConfigTransfer);
+            ->setConfig(clone $this->facetConfigTransfer)
+            ->setDocCount($totalDocCount);
 
         if (isset($requestParameters[$parameterName])) {
             $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
@@ -96,6 +100,8 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
         $nameFieldName = $this->getFieldNameWithNameSuffix($fieldName);
         $valueFieldName = $this->getFieldNameWithValueSuffix($fieldName);
 
+        $totalDocCount = 0;
+
         foreach ($aggregation[$nameFieldName]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;
@@ -103,11 +109,13 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
 
             foreach ($nameBucket[$valueFieldName]['buckets'] as $valueBucket) {
                 $facetResultValues = $this->addBucketValueToFacetResult($valueBucket, $facetResultValues);
+                $totalDocCount += $facetResultValues[$facetResultValues->count() - 1]->getDocCount();
             }
 
             break;
         }
 
+        $facetResultValues[static::DOC_COUNT] = $totalDocCount;
         return $facetResultValues;
     }
 
@@ -125,10 +133,14 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
         $nameFieldName = $this->getFieldNameWithNameSuffix($nestedFieldName);
         $valueFieldName = $this->getFieldNameWithValueSuffix($nestedFieldName);
 
+        $totalDocCount = 0;
+
         foreach ($aggregation[$nameFieldName][$valueFieldName]['buckets'] as $valueBucket) {
             $facetResultValues = $this->addBucketValueToFacetResult($valueBucket, $facetResultValues);
+            $totalDocCount += $facetResultValues[$facetResultValues->count() - 1]->getDocCount();
         }
 
+        $facetResultValues[static::DOC_COUNT] = $totalDocCount;
         return $facetResultValues;
     }
 

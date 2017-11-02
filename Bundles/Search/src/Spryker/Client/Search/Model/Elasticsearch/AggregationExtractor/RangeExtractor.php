@@ -37,7 +37,8 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
         $rangeResultTransfer = new RangeSearchResultTransfer();
         $rangeResultTransfer
             ->setName($this->facetConfigTransfer->getParameterName())
-            ->setConfig(clone $this->facetConfigTransfer);
+            ->setConfig(clone $this->facetConfigTransfer)
+            ->setDocCount($aggregations[static::DOC_COUNT]);
 
         $rangeResultTransfer = $this->setRangeResultValues($rangeResultTransfer, $aggregations, $requestParameters);
 

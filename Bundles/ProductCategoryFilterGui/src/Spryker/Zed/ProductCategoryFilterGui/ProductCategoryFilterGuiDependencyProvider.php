@@ -9,11 +9,13 @@ namespace Spryker\Zed\ProductCategoryFilterGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductSearchBridge;
-use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToLocaleBridge;
-use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterBridge;
-use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryBridge as ProductCategoryFilterGuiToCategoryQueryContainerBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Client\ProductCategoryFilterGuiToCatalogBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Client\ProductCategoryFilterGuiToProductCategoryFilterBridge as ProductCategoryFilterGuiToProductCategoryFilterClientBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToCategoryBridge as ProductCategoryFilterGuiToCategoryFacadeBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToLocaleBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterBridge as ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductSearchBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryBridge as ProductCategoryFilterGuiToCategoryQueryContainerBridge;
 
 class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,6 +24,8 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     const FACADE_CATEGORY = 'FACADE_CATEGORY';
     const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    const CLIENT_CATALOG = 'CLIENT_CATALOG';
+    const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +39,8 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
         $this->addCategoryFacade($container);
         $this->addProductSearchFacade($container);
         $this->addCategoryQueryContainer($container);
+        $this->addCatalogClient($container);
+        $this->addProductCategoryFilterClient($container);
 
         return $container;
     }
@@ -59,7 +65,7 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     protected function addProductCategoryFilterFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT_CATEGORY_FILTER] = function (Container $container) {
-            return new ProductCategoryFilterGuiToProductCategoryFilterBridge($container->getLocator()->productCategoryFilter()->facade());
+            return new ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge($container->getLocator()->productCategoryFilter()->facade());
         };
 
         return $container;
@@ -112,6 +118,30 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
             return new ProductCategoryFilterGuiToProductSearchBridge($container->getLocator()->productSearch()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addCatalogClient(Container $container)
+    {
+        $container[static::CLIENT_CATALOG] = function (Container $container) {
+            return new ProductCategoryFilterGuiToCatalogBridge($container->getLocator()->catalog()->client());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addProductCategoryFilterClient(Container $container)
+    {
+        $container[static::CLIENT_PRODUCT_CATEGORY_FILTER] = function (Container $container) {
+            return new ProductCategoryFilterGuiToProductCategoryFilterClientBridge($container->getLocator()->productCategoryFilter()->client());
         };
     }
 }

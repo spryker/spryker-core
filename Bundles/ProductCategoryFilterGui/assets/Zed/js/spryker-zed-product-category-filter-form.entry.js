@@ -6,3 +6,4 @@
 'use strict';
 
 require('./modules/product-category-filter-form/main');
+require('../sass/filters.scss');
