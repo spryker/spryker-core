@@ -72,7 +72,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
 
         $this->executePostHooks($quoteTransfer, $checkoutResponse);
-        $this->setCheckoutResponseSuccess($checkoutResponse);
+        $this->updateCheckoutResponseSuccess($checkoutResponse);
 
         return $checkoutResponse;
     }
@@ -109,7 +109,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      *
      * @return void
      */
-    protected function setCheckoutResponseSuccess(CheckoutResponseTransfer $checkoutResponseTransfer)
+    protected function updateCheckoutResponseSuccess(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $isSuccess = !$this->hasErrors($checkoutResponseTransfer);
         $checkoutResponseTransfer->setIsSuccess($isSuccess);
@@ -117,7 +117,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse Deprecated: SavedOrderTransfer should be used directly
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -132,7 +132,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse Deprecated: SavedOrderTransfer should be used directly
      *
      * @return void
      */

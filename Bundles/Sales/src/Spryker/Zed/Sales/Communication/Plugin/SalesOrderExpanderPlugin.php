@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SalesOrderExpanderPlugin extends AbstractPlugin implements CheckoutPreSaveHookInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

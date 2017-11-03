@@ -13,7 +13,8 @@ interface CheckoutPreSaveHookInterface
 {
     /**
      * Specification:
-     * - Do something before orderTransfer save
+     * - Does something before orderTransfer save
+     * - Does not save anything to DB
      *
      * @api
      *
