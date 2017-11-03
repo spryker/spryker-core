@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\UtilValidate\Model\Email;
 
-interface RfcValidatorInterface
+interface EmailValidatorInterface
 {
     /**
      * @param string $email
