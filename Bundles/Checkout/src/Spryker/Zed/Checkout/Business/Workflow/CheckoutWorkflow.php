@@ -73,7 +73,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
 
         $this->executePostHooks($quoteTransfer, $checkoutResponseTransfer);
-        $this->updateCheckoutResponseSuccess($checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
     }
@@ -103,17 +102,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected function hasErrors(CheckoutResponseTransfer $checkoutResponse)
     {
         return count($checkoutResponse->getErrors()) > 0;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    protected function updateCheckoutResponseSuccess(CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-        $isSuccess = !$this->hasErrors($checkoutResponseTransfer);
-        $checkoutResponseTransfer->setIsSuccess($isSuccess);
     }
 
     /**

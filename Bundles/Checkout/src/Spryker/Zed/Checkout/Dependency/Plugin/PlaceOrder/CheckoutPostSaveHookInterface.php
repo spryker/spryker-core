@@ -15,6 +15,7 @@ interface CheckoutPostSaveHookInterface
     /**
      * Specification:
      * - This plugin is called after the order is placed.
+     * - Set the success flag to false, if redirect should be headed to an error page afterwords
      *
      * @api
      *

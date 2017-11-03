@@ -8,19 +8,11 @@
 namespace Spryker\Zed\Checkout\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreSaveHookInterface as PlaceOrderCheckoutPreSaveHookInterface;
 
-interface CheckoutPreSaveHookInterface
+/**
+ * @deprecated Use \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreSaveHookInterface instead
+ */
+interface CheckoutPreSaveHookInterface extends PlaceOrderCheckoutPreSaveHookInterface
 {
-    /**
-     * Specification:
-     * - Does something before orderTransfer save
-     * - Does not save anything to DB
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function preSave(QuoteTransfer $quoteTransfer);
 }
