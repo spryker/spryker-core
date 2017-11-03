@@ -10,12 +10,18 @@ namespace Spryker\Zed\Checkout\Business\Workflow;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
     use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var CheckoutToOmsFacadeInterface
+     */
+    protected $omsFacade;
 
     /**
      * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
@@ -72,9 +78,26 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $quoteTransfer = $this->doPreSave($quoteTransfer);
         $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->executePostHooks($quoteTransfer, $checkoutResponseTransfer);
+        $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
+        $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    protected function runStateMachine(SaveOrderTransfer $saveOrderTransfer)
+    {
+        $salesOrderItemIds = [];
+
+        foreach ($saveOrderTransfer->getOrderItems() as $itemTransfer) {
+            $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItem();
+        }
+
+        $this->omsFacade->triggerEventForNewOrderItems($salesOrderItemIds);
     }
 
     /**
@@ -92,16 +115,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return (bool)$isPassed;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     *
-     * @return bool
-     */
-    protected function hasErrors(CheckoutResponseTransfer $checkoutResponse)
-    {
-        return count($checkoutResponse->getErrors()) > 0;
     }
 
     /**
@@ -143,7 +156,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      *
      * @return void
      */
-    protected function executePostHooks(QuoteTransfer $quoteTransfer, $checkoutResponse)
+    protected function doPostSave(QuoteTransfer $quoteTransfer, $checkoutResponse)
     {
         foreach ($this->postSaveHookStack as $postSaveHook) {
             $postSaveHook->executeHook($quoteTransfer, $checkoutResponse);

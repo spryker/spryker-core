@@ -16,6 +16,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const CHECKOUT_POST_HOOKS = 'checkout_post_hooks';
     const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
     const CHECKOUT_PRE_SAVE_HOOKS = 'checkout_pre_save_hooks';
+    const FACADE_OMS = 'FACADE_OMS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +39,22 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::CHECKOUT_PRE_SAVE_HOOKS] = function (Container $container) {
             return $this->getCheckoutPreSaveHooks($container);
+        };
+
+        $container = $this->addOmsFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addOmsFacade(Container $container)
+    {
+        $container[static::FACADE_OMS] = function () use ($container) {
+            return $container->getLocator()->oms()->facade();
         };
 
         return $container;
