@@ -252,7 +252,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface
+     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductInterface
      */
     protected function getPriceProductFacade()
     {

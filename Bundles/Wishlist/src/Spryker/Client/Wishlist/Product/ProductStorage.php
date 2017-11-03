@@ -9,6 +9,7 @@ namespace Spryker\Client\Wishlist\Product;
 
 use ArrayObject;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductInterface;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface;
 
 class ProductStorage implements ProductStorageInterface
@@ -19,11 +20,20 @@ class ProductStorage implements ProductStorageInterface
     protected $productClient;
 
     /**
-     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface $productClient
+     * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductInterface
      */
-    public function __construct(WishlistToProductInterface $productClient)
-    {
+    protected $priceProductClient;
+
+    /**
+     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface $productClient
+     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductInterface $priceProductClient
+     */
+    public function __construct(
+        WishlistToProductInterface $productClient,
+        WishlistToPriceProductInterface $priceProductClient
+    ) {
         $this->productClient = $productClient;
+        $this->priceProductClient = $priceProductClient;
     }
 
     /**
@@ -95,6 +105,11 @@ class ProductStorage implements ProductStorageInterface
         $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);
 
         foreach ($storageProductCollection as $storageProductTransfer) {
+            $currentPriceTransfer = $this->priceProductClient->resolveProductPrice($storageProductTransfer->getPrices());
+
+            $storageProductTransfer->setPrice($currentPriceTransfer->getPrice());
+            $storageProductTransfer->setPrices($currentPriceTransfer->getPrices());
+
             $result[$storageProductTransfer->getIdProductConcrete()] = $storageProductTransfer;
         }
 

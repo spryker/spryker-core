@@ -82,4 +82,12 @@ class PriceProductFacadeStub extends PriceProductFacade
     {
         $this->validities[$sku] = $validity;
     }
+
+    /**
+     * @return string
+     */
+    public function getDefaultPriceTypeName()
+    {
+        return 'DEFAULT';
+    }
 }

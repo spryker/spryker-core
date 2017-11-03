@@ -10,14 +10,14 @@ namespace Spryker\Zed\ProductRelationCollector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToCollectorBridge;
-use Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceBridge;
+use Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductBridgeProduct;
 use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorCollectorToProductImageBridge;
 use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductRelationBridge;
 
 class ProductRelationCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const FACADE_PRICE = 'FACADE_PRICE';
+    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
@@ -65,8 +65,8 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function providePriceFacade(Container $container)
     {
-        $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductRelationCollectorToPriceBridge($container->getLocator()->priceProduct()->facade());
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductRelationCollectorToPriceProductBridgeProduct($container->getLocator()->priceProduct()->facade());
         };
 
         return $container;

@@ -66,7 +66,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'asdf'))));
 
         $parameters = [
-            'foo' => 'asdf',
+            'foo-param' => 'asdf',
         ];
 
         return [$searchConfig, $expectedQuery, $parameters];
@@ -102,9 +102,9 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'yxcv'))));
 
         $parameters = [
-            'foo' => 'asdf',
-            'bar' => 'qwer',
-            'baz' => 'yxcv',
+            'foo-param' => 'asdf',
+            'bar-param' => 'qwer',
+            'baz-param' => 'yxcv',
         ];
 
         return [$searchConfig, $expectedQuery, $parameters];
@@ -126,7 +126,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ->addFilter((new Terms)
                         ->setTerms(PageIndexMap::STRING_FACET_FACET_VALUE, ['asdf', 'qwer']))));
         $parameters = [
-            'foo' => [
+            'foo-param' => [
                 'asdf',
                 'qwer',
             ],
@@ -178,7 +178,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                             ->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, 'yxcv')))));
 
         $parameters = [
-            'foo' => [
+            'foo-param' => [
                 'asdf',
                 'qwer',
                 'yxcv',
@@ -204,7 +204,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                         ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 123))));
 
         $parameters = [
-            'foo' => 123,
+            'foo-param' => 123,
         ];
 
         return [$searchConfig, $expectedQuery, $parameters];
@@ -220,21 +220,21 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
-                    ->setParameterName('bar')
+                    ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
-                    ->setParameterName('baz')
+                    ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
             );
@@ -271,9 +271,9 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                         ]))));
 
                 $parameters = [
-                    'foo' => 123, // simple value
-                    'bar' => '456-789', // range value as string
-                    'baz' => [
+                    'foo-param' => 123, // simple value
+                    'bar-param' => '456-789', // range value as string
+                    'baz-param' => [
                         'min' => 123,
                         'max' => 456,
                     ], // range value as array
@@ -292,21 +292,21 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
-                    ->setParameterName('bar')
+                    ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
-                    ->setParameterName('baz')
+                    ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE)
             );
@@ -339,13 +339,13 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                         ->addField(PageIndexMap::INTEGER_FACET_FACET_VALUE, []))));
 
                 $parameters = [
-                    'foo' => [
+                    'foo-param' => [
                         'min' => 123,
                     ], // open range
-                    'bar' => [
+                    'bar-param' => [
                         'max' => 123,
                     ], // open range
-                    'baz' => '-', // empty range
+                    'baz-param' => '-', // empty range
                 ];
 
                 return [$searchConfig, $expectedQuery, $parameters];
@@ -384,9 +384,9 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                         ]))));
 
                 $parameters = [
-                    'foo' => 123,
-                    'bar' => 456,
-                    'baz' => 789,
+                    'foo-param' => 123,
+                    'bar-param' => 456,
+                    'baz-param' => 789,
                 ];
 
                 return [$searchConfig, $expectedQuery, $parameters];
@@ -430,7 +430,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                             ->setTerm(PageIndexMap::INTEGER_FACET_FACET_VALUE, 789)))));
 
         $parameters = [
-            'foo' => [
+            'foo-param' => [
                 123,
                 456,
                 789,
@@ -451,7 +451,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1'));
 
         $parameters = [
-            'foo' => 'c1',
+            'foo-param' => 'c1',
         ];
 
         return [$searchConfig, $expectedQuery, $parameters];
@@ -482,9 +482,9 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1'));
 
         $parameters = [
-            'foo' => 'asdf',
-            'bar' => 456,
-            'baz' => 'c1',
+            'foo-param' => 'asdf',
+            'bar-param' => 456,
+            'baz-param' => 'c1',
         ];
 
         return [$searchConfig, $expectedQuery, $parameters];

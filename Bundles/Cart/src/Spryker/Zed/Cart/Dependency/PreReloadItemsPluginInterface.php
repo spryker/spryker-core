@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface PreReloadItemsPluginInterface
 {
     /**
-     *  Specification:
+     * Specification:
      *   - This plugin is execute before reloading cart items, with this plugin you can modify quote before reloading it.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -7,22 +7,15 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-use Generated\Shared\Transfer\PriceProductFilterTransfer;
-
 interface ProductBundleToPriceInterface
 {
     /**
-     * @param string $sku
-     * @param string|null $priceType
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceType = null);
+    public function getNetPriceModeIdentifier();
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
+    public function getGrossPriceModeIdentifier();
 }

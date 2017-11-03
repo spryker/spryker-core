@@ -25,7 +25,7 @@ class ProductRelationCollectorBusinessFactory extends AbstractBusinessFactory
         $productRelationCollector = new ProductRelationCollector(
             $this->getUtilDataReaderService(),
             $this->getProductImageQueryContainer(),
-            $this->getPriceFacade(),
+            $this->getPriceProductFacade(),
             $this->getProductRelationQueryContainer()
         );
 
@@ -40,11 +40,11 @@ class ProductRelationCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceInterface
+     * @return \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductInterface
      */
-    protected function getPriceFacade()
+    protected function getPriceProductFacade()
     {
-        return $this->getProvidedDependency(ProductRelationCollectorDependencyProvider::FACADE_PRICE);
+        return $this->getProvidedDependency(ProductRelationCollectorDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**

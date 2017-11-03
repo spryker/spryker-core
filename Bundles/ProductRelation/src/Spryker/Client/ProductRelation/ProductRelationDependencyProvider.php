@@ -26,18 +26,49 @@ class ProductRelationDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::KV_STORAGE] = function (Container $container) {
+        $container = $this->addStorageClient($container);
+        $container = $this->addLocaleClient($container);
+        $container = $this->addPriceProductClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStorageClient(Container $container)
+    {
+        $container[static::KV_STORAGE] = function (Container $container) {
             return new ProductRelationToStorageBridge($container->getLocator()->storage()->client());
         };
+        return $container;
+    }
 
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container)
+    {
         $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new ProductRelationToLocaleBridge($container->getLocator()->locale()->client());
         };
+        return $container;
+    }
 
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductClient(Container $container)
+    {
         $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
             return new ProductRelationToPriceProductBridge($container->getLocator()->priceProduct()->client());
         };
-
         return $container;
     }
 }

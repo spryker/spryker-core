@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductRelationCollector\Dependency\Facade;
 
-interface ProductRelationCollectorToPriceInterface
+interface ProductRelationCollectorToPriceProductInterface
 {
     /**
      * @param string $sku

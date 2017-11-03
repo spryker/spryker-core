@@ -26,22 +26,22 @@ class ConfigResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Service\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $coreClass = 'Spryker\\Service\\Kernel\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Service\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $projectClass = 'ProjectNamespace\\Service\\Kernel\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Service\\KernelDE\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $storeClass = 'ProjectNamespace\\Service\\KernelDE\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $classPattern = 'Unit\\%namespace%\\Service\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%Config';
+    protected $classPattern = '%namespace%\\Service\\%bundle%%store%\\ClassResolver\\%bundle%Config';
 
     /**
      * @var string

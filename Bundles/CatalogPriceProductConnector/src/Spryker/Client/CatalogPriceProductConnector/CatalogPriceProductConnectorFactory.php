@@ -14,7 +14,7 @@ class CatalogPriceProductConnectorFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductInterface
      */
-    function getPriceProductClient()
+    public function getPriceProductClient()
     {
         return $this->getProvidedDependency(CatalogPriceProductConnectorDependencyProvider::CLIENT_PRICE_PRODUCT);
     }

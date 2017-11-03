@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
 
-class ProductSetGuiToPriceProductBridge implements ProductSetGuiToPriceInterface
+class ProductSetGuiToPriceProductBridgeProduct implements ProductSetGuiToPriceProductInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface

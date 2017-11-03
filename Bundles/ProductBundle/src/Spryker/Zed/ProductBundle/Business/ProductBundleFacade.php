@@ -269,6 +269,8 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterBundleItemsOnCartReload(QuoteTransfer $quoteTransfer)
     {

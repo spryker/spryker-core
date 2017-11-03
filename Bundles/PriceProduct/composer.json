@@ -6,18 +6,18 @@
     "spryker/config": "^3.0.0",
     "spryker/currency": "^3.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/product": "^5.0.0",
     "spryker/price": "^5.0.0",
+    "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/store": "^1.0.0",
     "spryker/touch": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/installer": "*"
+    "spryker/installer": "*",
+    "spryker/testify": "*"
   },
-  "suggest" : {
+  "suggest": {
     "spryker/installer": "If you want to use default price product data installer"
   },
   "autoload": {

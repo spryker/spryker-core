@@ -18,9 +18,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use OutOfBoundsException;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -34,9 +34,9 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected $productBundleQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface
      */
-    protected $priceFacade;
+    protected $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
@@ -47,6 +47,11 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface
      */
     protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface
+     */
+    protected $priceFacade;
 
     /**
      * @var array
@@ -65,20 +70,23 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface $priceFacade
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToPriceInterface $priceFacade,
+        ProductBundleToPriceProductInterface $priceProductFacade,
         ProductBundleToProductInterface $productFacade,
-        ProductBundleToLocaleInterface $localeFacade
+        ProductBundleToLocaleInterface $localeFacade,
+        ProductBundleToPriceInterface $priceFacade
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
-        $this->priceFacade = $priceFacade;
+        $this->priceProductFacade = $priceProductFacade;
         $this->productFacade = $productFacade;
         $this->localeFacade = $localeFacade;
+        $this->priceFacade = $priceFacade;
     }
 
     /**
@@ -337,7 +345,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if (!isset(static::$productPriceCache[$sku])) {
             $priceFilterTransfer = $this->createPriceProductFilterTransfer($sku, $currencyIsoCode, $priceMode);
-            static::$productPriceCache[$sku] = $this->priceFacade->getPriceFor($priceFilterTransfer);
+            static::$productPriceCache[$sku] = $this->priceProductFacade->getPriceFor($priceFilterTransfer);
         }
 
          return static::$productPriceCache[$sku];
@@ -389,7 +397,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected function calculateBundleTotalUnitPrice(array $bundledProducts, $priceMode)
     {
         $totalBundleItemAmount = (int)array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) use ($priceMode) {
-            if ($priceMode === PriceMode::PRICE_MODE_NET) {
+            if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
                 $total += $itemTransfer->getUnitNetPrice();
             } else {
                 $total += $itemTransfer->getUnitGrossPrice();
@@ -440,7 +448,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function setPrice(ItemTransfer $itemTransfer, $unitPrice, $priceMode)
     {
-        if ($priceMode === PriceMode::PRICE_MODE_NET) {
+        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
             $itemTransfer->setUnitNetPrice($unitPrice);
             return;
         }
@@ -456,7 +464,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function requirePriceByMode(ItemTransfer $itemTransfer, $priceMode)
     {
-        if ($priceMode === PriceMode::PRICE_MODE_NET) {
+        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
             $itemTransfer->requireUnitNetPrice();
             return;
         }
@@ -472,7 +480,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     protected function getPriceByPriceMode(ItemTransfer $itemTransfer, $priceMode)
     {
-        if ($priceMode === PriceMode::PRICE_MODE_NET) {
+        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
             return $itemTransfer->getUnitNetPrice();
         }
 
@@ -480,7 +488,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param string$sku
+     * @param string $sku
      * @param string $currencyIsoCode
      * @param string $priceMode
      *

@@ -762,24 +762,4 @@ class AbstractProductFormDataProvider
 
         return $url;
     }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultPricesData()
-    {
-        $priceData = [];
-        $defaultPriceTypeName = $this->priceFacade->getDefaultPriceTypeName();
-        $priceTypes = $this->priceFacade->getPriceTypeValues();
-
-        foreach ($priceTypes as $priceType) {
-            if ($priceType === $defaultPriceTypeName) {
-                continue;
-            }
-
-            $priceData[$priceType] = null;
-        }
-
-        return $priceData;
-    }
 }

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CatalogPriceProductConnector\Dependency;
+namespace Spryker\Client\Wishlist\Dependency\Client;
 
-class CatalogPriceProductConnectorToPriceProductBridge implements CatalogPriceProductConnectorToPriceProductInterface
+class WishlistToPriceProductBridge implements WishlistToPriceProductInterface
 {
     /**
      * @var \Spryker\Client\PriceProduct\PriceProductClientInterface
