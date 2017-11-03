@@ -112,7 +112,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     }
 
     /**
-     * @deprecated will be removed in next major, make OMS facade dependency required
+     * @deprecated Will be removed in next major. Make OMS facade dependency required.
      *
      * @return bool
      */
