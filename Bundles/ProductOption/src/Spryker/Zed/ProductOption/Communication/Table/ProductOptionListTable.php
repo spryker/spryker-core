@@ -32,6 +32,9 @@ class ProductOptionListTable extends AbstractTable
     const URL_PARAM_ACTIVE = 'active';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    const NET_PRICE = 'NET_PRICE';
+    const GROSS_PRICE = 'GROSS_PRICE';
+
     const PRICE_LABEL = '<span class="label label-info">%s</span>';
 
     /**
@@ -131,13 +134,15 @@ class ProductOptionListTable extends AbstractTable
 
         /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity */
         foreach ($queryResult as $productOptionGroupEntity) {
+            $formattedPrices = $this->getFormattedPrices($productOptionGroupEntity);
+
             $result[] = [
                 SpyProductOptionGroupTableMap::COL_ID_PRODUCT_OPTION_GROUP => $productOptionGroupEntity->getIdProductOptionGroup(),
                 SpyProductOptionGroupTableMap::COL_NAME => $productOptionGroupEntity->getName(),
                 static::TABLE_COL_SKU => $this->formatSkus($productOptionGroupEntity),
                 static::TABLE_COL_NAME => $this->formatNames($productOptionGroupEntity),
-                static::TABLE_COL_GROSS_PRICE => $this->getFormattedGrossPrices($productOptionGroupEntity),
-                static::TABLE_COL_NET_PRICE => $this->getFormattedNetPrices($productOptionGroupEntity),
+                static::TABLE_COL_GROSS_PRICE => $formattedPrices[static::GROSS_PRICE],
+                static::TABLE_COL_NET_PRICE => $formattedPrices[static::NET_PRICE],
                 SpyProductOptionGroupTableMap::COL_ACTIVE => $this->getStatus($productOptionGroupEntity),
                 static::TABLE_COL_ACTIONS => $this->getActionButtons($productOptionGroupEntity),
             ];
@@ -150,40 +155,26 @@ class ProductOptionListTable extends AbstractTable
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueCollection
      *
      * @return string[] First level keys are product option value ids,
-     *                  second level keys are product option price ids,
-     *                  values are formatted gross prices with symbol.
+     *                  second level keys are price mode identifiers,
+     *                  third level keys are simple numerical indexes for each price,
+     *                  values are formatted prices with symbol.
      */
-    public function getGrossPriceCollection(ObjectCollection $productOptionValueCollection)
+    public function getPriceCollection(ObjectCollection $productOptionValueCollection)
     {
-        $grossPriceCollection = [];
+        $priceCollection = [];
         foreach ($productOptionValueCollection as $productOptionValueEntity) {
             foreach ($productOptionValueEntity->getProductOptionValuePrices() as $productOptionPriceEntity) {
-                $grossPriceCollection[$productOptionValueEntity->getIdProductOptionValue()][$productOptionPriceEntity->getIdProductOptionValuePrice()] =
-                    $this->formatPrice($productOptionPriceEntity->getNetPrice(), $productOptionPriceEntity->getFkCurrency());
+                $idProductOptionValue = $productOptionValueEntity->getIdProductOptionValue();
+                $idCurrency = $productOptionPriceEntity->getFkCurrency();
+                $netPrice = $productOptionPriceEntity->getNetPrice();
+                $grossPrice = $productOptionPriceEntity->getGrossPrice();
+
+                $priceCollection[$idProductOptionValue][static::NET_PRICE][] = $this->formatPrice($netPrice, $idCurrency);
+                $priceCollection[$idProductOptionValue][static::GROSS_PRICE][] = $this->formatPrice($grossPrice, $idCurrency);
             }
         }
 
-        return $grossPriceCollection;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueCollection
-     *
-     * @return string[] First level keys are product option value ids,
-     *                  second level keys are product option price ids,
-     *                  values are formatted net prices with symbol.
-     */
-    public function getNetPriceCollection(ObjectCollection $productOptionValueCollection)
-    {
-        $grossNetCollection = [];
-        foreach ($productOptionValueCollection as $productOptionValueEntity) {
-            foreach ($productOptionValueEntity->getProductOptionValuePrices() as $productOptionPriceEntity) {
-                $grossNetCollection[$productOptionValueEntity->getIdProductOptionValue()][$productOptionPriceEntity->getIdProductOptionValuePrice()] =
-                    $this->formatPrice($productOptionPriceEntity->getGrossPrice(), $productOptionPriceEntity->getFkCurrency());
-            }
-        }
-
-        return $grossNetCollection;
+        return $priceCollection;
     }
 
     /**
@@ -224,35 +215,26 @@ class ProductOptionListTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $entity
      *
-     * @return string
+     * @return string[]
      */
-    protected function getFormattedNetPrices(SpyProductOptionGroup $entity)
+    protected function getFormattedPrices(SpyProductOptionGroup $entity)
     {
-        $netPriceCollection = $this->getNetPriceCollection($entity->getSpyProductOptionValues());
+        $priceCollection = $this->getPriceCollection($entity->getSpyProductOptionValues());
 
-        $prices = '';
-        foreach ($netPriceCollection as $productOptionValuePrices) {
-            $prices .= $this->wrapInlineCellItem(implode(' ', $productOptionValuePrices));
+        $formattedPrices = [
+            static::NET_PRICE => '',
+            static::GROSS_PRICE => '',
+        ];
+        foreach ($priceCollection as $productOptionValuePrices) {
+            $formattedPrices[static::NET_PRICE] .= $this->wrapInlineCellItem(
+                implode(' ', $productOptionValuePrices[static::NET_PRICE])
+            );
+            $formattedPrices[static::GROSS_PRICE] .= $this->wrapInlineCellItem(
+                implode(' ', $productOptionValuePrices[static::GROSS_PRICE])
+            );
         }
 
-        return $prices;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $entity
-     *
-     * @return string
-     */
-    protected function getFormattedGrossPrices(SpyProductOptionGroup $entity)
-    {
-        $grossPriceCollection = $this->getGrossPriceCollection($entity->getSpyProductOptionValues());
-
-        $prices = '';
-        foreach ($grossPriceCollection as $productOptionValuePrices) {
-            $prices .= $this->wrapInlineCellItem(implode(' ', $productOptionValuePrices));
-        }
-
-        return $prices;
+        return $formattedPrices;
     }
 
     /**
