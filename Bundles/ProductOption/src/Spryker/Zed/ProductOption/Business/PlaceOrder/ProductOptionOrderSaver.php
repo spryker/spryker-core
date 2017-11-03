@@ -12,10 +12,14 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
+use Propel\Runtime\Connection\TransactionTrait;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
      */
@@ -36,6 +40,18 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
      * @return void
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $this->handleDatabaseTransaction(function () use ($saveOrderTransfer) {
+            $this->saveOrderTransaction($saveOrderTransfer);
+        });
+    }
+
+    /**
+     * @param SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderTransaction(SaveOrderTransfer $saveOrderTransfer)
     {
         foreach ($saveOrderTransfer->getOrderItems() as $itemTransfer) {
             $this->saveOptions($itemTransfer);
