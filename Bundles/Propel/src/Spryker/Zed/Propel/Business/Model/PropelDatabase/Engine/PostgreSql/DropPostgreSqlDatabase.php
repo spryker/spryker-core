@@ -20,9 +20,61 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     public function dropDatabase()
     {
-        $this->runProcess(
-            $this->getDropCommand()
-        );
+        if ($this->useSudo()) {
+            return $this->runSudoDropCommand();
+        }
+
+        return $this->runDropCommandRemote();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function runSudoDropCommand()
+    {
+        $this->closeOpenConnections();
+
+        return $this->runProcess($this->getSudoDropCommand());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function runDropCommandRemote()
+    {
+        return $this->runProcess($this->getDropCommand());
+    }
+
+    /**
+     * @throws \RuntimeException
+     *
+     * @return void
+     */
+    protected function closeOpenConnections()
+    {
+        $postgresVersion = $this->getPostgresVersion();
+        $process = $this->getProcess(sprintf('sudo pg_ctlcluster %s main restart --force', $postgresVersion));
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new RuntimeException($process->getErrorOutput());
+        }
+    }
+
+    /**
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    protected function getPostgresVersion()
+    {
+        $process = $this->getProcess('psql --version | awk \'{print $3}\' | cut -f1,2 -d\'.\'');
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new RuntimeException($process->getErrorOutput());
+        }
+
+        return trim($process->getOutput(), "\n");
     }
 
     /**
@@ -76,7 +128,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     {
         $this->exportPostgresPassword();
 
-        $process = new Process($command);
+        $process = $this->getProcess($command);
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -105,5 +157,17 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     protected function useSudo()
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function getProcess($command)
+    {
+        $process = new Process($command);
+
+        return $process;
     }
 }

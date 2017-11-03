@@ -44,7 +44,7 @@ class EngineFactory implements EngineFactoryInterface
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\MySql\DropMySqlDatabase
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\MySql\DropMySqlDatabase
      */
     protected function createMySqlDropCommand()
     {
@@ -92,7 +92,7 @@ class EngineFactory implements EngineFactoryInterface
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\PostgreSql\DropPostgreSqlDatabase
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\PostgreSql\DropPostgreSqlDatabase
      */
     protected function createPostgreSqlDropCommand()
     {
