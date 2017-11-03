@@ -55,7 +55,7 @@
                         <td>{{ optionValue.Sku }}</td>
                         <td>
                             {% for moneyValueTransfer in optionValue.prices %}
-                                {% if moneyValueTransfer.GrossAmount is defined %}
+                                {% if moneyValueTransfer.GrossAmount is not empty %}
                                     {{ priceLabel | format(moneyValueTransfer.GrossAmount | money) | raw }}
                                 {% else %}
                                     {{ priceLabel | format('-') | raw }}
@@ -64,7 +64,7 @@
                         </td>
                         <td>
                             {% for moneyValueTransfer in optionValue.prices %}
-                                {% if moneyValueTransfer.NetAmount is defined %}
+                                {% if moneyValueTransfer.NetAmount is not empty %}
                                     {{ priceLabel | format(moneyValueTransfer.NetAmount | money) | raw }}
                                 {% else %}
                                     {{ priceLabel | format('-') | raw }}
