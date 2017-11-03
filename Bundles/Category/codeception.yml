@@ -2,7 +2,7 @@ namespace: Category
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/Category
+    - tests/SprykerTest/Zed/Category
 
 paths:
     tests: tests

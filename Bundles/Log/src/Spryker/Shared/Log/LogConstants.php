@@ -15,6 +15,38 @@ interface LogConstants
      *
      * @api
      */
+    const LOGGER_CONFIG_YVES = 'LOG:LOGGER_CONFIG_YVES';
+
+    /**
+     * Specification:
+     * - Channel name of Yves logger.
+     *
+     * @api
+     */
+    const LOGGER_CHANNEL_YVES = 'LOG:LOGGER_CHANNEL_YVES';
+
+    /**
+     * Specification:
+     * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
+     *
+     * @api
+     */
+    const LOGGER_CONFIG_ZED = 'LOG:LOGGER_CONFIG_ZED';
+
+    /**
+     * Specification:
+     * - Channel name of Zed logger.
+     *
+     * @api
+     */
+    const LOGGER_CHANNEL_ZED = 'LOG:LOGGER_CHANNEL_ZED';
+
+    /**
+     * Specification:
+     * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
+     *
+     * @api
+     */
     const LOGGER_CONFIG = 'LOGGER_CONFIG';
 
     /**
@@ -28,6 +60,7 @@ interface LogConstants
     /**
      * Specification:
      * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
+     * - If set logs will be written to the specified file.
      *
      * @api
      */
