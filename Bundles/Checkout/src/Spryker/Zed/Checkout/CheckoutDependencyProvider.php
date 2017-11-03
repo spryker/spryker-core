@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Checkout;
 
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -47,14 +48,14 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addOmsFacade(Container $container)
     {
         $container[static::FACADE_OMS] = function () use ($container) {
-            return $container->getLocator()->oms()->facade();
+            return new CheckoutToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
 
         return $container;

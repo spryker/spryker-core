@@ -19,7 +19,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CheckoutToOmsFacadeInterface
+     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
      */
     protected $omsFacade;
 
@@ -44,17 +44,20 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $preSaveStack;
 
     /**
+     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface $omsFacade
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[] $preConditionStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[] $saveOrderStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[] $preSave
      */
     public function __construct(
+        CheckoutToOmsFacadeInterface $omsFacade,
         array $preConditionStack,
         array $saveOrderStack,
         array $postSaveHookStack,
         array $preSave = []
     ) {
+        $this->omsFacade = $omsFacade;
         $this->preConditionStack = $preConditionStack;
         $this->postSaveHookStack = $postSaveHookStack;
         $this->saveOrderStack = $saveOrderStack;
@@ -85,7 +88,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
@@ -164,7 +167,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

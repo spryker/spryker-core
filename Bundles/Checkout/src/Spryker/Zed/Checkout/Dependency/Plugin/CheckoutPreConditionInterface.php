@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Checkout\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface as PlaceOrderCheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface as PlaceOrderCheckoutPreConditionInterface;
 
 /**
  * @deprecated Use \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface instead

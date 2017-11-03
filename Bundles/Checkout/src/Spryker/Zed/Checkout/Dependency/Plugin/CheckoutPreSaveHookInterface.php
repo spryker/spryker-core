@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Checkout\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreSaveHookInterface as PlaceOrderCheckoutPreSaveHookInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreSaveHookInterface as PlaceOrderCheckoutPreSaveHookInterface;
 
 /**
  * @deprecated Use \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreSaveHookInterface instead

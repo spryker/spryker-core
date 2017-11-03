@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Checkout\Communication\Controller;
 
+use Exception;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -31,7 +32,7 @@ class GatewayController extends AbstractGatewayController
 
         try {
             $checkoutResponseTransfer = $this->getFacade()->placeOrder($quoteTransfer, $checkoutResponseTransfer);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $checkoutErrorTransfer = (new CheckoutErrorTransfer())
                 ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
                 ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
