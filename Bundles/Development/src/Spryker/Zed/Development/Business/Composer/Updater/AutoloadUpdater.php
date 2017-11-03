@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class AutoloadUpdater implements UpdaterInterface
@@ -135,7 +136,7 @@ class AutoloadUpdater implements UpdaterInterface
             $supportDirPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
 
             if ($this->pathExists($supportDirPath)) {
-                $nonEmptySupportDirectories = $this->getNonEmptyDirectoriesWithHelpers($this->getDirContents($supportDirPath));
+                $nonEmptySupportDirectories = $this->getNonEmptyDirectoriesWithHelpers($this->getHelperFilesInDir($supportDirPath));
                 $composerJson = $this->addAutoloadPsr4($composerJson);
                 foreach ($nonEmptySupportDirectories as $directory) {
                     preg_match('/' . static::BASE_SUPPORT_DIR . '\/(.+)/', $directory, $subNameSpace);
@@ -150,24 +151,12 @@ class AutoloadUpdater implements UpdaterInterface
 
     /**
      * @param string $dir
-     * @param array $results
      *
-     * @return array
+     * @return \Symfony\Component\Finder\Finder
      */
-    protected function getDirContents($dir, &$results = [])
+    protected function getHelperFilesInDir($dir)
     {
-        $files = scandir($dir);
-
-        foreach ($files as $key => $value) {
-            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
-            if (!is_dir($path)) {
-                $results[] = $path;
-            } elseif ($value != "." && $value != "..") {
-                $this->getDirContents($path, $results);
-            }
-        }
-
-        return $results;
+        return (new Finder())->files()->in($dir)->name('/Helper.php$/');
     }
 
     /**
@@ -179,8 +168,8 @@ class AutoloadUpdater implements UpdaterInterface
     {
         $directories = [];
         foreach ($files as $file) {
-            $dirname = dirname($file);
-            if (preg_match('/Helper\.php$/', $file) && !in_array($dirname, $directories)) {
+            $dirname = dirname(str_replace('//', '/', $file));
+            if (!in_array($dirname, $directories)) {
                 $directories[] = $dirname;
             }
         }
