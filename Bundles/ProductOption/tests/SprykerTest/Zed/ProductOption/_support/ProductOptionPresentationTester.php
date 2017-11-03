@@ -4,6 +4,7 @@ namespace SprykerTest\Zed\ProductOption;
 use ArrayObject;
 use Codeception\Actor;
 use Codeception\Scenario;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
@@ -61,7 +62,13 @@ class ProductOptionPresentationTester extends Actor
 
             $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_value', $value['value_translation_key'] . rand(1, 999));
             $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_sku', $value['value_sku'] . rand(1, 999));
-            $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_price', $value['value_price']);
+
+            $currencyIndex = 0;
+            foreach ($value['prices'] as $currencyPrices) {
+                $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_prices_' . $currencyIndex . '_net_amount', $currencyPrices['value_net_amount']);
+                $this->fillField('#product_option_general_productOptionValues_' . $elementNr . '_prices_' . $currencyIndex . '_gross_amount', $currencyPrices['value_gross_amount']);
+                $currencyIndex++;
+            }
         }
 
         $numberOfTranslations = count($values) * 2;
@@ -161,7 +168,15 @@ class ProductOptionPresentationTester extends Actor
 
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('option.value.translation.key.edit');
-        $productOptionValueTransfer->setPrices(new ArrayObject());
+        $productOptionValueTransfer->setPrices(new ArrayObject(
+            [
+                (new MoneyValueTransfer())
+                    ->setFkStore(1)
+                    ->setFkCurrency(93)
+                    ->setGrossAmount(1000)
+                    ->setNetAmount(2000),
+            ]
+        ));
         $productOptionValueTransfer->setSku('testing_sky_' . rand(1, 999));
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
@@ -169,7 +184,15 @@ class ProductOptionPresentationTester extends Actor
 
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('option.value.translation.key.edit.second');
-        $productOptionValueTransfer->setPrices(new ArrayObject());
+        $productOptionValueTransfer->setPrices(new ArrayObject(
+            [
+                (new MoneyValueTransfer())
+                    ->setFkStore(1)
+                    ->setFkCurrency(93)
+                    ->setGrossAmount(3000)
+                    ->setNetAmount(4000),
+            ]
+        ));
         $productOptionValueTransfer->setSku('testing_sky_second' . rand(1, 999));
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 

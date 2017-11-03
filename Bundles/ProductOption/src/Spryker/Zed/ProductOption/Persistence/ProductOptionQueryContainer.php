@@ -154,8 +154,12 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return $this->queryProductOptionGroupById($idProductOptionGroup)
             ->leftJoinWithSpyProductOptionValue()
-            ->useSpyProductOptionValueQuery()
+            ->useSpyProductOptionValueQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithProductOptionValuePrice()
+                ->orderByIdProductOptionValue()
+                ->useProductOptionValuePriceQuery(null, Criteria::LEFT_JOIN)
+                    ->orderByFkCurrency()
+                ->endUse()
             ->endUse();
     }
 
