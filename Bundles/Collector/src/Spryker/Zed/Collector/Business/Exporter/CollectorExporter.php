@@ -60,15 +60,13 @@ class CollectorExporter
         $types = array_keys($this->exporter->getCollectorPlugins());
         $availableTypes = $this->getAvailableCollectorTypes($types);
 
-        $output->writeln('');
+        $output->write(PHP_EOL);
         $output->writeln(sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $locale->getLocaleName()));
         $output->writeln('<fg=yellow>-------------</fg=yellow>');
 
         foreach ($availableTypes as $type) {
             if (!in_array($type, $types)) {
-                $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> ');
-                $output->write('<fg=white>N/A</fg=white>');
-                $output->writeln('');
+                $output->writeln('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green> <fg=white>N/A</fg=white>');
                 continue;
             }
 
@@ -94,24 +92,20 @@ class CollectorExporter
      */
     public function exportStorage(OutputInterface $output)
     {
-        $storeCollection = Store::getInstance()->getAllowedStores();
+        $storeName = Store::getInstance()->getStoreName();
 
         $results = [];
 
-        foreach ($storeCollection as $storeName) {
-            $output->writeln('');
-            $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
-            $output->writeln(sprintf(
-                '<fg=yellow>Exporting Store:</fg=yellow> <fg=white>%s</fg=white>',
-                $storeName
-            ));
-            $output->writeln('');
+        $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
+        $output->writeln(sprintf(
+            '<fg=yellow>Exporting Store:</fg=yellow> <fg=white>%s</fg=white>',
+            $storeName
+        ));
 
-            $localeCollection = Store::getInstance()->getLocalesPerStore($storeName);
-            foreach ($localeCollection as $locale => $localeCode) {
-                $localeTransfer = $this->localeFacade->getLocale($localeCode);
-                $results[$storeName . '@' . $localeCode] = $this->exportStorageByLocale($localeTransfer, $output);
-            }
+        $localeCollection = Store::getInstance()->getLocalesPerStore($storeName);
+        foreach ($localeCollection as $localeCode) {
+            $localeTransfer = $this->localeFacade->getLocale($localeCode);
+            $results[$storeName . '@' . $localeCode] = $this->exportStorageByLocale($localeTransfer, $output);
         }
 
         return $results;
