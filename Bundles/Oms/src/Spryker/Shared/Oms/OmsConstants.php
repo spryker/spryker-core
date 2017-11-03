@@ -15,5 +15,4 @@ interface OmsConstants
     const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
 
     const NAME_CREDIT_MEMO_REFERENCE = 'CreditMemoReference';
-
 }

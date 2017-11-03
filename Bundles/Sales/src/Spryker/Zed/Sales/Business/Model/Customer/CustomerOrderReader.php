@@ -100,7 +100,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
      */
     protected function excludeOrder(SpySalesOrder $salesOrderEntity)
     {
-        if (!$this->omsFacade) {
+        if (!$this->hasOmsFacade()) {
             return false;
         }
 
@@ -109,5 +109,15 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
         );
 
         return $excludeFromCustomer;
+    }
+
+    /**
+     * @deprecated will be removed in next major, make OMS facade dependency required
+     *
+     * @return bool
+     */
+    protected function hasOmsFacade()
+    {
+        return $this->omsFacade !== null;
     }
 }

@@ -113,7 +113,7 @@ class OmsFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\OmsFacade
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function createOmsFacade()
     {
@@ -131,7 +131,7 @@ class OmsFacadeTest extends Unit
      * @param array $activeProcesses
      * @param string|null $xmlFolder
      *
-     * @return \Spryker\Zed\Oms\Business\OmsFacade
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], $xmlFolder = null)
     {
