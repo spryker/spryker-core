@@ -26,6 +26,6 @@ class OrderShipmentSavePlugin extends AbstractPlugin implements CheckoutSaveOrde
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
-        $this->getFacade()->saveShipmentForOrder($quoteTransfer, $saveOrderTransfer);
+        $this->getFacade()->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
     }
 }

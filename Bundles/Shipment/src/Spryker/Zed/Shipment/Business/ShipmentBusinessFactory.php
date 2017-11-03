@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Shipment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -17,6 +18,7 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
@@ -87,11 +89,19 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface
      */
     public function createShipmentOrderSaver()
     {
         return new ShipmentOrderSaver($this->getSalesQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
+     */
+    public function createCheckoutShipmentOrderSaver()
+    {
+        return new CheckoutShipmentOrderSaver($this->getSalesQueryContainer());
     }
 
     /**
