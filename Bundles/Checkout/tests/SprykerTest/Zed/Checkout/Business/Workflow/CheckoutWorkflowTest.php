@@ -52,7 +52,9 @@ class CheckoutWorkflowTest extends Unit
         $checkoutWorkflow = new CheckoutWorkflow([$mock1, $mock2], [], []);
 
         $quoteTransfer = new QuoteTransfer();
-        $checkoutWorkflow->placeOrder($quoteTransfer);
+        $checkoutResponse = new CheckoutResponseTransfer();
+
+        $checkoutWorkflow->placeOrder($quoteTransfer, $checkoutResponse);
     }
 
     /**
@@ -76,8 +78,9 @@ class CheckoutWorkflowTest extends Unit
         );
 
         $checkoutWorkflow = new CheckoutWorkflow([], [$mock1, $mock2], [], []);
+        $checkoutResponse = new CheckoutResponseTransfer();
 
-        $checkoutWorkflow->placeOrder($quoteTransfer);
+        $checkoutWorkflow->placeOrder($quoteTransfer, $checkoutResponse);
     }
 
     /**
@@ -101,8 +104,9 @@ class CheckoutWorkflowTest extends Unit
         );
 
         $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1, $mock2]);
+        $checkoutResponse = new CheckoutResponseTransfer();
 
-        $checkoutWorkflow->placeOrder($quoteTransfer);
+        $checkoutWorkflow->placeOrder($quoteTransfer, $checkoutResponse);
     }
 
     /**
@@ -127,7 +131,9 @@ class CheckoutWorkflowTest extends Unit
             $this->isInstanceOf(CheckoutResponseTransfer::class)
         );
 
-        $checkoutWorkflow->placeOrder($quoteTransfer);
+        $checkoutResponse = new CheckoutResponseTransfer();
+
+        $checkoutWorkflow->placeOrder($quoteTransfer, $checkoutResponse);
     }
 
     /**
@@ -150,7 +156,9 @@ class CheckoutWorkflowTest extends Unit
 
         $mock2->expects($this->never())->method('executeHook');
 
-        $result = $checkoutWorkflow->placeOrder($quoteTransfer);
+        $checkoutResponse = new CheckoutResponseTransfer();
+
+        $result = $checkoutWorkflow->placeOrder($quoteTransfer, $checkoutResponse);
         $this->assertFalse($result->getIsSuccess());
     }
 
@@ -169,8 +177,9 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock]);
         $quoteTransfer = new QuoteTransfer();
+        $checkoutResponse = new CheckoutResponseTransfer();
 
-        $result = $checkoutWorkflow->placeOrder($quoteTransfer);
+        $result = $checkoutWorkflow->placeOrder($quoteTransfer, $checkoutResponse);
 
         $this->assertTrue($result->getIsSuccess());
     }

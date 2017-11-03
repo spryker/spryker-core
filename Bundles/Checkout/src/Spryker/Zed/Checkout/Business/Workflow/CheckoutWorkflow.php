@@ -57,24 +57,25 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function placeOrder(QuoteTransfer $quoteTransfer)
+    public function placeOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $checkoutResponse = $this->createCheckoutResponseTransfer();
+        $checkoutResponseTransfer = $this->resetCheckoutResponseTransfer($checkoutResponseTransfer);
 
-        if (!$this->checkPreConditions($quoteTransfer, $checkoutResponse)) {
-            return $checkoutResponse;
+        if (!$this->checkPreConditions($quoteTransfer, $checkoutResponseTransfer)) {
+            return $checkoutResponseTransfer;
         }
 
         $quoteTransfer = $this->doPreSave($quoteTransfer);
-        $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponse);
+        $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->executePostHooks($quoteTransfer, $checkoutResponse);
-        $this->updateCheckoutResponseSuccess($checkoutResponse);
+        $this->executePostHooks($quoteTransfer, $checkoutResponseTransfer);
+        $this->updateCheckoutResponseSuccess($checkoutResponseTransfer);
 
-        return $checkoutResponse;
+        return $checkoutResponseTransfer;
     }
 
     /**
@@ -162,11 +163,13 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function createCheckoutResponseTransfer()
+    protected function resetCheckoutResponseTransfer(CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $checkoutResponseTransfer = (new CheckoutResponseTransfer())
+        $checkoutResponseTransfer
             ->setSaveOrder(new SaveOrderTransfer())
             ->setIsSuccess(false);
 

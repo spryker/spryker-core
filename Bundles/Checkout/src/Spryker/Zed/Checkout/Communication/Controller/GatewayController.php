@@ -7,14 +7,19 @@
 
 namespace Spryker\Zed\Checkout\Communication\Controller;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Checkout\Business\CheckoutFacade getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
+    const MESSAGE_PLACE_ORDER_ERROR = 'Order can not be processed';
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -22,6 +27,18 @@ class GatewayController extends AbstractGatewayController
      */
     public function placeOrderAction(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->placeOrder($quoteTransfer);
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        try {
+            $checkoutResponseTransfer = $this->getFacade()->placeOrder($quoteTransfer, $checkoutResponseTransfer);
+        } catch (\Exception $exception) {
+            $checkoutErrorTransfer = (new CheckoutErrorTransfer())
+                ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
+                ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
+
+            $checkoutResponseTransfer->addError($checkoutErrorTransfer);
+        }
+
+        return $checkoutResponseTransfer;
     }
 }
