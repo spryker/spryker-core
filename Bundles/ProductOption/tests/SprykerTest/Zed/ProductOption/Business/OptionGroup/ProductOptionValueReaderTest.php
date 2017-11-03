@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
@@ -26,55 +27,94 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 class ProductOptionValueReaderTest extends MockProvider
 {
     /**
+     * @uses ProductOptionValueReader::getOptionValueById()
+     * @uses SpyProductOptionValue::getSpyProductOptionGroup()
+     *
      * @return void
      */
-    public function testGetProductOptionShouldReturnPersistedValueTransfer()
+    public function testGetProductOptionReturnsPersistedValueTransfer()
     {
+        // Assign
+        $expectedIdProductOptionValue = 5;
+
         $productOptionValueReaderMock = $this->createProductOptionValueReader();
-
         $productOptionValueEntityMock = $this->createProductOptionValueEntityMock();
+        $productOptionValueEntityMock->setIdProductOptionValue($expectedIdProductOptionValue);
 
-        $productOptionValueEntityMock->expects($this->once())
+        $productOptionValueEntityMock
+            ->expects($this->any())
             ->method('getSpyProductOptionGroup')
-            ->willReturn(new SpyProductOptionGroup());
-
-        $productOptionValueReaderMock->method('getOptionValueById')
+            ->willReturn((new SpyProductOptionGroup()));
+        $productOptionValueReaderMock
+            ->expects($this->any())
+            ->method('getOptionValueById')
             ->willReturn($productOptionValueEntityMock);
 
-        $productOptionTransfer = $productOptionValueReaderMock->getProductOption(1);
+        // Act
+        $actualProductOptionTransfer = $productOptionValueReaderMock->getProductOption($expectedIdProductOptionValue);
 
-        $this->assertInstanceOf(ProductOptionTransfer::class, $productOptionTransfer);
+        // Assert
+        $this->assertInstanceOf(ProductOptionTransfer::class, $actualProductOptionTransfer);
+        $this->assertEquals($expectedIdProductOptionValue, $actualProductOptionTransfer->getIdProductOptionValue());
     }
 
     /**
+     * @uses ProductOptionValueReader::getOptionValueById()
+     *
      * @return void
      */
-    public function testGetProductOptionWhenValueDoesNotExistShouldThrowException()
+    public function testGetProductOptionThrowsExceptionWhenOptionValueWasNotFoundInPersistentStorage()
     {
-        $this->expectException(ProductOptionNotFoundException::class);
-
+        // Assign
+        $dummyIdProductOptionValue = 1;
         $productOptionValueReaderMock = $this->createProductOptionValueReader();
-
-        $productOptionValueReaderMock->method('getOptionValueById')
+        $productOptionValueReaderMock
+            ->expects($this->any())
+            ->method('getOptionValueById')
             ->willReturn(null);
 
-        $productOptionValueReaderMock->getProductOption(1);
+        // Assert
+        $this->expectException(ProductOptionNotFoundException::class);
+
+        // Act
+        $productOptionValueReaderMock->getProductOption($dummyIdProductOptionValue);
     }
 
     /**
+     * @uses ProductOptionValueReader::getOptionValueById()
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader
      */
     protected function createProductOptionValueReader()
     {
         $productOptionQueryContainerMock = $this->createProductOptionQueryContainerMock();
+        $productOptionValuePriceReaderMock = $this->createProductOptionValuePriceReaderMock();
 
         return $this->getMockBuilder(ProductOptionValueReader::class)
-            ->setConstructorArgs([$productOptionQueryContainerMock])
+            ->setConstructorArgs(
+                [
+                    $productOptionValuePriceReaderMock,
+                    $productOptionQueryContainerMock,
+                ]
+            )
             ->setMethods(['getOptionValueById'])
             ->getMock();
     }
 
     /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface
+     */
+    protected function createProductOptionValuePriceReaderMock()
+    {
+        return $this->getMockBuilder(ProductOptionValuePriceReader::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @uses SpyProductOptionValue::save()
+     * @uses SpyProductOptionValue::getSpyProductOptionGroup()
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
     protected function createProductOptionValueEntityMock()
