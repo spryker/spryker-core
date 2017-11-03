@@ -49,7 +49,7 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
 
         $output->write(PHP_EOL);
         $output->writeln($collectorInfo);
-        
+
         $exportResults = $this->getFacade()->exportStorage($output);
         $message = $this->buildNestedSummary($exportResults);
         $message = '<info>' . $message . '</info>';
