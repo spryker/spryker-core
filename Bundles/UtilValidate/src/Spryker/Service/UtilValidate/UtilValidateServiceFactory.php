@@ -20,15 +20,15 @@ class UtilValidateServiceFactory extends AbstractServiceFactory
     public function createEmailRfcValidator()
     {
         return new EmailValidator(
-            $this->createEmailValidator(),
-            $this->createRfcEmailValidation()
+            $this->createEguliasEmailValidator(),
+            $this->createEguliasRfcValidation()
         );
     }
 
     /**
      * @return \Egulias\EmailValidator\EmailValidator
      */
-    protected function createEmailValidator()
+    protected function createEguliasEmailValidator()
     {
         return new EguliasEmailValidator();
     }
@@ -36,7 +36,7 @@ class UtilValidateServiceFactory extends AbstractServiceFactory
     /**
      * @return \Egulias\EmailValidator\Validation\RFCValidation
      */
-    public function createRfcEmailValidation()
+    public function createEguliasRfcValidation()
     {
         return new EguliasRFCValidation();
     }
