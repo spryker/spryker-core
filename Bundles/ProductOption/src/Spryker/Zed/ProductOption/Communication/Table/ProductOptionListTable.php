@@ -32,8 +32,8 @@ class ProductOptionListTable extends AbstractTable
     const URL_PARAM_ACTIVE = 'active';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    const NET_PRICE = 'NET_PRICE';
-    const GROSS_PRICE = 'GROSS_PRICE';
+    const PRICE_NET = 'PRICE_NET';
+    const PRICE_GROSS = 'PRICE_GROSS';
 
     const PRICE_LABEL = '<span class="label label-info">%s</span>';
 
@@ -141,8 +141,8 @@ class ProductOptionListTable extends AbstractTable
                 SpyProductOptionGroupTableMap::COL_NAME => $productOptionGroupEntity->getName(),
                 static::TABLE_COL_SKU => $this->formatSkus($productOptionGroupEntity),
                 static::TABLE_COL_NAME => $this->formatNames($productOptionGroupEntity),
-                static::TABLE_COL_GROSS_PRICE => $formattedPrices[static::GROSS_PRICE],
-                static::TABLE_COL_NET_PRICE => $formattedPrices[static::NET_PRICE],
+                static::TABLE_COL_GROSS_PRICE => $formattedPrices[static::PRICE_GROSS],
+                static::TABLE_COL_NET_PRICE => $formattedPrices[static::PRICE_NET],
                 SpyProductOptionGroupTableMap::COL_ACTIVE => $this->getStatus($productOptionGroupEntity),
                 static::TABLE_COL_ACTIONS => $this->getActionButtons($productOptionGroupEntity),
             ];
@@ -159,7 +159,7 @@ class ProductOptionListTable extends AbstractTable
      *                  third level keys are simple numerical indexes for each price,
      *                  values are formatted prices with symbol.
      */
-    public function getPriceCollection(ObjectCollection $productOptionValueCollection)
+    protected function getPriceCollection(ObjectCollection $productOptionValueCollection)
     {
         $priceCollection = [];
         foreach ($productOptionValueCollection as $productOptionValueEntity) {
@@ -169,8 +169,8 @@ class ProductOptionListTable extends AbstractTable
                 $netPrice = $productOptionPriceEntity->getNetPrice();
                 $grossPrice = $productOptionPriceEntity->getGrossPrice();
 
-                $priceCollection[$idProductOptionValue][static::NET_PRICE][] = $this->formatPrice($netPrice, $idCurrency);
-                $priceCollection[$idProductOptionValue][static::GROSS_PRICE][] = $this->formatPrice($grossPrice, $idCurrency);
+                $priceCollection[$idProductOptionValue][static::PRICE_NET][] = $this->formatPrice($netPrice, $idCurrency);
+                $priceCollection[$idProductOptionValue][static::PRICE_GROSS][] = $this->formatPrice($grossPrice, $idCurrency);
             }
         }
 
@@ -222,15 +222,15 @@ class ProductOptionListTable extends AbstractTable
         $priceCollection = $this->getPriceCollection($entity->getSpyProductOptionValues());
 
         $formattedPrices = [
-            static::NET_PRICE => '',
-            static::GROSS_PRICE => '',
+            static::PRICE_NET => '',
+            static::PRICE_GROSS => '',
         ];
         foreach ($priceCollection as $productOptionValuePrices) {
-            $formattedPrices[static::NET_PRICE] .= $this->wrapInlineCellItem(
-                implode(' ', $productOptionValuePrices[static::NET_PRICE])
+            $formattedPrices[static::PRICE_NET] .= $this->wrapInlineCellItem(
+                implode(' ', $productOptionValuePrices[static::PRICE_NET])
             );
-            $formattedPrices[static::GROSS_PRICE] .= $this->wrapInlineCellItem(
-                implode(' ', $productOptionValuePrices[static::GROSS_PRICE])
+            $formattedPrices[static::PRICE_GROSS] .= $this->wrapInlineCellItem(
+                implode(' ', $productOptionValuePrices[static::PRICE_GROSS])
             );
         }
 
