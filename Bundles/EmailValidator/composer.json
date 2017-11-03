@@ -3,7 +3,7 @@
   "description": "EmailValidator module",
   "license": "proprietary",
   "require": {
-    "egulias/email-validator": "^2.1.2"
+    "egulias/email-validator": "~2.1.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
