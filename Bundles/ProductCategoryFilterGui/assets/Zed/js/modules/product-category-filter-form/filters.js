@@ -8,14 +8,39 @@
 require('ZedGui');
 
 var filters = $('#filters');
+var filtersContainer = $('#filter-container');
 
 
 $(document).ready(function() {
-    $('#filter-container').nestable({
+    filtersContainer.nestable({
         group: 1,
         maxDepth: 1
     }).on('change', function(e) {
         var list = e.length ? e : $(e.target);
-        filters.val(list.nestable('serialize'));
+        filters.val(JSON.stringify(list.nestable('serialize').map(function(value) {
+            return value.filter;
+        })));
     });
+
+    filtersContainer.trigger('change');
 });
+
+function getCurrentList() {
+    return filters.val();
+}
+
+function addToList(filterToAdd) {
+    filtersContainer.prepend('<li data-filter="{{ filter.name }}" class="filter-item dd-item">\n' +
+        '                            <div class="dd-handle">\n' +
+        '                                <a class="btn btn-xs btn-outline btn-danger" title="Remove Filter">\n' +
+        '                                    <i class="fa fa-fw fa-trash"></i>\n' +
+        '                                </a>\n' +
+                                        filterToAdd +
+        '                            </div>\n' +
+        '                        </li>');
+}
+
+module.exports = {
+    getCurrentList: getCurrentList,
+    addToList: addToList
+};

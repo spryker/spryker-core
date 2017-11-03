@@ -21,7 +21,7 @@ class ProductCategoryFilterForm extends AbstractType
      */
     public function getName()
     {
-        return 'category_filter';
+        return 'product_category';
     }
 
     /**
