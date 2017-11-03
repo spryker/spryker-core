@@ -41,14 +41,33 @@ class MaintenanceDisableConsole extends AbstractMaintenanceConsole
     {
         $application = $this->getApplicationName($input);
 
+        $this->disableYvesMaintenancePage($application);
+        $this->disableZedMaintenancePage($application);
+
+        return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param string $application
+     *
+     * @return void
+     */
+    protected function disableYvesMaintenancePage($application)
+    {
         if ($application === static::APPLICATION_ALL || $application === static::APPLICATION_YVES) {
             $this->getFacade()->disableMaintenanceForYves();
         }
+    }
 
+    /**
+     * @param string $application
+     *
+     * @return void
+     */
+    protected function disableZedMaintenancePage($application)
+    {
         if ($application === static::APPLICATION_ALL || $application === static::APPLICATION_ZED) {
             $this->getFacade()->disableMaintenanceForZed();
         }
-
-        return static::CODE_SUCCESS;
     }
 }

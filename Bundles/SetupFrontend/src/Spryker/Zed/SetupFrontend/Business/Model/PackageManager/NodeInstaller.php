@@ -19,30 +19,62 @@ class NodeInstaller implements PackageManagerInstallerInterface
      */
     public function install(LoggerInterface $logger)
     {
-        $logger->info('Check node.js version');
+        $version = $this->getNodeJsVersion($logger);
 
-        $process = new Process('node -v');
+        if (preg_match('/^v[0-7]/', $version)) {
+            return $this->installNodeJs($logger);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return string
+     */
+    protected function getNodeJsVersion(LoggerInterface $logger)
+    {
+        $process = $this->getProcess('node -v');
         $process->run();
 
         $version = trim(preg_replace('/\s+/', ' ', $process->getOutput()));
         $logger->info(sprintf('Node.js Version "%s"', $version));
 
-        if (preg_match('/^v[0-7]/', $version)) {
-            $logger->info('Download node source');
-            $process = new Process('curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -');
-            $process->run(function ($type, $buffer) use ($logger) {
-                $logger->info($buffer);
-            });
+        return $version;
+    }
 
-            $logger->info('Install node.js');
-            $process = new Process('sudo -i apt-get install -y nodejs');
-            $process->run(function ($type, $buffer) use ($logger) {
-                $logger->info($buffer);
-            });
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function getProcess($command)
+    {
+        $process = new Process($command);
 
-            return $process->isSuccessful();
-        }
+        return $process;
+    }
 
-        return true;
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    protected function installNodeJs(LoggerInterface $logger)
+    {
+        $logger->info('Download node source');
+        $process = $this->getProcess('curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -');
+        $process->run(function ($type, $buffer) use ($logger) {
+            $logger->info($buffer);
+        });
+
+        $logger->info('Install node.js');
+        $process = $this->getProcess('sudo -i apt-get install -y nodejs');
+        $process->run(function ($type, $buffer) use ($logger) {
+            $logger->info($buffer);
+        });
+
+        return $process->isSuccessful();
     }
 }
