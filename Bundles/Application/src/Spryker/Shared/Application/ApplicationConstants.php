@@ -17,7 +17,7 @@ interface ApplicationConstants
     const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
     const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
 
-    const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR'; //deprecated
+    const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR'; // Deprecated: Will be removed with the next major.
     const STORE_PREFIX = 'STORE_PREFIX';
     const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 

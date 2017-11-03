@@ -10,4 +10,4 @@ composer require spryker/state-machine
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/engines/state_machine/state_machine.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/engines/state_machine/state_machine.html)

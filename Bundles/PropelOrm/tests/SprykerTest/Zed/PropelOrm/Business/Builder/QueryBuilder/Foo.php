@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Sales\Communication\Helper;
+namespace SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
-use Codeception\Module;
+use SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder\Base\Foo as BaseFoo;
 
-class CommunicationHelper extends Module
+class Foo extends BaseFoo
 {
 }

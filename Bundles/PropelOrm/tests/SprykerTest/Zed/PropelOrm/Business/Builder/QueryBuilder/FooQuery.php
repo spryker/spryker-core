@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Propel\Business\Builder\QueryBuilder;
+namespace SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
-use SprykerTest\Zed\Propel\Business\Builder\QueryBuilder\Base\FooQuery as BaseFooQuery;
+use SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder\Base\FooQuery as BaseFooQuery;
 
 class FooQuery extends BaseFooQuery
 {
