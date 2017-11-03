@@ -49,7 +49,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
-        if (isset($priceMap[$currentIdStore])) {
+        if (isset($priceMap[$currentIdStore]) && $priceMap[$currentIdStore]->getGrossPrice() !== null) {
             return $priceMap[$currentIdStore]->getGrossPrice();
         }
 
@@ -73,7 +73,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
-        if (isset($priceMap[$currentIdStore])) {
+        if (isset($priceMap[$currentIdStore]) && $priceMap[$currentIdStore]->getNetPrice() !== null) {
             return $priceMap[$currentIdStore]->getNetPrice();
         }
 
