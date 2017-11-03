@@ -130,19 +130,62 @@ class AutoloadUpdater implements UpdaterInterface
                 $application,
                 $moduleName,
                 static::BASE_SUPPORT_DIR,
-                static::BASE_HELPER_DIR,
             ];
 
-            $directoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
+            $supportDirPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
 
-            if ($this->pathExists($directoryPath)) {
+            if ($this->pathExists($supportDirPath)) {
+                $nonEmptySupportDirectories = $this->getNonEmptyDirectoriesWithHelpers($this->getDirContents($supportDirPath));
                 $composerJson = $this->addAutoloadPsr4($composerJson);
-                $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\' . $application . '\\' . $moduleName . '\\' . static::BASE_HELPER_DIR . '\\']
-                    = $this->getPath($pathParts);
+                foreach ($nonEmptySupportDirectories as $directory) {
+                    preg_match('/' . static::BASE_SUPPORT_DIR . '\/(.+)/', $directory, $subNameSpace);
+                    $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\' . $application . '\\' . $moduleName . '\\' . str_replace('/', '\\', $subNameSpace[1]) . '\\']
+                        = $this->getPath(array_merge($pathParts, explode('/', $subNameSpace[1])));
+                }
             }
         }
 
         return $composerJson;
+    }
+
+    /**
+     * @param string $dir
+     * @param array $results
+     *
+     * @return array
+     */
+    protected function getDirContents($dir, &$results = [])
+    {
+        $files = scandir($dir);
+
+        foreach ($files as $key => $value) {
+            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            if (!is_dir($path)) {
+                $results[] = $path;
+            } elseif ($value != "." && $value != "..") {
+                $this->getDirContents($path, $results);
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param array $files
+     *
+     * @return array
+     */
+    protected function getNonEmptyDirectoriesWithHelpers($files)
+    {
+        $directories = [];
+        foreach ($files as $file) {
+            $dirname = dirname($file);
+            if (preg_match('/Helper\.php$/', $file) && !in_array($dirname, $directories)) {
+                $directories[] = $dirname;
+            }
+        }
+
+        return $directories;
     }
 
     /**
