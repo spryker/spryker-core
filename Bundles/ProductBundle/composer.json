@@ -16,7 +16,7 @@
   "require-dev": {
     "spryker/calculation": "*",
     "spryker/cart": "*",
-    "spryker/checkout": "*",
+    "spryker/checkout": "^4.0.0",
     "spryker/code-sniffer": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",

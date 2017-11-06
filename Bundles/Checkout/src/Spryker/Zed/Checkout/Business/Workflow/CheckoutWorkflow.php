@@ -24,7 +24,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface[]
      */
     protected $preConditionStack;
 
@@ -39,16 +39,16 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $postSaveHookStack;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreSaveHookInterface[]
      */
     protected $preSaveStack;
 
     /**
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface $omsFacade
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[] $preConditionStack
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface[] $preConditionStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[] $saveOrderStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[] $preSave
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreSaveHookInterface[] $preSave
      */
     public function __construct(
         CheckoutToOmsFacadeInterface $omsFacade,

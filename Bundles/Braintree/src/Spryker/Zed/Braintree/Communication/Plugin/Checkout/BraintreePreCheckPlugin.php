@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
-use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreConditionPluginInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
  */
-class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionPluginInterface
+class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreCheckPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

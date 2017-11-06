@@ -64,7 +64,6 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api
@@ -81,7 +80,6 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api

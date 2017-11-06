@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPostSaveHookInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutSaveOrderInterface;
 use SprykerTest\Zed\Checkout\Business\Fixture\MockPostHook;
 use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
 

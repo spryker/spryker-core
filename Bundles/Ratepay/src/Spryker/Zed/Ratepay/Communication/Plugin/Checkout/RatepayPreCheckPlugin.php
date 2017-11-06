@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RatepayPaymentRequestTransfer;
 use Generated\Shared\Transfer\RatepayResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreConditionPluginInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  * @method \Spryker\Zed\Ratepay\Communication\RatepayCommunicationFactory getFactory()
  */
-class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
+class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Availability\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

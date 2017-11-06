@@ -10,13 +10,13 @@ namespace Spryker\Zed\DummyPayment\Communication\Plugin\Checkout;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreConditionPluginInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacade getFacade()
  */
-class DummyPaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
+class DummyPaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

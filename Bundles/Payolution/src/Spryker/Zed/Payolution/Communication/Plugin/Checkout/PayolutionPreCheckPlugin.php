@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
-use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreConditionPluginInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\Payolution\Business\PayolutionFacadeInterface getFacade()
  */
-class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionPluginInterface
+class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreCheckPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

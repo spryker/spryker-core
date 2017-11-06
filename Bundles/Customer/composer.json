@@ -20,7 +20,7 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/assertion": "*",
-    "spryker/checkout": "*",
+    "spryker/checkout": "^4.0.0",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/console": "*",
