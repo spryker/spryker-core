@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
- * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
 class ProductBundlePersistenceFactory extends AbstractPersistenceFactory
 {

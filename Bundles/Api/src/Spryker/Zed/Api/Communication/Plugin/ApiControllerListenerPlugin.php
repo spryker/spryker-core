@@ -21,7 +21,7 @@ use Throwable;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {

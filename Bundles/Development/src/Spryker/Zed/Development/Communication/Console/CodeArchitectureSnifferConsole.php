@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class CodeArchitectureSnifferConsole extends Console

@@ -14,7 +14,7 @@ use Spryker\Zed\CustomerApi\CustomerApiConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CustomerApi\Business\CustomerApiFacade getFacade()
+ * @method \Spryker\Zed\CustomerApi\Business\CustomerApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface

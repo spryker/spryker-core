@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Cart\Business\CartFacade getFacade()
+ * @method \Spryker\Zed\Cart\Business\CartFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

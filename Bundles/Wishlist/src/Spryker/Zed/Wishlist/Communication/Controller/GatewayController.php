@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Wishlist\Business\WishlistFacade getFacade()
+ * @method \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

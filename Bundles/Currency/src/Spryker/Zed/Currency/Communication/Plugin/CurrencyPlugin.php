@@ -10,7 +10,7 @@ namespace Spryker\Zed\Currency\Communication\Plugin;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  */
 class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
 {

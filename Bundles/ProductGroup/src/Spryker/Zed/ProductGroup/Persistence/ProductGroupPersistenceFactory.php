@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductGroup\ProductGroupConfig getConfig()
- * @method \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface getQueryContainer()
  */
 class ProductGroupPersistenceFactory extends AbstractPersistenceFactory
 {

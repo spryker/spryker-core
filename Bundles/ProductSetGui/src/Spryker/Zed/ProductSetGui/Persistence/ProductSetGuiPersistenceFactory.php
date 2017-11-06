@@ -12,7 +12,7 @@ use Spryker\Zed\ProductSetGui\ProductSetGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
- * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
  */
 class ProductSetGuiPersistenceFactory extends AbstractPersistenceFactory
 {
