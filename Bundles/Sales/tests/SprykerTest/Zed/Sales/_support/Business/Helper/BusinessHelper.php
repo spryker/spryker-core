@@ -23,7 +23,7 @@ use Orm\Zed\Sales\Persistence\SpySalesShipment;
 
 class BusinessHelper extends Module
 {
-    const DEFAULT_OMS_PROCESS_NAME = 'test';
+    const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     const DEFAULT_ITEM_STATE = 'test';
 
     /**

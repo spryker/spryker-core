@@ -21,11 +21,11 @@ class SalesDataHelper extends Module
 
     /**
      * @param array $override
-     * @param string $stateMachineProcessName
+     * @param string|null $stateMachineProcessName
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function haveOrder(array $override = [], $stateMachineProcessName = 'test')
+    public function haveOrder(array $override = [], $stateMachineProcessName = null)
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withItem($override)
@@ -39,7 +39,9 @@ class SalesDataHelper extends Module
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->makeEmpty()->build();
 
         $salesFacade = $this->getSalesFacade();
-        $salesFacade = $this->configureSalesFacadeForTests($salesFacade, $stateMachineProcessName);
+        if ($stateMachineProcessName) {
+            $salesFacade = $this->configureSalesFacadeForTests($salesFacade, $stateMachineProcessName);
+        }
         $salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;

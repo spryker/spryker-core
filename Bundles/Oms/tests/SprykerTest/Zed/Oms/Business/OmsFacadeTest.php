@@ -12,7 +12,6 @@ use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\OmsConfig;
@@ -135,12 +134,7 @@ class OmsFacadeTest extends Unit
      */
     protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], $xmlFolder = null)
     {
-        if (!$xmlFolder) {
-            $xmlFolder = realpath(__DIR__ . '/../../../../_data/state-machine/');
-        }
-
-        $this->tester->setConfig(OmsConstants::PROCESS_LOCATION, $xmlFolder);
-        $this->tester->setConfig(OmsConstants::ACTIVE_PROCESSES, $activeProcesses);
+        $this->tester->configureTestStateMachine($activeProcesses, $xmlFolder);
 
         return new OmsFacade();
     }
