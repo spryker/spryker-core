@@ -155,15 +155,6 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   display: inline;
 }
 
-/* datatables sorting icons .. */
-table.dataTable thead th.sorting_asc:after {
-  content: "\f0de";
-}
-table.dataTable thead th.sorting_desc:after {
-  content: "\f0dd";
-}
-/* .. datatables sorting icons */
-
 /* Nested panels... */
 .ibox.nested {
   margin-bottom: 5px;
@@ -225,3 +216,4 @@ table.dataTable thead th.sorting_desc:after {
   padding: 10px 15px;
 }
 /* .. Tabs */
+
