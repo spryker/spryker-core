@@ -176,6 +176,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceInterface
+     */
+    protected function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorterInterface
      */
     public function createProductOptionItemSorter()
@@ -210,11 +218,12 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface
      */
-    protected function createProductOptionValuePriceReader()
+    public function createProductOptionValuePriceReader()
     {
         return new ProductOptionValuePriceReader(
             $this->getCurrencyFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getPriceFacade()
         );
     }
 }

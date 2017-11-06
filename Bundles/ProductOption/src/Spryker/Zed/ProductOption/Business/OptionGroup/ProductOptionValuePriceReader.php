@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\ProductOption\ProductOptionConstants;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreInterface;
 
 class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInterface
@@ -27,13 +30,43 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceInterface
+     */
+    protected $priceFacade;
+
+    /**
+     * @var string
+     */
+    protected static $netPriceModeIdentifierCache;
+
+    /**
+     * @var string
+     */
+    protected static $grossPriceModeIdentifierCache;
+
+    /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected static $currentStoreTransferCache;
+
+    /**
+     * @var string[] Keys are currency ids, values are currency codes.
+     */
+    protected static $currencyCodeCache = [];
+
+    /**
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface $currencyFacade
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreInterface $storeFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceInterface $priceFacade
      */
-    public function __construct(ProductOptionToCurrencyInterface $currencyFacade, ProductOptionToStoreInterface $storeFacade)
-    {
+    public function __construct(
+        ProductOptionToCurrencyInterface $currencyFacade,
+        ProductOptionToStoreInterface $storeFacade,
+        ProductOptionToPriceInterface $priceFacade
+    ) {
         $this->currencyFacade = $currencyFacade;
         $this->storeFacade = $storeFacade;
+        $this->priceFacade = $priceFacade;
     }
 
     /**
@@ -112,5 +145,130 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
         $currency = $this->currencyFacade->getCurrent();
 
         return $this->currencyFacade->fromIsoCode($currency->getCode())->getIdCurrency();
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
+     *
+     * @return array
+     */
+    public function getStorePrices(ObjectCollection $priceCollection)
+    {
+        $currentStoreTransfer = $this->getCurrentStore();
+        $storePrices = [];
+        $defaultStorePrices = [];
+
+        foreach ($priceCollection as $priceEntity) {
+            if ($priceEntity->getFkStore() === null) {
+                $defaultStorePrices = $this->addPrice($defaultStorePrices, $priceEntity);
+
+                continue;
+            }
+
+            if ($priceEntity->getFkStore() === $currentStoreTransfer->getIdStore()) {
+                $storePrices = $this->addPrice($storePrices, $priceEntity);
+            }
+        }
+
+        return $this->applyDefaultStorePrices($storePrices, $defaultStorePrices);
+    }
+
+    /**
+     * @param array $storePrices
+     * @param array $defaultStorePrices
+     *
+     * @return array
+     */
+    protected function applyDefaultStorePrices(array $storePrices, array $defaultStorePrices)
+    {
+        foreach ($defaultStorePrices as $idCurrency => $currencyPrices) {
+            if (!isset($storePrices[$idCurrency])) {
+                $storePrices[$idCurrency] = $currencyPrices;
+
+                continue;
+            }
+
+            if (!isset($storePrices[$idCurrency][$this->getGrossPriceModeIdentifier()][ProductOptionConstants::AMOUNT])) {
+                $storePrices[$idCurrency][$this->getGrossPriceModeIdentifier()][ProductOptionConstants::AMOUNT] =
+                    $currencyPrices[$this->getGrossPriceModeIdentifier()][ProductOptionConstants::AMOUNT];
+            }
+
+            if (!isset($storePrices[$idCurrency][$this->getNetPriceModeIdentifier()][ProductOptionConstants::AMOUNT])) {
+                $storePrices[$idCurrency][$this->getNetPriceModeIdentifier()][ProductOptionConstants::AMOUNT] =
+                    $currencyPrices[$this->getNetPriceModeIdentifier()][ProductOptionConstants::AMOUNT];
+            }
+        }
+
+        return $storePrices;
+    }
+
+    /**
+     * @param array $prices
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice $priceEntity
+     *
+     * @return array
+     */
+    protected function addPrice(array $prices, SpyProductOptionValuePrice $priceEntity)
+    {
+        $prices[$this->getCurrencyCodeById($priceEntity->getFkCurrency())] = [
+            $this->getGrossPriceModeIdentifier() => [
+                ProductOptionConstants::AMOUNT => $priceEntity->getGrossPrice(),
+            ],
+            $this->getNetPriceModeIdentifier() => [
+                ProductOptionConstants::AMOUNT => $priceEntity->getNetPrice(),
+            ],
+        ];
+
+        return $prices;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore()
+    {
+        if (!isset(static::$currentStoreTransferCache)) {
+            static::$currentStoreTransferCache = $this->storeFacade->getCurrentStore();
+        }
+
+        return static::$currentStoreTransferCache;
+    }
+
+    /**
+     * @param int $idCurrency
+     *
+     * @return string
+     */
+    protected function getCurrencyCodeById($idCurrency)
+    {
+        if (!isset(static::$currencyCodeCache[$idCurrency])) {
+            static::$currencyCodeCache[$idCurrency] = $this->currencyFacade->getByIdCurrency($idCurrency)->getCode();
+        }
+
+        return static::$currencyCodeCache[$idCurrency];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNetPriceModeIdentifier()
+    {
+        if (!isset(static::$netPriceModeIdentifierCache)) {
+            static::$netPriceModeIdentifierCache = $this->priceFacade->getNetPriceModeIdentifier();
+        }
+
+        return static::$netPriceModeIdentifierCache;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getGrossPriceModeIdentifier()
+    {
+        if (!isset(static::$grossPriceModeIdentifierCache)) {
+            static::$grossPriceModeIdentifierCache = $this->priceFacade->getGrossPriceModeIdentifier();
+        }
+
+        return static::$grossPriceModeIdentifierCache;
     }
 }

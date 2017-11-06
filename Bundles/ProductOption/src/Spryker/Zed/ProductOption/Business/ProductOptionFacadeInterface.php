@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory getFactory()
@@ -176,4 +177,19 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductOptionGroupIds(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Selects prices for the current store.
+     * - The returned price map contains the net and gross amounts per currency.
+     * - Uses "default store" (fkStore=NULL) currency prices when a store does not specify the prices in a currency.
+     * - "default store" price is used for either net and gross price when it is null.
+     *
+     * @api
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
+     *
+     * @return array
+     */
+    public function getProductOptionValueStorePrices(ObjectCollection $priceCollection);
 }

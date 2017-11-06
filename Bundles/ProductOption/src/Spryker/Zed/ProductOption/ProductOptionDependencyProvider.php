@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
@@ -30,6 +31,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_MONEY = 'FACADE_MONEY';
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
     const FACADE_STORE = 'FACADE_STORE';
+    const FACADE_PRICE = 'FACADE_PRICE';
     const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
@@ -64,6 +66,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addPriceFacade($container);
 
         return $container;
     }
@@ -91,6 +94,20 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ProductOptionToStoreBridge($container->getLocator()->store()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceFacade(Container $container)
+    {
+        $container[static::FACADE_PRICE] = function (Container $container) {
+            return new ProductOptionToPriceBridge($container->getLocator()->price()->facade());
         };
 
         return $container;

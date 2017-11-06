@@ -8,6 +8,7 @@ namespace Spryker\Client\ProductOption;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductOption\KeyBuilder\ProductOptionKeyBuilder;
+use Spryker\Client\ProductOption\OptionGroup\ProductOptionValuePriceReader;
 use Spryker\Client\ProductOption\Storage\ProductOptionStorage;
 
 class ProductOptionFactory extends AbstractFactory
@@ -20,8 +21,9 @@ class ProductOptionFactory extends AbstractFactory
     public function createProductOptionStorage($localeName)
     {
         return new ProductOptionStorage(
-            $this->getStorage(),
+            $this->getStorageClient(),
             $this->createKeyBuilder(),
+            $this->createProductOptionValuePriceReader(),
             $localeName
         );
     }
@@ -37,8 +39,35 @@ class ProductOptionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface
      */
-    protected function getStorage()
+    protected function getStorageClient()
     {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::KV_STORAGE);
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOption\OptionGroup\ProductOptionValuePriceReaderInterface
+     */
+    protected function createProductOptionValuePriceReader()
+    {
+        return new ProductOptionValuePriceReader(
+            $this->getPriceClient(),
+            $this->getCurrencyClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceInterface
+     */
+    protected function getPriceClient()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyInterface
+     */
+    protected function getCurrencyClient()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::CLIENT_CURRENCY);
     }
 }

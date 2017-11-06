@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductOption\Storage;
 use Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer;
 use Generated\Shared\Transfer\StorageProductOptionGroupTransfer;
 use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface;
+use Spryker\Client\ProductOption\OptionGroup\ProductOptionValuePriceReaderInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductOptionStorage implements ProductOptionStorageInterface
@@ -25,6 +26,11 @@ class ProductOptionStorage implements ProductOptionStorageInterface
     protected $keyBuilder;
 
     /**
+     * @var \Spryker\Client\ProductOption\OptionGroup\ProductOptionValuePriceReaderInterface
+     */
+    protected $productOptionValuePriceReader;
+
+    /**
      * @var string
      */
     protected $localeName;
@@ -37,12 +43,18 @@ class ProductOptionStorage implements ProductOptionStorageInterface
     /**
      * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface $storage
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Client\ProductOption\OptionGroup\ProductOptionValuePriceReaderInterface $productOptionValuePriceReader
      * @param string $localeName
      */
-    public function __construct(ProductOptionToStorageInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
-    {
+    public function __construct(
+        ProductOptionToStorageInterface $storage,
+        KeyBuilderInterface $keyBuilder,
+        ProductOptionValuePriceReaderInterface $productOptionValuePriceReader,
+        $localeName
+    ) {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
+        $this->productOptionValuePriceReader = $productOptionValuePriceReader;
         $this->localeName = $localeName;
     }
 
@@ -78,6 +90,7 @@ class ProductOptionStorage implements ProductOptionStorageInterface
 
             $storageProductOptionGroupTransfer = new StorageProductOptionGroupTransfer();
             $storageProductOptionGroupTransfer->fromArray($productOption, true);
+            $this->productOptionValuePriceReader->localizeGroupPrices($storageProductOptionGroupTransfer);
 
             $productOptionGroupsTransfer->addProductOptionGroup($storageProductOptionGroupTransfer);
         }

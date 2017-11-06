@@ -9,9 +9,7 @@ namespace SprykerTest\Zed\ProductOption\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -19,11 +17,12 @@ use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
+use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\Price\PriceConfig;
+use Spryker\Shared\ProductOption\ProductOptionConstants;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreBridge;
-use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\Store\Business\StoreFacade;
 use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 
@@ -538,10 +537,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
         $quoteTransfer = new QuoteTransfer();
-
-        $addressTransfer = new AddressTransfer();
-        $addressTransfer->setIso2Code($iso2Code);
-        $quoteTransfer->setShippingAddress($addressTransfer);
+        $quoteTransfer->setShippingAddress($this->tester->createAddressTransfer($iso2Code));
 
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue());
@@ -617,6 +613,148 @@ class ProductOptionFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProductOptionValueStorePricesReturnsFormattedPrices()
+    {
+        // Assign
+        $idCurrentStore = $this->getCurrentIdStore();
+        $collection = new ObjectCollection();
+        $collection->append(
+            (new SpyProductOptionValuePrice())
+                ->setFkCurrency(93)
+                ->setFkStore($idCurrentStore)
+                ->setGrossPrice(100)
+                ->setNetPrice(200)
+        );
+        $collection->append(
+            (new SpyProductOptionValuePrice())
+                ->setFkCurrency(250)
+                ->setFkStore($idCurrentStore)
+                ->setGrossPrice(300)
+                ->setNetPrice(400)
+        );
+        $expectedResult = [
+            'EUR' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 200],
+            ],
+            'USD' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 300],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 400],
+            ],
+        ];
+
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($collection);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionValueStorePricesReturnsDefaultStoreCurrencyWhenCurrencyNotExistsInCurrentStore()
+    {
+        // Assign
+        $idCurrentStore = $this->getCurrentIdStore();
+        $collection = new ObjectCollection();
+        $collection->append(
+            (new SpyProductOptionValuePrice())
+                ->setFkCurrency(93)
+                ->setFkStore($idCurrentStore)
+                ->setGrossPrice(100)
+                ->setNetPrice(200)
+        );
+        $collection->append(
+            (new SpyProductOptionValuePrice())
+                ->setFkCurrency(250)
+                ->setFkStore(static::DEFAULT_ID_STORE)
+                ->setGrossPrice(300)
+                ->setNetPrice(400)
+        );
+        $expectedResult = [
+            'EUR' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 200],
+            ],
+            'USD' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 300],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 400],
+            ],
+        ];
+
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($collection);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionValueStorePricesReturnsADefaultStorePriceWhenACurrencyPriceIsNull()
+    {
+        // Assign
+        $idCurrentStore = $this->getCurrentIdStore();
+        $collection = new ObjectCollection();
+        $collection->append(
+            (new SpyProductOptionValuePrice())
+                ->setFkCurrency(93)
+                ->setFkStore($idCurrentStore)
+                ->setGrossPrice(100)
+                ->setNetPrice(null)
+        );
+        $collection->append(
+            (new SpyProductOptionValuePrice())
+                ->setFkCurrency(250)
+                ->setFkStore($idCurrentStore)
+                ->setGrossPrice(null)
+                ->setNetPrice(400)
+        );
+        $collection->append(
+            (new SpyProductOptionValuePrice())
+                ->setFkCurrency(93)
+                ->setFkStore(static::DEFAULT_ID_STORE)
+                ->setGrossPrice(500)
+                ->setNetPrice(600)
+        );
+        $collection->append(
+            (new SpyProductOptionValuePrice())
+                ->setFkCurrency(250)
+                ->setFkStore(static::DEFAULT_ID_STORE)
+                ->setGrossPrice(700)
+                ->setNetPrice(800)
+        );
+        $expectedResult = [
+            'EUR' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 600],
+            ],
+            'USD' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 700],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 400],
+            ],
+        ];
+
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($collection);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getCurrentIdStore()
+    {
+        return $this->tester->getLocator()->store()->facade()->getCurrentStore()->getIdStore();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer|null $productOptionValueTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
@@ -676,17 +814,6 @@ class ProductOptionFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function createLocaleTransfer()
-    {
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName(self::DEFAULT_LOCALE_ISO_CODE);
-
-        return $localeTransfer;
-    }
-
-    /**
      * @uses StoreFacadeInterface::getCurrentStore()
      *
      * @param string $storeName
@@ -706,10 +833,7 @@ class ProductOptionFacadeTest extends Unit
             ->method('getCurrentStore')
             ->willReturn($storeTransfer);
 
-        $this->tester->setDependency(
-            ProductOptionDependencyProvider::FACADE_STORE,
-            new ProductOptionToStoreBridge($storeFacadeMock)
-        );
+        $this->tester->setDependencyStoreFacade($storeFacadeMock);
     }
 
     /**
@@ -738,9 +862,6 @@ class ProductOptionFacadeTest extends Unit
             ->method('fromIsoCode')
             ->willReturn($currencyTransfer);
 
-        $this->tester->setDependency(
-            ProductOptionDependencyProvider::FACADE_CURRENCY,
-            new ProductOptionToCurrencyBridge($currencyFacadeMock)
-        );
+        $this->tester->setDependencyCurrencyFacade($currencyFacadeMock);
     }
 }

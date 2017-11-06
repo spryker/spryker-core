@@ -2,6 +2,7 @@
 namespace SprykerTest\Zed\ProductOption;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
@@ -12,6 +13,9 @@ use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Propel\Runtime\Propel;
+use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreBridge;
 
 /**
  * Inherited Methods
@@ -143,5 +147,44 @@ class ProductOptionBusinessTester extends Actor
         $productAbstractEntity->save();
 
         return $productAbstractEntity;
+    }
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function createAddressTransfer($iso2Code)
+    {
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer->setIso2Code($iso2Code);
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\Store\Business\StoreFacade|\PHPUnit_Framework_MockObject_MockObject $storeFacade
+     *
+     * @return void
+     */
+    public function setDependencyStoreFacade($storeFacade)
+    {
+        $this->setDependency(
+            ProductOptionDependencyProvider::FACADE_STORE,
+            new ProductOptionToStoreBridge($storeFacade)
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Currency\Business\CurrencyFacade|\PHPUnit_Framework_MockObject_MockObject $currencyFacade
+     *
+     * @return void
+     */
+    public function setDependencyCurrencyFacade($currencyFacade)
+    {
+        $this->setDependency(
+            ProductOptionDependencyProvider::FACADE_CURRENCY,
+            new ProductOptionToCurrencyBridge($currencyFacade)
+        );
     }
 }

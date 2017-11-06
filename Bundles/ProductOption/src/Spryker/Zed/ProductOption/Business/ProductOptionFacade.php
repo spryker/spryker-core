@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -193,6 +194,24 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      */
     public function hydrateProductOptionGroupIds(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createProductOptionGroupIdHydrator()->hydrateProductOptionGroupIds($orderTransfer);
+        return $this->getFactory()
+            ->createProductOptionGroupIdHydrator()
+            ->hydrateProductOptionGroupIds($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
+     *
+     * @return array
+     */
+    public function getProductOptionValueStorePrices(ObjectCollection $priceCollection)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceReader()
+            ->getStorePrices($priceCollection);
     }
 }
