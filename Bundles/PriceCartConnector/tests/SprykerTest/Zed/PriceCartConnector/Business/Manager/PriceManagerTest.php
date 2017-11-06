@@ -42,7 +42,7 @@ class PriceManagerTest extends Unit
 
         $priceManager = $this->createPriceManager($priceProductFacadeStub);
 
-        $modifiedItemCollection = $priceManager->addGrossPriceToItems($cartChangeTransfer);
+        $modifiedItemCollection = $priceManager->addPriceToItems($cartChangeTransfer);
 
         $this->assertSame(1, $modifiedItemCollection->getItems()->count());
 
@@ -67,7 +67,7 @@ class PriceManagerTest extends Unit
         $cartChangeTransfer->getItems()[0]->setSku('non existing');
 
         $priceManager = $this->createPriceManager($priceProductFacadeStub);
-        $priceManager->addGrossPriceToItems($cartChangeTransfer);
+        $priceManager->addPriceToItems($cartChangeTransfer);
     }
 
     /**

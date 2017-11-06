@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceCartConnector\Business\Manager;
+namespace Spryker\Zed\PriceCartConnector\Business\Validator;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface PriceManagerInterface
+interface PriceProductValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer);
+    public function validatePrices(CartChangeTransfer $cartChangeTransfer);
 }

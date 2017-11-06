@@ -24,6 +24,6 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->addGrossPriceToItems($cartChangeTransfer);
+        return $this->getFacade()->addPriceToItems($cartChangeTransfer);
     }
 }
