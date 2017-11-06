@@ -54,7 +54,7 @@ class PriceManager implements PriceManagerInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addGrossPriceToItems(CartChangeTransfer $cartChangeTransfer)
+    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer)
     {
         $cartChangeTransfer->setQuote(
             $this->setQuotePriceMode($cartChangeTransfer->getQuote())

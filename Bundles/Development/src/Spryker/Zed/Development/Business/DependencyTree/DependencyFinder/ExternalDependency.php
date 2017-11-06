@@ -111,7 +111,7 @@ class ExternalDependency extends AbstractDependencyFinder
     protected function getFile(SplFileInfo $fileInfo)
     {
         if (!class_exists(Runner::class)) {
-            // Deprecated - phpcs 2.x for BC
+            // Deprecated: phpcs 2.x for BC
             $phpcs = new PHP_CodeSniffer();
             $phpcs->process([], null, []);
             $fileObject = new PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], $phpcs);
@@ -125,7 +125,7 @@ class ExternalDependency extends AbstractDependencyFinder
         if (!defined('PHP_CODESNIFFER_CBF')) {
             define('PHP_CODESNIFFER_CBF', false);
         }
-        // Explictly specifying standard prevents it from searching for phpcs.xml type files.
+        // Explicitly specifying standard prevents it from searching for phpcs.xml type files.
         $config = new Config(['--standard=PSR2']);
         $phpcs->config = $config;
         $phpcs->init();

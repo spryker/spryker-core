@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidator;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 
 /**
@@ -23,6 +24,17 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createPriceManager()
     {
         return new PriceManager(
+            $this->getPriceProductFacade(),
+            $this->getPriceFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidatorInterface
+     */
+    public function createPriceProductValidator()
+    {
+        return new PriceProductValidator(
             $this->getPriceProductFacade(),
             $this->getPriceFacade()
         );

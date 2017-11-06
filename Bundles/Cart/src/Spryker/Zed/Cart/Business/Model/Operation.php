@@ -122,6 +122,8 @@ class Operation implements OperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->toArray(), true);
+
         $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
 
         $cartChangeTransfer = new CartChangeTransfer();
@@ -132,7 +134,7 @@ class Operation implements OperationInterface
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
-            return $cartChangeTransfer->getQuote();
+            return $originalQuoteTransfer;
         }
 
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);

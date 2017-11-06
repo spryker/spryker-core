@@ -12,4 +12,4 @@ composer require spryker/sales-product-connector
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/sales/sales.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/sales/sales.html)

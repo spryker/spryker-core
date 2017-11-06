@@ -12,14 +12,14 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
-    protected $priceFacade;
+    protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceFacade
+     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade
      */
-    public function __construct($priceFacade)
+    public function __construct($priceProductFacade)
     {
-        $this->priceFacade = $priceFacade;
+        $this->priceProductFacade = $priceProductFacade;
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      */
     public function getPriceBySku($sku, $priceTypeName = null)
     {
-        return $this->priceFacade->getPriceBySku($sku, $priceTypeName);
+        return $this->priceProductFacade->getPriceBySku($sku, $priceTypeName);
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      */
     public function getPriceTypeValues()
     {
-        return $this->priceFacade->getPriceTypeValues();
+        return $this->priceProductFacade->getPriceTypeValues();
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      */
     public function getDefaultPriceTypeName()
     {
-        return $this->priceFacade->getDefaultPriceTypeName();
+        return $this->priceProductFacade->getDefaultPriceTypeName();
     }
 
     /**
@@ -57,6 +57,6 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
     {
-        return $this->priceFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
+        return $this->priceProductFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
     }
 }

@@ -10,4 +10,4 @@ composer require spryker/wishlist
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/customer_management/wishlist/wishlist.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/customer_management/wishlist/wishlist.html)
