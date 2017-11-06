@@ -11,23 +11,22 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Use \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreConditionPluginInterface instead.
- *
  * Interface for the plugin stack defined as \Spryker\Zed\Payment\PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS
  */
-interface CheckoutPreCheckPluginInterface extends CheckoutPluginInterface
+interface CheckoutPreConditionPluginInterface
 {
     /**
      * Specification:
      * - Executes a pre-condition for checkout
-     * - Notifies about failed condition by filling CheckoutResponse errors
+     * - Returns `false` if a pre-condition is not passed
+     * - Could `true`, but CheckoutResponse errors filled in case an order still could be processed
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return void
+     * @return bool
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 }
