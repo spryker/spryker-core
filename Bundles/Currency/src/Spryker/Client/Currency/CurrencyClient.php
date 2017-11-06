@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class CurrencyClient extends AbstractClient implements CurrencyClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $isoCode
@@ -27,6 +29,8 @@ class CurrencyClient extends AbstractClient implements CurrencyClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer

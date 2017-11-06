@@ -13,6 +13,9 @@ namespace Spryker\Client\Currency;
 interface CurrencyClientInterface
 {
     /**
+     * Specification:
+     *  - Reads currency data for given iso code, it does not make zed call so it wont have foreign keys to currency table.
+     *
      * @api
      *
      * @param string $isoCode
@@ -22,6 +25,9 @@ interface CurrencyClientInterface
     public function fromIsoCode($isoCode);
 
     /**
+     * Specification:
+     *  - Returns current customer session selected currency.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
