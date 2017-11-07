@@ -199,10 +199,10 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
-     * @param CheckoutPreCheckPluginInterface $plugin
-     * 
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface $plugin
+     *
      * @return bool
      */
     protected function executePreCheckPluginPaymentPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
@@ -225,7 +225,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      * @param string $pluginType
      * @param string $provider
      *
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface|CheckoutPreCheckPluginInterface
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface
      */
     protected function findPlugin($pluginType, $provider)
     {

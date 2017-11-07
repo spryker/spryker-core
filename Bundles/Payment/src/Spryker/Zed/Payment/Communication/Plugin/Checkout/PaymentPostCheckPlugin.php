@@ -13,8 +13,6 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use \Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentOrderSaverPlugin instead
- *
  * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
  */
 class PaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
