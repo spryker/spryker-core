@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
 
 /**
- * @method \Spryker\Zed\Price\Business\PriceFacade getFacade()
+ * @method \Spryker\Zed\Price\Business\PriceFacadeInterface getFacade()
  * @method \Spryker\Zed\Price\Communication\PriceCommunicationFactory getFactory()
  */
 class PriceProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface

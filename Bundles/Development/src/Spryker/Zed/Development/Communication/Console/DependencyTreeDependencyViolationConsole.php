@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Zend\Filter\Word\DashToCamelCase;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class DependencyTreeDependencyViolationConsole extends Console
 {

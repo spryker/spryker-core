@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Country\Business\CountryFacade getFacade()
+ * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()
  */
 class CountryInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {

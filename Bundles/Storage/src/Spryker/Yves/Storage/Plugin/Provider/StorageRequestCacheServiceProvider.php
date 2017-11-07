@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @deprecated use StorageCacheServiceProvider instead.
  *
- * @method \Spryker\Client\Storage\StorageClient getClient()
+ * @method \Spryker\Client\Storage\StorageClientInterface getClient()
  */
 class StorageRequestCacheServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

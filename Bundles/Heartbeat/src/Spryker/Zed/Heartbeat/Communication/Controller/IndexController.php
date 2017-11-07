@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacade getFacade()
+ * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {

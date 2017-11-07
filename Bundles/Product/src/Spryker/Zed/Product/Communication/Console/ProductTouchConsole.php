@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
+ * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
  */
 class ProductTouchConsole extends Console
 {

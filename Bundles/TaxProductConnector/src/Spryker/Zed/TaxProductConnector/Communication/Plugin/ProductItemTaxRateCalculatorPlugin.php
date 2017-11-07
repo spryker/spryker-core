@@ -11,7 +11,7 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade getFacade()
+ * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface getFacade()
  */
 class ProductItemTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {

@@ -19,7 +19,7 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Touch\TouchConfig getConfig()
- * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface getQueryContainer()
  */
 class TouchBusinessFactory extends AbstractBusinessFactory
 {
