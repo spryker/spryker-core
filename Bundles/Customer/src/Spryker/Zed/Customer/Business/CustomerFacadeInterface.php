@@ -300,7 +300,7 @@ interface CustomerFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkOrderPreSaveConditions(
         QuoteTransfer $quoteTransfer,

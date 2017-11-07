@@ -63,7 +63,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductsAvailablePreCondition()
             ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
     }

@@ -175,7 +175,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     {
         $checkoutResponseTransfer
             ->setSaveOrder(new SaveOrderTransfer())
-            ->setIsSuccess(false);
+            ->setIsSuccess(true);
 
         return $checkoutResponseTransfer;
     }
