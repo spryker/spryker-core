@@ -20,7 +20,7 @@
                 <div class="panel-body">
                     {{ form_start(roleForm) }}
                     {{ form_widget(roleForm) }}
-                    <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
+                    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
                     {{ form_end(roleForm) }}
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <div class="panel-body">
                     {{ form_start(ruleSetForm) }}
                     {{ form_widget(ruleSetForm) }}
-                    <input type="submit" class="btn btn-primary" value="{{ 'Add Rule' | trans }}"/>
+                    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Add Rule' | trans }}"/>
                     {{ form_end(ruleSetForm) }}
                 </div>
             </div>
