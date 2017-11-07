@@ -12,4 +12,4 @@ composer require spryker/product-label-gui
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/products/product_label/product_label.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/products/product_label/product_label.html)

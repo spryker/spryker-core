@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @deprecated Use \Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin instead
  *
- * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class OrderCustomerSavePlugin extends AbstractPlugin implements CheckoutSaveOrderInterface

@@ -23,7 +23,7 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
- * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
 {

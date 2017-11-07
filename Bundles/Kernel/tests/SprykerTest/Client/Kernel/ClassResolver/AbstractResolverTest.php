@@ -130,8 +130,10 @@ abstract class AbstractResolverTest extends Unit
      */
     private function deleteCreatedFiles()
     {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->createdFiles);
+        if (is_dir($this->getBasePath())) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getBasePath());
+        }
     }
 
     /**
@@ -151,8 +153,8 @@ abstract class AbstractResolverTest extends Unit
         ];
         $directory = implode(DIRECTORY_SEPARATOR, $directoryParts);
 
-        if (!is_dir($directory)) {
-            mkdir($directory, 0775, true);
+        if (!is_dir($directory) || !is_writable($directory)) {
+            mkdir($directory, 0777, true);
         }
         $fileName = $directory . DIRECTORY_SEPARATOR . $class . '.php';
 
@@ -167,11 +169,6 @@ abstract class AbstractResolverTest extends Unit
      */
     private function getBasePath()
     {
-        $directoryParts = explode(DIRECTORY_SEPARATOR, __DIR__);
-        $testsDirectoryPosition = array_search('tests', $directoryParts);
-
-        $basePath = implode(DIRECTORY_SEPARATOR, array_slice($directoryParts, 0, $testsDirectoryPosition + 1));
-
-        return $basePath;
+        return __DIR__ . '/../_data/Generated';
     }
 }

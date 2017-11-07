@@ -12,4 +12,4 @@ composer require spryker/api-query-builder
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/zed_api/zed_api.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/zed_api/zed_api.html)

@@ -18,7 +18,7 @@ use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
  */
 class ProductSearchPersistenceFactory extends AbstractPersistenceFactory

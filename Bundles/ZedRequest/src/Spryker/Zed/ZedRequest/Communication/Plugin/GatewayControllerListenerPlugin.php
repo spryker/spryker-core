@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
  * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
- * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacade getFacade()
+ * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
  */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {

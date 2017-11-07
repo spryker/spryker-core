@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\Checkout\Business\CheckoutFacade getFacade()
+ * @method \Spryker\Zed\Checkout\Business\CheckoutFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

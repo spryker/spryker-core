@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
- * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface getQueryContainer()
  */
 class LocaleCommunicationFactory extends AbstractCommunicationFactory
 {

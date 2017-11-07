@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
- * @method \Spryker\Zed\Price\Persistence\PriceQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface getQueryContainer()
  */
 class PricePersistenceFactory extends AbstractPersistenceFactory
 {

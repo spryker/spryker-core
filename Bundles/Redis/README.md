@@ -10,4 +10,4 @@ composer require spryker/redis
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/yves/redis_as_kv.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/yves/redis_as_kv.html)
