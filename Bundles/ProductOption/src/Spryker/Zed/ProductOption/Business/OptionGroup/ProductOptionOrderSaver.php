@@ -25,6 +25,6 @@ class ProductOptionOrderSaver extends BaseProductOptionOrderSaver implements Pro
     public function save(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $saveOrderTransfer = $checkoutResponse->getSaveOrder();
-        $this->saveOrder($quoteTransfer, $saveOrderTransfer);
+        $this->saveOrderProductOptions($quoteTransfer, $saveOrderTransfer);
     }
 }

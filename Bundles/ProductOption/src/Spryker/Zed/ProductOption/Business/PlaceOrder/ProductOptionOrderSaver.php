@@ -38,10 +38,10 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrderProductOptions(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->handleDatabaseTransaction(function () use ($saveOrderTransfer) {
-            $this->saveOrderTransaction($saveOrderTransfer);
+            $this->saveOrderProductOptionsTransaction($saveOrderTransfer);
         });
     }
 
@@ -50,7 +50,7 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
      *
      * @return void
      */
-    public function saveOrderTransaction(SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrderProductOptionsTransaction(SaveOrderTransfer $saveOrderTransfer)
     {
         foreach ($saveOrderTransfer->getOrderItems() as $itemTransfer) {
             $this->saveOptions($itemTransfer);

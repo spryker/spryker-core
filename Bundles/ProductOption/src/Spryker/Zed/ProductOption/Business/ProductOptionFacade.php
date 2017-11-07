@@ -149,7 +149,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     {
         $this->getFactory()
             ->createPlaceOrderProductOptionOrderSaver()
-            ->saveOrder($quoteTransfer, $saveOrderTransfer);
+            ->saveOrderProductOptions($quoteTransfer, $saveOrderTransfer);
     }
 
     /**
