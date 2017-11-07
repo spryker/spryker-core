@@ -51,4 +51,20 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
             ->createProductValidator()
             ->validateItems($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceValidator()
+            ->validateProductOptionValuePrices($cartChangeTransfer);
+    }
 }
