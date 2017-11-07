@@ -39,7 +39,10 @@ class CurrencyFactory extends AbstractFactory
      */
     public function createCurrencyPostChangePluginExecutor()
     {
-        return new CurrencyPostChangePluginExecutor($this->getCurrencyPostChangePlugins());
+        return new CurrencyPostChangePluginExecutor(
+            $this->getCurrencyPostChangePlugins(),
+            $this->createCurrencyPersistence()
+        );
     }
 
     /**

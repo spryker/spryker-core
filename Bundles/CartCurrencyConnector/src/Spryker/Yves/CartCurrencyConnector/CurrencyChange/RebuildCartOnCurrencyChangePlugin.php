@@ -23,7 +23,7 @@ class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements Curren
      *
      * @param string $currencyIsoCode
      *
-     * @return void
+     * @return bool
      */
     public function execute($currencyIsoCode)
     {
@@ -32,6 +32,14 @@ class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements Curren
         $quoteTransfer = $cartClient->getQuote();
         if (count($quoteTransfer->getItems()) > 0) {
             $cartClient->reloadItems();
+
+            $zedRequestClient = $this->getFactory()->getZedRequestClient();
+            if (count($zedRequestClient->getLastResponseErrorMessages()) > 0) {
+                return false;
+            }
         }
+
+        return true;
     }
+
 }

@@ -11,13 +11,14 @@ interface CurrencyPostChangePluginInterface
 {
     /**
      *  Specification:
-     * - Plugin executed when currency is changed
+     *   - Plugin executed when currency is changed.
+     *   - Return false if something went wrong.
      *
      * @api
      *
      * @param string $currencyCode
      *
-     * @return string
+     * @return bool
      */
     public function execute($currencyCode);
 }

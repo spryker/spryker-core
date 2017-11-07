@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Currency\CurrencyChange;
 
+use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
+
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {
     /**
@@ -15,22 +17,36 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
     protected $currencyPostChangePlugins = [];
 
     /**
-     * @param \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[] $currencyPostChangePlugins
+     * @var \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
      */
-    public function __construct(array $currencyPostChangePlugins)
+    protected $currencyPersistence;
+
+    /**
+     * @param \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[] $currencyPostChangePlugins
+     * @param \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface $currencyPersistence
+     */
+    public function __construct(
+        array $currencyPostChangePlugins,
+        CurrencyPersistenceInterface $currencyPersistence
+    )
     {
         $this->currencyPostChangePlugins = $currencyPostChangePlugins;
+        $this->currencyPersistence = $currencyPersistence;
     }
 
     /**
      * @param string $currencyIsoCode
+     * @param string $previousCurrencyIsoCode
      *
      * @return void
      */
-    public function execute($currencyIsoCode)
+    public function execute($currencyIsoCode, $previousCurrencyIsoCode)
     {
         foreach ($this->currencyPostChangePlugins as $currencyPostChangePlugins) {
-            $currencyPostChangePlugins->execute($currencyIsoCode);
+            if (!$currencyPostChangePlugins->execute($currencyIsoCode)) {
+                $this->currencyPersistence->setCurrentCurrencyIsoCode($previousCurrencyIsoCode);
+                return;
+            }
         }
     }
 }
