@@ -10,6 +10,7 @@ namespace Spryker\Yves\Currency;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToSessionBridge;
+use Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Symfony\Component\Intl\Intl;
@@ -18,8 +19,10 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
     const STORE = 'store';
     const INTERNATIONALIZATION = 'internationalization';
+
     const CLIENT_SESSION = 'CLIENT_SESSION';
     const CURRENCY_POST_CHANGE_PLUGINS = 'CURRENCY_POST_CHANGE_PLUGINS';
+    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -32,6 +35,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addInternationalization($container);
         $container = $this->addSessionClient($container);
         $container = $this->addCurrencyPostChangePlugins($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -91,6 +95,19 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CURRENCY_POST_CHANGE_PLUGINS] = function () {
             return $this->getCurrencyPostChangePlugins();
+        };
+
+        return $container;
+    }
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container)
+    {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new CurrencyToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;
