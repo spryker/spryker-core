@@ -1,0 +1,12 @@
+{% set className = attr.class | default('btn btn-primary') %}
+
+<input type="submit" class="{{ className }} safe-submit" value="{{ value | trans }}"
+{%- for attrname, attrvalue in attr -%}
+    {{- " " -}}
+    {%- if attrvalue is same as(true) -%}
+        {{- attrname }}="{{ attrname }}"
+    {%- elseif attrvalue is not same as(false) -%}
+        {{- attrname }}="{{ attrvalue }}"
+    {%- endif -%}
+{%- endfor -%}
+/>

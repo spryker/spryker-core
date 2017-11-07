@@ -27,9 +27,13 @@ $(document).ready(function() {
     var sqlConditionBuilder = SqlFactory('#discount_discountCondition_decision_rule_query_string', '#builder_condition', true);
     var isQueryStringCollectorSelected = $('#discount_discountCalculator_collectorStrategyType_0').is(":checked");
 
-    $('#create-discount-button').on('click', function(element) {
-        element.preventDefault();
+    $('#create-discount-button').on('click', function (e) {
+        e.preventDefault();
 
+        $(this)
+            .prop('disabled', true)
+            .addClass('disabled');
+        
         if (isQueryStringCollectorSelected) {
             sqlCalculationBuilder.saveQuery();
         }
