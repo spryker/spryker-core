@@ -121,7 +121,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @deprecated Use saveOrderProductOptions instead
+     * @deprecated Use saveOrderProductOptions() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse

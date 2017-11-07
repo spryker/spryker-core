@@ -575,6 +575,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
+     * @deprecated Use saveOrderDiscountsForCheckout() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

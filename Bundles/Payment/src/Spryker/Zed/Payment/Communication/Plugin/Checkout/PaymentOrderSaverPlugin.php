@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 
 /**
+ * Requires Checkout ^4.0.0
+ *
  * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
  */
 class PaymentOrderSaverPlugin extends AbstractPaymentOrderPlugin implements CheckoutDoSaveOrderInterface

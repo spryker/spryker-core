@@ -13,6 +13,8 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * Requires Checkout ^4.0.0
+ *
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */

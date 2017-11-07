@@ -266,6 +266,8 @@ interface CustomerFacadeInterface
      *
      * @api
      *
+     * @deprecated Use saveOrderCustomer() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

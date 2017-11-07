@@ -81,6 +81,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use saveSalesOrder() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -209,7 +210,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer|null $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer|null $checkoutResponseTransfer Deprecated: Parameter is not used
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

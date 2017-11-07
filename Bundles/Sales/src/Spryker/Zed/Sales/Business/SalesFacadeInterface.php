@@ -162,7 +162,7 @@ interface SalesFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer|null $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer|null $checkoutResponseTransfer Deprecated: Parameter is not used
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

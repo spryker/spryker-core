@@ -23,6 +23,8 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
+     * @deprecated Use saveOrderItemMetadata() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -30,7 +32,9 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      */
     public function saveItemMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createItemMetadataSaver()->saveItemsMetadata($quoteTransfer);
+        $this->getFactory()
+            ->createItemMetadataSaver()
+            ->saveItemsMetadata($quoteTransfer);
     }
 
     /**
