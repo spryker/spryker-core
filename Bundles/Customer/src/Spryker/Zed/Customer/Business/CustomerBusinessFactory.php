@@ -170,7 +170,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface
      */
     protected function getUtilValidateService()
     {

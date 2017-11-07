@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class EmailValidator implements EmailValidatorInterface
@@ -19,41 +18,42 @@ class EmailValidator implements EmailValidatorInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface
+     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface
      */
     protected $utilValidateService;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface $utilValidateService
+     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface $utilValidateService
      */
-    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToUtilValidateInterface $utilValidateService)
+    public function __construct(CustomerQueryContainerInterface $queryContainer, CustomerToUtilValidateServiceInterface $utilValidateService)
     {
         $this->queryContainer = $queryContainer;
         $this->utilValidateService = $utilValidateService;
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $email
      *
      * @return bool
      */
-    public function isFormatValid(SpyCustomer $customerEntity)
+    public function isFormatValid($email)
     {
-        return $this->utilValidateService->isEmailFormatValid($customerEntity->getEmail());
+        return $this->utilValidateService->isEmailFormatValid($email);
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $email
+     * @param int $idCustomer
      *
      * @return bool
      */
-    public function isEmailAvailableForCustomer(SpyCustomer $customerEntity)
+    public function isEmailAvailableForCustomer($email, $idCustomer)
     {
-        $count = $this->queryContainer
-            ->queryCustomerByEmailApartFromIdCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())
-            ->count();
+        $customerEntity = $this->queryContainer
+            ->queryCustomerByEmailApartFromIdCustomer($email, $idCustomer)
+            ->findOne();
 
-        return ($count === 0);
+        return ($customerEntity === null);
     }
 }

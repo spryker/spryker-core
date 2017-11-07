@@ -12,8 +12,8 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
-use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeBridge;
-use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateBridge;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -134,7 +134,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function addUtilValidateService(Container $container)
     {
         $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
-            return new CustomerToUtilValidateBridge($container->getLocator()->utilValidate()->service());
+            return new CustomerToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
         };
 
         return $container;
@@ -170,7 +170,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function addUtilSanitizeService(Container $container)
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new CustomerToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
+            return new CustomerToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         };
 
         return $container;

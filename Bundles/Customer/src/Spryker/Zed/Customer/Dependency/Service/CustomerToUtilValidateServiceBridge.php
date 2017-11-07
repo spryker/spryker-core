@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Customer\Dependency\Service;
 
-class CustomerToUtilValidateBridge implements CustomerToUtilValidateInterface
+class CustomerToUtilValidateServiceBridge implements CustomerToUtilValidateServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilValidate\UtilValidateServiceInterface

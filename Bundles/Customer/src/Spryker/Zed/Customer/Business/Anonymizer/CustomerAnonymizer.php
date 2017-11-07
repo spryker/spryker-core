@@ -131,7 +131,8 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     {
         do {
             $randomEmail = sprintf(
-                '%s@%s.com',
+                '%s@%s.%s',
+                strtolower(md5(mt_rand())),
                 strtolower(md5(mt_rand())),
                 strtolower(md5(mt_rand()))
             );

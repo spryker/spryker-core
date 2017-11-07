@@ -17,7 +17,7 @@ use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
-use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateInterface;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -233,7 +233,7 @@ class CustomerFacadeTest extends Unit
      */
     protected function mockUtilValidateService($isEmailFormatValid)
     {
-        $serviceMock = $this->getMockBuilder(CustomerToUtilValidateInterface::class)
+        $serviceMock = $this->getMockBuilder(CustomerToUtilValidateServiceInterface::class)
             ->setMethods(['isEmailFormatValid'])
             ->getMock();
 

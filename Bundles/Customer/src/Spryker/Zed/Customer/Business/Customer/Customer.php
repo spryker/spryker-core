@@ -161,12 +161,11 @@ class Customer implements CustomerInterface
 
         $this->addLocale($customerEntity);
 
-        $errorCustomerResponseTransfer = $this->validateCustomerEmail($customerEntity);
-        if ($errorCustomerResponseTransfer !== null) {
-            return $errorCustomerResponseTransfer;
-        }
-
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
+        if ($customerResponseTransfer->getIsSuccess() !== true) {
+            return $customerResponseTransfer;
+        }
 
         $customerEntity->setCustomerReference($this->customerReferenceGenerator->generateCustomerReference($customerTransfer));
         $customerEntity->setRegistrationKey($this->generateKey());
@@ -410,15 +409,14 @@ class Customer implements CustomerInterface
             }
         }
 
+        $customerResponseTransfer = $this->createCustomerResponseTransfer();
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
-        $errorCustomerResponseTransfer = $this->validateCustomerEmail($customerEntity);
-        if ($errorCustomerResponseTransfer !== null) {
-            return $errorCustomerResponseTransfer;
+        $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
+        if ($customerResponseTransfer->getIsSuccess() !== true) {
+            return $customerResponseTransfer;
         }
-
-        $customerResponseTransfer = $this->createCustomerResponseTransfer();
 
         $changedRows = $customerEntity->save();
 
@@ -447,37 +445,41 @@ class Customer implements CustomerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function validateCustomerEmail(SpyCustomer $customerEntity)
+    protected function validateCustomerEmail(CustomerResponseTransfer $customerResponseTransfer, SpyCustomer $customerEntity)
     {
-        if (!$this->emailValidator->isFormatValid($customerEntity)) {
-            return $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_FORMAT_INVALID);
+        if (!$this->emailValidator->isFormatValid($customerEntity->getEmail())) {
+            $customerResponseTransfer->setIsSuccess(false);
+            $customerResponseTransfer->addError(
+                $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_FORMAT_INVALID)
+            );
         }
 
-        if (!$this->emailValidator->isEmailAvailableForCustomer($customerEntity)) {
-            return $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_ALREADY_USED);
+        if (!$this->emailValidator->isEmailAvailableForCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())) {
+            $customerResponseTransfer->setIsSuccess(false);
+            $customerResponseTransfer->addError(
+                $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_ALREADY_USED)
+            );
         }
 
-        return null;
+        return $customerResponseTransfer;
     }
 
     /**
      * @param string $message
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerErrorTransfer
      */
     protected function createErrorCustomerResponseTransfer($message)
     {
         $customerErrorTransfer = new CustomerErrorTransfer();
         $customerErrorTransfer->setMessage($message);
 
-        $customerResponseTransfer = $this->createCustomerResponseTransfer(false);
-        $customerResponseTransfer->addError($customerErrorTransfer);
-
-        return $customerResponseTransfer;
+        return $customerErrorTransfer;
     }
 
     /**

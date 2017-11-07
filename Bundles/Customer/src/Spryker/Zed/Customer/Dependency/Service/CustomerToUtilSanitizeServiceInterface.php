@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Customer\Dependency\Service;
 
-interface CustomerToUtilValidateInterface
+interface CustomerToUtilSanitizeServiceInterface
 {
     /**
-     * @param string $email
+     * @param string $text
+     * @param bool $double
+     * @param string|null $charset
      *
      * @return string
      */
-    public function isEmailFormatValid($email);
+    public function escapeHtml($text, $double = true, $charset = null);
 }

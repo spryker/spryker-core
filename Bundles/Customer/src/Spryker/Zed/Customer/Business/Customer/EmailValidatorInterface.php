@@ -7,21 +7,20 @@
 
 namespace Spryker\Zed\Customer\Business\Customer;
 
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-
 interface EmailValidatorInterface
 {
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $email
      *
      * @return bool
      */
-    public function isFormatValid(SpyCustomer $customerEntity);
+    public function isFormatValid($email);
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $email
+     * @param int $idCustomer
      *
      * @return bool
      */
-    public function isEmailAvailableForCustomer(SpyCustomer $customerEntity);
+    public function isEmailAvailableForCustomer($email, $idCustomer);
 }

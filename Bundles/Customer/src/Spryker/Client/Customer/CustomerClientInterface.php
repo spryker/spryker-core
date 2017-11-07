@@ -98,7 +98,8 @@ interface CustomerClientInterface
 
     /**
      * Specification:
-     * - Deletes a customer by either customer ID, customer email, or password restoration key.
+     * - Deletes a customer entity by either customer ID, customer email, or password restoration key.
+     * - Does not handle related connected entities.
      *
      * @api
      *
@@ -214,9 +215,9 @@ interface CustomerClientInterface
 
     /**
      * Specification:
-     * - Updates password if NewPassword property is set in provided transfer object.
-     *  - Validates provided current plain text password using persistent storage.
-     *  - Encrypts provided plain text password before update.
+     * - Updates password if NewPassword property is set in provided transfer object:
+     *      - Validates provided current plain text password using persistent storage.
+     *      - Encrypts provided plain text password before update.
      * - Identifies customer by either customer ID, customer email, or password restoration key.
      * - Validates customer email information.
      * - Updates customer data which is set in provided transfer object.
