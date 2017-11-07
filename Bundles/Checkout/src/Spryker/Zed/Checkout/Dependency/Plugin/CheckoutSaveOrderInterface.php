@@ -19,6 +19,8 @@ interface CheckoutSaveOrderInterface
      * Specification:
      * - This plugin retrieves (its) data from the quote object and saves it to the database.
      * - These plugins are already enveloped into a transaction.
+     * - Fills SaveOrderTransfer
+     * - Does not change Checkout Response
      *
      * @api
      *

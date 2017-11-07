@@ -262,7 +262,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Persists customer's data
+     * - Persists customer's data during order placement
      *
      * @api
      *
@@ -278,7 +278,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Persists customer's data
+     * - Persists customer's data during order placement
      *
      * @api
      *
@@ -291,7 +291,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Checks required for an order placement fields in a customer in the quote
+     * - Checks required fields for an order placement (in a customer in the quote)
      *
      * @api
      *

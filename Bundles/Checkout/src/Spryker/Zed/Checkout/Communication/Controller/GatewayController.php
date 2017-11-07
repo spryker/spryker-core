@@ -37,7 +37,9 @@ class GatewayController extends AbstractGatewayController
                 ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
                 ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
 
-            $checkoutResponseTransfer->addError($checkoutErrorTransfer);
+            $checkoutResponseTransfer
+                ->addError($checkoutErrorTransfer)
+                ->setIsSuccess(false);
         }
 
         return $checkoutResponseTransfer;
