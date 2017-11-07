@@ -90,7 +90,7 @@ interface SalesFacadeInterface
     public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
-     * Specification
+     * Specification:
      * - Update sales order with data from order transfer
      * - Returns true if order was successfully updated
      *

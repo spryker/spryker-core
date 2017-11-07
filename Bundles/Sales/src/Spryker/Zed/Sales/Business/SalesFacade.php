@@ -77,13 +77,10 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Saves order and items to database
-     * - Sets "is test" flag
-     * - Updates checkout response with saved order data
-     * - Sets initial state for state machine
+     * {@inheritdoc}
      *
      * @api
+     *
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -98,11 +95,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Saves order and items to database
-     * - Sets "is test" flag
-     * - Updates checkout response with saved order data
-     * - Sets initial state for state machine
+     * {@inheritdoc}
      *
      * @api
      *
@@ -115,7 +108,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     {
         $this->getFactory()
             ->createSalesOrderSaver()
-            ->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+            ->saveOrderSales($quoteTransfer, $saveOrderTransfer);
     }
 
     /**

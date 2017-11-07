@@ -9,7 +9,7 @@ namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
-use Spryker\Zed\Sales\Business\Model\Checkout\SalesOrderSaver;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
@@ -39,6 +39,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createSalesOrderSaver() instead.
+     *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderSaverInterface
      */
     public function createOrderSaver()
@@ -54,7 +56,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Checkout\SalesOrderSaverInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface
      */
     public function createSalesOrderSaver()
     {

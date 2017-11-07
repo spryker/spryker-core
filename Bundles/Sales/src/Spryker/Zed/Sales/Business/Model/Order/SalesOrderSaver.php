@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Checkout;
+namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -88,12 +88,12 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      *
      * @return void
      */
-    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrderSales(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->assertOrderRequirements($quoteTransfer);
 
         $salesOrderEntity = $this->handleDatabaseTransaction(function () use ($quoteTransfer) {
-            return $this->saveSalesOrderTransaction($quoteTransfer);
+            return $this->saveOrderSalesTransaction($quoteTransfer);
         });
 
         $this->hydrateSaveOrderTransfer($saveOrderTransfer, $quoteTransfer, $salesOrderEntity);
@@ -104,7 +104,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function saveSalesOrderTransaction(QuoteTransfer $quoteTransfer)
+    protected function saveOrderSalesTransaction(QuoteTransfer $quoteTransfer)
     {
         $salesOrderEntity = $this->saveOrderEntity($quoteTransfer);
 

@@ -9,8 +9,11 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Sales\Business\Model\Checkout\SalesOrderSaver;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 
+/**
+ * @deprecated Use \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver instead.
+ */
 class OrderSaver extends SalesOrderSaver implements OrderSaverInterface
 {
     /**
@@ -21,6 +24,6 @@ class OrderSaver extends SalesOrderSaver implements OrderSaverInterface
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
+        $this->saveOrderSales($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
     }
 }
