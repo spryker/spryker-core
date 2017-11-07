@@ -15,6 +15,7 @@ use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface;
@@ -727,5 +728,21 @@ class CustomerFacadeTest extends Unit
         $facade = $this->getFacade($customerTransfer);
 
         $this->assertSame($customerTransfer, $facade->updateCustomerPassword($customerTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testAnonymizeCustomer()
+    {
+        // Assign
+        $customerTransfer = $this->createTestCustomer();
+
+        // Act
+        $this->customerFacade->anonymizeCustomer($customerTransfer);
+
+        // Assert
+        $this->expectException(CustomerNotFoundException::class);
+        $this->customerFacade->getCustomer($customerTransfer);
     }
 }
