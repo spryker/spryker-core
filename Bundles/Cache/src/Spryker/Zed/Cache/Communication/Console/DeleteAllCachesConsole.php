@@ -12,9 +12,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole instead
+ * @deprecated Use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole instead.
  *
- * @method \Spryker\Zed\Cache\Business\CacheFacade getFacade()
+ * @method \Spryker\Zed\Cache\Business\CacheFacadeInterface getFacade()
  */
 class DeleteAllCachesConsole extends Console
 {

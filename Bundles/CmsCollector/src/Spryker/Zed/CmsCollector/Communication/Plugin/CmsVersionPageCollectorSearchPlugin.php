@@ -17,7 +17,7 @@ use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\CmsCollector\Business\CmsCollectorFacade getFacade()
+ * @method \Spryker\Zed\CmsCollector\Business\CmsCollectorFacadeInterface getFacade()
  */
 class CmsVersionPageCollectorSearchPlugin extends AbstractCollectorPlugin
 {

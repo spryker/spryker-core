@@ -44,7 +44,7 @@ class AutoloadUpdaterTest extends Unit
     {
         $updatedJson = $this->getJsonAfterUpdate(
             [
-                AutoloadUpdater::BASE_TESTS_DIR,
+                AutoloadUpdater::BASE_TESTS_DIRECTORY,
                 $autoloadKey,
             ],
             $this->getComposerJson($autoloadKey)
@@ -99,13 +99,13 @@ class AutoloadUpdaterTest extends Unit
     public function testWhenSupportFolderExistsWithHelpersItGetsAddedToAutoload()
     {
         $pathParts = [
-            AutoloadUpdater::BASE_SRC_DIR,
+            AutoloadUpdater::BASE_SRC_DIRECTORY,
             AutoloadUpdater::SPRYKER_NAMESPACE,
         ];
 
         $updatedJson = $this->getJsonAfterUpdate(
             [
-                AutoloadUpdater::BASE_SRC_DIR . '/' . AutoloadUpdater::SPRYKER_NAMESPACE,
+                AutoloadUpdater::BASE_SRC_DIRECTORY . '/' . AutoloadUpdater::SPRYKER_NAMESPACE,
             ],
             $this->getComposerJson(),
             [
@@ -127,13 +127,13 @@ class AutoloadUpdaterTest extends Unit
     protected function updateJsonForTests(array $composerJson)
     {
         $pathParts = [
-            AutoloadUpdater::BASE_TESTS_DIR,
+            AutoloadUpdater::BASE_TESTS_DIRECTORY,
             AutoloadUpdater::SPRYKER_TEST_NAMESPACE,
         ];
 
         return $this->getJsonAfterUpdate(
             [
-                AutoloadUpdater::BASE_TESTS_DIR,
+                AutoloadUpdater::BASE_TESTS_DIRECTORY,
                 AutoloadUpdater::SPRYKER_TEST_NAMESPACE,
             ],
             $composerJson,

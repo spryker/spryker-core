@@ -45,22 +45,22 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $coreClass = 'Spryker\\Zed\\Kernel\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $projectClass = 'ProjectNamespace\\Zed\\Kernel\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $storeClass = 'ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $classPattern = 'Unit\\%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\Fixtures\\%bundle%DependencyInjector';
+    protected $classPattern = '%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\%bundle%DependencyInjector';
 
     /**
      * @var array
@@ -204,8 +204,10 @@ class DependencyInjectorResolverTest extends Unit
      */
     private function deleteCreatedFiles()
     {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->createdFiles);
+        if (is_dir($this->getBasePath())) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getBasePath());
+        }
     }
 
     /**
@@ -247,11 +249,6 @@ class DependencyInjectorResolverTest extends Unit
      */
     private function getBasePath()
     {
-        $directoryParts = explode(DIRECTORY_SEPARATOR, __DIR__);
-        $testsDirectoryPosition = array_search('tests', $directoryParts);
-
-        $basePath = implode(DIRECTORY_SEPARATOR, array_slice($directoryParts, 0, $testsDirectoryPosition + 1));
-
-        return $basePath;
+        return __DIR__ . '/../_data/Generated';
     }
 }

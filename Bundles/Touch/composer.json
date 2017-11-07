@@ -18,7 +18,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Touch\\": "tests/SprykerTest/Zed/Touch/_support/Helper/"
+      "SprykerTest\\Zed\\Touch\\Helper\\": "tests/SprykerTest/Zed/Touch/_support/Helper/"
     }
   },
   "autoload-dev": {

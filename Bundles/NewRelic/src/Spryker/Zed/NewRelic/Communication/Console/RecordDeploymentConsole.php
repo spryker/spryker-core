@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\NewRelic\Business\NewRelicFacade getFacade()
+ * @method \Spryker\Zed\NewRelic\Business\NewRelicFacadeInterface getFacade()
  * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
  */
 class RecordDeploymentConsole extends Console

@@ -12,7 +12,7 @@ use Spryker\Zed\ProductNew\ProductNewDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductNew\ProductNewConfig getConfig()
- * @method \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainerInterface getQueryContainer()
  */
 class ProductNewPersistenceFactory extends AbstractPersistenceFactory
 {

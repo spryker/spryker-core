@@ -12,4 +12,4 @@ composer require spryker/product-group
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/products/product_set.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/products/product_set.html)

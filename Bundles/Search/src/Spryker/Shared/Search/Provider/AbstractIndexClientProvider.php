@@ -10,9 +10,6 @@ namespace Spryker\Shared\Search\Provider;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
-/**
- * @method \Elastica\Index getInstance()
- */
 abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
 {
     /**

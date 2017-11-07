@@ -10,4 +10,4 @@ composer require spryker/glossary
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/content_management/glossary/glossary.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/content_management/glossary/glossary.html)

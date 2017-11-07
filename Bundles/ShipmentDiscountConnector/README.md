@@ -12,4 +12,4 @@ composer require spryker/shipment-discount-connector
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/shipment/shipment_overview.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/shipment/shipment_overview.html)

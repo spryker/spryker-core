@@ -14,7 +14,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
- * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
+ * @method \Spryker\Zed\Braintree\Business\BraintreeFacadeInterface getFacade()
  * @method \Spryker\Zed\Braintree\Communication\BraintreeCommunicationFactory getFactory()
  */
 class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface

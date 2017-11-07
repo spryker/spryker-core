@@ -2,6 +2,9 @@
   "name": "spryker/util-text",
   "description": "UtilText module",
   "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

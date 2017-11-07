@@ -324,6 +324,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku)
+    {
+        return $this->getFactory()
+            ->createUtilReservation()
+            ->getOmsReservedProductQuantityForSku($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $stateName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState

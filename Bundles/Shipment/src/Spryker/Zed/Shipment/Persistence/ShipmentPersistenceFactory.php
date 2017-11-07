@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
- * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  */
 class ShipmentPersistenceFactory extends AbstractPersistenceFactory
 {

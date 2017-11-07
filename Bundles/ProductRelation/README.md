@@ -10,4 +10,4 @@ composer require spryker/product-relation
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/products/product_relation/product_relation.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/products/product_relation/product_relation.html)

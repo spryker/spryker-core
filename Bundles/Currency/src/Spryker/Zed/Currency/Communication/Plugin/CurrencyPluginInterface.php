@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Currency\Communication\Plugin;
 
 /**
- * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  */
 interface CurrencyPluginInterface
 {

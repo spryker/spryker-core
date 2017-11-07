@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Transfer\Business\TransferFacade getFacade()
+ * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
  */
 class GeneratorConsole extends Console
 {

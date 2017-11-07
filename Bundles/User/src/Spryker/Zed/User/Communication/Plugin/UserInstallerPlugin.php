@@ -11,7 +11,7 @@ use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\User\Business\UserFacade getFacade()
+ * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  */
 class UserInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface

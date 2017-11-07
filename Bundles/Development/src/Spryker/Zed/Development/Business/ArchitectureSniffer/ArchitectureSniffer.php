@@ -71,10 +71,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             }
         }
 
-        $sort = function ($a, $b) {
-            return $a["priority"] - $b["priority"];
+        $sortAlphabetically = function ($first, $second) {
+            return strcasecmp($first['name'], $second['name']) < 0;
         };
-        usort($rules, $sort);
+        usort($rules, $sortAlphabetically);
+
+        $sortPriority = function ($first, $second) {
+            return $first['priority'] - $second['priority'];
+        };
+        usort($rules, $sortPriority);
 
         return $rules;
     }

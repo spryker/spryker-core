@@ -24,7 +24,7 @@ use Spryker\Zed\Navigation\Business\Url\NavigationNodeUrlCleaner;
 use Spryker\Zed\Navigation\NavigationDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
  */
 class NavigationBusinessFactory extends AbstractBusinessFactory

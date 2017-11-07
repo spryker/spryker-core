@@ -181,6 +181,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             ->setOriginalItem($promotionItemTransfer)
             ->setOriginalItemCalculatedDiscounts($promotionItemTransfer->getCalculatedDiscounts())
             ->setQuantity($currentQuantity)
+            ->setUnitPrice($promotionItemTransfer->getUnitPrice())
             ->setUnitGrossPrice($promotionItemTransfer->getUnitGrossPrice());
 
         return $discountableItemTransfer;
