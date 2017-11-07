@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\CmsBlock\CmsBlockConfig getConfig()
- * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface getQueryContainer()
  */
 class CmsBlockCommunicationFactory extends AbstractCommunicationFactory
 {

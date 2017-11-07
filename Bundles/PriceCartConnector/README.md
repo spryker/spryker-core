@@ -10,4 +10,4 @@ composer require spryker/price-cart-connector
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/cart.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/cart.html)

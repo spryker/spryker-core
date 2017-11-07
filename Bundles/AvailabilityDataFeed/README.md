@@ -10,4 +10,4 @@ composer require spryker/availability-data-feed
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/data_feed.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/data_feed.html)

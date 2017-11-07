@@ -2,9 +2,9 @@
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Propel\Business\Builder\ObjectBuilder;
-use Spryker\Zed\Propel\Business\Builder\QueryBuilder;
 use Spryker\Zed\Propel\PropelConfig;
+use Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilder;
+use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
 $config[PropelConstants::ZED_DB_ENGINE_MYSQL] = PropelConfig::DB_ENGINE_MYSQL;
 $config[PropelConstants::ZED_DB_ENGINE_PGSQL] = PropelConfig::DB_ENGINE_PGSQL;

@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacade getFacade()
+ * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
  */
 class ProductRelationUpdaterConsole extends Console
 {

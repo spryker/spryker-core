@@ -13,7 +13,7 @@ use Spryker\Zed\ProductApi\ProductApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductApi\ProductApiConfig getConfig()
- * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface getQueryContainer()
  */
 class ProductApiPersistenceFactory extends AbstractPersistenceFactory
 {

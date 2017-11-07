@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Auth\AuthConfig getConfig()
- * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
  */
 class AuthPersistenceFactory extends AbstractPersistenceFactory
 {

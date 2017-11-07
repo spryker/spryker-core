@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
+ * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  */
 class CheckTimeoutConsole extends Console
 {

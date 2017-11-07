@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductLabel\ProductLabelConfig getConfig()
- * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface getQueryContainer()
  */
 class ProductLabelPersistenceFactory extends AbstractPersistenceFactory
 {

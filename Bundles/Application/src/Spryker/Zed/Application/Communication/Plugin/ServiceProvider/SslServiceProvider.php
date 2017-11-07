@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */

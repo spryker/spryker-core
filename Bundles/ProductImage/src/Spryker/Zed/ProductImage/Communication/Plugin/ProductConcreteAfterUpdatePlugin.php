@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
- * @method \Spryker\Zed\ProductImage\Business\ProductImageFacade getFacade()
+ * @method \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
  */
 class ProductConcreteAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
