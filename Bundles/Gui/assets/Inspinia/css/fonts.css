@@ -4,29 +4,29 @@
  */
 
 @font-face {
-    font-family: 'Open Sans';
+    font-family: 'Lato';
     font-style: normal;
     font-weight: 300;
-    src: local('Open Sans Light'), local('OpenSans-Light'), url(../fonts/OpenSansLight.ttf) format('truetype');
+    src: local('Lato Light'), local('Lato-Light'), url(../fonts/Lato-Light.ttf) format('truetype');
 }
 
 @font-face {
-    font-family: 'Open Sans';
+    font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
-    src: local('Open Sans'), local('OpenSans'), url(../fonts/OpenSans.ttf) format('truetype');
+    src: local('Lato'), local('Lato'), url(../fonts/Lato-Regular.ttf) format('truetype');
 }
 
 @font-face {
-    font-family: 'Open Sans';
+    font-family: 'Lato';
     font-style: normal;
     font-weight: 600;
-    src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(../fonts/OpenSansSemibold.ttf) format('truetype');
+    src: local('Lato Bold'), local('Lato-Bold'), url(../fonts/Lato-Bold.ttf) format('truetype');
 }
 
 @font-face {
-    font-family: 'Open Sans';
+    font-family: 'Lato';
     font-style: normal;
     font-weight: 700;
-    src: local('Open Sans Bold'), local('OpenSans-Bold'), url(../fonts/OpenSansBold.ttf) format('truetype');
+    src: local('Lato Black'), local('Lato-Black'), url(../fonts/Lato-Black.ttf) format('truetype');
 }

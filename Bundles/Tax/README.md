@@ -10,4 +10,4 @@ composer require spryker/tax
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/tax/tax.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/tax/tax.html)
