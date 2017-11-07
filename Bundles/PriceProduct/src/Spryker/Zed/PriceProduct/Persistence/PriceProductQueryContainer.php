@@ -13,6 +13,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -103,28 +104,22 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
         return $this->getFactory()
             ->createPriceProductStoreQuery()
             ->addJoin([
-                SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT,
+                SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT,
                 SpyPriceProductStoreTableMap::COL_FK_CURRENCY,
                 SpyPriceProductStoreTableMap::COL_FK_STORE,
             ], [
-                SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT,
+                SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT,
                 (int)$priceProductCriteriaTransfer->getIdCurrency(),
                 (int)$priceProductCriteriaTransfer->getIdStore(),
             ])
             ->addJoin([
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-            ], [
-                SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-            ])
-            ->addJoin([
-                SpyPriceTypeTableMap::COL_ID_PRICE_TYPE,
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
                 SpyPriceTypeTableMap::COL_NAME,
             ], [
-                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                SpyPriceTypeTableMap::COL_ID_PRICE_TYPE,
                 $this->getConnection()->quote($priceProductCriteriaTransfer->getPriceType()),
             ])
-
-            ->where(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ?', $idAbstractProduct);
+            ->where(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?', $idAbstractProduct, PDO::PARAM_INT);
     }
 
     /**

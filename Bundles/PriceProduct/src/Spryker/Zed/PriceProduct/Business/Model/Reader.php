@@ -246,19 +246,19 @@ class Reader implements ReaderInterface
      */
     protected function getProductPrice($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $priceProductConcrete = $this->priceProductConcreteReader->getPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
+        $priceProductConcrete = $this->priceProductConcreteReader->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
         if ($priceProductConcrete !== null) {
             return $priceProductConcrete;
         }
 
-        $priceProductAbstract = $this->priceProductAbstractReader->getPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
+        $priceProductAbstract = $this->priceProductAbstractReader->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
         if ($priceProductAbstract !== null) {
             return $priceProductAbstract;
         }
 
         if ($this->productFacade->hasProductConcrete($sku)) {
             $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-            $priceProductAbstract = $this->priceProductAbstractReader->getPriceForProductAbstract($abstractSku, $priceProductCriteriaTransfer);
+            $priceProductAbstract = $this->priceProductAbstractReader->findPriceForProductAbstract($abstractSku, $priceProductCriteriaTransfer);
 
             if ($priceProductAbstract !== null) {
                 return $priceProductAbstract;

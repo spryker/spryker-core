@@ -39,7 +39,7 @@ interface PriceProductConcreteReaderInterface
      *
      * @return array
      */
-    public function getPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
+    public function findPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
 
     /**
      * @param string $sku

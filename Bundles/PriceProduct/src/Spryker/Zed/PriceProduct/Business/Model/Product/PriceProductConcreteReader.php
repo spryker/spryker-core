@@ -45,12 +45,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function hasPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $productConcrete = $this->priceProductQueryContainer
-            ->queryPriceEntityForProductConcrete($sku, $priceProductCriteriaTransfer)
-            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
-            ->findOne();
-
-        return $productConcrete !== null;
+        return ($this->findPriceProductId($sku, $priceProductCriteriaTransfer) !== null);
     }
 
     /**
@@ -87,7 +82,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      *
      * @return array
      */
-    public function getPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    public function findPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
         return $this->priceProductQueryContainer
             ->queryPriceEntityForProductConcrete($sku, $priceProductCriteriaTransfer)
@@ -105,9 +100,15 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function findPriceProductId($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        return $this->priceProductQueryContainer
+        $idPriceProduct = $this->priceProductQueryContainer
             ->queryPriceEntityForProductConcrete($sku, $priceProductCriteriaTransfer)
-            ->findOne()
-            ->getIdPriceProduct();
+            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
+            ->findOne();
+
+        if (!$idPriceProduct) {
+            return null;
+        }
+
+        return (int)$idPriceProduct;
     }
 }

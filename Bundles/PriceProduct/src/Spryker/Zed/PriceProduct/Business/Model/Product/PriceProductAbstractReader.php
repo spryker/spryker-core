@@ -63,12 +63,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function hasPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $productAbstract = $this->priceProductQueryContainer
-            ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
-            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
-            ->findOne();
-
-        return $productAbstract !== null;
+        return ($this->findPriceProductId($sku, $priceProductCriteriaTransfer) !== null);
     }
 
     /**
@@ -78,7 +73,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function findProductAbstractPricesBySku($sku)
     {
-        $abstractSku = $this->getAbstractSku($sku);
+        $abstractSku = $this->findAbstractSku($sku);
 
         $productAbstractPriceEntities = $this->priceProductQueryContainer
             ->queryPricesForProductAbstractBySku($abstractSku)
@@ -92,7 +87,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return string
      */
-    public function getAbstractSku($sku)
+    public function findAbstractSku($sku)
     {
         $abstractSku = $sku;
         if ($this->productFacade->hasProductConcrete($sku)) {
@@ -108,7 +103,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return array
      */
-    public function getPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
         return $this->priceProductQueryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
@@ -136,21 +131,27 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int
+     * @return int|null
      */
     public function findPriceProductId($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        return $this->priceProductQueryContainer
+        $idPriceProduct = $this->priceProductQueryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
-            ->findOne()
-            ->getIdPriceProduct();
+            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
+            ->findOne();
+
+        if (!$idPriceProduct) {
+            return null;
+        }
+
+        return (int)$idPriceProduct;
     }
 
     /**
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
@@ -160,6 +161,10 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductStoreEntity = $this->priceProductQueryContainer
             ->queryPriceEntityForProductAbstractById($idAbstractProduct, $priceProductCriteriaTransfer)
             ->findOne();
+
+        if (!$priceProductStoreEntity) {
+            return null;
+        }
 
         return $this->priceProductMapper->mapProductPriceTransfer(
             $priceProductStoreEntity,
