@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
-use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPostSaveHookInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface;
-use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutSaveOrderInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use SprykerTest\Zed\Checkout\Business\Fixture\MockPostHook;
 use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
 
@@ -62,8 +62,8 @@ class CheckoutWorkflowTest extends Unit
      */
     public function testWorkflowCallsAllOrderSavers()
     {
-        $mock1 = $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
-        $mock2 = $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
+        $mock1 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
+        $mock2 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
 
         $quoteTransfer = new QuoteTransfer();
 
@@ -120,7 +120,7 @@ class CheckoutWorkflowTest extends Unit
             ->setRedirectUrl('anUrl');
 
         $mock1 = new ResponseManipulatorPreCondition($checkoutResponse);
-        $mock2 = $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
+        $mock2 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
 
         $quoteTransfer = new QuoteTransfer();
 

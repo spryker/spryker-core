@@ -7,11 +7,22 @@
 
 namespace Spryker\Zed\Checkout\Dependency\Plugin;
 
-use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPostSaveHookInterface as PlaceOrderCheckoutPostSaveHookInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-/**
- * @deprecated Use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPostSaveHookInterface instead
- */
-interface CheckoutPostSaveHookInterface extends PlaceOrderCheckoutPostSaveHookInterface
+interface CheckoutPostSaveHookInterface
 {
+    /**
+     * Specification:
+     * - This plugin is called after the order is placed.
+     * - Set the success flag to false, if redirect should be headed to an error page afterwords
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 }

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder;
+namespace Spryker\Zed\Checkout\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
-interface CheckoutSaveOrderInterface
+interface CheckoutDoSaveOrderInterface
 {
     /**
      * Specification:

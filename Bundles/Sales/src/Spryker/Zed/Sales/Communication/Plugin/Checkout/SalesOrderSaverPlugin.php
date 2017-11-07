@@ -9,14 +9,14 @@ namespace Spryker\Zed\Sales\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutSaveOrderInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  */
-class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
+class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
      * @api

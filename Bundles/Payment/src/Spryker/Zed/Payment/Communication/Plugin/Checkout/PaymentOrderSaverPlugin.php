@@ -9,12 +9,12 @@ namespace Spryker\Zed\Payment\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutSaveOrderInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 
 /**
  * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
  */
-class PaymentOrderSaverPlugin extends AbstractPaymentOrderPlugin implements CheckoutSaveOrderInterface
+class PaymentOrderSaverPlugin extends AbstractPaymentOrderPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

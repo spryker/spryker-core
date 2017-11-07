@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Checkout\Business\Fixture;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
 {
