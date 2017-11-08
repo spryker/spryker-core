@@ -8,9 +8,8 @@
 namespace Spryker\Yves\Currency\CurrencyChange;
 
 use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
+use Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface;
-use Spryker\Yves\Messenger\FlashMessenger\FlashMessenger;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {
@@ -30,19 +29,26 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
     protected $zedRequestClient;
 
     /**
+     * @var \Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface
+     */
+    protected $messengerClient;
+
+    /**
      * @param \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[] $currencyPostChangePlugins
      * @param \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface $currencyPersistence
      * @param \Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface $zedRequestClient
+     * @param \Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface $messengerClient
      */
     public function __construct(
         array $currencyPostChangePlugins,
         CurrencyPersistenceInterface $currencyPersistence,
-        CurrencyToZedRequestClientInterface $zedRequestClient
-    )
-    {
+        CurrencyToZedRequestClientInterface $zedRequestClient,
+        CurrencyToMessengerClientInterface $messengerClient
+    ) {
         $this->currencyPostChangePlugins = $currencyPostChangePlugins;
         $this->currencyPersistence = $currencyPersistence;
         $this->zedRequestClient = $zedRequestClient;
+        $this->messengerClient = $messengerClient;
     }
 
     /**
@@ -57,16 +63,22 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
             if ($currencyPostChangePlugins->execute($currencyIsoCode)) {
                 continue;
             }
+
             $this->currencyPersistence->setCurrentCurrencyIsoCode($previousCurrencyIsoCode);
 
-            $pimplePlugin = new Pimple();
-            $flashMessenger = $pimplePlugin->getApplication()['flash_messenger'];
-
-            foreach ($this->zedRequestClient->getLastResponseErrorMessages() as $errorMessage) {
-                $flashMessenger->addErrorMessage($errorMessage->getValue());
-            }
+            $this->addErrorMessages();
 
             return;
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function addErrorMessages()
+    {
+        foreach ($this->zedRequestClient->getLastResponseErrorMessages() as $messageTransfer) {
+            $this->messengerClient->addErrorMessage($messageTransfer->getValue());
         }
     }
 }

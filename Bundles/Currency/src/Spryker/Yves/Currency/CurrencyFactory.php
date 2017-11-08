@@ -42,7 +42,8 @@ class CurrencyFactory extends AbstractFactory
         return new CurrencyPostChangePluginExecutor(
             $this->getCurrencyPostChangePlugins(),
             $this->createCurrencyPersistence(),
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
+            $this->getMessengerClient()
         );
     }
 
@@ -84,5 +85,13 @@ class CurrencyFactory extends AbstractFactory
     protected function getZedRequestClient()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface
+     */
+    protected function getMessengerClient()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_MESSENGER);
     }
 }

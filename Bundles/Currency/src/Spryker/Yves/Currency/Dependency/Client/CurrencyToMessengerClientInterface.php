@@ -5,34 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Messenger\FlashMessenger;
+namespace Spryker\Yves\Currency\Dependency\Client;
 
-interface FlashMessengerInterface
+interface CurrencyToMessengerClientInterface
 {
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
-     * @return $this
+     * @return void
      */
     public function addSuccessMessage($message);
 
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
-     * @return $this
+     * @return void
      */
     public function addInfoMessage($message);
 
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
-     * @return $this
+     * @return void
      */
     public function addErrorMessage($message);
 }

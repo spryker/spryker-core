@@ -5,60 +5,57 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Messenger\FlashMessenger;
+namespace Spryker\Client\Messenger;
 
+use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Messenger\MessengerConstants;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
-class FlashMessenger implements FlashMessengerInterface
+/**
+ * @method \Spryker\Client\Messenger\MessengerFactory getFactory()
+ */
+class MessengerClient extends AbstractClient implements MessengerClientInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
-     */
-    protected $flashBag;
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag
-     */
-    public function __construct(FlashBagInterface $flashBag)
-    {
-        $this->flashBag = $flashBag;
-    }
-
-    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $message
      *
-     * @return $this
+     * @return void
      */
     public function addSuccessMessage($message)
     {
         $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_SUCCESS, $message);
-
-        return $this;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $message
      *
-     * @return $this
+     * @return void
      */
     public function addInfoMessage($message)
     {
         $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_INFO, $message);
-
-        return $this;
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $message
      *
-     * @return $this
+     * @return void
      */
     public function addErrorMessage($message)
     {
         $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_ERROR, $message);
-
-        return $this;
     }
 
     /**
@@ -69,6 +66,22 @@ class FlashMessenger implements FlashMessengerInterface
      */
     protected function addToFlashBag($key, $value)
     {
-        $this->flashBag->add($key, $value);
+        $this->getFlashBag()->add($key, $value);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface|\Symfony\Component\HttpFoundation\Session\SessionBagInterface
+     */
+    protected function getFlashBag()
+    {
+        return $this->getFactory()->getSessionClient()->getBag($this->getFlashBagName());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFlashBagName()
+    {
+        return (new FlashBag())->getName();
     }
 }

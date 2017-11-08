@@ -22,7 +22,6 @@ use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
  */
 class PriceCartConnectorFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester
      */
@@ -35,13 +34,12 @@ class PriceCartConnectorFacadeTest extends Unit
     {
         $priceCartConnectorFacade = $this->createPriceCartConnectorFacade();
 
-        $productConcreteTransfer =  $this->tester->haveProduct();
+        $productConcreteTransfer = $this->tester->haveProduct();
 
         $cartChangeTransfer = new CartChangeTransfer();
         //$cartChangeTransfer->addItem($itemTransfer);
 
         $updatedCartChangeTransfer = $priceCartConnectorFacade->addPriceToItems($cartChangeTransfer);
-
     }
 
     /**

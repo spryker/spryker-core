@@ -7,8 +7,6 @@
 namespace SprykerTest\Shared\PriceProduct\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\MoneyValueBuilder;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -20,17 +18,16 @@ class PriceProductDataHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param null $currencyIsoCode
+     * @param string|null $currencyIsoCode
      * @param array $moneyValueOverwrite
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function haveProductPrice(
         ProductConcreteTransfer $productConcreteTransfer,
-        $currencyIsoCode = null,
+        $currencyIsoCode,
         array $moneyValueOverwrite
-    )
-    {
+    ) {
         $priceTypeTransfer = new PriceTypeTransfer();
 
         $priceProductTransfer = (new PriceProductTransfer())

@@ -41,5 +41,4 @@ class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements Curren
 
         return true;
     }
-
 }
