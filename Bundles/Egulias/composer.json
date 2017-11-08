@@ -1,6 +1,6 @@
 {
-  "name": "spryker/email-validator",
-  "description": "EmailValidator module",
+  "name": "spryker/egulias",
+  "description": "Egulias module",
   "license": "proprietary",
   "require": {
     "egulias/email-validator": "~2.1.2"
