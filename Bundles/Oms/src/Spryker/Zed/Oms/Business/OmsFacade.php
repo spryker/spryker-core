@@ -72,6 +72,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder)
+    {
+        return $this->getFactory()
+            ->createOrderStateMachineFinder()
+            ->isOrderFlaggedExcludeFromCustomer($idOrder);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $eventId
      * @param array $orderItemIds
      * @param array $data

@@ -4,10 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
 
-    <process name="DummyPayment01" main="true">
-        <subprocesses>
-            <process>DummyRefund</process>
-        </subprocesses>
+    <process name="Test01" main="true">
 
         <states>
             <state name="new" reserved="true"/>
@@ -26,7 +23,7 @@
         </states>
 
         <transitions>
-            <transition happy="true" condition="DummyPayment/IsAuthorized">
+            <transition happy="true">
                 <source>new</source>
                 <target>payment pending</target>
                 <event>authorize</event>
@@ -35,13 +32,7 @@
             <transition>
                 <source>new</source>
                 <target>invalid</target>
-                <event>authorize</event>
-            </transition>
-
-            <transition happy="true" condition="DummyPayment/IsPayed">
-                <source>payment pending</source>
-                <target>paid</target>
-                <event>pay</event>
+                <event>authorization-failed</event>
             </transition>
 
             <transition>
@@ -68,12 +59,6 @@
                 <event>stock-update</event>
             </transition>
 
-            <transition>
-                <source>delivered</source>
-                <target>ready for return</target>
-                <event>return</event>
-            </transition>
-
             <transition happy="true">
                 <source>delivered</source>
                 <target>closed</target>
@@ -83,16 +68,15 @@
         </transitions>
 
         <events>
-            <event name="authorize" onEnter="true"/>
-            <event name="pay" manual="true" timeout="1 hour" command="DummyPayment/Pay"/>
-            <event name="export" onEnter="true" manual="true" command="Oms/SendOrderConfirmation"/>
-            <event name="ship" manual="true" command="Oms/SendOrderShipped"/>
+            <event name="authorize" manual="true"/>
+            <event name="authorization-failed" manual="true"/>
+            <event name="pay" manual="true" timeout="1 hour" />
+            <event name="export"  manual="true"/>
+            <event name="ship" manual="true" />
             <event name="stock-update" manual="true"/>
             <event name="close" manual="true" timeout="1 hour"/>
             <event name="return" manual="true" />
         </events>
     </process>
-
-    <process name="DummyRefund" file="DummySubprocess/DummyRefund01.xml"/>
 
 </statemachine>
