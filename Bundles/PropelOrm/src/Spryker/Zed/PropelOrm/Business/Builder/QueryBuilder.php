@@ -16,6 +16,8 @@ use Propel\Generator\Model\PropelTypes;
 
 class QueryBuilder extends PropelQueryBuilder
 {
+    const ATTRIBUTE_CASE_INSENSITIVE = 'caseInsensitive';
+
     /**
      * @param \Propel\Generator\Model\Column $col
      *
@@ -380,7 +382,7 @@ SCRIPT;
         
         \$query = \$this->addUsingAlias($qualifiedName, \$$variableName, \$comparison);
 ";
-        if ($col->isTextType() && $col->getAttribute('caseinsensitive') === 'true') {
+        if ($col->isTextType() && filter_var($col->getAttribute(static::ATTRIBUTE_CASE_INSENSITIVE), FILTER_VALIDATE_BOOLEAN) === true) {
             $script .= "
         /** @var \\Propel\\Runtime\\ActiveQuery\\Criterion\\BasicCriterion \$criterion */
         \$criterion = \$query->getCriterion($qualifiedName);
