@@ -7,37 +7,15 @@
 
 namespace Spryker\Service\UtilValidate;
 
-use Egulias\EmailValidator\EmailValidator as EguliasEmailValidator;
-use Egulias\EmailValidator\Validation\RFCValidation as EguliasRFCValidation;
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\UtilValidate\Model\Email\EmailValidator;
 
 class UtilValidateServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\UtilValidate\Model\Email\EmailValidatorInterface
+     * @return \Spryker\Service\UtilValidate\Dependency\External\EmailValidatorAdapterInterface
      */
-    public function createEmailRfcValidator()
+    public function getEmailValidatorAdapter()
     {
-        return new EmailValidator(
-            $this->createEguliasEmailValidator(),
-            $this->createEguliasRfcValidation()
-        );
-    }
-
-    /**
-     * @return \Egulias\EmailValidator\EmailValidator
-     */
-    protected function createEguliasEmailValidator()
-    {
-        return new EguliasEmailValidator();
-    }
-
-    /**
-     * @return \Egulias\EmailValidator\Validation\RFCValidation
-     */
-    public function createEguliasRfcValidation()
-    {
-        return new EguliasRFCValidation();
+        return $this->getProvidedDependency(UtilValidateDependencyProvider::ADAPTER_EMAIL_VALIDATOR);
     }
 }

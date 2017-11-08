@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilValidate\Model\Email;
+namespace Spryker\Service\UtilValidate\Dependency\External;
 
-interface EmailValidatorInterface
+interface EmailValidatorAdapterInterface
 {
     /**
      * @param string $email

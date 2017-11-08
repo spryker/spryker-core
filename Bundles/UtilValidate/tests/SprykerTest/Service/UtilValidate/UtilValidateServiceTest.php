@@ -19,6 +19,9 @@ use Codeception\Test\Unit;
  */
 class UtilValidateServiceTest extends Unit
 {
+    const VALID_EMAIL = 'some.one@example.com';
+    const INVALID_EMAIL = "te'<i>sting@twelvebeaufort.com";
+
     /**
      * @var \SprykerTest\Service\UtilValidate\UtilValidateServiceTester
      */
@@ -64,6 +67,7 @@ class UtilValidateServiceTest extends Unit
     public function invalidEmailFormats()
     {
         return [
+            [static::INVALID_EMAIL],
             ['Abc.example.com'],
             ['A@b@c@example.com'],
             ['a\"b(c)d,e:f;g<h>i[j\k]l@example.com'],
@@ -72,7 +76,6 @@ class UtilValidateServiceTest extends Unit
             ['this\ still\"not\\allowed@example.com'],
             ['john..doe@example.com'],
             ['john.doe@example..com'],
-            ["te'<i>sting@twelvebeaufort.com"],
         ];
     }
 
@@ -101,7 +104,23 @@ class UtilValidateServiceTest extends Unit
     public function validEmailFormats()
     {
         return [
-            ['some.one@example.com'],
+            [static::VALID_EMAIL],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsEmailFormatValidCallsBehaveStateless()
+    {
+        // Assign
+        $expectedResult = true;
+
+        // Act
+        $this->utilValidateService->isEmailFormatValid(static::INVALID_EMAIL);
+        $actualResult = $this->utilValidateService->isEmailFormatValid(static::VALID_EMAIL);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
     }
 }

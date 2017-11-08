@@ -9,7 +9,7 @@ interface UtilValidateServiceInterface
 {
     /**
      * Specification:
-     * - Validates email format against RFC.
+     * - Validates email format.
      *
      * @api
      *

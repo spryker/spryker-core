@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilValidate\Model\Email;
+namespace Spryker\Service\UtilValidate\Dependency\External;
 
 use Egulias\EmailValidator\EmailValidator as EguliasEmailValidator;
-use Egulias\EmailValidator\Validation\EmailValidation as EguliasEmailValidation;
+use Egulias\EmailValidator\Validation\RFCValidation as EguliasRfcValidation;
 
-class EmailValidator implements EmailValidatorInterface
+class EguliasRfcEmailValidatorAdapter implements EmailValidatorAdapterInterface
 {
     /**
      * @var \Egulias\EmailValidator\EmailValidator
@@ -22,14 +22,10 @@ class EmailValidator implements EmailValidatorInterface
      */
     protected $emailValidation;
 
-    /**
-     * @param \Egulias\EmailValidator\EmailValidator $emailValidator
-     * @param \Egulias\EmailValidator\Validation\EmailValidation $emailValidation
-     */
-    public function __construct(EguliasEmailValidator $emailValidator, EguliasEmailValidation $emailValidation)
+    public function __construct()
     {
-        $this->emailValidator = $emailValidator;
-        $this->emailValidation = $emailValidation;
+        $this->emailValidator = new EguliasEmailValidator();
+        $this->emailValidation = new EguliasRfcValidation();
     }
 
     /**
