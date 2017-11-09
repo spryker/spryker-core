@@ -22,5 +22,5 @@ interface SequenceNumberConstants
      *  'SEQUENCE2' => 200,
      * ]
      */
-    const SEQUENCE_NUMBER_LIMIT_LIST = 'SEQUENCE_NUMBER_LIMIT_LIST';
+    const LIMIT_LIST = 'SEQUENCE_NUMBER:LIMIT_LIST';
 }

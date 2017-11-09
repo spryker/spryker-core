@@ -97,6 +97,6 @@ class SequenceNumberConfig extends AbstractBundleConfig
      */
     public function getSequenceLimits()
     {
-        return $this->getConfig()->get(SequenceNumberConstants::SEQUENCE_NUMBER_LIMIT_LIST);
+        return $this->getConfig()->get(SequenceNumberConstants::LIMIT_LIST);
     }
 }
