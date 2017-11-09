@@ -10,6 +10,10 @@ namespace Spryker\Service\UtilValidate\Dependency\External;
 use Egulias\EmailValidator\EmailValidator as EguliasEmailValidator;
 use Egulias\EmailValidator\Validation\RFCValidation as EguliasRfcValidation;
 
+/**
+ * Note: This class is stateful due to the underlying external implementation.
+ * Make sure this adapter is always "new"ed for repeated usage.
+ */
 class UtilValidateToEguliasRfcEmailValidatorAdapter implements UtilValidateToEmailValidatorInterface
 {
     /**
