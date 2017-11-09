@@ -9,7 +9,7 @@ namespace Spryker\Zed\Navigation\Communication;
 
 /**
  * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
- * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  */
 class NavigationCommunicationFactory
 {

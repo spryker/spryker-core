@@ -16,7 +16,7 @@ use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
- * @method \Spryker\Zed\Stock\Persistence\StockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
  */
 class StockBusinessFactory extends AbstractBusinessFactory
 {

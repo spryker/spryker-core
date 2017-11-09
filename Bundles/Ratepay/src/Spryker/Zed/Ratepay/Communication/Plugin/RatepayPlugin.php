@@ -11,7 +11,7 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()
+ * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  * @method \Spryker\Zed\Ratepay\Communication\RatepayCommunicationFactory getFactory()
  */
 class RatepayPlugin extends AbstractPlugin implements ItemExpanderPluginInterface

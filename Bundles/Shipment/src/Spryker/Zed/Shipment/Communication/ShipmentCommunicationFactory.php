@@ -17,9 +17,9 @@ use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  */
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {

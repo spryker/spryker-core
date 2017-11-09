@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Setup\Business\SetupFacade getFacade()
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  */
 class JenkinsGenerateConsole extends Console
 {

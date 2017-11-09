@@ -29,7 +29,7 @@
 
             <div class="tabs-footer">
                 <a href="{{ url('/product-attribute-gui/attribute/edit', {'id': app.request.query.get('id')}) }}" class="btn btn-back">{{ 'Back' | trans }}</a>
-                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             </div>
         </div>
 
@@ -39,5 +39,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-productmanagement-attribute.js"></script>
+    <script src="/assets/js/spryker-zed-productattributegui-attribute.js"></script>
 {% endblock %}

@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Queue\QueueConfig getConfig()
- * @method \Spryker\Zed\Queue\Persistence\QueueQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface getQueryContainer()
  */
 class QueuePersistenceFactory extends AbstractPersistenceFactory
 {

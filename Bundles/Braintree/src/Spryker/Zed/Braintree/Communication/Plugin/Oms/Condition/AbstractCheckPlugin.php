@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 /**
- * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
+ * @method \Spryker\Zed\Braintree\Business\BraintreeFacadeInterface getFacade()
  * @method \Spryker\Zed\Braintree\Communication\BraintreeCommunicationFactory getFactory()
  */
 abstract class AbstractCheckPlugin extends AbstractPlugin implements ConditionInterface

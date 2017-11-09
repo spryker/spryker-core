@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
- * @method \Spryker\Zed\Price\Persistence\PriceQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface getQueryContainer()
  */
 class PriceCommunicationFactory extends AbstractCommunicationFactory
 {

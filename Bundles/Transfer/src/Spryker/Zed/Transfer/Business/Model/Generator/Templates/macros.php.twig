@@ -49,7 +49,6 @@
 {# constructor #}
 {% macro addConstructor(properties) %}
 {% if properties %}
-
     public function __construct()
     {
 {% for property, collectionType in properties %}

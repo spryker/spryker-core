@@ -39,7 +39,7 @@ class QueueConfig extends AbstractBundleConfig
     {
         $queueReceiverOptions = $this->getQueueReceiverOptions();
 
-        if (array_key_exists($queueName, $queueReceiverOptions)) {
+        if (isset($queueReceiverOptions[$queueName])) {
             return $queueReceiverOptions[$queueName];
         }
 

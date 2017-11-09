@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade getFacade()
+ * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
- * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
  */
 class DeleteController extends EditController
 {

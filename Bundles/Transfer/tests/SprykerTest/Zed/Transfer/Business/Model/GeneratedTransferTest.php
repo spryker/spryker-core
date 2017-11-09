@@ -34,17 +34,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @group GeneratedTransferTest
  * Add your own group annotations below this line
  */
-//class GeneratedTransferTest extends Unit
-/**
- * Auto-generated group annotations
- * @group SprykerTest
- * @group Zed
- * @group Transfer
- * @group Business
- * @group Model
- * @group GeneratedTransferTest
- * Add your own group annotations below this line
- */
 class GeneratedTransferTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -352,7 +341,7 @@ class GeneratedTransferTest extends PHPUnit_Framework_TestCase
      */
     protected function getTargetDirectory()
     {
-        return __DIR__ . '/Fixtures/GeneratedTest/';
+        return __DIR__ . '/../../_data/Generated/';
     }
 
     /**

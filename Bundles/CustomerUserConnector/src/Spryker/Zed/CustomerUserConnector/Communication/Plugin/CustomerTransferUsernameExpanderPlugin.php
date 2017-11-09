@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CustomerUserConnector\Communication\CustomerUserConnectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacade getFacade()
+ * @method \Spryker\Zed\CustomerUserConnector\Business\CustomerUserConnectorFacadeInterface getFacade()
  */
 class CustomerTransferUsernameExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {

@@ -16,7 +16,7 @@ use Twig_Environment;
 use Twig_SimpleFilter;
 
 /**
- * @method \Spryker\Zed\Money\Business\MoneyFacade getFacade()
+ * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface

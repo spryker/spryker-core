@@ -17,7 +17,7 @@ use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\NavigationCollector\Business\NavigationCollectorFacade getFacade()
+ * @method \Spryker\Zed\NavigationCollector\Business\NavigationCollectorFacadeInterface getFacade()
  */
 class NavigationMenuCollectorStoragePlugin extends AbstractCollectorPlugin
 {

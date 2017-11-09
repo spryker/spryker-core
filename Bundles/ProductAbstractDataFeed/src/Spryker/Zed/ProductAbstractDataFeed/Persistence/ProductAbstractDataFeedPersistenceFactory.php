@@ -12,7 +12,7 @@ use Spryker\Zed\ProductAbstractDataFeed\ProductAbstractDataFeedDependencyProvide
 
 /**
  * @method \Spryker\Zed\ProductAbstractDataFeed\ProductAbstractDataFeedConfig getConfig()
- * @method \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainerInterface getQueryContainer()
  */
 class ProductAbstractDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {

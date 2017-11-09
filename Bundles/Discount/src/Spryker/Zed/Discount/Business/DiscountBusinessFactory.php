@@ -53,7 +53,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
- * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  */
 class DiscountBusinessFactory extends AbstractBusinessFactory
 {

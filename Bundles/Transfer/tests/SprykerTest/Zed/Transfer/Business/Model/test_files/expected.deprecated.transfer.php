@@ -17,7 +17,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class DeprecatedFooBarTransfer extends AbstractTransfer
 {
-
     /**
      * @deprecated scalarField is deprecated.
      */
@@ -315,5 +314,4 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
 
         return $this;
     }
-
 }

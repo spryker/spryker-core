@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +31,7 @@ class SalesFacadeTest extends Unit
     const DEFAULT_ITEM_STATE = 'test';
 
     /**
-     * @var \SprykerTest\Zed\Sales\BusinessTester
+     * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
     protected $tester;
 
@@ -76,6 +77,8 @@ class SalesFacadeTest extends Unit
     {
         $salesOrderEntity = $this->tester->create();
 
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+
         $salesFacade = $this->createSalesFacade();
 
         $orderListTransfer = new OrderListTransfer();
@@ -120,7 +123,6 @@ class SalesFacadeTest extends Unit
      */
     protected function createSalesFacade()
     {
-//        return new SalesFacade();
         return $this->tester->getLocator()->sales()->facade();
     }
 }

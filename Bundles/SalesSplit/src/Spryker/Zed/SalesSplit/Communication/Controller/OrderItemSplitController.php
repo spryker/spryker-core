@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesSplit\Communication\SalesSplitCommunicationFactory getFactory()
- * @method \Spryker\Zed\SalesSplit\Business\SalesSplitFacade getFacade()
+ * @method \Spryker\Zed\SalesSplit\Business\SalesSplitFacadeInterface getFacade()
  */
 class OrderItemSplitController extends AbstractController
 {

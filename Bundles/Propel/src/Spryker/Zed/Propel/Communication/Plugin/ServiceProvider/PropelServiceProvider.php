@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
- * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
