@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SequenceNumber;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SequenceNumberConfig extends AbstractBundleConfig
@@ -89,5 +90,13 @@ class SequenceNumberConfig extends AbstractBundleConfig
     public function getSequenceName()
     {
         return 'Sequence';
+    }
+
+    /**
+     * @return array
+     */
+    public function getSequenceLimits()
+    {
+        return $this->getConfig()->get(SequenceNumberConstants::LIMIT_LIST);
     }
 }
