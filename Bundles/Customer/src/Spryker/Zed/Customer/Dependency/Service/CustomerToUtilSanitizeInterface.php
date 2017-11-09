@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Customer\Dependency\Service;
 
 /**
- * Extends deprecated interface for BC reasons.
+ * @deprecated Use CustomerToUtilSanitizeServiceInterface instead.
  */
-interface CustomerToUtilSanitizeServiceInterface extends CustomerToUtilSanitizeInterface
+interface CustomerToUtilSanitizeInterface
 {
     /**
      * @param string $text
