@@ -10,14 +10,6 @@ namespace Spryker\Zed\Customer\Dependency\Service;
 /**
  * @deprecated Use CustomerToUtilSanitizeServiceInterface instead.
  */
-interface CustomerToUtilSanitizeInterface
+interface CustomerToUtilSanitizeInterface extends CustomerToUtilSanitizeServiceInterface
 {
-    /**
-     * @param string $text
-     * @param bool $double
-     * @param string|null $charset
-     *
-     * @return string
-     */
-    public function escapeHtml($text, $double = true, $charset = null);
 }
