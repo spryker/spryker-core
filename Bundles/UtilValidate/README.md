@@ -12,4 +12,4 @@ composer require spryker/util-validate
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
