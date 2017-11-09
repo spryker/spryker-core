@@ -8,11 +8,11 @@ namespace Spryker\Service\UtilValidate;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\UtilValidate\Dependency\External\EguliasRfcEmailValidatorAdapter;
+use Spryker\Service\UtilValidate\Dependency\External\UtilValidateToEguliasRfcEmailValidatorAdapter;
 
 class UtilValidateDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const ADAPTER_EMAIL_VALIDATOR = 'ADAPTER_EMAIL_VALIDATOR';
+    const EMAIL_VALIDATOR = 'EMAIL_VALIDATOR';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -23,7 +23,7 @@ class UtilValidateDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideServiceDependencies($container);
 
-        $container = $this->addEmailValidatorAdapter($container);
+        $container = $this->addEmailValidator($container);
 
         return $container;
     }
@@ -33,10 +33,10 @@ class UtilValidateDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    protected function addEmailValidatorAdapter(Container $container)
+    protected function addEmailValidator(Container $container)
     {
-        $container[static::ADAPTER_EMAIL_VALIDATOR] = function (Container $container) {
-            return $this->createEmailValidatorAdapter($container);
+        $container[static::EMAIL_VALIDATOR] = function (Container $container) {
+            return $this->createEmailValidator($container);
         };
 
         return $container;
@@ -45,10 +45,10 @@ class UtilValidateDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return \Spryker\Service\UtilValidate\Dependency\External\EmailValidatorAdapterInterface
+     * @return \Spryker\Service\UtilValidate\Dependency\External\UtilValidateToEmailValidatorInterface
      */
-    protected function createEmailValidatorAdapter(Container $container)
+    protected function createEmailValidator(Container $container)
     {
-        return new EguliasRfcEmailValidatorAdapter();
+        return new UtilValidateToEguliasRfcEmailValidatorAdapter();
     }
 }

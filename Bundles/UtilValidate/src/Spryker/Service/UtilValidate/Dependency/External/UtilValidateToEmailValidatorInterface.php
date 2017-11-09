@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\UtilValidate\Dependency\External;
 
-interface EmailValidatorAdapterInterface
+interface UtilValidateToEmailValidatorInterface
 {
     /**
      * @param string $email

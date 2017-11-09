@@ -12,10 +12,10 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 class UtilValidateServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\UtilValidate\Dependency\External\EmailValidatorAdapterInterface
+     * @return \Spryker\Service\UtilValidate\Dependency\External\UtilValidateToEmailValidatorInterface
      */
-    public function getEmailValidatorAdapter()
+    public function getEmailValidator()
     {
-        return $this->getProvidedDependency(UtilValidateDependencyProvider::ADAPTER_EMAIL_VALIDATOR);
+        return $this->getProvidedDependency(UtilValidateDependencyProvider::EMAIL_VALIDATOR);
     }
 }

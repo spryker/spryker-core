@@ -10,7 +10,7 @@ namespace Spryker\Service\UtilValidate\Dependency\External;
 use Egulias\EmailValidator\EmailValidator as EguliasEmailValidator;
 use Egulias\EmailValidator\Validation\RFCValidation as EguliasRfcValidation;
 
-class EguliasRfcEmailValidatorAdapter implements EmailValidatorAdapterInterface
+class UtilValidateToEguliasRfcEmailValidatorAdapter implements UtilValidateToEmailValidatorInterface
 {
     /**
      * @var \Egulias\EmailValidator\EmailValidator
