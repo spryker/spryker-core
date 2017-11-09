@@ -13,7 +13,7 @@ interface SequenceNumberFacadeInterface
 {
     /**
      * Specification:
-     * - Generate a unique sequence value
+     * - Generates a unique sequence value
      *
      * @api
      *
