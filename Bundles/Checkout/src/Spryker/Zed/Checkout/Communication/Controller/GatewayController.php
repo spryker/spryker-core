@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 /**
  * @method \Spryker\Zed\Checkout\Business\CheckoutFacadeInterface getFacade()
@@ -33,6 +34,14 @@ class GatewayController extends AbstractGatewayController
         try {
             $checkoutResponseTransfer = $this->getFacade()->placeOrder($quoteTransfer, $checkoutResponseTransfer);
         } catch (Exception $exception) {
+            $checkoutErrorTransfer = (new CheckoutErrorTransfer())
+                ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
+                ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
+
+            $checkoutResponseTransfer
+                ->addError($checkoutErrorTransfer)
+                ->setIsSuccess(false);
+        } catch (Throwable $exception) {
             $checkoutErrorTransfer = (new CheckoutErrorTransfer())
                 ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
                 ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
