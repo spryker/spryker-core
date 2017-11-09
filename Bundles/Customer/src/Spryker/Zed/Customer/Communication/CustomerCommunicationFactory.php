@@ -129,7 +129,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeInterface
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface
      */
     protected function getUtilSanitizeService()
     {

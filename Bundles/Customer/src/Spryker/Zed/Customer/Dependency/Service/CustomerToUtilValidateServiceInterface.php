@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\Customer\Dependency\Service;
 
-/**
- * @deprecated Use CustomerToUtilSanitizeServiceInterface instead.
- */
-interface CustomerToUtilSanitizeInterface extends CustomerToUtilSanitizeServiceInterface
+interface CustomerToUtilValidateServiceInterface
 {
+    /**
+     * @param string $email
+     *
+     * @return string
+     */
+    public function isEmailFormatValid($email);
 }

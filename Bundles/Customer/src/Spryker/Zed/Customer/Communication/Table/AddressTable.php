@@ -9,7 +9,7 @@ namespace Spryker\Zed\Customer\Communication\Table;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Spryker\Shared\Customer\CustomerConstants;
-use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeInterface;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -34,19 +34,19 @@ class AddressTable extends AbstractTable
     protected $idCustomer;
 
     /**
-     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeInterface
+     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface
      */
     protected $utilSanitize;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      * @param int $idCustomer
-     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeInterface $utilSanitize
+     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface $utilSanitize
      */
     public function __construct(
         CustomerQueryContainerInterface $customerQueryContainer,
         $idCustomer,
-        CustomerToUtilSanitizeInterface $utilSanitize
+        CustomerToUtilSanitizeServiceInterface $utilSanitize
     ) {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->idCustomer = $idCustomer;

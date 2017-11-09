@@ -130,7 +130,12 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     protected function generateRandomEmail()
     {
         do {
-            $randomEmail = md5(mt_rand());
+            $randomEmail = sprintf(
+                '%s@%s.%s',
+                strtolower(md5(mt_rand())),
+                strtolower(md5(mt_rand())),
+                strtolower(md5(mt_rand()))
+            );
         } while ($this->queryContainer->queryCustomerByEmail($randomEmail)->exists());
 
         return $randomEmail;
