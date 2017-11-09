@@ -13,7 +13,7 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Cart\Business\CartFacade getFacade()
+ * @method \Spryker\Zed\Cart\Business\CartFacadeInterface getFacade()
  * @method \Spryker\Zed\Cart\Communication\CartCommunicationFactory getFactory()
  */
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface

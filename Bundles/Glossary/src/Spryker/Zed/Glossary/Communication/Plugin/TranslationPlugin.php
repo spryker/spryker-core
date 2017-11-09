@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
 
 /**
- * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  */
 class TranslationPlugin extends AbstractPlugin implements TranslationPluginInterface

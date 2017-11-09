@@ -21,7 +21,7 @@ use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
- * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 {

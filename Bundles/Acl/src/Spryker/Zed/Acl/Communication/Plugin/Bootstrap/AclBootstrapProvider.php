@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
- * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  */
 class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {

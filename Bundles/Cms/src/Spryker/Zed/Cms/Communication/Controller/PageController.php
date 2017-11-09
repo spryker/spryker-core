@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
  * @deprecated Use CMS page creation from CmsGui bundle.
  *
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
- * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
- * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  */
 class PageController extends AbstractController
 {

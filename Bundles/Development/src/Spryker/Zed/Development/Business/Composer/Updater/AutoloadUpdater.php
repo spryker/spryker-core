@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class AutoloadUpdater implements UpdaterInterface
@@ -14,10 +15,10 @@ class AutoloadUpdater implements UpdaterInterface
     const AUTOLOAD_KEY = 'autoload';
     const AUTOLOAD_DEV_KEY = 'autoload-dev';
 
-    const BASE_TESTS_DIR = 'tests';
-    const BASE_SRC_DIR = 'src';
-    const BASE_SUPPORT_DIR = '_support';
-    const BASE_HELPER_DIR = 'Helper';
+    const BASE_TESTS_DIRECTORY = 'tests';
+    const BASE_SRC_DIRECTORY = 'src';
+    const BASE_SUPPORT_DIRECTORY = '_support';
+    const BASE_HELPER_DIRECTORY = 'Helper';
 
     const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
     const SPRYKER_NAMESPACE = 'Spryker';
@@ -50,7 +51,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected $autoloadPSR4Whitelist = [
         self::SPRYKER_NAMESPACE,
-        self::BASE_HELPER_DIR,
+        self::BASE_HELPER_DIRECTORY,
     ];
 
     /**
@@ -101,7 +102,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected function updateAutoloadWithDefaultSrcDirectory(array $composerJson, $modulePath)
     {
         $pathParts = [
-            static::BASE_SRC_DIR,
+            static::BASE_SRC_DIRECTORY,
             static::SPRYKER_NAMESPACE,
         ];
         $directoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
@@ -125,20 +126,20 @@ class AutoloadUpdater implements UpdaterInterface
         $moduleName = $this->getLastPartOfPath($modulePath);
         foreach ($this->applications as $application) {
             $pathParts = [
-                static::BASE_TESTS_DIR,
+                static::BASE_TESTS_DIRECTORY,
                 static::SPRYKER_TEST_NAMESPACE,
                 $application,
                 $moduleName,
-                static::BASE_SUPPORT_DIR,
+                static::BASE_SUPPORT_DIRECTORY,
             ];
 
-            $supportDirPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
+            $supportDirectoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
 
-            if ($this->pathExists($supportDirPath)) {
-                $nonEmptySupportDirectories = $this->getNonEmptyDirectoriesWithHelpers($this->getDirContents($supportDirPath));
+            if ($this->pathExists($supportDirectoryPath)) {
+                $nonEmptySupportDirectories = $this->getNonEmptyDirectoriesWithHelpers($supportDirectoryPath);
                 $composerJson = $this->addAutoloadPsr4($composerJson);
                 foreach ($nonEmptySupportDirectories as $directory) {
-                    preg_match('/' . static::BASE_SUPPORT_DIR . '\/(.+)/', $directory, $subNameSpace);
+                    preg_match('/' . static::BASE_SUPPORT_DIRECTORY . '\/(.+)/', $directory, $subNameSpace);
                     $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\' . $application . '\\' . $moduleName . '\\' . str_replace('/', '\\', $subNameSpace[1]) . '\\']
                         = $this->getPath(array_merge($pathParts, explode('/', $subNameSpace[1])));
                 }
@@ -149,39 +150,18 @@ class AutoloadUpdater implements UpdaterInterface
     }
 
     /**
-     * @param string $dir
-     * @param array $results
+     * @param string $directory
      *
      * @return array
      */
-    protected function getDirContents($dir, &$results = [])
+    protected function getNonEmptyDirectoriesWithHelpers($directory)
     {
-        $files = scandir($dir);
-
-        foreach ($files as $key => $value) {
-            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
-            if (!is_dir($path)) {
-                $results[] = $path;
-            } elseif ($value != "." && $value != "..") {
-                $this->getDirContents($path, $results);
-            }
-        }
-
-        return $results;
-    }
-
-    /**
-     * @param array $files
-     *
-     * @return array
-     */
-    protected function getNonEmptyDirectoriesWithHelpers($files)
-    {
+        $files = (new Finder())->files()->in($directory)->name('/Helper.php$/');
         $directories = [];
         foreach ($files as $file) {
-            $dirname = dirname($file);
-            if (preg_match('/Helper\.php$/', $file) && !in_array($dirname, $directories)) {
-                $directories[] = $dirname;
+            $directoryName = dirname(str_replace('//', '/', $file));
+            if (!in_array($directoryName, $directories)) {
+                $directories[] = $directoryName;
             }
         }
 
@@ -208,7 +188,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected function updateAutoloadDevWithDefaultTestDirectory(array $composerJson, $modulePath)
     {
         $pathParts = [
-            static::BASE_TESTS_DIR,
+            static::BASE_TESTS_DIRECTORY,
             static::SPRYKER_TEST_NAMESPACE,
         ];
 
@@ -234,14 +214,14 @@ class AutoloadUpdater implements UpdaterInterface
         $directoryPath = $this->getPath(
             [
                 rtrim($modulePath, DIRECTORY_SEPARATOR),
-                static::BASE_TESTS_DIR,
+                static::BASE_TESTS_DIRECTORY,
                 $testDirectoryKey,
             ]
         );
 
         if ($this->pathExists($directoryPath)) {
             $composerJson = $this->addAutoloadDevPsr0($composerJson);
-            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_0][$testDirectoryKey] = static::BASE_TESTS_DIR . '/';
+            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_0][$testDirectoryKey] = static::BASE_TESTS_DIRECTORY . '/';
         }
 
         if (isset($composerJson[static::AUTOLOAD_KEY][static::PSR_0][$testDirectoryKey])) {
@@ -427,7 +407,7 @@ class AutoloadUpdater implements UpdaterInterface
 
             $pathParts = [
                 rtrim($modulePath, DIRECTORY_SEPARATOR),
-                static::BASE_TESTS_DIR,
+                static::BASE_TESTS_DIRECTORY,
                 rtrim($namespace, '\\'),
             ];
 

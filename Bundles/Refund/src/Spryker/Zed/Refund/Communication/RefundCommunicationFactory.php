@@ -13,7 +13,7 @@ use Spryker\Zed\Refund\RefundDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Refund\RefundConfig getConfig()
- * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface getQueryContainer()
  */
 class RefundCommunicationFactory extends AbstractCommunicationFactory
 {

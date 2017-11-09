@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Touch\Business\TouchFacade getFacade()
+ * @method \Spryker\Zed\Touch\Business\TouchFacadeInterface getFacade()
  */
 class TouchCleanUpConsole extends Console
 {

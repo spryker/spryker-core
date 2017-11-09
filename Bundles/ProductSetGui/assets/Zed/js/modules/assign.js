@@ -191,7 +191,7 @@ function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCa
 
 $(document).ready(function() {
     var rawProductPosition = $('#product_set_form_products_form_product_position').attr('value');
-    console.log(rawProductPosition);
+
     if (rawProductPosition) {
         productPosition = $.parseJSON(rawProductPosition);
     }
