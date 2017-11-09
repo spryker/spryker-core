@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Transfer\Business\TransferFacade getFacade()
+ * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
  */
 class ValidatorConsole extends Console
 {

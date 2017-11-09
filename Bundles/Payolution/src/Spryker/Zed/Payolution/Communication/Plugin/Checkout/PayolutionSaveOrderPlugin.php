@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface;
 
 /**
- * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacadeInterface getFacade()
  */
 class PayolutionSaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderPluginInterface
 {

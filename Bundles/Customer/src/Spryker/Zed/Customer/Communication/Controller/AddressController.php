@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class AddressController extends AbstractController

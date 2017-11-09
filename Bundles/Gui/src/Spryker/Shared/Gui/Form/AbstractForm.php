@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * @deprecated Use \Symfony\Component\Form\AbstractType instead.
+ * @deprecated Use Symfony\Component\Form\AbstractType instead.
  */
 abstract class AbstractForm implements FormTypeInterface
 {

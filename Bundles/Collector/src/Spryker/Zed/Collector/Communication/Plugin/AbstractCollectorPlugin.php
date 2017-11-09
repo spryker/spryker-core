@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
+ * @method \Spryker\Zed\Collector\Business\CollectorFacadeInterface getFacade()
  * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
  */
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface

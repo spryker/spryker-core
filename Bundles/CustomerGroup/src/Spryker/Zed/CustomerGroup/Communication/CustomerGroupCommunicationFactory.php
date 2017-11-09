@@ -21,7 +21,7 @@ use Spryker\Zed\CustomerGroup\CustomerGroupDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
  */
 class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory

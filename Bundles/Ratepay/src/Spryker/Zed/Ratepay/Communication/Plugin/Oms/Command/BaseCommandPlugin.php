@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
- * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()
+ * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  * @method \Spryker\Zed\Ratepay\Communication\RatepayCommunicationFactory getFactory()
  */
 abstract class BaseCommandPlugin extends AbstractPlugin implements CommandByOrderInterface

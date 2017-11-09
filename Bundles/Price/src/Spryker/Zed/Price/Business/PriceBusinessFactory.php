@@ -16,7 +16,7 @@ use Spryker\Zed\Price\PriceDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Price\PriceConfig getConfig()
- * @method \Spryker\Zed\Price\Persistence\PriceQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface getQueryContainer()
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {

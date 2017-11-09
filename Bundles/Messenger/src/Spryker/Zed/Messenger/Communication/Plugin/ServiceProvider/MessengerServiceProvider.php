@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Messenger\Business\MessengerFacade getFacade()
+ * @method \Spryker\Zed\Messenger\Business\MessengerFacadeInterface getFacade()
  */
 class MessengerServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

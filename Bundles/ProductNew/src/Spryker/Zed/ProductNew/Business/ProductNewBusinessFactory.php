@@ -12,7 +12,7 @@ use Spryker\Zed\ProductNew\Business\Label\ProductAbstractRelationReader;
 
 /**
  * @method \Spryker\Zed\ProductNew\ProductNewConfig getConfig()
- * @method \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainerInterface getQueryContainer()
  */
 class ProductNewBusinessFactory extends AbstractBusinessFactory
 {

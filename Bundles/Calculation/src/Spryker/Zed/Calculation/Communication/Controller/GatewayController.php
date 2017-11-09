@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

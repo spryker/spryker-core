@@ -12,7 +12,6 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
  * @method \Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
