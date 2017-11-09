@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface
      */
     protected $currencyFacade;
 
@@ -27,11 +27,11 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $priceProductTypeMapper;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyInterface $currencyFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface $priceProductTypeMapper
      */
     public function __construct(
-        PriceProductToCurrencyInterface $currencyFacade,
+        PriceProductToCurrencyFacadeInterface $currencyFacade,
         ProductPriceTypeMapperInterface $priceProductTypeMapper
     ) {
         $this->currencyFacade = $currencyFacade;

@@ -76,7 +76,7 @@ class CurrencyFactory extends AbstractFactory
      */
     protected function getCurrencyPostChangePlugins()
     {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::CURRENCY_POST_CHANGE_PLUGINS);
+        return $this->getProvidedDependency(CurrencyDependencyProvider::PLUGINS_CURRENCY_POST_CHANGE);
     }
 
     /**

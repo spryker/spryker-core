@@ -11,8 +11,9 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
@@ -28,7 +29,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     protected $priceProductMapper;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
     protected $productFacade;
 
@@ -40,13 +41,13 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface $productFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductMapperInterface $priceProductMapper,
-        PriceProductToProductInterface $productFacade,
+        PriceProductToProductFacadeInterface $productFacade,
         PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
@@ -63,7 +64,16 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function hasPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        return ($this->findPriceProductId($sku, $priceProductCriteriaTransfer) !== null);
+        $prices = $this->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
+        if (!$prices) {
+            return false;
+        }
+
+        if ($priceProductCriteriaTransfer->getPriceMode() === PriceMode::PRICE_MODE_NET) {
+            return $prices[PriceProductQueryContainerInterface::COL_NET_PRICE] !== null;
+        }
+
+        return $prices[PriceProductQueryContainerInterface::COL_GROSS_PRICE] !== null;
     }
 
     /**

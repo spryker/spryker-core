@@ -25,7 +25,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
-    const CURRENCY_POST_CHANGE_PLUGINS = 'CURRENCY_POST_CHANGE_PLUGINS';
+    const PLUGINS_CURRENCY_POST_CHANGE = 'CURRENCY_POST_CHANGE_PLUGINS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -125,7 +125,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyPostChangePlugins(Container $container)
     {
-        $container[static::CURRENCY_POST_CHANGE_PLUGINS] = function () {
+        $container[static::PLUGINS_CURRENCY_POST_CHANGE] = function () {
             return $this->getCurrencyPostChangePlugins();
         };
 

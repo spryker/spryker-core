@@ -10,24 +10,24 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 
 class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface
      */
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface
      */
     protected $priceFacade;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface
      */
     protected $storeFacade;
 
@@ -37,15 +37,15 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     protected $priceProductTypeReader;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyInterface $currencyFacade
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface $priceFacade
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreInterface $storeFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
      */
     public function __construct(
-        PriceProductToCurrencyInterface $currencyFacade,
-        PriceProductToPriceInterface $priceFacade,
-        PriceProductToStoreInterface $storeFacade,
+        PriceProductToCurrencyFacadeInterface $currencyFacade,
+        PriceProductToPriceFacadeInterface $priceFacade,
+        PriceProductToStoreFacadeInterface $storeFacade,
         PriceProductTypeReaderInterface $priceProductTypeReader
     ) {
         $this->currencyFacade = $currencyFacade;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -19,8 +20,8 @@ use Spryker\Zed\PriceProduct\Business\Exception\ProductPriceChangeException;
 use Spryker\Zed\PriceProduct\Business\Exception\UndefinedPriceTypeException;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -38,7 +39,7 @@ class Writer implements WriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface
      */
     protected $touchFacade;
 
@@ -48,7 +49,7 @@ class Writer implements WriterInterface
     protected $priceConfig;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
     protected $productFacade;
 
@@ -64,17 +65,17 @@ class Writer implements WriterInterface
 
     /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchInterface $touchFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceConfig
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface $productFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      */
     public function __construct(
         PriceProductQueryContainerInterface $queryContainer,
-        PriceProductToTouchInterface $touchFacade,
+        PriceProductToTouchFacadeInterface $touchFacade,
         PriceProductConfig $priceConfig,
-        PriceProductToProductInterface $productFacade,
+        PriceProductToProductFacadeInterface $productFacade,
         PriceProductTypeReaderInterface $priceTypeReader,
         PriceProductMapperInterface $priceProductMapper
     ) {
@@ -395,6 +396,11 @@ class Writer implements WriterInterface
             ->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            if ($this->isEmptyMoneyValue($moneyValueTransfer)) {
+                continue;
+            }
+
             $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
             $this->persistPriceProductStore($priceProductTransfer);
             $priceProductTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
@@ -415,6 +421,11 @@ class Writer implements WriterInterface
             ->getIdProductConcrete();
 
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            if ($this->isEmptyMoneyValue($moneyValueTransfer)) {
+                continue;
+            }
+
             $this->persistProductConcretePriceEntity($priceProductTransfer, $idProductConcrete);
             $this->persistPriceProductStore($priceProductTransfer);
 
@@ -501,5 +512,15 @@ class Writer implements WriterInterface
         $moneyValueTransfer->setIdEntity($priceProduceStoreEntity->getIdPriceProductStore());
 
         return $priceProduceStoreEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     *
+     * @return bool
+     */
+    protected function isEmptyMoneyValue(MoneyValueTransfer $moneyValueTransfer)
+    {
+        return (!$moneyValueTransfer->getIdEntity() && $moneyValueTransfer->getNetAmount() === null && $moneyValueTransfer->getGrossAmount() === null);
     }
 }

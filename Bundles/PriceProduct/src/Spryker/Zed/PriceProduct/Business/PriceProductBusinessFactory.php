@@ -22,7 +22,7 @@ use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
- * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
  */
 class PriceProductBusinessFactory extends AbstractBusinessFactory
 {
@@ -142,7 +142,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface
+     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
     protected function getProductFacade()
     {
@@ -150,7 +150,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchInterface
+     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface
      */
     protected function getTouchFacade()
     {
@@ -158,7 +158,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyInterface
+     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface
      */
     protected function getCurrencyFacade()
     {
@@ -166,7 +166,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface
+     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface
      */
     protected function getPriceFacade()
     {
@@ -174,7 +174,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreInterface
+     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface
      */
     protected function getStoreFacade()
     {

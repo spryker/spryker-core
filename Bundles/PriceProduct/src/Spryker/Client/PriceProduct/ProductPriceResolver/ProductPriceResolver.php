@@ -8,19 +8,19 @@
 namespace Spryker\Client\PriceProduct\ProductPriceResolver;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyInterface;
-use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceInterface;
+use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
+use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
     /**
-     * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceInterface
+     * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
      */
     protected $priceClient;
 
     /**
-     * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyInterface
+     * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface
      */
     protected $currencyClient;
 
@@ -30,13 +30,13 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductConfig;
 
     /**
-     * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceInterface $priceClient
-     * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyInterface $currencyClient
+     * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient
+     * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
      */
     public function __construct(
-        PriceProductToPriceInterface $priceClient,
-        PriceProductToCurrencyInterface $currencyClient,
+        PriceProductToPriceClientInterface $priceClient,
+        PriceProductToCurrencyClientInterface $currencyClient,
         PriceProductConfig $priceProductConfig
     ) {
         $this->priceProductConfig = $priceProductConfig;

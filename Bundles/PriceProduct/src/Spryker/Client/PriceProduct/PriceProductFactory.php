@@ -28,7 +28,7 @@ class PriceProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceInterface
+     * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
      */
     protected function getPriceClient()
     {
@@ -36,7 +36,7 @@ class PriceProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyInterface
+     * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface
      */
     protected function getCurrencyClient()
     {

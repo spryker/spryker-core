@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
@@ -31,7 +32,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
-        PriceProductMapperInterface  $priceProductMapper
+        PriceProductMapperInterface $priceProductMapper
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
@@ -45,7 +46,16 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function hasPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        return ($this->findPriceProductId($sku, $priceProductCriteriaTransfer) !== null);
+        $prices = $this->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
+        if (!$prices) {
+            return false;
+        }
+
+        if ($priceProductCriteriaTransfer->getPriceMode() === PriceMode::PRICE_MODE_NET) {
+            return $prices[PriceProductQueryContainerInterface::COL_NET_PRICE] !== null;
+        }
+
+        return $prices[PriceProductQueryContainerInterface::COL_GROSS_PRICE] !== null;
     }
 
     /**

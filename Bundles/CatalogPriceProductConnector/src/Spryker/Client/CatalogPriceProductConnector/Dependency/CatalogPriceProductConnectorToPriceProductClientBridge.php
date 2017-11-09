@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CatalogPriceProductConnector\Dependency;
 
-class CatalogPriceProductConnectorToPriceProductBridge implements CatalogPriceProductConnectorToPriceProductInterface
+class CatalogPriceProductConnectorToPriceProductClientBridge implements CatalogPriceProductConnectorToPriceProductClientInterface
 {
     /**
      * @var \Spryker\Client\PriceProduct\PriceProductClientInterface
@@ -30,5 +30,13 @@ class CatalogPriceProductConnectorToPriceProductBridge implements CatalogPricePr
     public function resolveProductPrice(array $priceMap)
     {
         return $this->priceProductClient->resolveProductPrice($priceMap);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceTypeDefaultName()
+    {
+        return $this->priceProductClient->getPriceTypeDefaultName();
     }
 }
