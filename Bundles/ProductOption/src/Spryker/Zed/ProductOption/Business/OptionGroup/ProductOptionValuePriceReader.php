@@ -188,15 +188,26 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
                 continue;
             }
 
-            if (!isset($storePrices[$idCurrency][$this->getGrossPriceModeIdentifier()][ProductOptionConstants::AMOUNT])) {
-                $storePrices[$idCurrency][$this->getGrossPriceModeIdentifier()][ProductOptionConstants::AMOUNT] =
-                    $currencyPrices[$this->getGrossPriceModeIdentifier()][ProductOptionConstants::AMOUNT];
-            }
+            $storePrices = $this->setDefaultCurrencyPrice($storePrices, $idCurrency, $this->getGrossPriceModeIdentifier(), $currencyPrices);
+            $storePrices = $this->setDefaultCurrencyPrice($storePrices, $idCurrency, $this->getNetPriceModeIdentifier(), $currencyPrices);
+        }
 
-            if (!isset($storePrices[$idCurrency][$this->getNetPriceModeIdentifier()][ProductOptionConstants::AMOUNT])) {
-                $storePrices[$idCurrency][$this->getNetPriceModeIdentifier()][ProductOptionConstants::AMOUNT] =
-                    $currencyPrices[$this->getNetPriceModeIdentifier()][ProductOptionConstants::AMOUNT];
-            }
+        return $storePrices;
+    }
+
+    /**
+     * @param array $storePrices
+     * @param int $idCurrency
+     * @param string $priceMode
+     * @param array $defaultCurrencyPrices
+     *
+     * @return array
+     */
+    protected function setDefaultCurrencyPrice(array $storePrices, $idCurrency, $priceMode, array $defaultCurrencyPrices)
+    {
+        if (!isset($storePrices[$idCurrency][$priceMode][ProductOptionConstants::AMOUNT])) {
+            $storePrices[$idCurrency][$priceMode][ProductOptionConstants::AMOUNT] =
+                $defaultCurrencyPrices[$priceMode][ProductOptionConstants::AMOUNT];
         }
 
         return $storePrices;
