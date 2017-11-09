@@ -29,16 +29,14 @@ class GatewayController extends AbstractGatewayController
      */
     public function placeOrderAction(QuoteTransfer $quoteTransfer)
     {
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
-
         try {
-            $checkoutResponseTransfer = $this->getFacade()->placeOrder($quoteTransfer, $checkoutResponseTransfer);
+            $checkoutResponseTransfer = $this->getFacade()->placeOrder($quoteTransfer);
         } catch (Exception $exception) {
             $checkoutErrorTransfer = (new CheckoutErrorTransfer())
                 ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
                 ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
 
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer = (new CheckoutResponseTransfer())
                 ->addError($checkoutErrorTransfer)
                 ->setIsSuccess(false);
         } catch (Throwable $exception) {
@@ -46,7 +44,7 @@ class GatewayController extends AbstractGatewayController
                 ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
                 ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
 
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer = (new CheckoutResponseTransfer())
                 ->addError($checkoutErrorTransfer)
                 ->setIsSuccess(false);
         }

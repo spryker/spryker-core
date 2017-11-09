@@ -66,12 +66,12 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function placeOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function placeOrder(QuoteTransfer $quoteTransfer)
     {
+        $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
         $checkoutResponseTransfer = $this->resetCheckoutResponseTransfer($checkoutResponseTransfer);
 
         if (!$this->checkPreConditions($quoteTransfer, $checkoutResponseTransfer)) {
@@ -178,6 +178,14 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             ->setIsSuccess(true);
 
         return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function createCheckoutResponseTransfer()
+    {
+        return new CheckoutResponseTransfer();
     }
 
     /**

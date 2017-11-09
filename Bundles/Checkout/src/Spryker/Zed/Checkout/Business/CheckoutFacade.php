@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -22,17 +21,16 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function placeOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         return $this
             ->getFactory()
             ->createCheckoutWorkflow()
-            ->placeOrder($quoteTransfer, $checkoutResponseTransfer);
+            ->placeOrder($quoteTransfer);
     }
 }
