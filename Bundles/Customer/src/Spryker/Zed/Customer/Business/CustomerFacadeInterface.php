@@ -17,6 +17,9 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 interface CustomerFacadeInterface
 {
     /**
+     * Specification:
+     * - Checks if provided email address exists in persistent storage.
+     *
      * @api
      *
      * @param string $email
@@ -27,9 +30,11 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Hashes password if provided
-     * - Saves customer
-     * - Returns CustomerResponseTransfer with success flag
+     * - Validates provided customer email information.
+     * - Encrypts provided plain text password.
+     * - Assigns current locale to customer if it is not set already.
+     * - Generates customer reference for customer.
+     * - Stores customer data.
      *
      * @api
      *
@@ -41,10 +46,13 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Hashes password if provided
-     * - Saves customer
-     * - Sends registration email (on successful registration)
-     * - Returns CustomerResponseTransfer with success flag
+     * - Validates provided customer email information.
+     * - Encrypts provided plain text password.
+     * - Assigns current locale to customer if it is not set already.
+     * - Generates customer reference for customer.
+     * - Stores customer data.
+     * - Sends registration confirmation link via email using a freshly generated registration key.
+     * - Sends password restoration email if SendPasswordToken property is set in the provided transfer object.
      *
      * @api
      *
@@ -55,6 +63,10 @@ interface CustomerFacadeInterface
     public function registerCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Finds customer registration confirmation by provided registration key.
+     * - Sets customer as registered and removes the registration key from persistent storage.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -64,6 +76,9 @@ interface CustomerFacadeInterface
     public function confirmRegistration(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Sends password restoration link via email using a freshly generated password restoration key.
+     *
      * @api
      *
      * @deprecated Use sendPasswordRestoreMail() instead
@@ -75,6 +90,9 @@ interface CustomerFacadeInterface
     public function forgotPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Sends password restoration link via email using a freshly generated password restoration key.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -84,6 +102,13 @@ interface CustomerFacadeInterface
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Encrypts provided plain text password.
+     * - Stores new password for customer in persistent storage.
+     * - Removes password restoration key from customer.
+     * - Sends password restoration confirmation email.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -93,6 +118,9 @@ interface CustomerFacadeInterface
     public function restorePassword(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Deletes a customer by either customer ID, customer email, or password restoration key.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -102,6 +130,9 @@ interface CustomerFacadeInterface
     public function deleteCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Retrieves customer information with customer addresses by customer ID from persistent storage.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -111,6 +142,9 @@ interface CustomerFacadeInterface
     public function getCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Retrieves customer information with customer addresses and locale information by customer ID.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -121,10 +155,13 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Hashes password if provided
-     * - Saves customer
-     * - Sends password restore email if applicable
-     * - Returns CustomerResponseTransfer with success flag
+     * - Updates password if NewPassword property is set in provided transfer object:
+     *      - Validates provided current plain text password using persistent storage.
+     *      - Encrypts provided plain text password before update.
+     * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Validates customer email information.
+     * - Updates customer data which is set in provided transfer object.
+     * - Sends password restoration email if SendPasswordToken property is set in the provided transfer object.
      *
      * @api
      *
@@ -135,6 +172,11 @@ interface CustomerFacadeInterface
     public function updateCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Validates provided current plain text password using persistent storage.
+     * - Encrypts provided plain text password and stores it in persistent storage.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -144,6 +186,10 @@ interface CustomerFacadeInterface
     public function updateCustomerPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Retrieves an address by customer ID and address ID.
+     * - Populates address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -153,6 +199,9 @@ interface CustomerFacadeInterface
     public function getAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Retrieves provided customer related addresses from persistent storage.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -162,6 +211,10 @@ interface CustomerFacadeInterface
     public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Retrieves an address by customer ID and address ID.
+     * - Populates address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -171,6 +224,10 @@ interface CustomerFacadeInterface
     public function updateAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Updates customer address using provided transfer object.
+     * - Sets address as default address based on provided default address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -180,6 +237,10 @@ interface CustomerFacadeInterface
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Creates customer address using provided transfer object.
+     * - Sets address as default address based on provided default address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -189,6 +250,10 @@ interface CustomerFacadeInterface
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Creates customer address using provided transfer object.
+     * - Sets address as default address based on provided default address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -198,6 +263,9 @@ interface CustomerFacadeInterface
     public function createAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Sets provided address as default billing address for the related customer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -207,6 +275,9 @@ interface CustomerFacadeInterface
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Sets provided address as default shipping address for the related customer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -216,6 +287,9 @@ interface CustomerFacadeInterface
     public function setDefaultShippingAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Retrieves address as a formatted string for rendering.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -225,6 +299,9 @@ interface CustomerFacadeInterface
     public function renderAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Retrieves default shipping address for customer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -234,6 +311,9 @@ interface CustomerFacadeInterface
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Retrieves default billing address for customer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -243,6 +323,10 @@ interface CustomerFacadeInterface
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Deletes address.
+     * - Removes references between customer-address entities.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -252,6 +336,9 @@ interface CustomerFacadeInterface
     public function deleteAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Checks if customer exists in persistent storage by provided email and plain text password.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -262,7 +349,13 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Persists customer's data during order placement
+     * - Does nothing if customer is guest.
+     * - Registers customer if it does not exist in persistent storage.
+     * - Updates customer if it exists in persistent storage.
+     * - Updates customer addresses.
+     *
+     * @see CustomerFacadeInterface::registerCustomer()
+     * @see CustomerFacadeInterface::updateCustomer()
      *
      * @api
      *
@@ -280,7 +373,13 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Persists customer's data during order placement
+     * - Does nothing if customer is guest.
+     * - Registers customer if it does not exist in persistent storage.
+     * - Updates customer if it exists in persistent storage.
+     * - Updates customer addresses.
+     *
+     * @see CustomerFacadeInterface::registerCustomer()
+     * @see CustomerFacadeInterface::updateCustomer()
      *
      * @api
      *
@@ -294,6 +393,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Checks required fields for an order placement (in a customer in the quote)
+     * - Checks if a new customer has a not yet registered email.
      *
      * @api
      *
@@ -309,9 +409,11 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Executes anonymization plugins
-     * - Executes customer addresses anonymization
-     * - Executes customer anonymization
+     * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Applies configured CustomerAnonymizerPluginInterface plugins on customer data.
+     * - Anonymizes customer addresses.
+     * - Anonymizes customer data.
+     * - Updates persistent storage with anonymized data.
      *
      * @api
      *
@@ -322,6 +424,9 @@ interface CustomerFacadeInterface
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Retrieves customer information with customer addresses and locale information by customer reference.
+     *
      * @api
      *
      * Specification:
@@ -335,6 +440,11 @@ interface CustomerFacadeInterface
     public function findByReference($customerReference);
 
     /**
+     * Specification:
+     * - Hydrates Customer transfer object into provided Order transfer object.
+     * - Uses Order::customerReference transfer object property to identify customer.
+     * - Does nothing if Customer transfer object is already set.
+     *
      * @api
      *
      * Specification

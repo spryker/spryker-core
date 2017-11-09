@@ -11,6 +11,7 @@ use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
+use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
@@ -35,6 +36,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCustomerReferenceGenerator(),
             $config,
+            $this->createEmailValidator(),
             $this->getMailFacade(),
             $this->getLocaleQueryContainer(),
             $this->getStore()
@@ -163,5 +165,24 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderHydrator(
             $this->createCustomer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface
+     */
+    protected function createEmailValidator()
+    {
+        return new EmailValidator(
+            $this->getQueryContainer(),
+            $this->getUtilValidateService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface
+     */
+    protected function getUtilValidateService()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
 }
