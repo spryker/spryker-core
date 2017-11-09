@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacadeInterface getFacade()
  */
 class MaintenanceEnableConsole extends AbstractMaintenanceConsole
 {

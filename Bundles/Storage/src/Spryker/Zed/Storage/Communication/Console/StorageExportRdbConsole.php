@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
+ * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
  */
 class StorageExportRdbConsole extends Console
 {
