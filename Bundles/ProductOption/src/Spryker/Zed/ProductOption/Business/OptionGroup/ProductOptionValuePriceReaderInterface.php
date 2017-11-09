@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductOptionValuePriceReaderInterface
 {
@@ -27,9 +27,9 @@ interface ProductOptionValuePriceReaderInterface
     public function getCurrentNetPrice(SpyProductOptionValue $productOptionValueEntity);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
-    public function getStorePrices(ObjectCollection $priceCollection);
+    public function getStorePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
 }

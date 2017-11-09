@@ -8,9 +8,9 @@ namespace Spryker\Zed\ProductOption\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory getFactory()
@@ -187,9 +187,9 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
-    public function getProductOptionValueStorePrices(ObjectCollection $priceCollection);
+    public function getProductOptionValueStorePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
 }

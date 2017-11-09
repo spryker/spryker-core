@@ -14,11 +14,10 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
@@ -619,21 +618,22 @@ class ProductOptionFacadeTest extends Unit
     {
         // Assign
         $idCurrentStore = $this->getCurrentIdStore();
-        $collection = new ObjectCollection();
-        $collection->append(
-            (new SpyProductOptionValuePrice())
+        $prices = new ArrayObject();
+        $prices->append(
+            (new MoneyValueTransfer())
                 ->setFkCurrency(93)
                 ->setFkStore($idCurrentStore)
-                ->setGrossPrice(100)
-                ->setNetPrice(200)
+                ->setGrossAmount(100)
+                ->setNetAmount(200)
         );
-        $collection->append(
-            (new SpyProductOptionValuePrice())
+        $prices->append(
+            (new MoneyValueTransfer())
                 ->setFkCurrency(250)
                 ->setFkStore($idCurrentStore)
-                ->setGrossPrice(300)
-                ->setNetPrice(400)
+                ->setGrossAmount(300)
+                ->setNetAmount(400)
         );
+        $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
         $expectedResult = [
             'EUR' => [
                 PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
@@ -646,7 +646,7 @@ class ProductOptionFacadeTest extends Unit
         ];
 
         // Act
-        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($collection);
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($request)->getStorePrices();
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
@@ -659,21 +659,22 @@ class ProductOptionFacadeTest extends Unit
     {
         // Assign
         $idCurrentStore = $this->getCurrentIdStore();
-        $collection = new ObjectCollection();
-        $collection->append(
-            (new SpyProductOptionValuePrice())
+        $prices = new ArrayObject();
+        $prices->append(
+            (new MoneyValueTransfer())
                 ->setFkCurrency(93)
                 ->setFkStore($idCurrentStore)
-                ->setGrossPrice(100)
-                ->setNetPrice(200)
+                ->setGrossAmount(100)
+                ->setNetAmount(200)
         );
-        $collection->append(
-            (new SpyProductOptionValuePrice())
+        $prices->append(
+            (new MoneyValueTransfer())
                 ->setFkCurrency(250)
                 ->setFkStore(static::DEFAULT_ID_STORE)
-                ->setGrossPrice(300)
-                ->setNetPrice(400)
+                ->setGrossAmount(300)
+                ->setNetAmount(400)
         );
+        $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
         $expectedResult = [
             'EUR' => [
                 PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
@@ -686,7 +687,7 @@ class ProductOptionFacadeTest extends Unit
         ];
 
         // Act
-        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($collection);
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($request)->getStorePrices();
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
@@ -699,35 +700,36 @@ class ProductOptionFacadeTest extends Unit
     {
         // Assign
         $idCurrentStore = $this->getCurrentIdStore();
-        $collection = new ObjectCollection();
-        $collection->append(
-            (new SpyProductOptionValuePrice())
+        $prices = new ArrayObject();
+        $prices->append(
+            (new MoneyValueTransfer())
                 ->setFkCurrency(93)
                 ->setFkStore($idCurrentStore)
-                ->setGrossPrice(100)
-                ->setNetPrice(null)
+                ->setGrossAmount(100)
+                ->setNetAmount(null)
         );
-        $collection->append(
-            (new SpyProductOptionValuePrice())
+        $prices->append(
+            (new MoneyValueTransfer())
                 ->setFkCurrency(250)
                 ->setFkStore($idCurrentStore)
-                ->setGrossPrice(null)
-                ->setNetPrice(400)
+                ->setGrossAmount(null)
+                ->setNetAmount(400)
         );
-        $collection->append(
-            (new SpyProductOptionValuePrice())
+        $prices->append(
+            (new MoneyValueTransfer())
                 ->setFkCurrency(93)
                 ->setFkStore(static::DEFAULT_ID_STORE)
-                ->setGrossPrice(500)
-                ->setNetPrice(600)
+                ->setGrossAmount(500)
+                ->setNetAmount(600)
         );
-        $collection->append(
-            (new SpyProductOptionValuePrice())
+        $prices->append(
+            (new MoneyValueTransfer())
                 ->setFkCurrency(250)
                 ->setFkStore(static::DEFAULT_ID_STORE)
-                ->setGrossPrice(700)
-                ->setNetPrice(800)
+                ->setGrossAmount(700)
+                ->setNetAmount(800)
         );
+        $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
         $expectedResult = [
             'EUR' => [
                 PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
@@ -740,7 +742,7 @@ class ProductOptionFacadeTest extends Unit
         ];
 
         // Act
-        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($collection);
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($request)->getStorePrices();
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface;
@@ -148,29 +150,31 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
-    public function getStorePrices(ObjectCollection $priceCollection)
+    public function getStorePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer)
     {
         $currentStoreTransfer = $this->getCurrentStore();
         $storePrices = [];
         $defaultStorePrices = [];
 
-        foreach ($priceCollection as $priceEntity) {
-            if ($priceEntity->getFkStore() === null) {
-                $defaultStorePrices = $this->addPrice($defaultStorePrices, $priceEntity);
+        foreach ($storePricesRequestTransfer->getPrices() as $moneyValueTransfer) {
+            if ($moneyValueTransfer->getFkStore() === null) {
+                $defaultStorePrices = $this->addPrice($defaultStorePrices, $moneyValueTransfer);
 
                 continue;
             }
 
-            if ($priceEntity->getFkStore() === $currentStoreTransfer->getIdStore()) {
-                $storePrices = $this->addPrice($storePrices, $priceEntity);
+            if ($moneyValueTransfer->getFkStore() === $currentStoreTransfer->getIdStore()) {
+                $storePrices = $this->addPrice($storePrices, $moneyValueTransfer);
             }
         }
 
-        return $this->applyDefaultStorePrices($storePrices, $defaultStorePrices);
+        $storePrices = $this->applyDefaultStorePrices($storePrices, $defaultStorePrices);
+
+        return (new ProductOptionValueStorePricesResponseTransfer())->setStorePrices($storePrices);
     }
 
     /**
@@ -215,18 +219,18 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
 
     /**
      * @param array $prices
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice $priceEntity
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return array
      */
-    protected function addPrice(array $prices, SpyProductOptionValuePrice $priceEntity)
+    protected function addPrice(array $prices, MoneyValueTransfer $moneyValueTransfer)
     {
-        $prices[$this->getCurrencyCodeById($priceEntity->getFkCurrency())] = [
+        $prices[$this->getCurrencyCodeById($moneyValueTransfer->getFkCurrency())] = [
             $this->getGrossPriceModeIdentifier() => [
-                ProductOptionConstants::AMOUNT => $priceEntity->getGrossPrice(),
+                ProductOptionConstants::AMOUNT => $moneyValueTransfer->getGrossAmount(),
             ],
             $this->getNetPriceModeIdentifier() => [
-                ProductOptionConstants::AMOUNT => $priceEntity->getNetPrice(),
+                ProductOptionConstants::AMOUNT => $moneyValueTransfer->getNetAmount(),
             ],
         ];
 
