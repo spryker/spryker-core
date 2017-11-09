@@ -9,6 +9,7 @@
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/messenger": "^3.1.0",
+    "spryker/zed-request": "^3.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -16,8 +17,7 @@
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/transfer": "*",
-    "spryker/twig": "*",
-    "spryker/zed-request": "*"
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider.",

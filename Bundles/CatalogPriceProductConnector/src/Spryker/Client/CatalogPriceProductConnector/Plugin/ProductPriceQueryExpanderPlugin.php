@@ -1,24 +1,21 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CatalogPriceProductConnector\Plugin;
 
 use Elastica\Query;
-use Spryker\Client\Currency\CurrencyClient;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Nested;
+use Elastica\Query\Term;
+use Generated\Shared\Search\PageIndexMap;
+use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Price\PriceClient;
-use Spryker\Client\PriceProduct\PriceProductClient;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Elastica\Query\BoolQuery;
-use InvalidArgumentException;
-use Elastica\Query\Type;
-use Generated\Shared\Search\PageIndexMap;
-use Elastica\Query\Term;
-use Elastica\Query\Nested;
 
 /**
  * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()

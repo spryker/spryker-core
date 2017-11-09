@@ -7,7 +7,6 @@
 namespace SprykerTest\Zed\PriceCartConnector\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
 
 /**
@@ -26,21 +25,6 @@ class PriceCartConnectorFacadeTest extends Unit
      * @var \SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    public function testAddPriceToItemsShouldUpdateCartItemsWithPrices()
-    {
-        $priceCartConnectorFacade = $this->createPriceCartConnectorFacade();
-
-        $productConcreteTransfer = $this->tester->haveProduct();
-
-        $cartChangeTransfer = new CartChangeTransfer();
-        //$cartChangeTransfer->addItem($itemTransfer);
-
-        $updatedCartChangeTransfer = $priceCartConnectorFacade->addPriceToItems($cartChangeTransfer);
-    }
 
     /**
      * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface

@@ -3,14 +3,15 @@
   "description": "Shipment Cart Connector module",
   "license": "proprietary",
   "require": {
-    "spryker/currency": "^3.1.0",
     "spryker/shipment": "^6.1.0",
     "spryker/price": "^5.0.0",
     "spryker/kernel": "^3.13.0"
   },
   "require-dev": {
+    "spryker/cart": "*"
   },
   "suggest": {
+    "spryker/cart": "If you want to use shipment cart plugins."
   },
   "autoload": {
     "psr-4": {
