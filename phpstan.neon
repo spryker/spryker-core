@@ -56,3 +56,9 @@ services:
         class: PhpStan\DynamicType\ServiceDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ClientDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
