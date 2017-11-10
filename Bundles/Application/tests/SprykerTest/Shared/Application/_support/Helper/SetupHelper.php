@@ -14,10 +14,10 @@ use Symfony\Component\Process\Process;
 
 class SetupHelper extends Module
 {
-    const SPRYKER_SETUP = 'php spryker.phar setup testing';
+    const SPRYKER_SETUP = 'vendor/bin/deploy testing';
 
     /**
-     * @deprecated Please use the new spryker setup tool.
+     * @deprecated Please use the new spryker deploy tool.
      */
     const TEST_ENV_SCRIPT = 'setup_test';
 
