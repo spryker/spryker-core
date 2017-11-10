@@ -80,20 +80,6 @@ interface CustomerFacadeInterface
      *
      * @api
      *
-     * @deprecated Use sendPasswordRestoreMail() instead
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    public function forgotPassword(CustomerTransfer $customerTransfer);
-
-    /**
-     * Specification:
-     * - Sends password restoration link via email using a freshly generated password restoration key.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
