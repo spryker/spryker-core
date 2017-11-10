@@ -358,16 +358,16 @@ class Address implements AddressInterface
      */
     protected function getCustomerCountryId()
     {
-        $idCountry = $this->countryFacade->getIdCountryByIso2Code($this->getIsoCode());
+        $countryTransfer = $this->countryFacade->getCountryByIso2Code($this->getIsoCode());
 
-        if ($idCountry === null) {
+        if ($countryTransfer->getIdCountry()) {
             throw new CountryNotFoundException(sprintf(
                 'Country not found for ISO code `%s`.',
                 $this->getIsoCode()
             ));
         }
 
-        return $idCountry;
+        return $countryTransfer->getIdCountry();
     }
 
     /**
@@ -465,7 +465,8 @@ class Address implements AddressInterface
         if (empty($fkCountry)) {
             $iso2Code = $addressTransfer->getIso2Code();
             if (empty($iso2Code) === false) {
-                $fkCountry = $this->countryFacade->getIdCountryByIso2Code($iso2Code);
+                $countryTransfer = $this->countryFacade->getCountryByIso2Code($iso2Code);
+                $fkCountry = $countryTransfer->getIdCountry();
             } else {
                 $fkCountry = $this->getCustomerCountryId();
             }
