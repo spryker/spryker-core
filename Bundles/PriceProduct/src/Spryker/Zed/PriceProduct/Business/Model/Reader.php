@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface;
@@ -204,14 +205,14 @@ class Reader implements ReaderInterface
             $priceMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
             $priceType = $priceProductTransfer->getPriceType()->getName();
-            $currency = $priceMoneyValueTransfer->getCurrency()->getCode();
+            $currencyIsoCode = $priceMoneyValueTransfer->getCurrency()->getCode();
 
             if ($priceMoneyValueTransfer->getGrossAmount()) {
-                $prices[$currency][$this->getGrossPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getGrossAmount();
+                $prices[$currencyIsoCode][$this->getGrossPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getGrossAmount();
             }
 
             if ($priceMoneyValueTransfer->getNetAmount()) {
-                $prices[$currency][$this->getNetPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getNetAmount();
+                $prices[$currencyIsoCode][$this->getNetPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getNetAmount();
             }
         }
 
@@ -230,6 +231,10 @@ class Reader implements ReaderInterface
 
         if (count($concretePriceProductTransfers) === 0) {
             return $abstractPriceProductTransfers;
+        }
+
+        if (count($abstractPriceProductTransfers) === 0) {
+            return $concretePriceProductTransfers;
         }
 
         return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
@@ -252,24 +257,40 @@ class Reader implements ReaderInterface
                     continue;
                 }
 
-                $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
-                $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
-                if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
-                    $concreteMoneyValueTransfer->setGrossAmount($abstractMoneyValueTransfer->getGrossAmount());
-                }
-
-                if ($concreteMoneyValueTransfer->getNetAmount() === null) {
-                    $concreteMoneyValueTransfer->setNetAmount($abstractMoneyValueTransfer->getNetAmount());
-                }
-
-                $priceProductTransfers[$concreteKey] = $priceProductConcreteTransfer;
+                $priceProductTransfers[$concreteKey] = $this->resolveConcreteProductPrice(
+                    $priceProductAbstractTransfer,
+                    $priceProductConcreteTransfer
+                );
             }
 
             if (!isset($priceProductTransfers[$abstractKey])) {
-                $priceProductTransfers[$abstractKey] = $abstractPriceProductTransfers;
+                $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer;
             }
         }
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductAbstractTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function resolveConcreteProductPrice(
+        PriceProductTransfer $priceProductAbstractTransfer,
+        PriceProductTransfer $priceProductConcreteTransfer
+    ) {
+        $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
+        $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
+        if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
+            $concreteMoneyValueTransfer->setGrossAmount($abstractMoneyValueTransfer->getGrossAmount());
+        }
+
+        if ($concreteMoneyValueTransfer->getNetAmount() === null) {
+            $concreteMoneyValueTransfer->setNetAmount($abstractMoneyValueTransfer->getNetAmount());
+        }
+
+        return $priceProductConcreteTransfer;
     }
 
     /**

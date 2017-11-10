@@ -45,7 +45,7 @@ interface PriceProductConcreteReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int
+     * @return int|null
      */
     public function findPriceProductId($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
 }

@@ -86,7 +86,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
      *
      * @return void
      */
-    protected function setPrice(
+    protected function setExpensePrice(
         ExpenseTransfer $shipmentExpenseTransfer,
         ShipmentMethodTransfer $shipmentMethodTransfer,
         CurrencyTransfer $currencyTransfer,
@@ -126,7 +126,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
                 continue;
             }
 
-            $this->setPrice($expenseTransfer, $shipmentMethodTransfer, $currencyTransfer, $priceMode);
+            $this->setExpensePrice($expenseTransfer, $shipmentMethodTransfer, $currencyTransfer, $priceMode);
         }
     }
 }
