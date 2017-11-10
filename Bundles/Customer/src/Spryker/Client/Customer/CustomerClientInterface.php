@@ -105,7 +105,7 @@ interface CustomerClientInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer);
 

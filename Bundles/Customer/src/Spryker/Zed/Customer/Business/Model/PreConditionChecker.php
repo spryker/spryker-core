@@ -10,7 +10,7 @@ namespace Spryker\Zed\Customer\Business\Model;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Customer\Business\Customer\Customer;
+use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 use Spryker\Zed\Customer\CustomerConfig;
 
 class PreConditionChecker implements PreConditionCheckerInterface
@@ -21,9 +21,9 @@ class PreConditionChecker implements PreConditionCheckerInterface
     protected $customer;
 
     /**
-     * @param \Spryker\Zed\Customer\Business\Customer\Customer $customer
+     * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
      */
-    public function __construct(Customer $customer)
+    public function __construct(CustomerInterface $customer)
     {
         $this->customer = $customer;
     }

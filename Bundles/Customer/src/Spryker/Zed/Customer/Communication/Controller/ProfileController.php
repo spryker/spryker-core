@@ -25,6 +25,8 @@ class ProfileController extends AbstractController
     const OUTPUT_PAYLOAD = 'content';
 
     /**
+     * @todo fix or remove
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
