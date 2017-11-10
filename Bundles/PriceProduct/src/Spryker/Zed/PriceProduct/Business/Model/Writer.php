@@ -118,26 +118,22 @@ class Writer implements WriterInterface
         $priceProductTransfer->requireMoneyValue();
 
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
-        if (!$this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
-            && !$this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
-        ) {
-            $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-            $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
-
-            $pricePriceProductStoreEntity = $this->savePriceProductEntity(
-                $priceProductTransfer,
-                new SpyPriceProduct()
-            );
-
-            if ($priceProductTransfer->getIdProduct()) {
-                $this->insertTouchRecord(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
-            }
-
-            $priceProductTransfer->setIdPriceProduct($pricePriceProductStoreEntity->getPriceProduct()->getIdPriceProduct());
-
-            return $priceProductTransfer;
+        if ($this->havePriceAlreadyAssignedForCouple($priceProductTransfer)) {
+            throw new ProductPriceChangeException('This couple product price type is already set');
         }
-        throw new ProductPriceChangeException('This couple product price type is already set');
+
+        $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
+
+        $pricePriceProductStoreEntity = $this->savePriceProductEntity($priceProductTransfer, new SpyPriceProduct());
+        if ($priceProductTransfer->getIdProduct()) {
+            $this->insertTouchRecord(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+        }
+
+        $priceProductTransfer->setIdPriceProduct($pricePriceProductStoreEntity->getPriceProduct()->getIdPriceProduct());
+
+        return $priceProductTransfer;
+
     }
 
     /**
@@ -153,21 +149,20 @@ class Writer implements WriterInterface
 
         $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
-        if ($this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
-            || $this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
-        ) {
-            $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-            $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
-
-            $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
-            $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);
-
-            if ($priceProductTransfer->getIdProduct()) {
-                $this->insertTouchRecord(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
-            }
-            return;
+        if (!$this->havePriceInAnyCouple($priceProductTransfer)) {
+            throw new ProductPriceChangeException('There is no price assigned for selected product!');
         }
-        throw new ProductPriceChangeException('There is no price assigned for selected product!');
+
+        $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
+
+        $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
+        $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);
+
+        if ($priceProductTransfer->getIdProduct()) {
+            $this->insertTouchRecord(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+        }
+        return;
     }
 
     /**
@@ -522,5 +517,27 @@ class Writer implements WriterInterface
     protected function isEmptyMoneyValue(MoneyValueTransfer $moneyValueTransfer)
     {
         return (!$moneyValueTransfer->getIdEntity() && $moneyValueTransfer->getNetAmount() === null && $moneyValueTransfer->getGrossAmount() === null);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    protected function havePriceAlreadyAssignedForCouple(PriceProductTransfer $priceProductTransfer)
+    {
+        return $this->isPriceTypeExistingForProductAbstract($priceProductTransfer)
+            && $this->isPriceTypeExistingForProductConcrete($priceProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    protected function havePriceInAnyCouple(PriceProductTransfer $priceProductTransfer)
+    {
+        return $this->isPriceTypeExistingForProductConcrete($priceProductTransfer)
+            || $this->isPriceTypeExistingForProductAbstract($priceProductTransfer);
     }
 }

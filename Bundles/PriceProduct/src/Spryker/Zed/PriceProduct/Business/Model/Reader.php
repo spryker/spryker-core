@@ -228,8 +228,47 @@ class Reader implements ReaderInterface
         $abstractPriceProductTransfers = $this->priceProductAbstractReader->findProductAbstractPricesBySku($sku);
         $concretePriceProductTransfers = $this->priceProductConcreteReader->findProductConcretePricesBySku($sku);
 
-        $priceProductTransfers = array_merge($abstractPriceProductTransfers, $concretePriceProductTransfers);
+        if (count($concretePriceProductTransfers) === 0) {
+            return $abstractPriceProductTransfers;
+        }
 
+        return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function mergeConcreteAndAbstractPrices(
+        array $abstractPriceProductTransfers,
+        array $concretePriceProductTransfers
+    ) {
+        $priceProductTransfers = [];
+        foreach ($abstractPriceProductTransfers as $abstractKey => $priceProductAbstractTransfer) {
+            foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
+                if ($abstractKey !== $concreteKey) {
+                    continue;
+                }
+
+                $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
+                $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
+                if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
+                    $concreteMoneyValueTransfer->setGrossAmount($abstractMoneyValueTransfer->getGrossAmount());
+                }
+
+                if ($concreteMoneyValueTransfer->getNetAmount() === null) {
+                    $concreteMoneyValueTransfer->setNetAmount($abstractMoneyValueTransfer->getNetAmount());
+                }
+
+                $priceProductTransfers[$concreteKey] = $priceProductConcreteTransfer;
+            }
+
+            if (!isset($priceProductTransfers[$abstractKey])) {
+                $priceProductTransfers[$abstractKey] = $abstractPriceProductTransfers;
+            }
+        }
         return $priceProductTransfers;
     }
 
@@ -242,8 +281,7 @@ class Reader implements ReaderInterface
     protected function findProductPrice($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
         $priceProductConcrete = $this->priceProductConcreteReader->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
-
-        if ($priceProductConcrete) {
+        if ($priceProductConcrete !== null) {
             $concreteProductPrice = $this->findPriceByPriceMode($priceProductCriteriaTransfer, $priceProductConcrete);
             if ($concreteProductPrice !== null) {
                 return (int)$concreteProductPrice;
@@ -255,8 +293,7 @@ class Reader implements ReaderInterface
         }
 
         $priceProductAbstract = $this->priceProductAbstractReader->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
-
-        if (!$priceProductAbstract) {
+        if ($priceProductAbstract === null) {
             return null;
         }
 

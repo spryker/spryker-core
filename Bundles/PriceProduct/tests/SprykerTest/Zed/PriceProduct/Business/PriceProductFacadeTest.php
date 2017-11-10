@@ -8,12 +8,14 @@ namespace SprykerTest\Zed\PriceProduct\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
@@ -84,9 +86,9 @@ class PriceProductFacadeTest extends Unit
             self::USD_ISO_CODE
         );
 
-        $priceProductFilterTransfer = new PriceProductFilterTransfer();
-        $priceProductFilterTransfer->setCurrencyIsoCode(self::USD_ISO_CODE);
-        $priceProductFilterTransfer->setSku($priceProductTransfer2->getSkuProduct());
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(self::USD_ISO_CODE)
+            ->setSku($priceProductTransfer2->getSkuProduct());
 
         $price = $priceProductFacade->getPriceFor($priceProductFilterTransfer);
 
@@ -146,8 +148,8 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductTransfer = $this->createProductWithAmount(50, 40);
 
-        $priceProductFilterTransfer = new PriceProductFilterTransfer();
-        $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setSku($priceProductTransfer->getSkuProduct());
 
         $this->assertTrue(
             $priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)
@@ -406,24 +408,18 @@ class PriceProductFacadeTest extends Unit
              ->setSkuProduct($skuConcrete);
 
         if (!$skuAbstract || !$skuConcrete) {
-            $productConcreteTransfer = $this->tester->haveProduct();
-            $priceProductTransfer->setSkuProductAbstract($productConcreteTransfer->getAbstractSku());
-            $priceProductTransfer->setSkuProduct($productConcreteTransfer->getSku());
+            $priceProductTransfer = $this->buildProduct($priceProductTransfer);
         }
 
         $storeTransfer = $this->createStoreFacade()->getCurrentStore();
-        if (!$currencyIsoCode) {
-            $currencyTransfer = $this->createCurrencyFacade()->getDefaultCurrencyForCurrentStore();
-        } else {
-            $currencyTransfer = $this->createCurrencyFacade()->fromIsoCode($currencyIsoCode);
-        }
+        $currencyTransfer = $this->getCurrencyTransfer($currencyIsoCode);
 
-        $moneyValueTransfer = (new MoneyValueTransfer())
-            ->setNetAmount($netAmount)
-            ->setGrossAmount($grossAmount)
-            ->setFkStore($storeTransfer->getIdStore())
-            ->setFkCurrency($currencyTransfer->getIdCurrency())
-            ->setCurrency($currencyTransfer);
+        $moneyValueTransfer = $this->createMoneyValueTransfer(
+            $grossAmount,
+            $netAmount,
+            $storeTransfer,
+            $currencyTransfer
+        );
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
 
@@ -481,14 +477,63 @@ class PriceProductFacadeTest extends Unit
         $currencyTransfer = $this->createCurrencyFacade()->fromIsoCode($currencyIsoCode);
         $storeTransfer = $this->createStoreFacade()->getCurrentStore();
 
-        $moneyValueTransfer = (new MoneyValueTransfer())
-            ->setGrossAmount($grossPrice)
-            ->setNetAmount($netPrice)
-            ->setFkCurrency($currencyTransfer->getIdCurrency())
-            ->setCurrency($currencyTransfer)
-            ->setFkStore($storeTransfer->getIdStore());
+        $moneyValueTransfer = $this->createMoneyValueTransfer(
+            $grossPrice,
+            $netPrice,
+            $storeTransfer,
+            $currencyTransfer
+        );
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @param string $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransfer($currencyIsoCode)
+    {
+        if (!$currencyIsoCode) {
+            return $this->createCurrencyFacade()->getDefaultCurrencyForCurrentStore();
+        }
+        return $this->createCurrencyFacade()->fromIsoCode($currencyIsoCode);
+    }
+
+    /**
+     * @param int $grossAmount
+     * @param int $netAmount
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function createMoneyValueTransfer(
+        $grossAmount,
+        $netAmount,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ) {
+        return (new MoneyValueTransfer())
+            ->setNetAmount($netAmount)
+            ->setGrossAmount($grossAmount)
+            ->setFkStore($storeTransfer->getIdStore())
+            ->setFkCurrency($currencyTransfer->getIdCurrency())
+            ->setCurrency($currencyTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function buildProduct(PriceProductTransfer $priceProductTransfer)
+    {
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductTransfer->setSkuProductAbstract($productConcreteTransfer->getAbstractSku());
+        $priceProductTransfer->setSkuProduct($productConcreteTransfer->getSku());
 
         return $priceProductTransfer;
     }

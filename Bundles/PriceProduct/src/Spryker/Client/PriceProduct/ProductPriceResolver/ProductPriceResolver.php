@@ -61,7 +61,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             return $currentProductPriceTransfer;
         }
 
-        $price = 0;
+        $price = null;
         $prices = $priceMap[$currencyIsoCode][$currentPriceMode];
         $defaultProductPriceType = $this->getPriceProductConfig()->getPriceTypeDefaultName();
         if (isset($prices[$defaultProductPriceType])) {

@@ -36,6 +36,24 @@ class ProductMoneyCollectionType extends MoneyCollectionType
     }
 
     /**
+     * This function builds table for view:
+     * [
+     *    'store1' => [
+     *       'EUR' => [
+     *          'NET_MODE' => [
+     *              'DEFAULT' => FormView,
+     *              'ORIGINAL' => FormView
+     *          ],
+     *          'GROSS_MODE' => [
+     *              'DEFAULT' => FormView,
+     *              'ORIGINAL' => FormView
+     *          ]
+     *       ],
+     *       'USD' => ...
+     *    ],
+     *    'store2' => ...
+     * ]
+     *
      * @param \Symfony\Component\Form\FormView $formViewCollection
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
@@ -47,10 +65,7 @@ class ProductMoneyCollectionType extends MoneyCollectionType
         $grossPriceModeIdentifier = $this->getGrossPriceModeIdentifier();
         $netPriceModeIdentifier = $this->getNetPriceModeIdentifier();
 
-        $priceTypes = [
-            $grossPriceModeIdentifier => [],
-            $netPriceModeIdentifier => [],
-        ];
+        $priceTypes = $this->createBasePriceType($grossPriceModeIdentifier, $netPriceModeIdentifier);
 
         $priceTable = [];
         foreach ($formViewCollection as $productMoneyTypeFormView) {
@@ -106,5 +121,19 @@ class ProductMoneyCollectionType extends MoneyCollectionType
         }
 
         return static::$grossPriceModeIdentifier;
+    }
+
+    /**
+     * @param int $grossPriceModeIdentifier
+     * @param int $netPriceModeIdentifier
+     *
+     * @return array
+     */
+    protected function createBasePriceType($grossPriceModeIdentifier, $netPriceModeIdentifier)
+    {
+        return [
+            $grossPriceModeIdentifier => [],
+            $netPriceModeIdentifier => [],
+        ];
     }
 }
