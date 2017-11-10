@@ -250,12 +250,11 @@ class Reader implements ReaderInterface
             }
         }
 
-        if (!$this->productFacade->hasProductConcrete($sku)) {
-            return null;
+        if ($this->productFacade->hasProductConcrete($sku)) {
+            $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         }
 
-        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-        $priceProductAbstract = $this->priceProductAbstractReader->findPriceForProductAbstract($abstractSku, $priceProductCriteriaTransfer);
+        $priceProductAbstract = $this->priceProductAbstractReader->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
 
         if (!$priceProductAbstract) {
             return null;
