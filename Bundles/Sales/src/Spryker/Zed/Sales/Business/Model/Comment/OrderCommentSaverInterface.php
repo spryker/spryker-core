@@ -14,7 +14,7 @@ interface OrderCommentSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderComment
+     * @return \Generated\Shared\Transfer\CommentTransfer
      */
     public function save(CommentTransfer $commentTransfer);
 }
