@@ -46,12 +46,4 @@ class AddController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function createCustomerTransfer()
-    {
-        return new CustomerTransfer();
-    }
 }

@@ -15,19 +15,6 @@ interface CustomerClientInterface
     /**
      * Specification:
      * - Checks if customer exists in persistent storage by provided email and plain text password.
-     * - Stores found customer information in session.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer);
-
-    /**
-     * Specification:
-     * - Checks if customer exists in persistent storage by provided email and plain text password.
      *
      * @api
      *
