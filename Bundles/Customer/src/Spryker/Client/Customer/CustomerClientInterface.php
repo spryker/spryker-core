@@ -13,6 +13,10 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface CustomerClientInterface
 {
     /**
+     * Specification:
+     * - Checks if customer exists in persistent storage by provided email and plain text password.
+     * - Stores found customer information in session.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -22,6 +26,9 @@ interface CustomerClientInterface
     public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Checks if customer exists in persistent storage by provided email and plain text password.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -31,6 +38,15 @@ interface CustomerClientInterface
     public function findCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Validates provided customer email information.
+     * - Encrypts provided plain text password.
+     * - Assigns current locale to customer if it is not set already.
+     * - Generates customer reference for customer.
+     * - Stores customer data.
+     * - Sends specific registration confirmation link via email using a freshly generated registration key.
+     * - Sends password restoration email if SendPasswordToken property is set in the provided transfer object.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -40,6 +56,10 @@ interface CustomerClientInterface
     public function registerCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Finds customer registration confirmation by provided registration key.
+     * - Sets customer as registered and removes the registration key from persistent storage.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -49,6 +69,9 @@ interface CustomerClientInterface
     public function confirmRegistration(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Sends password restoration link via email using a freshly generated password restoration key.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -58,6 +81,13 @@ interface CustomerClientInterface
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Encrypts provided plain text password.
+     * - Stores new password for customer in persistent storage.
+     * - Removes password restoration key from customer.
+     * - Sends password restoration confirmation email.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -67,6 +97,10 @@ interface CustomerClientInterface
     public function restorePassword(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Deletes a customer entity by either customer ID, customer email, or password restoration key.
+     * - Does not handle related connected entities.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -77,7 +111,7 @@ interface CustomerClientInterface
 
     /**
      * Specification:
-     * - Returns Customer data from session
+     * - Returns customer information from session.
      *
      * @api
      *
@@ -86,6 +120,9 @@ interface CustomerClientInterface
     public function getCustomer();
 
     /**
+     * Specification:
+     * - Stores provided customer information in session.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -95,6 +132,10 @@ interface CustomerClientInterface
     public function setCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Checks if customer exists in persistent storage by provided email and plain text password.
+     * - Stores found customer information in session.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -104,6 +145,9 @@ interface CustomerClientInterface
     public function login(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Removes customer information from session.
+     *
      * @api
      *
      * @return void
@@ -111,6 +155,9 @@ interface CustomerClientInterface
     public function logout();
 
     /**
+     * Specification:
+     * - Checks if customer information is present in session.
+     *
      * @api
      *
      * @return bool
@@ -118,6 +165,9 @@ interface CustomerClientInterface
     public function isLoggedIn();
 
     /**
+     * Specification:
+     * - Retrieves provided customer related addresses from persistent storage.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -128,7 +178,7 @@ interface CustomerClientInterface
 
     /**
      * Specification:
-     * - Returns fresh Customer data from database by ID
+     * - Retrieves customer information with customer addresses by customer ID from persistent storage.
      *
      * @api
      *
@@ -140,7 +190,8 @@ interface CustomerClientInterface
 
     /**
      * Specification:
-     * - Returns fresh Customer transfer or NULL, if it does not exist
+     * - Retrieves customer information using provided customer ID.
+     * - Returns null if customer was not found.
      *
      * @api
      *
@@ -151,6 +202,9 @@ interface CustomerClientInterface
     public function findCustomerById(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Retrieves customer information by either customer ID, customer email, or password restoration key.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -160,6 +214,15 @@ interface CustomerClientInterface
     public function getCustomerByEmail(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Updates password if NewPassword property is set in provided transfer object:
+     *      - Validates provided current plain text password using persistent storage.
+     *      - Encrypts provided plain text password before update.
+     * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Validates customer email information.
+     * - Updates customer data which is set in provided transfer object.
+     * - Sends password restoration email if SendPasswordToken property is set in the provided transfer object.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -169,6 +232,11 @@ interface CustomerClientInterface
     public function updateCustomer(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Validates provided current plain text password using persistent storage.
+     * - Encrypts provided plain text password and stores it in persistent storage.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -178,6 +246,10 @@ interface CustomerClientInterface
     public function updateCustomerPassword(CustomerTransfer $customerTransfer);
 
     /**
+     * Specification:
+     * - Retrieves an address by customer ID and address ID.
+     * - Populates address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -187,6 +259,9 @@ interface CustomerClientInterface
     public function getAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Updates customer address using provided transfer object.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -196,6 +271,10 @@ interface CustomerClientInterface
     public function updateAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Updates customer address using provided transfer object.
+     * - Sets address as default address based on provided default address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -205,6 +284,10 @@ interface CustomerClientInterface
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Creates customer address using provided transfer object.
+     * - Sets address as default address based on provided default address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -214,6 +297,10 @@ interface CustomerClientInterface
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Creates customer address using provided transfer object.
+     * - Sets address as default address based on provided default address flags.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -223,6 +310,10 @@ interface CustomerClientInterface
     public function createAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Deletes address.
+     * - Removes references between customer-address entities.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -232,6 +323,9 @@ interface CustomerClientInterface
     public function deleteAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Sets provided address as default shipping address for the related customer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -241,6 +335,9 @@ interface CustomerClientInterface
     public function setDefaultShippingAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Sets provided address as default billing address for the related customer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -250,6 +347,13 @@ interface CustomerClientInterface
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer);
 
     /**
+     * Specification:
+     * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Applies configured CustomerAnonymizerPluginInterface plugins on customer data.
+     * - Anonymizes customer addresses.
+     * - Anonymizes customer data.
+     * - Updates persistent storage with anonymized data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
