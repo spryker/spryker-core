@@ -36,6 +36,8 @@ class SequenceNumber implements SequenceNumberInterface
     protected $connection;
 
     /**
+     * @see \Spryker\Shared\SequenceNumber\SequenceNumberConstants::LIMIT_LIST
+     *
      * @var array
      */
     protected $limitList;
