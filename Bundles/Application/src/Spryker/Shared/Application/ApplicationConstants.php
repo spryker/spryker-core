@@ -87,12 +87,39 @@ interface ApplicationConstants
      */
     const CORE_NAMESPACES = KernelConstants::CORE_NAMESPACES;
 
+    /**
+     * @deprecated Use `SearchConstants::ELASTICA_PARAMETER__HOST` instead
+     */
     const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
+
+    /**
+     * @deprecated Use `SearchConstants::ELASTICA_PARAMETER__PORT` instead
+     */
     const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
+
+    /**
+     * @deprecated Use `SearchConstants::ELASTICA_PARAMETER__TRANSPORT` instead
+     */
     const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
+
+    /**
+     * @deprecated Use `SearchConstants::ELASTICA_PARAMETER__INDEX_NAME` instead
+     */
     const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
+
+    /**
+     * @deprecated Use `SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER` instead
+     */
     const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
+
+    /**
+     * @deprecated Use `SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE` instead
+     */
     const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
+
+    /**
+     * @deprecated Use `SearchConstants::ELASTICA_PARAMETER__EXTRA` instead
+     */
     const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
 
     /**
