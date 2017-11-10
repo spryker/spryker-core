@@ -21,7 +21,7 @@ class ProductOptionClient extends AbstractClient implements ProductOptionClientI
      * @api
      *
      * @param int $idAbstractProduct
-     * @param int $localeName
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
      */

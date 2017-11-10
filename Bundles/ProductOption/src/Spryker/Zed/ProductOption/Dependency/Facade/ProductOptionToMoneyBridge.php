@@ -86,7 +86,7 @@ class ProductOptionToMoneyBridge implements ProductOptionToMoneyInterface
     }
 
     /**
-     * @param float $amount
+     * @param string $amount
      * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
