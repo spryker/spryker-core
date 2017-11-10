@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\Cms\CmsFactory getFactory
+ * @method \Spryker\Client\Cms\CmsFactory getFactory()
  */
 class CmsClient extends AbstractClient implements CmsClientInterface
 {

@@ -3,7 +3,9 @@
   "description": "CatalogPriceProductConnector module",
   "license": "proprietary",
   "require": {
+    "spryker/currency": "^3.2.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/price": "^5.0.0",
     "spryker/price-product": "^1.0.0"
   },
   "require-dev": {

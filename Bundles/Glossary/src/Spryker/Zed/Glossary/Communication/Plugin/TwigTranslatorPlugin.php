@@ -14,7 +14,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Twig_SimpleFilter;
 
 /**
- * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  */
 class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements TranslatorInterface

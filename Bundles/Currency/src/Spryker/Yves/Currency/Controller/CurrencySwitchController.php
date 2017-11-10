@@ -28,13 +28,14 @@ class CurrencySwitchController extends AbstractController
     {
         $currencyIsoCode = $request->get(static::URL_PARAM_CURRENCY_ISO_CODE);
 
-        $this->getFactory()
-            ->createCurrencyPersistence()
-            ->setCurrentCurrencyIsoCode($currencyIsoCode);
+        $currencyPersistence = $this->getFactory()->createCurrencyPersistence();
+        $previousCurrencyIsoCode = $currencyPersistence->getCurrentCurrencyIsoCode();
+
+        $currencyPersistence->setCurrentCurrencyIsoCode($currencyIsoCode);
 
         $this->getFactory()
             ->createCurrencyPostChangePluginExecutor()
-            ->execute($currencyIsoCode);
+            ->execute($currencyIsoCode, $previousCurrencyIsoCode);
 
         return $this->redirectResponseExternal(
             urldecode($request->get(static::URL_PARAM_REFERRER_URL))

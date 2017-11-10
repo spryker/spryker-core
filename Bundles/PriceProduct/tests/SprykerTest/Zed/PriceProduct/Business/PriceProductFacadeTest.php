@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\Price\PriceConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\Store\Business\StoreFacade;
@@ -30,6 +31,8 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class PriceProductFacadeTest extends Unit
 {
+    const EUR_ISO_CODE = 'EUR';
+    const USD_ISO_CODE = 'USD';
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
@@ -78,11 +81,11 @@ class PriceProductFacadeTest extends Unit
             90,
             $priceProductTransfer1->getSkuProductAbstract(),
             $priceProductTransfer1->getSkuProduct(),
-            'USD'
+            self::USD_ISO_CODE
         );
 
         $priceProductFilterTransfer = new PriceProductFilterTransfer();
-        $priceProductFilterTransfer->setCurrencyIsoCode('USD');
+        $priceProductFilterTransfer->setCurrencyIsoCode(self::USD_ISO_CODE);
         $priceProductFilterTransfer->setSku($priceProductTransfer2->getSkuProduct());
 
         $price = $priceProductFacade->getPriceFor($priceProductFilterTransfer);
@@ -191,8 +194,8 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, 'EUR');
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, 'USD');
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
@@ -220,7 +223,7 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, 'EUR');
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
 
         $productConcreteTransfer->setPrices($prices);
 
@@ -230,6 +233,155 @@ class PriceProductFacadeTest extends Unit
             $this->assertNotEmpty($priceProductTransfer->getIdPriceProduct());
             $this->assertNotEmpty($priceProductTransfer->getMoneyValue()->getIdEntity());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceFindPricesBySkuShouldReturnPricesForCurrentStoreConfiguration()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($priceProductFacade->getDefaultPriceTypeName());
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $prices = new ArrayObject();
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::USD_ISO_CODE);
+
+        $productConcreteTransfer->setPrices($prices);
+
+        $productConcreteTransfer = $priceProductFacade->persistProductConcretePriceCollection($productConcreteTransfer);
+
+        $storePrices = $priceProductFacade->findPricesBySku($productConcreteTransfer->getSku());
+
+        $this->assertCount(2, $storePrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindPricesBySkuGroupedShouldReturnGroupedPrices()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $defaultPriceMode = $priceProductFacade->getDefaultPriceTypeName();
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($defaultPriceMode);
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $prices = new ArrayObject();
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::USD_ISO_CODE);
+
+        $productConcreteTransfer->setPrices($prices);
+
+        $productConcreteTransfer = $priceProductFacade->persistProductConcretePriceCollection($productConcreteTransfer);
+
+        $storePrices = $priceProductFacade->findPricesBySkuGrouped($productConcreteTransfer->getSku());
+
+        $this->assertCount(2, $storePrices);
+
+        $this->assertArrayHasKey(static::EUR_ISO_CODE, $storePrices);
+        $this->assertArrayHasKey(static::USD_ISO_CODE, $storePrices);
+
+        $this->assertArrayHasKey(PriceConfig::PRICE_MODE_GROSS, $storePrices[static::EUR_ISO_CODE]);
+        $this->assertArrayHasKey(PriceConfig::PRICE_MODE_NET, $storePrices[static::EUR_ISO_CODE]);
+        $this->assertArrayHasKey(PriceConfig::PRICE_MODE_GROSS, $storePrices[static::USD_ISO_CODE]);
+        $this->assertArrayHasKey(PriceConfig::PRICE_MODE_NET, $storePrices[static::USD_ISO_CODE]);
+
+        $this->assertArrayHasKey($defaultPriceMode, $storePrices[static::USD_ISO_CODE][PriceConfig::PRICE_MODE_GROSS]);
+        $this->assertArrayHasKey($defaultPriceMode, $storePrices[static::USD_ISO_CODE][PriceConfig::PRICE_MODE_NET]);
+
+        $priceGross = $storePrices[static::USD_ISO_CODE][PriceConfig::PRICE_MODE_GROSS][$defaultPriceMode];
+        $priceNet = $storePrices[static::USD_ISO_CODE][PriceConfig::PRICE_MODE_NET][$defaultPriceMode];
+
+        $this->assertSame(9, $priceGross);
+        $this->assertSame(10, $priceNet);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractPricesShouldReturnPriceAssignedToAbstractProduct()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($priceProductFacade->getDefaultPriceTypeName());
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $prices = new ArrayObject();
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setSku($productConcreteTransfer->getAbstractSku())
+            ->setPrices($prices);
+
+        $productAbstractTransfer = $priceProductFacade->persistProductAbstractPriceCollection($productAbstractTransfer);
+
+        $storedPrices = $priceProductFacade->findProductAbstractPrices($productAbstractTransfer->getIdProductAbstract());
+
+        $this->assertCount(2, $storedPrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductConcretePricesShouldReturnPriceAssignedToConcreteProduct()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($priceProductFacade->getDefaultPriceTypeName());
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $prices = new ArrayObject();
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+
+        $productConcreteTransfer->setPrices($prices);
+
+        $productConcreteTransfer = $priceProductFacade->persistProductConcretePriceCollection($productConcreteTransfer);
+
+        $storedPrices = $priceProductFacade->findProductConcretePrices($productConcreteTransfer->getIdProductConcrete(), $productConcreteTransfer->getFkProductAbstract());
+
+        $this->assertCount(1, $storedPrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractPriceShouldReturnDefaultPriceForAbstractProduct()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($priceProductFacade->getDefaultPriceTypeName());
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $prices = new ArrayObject();
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setSku($productConcreteTransfer->getAbstractSku())
+            ->setPrices($prices);
+
+        $productAbstractTransfer = $priceProductFacade->persistProductAbstractPriceCollection($productAbstractTransfer);
+
+        $priceProductTransfer = $priceProductFacade->findProductAbstractPrice($productAbstractTransfer->getIdProductAbstract());
+
+        $this->assertSame(9, $priceProductTransfer->getMoneyValue()->getGrossAmount());
+        $this->assertSame(10, $priceProductTransfer->getMoneyValue()->getNetAmount());
     }
 
     /**
@@ -248,9 +400,10 @@ class PriceProductFacadeTest extends Unit
         $skuConcrete = '',
         $currencyIsoCode = ''
     ) {
-        $priceProductTransfer = new PriceProductTransfer();
-        $priceProductTransfer->setSkuProductAbstract($skuAbstract);
-        $priceProductTransfer->setSkuProduct($skuConcrete);
+
+        $priceProductTransfer = (new PriceProductTransfer())
+             ->setSkuProductAbstract($skuAbstract)
+             ->setSkuProduct($skuConcrete);
 
         if (!$skuAbstract || !$skuConcrete) {
             $productConcreteTransfer = $this->tester->haveProduct();

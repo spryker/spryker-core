@@ -14,6 +14,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonFun
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\RemoveActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonGroupFunction;
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Form\SubmitButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\BackTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\CreateTableButtonFunction;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonFunction;
@@ -92,6 +93,8 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
             new CreateTableButtonFunction(),
             new ViewTableButtonFunction(),
             new RemoveTableButtonFunction(),
+            // Form buttons
+            new SubmitButtonFunction(),
         ];
     }
 

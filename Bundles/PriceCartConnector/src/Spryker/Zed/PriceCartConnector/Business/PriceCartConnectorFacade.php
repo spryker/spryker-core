@@ -20,14 +20,14 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
-     * @param string|null $grossPriceType
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addPriceToItems(CartChangeTransfer $change, $grossPriceType = null)
+    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer, $priceType = null)
     {
-        return $this->getFactory()->createPriceManager()->addPriceToItems($change);
+        return $this->getFactory()->createPriceManager()->addPriceToItems($cartChangeTransfer);
     }
 
     /**

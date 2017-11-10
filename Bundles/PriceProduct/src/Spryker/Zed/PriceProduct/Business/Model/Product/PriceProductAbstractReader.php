@@ -11,8 +11,9 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
+use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
@@ -28,7 +29,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     protected $priceProductMapper;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
     protected $productFacade;
 
@@ -40,13 +41,13 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface $productFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductMapperInterface $priceProductMapper,
-        PriceProductToProductInterface $productFacade,
+        PriceProductToProductFacadeInterface $productFacade,
         PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
@@ -63,12 +64,16 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function hasPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $productAbstract = $this->priceProductQueryContainer
-            ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
-            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
-            ->findOne();
+        $prices = $this->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
+        if (!$prices) {
+            return false;
+        }
 
-        return $productAbstract !== null;
+        if ($priceProductCriteriaTransfer->getPriceMode() === PriceMode::PRICE_MODE_NET) {
+            return $prices[PriceProductQueryContainerInterface::COL_NET_PRICE] !== null;
+        }
+
+        return $prices[PriceProductQueryContainerInterface::COL_GROSS_PRICE] !== null;
     }
 
     /**
@@ -78,7 +83,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function findProductAbstractPricesBySku($sku)
     {
-        $abstractSku = $this->getAbstractSku($sku);
+        $abstractSku = $this->findAbstractSku($sku);
 
         $productAbstractPriceEntities = $this->priceProductQueryContainer
             ->queryPricesForProductAbstractBySku($abstractSku)
@@ -92,7 +97,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return string
      */
-    public function getAbstractSku($sku)
+    public function findAbstractSku($sku)
     {
         $abstractSku = $sku;
         if ($this->productFacade->hasProductConcrete($sku)) {
@@ -108,7 +113,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return array
      */
-    public function getPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
         return $this->priceProductQueryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
@@ -136,21 +141,27 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int
+     * @return int|null
      */
     public function findPriceProductId($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        return $this->priceProductQueryContainer
+        $idPriceProduct = $this->priceProductQueryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
-            ->findOne()
-            ->getIdPriceProduct();
+            ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
+            ->findOne();
+
+        if (!$idPriceProduct) {
+            return null;
+        }
+
+        return (int)$idPriceProduct;
     }
 
     /**
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null)
     {
@@ -160,6 +171,10 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductStoreEntity = $this->priceProductQueryContainer
             ->queryPriceEntityForProductAbstractById($idAbstractProduct, $priceProductCriteriaTransfer)
             ->findOne();
+
+        if (!$priceProductStoreEntity) {
+            return null;
+        }
 
         return $this->priceProductMapper->mapProductPriceTransfer(
             $priceProductStoreEntity,

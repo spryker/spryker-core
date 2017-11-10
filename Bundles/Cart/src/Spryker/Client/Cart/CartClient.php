@@ -55,7 +55,6 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     *
      * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
      */
     protected function getItemCounter()

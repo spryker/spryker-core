@@ -9,11 +9,11 @@ namespace Spryker\Zed\PriceProduct;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyBridge;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceBridge;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductBridge;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreBridge;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchBridge;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeBridge;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeBridge;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeBridge;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeBridge;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeBridge;
 
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -47,7 +47,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     protected function addTouchFacade(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
-            return new PriceProductToTouchBridge($container->getLocator()->touch()->facade());
+            return new PriceProductToTouchFacadeBridge($container->getLocator()->touch()->facade());
         };
 
         return $container;
@@ -61,7 +61,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProductFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new PriceProductToProductBridge($container->getLocator()->product()->facade());
+            return new PriceProductToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
         return $container;
@@ -75,7 +75,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCurrencyFacade(Container $container)
     {
         $container[static::FACADE_CURRENCY] = function (Container $container) {
-            return new PriceProductToCurrencyBridge($container->getLocator()->currency()->facade());
+            return new PriceProductToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
         };
 
         return $container;
@@ -89,7 +89,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     protected function addPriceFacade(Container $container)
     {
         $container[static::FACADE_PRICE] = function (Container $container) {
-            return new PriceProductToPriceBridge($container->getLocator()->price()->facade());
+            return new PriceProductToPriceFacadeBridge($container->getLocator()->price()->facade());
         };
 
         return $container;
@@ -103,7 +103,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStoreFacade(Container $container)
     {
         $container[static::FACADE_STORE] = function (Container $container) {
-            return new PriceProductToStoreBridge($container->getLocator()->store()->facade());
+            return new PriceProductToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

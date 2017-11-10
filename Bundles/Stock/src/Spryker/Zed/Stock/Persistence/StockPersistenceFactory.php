@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
- * @method \Spryker\Zed\Stock\Persistence\StockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
  */
 class StockPersistenceFactory extends AbstractPersistenceFactory
 {

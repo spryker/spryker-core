@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Queue\Business\QueueFacade getFacade()
+ * @method \Spryker\Zed\Queue\Business\QueueFacadeInterface getFacade()
  */
 class QueueWorkerConsole extends Console
 {

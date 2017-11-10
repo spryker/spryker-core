@@ -27,6 +27,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
+            $this->getStoreFacade()->getCurrentStore()->getDefaultCurrencyIsoCode(),
             $this->getStoreFacade()->getCurrentStore()->getSelectedCurrencyIsoCode()
         );
     }

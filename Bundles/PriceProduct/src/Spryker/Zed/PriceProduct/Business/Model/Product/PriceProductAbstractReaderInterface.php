@@ -31,7 +31,7 @@ interface PriceProductAbstractReaderInterface
      *
      * @return string
      */
-    public function getAbstractSku($sku);
+    public function findAbstractSku($sku);
 
     /**
      * @param string $sku
@@ -39,7 +39,7 @@ interface PriceProductAbstractReaderInterface
      *
      * @return array
      */
-    public function getPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
+    public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
 
     /**
      * @param int $idProductAbstract
@@ -52,7 +52,7 @@ interface PriceProductAbstractReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int
+     * @return int|null
      */
     public function findPriceProductId($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
 
@@ -60,7 +60,7 @@ interface PriceProductAbstractReaderInterface
      * @param int $idAbstractProduct
      * @param string|null $priceTypeName
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
 }

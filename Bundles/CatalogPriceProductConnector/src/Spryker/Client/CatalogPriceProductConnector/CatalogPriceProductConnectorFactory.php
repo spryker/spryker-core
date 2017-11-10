@@ -7,15 +7,44 @@
 
 namespace Spryker\Client\CatalogPriceProductConnector;
 
+use Spryker\Client\CatalogPriceProductConnector\Price\PriceIdentifierBuilder;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CatalogPriceProductConnectorFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductInterface
+     * @return \Spryker\Client\CatalogPriceProductConnector\Price\PriceIdentifierBuilderInterface
+     */
+    public function createPriceIdentifierBuilder()
+    {
+        return new PriceIdentifierBuilder(
+            $this->getCurrencyClient(),
+            $this->getPriceClient(),
+            $this->getPriceProductClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductClientInterface
      */
     public function getPriceProductClient()
     {
         return $this->getProvidedDependency(CatalogPriceProductConnectorDependencyProvider::CLIENT_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceClientInterface
+     */
+    protected function getPriceClient()
+    {
+        return $this->getProvidedDependency(CatalogPriceProductConnectorDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToCurrencyClientInterface
+     */
+    protected function getCurrencyClient()
+    {
+        return $this->getProvidedDependency(CatalogPriceProductConnectorDependencyProvider::CLIENT_CURRENCY);
     }
 }

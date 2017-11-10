@@ -9,12 +9,11 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface;
-use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class Reader implements ReaderInterface
@@ -32,12 +31,12 @@ class Reader implements ReaderInterface
     protected static $grossPriceModeIdentifier;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface
      */
     protected $priceFacade;
 
@@ -62,16 +61,16 @@ class Reader implements ReaderInterface
     protected $priceProductCriteriaBuilder;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductInterface $productFacade
-     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceInterface $priceFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface $priceProductConcreteReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface $priceProductAbstractReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      */
     public function __construct(
-        PriceProductToProductInterface $productFacade,
-        PriceProductToPriceInterface $priceFacade,
+        PriceProductToProductFacadeInterface $productFacade,
+        PriceProductToPriceFacadeInterface $priceFacade,
         PriceProductTypeReaderInterface $priceProductTypeReader,
         PriceProductConcreteReaderInterface $priceProductConcreteReader,
         PriceProductAbstractReaderInterface $priceProductAbstractReader,
@@ -94,9 +93,8 @@ class Reader implements ReaderInterface
     public function getPriceBySku($sku, $priceTypeName = null)
     {
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues($priceTypeName);
-        $productPrice = $this->getProductPrice($sku, $priceProductCriteriaTransfer);
 
-        return $this->findPriceByPriceMode($priceProductCriteriaTransfer, $productPrice);
+        return $this->findProductPrice($sku, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -109,9 +107,8 @@ class Reader implements ReaderInterface
         $priceProductFilterTransfer->requireSku();
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
-        $productPrice = $this->getProductPrice($priceProductFilterTransfer->getSku(), $priceProductCriteriaTransfer);
 
-        return $this->findPriceByPriceMode($priceProductCriteriaTransfer, $productPrice);
+        return $this->findProductPrice($priceProductFilterTransfer->getSku(), $priceProductCriteriaTransfer);
     }
 
     /**
@@ -146,7 +143,7 @@ class Reader implements ReaderInterface
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues();
 
-        return $this->isValidProduct($sku, $priceProductCriteriaTransfer);
+        return $this->isValidPrice($sku, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -166,9 +163,9 @@ class Reader implements ReaderInterface
             return false;
         }
 
-        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues();
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        return $this->isValidProduct($priceProductFilterTransfer->getSku(), $priceProductCriteriaTransfer);
+        return $this->isValidPrice($priceProductFilterTransfer->getSku(), $priceProductCriteriaTransfer);
     }
 
     /**
@@ -240,35 +237,36 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @throws \Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException
-     *
-     * @return array
+     * @return int|null
      */
-    protected function getProductPrice($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    protected function findProductPrice($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $priceProductConcrete = $this->priceProductConcreteReader->getPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
-        if ($priceProductConcrete !== null) {
-            return $priceProductConcrete;
-        }
+        $priceProductConcrete = $this->priceProductConcreteReader->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
 
-        $priceProductAbstract = $this->priceProductAbstractReader->getPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
-        if ($priceProductAbstract !== null) {
-            return $priceProductAbstract;
-        }
-
-        if ($this->productFacade->hasProductConcrete($sku)) {
-            $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-            $priceProductAbstract = $this->priceProductAbstractReader->getPriceForProductAbstract($abstractSku, $priceProductCriteriaTransfer);
-
-            if ($priceProductAbstract !== null) {
-                return $priceProductAbstract;
+        if ($priceProductConcrete) {
+            $concreteProductPrice = $this->findPriceByPriceMode($priceProductCriteriaTransfer, $priceProductConcrete);
+            if ($concreteProductPrice !== null) {
+                return (int)$concreteProductPrice;
             }
         }
 
-        throw new MissingPriceException(sprintf(
-            'Price not found for product with SKU: "%s".',
-            $sku
-        ));
+        if (!$this->productFacade->hasProductConcrete($sku)) {
+            return null;
+        }
+
+        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+        $priceProductAbstract = $this->priceProductAbstractReader->findPriceForProductAbstract($abstractSku, $priceProductCriteriaTransfer);
+
+        if (!$priceProductAbstract) {
+            return null;
+        }
+
+        $abstractProductPrice = $this->findPriceByPriceMode($priceProductCriteriaTransfer, $priceProductAbstract);
+        if ($abstractProductPrice !== null) {
+            return (int)$abstractProductPrice;
+        }
+
+        return null;
     }
 
     /**
@@ -277,19 +275,15 @@ class Reader implements ReaderInterface
      *
      * @return bool
      */
-    protected function isValidProduct($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    protected function isValidPrice($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        if ($this->priceProductConcreteReader->hasPriceForProductConcrete($sku, $priceProductCriteriaTransfer) ||
-            $this->priceProductAbstractReader->hasPriceForProductAbstract($sku, $priceProductCriteriaTransfer)) {
+        if ($this->priceProductConcreteReader->hasPriceForProductConcrete($sku, $priceProductCriteriaTransfer)) {
             return true;
         }
 
-        if ($this->productFacade->hasProductConcrete($sku)) {
-            $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-            if ($this->productFacade->hasProductAbstract($abstractSku) &&
-                $this->priceProductAbstractReader->hasPriceForProductAbstract($abstractSku, $priceProductCriteriaTransfer)) {
-                return true;
-            }
+        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+        if ($this->priceProductAbstractReader->hasPriceForProductAbstract($abstractSku, $priceProductCriteriaTransfer)) {
+            return true;
         }
 
         return false;
@@ -328,9 +322,9 @@ class Reader implements ReaderInterface
     protected function findPriceByPriceMode(PriceProductCriteriaTransfer $priceProductCriteriaTransfer, array $productPrice)
     {
         if ($priceProductCriteriaTransfer->getPriceMode() === $this->getNetPriceModeIdentifier()) {
-            return (int)$productPrice[PriceProductQueryContainerInterface::COL_NET_PRICE];
+            return $productPrice[PriceProductQueryContainerInterface::COL_NET_PRICE];
         }
 
-        return (int)$productPrice[PriceProductQueryContainerInterface::COL_GROSS_PRICE];
+        return $productPrice[PriceProductQueryContainerInterface::COL_GROSS_PRICE];
     }
 }

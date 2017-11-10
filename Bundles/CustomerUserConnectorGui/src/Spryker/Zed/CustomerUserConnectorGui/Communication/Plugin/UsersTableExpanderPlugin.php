@@ -16,7 +16,6 @@ use Spryker\Zed\User\Communication\Controller\EditController;
 use Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\CustomerUserConnectorGui\Business\CustomerUserConnectorGuiFacade getFacade()
  * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
  */
 class UsersTableExpanderPlugin extends AbstractPlugin implements UsersTableExpanderPluginInterface

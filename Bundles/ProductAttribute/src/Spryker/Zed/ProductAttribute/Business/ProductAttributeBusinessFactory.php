@@ -24,7 +24,7 @@ use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
- * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface getQueryContainer()
  */
 class ProductAttributeBusinessFactory extends AbstractBusinessFactory
 {
