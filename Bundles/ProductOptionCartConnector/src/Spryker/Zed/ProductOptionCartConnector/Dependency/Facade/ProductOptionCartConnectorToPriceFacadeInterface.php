@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\ProductOptionCartConnector\Dependency\Facade;
 
-interface ProductOptionCartConnectorToProductOptionInterface
+interface ProductOptionCartConnectorToPriceFacadeInterface
 {
     /**
-     * @param int $idProductOptionValueUsage
-     *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     * @return string
      */
-    public function getProductOptionValue($idProductOptionValueUsage);
+    public function getGrossPriceModeIdentifier();
+
+    /**
+     * @return string
+     */
+    public function getDefaultPriceMode();
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
-use Spryker\Zed\ProductCartConnector\Business\Validator\ProductOptionValuePriceValidator;
 use Spryker\Zed\ProductCartConnector\Business\Validator\ProductValidator;
 use Spryker\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
 
@@ -54,32 +53,5 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductOptionFacadeInterface
-     */
-    protected function getProductOptionFacade()
-    {
-        return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPriceFacadeInterface
-     */
-    protected function getPriceFacade()
-    {
-        return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_PRICE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductCartConnector\Business\Validator\ProductOptionValuePriceValidatorInterface
-     */
-    public function createProductOptionValuePriceValidator()
-    {
-        return new ProductOptionValuePriceValidator(
-            $this->getProductOptionFacade(),
-            $this->getPriceFacade()
-        );
     }
 }

@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCartConnector\Business\Validator;
+namespace Spryker\Zed\ProductOptionCartConnector\Business\Validator;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPriceFacadeInterface;
-use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductOptionFacadeInterface;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface;
 
 class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidatorInterface
 {
@@ -22,22 +22,22 @@ class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidat
     const MESSAGE_PARAM_SKU = 'sku';
 
     /**
-     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductOptionFacadeInterface
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
      */
     protected $productOptionFacade;
 
     /**
-     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPriceFacadeInterface
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface
      */
     protected $priceFacade;
 
     /**
-     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductOptionFacadeInterface $productOptionFacade
-     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface $priceFacade
      */
     public function __construct(
-        ProductCartConnectorToProductOptionFacadeInterface $productOptionFacade,
-        ProductCartConnectorToPriceFacadeInterface $priceFacade
+        ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade,
+        ProductOptionCartConnectorToPriceFacadeInterface $priceFacade
     ) {
         $this->productOptionFacade = $productOptionFacade;
         $this->priceFacade = $priceFacade;
@@ -108,11 +108,11 @@ class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidat
         );
 
         $priceMode = $this->getPriceMode($cartChangeTransfer);
-        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
-            return $productOptionTransfer->getUnitNetPrice();
+        if ($priceMode === $this->priceFacade->getGrossPriceModeIdentifier()) {
+            return $productOptionTransfer->getUnitGrossPrice();
         }
 
-        return $productOptionTransfer->getUnitGrossPrice();
+        return $productOptionTransfer->getUnitNetPrice();
     }
 
     /**

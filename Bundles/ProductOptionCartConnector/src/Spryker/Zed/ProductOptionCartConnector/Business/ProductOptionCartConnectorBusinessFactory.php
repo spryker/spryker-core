@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantity;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpander;
+use Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidator;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
 
 /**
@@ -31,7 +32,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
      */
     protected function getProductOptionFacade()
     {
@@ -39,7 +40,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceInterface
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface
      */
     protected function getPriceFacade()
     {
@@ -60,5 +61,16 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createGroupKeyExpander()
     {
         return new GroupKeyExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidatorInterface
+     */
+    public function createProductOptionValuePriceValidator()
+    {
+        return new ProductOptionValuePriceValidator(
+            $this->getProductOptionFacade(),
+            $this->getPriceFacade()
+        );
     }
 }

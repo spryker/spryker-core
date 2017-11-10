@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCartConnector\Business\Validator;
+namespace Spryker\Zed\ProductOptionCartConnector\Business\Validator;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 

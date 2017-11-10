@@ -10,18 +10,18 @@ namespace Spryker\Zed\ProductOptionCartConnector\Business\Model;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceInterface;
-use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface;
 
 class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
      */
     protected $productOptionFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceInterface
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface
      */
     protected $priceFacade;
 
@@ -31,10 +31,10 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     protected static $grossPriceModeIdentifierCache;
 
     /**
-     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface $productOptionFacade
-     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface $priceFacade
      */
-    public function __construct(ProductOptionCartConnectorToProductOptionInterface $productOptionFacade, ProductOptionCartConnectorToPriceInterface $priceFacade)
+    public function __construct(ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade, ProductOptionCartConnectorToPriceFacadeInterface $priceFacade)
     {
         $this->productOptionFacade = $productOptionFacade;
         $this->priceFacade = $priceFacade;

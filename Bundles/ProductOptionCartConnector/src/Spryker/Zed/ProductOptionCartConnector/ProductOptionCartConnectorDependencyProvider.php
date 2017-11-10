@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductOptionCartConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceBridge;
-use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionBridge;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeBridge;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeBridge;
 
 class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -38,7 +38,7 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
     protected function addProductOptionFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT_OPTION] = function (Container $container) {
-            return new ProductOptionCartConnectorToProductOptionBridge($container->getLocator()->productOption()->facade());
+            return new ProductOptionCartConnectorToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());
         };
 
         return $container;
@@ -52,7 +52,7 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
     protected function addPriceFacade(Container $container)
     {
         $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductOptionCartConnectorToPriceBridge($container->getLocator()->price()->facade());
+            return new ProductOptionCartConnectorToPriceFacadeBridge($container->getLocator()->price()->facade());
         };
 
         return $container;

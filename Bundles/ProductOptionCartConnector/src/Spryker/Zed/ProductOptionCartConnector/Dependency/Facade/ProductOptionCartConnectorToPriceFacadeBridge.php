@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionCartConnector\Dependency\Facade;
 
-class ProductOptionCartConnectorToPriceBridge implements ProductOptionCartConnectorToPriceInterface
+class ProductOptionCartConnectorToPriceFacadeBridge implements ProductOptionCartConnectorToPriceFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
@@ -28,5 +28,13 @@ class ProductOptionCartConnectorToPriceBridge implements ProductOptionCartConnec
     public function getGrossPriceModeIdentifier()
     {
         return $this->priceFacade->getGrossPriceModeIdentifier();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultPriceMode()
+    {
+        return $this->priceFacade->getDefaultPriceMode();
     }
 }

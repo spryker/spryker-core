@@ -5,10 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
+namespace Spryker\Zed\ProductOptionCartConnector\Dependency\Facade;
 
-interface ProductCartConnectorToProductOptionFacadeInterface
+interface ProductOptionCartConnectorToProductOptionFacadeInterface
 {
+    /**
+     * @param int $idProductOptionValueUsage
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    public function getProductOptionValue($idProductOptionValueUsage);
+
     /**
      * @param int $idProductOptionValue
      *

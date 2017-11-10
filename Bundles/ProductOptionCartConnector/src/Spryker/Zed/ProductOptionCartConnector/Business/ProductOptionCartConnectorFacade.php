@@ -63,4 +63,20 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
             ->createProductOptionCartQuantity()
             ->changeQuantity($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceValidator()
+            ->validateProductOptionValuePrices($cartChangeTransfer);
+    }
 }

@@ -37,19 +37,4 @@ interface ProductCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateItems(CartChangeTransfer $cartChangeTransfer);
-
-    /**
-     * Specification:
-     * - Checks changed cart product's product option prices if they exist.
-     * - Price has to be present for the current store, current currency, and current price mode.
-     * - Product option value price might be defined using the "default store" (fkStore=NULL).
-     * - Returns pre-check transfer with error messages in case of error.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
-    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer);
 }
