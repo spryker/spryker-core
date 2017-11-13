@@ -186,14 +186,14 @@ class ProductOptionListTable extends AbstractTable
     protected function formatPrice($price, $idCurrency)
     {
         if ($price === null) {
-            return '';
+            return sprintf(static::PRICE_LABEL, '-');
         }
 
-        return $this->moneyFacade->formatWithSymbol(
-            (new MoneyTransfer())
-                ->setAmount($price)
-                ->setCurrency($this->getCurrencyTransfer($idCurrency))
-        );
+        $moneyTransfer = (new MoneyTransfer())
+            ->setAmount($price)
+            ->setCurrency($this->getCurrencyTransfer($idCurrency));
+
+        return sprintf(static::PRICE_LABEL, $this->moneyFacade->formatWithSymbol($moneyTransfer));
     }
 
     /**
