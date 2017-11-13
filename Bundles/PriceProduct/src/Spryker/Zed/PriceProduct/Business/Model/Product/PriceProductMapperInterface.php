@@ -26,4 +26,14 @@ interface PriceProductMapperInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mapPriceProductTransferCollection($priceProductEntities);
+
+    /**
+     * @return string
+     */
+    public function getGrossPriceModeIdentifier();
+
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier();
 }

@@ -13,9 +13,20 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
+    /**
+     * @var string
+     */
+    protected static $netPriceModeIdentifier;
+
+    /**
+     * @var string
+     */
+    protected static $grossPriceModeIdentifier;
+
     /**
      * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface
      */
@@ -27,15 +38,23 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $priceProductTypeMapper;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface
+     */
+    protected $priceFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface $priceProductTypeMapper
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      */
     public function __construct(
         PriceProductToCurrencyFacadeInterface $currencyFacade,
-        ProductPriceTypeMapperInterface $priceProductTypeMapper
+        ProductPriceTypeMapperInterface $priceProductTypeMapper,
+        PriceProductToPriceFacadeInterface $priceFacade
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceProductTypeMapper = $priceProductTypeMapper;
+        $this->priceFacade = $priceFacade;
     }
 
     /**
@@ -80,6 +99,30 @@ class PriceProductMapper implements PriceProductMapperInterface
         }
 
         return $productPriceCollection;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGrossPriceModeIdentifier()
+    {
+        if (!static::$grossPriceModeIdentifier) {
+            static::$grossPriceModeIdentifier = $this->priceFacade->getGrossPriceModeIdentifier();
+        }
+
+        return static::$grossPriceModeIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier()
+    {
+        if (!static::$netPriceModeIdentifier) {
+            static::$netPriceModeIdentifier = $this->priceFacade->getNetPriceModeIdentifier();
+        }
+
+        return static::$netPriceModeIdentifier;
     }
 
     /**

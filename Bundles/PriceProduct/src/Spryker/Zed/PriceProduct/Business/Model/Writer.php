@@ -120,8 +120,7 @@ class Writer implements WriterInterface
             throw new ProductPriceChangeException('This couple product price type is already set');
         }
 
-        $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadPriceProductTransfer($priceProductTransfer);
 
         $pricePriceProductStoreEntity = $this->savePriceProductEntity($priceProductTransfer, new SpyPriceProduct());
         if ($priceProductTransfer->getIdProduct()) {
@@ -150,8 +149,7 @@ class Writer implements WriterInterface
             throw new ProductPriceChangeException('There is no price assigned for selected product!');
         }
 
-        $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadPriceProductTransfer($priceProductTransfer);
 
         $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
         $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);
@@ -159,7 +157,30 @@ class Writer implements WriterInterface
         if ($priceProductTransfer->getIdProduct()) {
             $this->insertTouchRecord(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
         }
-        return;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->handleDatabaseTransaction(function () use ($productAbstractTransfer) {
+            return $this->executePersistProductAbstractPriceCollectionTransaction($productAbstractTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        return $this->handleDatabaseTransaction(function () use ($productConcreteTransfer) {
+            return $this->executePersistProductConcretePriceCollectionTransaction($productConcreteTransfer);
+        });
     }
 
     /**
@@ -325,34 +346,15 @@ class Writer implements WriterInterface
             ->findOne();
 
         if (!$priceTypeEntity) {
-            throw new UndefinedPriceTypeException('Undefined product price type: ' . $priceTypeName);
+            throw new UndefinedPriceTypeException(
+                sprintf(
+                    'Undefined product price type: %s',
+                    $priceTypeName
+                )
+            );
         }
 
         return $priceTypeEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer)
-    {
-        return $this->handleDatabaseTransaction(function () use ($productAbstractTransfer) {
-            return $this->executePersistProductAbstractPriceCollectionTransaction($productAbstractTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        return $this->handleDatabaseTransaction(function () use ($productConcreteTransfer) {
-            return $this->executePersistProductConcretePriceCollectionTransaction($productConcreteTransfer);
-        });
     }
 
     /**
@@ -374,6 +376,7 @@ class Writer implements WriterInterface
 
             $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
             $this->persistPriceProductStore($priceProductTransfer);
+
             $priceProductTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
 
@@ -529,5 +532,16 @@ class Writer implements WriterInterface
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())
             ->setIdStore($moneyValueTransfer->getFkStore())
             ->setPriceType($priceTypeEntity->getName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    protected function loadPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
+    {
+        $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
     }
 }

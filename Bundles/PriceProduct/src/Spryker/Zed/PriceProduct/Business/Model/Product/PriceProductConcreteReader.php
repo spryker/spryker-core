@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
-use Spryker\Shared\Price\PriceConfig;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
@@ -51,7 +50,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             return false;
         }
 
-        if ($priceProductCriteriaTransfer->getPriceMode() === PriceConfig::PRICE_MODE_NET) {
+        if ($priceProductCriteriaTransfer->getPriceMode() === $this->priceProductMapper->getNetPriceModeIdentifier()) {
             return $prices[PriceProductQueryContainerInterface::COL_NET_PRICE] !== null;
         }
 
