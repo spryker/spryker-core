@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductSetGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ */
 class CreateController extends AbstractProductSetController
 {
     /**
