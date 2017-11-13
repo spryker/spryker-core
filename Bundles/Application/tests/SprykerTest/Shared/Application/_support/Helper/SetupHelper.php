@@ -14,7 +14,7 @@ use Symfony\Component\Process\Process;
 
 class SetupHelper extends Module
 {
-    const SPRYKER_SETUP = 'vendor/bin/deploy testing';
+    const SPRYKER_SETUP = 'vendor/bin/deploy -r testing -q';
 
     /**
      * @deprecated Please use the new spryker deploy tool.
@@ -50,7 +50,7 @@ class SetupHelper extends Module
     protected function hasSprykerSetup()
     {
         if ($this->hasSetupTool === null) {
-            $this->hasSetupTool = file_exists(APPLICATION_ROOT_DIR . '/spryker.phar');
+            $this->hasSetupTool = file_exists(APPLICATION_ROOT_DIR . '/vendor/bin/deploy');
         }
 
         return $this->hasSetupTool;
@@ -62,7 +62,7 @@ class SetupHelper extends Module
     public function runCollectors()
     {
         if ($this->hasSprykerSetup()) {
-            $this->run('-s export-data');
+            $this->run('-s collectors');
 
             return $this;
         }
