@@ -19,7 +19,7 @@ class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidat
 {
     const MESSAGE_ERROR_PRODUCT_OPTION_VALUE_PRICE_EXISTS = 'product-cart.validation.error.product-option-value-price-exists';
 
-    const MESSAGE_PARAM_SKU = 'sku';
+    const MESSAGE_PARAM_SKU = '%sku%';
 
     /**
      * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
