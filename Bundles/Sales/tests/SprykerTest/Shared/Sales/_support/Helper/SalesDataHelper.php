@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\Sales\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SaveOrderBuilder;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
