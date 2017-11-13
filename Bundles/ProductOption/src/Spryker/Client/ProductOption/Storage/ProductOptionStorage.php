@@ -92,7 +92,9 @@ class ProductOptionStorage implements ProductOptionStorageInterface
             $storageProductOptionGroupTransfer->fromArray($productOption, true);
             $this->productOptionValuePriceReader->localizeGroupPrices($storageProductOptionGroupTransfer);
 
-            $productOptionGroupsTransfer->addProductOptionGroup($storageProductOptionGroupTransfer);
+            if ($storageProductOptionGroupTransfer->getValues()->count() > 0) {
+                $productOptionGroupsTransfer->addProductOptionGroup($storageProductOptionGroupTransfer);
+            }
         }
 
         return $productOptionGroupsTransfer;
