@@ -16,7 +16,6 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
 use Spryker\Zed\PriceProduct\Business\Exception\ProductPriceChangeException;
-use Spryker\Zed\PriceProduct\Business\Exception\UndefinedPriceTypeException;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
@@ -188,6 +187,17 @@ class Writer implements WriterInterface
      *
      * @return void
      */
+    protected function loadPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
+    {
+        $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
     protected function loadProductAbstractIdForPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
     {
         if ($priceProductTransfer->getIdProductAbstract() !== null) {
@@ -332,32 +342,6 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param string $priceTypeName
-     *
-     * @throws \Spryker\Zed\PriceProduct\Business\Exception\UndefinedPriceTypeException
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceType
-     */
-    protected function getPriceTypeEntity($priceTypeName)
-    {
-        $priceTypeName = $this->priceTypeReader->handleDefaultPriceType($priceTypeName);
-        $priceTypeEntity = $this->queryContainer
-            ->queryPriceType($priceTypeName)
-            ->findOne();
-
-        if (!$priceTypeEntity) {
-            throw new UndefinedPriceTypeException(
-                sprintf(
-                    'Undefined product price type: %s',
-                    $priceTypeName
-                )
-            );
-        }
-
-        return $priceTypeEntity;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -418,7 +402,7 @@ class Writer implements WriterInterface
      */
     protected function persistProductAbstractPriceEntity(PriceProductTransfer $priceTransfer, $idProductAbstract)
     {
-        $priceTypeEntity = $this->getPriceTypeEntity($priceTransfer->getPriceType()->getName());
+        $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceTransfer->getPriceType()->getName());
 
         $priceProductEntity = $this->queryContainer
             ->queryPriceProductForAbstractProduct($idProductAbstract, $priceTypeEntity->getIdPriceType())
@@ -440,14 +424,13 @@ class Writer implements WriterInterface
      */
     protected function persistProductConcretePriceEntity(PriceProductTransfer $priceProductTransfer, $idProductConcrete)
     {
-        $priceTypeEntity = $this->getPriceTypeEntity($priceProductTransfer->getPriceType()->getName());
+        $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceProductTransfer->getPriceType()->getName());
 
         $priceProductEntity = $this->queryContainer
             ->queryPriceProductForConcreteProductBy($idProductConcrete, $priceTypeEntity->getIdPriceType())
             ->findOneOrCreate();
 
-        $priceProductEntity->setFkProduct($idProductConcrete)
-            ->save();
+        $priceProductEntity->setFkProduct($idProductConcrete)->save();
 
         $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
 
@@ -474,7 +457,8 @@ class Writer implements WriterInterface
 
         $priceProduceStoreEntity->fromArray($moneyValueTransfer->toArray());
 
-        $priceProduceStoreEntity->setFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+        $priceProduceStoreEntity
+            ->setFkPriceProduct($priceProductTransfer->getIdPriceProduct())
             ->setNetPrice($moneyValueTransfer->getNetAmount())
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->save();
@@ -532,16 +516,5 @@ class Writer implements WriterInterface
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())
             ->setIdStore($moneyValueTransfer->getFkStore())
             ->setPriceType($priceTypeEntity->getName());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return void
-     */
-    protected function loadPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
-    {
-        $this->loadProductAbstractIdForPriceProductTransfer($priceProductTransfer);
-        $this->loadProductConcreteIdForPriceProductTransfer($priceProductTransfer);
     }
 }

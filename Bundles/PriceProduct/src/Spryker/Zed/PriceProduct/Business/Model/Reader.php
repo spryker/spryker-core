@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface;
@@ -218,21 +217,45 @@ class Reader implements ReaderInterface
     ) {
         $priceProductTransfers = [];
         foreach ($abstractPriceProductTransfers as $abstractKey => $priceProductAbstractTransfer) {
-            foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
-                if ($abstractKey !== $concreteKey) {
-                    continue;
-                }
-
-                $priceProductTransfers[$concreteKey] = $this->resolveConcreteProductPrice(
-                    $priceProductAbstractTransfer,
-                    $priceProductConcreteTransfer
-                );
-            }
+            $priceProductTransfers = $this->mergeConcreteProduct(
+                $concretePriceProductTransfers,
+                $abstractKey,
+                $priceProductAbstractTransfer,
+                $priceProductTransfers
+            );
 
             if (!isset($priceProductTransfers[$abstractKey])) {
                 $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer;
             }
         }
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @param array $concretePriceProductTransfers
+     * @param string $abstractKey
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductAbstractTransfer
+     * @param array $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function mergeConcreteProduct(
+        array $concretePriceProductTransfers,
+        $abstractKey,
+        PriceProductTransfer $priceProductAbstractTransfer,
+        array $priceProductTransfers
+    ) {
+        foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
+            if ($abstractKey !== $concreteKey) {
+                continue;
+            }
+
+            $priceProductTransfers[$concreteKey] = $this->resolveConcreteProductPrice(
+                $priceProductAbstractTransfer,
+                $priceProductConcreteTransfer
+            );
+        }
+
         return $priceProductTransfers;
     }
 

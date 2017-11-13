@@ -49,11 +49,11 @@ class PriceGrouper implements PriceGrouperInterface
             $priceType = $priceProductTransfer->getPriceType()->getName();
             $currencyIsoCode = $priceMoneyValueTransfer->getCurrency()->getCode();
 
-            if ($priceMoneyValueTransfer->getGrossAmount()) {
+            if ($priceMoneyValueTransfer->getGrossAmount() !== null) {
                 $prices[$currencyIsoCode][$this->priceProductMapper->getGrossPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getGrossAmount();
             }
 
-            if ($priceMoneyValueTransfer->getNetAmount()) {
+            if ($priceMoneyValueTransfer->getNetAmount() !== null) {
                 $prices[$currencyIsoCode][$this->priceProductMapper->getNetPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getNetAmount();
             }
         }
