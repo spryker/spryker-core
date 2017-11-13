@@ -14,7 +14,7 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 /**
  * Requires Checkout ^4.0.0
  *
- * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
+ * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  */
 class PaymentOrderSaverPlugin extends AbstractPaymentOrderPlugin implements CheckoutDoSaveOrderInterface
 {

@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * Checkout place order plugin adapter.
  * From Checkout ^4 changes during the save execution in the CheckoutResponse are forbidden.
- * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
+ * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  */
 class AbstractPaymentOrderPlugin extends AbstractPlugin
 {
