@@ -28,6 +28,7 @@ class DummyPaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCh
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
+        $checkoutResponseTransfer->setIsSuccess(true);
         return true;
     }
 }
