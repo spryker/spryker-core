@@ -147,7 +147,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createInstaller()
     {
-        return new Install($this->createWriterModel(), $this->getConfig());
+        return new Install($this->createPriceTypeWriter(), $this->getConfig());
     }
 
     /**
