@@ -23,29 +23,6 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return bool
-     */
-    public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
-    {
-        $customerResponseTransfer = $this->getFactory()
-            ->createZedCustomerStub()
-            ->hasCustomerWithEmailAndPassword($customerTransfer);
-
-        $hasCustomer = $customerResponseTransfer->getHasCustomer();
-        if ($hasCustomer === true) {
-            $this->setCustomer($customerResponseTransfer->getCustomerTransfer());
-        }
-
-        return $hasCustomer;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
