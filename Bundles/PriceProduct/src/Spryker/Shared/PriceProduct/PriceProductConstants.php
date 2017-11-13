@@ -10,4 +10,6 @@ namespace Spryker\Shared\PriceProduct;
 interface PriceProductConstants
 {
     const DEFAULT_PRICE_TYPE = 'DEFAULT_PRICE_TYPE';
+
+    const ORIGINAL_PRICE_TYPE = 'ORIGINAL';
 }

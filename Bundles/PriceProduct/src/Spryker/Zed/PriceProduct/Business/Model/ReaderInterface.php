@@ -64,11 +64,4 @@ interface ReaderInterface
      * @return int
      */
     public function getProductPriceIdBySku($sku, $priceTypeName, $currencyIsoCode);
-
-    /**
-     * @param string $sku
-     *
-     * @return array
-     */
-    public function findPricesBySkuGrouped($sku);
 }

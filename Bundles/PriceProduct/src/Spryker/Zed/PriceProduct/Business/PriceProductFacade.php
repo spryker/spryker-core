@@ -252,7 +252,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function findPricesBySkuGrouped($sku)
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createPriceGrouper()
             ->findPricesBySkuGrouped($sku);
     }
 

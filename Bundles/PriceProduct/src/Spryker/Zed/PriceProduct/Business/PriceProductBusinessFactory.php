@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProduct\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
+use Spryker\Zed\PriceProduct\Business\Model\PriceGrouper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeMapper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReader;
@@ -33,11 +34,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new Reader(
             $this->getProductFacade(),
-            $this->getPriceFacade(),
             $this->createPriceTypeReader(),
             $this->createPriceProductConcreteReader(),
             $this->createPriceProductAbstractReader(),
-            $this->createProductCriteriaBuilder()
+            $this->createProductCriteriaBuilder(),
+            $this->createPriceProductMapper()
         );
     }
 
@@ -88,7 +89,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductMapper()
     {
-        return new PriceProductMapper($this->getCurrencyFacade(), $this->createPriceTypeMapper());
+        return new PriceProductMapper(
+            $this->getCurrencyFacade(),
+            $this->createPriceTypeMapper(),
+            $this->getPriceFacade()
+        );
     }
 
     /**
@@ -139,6 +144,14 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createInstaller()
     {
         return new Install($this->createWriterModel(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceGrouperInterface
+     */
+    public function createPriceGrouper()
+    {
+        return new PriceGrouper($this->createReaderModel(), $this->createPriceProductMapper());
     }
 
     /**
