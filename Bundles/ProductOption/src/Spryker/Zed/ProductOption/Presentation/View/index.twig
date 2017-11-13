@@ -56,7 +56,7 @@
                         <td>
                             {% for moneyValueTransfer in optionValue.prices %}
                                 {% if moneyValueTransfer.GrossAmount is not empty %}
-                                    {{ priceLabel | format(moneyValueTransfer.GrossAmount | money) | raw }}
+                                    {{ priceLabel | format(moneyValueTransfer.GrossAmount | money(true, moneyValueTransfer.Currency.Code)) | raw }}
                                 {% else %}
                                     {{ priceLabel | format('-') | raw }}
                                 {% endif %}
@@ -65,7 +65,7 @@
                         <td>
                             {% for moneyValueTransfer in optionValue.prices %}
                                 {% if moneyValueTransfer.NetAmount is not empty %}
-                                    {{ priceLabel | format(moneyValueTransfer.NetAmount | money) | raw }}
+                                    {{ priceLabel | format(moneyValueTransfer.NetAmount | money(true, moneyValueTransfer.Currency.Code)) | raw }}
                                 {% else %}
                                     {{ priceLabel | format('-') | raw }}
                                 {% endif %}
