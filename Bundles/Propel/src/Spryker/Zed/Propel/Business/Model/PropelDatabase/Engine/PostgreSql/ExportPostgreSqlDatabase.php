@@ -86,7 +86,9 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        return true;
+        $returnValue = (int)$process->getOutput();
+
+        return (bool)$returnValue;
     }
 
     /**

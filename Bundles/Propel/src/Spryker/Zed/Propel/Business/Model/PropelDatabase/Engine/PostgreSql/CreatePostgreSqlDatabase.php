@@ -116,7 +116,9 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        return true;
+        $returnValue = (int)$process->getOutput();
+
+        return (bool)$returnValue;
     }
 
     /**
