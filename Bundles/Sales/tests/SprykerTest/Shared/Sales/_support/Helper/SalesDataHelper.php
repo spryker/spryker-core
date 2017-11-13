@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Sales\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\SaveOrderBuilder;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
@@ -23,7 +24,7 @@ class SalesDataHelper extends Module
      * @param array $override
      * @param string|null $stateMachineProcessName
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
     public function haveOrder(array $override = [], $stateMachineProcessName = null)
     {
@@ -36,15 +37,16 @@ class SalesDataHelper extends Module
             ->withCurrency()
             ->build();
 
-        $checkoutResponseTransfer = (new CheckoutResponseBuilder())->makeEmpty()->build();
+        $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
 
         $salesFacade = $this->getSalesFacade();
         if ($stateMachineProcessName) {
             $salesFacade = $this->configureSalesFacadeForTests($salesFacade, $stateMachineProcessName);
         }
-        $salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
 
-        return $checkoutResponseTransfer;
+        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+
+        return $saveOrderTransfer;
     }
 
     /**
