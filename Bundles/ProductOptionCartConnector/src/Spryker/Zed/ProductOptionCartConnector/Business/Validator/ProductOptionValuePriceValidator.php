@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOptionCartConnector\Business\Validator;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface;
@@ -51,48 +50,22 @@ class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidat
     public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer)
     {
         $responseTransfer = new CartPreCheckResponseTransfer();
+        $responseTransfer->setIsSuccess(true);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $this->validateProductOptionValuePrice(
-                    $cartChangeTransfer,
-                    $itemTransfer,
-                    $productOptionTransfer,
-                    $responseTransfer
-                );
+                if ($this->hasProductOptionValueStorePrice($cartChangeTransfer, $productOptionTransfer)) {
+                    continue;
+                }
+
+                $responseTransfer->addMessage($this->createMissingPriceViolationMessage($itemTransfer->getSku()));
+                $responseTransfer->setIsSuccess(false);
             }
         }
 
         $responseTransfer->setIsSuccess($responseTransfer->getMessages()->count() === 0);
 
         return $responseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
-     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
-     *
-     * @return void
-     */
-    protected function validateProductOptionValuePrice(
-        CartChangeTransfer $cartChangeTransfer,
-        ItemTransfer $itemTransfer,
-        ProductOptionTransfer $productOptionTransfer,
-        CartPreCheckResponseTransfer $responseTransfer
-    ) {
-        $storePrice = $this->getProductOptionValueStorePrice($cartChangeTransfer, $productOptionTransfer);
-        if (isset($storePrice)) {
-            return;
-        }
-
-        $responseTransfer->addMessage(
-            $this->createViolationMessage(
-                static::MESSAGE_ERROR_PRODUCT_OPTION_VALUE_PRICE_EXISTS,
-                $itemTransfer->getSku()
-            )
-        );
     }
 
     /**
@@ -116,15 +89,27 @@ class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidat
     }
 
     /**
-     * @param string $translationKey
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     *
+     * @return bool
+     */
+    protected function hasProductOptionValueStorePrice(CartChangeTransfer $cartChangeTransfer, ProductOptionTransfer $productOptionTransfer)
+    {
+        $storePrice = $this->getProductOptionValueStorePrice($cartChangeTransfer, $productOptionTransfer);
+
+        return $storePrice !== null;
+    }
+
+    /**
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createViolationMessage($translationKey, $sku)
+    protected function createMissingPriceViolationMessage($sku)
     {
         $messageTransfer = (new MessageTransfer())
-            ->setValue($translationKey)
+            ->setValue(static::MESSAGE_ERROR_PRODUCT_OPTION_VALUE_PRICE_EXISTS)
             ->setParameters([static::MESSAGE_PARAM_SKU => $sku]);
 
         return $messageTransfer;
