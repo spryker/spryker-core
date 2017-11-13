@@ -77,7 +77,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function createPriceType($name)
     {
         return $this->getFactory()
-            ->createWriterModel()
+            ->createPriceTypeWriter()
             ->createPriceType($name);
     }
 
@@ -204,7 +204,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer)
     {
         return $this->getFactory()
-            ->createWriterModel()
+            ->createPriceProductAbstractWriter()
             ->persistProductAbstractPriceCollection($productAbstractTransfer);
     }
 
@@ -220,7 +220,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()
-            ->createWriterModel()
+            ->createPriceProductConcreteWriter()
             ->persistProductConcretePriceCollection($productConcreteTransfer);
     }
 

@@ -51,8 +51,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      */
     public function resolve(array $priceMap)
     {
-        $currentProductPriceTransfer = (new CurrentProductPriceTransfer())
-            ->setPrice(0);
+        $currentProductPriceTransfer = new CurrentProductPriceTransfer();
 
         $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
         $currentPriceMode = $this->priceClient->getCurrentPriceMode();
