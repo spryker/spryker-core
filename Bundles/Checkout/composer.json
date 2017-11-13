@@ -8,7 +8,8 @@
     "spryker/quote": "^1.0.0",
     "spryker/step-engine": "^2.0.0 || ^3.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/zed-request": "^3.0.0",
+    "spryker/oms": "^5.0.0 || ^6.0.0 || ^7.0.0"
   },
   "require-dev": {
     "spryker/availability": "*",
@@ -16,7 +17,6 @@
     "spryker/country": "*",
     "spryker/customer": "*",
     "spryker/locale": "*",
-    "spryker/oms": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/sales": "*",
