@@ -15,7 +15,6 @@ use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
-use Spryker\Zed\Customer\Business\Exception\CountryNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
@@ -352,20 +351,11 @@ class Address implements AddressInterface
     }
 
     /**
-     * @throws \Spryker\Zed\Customer\Business\Exception\CountryNotFoundException
-     *
      * @return int
      */
     protected function getCustomerCountryId()
     {
         $countryTransfer = $this->countryFacade->getCountryByIso2Code($this->getIsoCode());
-
-        if (!$countryTransfer->getIdCountry()) {
-            throw new CountryNotFoundException(sprintf(
-                'Country not found for ISO code `%s`.',
-                $this->getIsoCode()
-            ));
-        }
 
         return $countryTransfer->getIdCountry();
     }
