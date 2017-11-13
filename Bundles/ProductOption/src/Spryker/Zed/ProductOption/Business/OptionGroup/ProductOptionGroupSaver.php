@@ -116,7 +116,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     }
 
     /**
-     * @param int|mixed $idProductOptionGroup
+     * @param int|string|null $idProductOptionGroup
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
