@@ -360,7 +360,7 @@ class Address implements AddressInterface
     {
         $countryTransfer = $this->countryFacade->getCountryByIso2Code($this->getIsoCode());
 
-        if ($countryTransfer->getIdCountry()) {
+        if (!$countryTransfer->getIdCountry()) {
             throw new CountryNotFoundException(sprintf(
                 'Country not found for ISO code `%s`.',
                 $this->getIsoCode()
