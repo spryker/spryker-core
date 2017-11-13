@@ -69,8 +69,6 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     }
 
     /**
-     * Check if exit code can be used to return bool
-     *
      * @param string $command
      *
      * @throws \RuntimeException
@@ -88,9 +86,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        $returnValue = (int)$process->getOutput();
-
-        return (bool)$returnValue;
+        return true;
     }
 
     /**

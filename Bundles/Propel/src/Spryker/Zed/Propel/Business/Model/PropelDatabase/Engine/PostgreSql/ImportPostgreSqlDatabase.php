@@ -73,8 +73,6 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     }
 
     /**
-     * Check if exit code can be used to return bool
-     *
      * @param string $command
      *
      * @throws \RuntimeException
@@ -92,9 +90,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        $returnValue = (int)$process->getOutput();
-
-        return (bool)$returnValue;
+        return true;
     }
 
     /**

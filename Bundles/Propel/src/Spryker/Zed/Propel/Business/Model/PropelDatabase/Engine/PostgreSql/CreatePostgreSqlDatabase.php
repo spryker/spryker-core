@@ -99,8 +99,6 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     }
 
     /**
-     * Check if exit code can be used to return bool
-     *
      * @param string $command
      *
      * @throws \RuntimeException
@@ -118,9 +116,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        $returnValue = (int)$process->getOutput();
-
-        return (bool)$returnValue;
+        return true;
     }
 
     /**

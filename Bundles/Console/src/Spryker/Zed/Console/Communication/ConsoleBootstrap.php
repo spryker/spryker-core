@@ -170,10 +170,11 @@ class ConsoleBootstrap extends Application
 
     /**
      * This will force color mode when executed from another tool. The env variable can be set
-     * from any body who wants to force color mode for the execution of this tool.
+     * from anybody who wants to force color mode for the execution of this Application.
      *
-     * For the Spryker's setup tool it is needed to get colored output from the console commands
-     * executed by this script.
+     * For Spryker's deploy tool it is needed to get colored output from the console commands
+     * executed by this script without force projects to deal with ansi flags of the underlying
+     * console commands.
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *

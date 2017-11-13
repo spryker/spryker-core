@@ -116,8 +116,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     }
 
     /**
-     * Check if exit code can be used to return bool
-     *
      * @param string $command
      *
      * @throws \RuntimeException
@@ -135,9 +133,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        $returnValue = (int)$process->getOutput();
-
-        return (bool)$returnValue;
+        return true;
     }
 
     /**
