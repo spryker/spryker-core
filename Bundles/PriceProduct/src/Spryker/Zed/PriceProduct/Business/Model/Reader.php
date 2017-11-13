@@ -217,7 +217,6 @@ class Reader implements ReaderInterface
         array $concretePriceProductTransfers
     ) {
         $priceProductTransfers = [];
-        $originalPricesSet = $this->haveProductAbstractOriginalPrice($abstractPriceProductTransfers);
         foreach ($abstractPriceProductTransfers as $abstractKey => $priceProductAbstractTransfer) {
             foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
                 if ($abstractKey !== $concreteKey) {
@@ -226,8 +225,7 @@ class Reader implements ReaderInterface
 
                 $priceProductTransfers[$concreteKey] = $this->resolveConcreteProductPrice(
                     $priceProductAbstractTransfer,
-                    $priceProductConcreteTransfer,
-                    $originalPricesSet
+                    $priceProductConcreteTransfer
                 );
             }
 
@@ -239,56 +237,24 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
-     *
-     * @return array
-     */
-    protected function haveProductAbstractOriginalPrice(array $abstractPriceProductTransfers)
-    {
-        $originalPricesSet = [
-            $this->priceProductMapper->getNetPriceModeIdentifier() => false,
-            $this->priceProductMapper->getGrossPriceModeIdentifier() => false,
-        ];
-        foreach ($abstractPriceProductTransfers as $priceProductTransfer) {
-            if ($priceProductTransfer->getPriceTypeName() !== PriceProductConstants::ORIGINAL_PRICE_TYPE) {
-                continue;
-            }
-
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-            if ($moneyValueTransfer->getNetAmount() !== null) {
-                $originalPricesSet[$this->priceProductMapper->getNetPriceModeIdentifier()] = true;
-            }
-
-            if ($moneyValueTransfer->getGrossAmount() !== null) {
-                $originalPricesSet[$this->priceProductMapper->getGrossPriceModeIdentifier()] = true;
-            }
-        }
-
-         return $originalPricesSet;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductAbstractTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductConcreteTransfer
-     * @param array $originalPricesSet
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function resolveConcreteProductPrice(
         PriceProductTransfer $priceProductAbstractTransfer,
-        PriceProductTransfer $priceProductConcreteTransfer,
-        array $originalPricesSet
+        PriceProductTransfer $priceProductConcreteTransfer
     ) {
+
         $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
         $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
 
-        if ($originalPricesSet[$this->priceProductMapper->getGrossPriceModeIdentifier()] === false &&
-            $concreteMoneyValueTransfer->getGrossAmount() === null) {
+        if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
             $concreteMoneyValueTransfer->setGrossAmount($abstractMoneyValueTransfer->getGrossAmount());
         }
 
-        if ($originalPricesSet[$this->priceProductMapper->getNetPriceModeIdentifier()] === false &&
-            $concreteMoneyValueTransfer->getNetAmount() === null) {
+        if ($concreteMoneyValueTransfer->getNetAmount() === null) {
             $concreteMoneyValueTransfer->setNetAmount($abstractMoneyValueTransfer->getNetAmount());
         }
 
