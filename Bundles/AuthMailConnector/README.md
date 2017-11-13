@@ -1,6 +1,6 @@
 # AuthMailConnector Module
 
-AuthMailConnector is a plugin for extending the Auth to use it in Mail. This extension supports functionality like passwords reset mail.
+AuthMailConnector provides a plugin for extending the Auth to use it in Mail. This extension supports functionality like passwords reset mail.
 
 ## Installation
 

@@ -1,7 +1,8 @@
 # Synchronization Module
 [![Build Status](https://travis-ci.org/spryker/Synchronization.svg)](https://travis-ci.org/spryker/Synchronization)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/Synchronization/badge.svg)](https://coveralls.io/github/spryker/Synchronization)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/Synchronization/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/Synchronization/?branch=master)
+
+Synchronization provides a set of queue consumer plugins for exporting data to Storage/Search applications and some utilities for cleaning the exported data.
 
 ## Installation
 
