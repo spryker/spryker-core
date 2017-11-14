@@ -1,7 +1,8 @@
 # SynchronizationBehavior Module
 [![Build Status](https://travis-ci.org/spryker/SynchronizationBehavior.svg)](https://travis-ci.org/spryker/SynchronizationBehavior)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/SynchronizationBehavior/badge.svg)](https://coveralls.io/github/spryker/SynchronizationBehavior)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/SynchronizationBehavior/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/SynchronizationBehavior/?branch=master)
+
+SynchronizationBehavior provides Propel behavior for Storage and Search modules, this behavior adds required columns and pre/post save hooks to aggregated Propel entities.
 
 ## Installation
 
