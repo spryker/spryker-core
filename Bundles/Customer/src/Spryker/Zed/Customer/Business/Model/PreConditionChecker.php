@@ -16,6 +16,9 @@ use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterfa
 
 class PreConditionChecker implements PreConditionCheckerInterface
 {
+    const ERROR_EMAIL_INVALID = 'customer.email.invalid';
+    const ERROR_EMAIL_UNIQUE = 'customer.email.already.used';
+
     /**
      * @var \Spryker\Zed\Customer\Business\Customer\CustomerInterface
      */
@@ -52,7 +55,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
             $this->addViolation(
                 $checkoutResponseTransfer,
                 CustomerConfig::ERROR_CODE_CUSTOMER_INVALID_EMAIL,
-                'customer.email.invalid'
+                static::ERROR_EMAIL_INVALID
             );
         }
 
@@ -64,7 +67,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
             $this->addViolation(
                 $checkoutResponseTransfer,
                 CustomerConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED,
-                'customer.email.already.used'
+                static::ERROR_EMAIL_UNIQUE
             );
         }
     }
