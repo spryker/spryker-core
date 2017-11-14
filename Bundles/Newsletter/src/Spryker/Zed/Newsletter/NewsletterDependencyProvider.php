@@ -60,7 +60,7 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilValidateService(Container $container)
     {
-        $container[self::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
             return new NewsletterToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
         };
 
