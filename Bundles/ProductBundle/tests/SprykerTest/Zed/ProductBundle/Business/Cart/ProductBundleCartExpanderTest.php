@@ -160,7 +160,7 @@ class ProductBundleCartExpanderTest extends Unit
         $localeFacadeMock->method('getCurrentLocale')->willReturn($localeTransfer);
 
         $priceFacadeMock = $this->createPriceProductFacadeMock();
-        $priceFacadeMock->method('getPriceFor')->willReturn(25);
+        $priceFacadeMock->method('findPriceFor')->willReturn(25);
 
         $productExpanderMock = $this->createProductExpanderMock($priceFacadeMock, $productFacadeMock, $localeFacadeMock);
 
