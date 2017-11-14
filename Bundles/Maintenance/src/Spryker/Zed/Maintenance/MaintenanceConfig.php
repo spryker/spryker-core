@@ -25,7 +25,7 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getMaintenanceMarkerDirZed()
     {
-        return APPLICATION_ROOT_DIR . '/public/Zed';
+        return APPLICATION_ROOT_DIR . '/public/Zed/maintenance';
     }
 
     /**
@@ -41,6 +41,6 @@ class MaintenanceConfig extends AbstractBundleConfig
      */
     public function getMaintenanceMarkerDirYves()
     {
-        return APPLICATION_ROOT_DIR . '/public/Yves';
+        return APPLICATION_ROOT_DIR . '/public/Yves/maintenance';
     }
 }
