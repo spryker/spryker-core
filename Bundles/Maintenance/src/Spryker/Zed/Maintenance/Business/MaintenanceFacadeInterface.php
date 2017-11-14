@@ -11,7 +11,7 @@ interface MaintenanceFacadeInterface
 {
     /**
      * Specification:
-     * - Enables maintenance for Zed.
+     * - Enables maintenance mode for Zed.
      *
      * @api
      *
@@ -21,7 +21,7 @@ interface MaintenanceFacadeInterface
 
     /**
      * Specification:
-     * - Disables maintenance for Zed.
+     * - Disables maintenance mode for Zed.
      *
      * @api
      *
@@ -31,7 +31,7 @@ interface MaintenanceFacadeInterface
 
     /**
      * Specification:
-     * - Enables maintenance for Yves.
+     * - Enables maintenance mode for Yves.
      *
      * @api
      *
@@ -41,7 +41,7 @@ interface MaintenanceFacadeInterface
 
     /**
      * Specification:
-     * - Disables maintenance for Zed.
+     * - Disables maintenance mode for Yves.
      *
      * @api
      *
