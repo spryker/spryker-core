@@ -17,9 +17,9 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/twig": "If you want to use twig extension plugins",
     "spryker/installer": "If you want to use Installer plugins.",
-    "spryker/silex": "If you want to use ServiceProvider."
+    "spryker/silex": "If you want to use ServiceProvider.",
+    "spryker/twig": "If you want to use twig extension plugins"
   },
   "autoload": {
     "psr-4": {

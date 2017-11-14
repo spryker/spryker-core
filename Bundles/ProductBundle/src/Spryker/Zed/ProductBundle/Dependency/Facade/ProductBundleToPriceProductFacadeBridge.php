@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
-class ProductBundleToPriceProductBridgeProduct implements ProductBundleToPriceProductInterface
+class ProductBundleToPriceProductFacadeBridge implements ProductBundleToPriceProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface

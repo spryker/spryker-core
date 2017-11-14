@@ -10,28 +10,28 @@ namespace Spryker\Zed\ProductCartConnector\Business\Expander;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
-use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleFacadeInterface;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface;
 
 class ProductExpander implements ProductExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface
+     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
+     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface $productFacade
      */
     public function __construct(
-        ProductCartConnectorToLocaleInterface $localeFacade,
-        ProductCartConnectorToProductInterface $productFacade
+        ProductCartConnectorToLocaleFacadeInterface $localeFacade,
+        ProductCartConnectorToProductFacadeInterface $productFacade
     ) {
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;

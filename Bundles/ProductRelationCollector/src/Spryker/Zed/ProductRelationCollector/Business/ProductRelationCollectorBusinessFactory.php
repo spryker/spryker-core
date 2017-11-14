@@ -40,7 +40,7 @@ class ProductRelationCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductInterface
+     * @return \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductFacadeInterface
      */
     protected function getPriceProductFacade()
     {

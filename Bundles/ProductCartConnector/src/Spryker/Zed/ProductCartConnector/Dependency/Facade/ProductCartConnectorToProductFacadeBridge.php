@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-class ProductCartConnectorToProductBridge implements ProductCartConnectorToProductInterface
+class ProductCartConnectorToProductFacadeBridge implements ProductCartConnectorToProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface

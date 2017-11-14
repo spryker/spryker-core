@@ -18,7 +18,7 @@ use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
-use Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductInterface;
+use Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductFacadeInterface;
 use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductImageInterface;
 use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductRelationInterface;
 use Spryker\Zed\ProductRelationCollector\Persistence\Collector\Propel\ProductRelationCollectorQuery;
@@ -31,7 +31,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     protected $productImageQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductInterface
+     * @var \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
 
@@ -43,13 +43,13 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductImageInterface $productImageQueryContainer
-     * @param \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductRelationInterface $productRelationQueryContainer
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         ProductRelationCollectorToProductImageInterface $productImageQueryContainer,
-        ProductRelationCollectorToPriceProductInterface $priceProductFacade,
+        ProductRelationCollectorToPriceProductFacadeInterface $priceProductFacade,
         ProductRelationCollectorToProductRelationInterface $productRelationQueryContainer
     ) {
         $this->productImageQueryContainer = $productImageQueryContainer;

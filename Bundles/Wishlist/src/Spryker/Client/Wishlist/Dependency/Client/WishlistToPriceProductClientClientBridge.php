@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Wishlist\Dependency\Client;
 
-class WishlistToPriceProductBridge implements WishlistToPriceProductInterface
+class WishlistToPriceProductClientClientBridge implements WishlistToPriceProductClientInterface
 {
     /**
      * @var \Spryker\Client\PriceProduct\PriceProductClientInterface

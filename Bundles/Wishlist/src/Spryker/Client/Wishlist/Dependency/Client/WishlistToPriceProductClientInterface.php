@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Wishlist\Dependency\Client;
 
-interface WishlistToPriceProductInterface
+interface WishlistToPriceProductClientInterface
 {
     /**
      * @param array $priceMap

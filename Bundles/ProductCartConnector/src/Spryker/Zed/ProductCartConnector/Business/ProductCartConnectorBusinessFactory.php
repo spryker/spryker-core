@@ -40,7 +40,7 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleFacadeInterface
      */
     protected function getLocaleFacade()
     {
@@ -48,7 +48,7 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface
      */
     protected function getProductFacade()
     {

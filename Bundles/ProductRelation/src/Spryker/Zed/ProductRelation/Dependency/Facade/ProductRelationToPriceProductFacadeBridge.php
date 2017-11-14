@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductRelation\Dependency\Facade;
 
-class ProductRelationToPriceProductBridge implements ProductRelationToPriceProductInterface
+class ProductRelationToPriceProductFacadeBridge implements ProductRelationToPriceProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface

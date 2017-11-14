@@ -12,7 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface;
-use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductInterface;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface;
 
 abstract class AbstractRelatedProductTable extends AbstractTable
 {
@@ -39,7 +39,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected $idProductLabel;
 
     /**
-     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductInterface
+     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
 
@@ -47,13 +47,13 @@ abstract class AbstractRelatedProductTable extends AbstractTable
      * @param \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface $tableQueryBuilder
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface $moneyFacade
      * @param int|null $idProductLabel
-     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade
      */
     public function __construct(
         RelatedProductTableQueryBuilderInterface $tableQueryBuilder,
         ProductLabelGuiToMoneyInterface $moneyFacade,
         $idProductLabel,
-        ProductLabelGuiToPriceProductInterface $priceProductFacade
+        ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
         $this->moneyFacade = $moneyFacade;

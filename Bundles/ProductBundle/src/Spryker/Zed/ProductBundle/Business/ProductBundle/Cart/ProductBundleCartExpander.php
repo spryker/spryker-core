@@ -20,7 +20,7 @@ use OutOfBoundsException;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -34,7 +34,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected $productBundleQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
 
@@ -70,14 +70,14 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface $priceFacade
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToPriceProductInterface $priceProductFacade,
+        ProductBundleToPriceProductFacadeInterface $priceProductFacade,
         ProductBundleToProductInterface $productFacade,
         ProductBundleToLocaleInterface $localeFacade,
         ProductBundleToPriceInterface $priceFacade

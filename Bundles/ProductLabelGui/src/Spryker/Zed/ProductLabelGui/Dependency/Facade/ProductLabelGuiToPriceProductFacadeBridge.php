@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSetGui\Dependency\Facade;
+namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
-class ProductSetGuiToPriceProductBridgeProduct implements ProductSetGuiToPriceProductInterface
+class ProductLabelGuiToPriceProductFacadeBridge implements ProductLabelGuiToPriceProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
@@ -15,11 +15,11 @@ class ProductSetGuiToPriceProductBridgeProduct implements ProductSetGuiToPricePr
     protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceFacade
+     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade
      */
-    public function __construct($priceFacade)
+    public function __construct($priceProductFacade)
     {
-        $this->priceProductFacade = $priceFacade;
+        $this->priceProductFacade = $priceProductFacade;
     }
 
     /**

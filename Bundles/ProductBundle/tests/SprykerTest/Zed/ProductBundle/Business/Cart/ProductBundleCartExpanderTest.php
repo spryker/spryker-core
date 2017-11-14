@@ -22,7 +22,7 @@ use Spryker\Shared\Price\PriceConfig;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -95,7 +95,7 @@ class ProductBundleCartExpanderTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface|null $priceProductFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface|null $priceProductFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface|null $productFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface|null $localeFacadeMock
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
@@ -103,7 +103,7 @@ class ProductBundleCartExpanderTest extends Unit
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander
      */
     protected function createProductExpanderMock(
-        ProductBundleToPriceProductInterface $priceProductFacadeMock = null,
+        ProductBundleToPriceProductFacadeInterface $priceProductFacadeMock = null,
         ProductBundleToProductInterface $productFacadeMock = null,
         ProductBundleToLocaleInterface $localeFacadeMock = null,
         ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null
@@ -233,11 +233,11 @@ class ProductBundleCartExpanderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface
      */
     protected function createPriceProductFacadeMock()
     {
-         return $this->getMockBuilder(ProductBundleToPriceProductInterface::class)->getMock();
+         return $this->getMockBuilder(ProductBundleToPriceProductFacadeInterface::class)->getMock();
     }
 
     /**

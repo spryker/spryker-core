@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
-interface ProductBundleToPriceProductInterface
+interface ProductBundleToPriceProductFacadeInterface
 {
     /**
      * @param string $sku
