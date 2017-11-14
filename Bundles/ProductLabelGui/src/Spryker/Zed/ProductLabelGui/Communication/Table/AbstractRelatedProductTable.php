@@ -136,7 +136,12 @@ abstract class AbstractRelatedProductTable extends AbstractTable
      */
     protected function getPriceColumn(SpyProductAbstract $productAbstractEntity)
     {
-        $price = $this->priceProductFacade->getPriceBySku($productAbstractEntity->getSku());
+        $price = $this->priceProductFacade->findPriceBySku($productAbstractEntity->getSku());
+
+        if ($price === null) {
+            return 'N/A';
+        }
+
         $moneyTransfer = $this->moneyFacade->fromInteger($price);
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);

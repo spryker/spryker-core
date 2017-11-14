@@ -65,7 +65,7 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductTransfer = $this->createProductWithAmount(50, 40);
 
-        $price = $priceProductFacade->getPriceBySku($priceProductTransfer->getSkuProduct());
+        $price = $priceProductFacade->findPriceBySku($priceProductTransfer->getSkuProduct());
 
         $this->assertSame(50, $price);
     }
@@ -90,7 +90,7 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(self::USD_ISO_CODE)
             ->setSku($priceProductTransfer2->getSkuProduct());
 
-        $price = $priceProductFacade->getPriceFor($priceProductFilterTransfer);
+        $price = $priceProductFacade->findPriceFor($priceProductFilterTransfer);
 
         $this->assertSame(100, $price);
     }
@@ -120,7 +120,7 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductFacade->setPriceForProduct($priceProductTransfer);
 
-        $price = $priceProductFacade->getPriceBySku($priceProductTransfer->getSkuProduct());
+        $price = $priceProductFacade->findPriceBySku($priceProductTransfer->getSkuProduct());
 
         $this->assertSame(100, $price);
     }

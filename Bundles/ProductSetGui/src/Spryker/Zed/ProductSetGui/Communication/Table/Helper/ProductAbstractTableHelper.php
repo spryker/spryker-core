@@ -64,7 +64,10 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      */
     public function getProductPrice(SpyProductAbstract $productAbstractEntity)
     {
-        $price = $this->priceProductFacade->getPriceBySku($productAbstractEntity->getSku());
+        $price = $this->priceProductFacade->findPriceBySku($productAbstractEntity->getSku());
+        if ($price === null) {
+            return 'N/A';
+        }
         $moneyTransfer = $this->moneyFacade->fromInteger($price);
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);

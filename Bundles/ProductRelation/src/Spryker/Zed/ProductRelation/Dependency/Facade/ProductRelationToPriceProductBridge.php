@@ -25,10 +25,10 @@ class ProductRelationToPriceProductBridge implements ProductRelationToPriceProdu
     /**
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku)
+    public function findPriceBySku($sku)
     {
-        return $this->priceProductFacade->getPriceBySku($sku);
+        return $this->priceProductFacade->findPriceBySku($sku);
     }
 }

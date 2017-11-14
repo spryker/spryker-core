@@ -82,9 +82,9 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceTypeName = null)
+    public function findPriceBySku($sku, $priceTypeName = null)
     {
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues($priceTypeName);
 
@@ -94,9 +94,9 @@ class Reader implements ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return mixed
+     * @return int|null
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
+    public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
     {
         $priceProductFilterTransfer->requireSku();
 

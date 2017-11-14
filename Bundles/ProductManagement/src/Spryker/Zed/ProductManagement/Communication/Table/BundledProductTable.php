@@ -221,7 +221,11 @@ class BundledProductTable extends AbstractTable
      */
     protected function getFormattedPrice($sku)
     {
-        $priceInCents = $this->priceProductFacade->getPriceBySku($sku);
+        $priceInCents = $this->priceProductFacade->findPriceBySku($sku);
+
+        if ($priceInCents === null) {
+            return 'N/A';
+        }
 
         $moneyTransfer = $this->moneyFacade->fromInteger($priceInCents);
 

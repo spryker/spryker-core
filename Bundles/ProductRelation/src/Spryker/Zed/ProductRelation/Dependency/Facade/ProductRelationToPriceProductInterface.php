@@ -12,7 +12,7 @@ interface ProductRelationToPriceProductInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku);
+    public function findPriceBySku($sku);
 }

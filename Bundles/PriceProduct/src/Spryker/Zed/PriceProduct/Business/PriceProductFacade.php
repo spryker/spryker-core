@@ -40,13 +40,13 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceTypeName = null)
+    public function findPriceBySku($sku, $priceTypeName = null)
     {
         return $this->getFactory()
             ->createReaderModel()
-            ->getPriceBySku($sku, $priceTypeName);
+            ->findPriceBySku($sku, $priceTypeName);
     }
 
     /**
@@ -58,11 +58,11 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @return int
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
+    public function findPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
     {
         return $this->getFactory()
             ->createReaderModel()
-            ->getPriceFor($priceFilterTransfer);
+            ->findPriceFor($priceFilterTransfer);
     }
 
     /**

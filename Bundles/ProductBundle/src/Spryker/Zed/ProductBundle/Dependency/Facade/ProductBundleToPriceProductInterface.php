@@ -15,14 +15,14 @@ interface ProductBundleToPriceProductInterface
      * @param string $sku
      * @param string|null $priceType
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceType = null);
+    public function findPriceBySku($sku, $priceType = null);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
+    public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
 }

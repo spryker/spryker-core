@@ -37,9 +37,9 @@ interface PriceProductFacadeInterface
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceTypeName = null);
+    public function findPriceBySku($sku, $priceTypeName = null);
 
     /**
      * Specification:
@@ -53,9 +53,9 @@ interface PriceProductFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
+    public function findPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 
     /**
      * Specification:

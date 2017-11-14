@@ -251,7 +251,11 @@ class ProductTable extends AbstractProductTable
      */
     protected function formatProductPrice($sku)
     {
-        $price = $this->priceProductFacade->getPriceBySku($sku);
+        $price = $this->priceProductFacade->findPriceBySku($sku);
+
+        if ($price === null) {
+            return 'N/A';
+        }
 
         $moneyTransfer = $this->moneyFacade->fromInteger($price);
 

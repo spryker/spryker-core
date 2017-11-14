@@ -26,10 +26,10 @@ class ProductLabelGuiToPriceProductBridge implements ProductLabelGuiToPriceProdu
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceTypeName = null)
+    public function findPriceBySku($sku, $priceTypeName = null)
     {
-        return $this->priceProductFacade->getPriceBySku($sku, $priceTypeName);
+        return $this->priceProductFacade->findPriceBySku($sku, $priceTypeName);
     }
 }

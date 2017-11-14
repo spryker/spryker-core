@@ -345,7 +345,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if (!isset(static::$productPriceCache[$sku])) {
             $priceFilterTransfer = $this->createPriceProductFilterTransfer($sku, $currencyIsoCode, $priceMode);
-            static::$productPriceCache[$sku] = $this->priceProductFacade->getPriceFor($priceFilterTransfer);
+            static::$productPriceCache[$sku] = $this->priceProductFacade->findPriceFor($priceFilterTransfer);
         }
 
          return static::$productPriceCache[$sku];

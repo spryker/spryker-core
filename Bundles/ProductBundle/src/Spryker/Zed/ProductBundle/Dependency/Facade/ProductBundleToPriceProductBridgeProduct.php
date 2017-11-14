@@ -28,20 +28,20 @@ class ProductBundleToPriceProductBridgeProduct implements ProductBundleToPricePr
      * @param string $sku
      * @param string|null $priceType
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceType = null)
+    public function findPriceBySku($sku, $priceType = null)
     {
-        return $this->priceProductFacade->getPriceBySku($sku, $priceType);
+        return $this->priceProductFacade->findPriceBySku($sku, $priceType);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
+    public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
     {
-        return $this->priceProductFacade->getPriceFor($priceProductFilterTransfer);
+        return $this->priceProductFacade->findPriceFor($priceProductFilterTransfer);
     }
 }
