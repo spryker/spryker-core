@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CustomerConfig extends AbstractBundleConfig
 {
     const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
+    const ERROR_CODE_CUSTOMER_INVALID_EMAIL = 4002;
 
     /**
      * @return string
