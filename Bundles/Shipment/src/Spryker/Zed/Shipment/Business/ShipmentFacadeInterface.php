@@ -216,4 +216,14 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity);
+
+    /**
+     * Specification:
+     * - Returns shipment expense type, used to identify expense used for shipment.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getShipmentExpenseTypeIdentifier();
 }

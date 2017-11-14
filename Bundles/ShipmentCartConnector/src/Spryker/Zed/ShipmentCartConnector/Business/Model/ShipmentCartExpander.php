@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 
@@ -56,7 +55,13 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
 
         $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
 
+        if (!$shipmentMethodTransfer) {
+            return $cartChangeTransfer;
+        }
+
         $this->updateShipmentExpenses($quoteTransfer, $shipmentMethodTransfer);
+
+        $shipmentMethodTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
 
         $quoteTransfer->getShipment()->setMethod($shipmentMethodTransfer);
 
@@ -121,8 +126,9 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     {
         $priceMode = $quoteTransfer->getPriceMode();
         $currencyTransfer = $quoteTransfer->getCurrency();
+        $shipmentExpenseTypeIdentifier = $this->shipmentFacade->getShipmentExpenseTypeIdentifier();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() !== $shipmentExpenseTypeIdentifier) {
                 continue;
             }
 

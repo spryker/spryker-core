@@ -20,8 +20,8 @@ class ProductBundlePreReloadUpdater implements ProductBundlePreReloadUpdaterInte
     public function preReloadItems(QuoteTransfer $quoteTransfer)
     {
         $quoteTransfer = $this->removeBundledItems($quoteTransfer);
-        $this->assignBundles($quoteTransfer);
-        $this->removePreviousBundles($quoteTransfer);
+        $this->assignBundlesForExpanding($quoteTransfer);
+        $this->removePreviouslyExpandedBundles($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -50,7 +50,7 @@ class ProductBundlePreReloadUpdater implements ProductBundlePreReloadUpdaterInte
      *
      * @return void
      */
-    protected function assignBundles(QuoteTransfer $quoteTransfer)
+    protected function assignBundlesForExpanding(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             $quoteTransfer->addItem($itemTransfer);
@@ -62,7 +62,7 @@ class ProductBundlePreReloadUpdater implements ProductBundlePreReloadUpdaterInte
      *
      * @return void
      */
-    protected function removePreviousBundles(QuoteTransfer $quoteTransfer)
+    protected function removePreviouslyExpandedBundles(QuoteTransfer $quoteTransfer)
     {
         $quoteTransfer->setBundleItems(new ArrayObject());
     }

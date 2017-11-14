@@ -34,4 +34,12 @@ class ShipmentCartConnectorToShipmentFacadeBridge implements ShipmentCartConnect
     {
         return $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
     }
+
+    /**
+     * @return string
+     */
+    public function getShipmentExpenseTypeIdentifier()
+    {
+        return $this->shipmentFacade->getShipmentExpenseTypeIdentifier();
+    }
 }

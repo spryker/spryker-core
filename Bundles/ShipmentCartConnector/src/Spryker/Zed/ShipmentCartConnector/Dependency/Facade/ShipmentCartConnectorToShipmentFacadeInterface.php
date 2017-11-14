@@ -18,4 +18,9 @@ interface ShipmentCartConnectorToShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
+
+    /**
+     * @return string
+     */
+    public function getShipmentExpenseTypeIdentifier();
 }

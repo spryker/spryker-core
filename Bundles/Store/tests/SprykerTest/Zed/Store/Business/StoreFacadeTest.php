@@ -27,6 +27,7 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class StoreFacadeTest extends Unit
 {
+    const DEFAULT_STORE_NAME = 'DE';
     /**
      * @var \SprykerTest\Zed\Store\StoreBusinessTester
      */
@@ -69,6 +70,20 @@ class StoreFacadeTest extends Unit
 
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
         $this->assertNotEmpty($storeTransfer->getName());
+        $this->assertNotEmpty($storeTransfer->getIdStore());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStoreByNameShouldReturnStore()
+    {
+        $storeFacade = $this->createStoreFacade();
+        $storeTransfer = $storeFacade->getStoreByName(static::DEFAULT_STORE_NAME);
+
+        $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
+
+        $this->assertEquals(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
         $this->assertNotEmpty($storeTransfer->getIdStore());
     }
 

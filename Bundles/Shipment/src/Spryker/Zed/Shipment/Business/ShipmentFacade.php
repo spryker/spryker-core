@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -247,5 +248,17 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         return $this->getFactory()->createShipmentMethodTransformer()
             ->transformEntityToTransfer($shipmentMethodEntity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getShipmentExpenseTypeIdentifier()
+    {
+        return ShipmentConstants::SHIPMENT_EXPENSE_TYPE;
     }
 }
