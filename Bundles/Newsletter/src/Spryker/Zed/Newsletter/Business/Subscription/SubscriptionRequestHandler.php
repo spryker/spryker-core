@@ -19,6 +19,7 @@ use Spryker\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberEmailEx
 use Spryker\Zed\Newsletter\Communication\Plugin\Mail\NewsletterSubscribedMailTypePlugin;
 use Spryker\Zed\Newsletter\Communication\Plugin\Mail\NewsletterUnsubscribedMailTypePlugin;
 use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface;
+use Spryker\Zed\Newsletter\Dependency\Service\NewsletterToUtilValidateServiceInterface;
 use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface;
 
 class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
@@ -49,21 +50,29 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
     protected $mailFacade;
 
     /**
+     * @var \Spryker\Zed\Newsletter\Dependency\Service\NewsletterToUtilValidateServiceInterface
+     */
+    protected $utilValidateService;
+
+    /**
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface $subscriptionManager
      * @param \Spryker\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface $subscriberManager
      * @param \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface $mailFacade
+     * @param \Spryker\Zed\Newsletter\Dependency\Service\NewsletterToUtilValidateServiceInterface $utilValidateService
      */
     public function __construct(
         SubscriptionManagerInterface $subscriptionManager,
         SubscriberManagerInterface $subscriberManager,
         NewsletterQueryContainerInterface $queryContainer,
-        NewsletterToMailInterface $mailFacade
+        NewsletterToMailInterface $mailFacade,
+        NewsletterToUtilValidateServiceInterface $utilValidateService
     ) {
         $this->subscriptionManager = $subscriptionManager;
         $this->subscriberManager = $subscriberManager;
         $this->queryContainer = $queryContainer;
         $this->mailFacade = $mailFacade;
+        $this->utilValidateService = $utilValidateService;
     }
 
     /**
@@ -240,16 +249,18 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
      */
     protected function processSubscription(NewsletterSubscriberTransfer $newsletterSubscriberTransfer, NewsletterTypeTransfer $newsletterTypeTransfer)
     {
-        $isAlreadySubscribed = $this->subscriptionManager->isAlreadySubscribed($newsletterSubscriberTransfer, $newsletterTypeTransfer);
-
-        if ($isAlreadySubscribed) {
-            $subscriptionResult = $this->createAlreadySubscribedResult($newsletterTypeTransfer);
-        } else {
-            $this->subscriptionManager->subscribe($newsletterSubscriberTransfer, $newsletterTypeTransfer);
-            $subscriptionResult = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, true);
+        $isEmailValid = $this->utilValidateService->isEmailFormatValid($newsletterSubscriberTransfer->getEmail());
+        if (!$isEmailValid) {
+            return $this->createInvalidEmailResult($newsletterTypeTransfer);
         }
 
-        return $subscriptionResult;
+        $isAlreadySubscribed = $this->subscriptionManager->isAlreadySubscribed($newsletterSubscriberTransfer, $newsletterTypeTransfer);
+        if ($isAlreadySubscribed) {
+            return $this->createAlreadySubscribedResult($newsletterTypeTransfer);
+        }
+
+        $this->subscriptionManager->subscribe($newsletterSubscriberTransfer, $newsletterTypeTransfer);
+        return $this->createSubscriptionResultTransfer($newsletterTypeTransfer, true);
     }
 
     /**
@@ -271,6 +282,19 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
     {
         $subscriptionResultTransfer = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, false);
         $subscriptionResultTransfer->setErrorMessage(Messages::ALREADY_SUBSCRIBED);
+
+        return $subscriptionResultTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NewsletterTypeTransfer $newsletterTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer
+     */
+    protected function createInvalidEmailResult(NewsletterTypeTransfer $newsletterTypeTransfer)
+    {
+        $subscriptionResultTransfer = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, false);
+        $subscriptionResultTransfer->setErrorMessage(Messages::INVALID_EMAIL_FORMAT);
 
         return $subscriptionResultTransfer;
     }

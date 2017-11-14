@@ -11,11 +11,14 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToGlossaryBridge;
 use Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailBridge;
+use Spryker\Zed\Newsletter\Dependency\Service\NewsletterToUtilValidateServiceBridge;
 
 class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_MAIL = 'mail facade';
     const FACADE_GLOSSARY = 'glossary facade';
+
+    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +30,8 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::FACADE_MAIL] = function (Container $container) {
             return new NewsletterToMailBridge($container->getLocator()->mail()->facade());
         };
+
+        $container = $this->addUtilValidateService($container);
 
         return $container;
     }
@@ -43,6 +48,20 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
         };
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
             return new NewsletterToGlossaryBridge($container->getLocator()->glossary()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilValidateService(Container $container)
+    {
+        $container[self::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+            return new NewsletterToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
         };
 
         return $container;
