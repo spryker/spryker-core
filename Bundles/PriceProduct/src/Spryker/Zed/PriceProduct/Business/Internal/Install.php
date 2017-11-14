@@ -8,13 +8,12 @@
 namespace Spryker\Zed\PriceProduct\Business\Internal;
 
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceTypeWriterInterface;
-use Spryker\Zed\PriceProduct\Business\Model\WriterInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class Install implements InstallInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Writer
+     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceTypeWriterInterface
      */
     protected $priceTypeWriter;
 
@@ -29,8 +28,8 @@ class Install implements InstallInterface
      */
     public function __construct(
         PriceTypeWriterInterface $priceTypeWriter,
-        PriceProductConfig $config)
-    {
+        PriceProductConfig $config
+    ) {
         $this->priceTypeWriter = $priceTypeWriter;
         $this->config = $config;
     }
