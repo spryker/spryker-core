@@ -39,6 +39,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Config\Helper\ConfigInit
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - WebDriver:
                     url: ''
                     browser: chrome

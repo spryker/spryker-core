@@ -59,7 +59,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const PLUGINS_PRODUCT_ABSTRACT_VIEW = 'PRODUCT_MANAGEMENT:PLUGINS_PRODUCT_ABSTRACT_VIEW';
 
     const PLUGIN_MONEY_FORM_TYPE = 'MONEY_FORM_TYPE_PLUGIN';
-    const PLUGIN_MONEY_COLLECTION_FORM_TYPE = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
