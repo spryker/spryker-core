@@ -477,4 +477,12 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE);
     }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getMoneyFormTypePlugin()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGIN_MONEY_FORM_TYPE);
+    }
 }

@@ -7,15 +7,19 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Price;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractCollectionType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  */
-class ProductMoneyCollectionType extends MoneyCollectionType
+class ProductMoneyCollectionType extends AbstractCollectionType
 {
     /**
      * @var string
@@ -28,11 +32,55 @@ class ProductMoneyCollectionType extends MoneyCollectionType
     protected static $grossPriceModeIdentifier;
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string[] $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $defaultOptions = [
+            'entry_options' => [
+                'data_class' => MoneyValueTransfer::class,
+            ],
+            'entry_type' => $this->getFactory()->getMoneyFormTypePlugin()->getType(),
+        ];
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $this->setInitialMoneyValueData($event);
+            }
+        );
+
+        parent::buildForm($builder, array_replace_recursive($defaultOptions, $options));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getBlockPrefix()
     {
         return 'product_money_collection';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return void
+     */
+    protected function setInitialMoneyValueData(FormEvent $event)
+    {
+        $moneyCollectionInitialDataProvider = $this->getFactory()->createMoneyCollectionMultiStoreDataProvider();
+
+        if (count($event->getData()) === 0) {
+            $event->setData($moneyCollectionInitialDataProvider->getInitialData());
+            return;
+        }
+
+        $event->setData(
+            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($event->getData())
+        );
     }
 
     /**

@@ -9,13 +9,13 @@ namespace Spryker\Zed\Money\Communication\Plugin\Form;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 
 /**
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  */
-class MoneyCollectionFormTypePlugin extends AbstractPlugin implements FormTypeInterface
+class MoneyFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
     /**
      * {@inheritdoc}
@@ -26,6 +26,6 @@ class MoneyCollectionFormTypePlugin extends AbstractPlugin implements FormTypeIn
      */
     public function getType()
     {
-        return MoneyCollectionType::class;
+        return MoneyType::class;
     }
 }

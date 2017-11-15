@@ -26,6 +26,8 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextBridge;
+use Spryker\Zed\ProductManagement\Exception\MissingMoneyTypePluginException;
+use Symfony\Component\Form\FormTypeInterface;
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -55,6 +57,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
 
     const PLUGINS_PRODUCT_ABSTRACT_VIEW = 'PRODUCT_MANAGEMENT:PLUGINS_PRODUCT_ABSTRACT_VIEW';
+
+    const PLUGIN_MONEY_FORM_TYPE = 'MONEY_FORM_TYPE_PLUGIN';
+    const PLUGIN_MONEY_COLLECTION_FORM_TYPE = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -215,6 +220,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addStore($container);
         $container = $this->addProductAbstractViewPlugins($container);
+        $container = $this->addMoneyFormTypePlugin($container);
 
         return $container;
     }
@@ -245,6 +251,39 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFormTypePlugin(Container $container)
+    {
+        $container[static::PLUGIN_MONEY_FORM_TYPE] = function (Container $container) {
+            return $this->createMoneyFormTypePlugin($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @throws \Spryker\Zed\ProductManagement\Exception\MissingMoneyTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function createMoneyFormTypePlugin(Container $container)
+    {
+        throw new MissingMoneyTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure MoneyFormTypePlugin ' .
+                'in your own ProductManagementDependencyProvider::createMoneyFormTypePlugin() ' .
+                'to be able to manage product prices.',
+                FormTypeInterface::class
+            )
+        );
     }
 
     /**
