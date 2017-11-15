@@ -33,5 +33,4 @@ class ProductManagementCommunicationTester extends Actor
             return new MoneyFormTypePlugin();
         });
     }
-
 }
