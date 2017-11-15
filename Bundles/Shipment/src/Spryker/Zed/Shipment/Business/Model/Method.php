@@ -67,6 +67,19 @@ class Method implements MethodInterface
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
+        $shipmentMethodsTransfer = $this->getAvailableMethodsTransfer($quoteTransfer);
+        $shipmentMethodsTransfer = $this->applyFilters($shipmentMethodsTransfer, $quoteTransfer);
+
+        return $shipmentMethodsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function getAvailableMethodsTransfer(QuoteTransfer $quoteTransfer)
+    {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
 
@@ -76,8 +89,6 @@ class Method implements MethodInterface
                 $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
             }
         }
-
-        $shipmentMethodsTransfer = $this->applyShipmentMethodFilters($shipmentMethodsTransfer, $quoteTransfer);
 
         return $shipmentMethodsTransfer;
     }
@@ -114,7 +125,7 @@ class Method implements MethodInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
-    protected function applyShipmentMethodFilters(ShipmentMethodsTransfer $shipmentMethodsTransfer, QuoteTransfer $quoteTransfer)
+    protected function applyFilters(ShipmentMethodsTransfer $shipmentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
         $shipmentMethods = $shipmentMethodsTransfer->getMethods();
 

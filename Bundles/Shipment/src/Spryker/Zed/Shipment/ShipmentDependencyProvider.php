@@ -103,6 +103,18 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
         };
 
+        $container = $this->addMethodFilterPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMethodFilterPlugins(Container $container)
+    {
         $container[static::METHOD_FILTER_PLUGINS] = function (Container $container) {
             return $this->getMethodFilterPlugins($container);
         };
