@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Customer\Dependency\Service;
 
-interface CustomerToUtilSanitizeInterface
+interface CustomerToUtilSanitizeServiceInterface
 {
     /**
      * @param string $text
