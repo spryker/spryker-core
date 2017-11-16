@@ -15,7 +15,7 @@ class GiftCardMailConnectorToGiftCardQueryContainerBridge implements GiftCardMai
     protected $giftCardQueryContainer;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface $giftCardQueryContainer
+     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface $giftCardQueryContainer
      */
     public function __construct($giftCardQueryContainer)
     {

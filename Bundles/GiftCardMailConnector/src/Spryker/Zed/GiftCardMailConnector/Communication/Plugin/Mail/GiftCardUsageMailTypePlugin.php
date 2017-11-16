@@ -15,9 +15,9 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  * @method \Spryker\Zed\GiftCardMailConnector\Business\GiftCardMailConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCardMailConnector\Communication\GiftCardMailConnectorCommunicationFactory getFactory()
  */
-class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
+class GiftCardUsageMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    const MAIL_TYPE = 'gift card delivery mail';
+    const MAIL_TYPE = 'gift card usage mail';
 
     /**
      * @return string
@@ -49,7 +49,7 @@ class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypeP
      */
     protected function setSubject(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSubject('mail.giftCard.delivery.subject');
+        $mailBuilder->setSubject('mail.giftCard.usage.subject');
 
         return $this;
     }
@@ -61,7 +61,7 @@ class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypeP
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setHtmlTemplate('giftCardMailConnector/mail/gift_card_delivery.html.twig');
+        $mailBuilder->setHtmlTemplate('giftCardMailConnector/mail/gift_card_usage.html.twig');
 
         return $this;
     }
@@ -73,7 +73,7 @@ class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypeP
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setTextTemplate('giftCardMailConnector/mail/gift_card_delivery.text.twig');
+        $mailBuilder->setTextTemplate('giftCardMailConnector/mail/gift_card_usage.text.twig');
 
         return $this;
     }
@@ -85,8 +85,10 @@ class GiftCardDeliveryMailTypePlugin extends AbstractPlugin implements MailTypeP
      */
     protected function setRecipient(MailBuilderInterface $mailBuilder)
     {
-        $customerTransfer = $mailBuilder->getMailTransfer()
-            ->requireCustomer()
+        $mailBuilder->getMailTransfer()->requireCustomer();
+
+        $customerTransfer = $mailBuilder
+            ->getMailTransfer()
             ->getCustomer();
 
         $mailBuilder->addRecipient(

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\GiftCardMailConnector\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface GiftCardMailConnectorFacadeInterface
 {
     /**
@@ -22,4 +25,18 @@ interface GiftCardMailConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
     public function deliverGiftCardByEmail($idSalesOrderItem);
+
+    /**
+     * Specification:
+     * - Find Gift Cards in the provided quote
+     * - Sends an email to a Gift Card user
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function sendUsageNotification(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 }

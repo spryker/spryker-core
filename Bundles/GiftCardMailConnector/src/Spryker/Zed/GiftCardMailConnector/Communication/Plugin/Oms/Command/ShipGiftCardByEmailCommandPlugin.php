@@ -19,8 +19,9 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 class ShipGiftCardByEmailCommandPlugin extends AbstractPlugin implements CommandByItemInterface
 {
     /**
-     *
-     * Command which is executed per order item basis
+     * Specification:
+     * - Finds Gift Cards in the provided order
+     * - Send Gift Cards info via email
      *
      * @api
      *

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GiftCardMailConnector\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,9 +17,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class GiftCardMailConnectorFacade extends AbstractFacade implements GiftCardMailConnectorFacadeInterface
 {
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @inheritdoc
+     * @api
      *
      * @param int $idSalesOrderItem
      *
@@ -28,5 +30,22 @@ class GiftCardMailConnectorFacade extends AbstractFacade implements GiftCardMail
         return $this->getFactory()
             ->createGiftCardCarrier()
             ->deliverByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function sendUsageNotification(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        $this->getFactory()
+            ->createGiftCardUsageMailer()
+            ->sendUsageNotification($quoteTransfer, $checkoutResponseTransfer);
     }
 }

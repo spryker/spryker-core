@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCardMailConnector\Business;
 
 use Spryker\Zed\GiftCardMailConnector\Business\Carrier\GiftCardCarrier;
+use Spryker\Zed\GiftCardMailConnector\Business\Checkout\GiftCardUsageMailer;
 use Spryker\Zed\GiftCardMailConnector\GiftCardMailConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -24,6 +25,17 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
         return new GiftCardCarrier(
             $this->getMailFacade(),
             $this->getCustomerFacade(),
+            $this->getGiftCardQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCardMailConnector\Business\Checkout\GiftCardUsageMailerInterface
+     */
+    public function createGiftCardUsageMailer()
+    {
+        return new GiftCardUsageMailer(
+            $this->getMailFacade(),
             $this->getGiftCardQueryContainer()
         );
     }

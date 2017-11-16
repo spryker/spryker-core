@@ -11,10 +11,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/checkout": "*",
+    "spryker/oms": "*"
   },
   "suggest": {
-    "spryker/oms": "In case you will use ShipGiftCardByEmailCommandPlugin"
+    "spryker/checkout": "If you want to use Checkout plugins (SendEmailToGiftCardUser)",
+    "spryker/oms": "In case you will use commands (ShipGiftCardByEmailCommandPlugin)"
   },
   "autoload": {
     "psr-4": {

@@ -30,7 +30,7 @@ class GiftCardCarrier implements GiftCardCarrierInterface
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface
+     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface
      */
     protected $giftCardQueryContainer;
 
@@ -60,7 +60,7 @@ class GiftCardCarrier implements GiftCardCarrierInterface
 
         $mailTransfer
             ->requireCustomer()
-            ->requireGiftCard();
+            ->requireGiftCards();
 
         $this->mailFacade->handleMail($mailTransfer);
     }
@@ -86,7 +86,7 @@ class GiftCardCarrier implements GiftCardCarrierInterface
         $mailTransfer = $mailTransfer
             ->setType(GiftCardDeliveryMailTypePlugin::MAIL_TYPE)
             ->setCustomer($customerTransfer)
-            ->setGiftCard($giftCardTransfer);
+            ->addGiftCard($giftCardTransfer);
 
         return $mailTransfer;
     }
