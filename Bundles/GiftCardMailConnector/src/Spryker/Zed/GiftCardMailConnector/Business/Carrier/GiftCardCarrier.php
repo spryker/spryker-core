@@ -13,14 +13,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException;
 use Spryker\Zed\GiftCardMailConnector\Communication\Plugin\Mail\GiftCardDeliveryMailTypePlugin;
-use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerInterface;
-use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface;
+use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerFacadeInterface;
+use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface;
 use Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface;
 
 class GiftCardCarrier implements GiftCardCarrierInterface
 {
     /**
-     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface
+     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface
      */
     protected $mailFacade;
 
@@ -35,13 +35,13 @@ class GiftCardCarrier implements GiftCardCarrierInterface
     protected $giftCardQueryContainer;
 
     /**
-     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface $mailFacade
-     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface $mailFacade
+     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface $giftCardQueryContainer
      */
     public function __construct(
-        GiftCardMailConnectorToMailInterface $mailFacade,
-        GiftCardMailConnectorToCustomerInterface $customerFacade,
+        GiftCardMailConnectorToMailFacadeInterface $mailFacade,
+        GiftCardMailConnectorToCustomerFacadeInterface $customerFacade,
         GiftCardMailConnectorToGiftCardQueryContainerInterface $giftCardQueryContainer
     ) {
         $this->mailFacade = $mailFacade;

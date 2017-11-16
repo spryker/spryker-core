@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\GiftCardMailConnector;
 
-use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerBridge;
-use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailBridge;
+use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerFacadeBridge;
+use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeBridge;
 use Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -41,7 +41,7 @@ class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyPr
     protected function addMailFacade(Container $container)
     {
         $container[static::MAIL_FACADE] = function (Container $container) {
-            return new GiftCardMailConnectorToMailBridge($container->getLocator()->mail()->facade());
+            return new GiftCardMailConnectorToMailFacadeBridge($container->getLocator()->mail()->facade());
         };
 
         return $container;
@@ -55,7 +55,7 @@ class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyPr
     protected function addCustomerFacade(Container $container)
     {
         $container[static::CUSTOMER_FACADE] = function (Container $container) {
-            return new GiftCardMailConnectorToCustomerBridge($container->getLocator()->customer()->facade());
+            return new GiftCardMailConnectorToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

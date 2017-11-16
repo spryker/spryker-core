@@ -41,7 +41,7 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface
+     * @return \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface
      */
     protected function getMailFacade()
     {
@@ -49,7 +49,7 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerInterface
+     * @return \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerFacadeInterface
      */
     protected function getCustomerFacade()
     {

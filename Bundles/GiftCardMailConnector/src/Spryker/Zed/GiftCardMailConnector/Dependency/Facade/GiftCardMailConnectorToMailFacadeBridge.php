@@ -9,7 +9,7 @@ namespace Spryker\Zed\GiftCardMailConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\MailTransfer;
 
-class GiftCardMailConnectorToMailBridge implements GiftCardMailConnectorToMailInterface
+class GiftCardMailConnectorToMailFacadeBridge implements GiftCardMailConnectorToMailFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface

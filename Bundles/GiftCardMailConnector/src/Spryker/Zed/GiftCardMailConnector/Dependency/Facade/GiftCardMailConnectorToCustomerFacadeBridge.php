@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\GiftCardMailConnector\Dependency\Facade;
 
-class GiftCardMailConnectorToCustomerBridge implements GiftCardMailConnectorToCustomerInterface
+class GiftCardMailConnectorToCustomerFacadeBridge implements GiftCardMailConnectorToCustomerFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface

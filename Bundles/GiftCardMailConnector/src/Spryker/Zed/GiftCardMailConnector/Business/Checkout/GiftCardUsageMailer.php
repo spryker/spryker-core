@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\GiftCardMailConnector\Communication\Plugin\Mail\GiftCardUsageMailTypePlugin;
-use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface;
+use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface;
 use Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface;
 
 class GiftCardUsageMailer implements GiftCardUsageMailerInterface
 {
     /**
-     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface
+     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface
      */
     protected $mailFacade;
 
@@ -27,10 +27,10 @@ class GiftCardUsageMailer implements GiftCardUsageMailerInterface
     protected $giftCardQueryContainer;
 
     /**
-     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailInterface $mailFacade
+     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface $giftCardQueryContainer
      */
-    public function __construct(GiftCardMailConnectorToMailInterface $mailFacade, GiftCardMailConnectorToGiftCardQueryContainerInterface $giftCardQueryContainer)
+    public function __construct(GiftCardMailConnectorToMailFacadeInterface $mailFacade, GiftCardMailConnectorToGiftCardQueryContainerInterface $giftCardQueryContainer)
     {
         $this->mailFacade = $mailFacade;
         $this->giftCardQueryContainer = $giftCardQueryContainer;

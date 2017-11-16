@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\GiftCardMailConnector\Dependency\Facade;
 
-interface GiftCardMailConnectorToCustomerInterface
+use Generated\Shared\Transfer\MailTransfer;
+
+interface GiftCardMailConnectorToMailFacadeInterface
 {
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return void
      */
-    public function findByReference($customerReference);
+    public function handleMail(MailTransfer $mailTransfer);
 }
