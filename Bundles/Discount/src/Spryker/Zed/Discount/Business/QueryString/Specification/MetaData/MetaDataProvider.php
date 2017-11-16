@@ -30,7 +30,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     protected $logicalComparators;
 
     /**
-     * @var array|null Numerical array of available fields.
+     * @var string[]|null Numerical array of available fields.
      */
     protected $availableFieldsBuffer = null;
 
@@ -75,7 +75,7 @@ class MetaDataProvider implements MetaDataProviderInterface
      */
     public function isFieldAvailable($field)
     {
-        if (!isset($this->availableFieldsBuffer)) {
+        if (!isset($this->availableFieldsMapBuffer)) {
             $this->loadAvailableFieldsBuffers();
         }
 
