@@ -86,11 +86,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @param array $bundles
      * @param bool $dryRun
      *
-     * @return array
+     * @return void
      */
     public function updateComposerJsonInBundles(array $bundles, $dryRun = false)
     {
-        return $this->getFactory()->createComposerJsonUpdater()->update($bundles, $dryRun);
+        $this->getFactory()->createComposerJsonUpdater()->update($bundles, $dryRun);
     }
 
     /**
@@ -124,21 +124,19 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function getAllBundles()
     {
-        return $this->getFactory()->createDependencyManager()->collectAllBundles();
+        return $this->getFactory()->createDependencyManager()->collectAllModules();
     }
 
     /**
      * @api
      *
-     * @param string $application
-     * @param string $bundle
-     * @param string $layer
+     * @param string $module
      *
      * @return void
      */
-    public function buildDependencyTree($application, $bundle, $layer)
+    public function buildDependencyTree(string $module)
     {
-        $this->getFactory()->createDependencyTreeBuilder($application, $bundle, $layer)->buildDependencyTree();
+        $this->getFactory()->createDependencyTreeBuilder()->buildDependencyTree($module);
     }
 
     /**
@@ -245,13 +243,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer)
     {
-        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($bundleDependencyCollectionTransfer);
+        return $this->getFactory()->createComposerDependencyParser()->getComposerDependencyComparison($moduleDependencyCollectionTransfer);
     }
 
     /**

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree;
 
-use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 
-class AdjacencyMatrixBuilder
+class AdjacencyMatrixBuilder implements AdjacencyMatrixBuilderInterface
 {
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
@@ -18,7 +18,7 @@ class AdjacencyMatrixBuilder
     private $dependencyTreeReader;
 
     /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface
      */
     private $filter;
 
@@ -35,12 +35,12 @@ class AdjacencyMatrixBuilder
     /**
      * @param array $bundleList
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $dependencyTreeReader
-     * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter $filter
+     * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface $filter
      */
     public function __construct(
         array $bundleList,
         DependencyTreeReaderInterface $dependencyTreeReader,
-        TreeFilter $filter
+        TreeFilterInterface $filter
     ) {
         $this->bundleList = $bundleList;
         $this->dependencyTreeReader = $dependencyTreeReader;

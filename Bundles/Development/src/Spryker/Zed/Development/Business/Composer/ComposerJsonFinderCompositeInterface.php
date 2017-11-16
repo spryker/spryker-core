@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\Development\Business\Composer;
 
-interface ComposerJsonUpdaterInterface
+interface ComposerJsonFinderCompositeInterface extends ComposerJsonFinderInterface
 {
     /**
-     * @param array $bundles
-     * @param bool $dryRun
+     * @param \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface $finder
      *
      * @return void
      */
-    public function update(array $bundles, $dryRun = false);
+    public function addFinder(ComposerJsonFinderInterface $finder);
 }

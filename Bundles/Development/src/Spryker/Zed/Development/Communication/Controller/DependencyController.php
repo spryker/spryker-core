@@ -19,7 +19,7 @@ class DependencyController extends AbstractController
 {
     const APPLICATION_ZED = 'Zed';
     const QUERY_KEY_BUILD_TREE = 'build-tree';
-    const QUERY_KEY_BUNDLE = 'bundle';
+    const QUERY_KEY_MODULE = 'bundle';
 
     /**
      * @return array
@@ -40,13 +40,13 @@ class DependencyController extends AbstractController
      */
     public function outgoingAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(static::QUERY_KEY_BUNDLE);
+        $bundleName = $request->query->getAlnum(static::QUERY_KEY_MODULE);
 
         $bundleDependencyCollectionTransfer = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
         $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleDependencyCollectionTransfer);
 
         return $this->viewResponse([
-            static::QUERY_KEY_BUNDLE => $bundleName,
+            static::QUERY_KEY_MODULE => $bundleName,
             'dependencies' => $bundleDependencyCollectionTransfer,
             'composerDependencies' => $composerDependencies,
         ]);
@@ -59,7 +59,7 @@ class DependencyController extends AbstractController
      */
     public function outgoingGraphAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(self::QUERY_KEY_BUNDLE);
+        $bundleName = $request->query->getAlnum(self::QUERY_KEY_MODULE);
         $dataProvider = $this->getFactory()->createBundleFormDataProvider($request, $bundleName);
 
         $form = $this->getFactory()
@@ -114,12 +114,12 @@ class DependencyController extends AbstractController
      */
     public function incomingAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(static::QUERY_KEY_BUNDLE);
+        $module = $request->query->getAlnum(static::QUERY_KEY_MODULE);
 
-        $dependencies = $this->getFacade()->showIncomingDependenciesForBundle($bundleName);
+        $dependencies = $this->getFacade()->showIncomingDependenciesForBundle($module);
 
         return $this->viewResponse([
-            static::QUERY_KEY_BUNDLE => $bundleName,
+            static::QUERY_KEY_MODULE => $module,
             'dependencies' => $dependencies,
         ]);
     }
@@ -131,20 +131,20 @@ class DependencyController extends AbstractController
      */
     public function dependencyTreeGraphAction(Request $request)
     {
-        if (!$request->query->has(static::QUERY_KEY_BUNDLE)) {
+        if (!$request->query->has(static::QUERY_KEY_MODULE)) {
             $this->addErrorMessage('You must specify a bundle for which the graph should be build');
 
             return $this->redirectResponse('/development/dependency');
         }
 
         $callback = function () use ($request) {
-            $bundleToView = $request->query->get(static::QUERY_KEY_BUNDLE, false);
+            $module = $request->query->getAlpha(static::QUERY_KEY_MODULE, '*');
 
             if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, !$this->hasDependencyTreeCache())) {
-                $this->getFacade()->buildDependencyTree('*', $bundleToView, '*');
+                $this->getFacade()->buildDependencyTree($module);
             }
 
-            echo $this->getFacade()->drawDetailedDependencyTreeGraph($bundleToView);
+            echo $this->getFacade()->drawDetailedDependencyTreeGraph($module);
         };
 
         return $this->streamedResponse($callback);
@@ -158,15 +158,14 @@ class DependencyController extends AbstractController
     public function simpleAction(Request $request)
     {
         $callback = function () use ($request) {
-            $bundleToView = $request->query->getBoolean(static::QUERY_KEY_BUNDLE, false);
+            $module = $request->query->getAlpha(static::QUERY_KEY_MODULE, '*');
             $showEngineBundle = $request->query->getBoolean('show-engine-bundle', true);
 
             if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, !$this->hasDependencyTreeCache())) {
-                $bundle = (is_string($bundleToView)) ? $bundleToView : '*';
-                $this->getFacade()->buildDependencyTree('*', $bundle, '*');
+                $this->getFacade()->buildDependencyTree($module);
             }
 
-            echo $this->getFacade()->drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView);
+            echo $this->getFacade()->drawSimpleDependencyTreeGraph($showEngineBundle, $module);
         };
 
         return $this->streamedResponse($callback);
@@ -180,7 +179,7 @@ class DependencyController extends AbstractController
     public function adjacencyMatrixAction(Request $request)
     {
         if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, !$this->hasDependencyTreeCache())) {
-            $this->getFacade()->buildDependencyTree('*', '*', '*');
+            $this->getFacade()->buildDependencyTree('*');
         }
 
         $matrixData = $this->getFacade()->getAdjacencyMatrixData();
@@ -197,14 +196,13 @@ class DependencyController extends AbstractController
     public function externalDependencyTreeAction(Request $request)
     {
         $callback = function () use ($request) {
-            $bundleToView = $request->query->getBoolean(static::QUERY_KEY_BUNDLE, false);
+            $module = $request->query->getAlpha(static::QUERY_KEY_MODULE, '*');
 
             if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, !$this->hasDependencyTreeCache())) {
-                $bundle = (is_string($bundleToView)) ? $bundleToView : '*';
-                $this->getFacade()->buildDependencyTree('*', $bundle, '*');
+                $this->getFacade()->buildDependencyTree($module);
             }
 
-            echo $this->getFacade()->drawExternalDependencyTreeGraph($bundleToView);
+            echo $this->getFacade()->drawExternalDependencyTreeGraph($module);
         };
 
         return $this->streamedResponse($callback);

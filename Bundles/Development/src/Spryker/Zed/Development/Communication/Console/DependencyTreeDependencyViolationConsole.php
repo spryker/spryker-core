@@ -46,11 +46,16 @@ class DependencyTreeDependencyViolationConsole extends Console
         $this->info('Find dependency violations');
 
         $modules = $this->getFacade()->getAllBundles();
-
         $module = $input->getArgument(static::ARGUMENT_MODULE);
         if ($module) {
             $filter = new DashToCamelCase();
-            $modules = [ucfirst($filter->filter($module))];
+            $filteredModuleName = ucfirst($filter->filter($module));
+            if (!in_array($filteredModuleName, $modules)) {
+                $output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', $filteredModuleName));
+
+                return static::CODE_ERROR;
+            }
+            $modules = [$filteredModuleName];
         }
 
         $message = sprintf('Checking %d %s for dependency issues.', count($modules), (count($modules) === 1) ? 'Module (' . $modules[0] . ')' : 'Modules');
