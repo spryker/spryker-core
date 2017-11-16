@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
-use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleFacadeInterface;
-use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 /**
  * Auto-generated group annotations
@@ -133,22 +133,22 @@ class ProductManagerTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockProductFacade()
     {
-        return $this->getMockBuilder(ProductCartConnectorToProductFacadeInterface::class)
+        return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
             ->setMethods(['getProductConcrete', 'getLocalizedProductConcreteName', 'hasProductAbstract', 'hasProductConcrete'])
             ->disableOriginalConstructor()
             ->getMock();
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockLocaleFacade()
     {
-        return $this->getMockBuilder(ProductCartConnectorToLocaleFacadeInterface::class)
+        return $this->getMockBuilder(ProductCartConnectorToLocaleInterface::class)
             ->setMethods(['getCurrentLocale'])
             ->disableOriginalConstructor()
             ->getMock();

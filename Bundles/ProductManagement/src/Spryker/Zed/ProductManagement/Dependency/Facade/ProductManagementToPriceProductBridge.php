@@ -59,4 +59,12 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
     {
         return $this->priceProductFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
     }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForBothType()
+    {
+        return $this->priceProductFacade->getPriceModeIdentifierForBothType();
+    }
 }

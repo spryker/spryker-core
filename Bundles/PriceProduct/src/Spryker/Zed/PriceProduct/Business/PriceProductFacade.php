@@ -305,4 +305,18 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
             ->createPriceProductAbstractReader()
             ->findProductAbstractPrice($idAbstractProduct, $priceTypeName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getPriceModeIdentifierForBothType()
+    {
+        return $this->getFactory()
+            ->getModuleConfig()
+            ->getPriceModeIdentifierForBothType();
+    }
 }

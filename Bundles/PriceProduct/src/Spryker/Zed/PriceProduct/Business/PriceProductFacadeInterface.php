@@ -273,4 +273,14 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findProductAbstractPrice($idAbstractProduct, $priceTypeName = null);
+
+    /**
+     * Specification:
+     *  - Returns price mode identifier when used identify price which is applicable to gross and net prices type together
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getPriceModeIdentifierForBothType();
 }

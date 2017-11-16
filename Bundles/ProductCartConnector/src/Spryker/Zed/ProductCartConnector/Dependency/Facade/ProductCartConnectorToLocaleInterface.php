@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
-interface ProductCartConnectorToLocaleFacadeInterface
+interface ProductCartConnectorToLocaleInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer

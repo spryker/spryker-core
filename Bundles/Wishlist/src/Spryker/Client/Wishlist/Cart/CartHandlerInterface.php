@@ -6,7 +6,6 @@
 namespace Spryker\Client\Wishlist\Cart;
 
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
-use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 
 interface CartHandlerInterface
 {

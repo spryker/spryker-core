@@ -7,16 +7,17 @@
 
 namespace Spryker\Client\PriceProduct;
 
-use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\PriceProduct\PriceProductConfig as SharedPriceProductConfig;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceProductConfig extends AbstractBundleConfig
 {
     /**
-     * @return \Spryker\Shared\PriceProduct\PriceProductConfig
+     * @return string
      */
-    public function createSharedPriceConfig()
+    public function getPriceTypeDefaultName()
     {
-        return new SharedPriceProductConfig();
+        return Config::get(PriceProductConstants::DEFAULT_PRICE_TYPE);
     }
 }

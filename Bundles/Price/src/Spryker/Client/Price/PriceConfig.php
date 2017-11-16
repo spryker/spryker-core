@@ -8,15 +8,33 @@
 namespace Spryker\Client\Price;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Price\PriceConfig as SharedPriceConfig;
+use Spryker\Shared\Price\PriceConstants;
 
 class PriceConfig extends AbstractBundleConfig
 {
     /**
-     * @return \Spryker\Shared\Price\PriceConfig
+     * @return string
      */
-    public function createSharedPriceConfig()
+    public function getDefaultPriceMode()
     {
-        return new SharedPriceConfig();
+        return Config::get(PriceConstants::DEFAULT_PRICE_MODE, SharedPriceConfig::PRICE_MODE_GROSS);
+    }
+
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier()
+    {
+        return SharedPriceConfig::PRICE_MODE_NET;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGrossPriceModeIdentifier()
+    {
+        return SharedPriceConfig::PRICE_MODE_GROSS;
     }
 }

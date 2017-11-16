@@ -17,9 +17,4 @@ interface ProductManagementConstants
      * @api
      */
     const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
-
-    /**
-     * Price mode for price type when its applicable to gross and net price modes.
-     */
-    const PRICE_MODE_BOTH = 'BOTH';
 }

@@ -39,7 +39,7 @@ class PriceClient extends AbstractClient implements PriceClientInterface
     public function getGrossPriceModeIdentifier()
     {
         return $this->getFactory()
-            ->createSharedConfig()
+            ->getModuleConfig()
             ->getGrossPriceModeIdentifier();
     }
 
@@ -53,7 +53,7 @@ class PriceClient extends AbstractClient implements PriceClientInterface
     public function getNetPriceModeIdentifier()
     {
         return $this->getFactory()
-            ->createSharedConfig()
+            ->getModuleConfig()
             ->getNetPriceModeIdentifier();
     }
 }

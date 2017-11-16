@@ -237,4 +237,12 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_STORE);
     }
+
+    /**
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig|\Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    public function getModuleConfig()
+    {
+        return parent::getConfig();
+    }
 }

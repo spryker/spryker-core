@@ -43,8 +43,6 @@ class PriceModeResolver implements PriceModeResolverInterface
             return $quoteTransfer->getPriceMode();
         }
 
-        return $this->priceConfig
-            ->createSharedPriceConfig()
-            ->getDefaultPriceMode();
+        return $this->priceConfig->getDefaultPriceMode();
     }
 }

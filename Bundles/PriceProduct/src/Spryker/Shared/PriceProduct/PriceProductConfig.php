@@ -7,15 +7,10 @@
 
 namespace Spryker\Shared\PriceProduct;
 
-use Spryker\Shared\Config\Config;
-
 class PriceProductConfig
 {
     /**
-     * @return string
+     * Price mode for price type when its applicable to gross and net price modes.
      */
-    public function getPriceTypeDefaultName()
-    {
-        return Config::get(PriceProductConstants::DEFAULT_PRICE_TYPE);
-    }
+    const PRICE_MODE_BOTH = 'BOTH';
 }

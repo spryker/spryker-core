@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
-class ProductCartConnectorToLocaleFacadeBridge implements ProductCartConnectorToLocaleFacadeInterface
+class ProductCartConnectorToLocaleBridge implements ProductCartConnectorToLocaleInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

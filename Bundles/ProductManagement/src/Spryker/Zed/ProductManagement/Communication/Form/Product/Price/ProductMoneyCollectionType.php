@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Price;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Kernel\Communication\Form\AbstractCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -142,7 +141,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $priceType = $priceTypeTransfer->getName();
         $priceModeConfiguration = $priceTypeTransfer->getPriceModeConfiguration();
 
-        if ($priceModeConfiguration === ProductManagementConstants::PRICE_MODE_BOTH) {
+        if ($priceModeConfiguration === $this->getPriceModeIdentifierForBothType()) {
             $priceTypes[$netPriceModeIdentifier][$priceType] = $priceTypeTransfer;
             $priceTypes[$grossPriceModeIdentifier][$priceType] = $priceTypeTransfer;
         }
@@ -177,7 +176,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $storeName = $moneyValueFormView->vars['store_name'];
         $currencySymbol = $moneyValueFormView->vars['currency_symbol'];
 
-        if ($priceModeConfiguration === ProductManagementConstants::PRICE_MODE_BOTH) {
+        if ($priceModeConfiguration === $this->getPriceModeIdentifierForBothType()) {
             $priceTable[$storeName][$currencySymbol][$netPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
             $priceTable[$storeName][$currencySymbol][$grossPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
         } else {
@@ -185,6 +184,14 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         }
 
         return $priceTable;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPriceModeIdentifierForBothType()
+    {
+        return $this->getFactory()->getPriceProductFacade()->getPriceModeIdentifierForBothType();
     }
 
     /**

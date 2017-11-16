@@ -34,4 +34,9 @@ interface ProductManagementToPriceProductInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForBothType();
 }

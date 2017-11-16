@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class ProductValidator implements ProductValidatorInterface
 {
@@ -19,13 +19,13 @@ class ProductValidator implements ProductValidatorInterface
     const MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS = 'product-cart.validation.error.concrete-product-exists';
     const MESSAGE_PARAM_SKU = 'sku';
 
-    /** @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface */
+    /** @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface $productFacade
      */
-    public function __construct(ProductCartConnectorToProductFacadeInterface $productFacade)
+    public function __construct(ProductCartConnectorToProductInterface $productFacade)
     {
         $this->productFacade = $productFacade;
     }
