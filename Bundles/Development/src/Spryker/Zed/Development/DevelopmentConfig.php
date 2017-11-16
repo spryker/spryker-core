@@ -72,26 +72,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getPathToCore() to get the path to core modules
-     *
-     * @return string
-     */
-    public function getBundleDirectory()
-    {
-        return $this->getConfig()->get(KernelConstants::SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @deprecated use getBundleDirectory() to get the path to core modules
-     *
-     * @return string
-     */
-    public function getPathToSpryker()
-    {
-        return $this->getPathToCore();
-    }
-
-    /**
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard (see `phpcs -i` for a list of available ones).
      *

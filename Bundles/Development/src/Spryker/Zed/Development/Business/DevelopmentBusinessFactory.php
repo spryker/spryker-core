@@ -1189,16 +1189,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createXmlReader() instead.
-     *
-     * @return \Zend\Config\Reader\ReaderInterface
-     */
-    protected function getXmlReader()
-    {
-        return $this->createXmlReader();
-    }
-
-    /**
      * @return \Zend\Config\Reader\ReaderInterface
      */
     protected function createXmlReader()
@@ -1217,16 +1207,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getProjectNamespaces(),
             $this->getConfig()->getCoreNamespaces()
         );
-    }
-
-    /**
-     * @deprecated Use createCamelCaseToDashFilter() instead.
-     *
-     * @return \Zend\Filter\FilterInterface
-     */
-    protected function getCamelCaseToDashFilter()
-    {
-        return $this->createCamelCaseToDashFilter();
     }
 
     /**
