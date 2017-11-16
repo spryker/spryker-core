@@ -81,18 +81,6 @@ class Manager implements ManagerInterface
     }
 
     /**
-     * @deprecated Use `collectAllForeignModules` instead
-     *
-     * @param string $moduleName
-     *
-     * @return array
-     */
-    protected function collectAllForeignBundles($moduleName)
-    {
-        return $this->collectAllForeignModules($moduleName);
-    }
-
-    /**
      * @param string $moduleName
      *
      * @return array
@@ -133,16 +121,6 @@ class Manager implements ManagerInterface
     }
 
     /**
-     * @deprecated Use `collectAllModules()` instead.
-     *
-     * @return array
-     */
-    public function collectAllBundles()
-    {
-        return $this->collectAllModules();
-    }
-
-    /**
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function collectCoreModules()
@@ -150,15 +128,5 @@ class Manager implements ManagerInterface
         $modules = (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
 
         return $modules;
-    }
-
-    /**
-     * @deprecated Use `collectCoreModules()` instead.
-     *
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
-     */
-    protected function collectCoreBundles()
-    {
-        return $this->collectCoreModules();
     }
 }
