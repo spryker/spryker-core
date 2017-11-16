@@ -29,11 +29,11 @@ class ComposerJsonFinderComposite implements ComposerJsonFinderCompositeInterfac
     /**
      * @return array
      */
-    public function find(): array
+    public function findAll(): array
     {
         $composerJsonFiles = [];
         foreach ($this->finder as $finder) {
-            $composerJsonFiles = array_merge($composerJsonFiles, $finder->find());
+            $composerJsonFiles = array_merge($composerJsonFiles, $finder->findAll());
         }
 
         return $composerJsonFiles;
