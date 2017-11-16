@@ -151,20 +151,6 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
-     */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
-    {
-        return $this->createCartHandler()->moveToCart($wishlistMoveToCartRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer

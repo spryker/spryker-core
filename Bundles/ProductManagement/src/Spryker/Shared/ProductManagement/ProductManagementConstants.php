@@ -11,9 +11,6 @@ interface ProductManagementConstants
 {
     const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
 
-    /** @deprecated Please use ProductManagementConstants::BASE_URL_YVES instead */
-    const HOST_YVES = 'HOST_YVES';
-
     /**
      * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *

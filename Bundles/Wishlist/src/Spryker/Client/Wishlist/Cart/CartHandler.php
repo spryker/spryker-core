@@ -38,23 +38,6 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
-     * @deprecated Use moveCollectionToCart() instead
-     *
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
-     */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
-    {
-        $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
-
-        $this->storeItemInQuote($wishlistMoveToCartRequestTransfer->getSku());
-        $this->wishlistClient->removeItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
-
-        return $wishlistMoveToCartRequestTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $requestCollectionTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
