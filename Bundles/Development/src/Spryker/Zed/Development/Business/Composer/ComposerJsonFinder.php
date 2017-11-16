@@ -22,6 +22,11 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     protected $pathToModules;
 
     /**
+     * @var bool
+     */
+    protected $pathIsValid = true;
+
+    /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param string $pathToModules
      */
@@ -34,8 +39,14 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     /**
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
-    public function find()
+    public function findAll()
     {
+        if (!$this->pathIsValid || !glob($this->pathToModules)) {
+            $this->pathIsValid = false;
+
+            return [];
+        }
+
         return iterator_to_array($this->finder->in($this->pathToModules)->name('composer.json')->depth('< 2'));
     }
 }

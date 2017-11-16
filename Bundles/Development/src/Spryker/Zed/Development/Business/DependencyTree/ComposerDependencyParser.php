@@ -222,7 +222,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      */
     protected function parseDeclaredDependenciesForBundle($moduleName)
     {
-        $composerJsonFiles = $this->finder->find();
+        $composerJsonFiles = $this->finder->findAll();
         foreach ($composerJsonFiles as $composerJsonFile) {
             if ($this->shouldSkip($composerJsonFile, $moduleName)) {
                 continue;
@@ -255,7 +255,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      */
     protected function getParsedComposerDependenciesForBundle($moduleName)
     {
-        $composerJsonFiles = $this->finder->find();
+        $composerJsonFiles = $this->finder->findAll();
 
         $composerDependencies = new ComposerDependencyCollectionTransfer();
 
