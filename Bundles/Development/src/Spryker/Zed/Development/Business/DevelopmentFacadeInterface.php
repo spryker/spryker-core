@@ -86,15 +86,17 @@ interface DevelopmentFacadeInterface
     public function getAllBundles();
 
     /**
+     * Specification:
+     * - Builds the dependency tree for all modules if * is used as $module.
+     * - Builds the dependency tree for specific module if $module is name of a module.
+     *
      * @api
      *
-     * @param string $application
-     * @param string $bundle
-     * @param string $layer
+     * @param string $module
      *
      * @return void
      */
-    public function buildDependencyTree($application, $bundle, $layer);
+    public function buildDependencyTree(string $module);
 
     /**
      * Specification:
@@ -185,11 +187,11 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer);
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer);
 
     /**
      * @api

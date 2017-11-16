@@ -26,6 +26,20 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array
+     */
+    public function getApplications()
+    {
+        return [
+            'Client',
+            'Service',
+            'Shared',
+            'Yves',
+            'Zed',
+        ];
+    }
+
+    /**
      * @return string
      */
     public function getPathToCore()
@@ -34,7 +48,31 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getBundleDirectory() to get the path to core modules
+     * @return string
+     */
+    public function getPathToSdk()
+    {
+        return $this->getPathToRoot() . 'vendor/spryker-sdk/';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToShop()
+    {
+        return $this->getPathToRoot() . 'vendor/spryker-shop/';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToEco()
+    {
+        return $this->getPathToRoot() . 'vendor/spryker-eco/';
+    }
+
+    /**
+     * @deprecated use getPathToCore() to get the path to core modules
      *
      * @return string
      */

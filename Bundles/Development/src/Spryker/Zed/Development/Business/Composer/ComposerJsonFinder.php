@@ -19,16 +19,16 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     /**
      * @var string
      */
-    protected $pathToBundles;
+    protected $pathToModules;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
-     * @param string $pathToBundles
+     * @param string $pathToModules
      */
-    public function __construct(Finder $finder, $pathToBundles)
+    public function __construct(Finder $finder, $pathToModules)
     {
         $this->finder = $finder;
-        $this->pathToBundles = $pathToBundles;
+        $this->pathToModules = $pathToModules;
     }
 
     /**
@@ -36,6 +36,6 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
      */
     public function find()
     {
-        return $this->finder->in($this->pathToBundles)->name('composer.json')->depth('< 2');
+        return iterator_to_array($this->finder->in($this->pathToModules)->name('composer.json')->depth('< 2'));
     }
 }

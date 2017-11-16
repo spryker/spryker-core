@@ -9,48 +9,50 @@ namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Symfony\Component\Finder\Finder;
+use Zend\Filter\FilterChain;
+use Zend\Filter\Word\DashToCamelCase;
 
-class Manager
+class Manager implements ManagerInterface
 {
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\BundleParserInterface
      */
-    protected $bundleParser;
+    protected $moduleParser;
 
     /**
      * @var string
      */
-    protected $bundleDirectory;
+    protected $moduleDirectories;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
-     * @param string $bundleDirectory
+     * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $moduleParser
+     * @param string[] $moduleDirectories
      */
-    public function __construct(BundleParserInterface $bundleParser, $bundleDirectory)
+    public function __construct(BundleParserInterface $moduleParser, $moduleDirectories)
     {
-        $this->bundleParser = $bundleParser;
-        $this->bundleDirectory = $bundleDirectory;
+        $this->moduleParser = $moduleParser;
+        $this->moduleDirectories = array_filter($moduleDirectories, 'is_dir');
     }
 
     /**
-     * @param string $bundleName
+     * @param string $moduleName
      *
      * @return array
      */
-    public function parseIncomingDependencies($bundleName)
+    public function parseIncomingDependencies($moduleName)
     {
-        $allForeignBundles = $this->collectAllForeignBundles($bundleName);
+        $allForeignModules = $this->collectAllForeignModules($moduleName);
 
         $incomingDependencies = [];
-        foreach ($allForeignBundles as $foreignBundle) {
-            $bundleDependencyCollectionTransfer = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
-            $dependencyBundle = $this->findDependencyTo($bundleName, $bundleDependencyCollectionTransfer);
+        foreach ($allForeignModules as $foreignModule) {
+            $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($foreignModule);
+            $dependencyModule = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
 
-            if ($dependencyBundle) {
-                if (array_key_exists($foreignBundle, $incomingDependencies) === false) {
-                    $incomingDependencies[$foreignBundle] = 0;
+            if ($dependencyModule) {
+                if (array_key_exists($foreignModule, $incomingDependencies) === false) {
+                    $incomingDependencies[$foreignModule] = 0;
                 }
-                $incomingDependencies[$foreignBundle] += count($dependencyBundle->getDependencies());
+                $incomingDependencies[$foreignModule] += count($dependencyModule->getDependencies());
             }
         }
 
@@ -58,18 +60,18 @@ class Manager
     }
 
     /**
-     * @param string $bundleName
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
      * @return bool|\Generated\Shared\Transfer\DependencyBundleTransfer|mixed
      */
-    protected function findDependencyTo($bundleName, BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer)
+    protected function findDependencyTo($moduleName, BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer)
     {
-        foreach ($bundleDependencyCollectionTransfer->getDependencyBundles() as $dependencyBundle) {
-            if ($dependencyBundle->getBundle() === $bundleName) {
-                foreach ($dependencyBundle->getDependencies() as $dependencyTransfer) {
+        foreach ($moduleDependencyCollectionTransfer->getDependencyBundles() as $dependencyModule) {
+            if ($dependencyModule->getBundle() === $moduleName) {
+                foreach ($dependencyModule->getDependencies() as $dependencyTransfer) {
                     if (!$dependencyTransfer->getIsInTest() && !$dependencyTransfer->getIsOptional()) {
-                        return $dependencyBundle;
+                        return $dependencyModule;
                     }
                 }
             }
@@ -79,49 +81,84 @@ class Manager
     }
 
     /**
-     * @param string $bundleName
+     * @deprecated Use `collectAllForeignModules` instead
+     *
+     * @param string $moduleName
      *
      * @return array
      */
-    protected function collectAllForeignBundles($bundleName)
+    protected function collectAllForeignBundles($moduleName)
     {
-        $bundles = $this->collectCoreBundles();
-        $allForeignBundles = [];
+        return $this->collectAllForeignModules($moduleName);
+    }
 
-        foreach ($bundles as $bundle) {
-            $foreignBundleName = $bundle->getFilename();
-            if ($foreignBundleName !== $bundleName) {
-                $allForeignBundles[] = $foreignBundleName;
+    /**
+     * @param string $moduleName
+     *
+     * @return array
+     */
+    protected function collectAllForeignModules($moduleName)
+    {
+        $modules = $this->collectCoreModules();
+        $allForeignModules = [];
+
+        foreach ($modules as $module) {
+            $foreignModuleName = $module->getFilename();
+            if ($foreignModuleName !== $moduleName) {
+                $allForeignModules[] = $foreignModuleName;
             }
         }
-        asort($allForeignBundles);
+        asort($allForeignModules);
 
-        return $allForeignBundles;
+        return $allForeignModules;
     }
 
     /**
      * @return array
      */
+    public function collectAllModules()
+    {
+        $modules = $this->collectCoreModules();
+        $allModules = [];
+
+        $filterChain = new FilterChain();
+        $filterChain->attach(new DashToCamelCase());
+
+        foreach ($modules as $module) {
+            $allModules[] = $filterChain->filter($module->getFilename());
+        }
+        asort($allModules);
+
+        return $allModules;
+    }
+
+    /**
+     * @deprecated Use `collectAllModules()` instead.
+     *
+     * @return array
+     */
     public function collectAllBundles()
     {
-        $bundles = $this->collectCoreBundles();
-        $allBundles = [];
-
-        foreach ($bundles as $bundle) {
-            $allBundles[] = $bundle->getFilename();
-        }
-        asort($allBundles);
-
-        return $allBundles;
+        return $this->collectAllModules();
     }
 
     /**
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
+    protected function collectCoreModules()
+    {
+        $modules = (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
+
+        return $modules;
+    }
+
+    /**
+     * @deprecated Use `collectCoreModules()` instead.
+     *
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     */
     protected function collectCoreBundles()
     {
-        $bundles = (new Finder())->directories()->depth('== 0')->in($this->bundleDirectory);
-
-        return $bundles;
+        return $this->collectCoreModules();
     }
 }
