@@ -13,6 +13,13 @@ interface MetaDataProviderInterface
     public function getAvailableFields();
 
     /**
+     * @param string $field
+     *
+     * @return int
+     */
+    public function isFieldAvailable($field);
+
+    /**
      * @param string $fieldName
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
