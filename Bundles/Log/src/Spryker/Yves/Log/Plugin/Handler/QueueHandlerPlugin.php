@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Log\Plugin\Handler;
 
+use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Monolog\Formatter\FormatterInterface;
 use Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -27,7 +28,7 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     protected function getHandler()
     {
         if (!$this->handler) {
-            $this->handler = $this->getFactory()->createQueueHandler();
+            $this->handler = $this->getFactory()->createBufferedQueueHandler();
         }
 
         return $this->handler;
@@ -40,6 +41,10 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
      */
     public function isHandling(array $record)
     {
+        if (!class_exists(QueueSendMessageTransfer::class)) {
+            return false;
+        }
+
         return $this->getHandler()->isHandling($record);
     }
 

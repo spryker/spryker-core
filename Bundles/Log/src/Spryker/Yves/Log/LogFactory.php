@@ -159,9 +159,17 @@ class LogFactory extends AbstractFactory
     }
 
     /**
+     * @return \Monolog\Handler\HandlerInterface
+     */
+    public function createBufferedQueueHandler()
+    {
+        return new BufferHandler($this->createQueueHandler());
+    }
+
+    /**
      * @return \Monolog\Handler\HandlerInterface|\Spryker\Yves\Log\Handler\QueueHandler
      */
-    public function createQueueHandler()
+    protected function createQueueHandler()
     {
         return new QueueHandler(
             $this->getProvidedDependency(LogDependencyProvider::CLIENT_QUEUE),
