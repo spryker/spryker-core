@@ -28,7 +28,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     /**
      * @var string
      */
-    protected static $grossPriceModeIdentifierCache;
+    protected static $grossPriceModeIdentifierBuffer;
 
     /**
      * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade
@@ -98,10 +98,10 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
      */
     protected function getGrossPriceModeIdentifier()
     {
-        if (!isset(static::$grossPriceModeIdentifierCache)) {
-            static::$grossPriceModeIdentifierCache = $this->priceFacade->getGrossPriceModeIdentifier();
+        if (!isset(static::$grossPriceModeIdentifierBuffer)) {
+            static::$grossPriceModeIdentifierBuffer = $this->priceFacade->getGrossPriceModeIdentifier();
         }
 
-        return static::$grossPriceModeIdentifierCache;
+        return static::$grossPriceModeIdentifierBuffer;
     }
 }

@@ -23,7 +23,7 @@ class ProductOptionValuePriceHydrator implements ProductOptionValuePriceHydrator
     /**
      * @var array Keys are currency ids, values are currency transfer objects in array format.
      */
-    protected static $currencyCache = [];
+    protected static $currencyBuffer = [];
 
     /**
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface $currencyFacade
@@ -62,12 +62,12 @@ class ProductOptionValuePriceHydrator implements ProductOptionValuePriceHydrator
      */
     protected function getCurrencyTransferByIdCurrency($idCurrency)
     {
-        if (!isset(static::$currencyCache[$idCurrency])) {
-            static::$currencyCache[$idCurrency] = $this->currencyFacade
+        if (!isset(static::$currencyBuffer[$idCurrency])) {
+            static::$currencyBuffer[$idCurrency] = $this->currencyFacade
                 ->getByIdCurrency($idCurrency)
                 ->toArray();
         }
 
-        return (new CurrencyTransfer())->fromArray(static::$currencyCache[$idCurrency]);
+        return (new CurrencyTransfer())->fromArray(static::$currencyBuffer[$idCurrency]);
     }
 }

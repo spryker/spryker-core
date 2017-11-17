@@ -55,7 +55,7 @@ class ProductOptionListTable extends AbstractTable
     /**
      * @var array Keys are currency ids, values are currency transfer objects in array format.
      */
-    protected static $currencyCache = [];
+    protected static $currencyBuffer = [];
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
@@ -203,13 +203,13 @@ class ProductOptionListTable extends AbstractTable
      */
     protected function getCurrencyTransfer($idCurrency)
     {
-        if (!isset(static::$currencyCache[$idCurrency])) {
-            static::$currencyCache[$idCurrency] = $this->currencyFacade
+        if (!isset(static::$currencyBuffer[$idCurrency])) {
+            static::$currencyBuffer[$idCurrency] = $this->currencyFacade
                 ->getByIdCurrency($idCurrency)
                 ->toArray();
         }
 
-        return (new CurrencyTransfer())->fromArray(static::$currencyCache[$idCurrency]);
+        return (new CurrencyTransfer())->fromArray(static::$currencyBuffer[$idCurrency]);
     }
 
     /**

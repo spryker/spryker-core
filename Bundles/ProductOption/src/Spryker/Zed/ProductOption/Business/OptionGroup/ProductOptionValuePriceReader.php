@@ -39,22 +39,22 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     /**
      * @var string
      */
-    protected static $netPriceModeIdentifierCache;
+    protected static $netPriceModeIdentifierBuffer;
 
     /**
      * @var string
      */
-    protected static $grossPriceModeIdentifierCache;
+    protected static $grossPriceModeIdentifierBuffer;
 
     /**
      * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    protected static $currentStoreTransferCache;
+    protected static $currentStoreTransferBuffer;
 
     /**
      * @var string[] Keys are currency ids, values are currency codes.
      */
-    protected static $currencyCodeCache = [];
+    protected static $currencyCodeBuffer = [];
 
     /**
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface $currencyFacade
@@ -242,11 +242,11 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getCurrentStore()
     {
-        if (!isset(static::$currentStoreTransferCache)) {
-            static::$currentStoreTransferCache = $this->storeFacade->getCurrentStore();
+        if (!isset(static::$currentStoreTransferBuffer)) {
+            static::$currentStoreTransferBuffer = $this->storeFacade->getCurrentStore();
         }
 
-        return static::$currentStoreTransferCache;
+        return static::$currentStoreTransferBuffer;
     }
 
     /**
@@ -256,11 +256,11 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getCurrencyCodeById($idCurrency)
     {
-        if (!isset(static::$currencyCodeCache[$idCurrency])) {
-            static::$currencyCodeCache[$idCurrency] = $this->currencyFacade->getByIdCurrency($idCurrency)->getCode();
+        if (!isset(static::$currencyCodeBuffer[$idCurrency])) {
+            static::$currencyCodeBuffer[$idCurrency] = $this->currencyFacade->getByIdCurrency($idCurrency)->getCode();
         }
 
-        return static::$currencyCodeCache[$idCurrency];
+        return static::$currencyCodeBuffer[$idCurrency];
     }
 
     /**
@@ -268,11 +268,11 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getNetPriceModeIdentifier()
     {
-        if (!isset(static::$netPriceModeIdentifierCache)) {
-            static::$netPriceModeIdentifierCache = $this->priceFacade->getNetPriceModeIdentifier();
+        if (!isset(static::$netPriceModeIdentifierBuffer)) {
+            static::$netPriceModeIdentifierBuffer = $this->priceFacade->getNetPriceModeIdentifier();
         }
 
-        return static::$netPriceModeIdentifierCache;
+        return static::$netPriceModeIdentifierBuffer;
     }
 
     /**
@@ -280,10 +280,10 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getGrossPriceModeIdentifier()
     {
-        if (!isset(static::$grossPriceModeIdentifierCache)) {
-            static::$grossPriceModeIdentifierCache = $this->priceFacade->getGrossPriceModeIdentifier();
+        if (!isset(static::$grossPriceModeIdentifierBuffer)) {
+            static::$grossPriceModeIdentifierBuffer = $this->priceFacade->getGrossPriceModeIdentifier();
         }
 
-        return static::$grossPriceModeIdentifierCache;
+        return static::$grossPriceModeIdentifierBuffer;
     }
 }

@@ -29,12 +29,12 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     /**
      * @var string
      */
-    protected static $currentCurrencyCodeCache;
+    protected static $currentCurrencyCodeBuffer;
 
     /**
      * @var string
      */
-    protected static $currentPriceModeCache;
+    protected static $currentPriceModeBuffer;
 
     /**
      * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceInterface $priceClient
@@ -102,11 +102,11 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getCurrentCurrencyCode()
     {
-        if (!isset(static::$currentCurrencyCodeCache)) {
-            static::$currentCurrencyCodeCache = $this->currencyClient->getCurrent()->getCode();
+        if (!isset(static::$currentCurrencyCodeBuffer)) {
+            static::$currentCurrencyCodeBuffer = $this->currencyClient->getCurrent()->getCode();
         }
 
-        return static::$currentCurrencyCodeCache;
+        return static::$currentCurrencyCodeBuffer;
     }
 
     /**
@@ -114,10 +114,10 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getCurrentPriceMode()
     {
-        if (!isset(static::$currentPriceModeCache)) {
-            static::$currentPriceModeCache = $this->priceClient->getCurrentPriceMode();
+        if (!isset(static::$currentPriceModeBuffer)) {
+            static::$currentPriceModeBuffer = $this->priceClient->getCurrentPriceMode();
         }
 
-        return static::$currentPriceModeCache;
+        return static::$currentPriceModeBuffer;
     }
 }
