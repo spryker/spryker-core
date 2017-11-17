@@ -14,6 +14,9 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUEUE = 'queue client';
 
+    const PROCESSOR_PLUGINS = 'PROCESSOR_PLUGINS';
+    const LOG_HANDLERS = 'LOG_HANDLERS';
+
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -22,6 +25,8 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addQueueClient($container);
+        $container = $this->addLogHandlers($container);
+        $container = $this->addProcessors($container);
 
         return $container;
     }
@@ -35,6 +40,34 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::CLIENT_QUEUE] = function () use ($container) {
             return $container->getLocator()->queue()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLogHandlers(Container $container)
+    {
+        $container[static::LOG_HANDLERS] = function () {
+            return [];
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addProcessors(Container $container)
+    {
+        $container[static::PROCESSOR_PLUGINS] = function () {
+            return [];
         };
 
         return $container;

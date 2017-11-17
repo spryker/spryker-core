@@ -12,6 +12,7 @@ use Monolog\Formatter\LogstashFormatter;
 use Monolog\Handler\BufferHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 /**
@@ -24,7 +25,7 @@ class LogFactory extends AbstractFactory
      */
     public function getHandlers()
     {
-        return [];
+        return $this->getProvidedDependency(LogDependencyProvider::LOG_HANDLERS);
     }
 
     /**
@@ -32,7 +33,18 @@ class LogFactory extends AbstractFactory
      */
     public function getProcessors()
     {
-        return [];
+        return $this->getProvidedDependency(LogDependencyProvider::PROCESSOR_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
+     */
+    public function createSanitizer()
+    {
+        return new Sanitizer(
+            $this->getConfig()->getSanitizerFieldNames(),
+            $this->getConfig()->getSanitizedFieldValue()
+        );
     }
 
     /**
