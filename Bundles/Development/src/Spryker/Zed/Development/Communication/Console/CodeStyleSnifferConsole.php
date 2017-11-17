@@ -56,8 +56,25 @@ class CodeStyleSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $isCore = $this->input->getOption(static::OPTION_CORE);
         $module = $this->input->getOption(static::OPTION_MODULE);
+        $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
+
+        $this->info($this->buildMessage($module, $path));
+
+        $this->getFacade()->checkCodeStyle($module, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
+
+        return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param string|null $module
+     * @param string|null $path
+     *
+     * @return string
+     */
+    protected function buildMessage($module, $path)
+    {
+        $isCore = $this->input->getOption(static::OPTION_CORE);
         $message = sprintf('Run Code Style Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
 
         if ($module) {
@@ -65,16 +82,11 @@ class CodeStyleSnifferConsole extends Console
             $message .= ' in ' . $module . ' module';
         }
 
-        $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
         if ($path) {
             $message .= ' (' . $path . ')';
         }
 
-        $this->info($message);
-
-        $this->getFacade()->checkCodeStyle($module, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
-
-        return static::CODE_SUCCESS;
+        return $message;
     }
 
     /**
