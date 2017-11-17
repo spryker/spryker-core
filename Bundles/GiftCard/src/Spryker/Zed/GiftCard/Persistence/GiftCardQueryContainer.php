@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GiftCard\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -142,6 +143,18 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     public function queryGiftCardByCode($code)
     {
         return $this->queryGiftCards()->filterByCode($code);
+    }
+
+    /**
+     * @api
+     *
+     * @param string[] $codes
+     *
+     * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
+     */
+    public function queryGiftCardByCodes(array $codes)
+    {
+        return $this->queryGiftCards()->filterByCode($codes, Criteria::IN);
     }
 
     /**

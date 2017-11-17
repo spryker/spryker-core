@@ -55,7 +55,7 @@ class GiftCardReplacer implements GiftCardReplacerInterface
         $giftCardPayments = $this->giftCardReader->getGiftCardPaymentsForOrder($idSalesOrder);
 
         $this->handleDatabaseTransaction(function () use ($giftCardPayments) {
-            $this->saveGiftCardReplacements($giftCardPayments);
+            $this->replaceGiftCardsTransaction($giftCardPayments);
         });
     }
 
@@ -64,7 +64,7 @@ class GiftCardReplacer implements GiftCardReplacerInterface
      *
      * @return void
      */
-    protected function saveGiftCardReplacements(ArrayObject $giftCardPayments)
+    protected function replaceGiftCardsTransaction(ArrayObject $giftCardPayments)
     {
         foreach ($giftCardPayments as $giftCardPayment) {
             $giftCard = $this->giftCardReader->findByCode($giftCardPayment->getCode());

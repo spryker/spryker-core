@@ -147,4 +147,12 @@ interface GiftCardFacadeInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return GiftCardTransfer[]
+     */
+    public function findGiftCardsByIdSalesOrder($idSalesOrder);
+
 }

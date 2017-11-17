@@ -56,7 +56,7 @@ class GiftCardReader implements GiftCardReaderInterface
             return null;
         }
 
-        return $this->getGiftCardTransferFromEntity($giftCardEntity);
+        return $this->hydrateGiftCardTransfer($giftCardEntity, new GiftCardTransfer());
     }
 
     /**
@@ -106,7 +106,7 @@ class GiftCardReader implements GiftCardReaderInterface
             return null;
         }
 
-        $giftCardTransfer = $this->getGiftCardTransferFromEntity($giftCardEntity);
+        $giftCardTransfer = $this->hydrateGiftCardTransfer($giftCardEntity, new GiftCardTransfer());
 
         return $giftCardTransfer;
     }
@@ -126,13 +126,12 @@ class GiftCardReader implements GiftCardReaderInterface
 
     /**
      * @param \Orm\Zed\GiftCard\Persistence\SpyGiftCard $giftCardEntity
+     * @param GiftCardTransfer $giftCardTransfer
      *
      * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
-    protected function getGiftCardTransferFromEntity(SpyGiftCard $giftCardEntity)
+    protected function hydrateGiftCardTransfer(SpyGiftCard $giftCardEntity, GiftCardTransfer $giftCardTransfer)
     {
-        $giftCardTransfer = new GiftCardTransfer();
-
         $giftCardData = $giftCardEntity->toArray();
         $attributes = $this->encodingService->decodeJson($giftCardData[static::ATTRIBUTES], true);
 
@@ -146,6 +145,22 @@ class GiftCardReader implements GiftCardReaderInterface
         $giftCardTransfer->fromArray($giftCardData, true);
 
         return $giftCardTransfer;
+    }
+
+    /**
+     * @param array $giftCardEntities
+     *
+     * @return array
+     */
+    protected function getGiftCardTransfersFromEntities(array $giftCardEntities)
+    {
+        $giftCardTransfers = [];
+
+        foreach ($giftCardEntities as $giftCardEntity) {
+            $giftCardTransfers[] = $this->hydrateGiftCardTransfer($giftCardEntity, new GiftCardTransfer());
+        }
+
+        return $giftCardTransfers;
     }
 
     /**
@@ -250,4 +265,37 @@ class GiftCardReader implements GiftCardReaderInterface
 
         return $result;
     }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return GiftCardTransfer[]
+     */
+    public function findGiftCardsByIdSalesOrder($idSalesOrder)
+    {
+        $giftCardPaymentEntities = $this->getGiftCardPaymentsForOrder($idSalesOrder);
+        $giftCardCodes = $this->extractGiftCardCodesFromGiftCardPaymentEntities($giftCardPaymentEntities);
+
+        $giftCardEntities = $this->queryContainer->queryGiftCardByCodes($giftCardCodes)->find();
+        $giftCardTransfers = $this->getGiftCardTransfersFromEntities($giftCardEntities);
+
+        return $giftCardTransfers;
+    }
+
+    /**
+     * @param array $giftCardPayments
+     *
+     * @return array
+     */
+    protected function extractGiftCardCodesFromGiftCardPaymentEntities(array $giftCardPayments)
+    {
+        $codes = [];
+
+        foreach ($giftCardPayments as $paymentGiftCard) {
+            $codes[] = $paymentGiftCard->getCode();
+        }
+
+        return $codes;
+    }
+
 }

@@ -205,4 +205,16 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     {
         return $this->getFactory()->createShipmentMethodFilter()->filterShipmentMethods($shipmentMethods, $quoteTransfer);
     }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return GiftCardTransfer[]
+     */
+    public function findGiftCardsByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getFactory()
+            ->createGiftCardReader()
+            ->findGiftCardsByIdSalesOrder($idSalesOrder);
+    }
 }
