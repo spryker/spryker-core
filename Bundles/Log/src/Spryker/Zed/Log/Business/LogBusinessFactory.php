@@ -32,6 +32,6 @@ class LogBusinessFactory extends AbstractBusinessFactory
      */
     public function createLogListener()
     {
-        return new LogListenerCollection($this->getProvidedDependency(LogDependencyProvider::LOG_LISTENER));
+        return new LogListenerCollection($this->getProvidedDependency(LogDependencyProvider::LOG_LISTENERS));
     }
 }

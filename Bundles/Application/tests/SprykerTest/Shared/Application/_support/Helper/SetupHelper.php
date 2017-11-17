@@ -14,10 +14,10 @@ use Symfony\Component\Process\Process;
 
 class SetupHelper extends Module
 {
-    const SPRYKER_SETUP = 'vendor/bin/deploy -r testing -q';
+    const SPRYKER_DEPLOY = 'vendor/bin/deploy -r testing -q';
 
     /**
-     * @deprecated Please use the new spryker deploy tool.
+     * @deprecated Please use the spryker/deploy module.
      */
     const TEST_ENV_SCRIPT = 'setup_test';
 
@@ -99,7 +99,7 @@ class SetupHelper extends Module
     protected function buildCommandToExecute($argument)
     {
         if ($this->hasSprykerSetup()) {
-            return sprintf(static::SPRYKER_SETUP . ' %s', $argument);
+            return sprintf(static::SPRYKER_DEPLOY . ' %s', $argument);
         }
 
         return sprintf(static::TEST_ENV_SCRIPT . ' %s', $argument);

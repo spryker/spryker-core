@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUEUE = 'queue client';
-    const LOG_LISTENER = 'log listener';
+    const LOG_LISTENERS = 'log listener';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -60,10 +60,18 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLogListener(Container $container)
     {
-        $container[static::LOG_LISTENER] = function () {
-            return [];
+        $container[static::LOG_LISTENERS] = function () {
+            return $this->getLogListeners();
         };
 
         return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getLogListeners()
+    {
+        return [];
     }
 }
