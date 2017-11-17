@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Log\Communication\Plugin\Processor;
 
-use Monolog\Processor\PsrLogMessageProcessor;
 use Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -25,6 +24,6 @@ class PsrLogMessageProcessorPlugin extends AbstractPlugin implements LogProcesso
      */
     public function __invoke(array $data)
     {
-        return (new PsrLogMessageProcessor())->__invoke($data);
+        return $this->getFactory()->createPsrMessageProcessor()->__invoke($data);
     }
 }

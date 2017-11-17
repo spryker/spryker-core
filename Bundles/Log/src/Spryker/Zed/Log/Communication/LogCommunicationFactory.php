@@ -12,6 +12,7 @@ use Monolog\Formatter\LogstashFormatter;
 use Monolog\Handler\BufferHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Monolog\Processor\PsrLogMessageProcessor;
 use Spryker\Shared\Log\Processor\EnvironmentProcessor;
 use Spryker\Shared\Log\Processor\GuzzleBodyProcessor;
 use Spryker\Shared\Log\Processor\RequestProcessor;
@@ -81,6 +82,14 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     public function createGuzzleBodyProcessor()
     {
         return new GuzzleBodyProcessor($this->createSanitizer());
+    }
+
+    /**
+     * @return \Monolog\Processor\PsrLogMessageProcessor
+     */
+    public function createPsrMessageProcessor()
+    {
+        return new PsrLogMessageProcessor();
     }
 
     /**
