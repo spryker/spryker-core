@@ -153,7 +153,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Monolog\Handler\HandlerInterface|\Spryker\Zed\Log\Communication\Handler\QueueHandler
      */
-    protected function createQueueHandler()
+    public function createQueueHandler()
     {
         return new QueueHandler(
             $this->getProvidedDependency(LogDependencyProvider::CLIENT_QUEUE),
