@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Log\Processor;
 
+use Symfony\Component\HttpFoundation\Request;
+
 class ServerProcessor implements ProcessorInterface
 {
     const EXTRA = 'server';
@@ -37,92 +39,16 @@ class ServerProcessor implements ProcessorInterface
      */
     public function getData()
     {
+        $request = Request::createFromGlobals();
+
         return [
-            static::URL => $this->getUrl(),
-            static::IS_HTTPS => (int)$this->isSecureConnection(),
-            static::HOST_NAME => $this->getHost(),
-            static::USER_AGENT => $this->getUserAgent(),
-            static::USER_IP => $this->getRemoteAddress(),
-            static::REQUEST_METHOD => $this->getRequestMethod(),
-            static::REFERER => $this->getHttpReferer(),
+            static::URL => $request->getUri(),
+            static::IS_HTTPS => $request->isSecure(),
+            static::HOST_NAME => $request->getHost(),
+            static::USER_AGENT => $request->server->get('HTTP_USER_AGENT', null),
+            static::USER_IP => $request->server->get('REMOTE_ADDR', null),
+            static::REQUEST_METHOD => $request->server->get('REQUEST_METHOD', 'cli'),
+            static::REFERER => $request->server->get('HTTP_REFERER', null),
         ];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getUrl()
-    {
-        $serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : null;
-        $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-
-        $protocol = 'http://';
-
-        if ($this->isSecureConnection()) {
-            $protocol = 'https://';
-        }
-
-        $url = '';
-        if ($serverName) {
-            $url = $protocol . $serverName . $requestUri;
-        }
-
-        return $url;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isSecureConnection()
-    {
-        if ((isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
-            || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getHost()
-    {
-        $hostName = (gethostname()) ?: php_uname('n');
-
-        return isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : $hostName;
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getUserAgent()
-    {
-        return isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null;
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getRemoteAddress()
-    {
-        return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestMethod()
-    {
-        return isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getHttpReferer()
-    {
-        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
     }
 }
