@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PropelOrm\Communication\Plugin;
+namespace Spryker\Zed\Propel\Communication\Plugin\Log;
 
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\PropelOrm\Communication\PropelOrmCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class EntitySanitizerPlugin extends AbstractPlugin implements LogProcessorPluginInterface
+class EntityProcessorPlugin extends AbstractPlugin implements LogProcessorPluginInterface
 {
     const EXTRA = 'entity';
     const CONTEXT_KEY = 'entity';
@@ -52,6 +53,7 @@ class EntitySanitizerPlugin extends AbstractPlugin implements LogProcessorPlugin
         if (!empty($context[static::CONTEXT_KEY])) {
             return $context[static::CONTEXT_KEY];
         }
+
         if (current($context) instanceof ActiveRecordInterface) {
             return current($context);
         }

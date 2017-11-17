@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PropelOrm\Dependency\Facade;
+namespace Spryker\Zed\Propel\Dependency\Facade;
 
-interface PropelOrmToLogInterface
+interface PropelToLogInterface
 {
     /**
      * @param array $data

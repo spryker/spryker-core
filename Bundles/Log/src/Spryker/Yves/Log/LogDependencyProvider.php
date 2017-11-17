@@ -14,7 +14,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUEUE = 'queue client';
 
-    const PROCESSOR_PLUGINS = 'PROCESSOR_PLUGINS';
+    const LOG_PROCESSORS = 'LOG_PROCESSORS';
     const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
@@ -66,7 +66,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProcessors(Container $container)
     {
-        $container[static::PROCESSOR_PLUGINS] = function () {
+        $container[static::LOG_PROCESSORS] = function () {
             return [];
         };
 

@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Processor;
+namespace Spryker\Shared\Log\Processor;
 
 use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Use `RequestProcessorPlugin` from Log module instead.
- */
-class RequestProcessor
+class RequestProcessor implements ProcessorInterface
 {
     const EXTRA = 'request';
     const CONTEXT_KEY = 'request';

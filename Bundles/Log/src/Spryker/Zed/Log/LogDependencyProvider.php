@@ -17,6 +17,9 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     const LOG_LISTENERS = 'log listener';
     const FILESYSTEM = 'filesystem';
 
+    const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    const LOG_HANDLERS = 'LOG_HANDLERS';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -25,6 +28,8 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addQueueClient($container);
+        $container = $this->addLogHandlers($container);
+        $container = $this->addProcessors($container);
 
         return $container;
     }
@@ -71,6 +76,28 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface[]
+     */
+    protected function getLogListeners()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLogHandlers(Container $container)
+    {
+        $container[static::LOG_HANDLERS] = function () {
+            return [];
+        };
+
+        return $container;
+    }
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -85,10 +112,16 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface[]
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container*
      */
-    protected function getLogListeners()
+    protected function addProcessors(Container $container)
     {
-        return [];
+        $container[static::LOG_PROCESSORS] = function () {
+            return [];
+        };
+
+        return $container;
     }
 }

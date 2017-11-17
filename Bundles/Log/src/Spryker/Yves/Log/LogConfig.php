@@ -63,4 +63,12 @@ class LogConfig extends AbstractBundleConfig
 
         return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH);
     }
+
+    /**
+     * @return string
+     */
+    public function getQueueName()
+    {
+        return $this->get(LogConstants::LOG_QUEUE_NAME);
+    }
 }

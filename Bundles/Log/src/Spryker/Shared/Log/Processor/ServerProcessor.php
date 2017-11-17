@@ -5,14 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Processor;
+namespace Spryker\Shared\Log\Processor;
 
-use Spryker\Service\UtilNetwork\Model\Host;
-
-/**
- * @deprecated Use `ServerProcessorPlugin` from Log module instead.
- */
-class ServerProcessor
+class ServerProcessor implements ProcessorInterface
 {
     const EXTRA = 'server';
 
@@ -94,9 +89,9 @@ class ServerProcessor
      */
     protected function getHost()
     {
-        $utilNetworkHost = new Host();
+        $hostName = (gethostname()) ?: php_uname('n');
 
-        return isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : $utilNetworkHost->getHostname();
+        return isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : $hostName;
     }
 
     /**

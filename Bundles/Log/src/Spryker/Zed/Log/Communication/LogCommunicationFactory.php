@@ -12,7 +12,15 @@ use Monolog\Formatter\LogstashFormatter;
 use Monolog\Handler\BufferHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Spryker\Shared\Log\Processor\EnvironmentProcessor;
+use Spryker\Shared\Log\Processor\GuzzleBodyProcessor;
+use Spryker\Shared\Log\Processor\RequestProcessor;
+use Spryker\Shared\Log\Processor\ResponseProcessor;
+use Spryker\Shared\Log\Processor\ServerProcessor;
+use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Log\Communication\Handler\QueueHandler;
+use Spryker\Zed\Log\LogDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Log\LogConfig getConfig()
@@ -24,7 +32,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getHandlers()
     {
-        return [];
+        return $this->getProvidedDependency(LogDependencyProvider::LOG_HANDLERS);
     }
 
     /**
@@ -32,13 +40,64 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getProcessors()
     {
-        return [];
+        return $this->getProvidedDependency(LogDependencyProvider::LOG_PROCESSORS);
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createEnvironmentProcessor()
+    {
+        return new EnvironmentProcessor();
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createRequestProcessor()
+    {
+        return new RequestProcessor($this->createSanitizer());
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createResponseProcessor()
+    {
+        return new ResponseProcessor();
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createServerProcessor()
+    {
+        return new ServerProcessor();
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createGuzzleBodyProcessor()
+    {
+        return new GuzzleBodyProcessor($this->createSanitizer());
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
+     */
+    protected function createSanitizer()
+    {
+        return new Sanitizer(
+            $this->getConfig()->getSanitizerFieldNames(),
+            $this->getConfig()->getSanitizedFieldValue()
+        );
     }
 
     /**
      * @return \Monolog\Handler\HandlerInterface|\Monolog\Handler\BufferHandler
      */
-    protected function createBufferedStreamHandler()
+    public function createBufferedStreamHandler()
     {
         return new BufferHandler($this->createStreamHandler());
     }
@@ -69,7 +128,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Monolog\Handler\HandlerInterface|\Monolog\Handler\FilterHandler
      */
-    protected function createExceptionStreamHandler()
+    public function createExceptionStreamHandler()
     {
         $streamHandler = new StreamHandler(
             $this->getConfig()->getExceptionLogFilePath(),
@@ -89,5 +148,16 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
         $lineFormatter->includeStacktraces(true);
 
         return $lineFormatter;
+    }
+
+    /**
+     * @return \Monolog\Handler\HandlerInterface|\Spryker\Zed\Log\Communication\Handler\QueueHandler
+     */
+    protected function createQueueHandler()
+    {
+        return new QueueHandler(
+            $this->getProvidedDependency(LogDependencyProvider::CLIENT_QUEUE),
+            $this->getConfig()->getQueueName()
+        );
     }
 }
