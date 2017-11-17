@@ -71,7 +71,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     /**
      * @param string $field
      *
-     * @return int
+     * @return bool
      */
     public function isFieldAvailable($field)
     {
