@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\Kernel;
 
-use Spryker\Shared\Kernel\AbstractSharedConfig;
 use Spryker\Shared\Kernel\ClassResolver\Config\SharedConfigResolver;
 
 trait SharedConfigResolverAwareTrait
