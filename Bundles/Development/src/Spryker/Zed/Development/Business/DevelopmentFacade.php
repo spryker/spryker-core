@@ -18,53 +18,53 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string|null $bundle
+     * @param string|null $module
      * @param array $options
      *
      * @return int Exit code
      */
-    public function checkCodeStyle($bundle = null, array $options = [])
+    public function checkCodeStyle($module = null, array $options = [])
     {
-        return $this->getFactory()->createCodeStyleSniffer()->checkCodeStyle($bundle, $options);
+        return $this->getFactory()->createCodeStyleSniffer()->checkCodeStyle($module, $options);
     }
 
     /**
      * @api
      *
-     * @param string|null $bundle
+     * @param string|null $module
      * @param array $options
      *
      * @return void
      */
-    public function runTest($bundle, array $options = [])
+    public function runTest($module, array $options = [])
     {
-        $this->getFactory()->createCodeTester()->runTest($bundle, $options);
+        $this->getFactory()->createCodeTester()->runTest($module, $options);
     }
 
     /**
      * @api
      *
-     * @param string|null $bundle
+     * @param string|null $module
      * @param array $options
      *
      * @return int Exit code
      */
-    public function runPhpMd($bundle, array $options = [])
+    public function runPhpMd($module, array $options = [])
     {
-        return $this->getFactory()->createPhpMdRunner()->run($bundle, $options);
+        return $this->getFactory()->createPhpMdRunner()->run($module, $options);
     }
 
     /**
      * @api
      *
-     * @param string $bundle
-     * @param string $toBundle
+     * @param string $module
+     * @param string $toModule
      *
      * @return void
      */
-    public function createBridge($bundle, $toBundle)
+    public function createBridge($module, $toModule)
     {
-        $this->getFactory()->createBridgeBuilder()->build($bundle, $toBundle);
+        $this->getFactory()->createBridgeBuilder()->build($module, $toModule);
     }
 
     /**
@@ -83,38 +83,38 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param array $bundles
+     * @param array $modules
      * @param bool $dryRun
      *
-     * @return void
+     * @return array
      */
-    public function updateComposerJsonInBundles(array $bundles, $dryRun = false)
+    public function updateComposerJsonInModules(array $modules, $dryRun = false)
     {
-        $this->getFactory()->createComposerJsonUpdater()->update($bundles, $dryRun);
+        return $this->getFactory()->createComposerJsonUpdater()->update($modules, $dryRun);
     }
 
     /**
      * @api
      *
-     * @param string $bundleName
+     * @param string $moduleName
      *
      * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
-    public function showOutgoingDependenciesForBundle($bundleName)
+    public function showOutgoingDependenciesForModule($moduleName)
     {
-        return $this->getFactory()->createDependencyBundleParser()->parseOutgoingDependencies($bundleName);
+        return $this->getFactory()->createDependencyBundleParser()->parseOutgoingDependencies($moduleName);
     }
 
     /**
      * @api
      *
-     * @param string $bundleName
+     * @param string $moduleName
      *
      * @return array
      */
-    public function showIncomingDependenciesForBundle($bundleName)
+    public function showIncomingDependenciesForModule($moduleName)
     {
-        return $this->getFactory()->createDependencyManager()->parseIncomingDependencies($bundleName);
+        return $this->getFactory()->createDependencyManager()->parseIncomingDependencies($moduleName);
     }
 
     /**
@@ -122,7 +122,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return array
      */
-    public function getAllBundles()
+    public function getAllModules()
     {
         return $this->getFactory()->createDependencyManager()->collectAllModules();
     }
@@ -152,52 +152,52 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string|bool $bundleToView
-     * @param array $excludedBundles
+     * @param string|bool $moduleToView
+     * @param array $excludedModules
      * @param bool $showIncomingDependencies
      *
      * @return string
      */
-    public function drawOutgoingDependencyTreeGraph($bundleToView, array $excludedBundles = [], $showIncomingDependencies = false)
+    public function drawOutgoingDependencyTreeGraph($moduleToView, array $excludedModules = [], $showIncomingDependencies = false)
     {
-        return $this->getFactory()->createOutgoingDependencyGraphBuilder($bundleToView, $excludedBundles)->build($showIncomingDependencies);
+        return $this->getFactory()->createOutgoingDependencyGraphBuilder($moduleToView, $excludedModules)->build($showIncomingDependencies);
     }
 
     /**
      * @api
      *
-     * @param string|bool $bundleToView
+     * @param string|bool $moduleToView
      *
      * @return string
      */
-    public function drawDetailedDependencyTreeGraph($bundleToView)
+    public function drawDetailedDependencyTreeGraph($moduleToView)
     {
-        return $this->getFactory()->createDetailedDependencyGraphBuilder($bundleToView)->build();
+        return $this->getFactory()->createDetailedDependencyGraphBuilder($moduleToView)->build();
     }
 
     /**
      * @api
      *
-     * @param bool $showEngineBundle
-     * @param string|bool $bundleToView
+     * @param bool $showEngineModule
+     * @param string|bool $moduleToView
      *
      * @return string
      */
-    public function drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView)
+    public function drawSimpleDependencyTreeGraph($showEngineModule, $moduleToView)
     {
-        return $this->getFactory()->createSimpleDependencyGraphBuilder($showEngineBundle, $bundleToView)->build();
+        return $this->getFactory()->createSimpleDependencyGraphBuilder($showEngineModule, $moduleToView)->build();
     }
 
     /**
      * @api
      *
-     * @param string $bundleToView
+     * @param string $moduleToView
      *
      * @return string
      */
-    public function drawExternalDependencyTreeGraph($bundleToView)
+    public function drawExternalDependencyTreeGraph($moduleToView)
     {
-        return $this->getFactory()->createExternalDependencyGraphBuilder($bundleToView)->build();
+        return $this->getFactory()->createExternalDependencyGraphBuilder($moduleToView)->build();
     }
 
     /**

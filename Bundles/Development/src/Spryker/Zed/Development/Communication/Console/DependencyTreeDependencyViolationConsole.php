@@ -45,7 +45,7 @@ class DependencyTreeDependencyViolationConsole extends Console
     {
         $this->info('Find dependency violations');
 
-        $modules = $this->getFacade()->getAllBundles();
+        $modules = $this->getFacade()->getAllModules();
         $module = $input->getArgument(static::ARGUMENT_MODULE);
         if ($module) {
             $filter = new DashToCamelCase();
@@ -64,7 +64,7 @@ class DependencyTreeDependencyViolationConsole extends Console
         $count = 0;
         foreach ($modules as $module) {
             $violations = [];
-            $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($module);
+            $dependencies = $this->getFacade()->showOutgoingDependenciesForModule($module);
             $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
             foreach ($composerDependencies as $composerDependency) {
                 if (!$composerDependency['tests'] && !$composerDependency['src'] && ($composerDependency['composerRequire'] || $composerDependency['composerRequireDev'])) {
