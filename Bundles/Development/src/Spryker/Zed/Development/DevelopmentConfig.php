@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
     const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+    const APPLICATION_NAMESPACES = ['Orm'];
+    const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
     /**
      * @return string
@@ -329,5 +331,13 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getArchitectureSnifferDefaultPriority()
     {
         return 2;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPhpstanLevel()
+    {
+        return 1;
     }
 }

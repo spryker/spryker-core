@@ -9,6 +9,8 @@ namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentBusinessFactory getFactory()
@@ -329,5 +331,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function getArchitectureRules()
     {
         return $this->getFactory()->createArchitectureSniffer()->getRules();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
+    public function runPhpstan(InputInterface $input, OutputInterface $output)
+    {
+        return $this->getFactory()->createPhpstanRunner()->run($input, $output);
     }
 }

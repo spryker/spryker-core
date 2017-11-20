@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface DevelopmentFacadeInterface
 {
@@ -20,6 +22,16 @@ interface DevelopmentFacadeInterface
      * @return void
      */
     public function checkCodeStyle($module = null, array $options = []);
+
+    /**
+     * @api
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
+    public function runPhpstan(InputInterface $input, OutputInterface $output);
 
     /**
      * @api

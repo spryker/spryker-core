@@ -80,6 +80,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
+use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -258,6 +259,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new SprykerSdkPathBuilder(
             $this->getConfig()->getPathToSdk(),
             $this->getConfig()->getApplications()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Phpstan\PhpstanRunner
+     */
+    public function createPhpstanRunner()
+    {
+        return new PhpstanRunner(
+            $this->getConfig()
         );
     }
 
