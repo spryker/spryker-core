@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\ClassResolver\Config\SharedConfigResolver;
 
 trait SharedConfigResolverAwareTrait
 {
-
     /**
      * @var \Spryker\Shared\Kernel\AbstractSharedConfig
      */
@@ -52,5 +51,4 @@ trait SharedConfigResolverAwareTrait
 
         return $sharedConfig;
     }
-
 }

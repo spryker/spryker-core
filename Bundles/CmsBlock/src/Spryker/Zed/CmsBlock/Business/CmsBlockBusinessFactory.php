@@ -22,7 +22,6 @@ use Symfony\Component\Finder\Finder;
 /**
  * @method \Spryker\Zed\CmsBlock\CmsBlockConfig getConfig()
  * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface getQueryContainer()
- * @method \Spryker\Shared\CmsBlock\CmsBlockConfig getSharedConfig()
  */
 class CmsBlockBusinessFactory extends AbstractBusinessFactory
 {
@@ -31,6 +30,8 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsBlockReader()
     {
+        $demo = $this->getConfig()->getTest();
+
         return new CmsBlockReader(
             $this->getQueryContainer(),
             $this->createCmsBlockMapper()

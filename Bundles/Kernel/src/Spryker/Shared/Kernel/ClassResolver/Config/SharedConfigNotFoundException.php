@@ -15,7 +15,6 @@ use Spryker\Shared\Kernel\KernelConstants;
 
 class SharedConfigNotFoundException extends Exception
 {
-
     /**
      * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
@@ -49,5 +48,4 @@ class SharedConfigNotFoundException extends Exception
 
         return $message;
     }
-
 }

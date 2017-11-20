@@ -12,13 +12,12 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 class SharedConfigResolver extends AbstractClassResolver
 {
-
     const CLASS_NAME_PATTERN = '\\%1$s\\Shared\\%2$s%3$s\\%2$sConfig';
 
     /**
      * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
-    private $classInfo;
+    protected $classInfo;
 
     /**
      * @param object|string $callerClass
@@ -93,5 +92,4 @@ class SharedConfigResolver extends AbstractClassResolver
 
         return $className;
     }
-
 }

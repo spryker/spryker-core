@@ -20,6 +20,14 @@ class CmsBlockConfig extends AbstractBundleConfig
     const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
 
     /**
+     * @return array
+     */
+    public function getTest()
+    {
+        return $this->getSharedConfig()->getTest();
+    }
+
+    /**
      * @return string
      */
     public function getPlaceholderPattern()
