@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Braintree\BraintreeConfig getConfig()
- * @method \Spryker\Zed\Braintree\Persistence\BraintreeQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Braintree\Persistence\BraintreeQueryContainerInterface getQueryContainer()
  */
 class BraintreePersistenceFactory extends AbstractPersistenceFactory
 {

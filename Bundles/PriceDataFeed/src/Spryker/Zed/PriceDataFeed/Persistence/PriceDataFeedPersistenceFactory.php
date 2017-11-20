@@ -12,7 +12,7 @@ use Spryker\Zed\PriceDataFeed\PriceDataFeedDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PriceDataFeed\PriceDataFeedConfig getConfig()
- * @method \Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainerInterface getQueryContainer()
  */
 class PriceDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Oms\Communication\Console;
 
 /**
- * @deprecated Use \Spryker\Zed\Oms\Communication\ClearLocksConsole instead.
+ * @deprecated Use Spryker\Zed\Oms\Communication\ClearLocksConsole instead.
  */
 class ClearLocks extends ClearLocksConsole
 {

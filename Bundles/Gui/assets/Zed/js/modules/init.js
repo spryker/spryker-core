@@ -74,4 +74,28 @@ $(document).ready(function() {
 
     /* Init iboxes */
     new Ibox();
+
+    /* Prevent .save-submit items to be pressed twice */
+    $('body').on('click', '.safe-submit', function () {
+        var $item = $(this);
+        var $forms = $item.parents('form');
+        var isValid = true;
+
+        function disableTrigger() {
+            $item
+                .prop('disabled', true)
+                .addClass('disabled')
+                .off('click');
+        }
+
+        if ($forms.length > 0) { 
+            isValid = !!$forms[0].checkValidity ? $forms[0].checkValidity() : isValid;
+        }
+
+        if (isValid) {
+            setTimeout(disableTrigger);
+        }
+        
+        return true;
+    });
 });

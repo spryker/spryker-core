@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Newsletter\Business\NewsletterFacade getFacade()
+ * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

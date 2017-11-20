@@ -35,7 +35,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
- * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  */
 class CmsBusinessFactory extends AbstractBusinessFactory
 {

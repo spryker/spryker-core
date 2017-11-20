@@ -14,7 +14,7 @@ use Spryker\Zed\User\UserDependencyProvider;
 
 /**
  * @method \Spryker\Zed\User\UserConfig getConfig()
- * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  */
 class UserBusinessFactory extends AbstractBusinessFactory
 {

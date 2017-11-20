@@ -10,4 +10,4 @@ composer require spryker/mail
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/mail/mail.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/mail/mail.html)

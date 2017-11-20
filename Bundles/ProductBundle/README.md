@@ -209,4 +209,4 @@ Take the new implementation for listing order items, including `src/Pyz/Yves/Cus
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/products/product/product_bundles.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/products/product/product_bundles.html)

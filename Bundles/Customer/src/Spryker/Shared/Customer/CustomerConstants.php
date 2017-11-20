@@ -12,11 +12,9 @@ interface CustomerConstants
     const CUSTOMER_ANONYMOUS_PATTERN = 'CUSTOMER_ANONYMOUS_PATTERN';
     const CUSTOMER_SECURED_PATTERN = 'CUSTOMER_SECURED_PATTERN';
 
-    /** @deprecated Use CustomerConstants::BASE_URL_YVES instead */
-    const HOST_YVES = 'HOST_YVES';
-
     /**
-     * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
+     * Specification:
+     * - Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api
      */

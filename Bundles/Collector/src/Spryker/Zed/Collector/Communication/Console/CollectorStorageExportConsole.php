@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
+ * @method \Spryker\Zed\Collector\Business\CollectorFacadeInterface getFacade()
  */
 class CollectorStorageExportConsole extends AbstractCollectorConsole
 {

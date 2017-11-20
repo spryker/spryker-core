@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacade getFacade()
+ * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacadeInterface getFacade()
  */
 class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {

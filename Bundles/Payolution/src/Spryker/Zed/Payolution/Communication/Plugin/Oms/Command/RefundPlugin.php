@@ -13,7 +13,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
- * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacadeInterface getFacade()
  * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
  */
 class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface

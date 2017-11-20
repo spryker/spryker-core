@@ -13,7 +13,7 @@ use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
- * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
  */
 class ProductCategoryBusinessFactory extends AbstractBusinessFactory
 {

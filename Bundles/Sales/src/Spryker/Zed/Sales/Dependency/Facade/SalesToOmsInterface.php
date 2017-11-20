@@ -56,4 +56,11 @@ interface SalesToOmsInterface
      * @return array
      */
     public function getOrderItemMatrix();
+
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
 }

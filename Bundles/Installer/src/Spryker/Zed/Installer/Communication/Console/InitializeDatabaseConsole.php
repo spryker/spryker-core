@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Installer\Business\InstallerFacade getFacade()
+ * @method \Spryker\Zed\Installer\Business\InstallerFacadeInterface getFacade()
  */
 class InitializeDatabaseConsole extends Console
 {

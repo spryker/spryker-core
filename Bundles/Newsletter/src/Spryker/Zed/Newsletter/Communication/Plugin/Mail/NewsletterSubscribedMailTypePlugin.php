@@ -12,8 +12,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
- * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
+ * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
  */
 class NewsletterSubscribedMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {

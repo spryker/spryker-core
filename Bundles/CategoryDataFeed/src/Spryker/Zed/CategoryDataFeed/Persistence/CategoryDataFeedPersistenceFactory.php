@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CategoryDataFeed\CategoryDataFeedConfig getConfig()
- * @method \Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainerInterface getQueryContainer()
  */
 class CategoryDataFeedPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -18,7 +18,7 @@ use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  */
