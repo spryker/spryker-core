@@ -33,7 +33,6 @@ class HandlerResolver implements HandlerResolverInterface
     public function get($stateMachineName)
     {
         $stateMachineHandler = $this->find($stateMachineName);
-
         if ($stateMachineHandler !== null) {
             return $stateMachineHandler;
         }

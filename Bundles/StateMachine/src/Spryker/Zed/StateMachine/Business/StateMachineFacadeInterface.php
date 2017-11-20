@@ -14,6 +14,15 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 interface StateMachineFacadeInterface
 {
     /**
+     * Specification:
+     * - Must be triggered once per state machine when first item is added.
+     * - Creates new process item in persistent storage if it does not exist.
+     * - Creates new state item in persistent storage if it does not exist.
+     * - Executes registered StateMachineHandlerInterface::getInitialStateForProcess() plugin.
+     * - Executes registered StateMachineHandlerInterface::itemStateUpdated() plugin methods on state change.
+     * - Persists state item history.
+     * - Returns with the number of transitioned items.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -24,6 +33,14 @@ interface StateMachineFacadeInterface
     public function triggerForNewStateMachineItem(StateMachineProcessTransfer $stateMachineProcessTransfer, $identifier);
 
     /**
+     * Specification:
+     * - State machine must be already initialized with StateMachineFacadeInterface::triggerForNewStateMachineItem().
+     * - Triggers event for the provided item.
+     * - Creates new state item in persistent storage if it does not exist.
+     * - Executes registered StateMachineHandlerInterface::itemStateUpdated() plugin methods on state change.
+     * - Persists state item history.
+     * - Returns with the number of transitioned items.
+     *
      * @api
      *
      * @param string $eventName
@@ -34,6 +51,14 @@ interface StateMachineFacadeInterface
     public function triggerEvent($eventName, StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
+     * Specification:
+     * - State machine must be already initialized with StateMachineFacadeInterface::triggerForNewStateMachineItem().
+     * - Triggers event for the provided items.
+     * - Creates new state item in persistent storage if it does not exist.
+     * - Executes registered StateMachineHandlerInterface::itemStateUpdated() plugin methods on state change.
+     * - Persists state item history.
+     * - Returns with the number of transitioned items.
+     *
      * @api
      *
      * @param string $eventName
@@ -44,6 +69,10 @@ interface StateMachineFacadeInterface
     public function triggerEventForItems($eventName, array $stateMachineItems);
 
     /**
+     * Specification:
+     * - Finds state machine handler by provided state machine name.
+     * - Retrieves active process transfer list defined in handler by process name.
+     *
      * @api
      *
      * @param string $stateMachineName
@@ -51,15 +80,6 @@ interface StateMachineFacadeInterface
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
      */
     public function getProcesses($stateMachineName);
-
-    /**
-     * @api
-     *
-     * @param string $stateMachineName
-     *
-     * @return int
-     */
-    public function checkConditions($stateMachineName);
 
     /**
      * Specification:
@@ -74,6 +94,23 @@ interface StateMachineFacadeInterface
     public function hasHandler($stateMachineName);
 
     /**
+     * Specification:
+     * - Gathers all transitions without any event for the provided state machine.
+     * - Executes gathered transitions.
+     *
+     * @api
+     *
+     * @param string $stateMachineName
+     *
+     * @return int
+     */
+    public function checkConditions($stateMachineName);
+
+    /**
+     * Specification:
+     * - Gathers all timeout expired events for the provided state machine.
+     * - Executes gathered events.
+     *
      * @api
      *
      * @param string $stateMachineName
@@ -83,6 +120,10 @@ interface StateMachineFacadeInterface
     public function checkTimeouts($stateMachineName);
 
     /**
+     * Specification:
+     * - Loads state machine process from XML.
+     * - Draws graph using graph library.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -95,6 +136,9 @@ interface StateMachineFacadeInterface
     public function drawProcess(StateMachineProcessTransfer $stateMachineProcessTransfer, $highlightState = null, $format = null, $fontSize = null);
 
     /**
+     * Specification:
+     * - Retrieves process id by provided process name.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -104,6 +148,10 @@ interface StateMachineFacadeInterface
     public function getStateMachineProcessId(StateMachineProcessTransfer $stateMachineProcessTransfer);
 
     /**
+     * Specification:
+     * - Loads state machine process from XML using provided state machine item.
+     * - Retrieves manual event list.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -113,6 +161,11 @@ interface StateMachineFacadeInterface
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
+     * Specification:
+     * - Loads state machine process from XML using provided state machine item.
+     * - Retrieves manual event list per items identifier.
+     * - Items without any manual events are not part of result.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
@@ -122,6 +175,9 @@ interface StateMachineFacadeInterface
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
     /**
+     * Specification:
+     * - Retrieves hydrated item transfer by provided item id and identifier pair.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -131,6 +187,9 @@ interface StateMachineFacadeInterface
     public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
+     * Specification:
+     * - Retrieves hydrated item transfers by provided item id and identifier pairs.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
@@ -140,6 +199,9 @@ interface StateMachineFacadeInterface
     public function getProcessedStateMachineItems(array $stateMachineItems);
 
     /**
+     * Specification:
+     * - Retrieves state item history by state item identifier.
+     *
      * @api
      *
      * @param int $idStateMachineProcess
@@ -150,6 +212,10 @@ interface StateMachineFacadeInterface
     public function getStateHistoryByStateItemIdentifier($idStateMachineProcess, $identifier);
 
     /**
+     * Specification:
+     * - Loads state machine process from XML.
+     * - Retrieves all items with state which have the provided flag.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -160,6 +226,10 @@ interface StateMachineFacadeInterface
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName);
 
     /**
+     * Specification:
+     * - Loads state machine process from XML.
+     * - Retrieves all items with state which have do not have the provided flag.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
@@ -170,6 +240,9 @@ interface StateMachineFacadeInterface
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName);
 
     /**
+     * Specification:
+     * - Clears all expired item locks.
+     *
      * @api
      *
      * @return void
