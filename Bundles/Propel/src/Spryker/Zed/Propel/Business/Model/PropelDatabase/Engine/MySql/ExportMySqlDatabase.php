@@ -43,9 +43,7 @@ class ExportMySqlDatabase implements ExportDatabaseInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        $returnValue = (int)$process->getOutput();
-
-        return (bool)$returnValue;
+        return (bool)$process->getOutput();
     }
 
     /**
