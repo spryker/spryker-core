@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Controller;
 
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,9 +31,7 @@ class ProductCategoryFilterController extends AbstractController
         $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
         $localeTransfer = $this->getCurrentLocale();
 
-        $mainCategory = $this->getQueryContainer()
-            ->queryCategoryByIdAndLocale($idCategory, $localeTransfer->getIdLocale())
-            ->findOne();
+        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocale());
 
         $productCategoryFilterDataProvider = $this->getFactory()
             ->createProductCategoryFilterDataProvider();
@@ -47,6 +46,11 @@ class ProductCategoryFilterController extends AbstractController
         $searchResultsForCategory = $this->getFactory()
             ->getCatalogClient()
             ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
+
+        $productCategoryFilters = $this->getFactory()
+            ->getProductCategoryFilterFacade()
+            ->findProductCategoryFilterByCategoryId($idCategory)
+            ->getFilterDataArray();
 
         $filters = $this->getFactory()
             ->getProductCategoyFilterClient()
@@ -85,8 +89,9 @@ class ProductCategoryFilterController extends AbstractController
 
         return $this->viewResponse([
             'productCategoryFilterForm' => $productCategoryFilterForm->createView(),
-            'mainCategory' => $mainCategory,
+            'category' => $category,
             'filters' => $filters,
+            'productCategoryFilters' => $productCategoryFilters,
         ]);
     }
 
@@ -98,5 +103,24 @@ class ProductCategoryFilterController extends AbstractController
         return $this->getFactory()
             ->getLocaleFacade()
             ->getCurrentLocale();
+    }
+
+    /**
+     * @param int $idCategory
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function getCategory($idCategory, $idLocale)
+    {
+        $mainCategory = $this->getQueryContainer()
+            ->queryCategoryByIdAndLocale($idCategory, $idLocale)
+            ->findOne();
+
+        $category = new CategoryTransfer();
+        $category->setIdCategory($mainCategory->getFkCategory());
+        $category->setName($mainCategory->getName());
+
+        return $category;
     }
 }

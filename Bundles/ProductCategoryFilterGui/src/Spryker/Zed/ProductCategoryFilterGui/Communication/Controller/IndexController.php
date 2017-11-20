@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
@@ -38,6 +39,27 @@ class IndexController extends AbstractController
 
         return $this->jsonResponse(
             $productTable->fetchData()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testingAction()
+    {
+        $categoryId = 10;
+        $this->getFactory()->getProductCategoryFilterFacade()->createProductCategoryFilter(
+            (new ProductCategoryFilterTransfer())->fromArray(
+                [
+                    ProductCategoryFilterTransfer::FK_CATEGORY => $categoryId,
+                    ProductCategoryFilterTransfer::FILTER_DATA => json_encode([
+                        'weight' => true,
+                        'price' => false,
+                        'category' => true,
+                    ]),
+                ],
+                true
+            )
         );
     }
 

@@ -1,10 +1,12 @@
 {% extends '@Gui/Layout/iframe-layout.twig' %}
 
+
 {% block content %}
     <div class="ibox float-e-margins">
         {% block widget_content %}
             <div class="ibox-title">
-                <h5>{{ 'Category Filters for' | trans }} {{ mainCategory.name }}</h5>
+                <h5>{{ 'Category Filters for' | trans }} {{ category.name }}</h5>
+                <input type="hidden" id="idCategory" value="{{ category.idCategory }}"/>
             </div>
             <div class="ibox-content sk-loading">
                 <div class="alert alert-info alert-dismissable">
@@ -25,7 +27,7 @@
                             {{ form_widget(productCategoryFilterForm) }}
                         </td>
                         <td>&nbsp</td>
-                        <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  id="addButton" /></td>
+                        <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  disabled id="addButton" /></td>
                     </tr>
                 </table>
             </div>

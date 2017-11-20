@@ -16,9 +16,4 @@ interface ProductCategoryFilterGuiToProductSearchInterface
      * @return array
      */
     public function suggestProductSearchAttributeKeys($searchText = '', $limit = 10);
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
-     */
-    public function getProductSearchAttributeList();
 }
