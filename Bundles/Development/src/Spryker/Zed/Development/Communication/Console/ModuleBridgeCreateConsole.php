@@ -15,11 +15,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
-class CodeCreateConsole extends Console
+class ModuleBridgeCreateConsole extends Console
 {
     const COMMAND_NAME = 'dev:bridge:create';
-    const OPTION_BUNDLE = 'from module';
-    const OPTION_TO_BUNDLE = 'to module';
+    const OPTION_MODULE = 'from module';
+    const OPTION_TO_MODULE = 'to module';
 
     /**
      * @return void
@@ -32,8 +32,8 @@ class CodeCreateConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Create bridge and facade interface (Spryker core dev only)');
 
-        $this->addArgument(static::OPTION_BUNDLE, InputArgument::REQUIRED, 'Name of core module where the bridge should be created in');
-        $this->addArgument(static::OPTION_TO_BUNDLE, InputArgument::REQUIRED, 'Name of core module to which the module must be connected to');
+        $this->addArgument(static::OPTION_MODULE, InputArgument::REQUIRED, 'Name of core module where the bridge should be created in');
+        $this->addArgument(static::OPTION_TO_MODULE, InputArgument::REQUIRED, 'Name of core module to which the module must be connected to');
     }
 
     /**
@@ -44,13 +44,13 @@ class CodeCreateConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getArgument(static::OPTION_BUNDLE);
-        $toBundle = $this->input->getArgument(static::OPTION_TO_BUNDLE);
+        $module = $this->input->getArgument(static::OPTION_MODULE);
+        $toModule = $this->input->getArgument(static::OPTION_TO_MODULE);
 
-        $message = 'Create bridge in ' . $bundle;
+        $message = 'Create bridge in ' . $module;
 
         $this->info($message);
 
-        $this->getFacade()->createBridge($bundle, $toBundle);
+        $this->getFacade()->createBridge($module, $toModule);
     }
 }

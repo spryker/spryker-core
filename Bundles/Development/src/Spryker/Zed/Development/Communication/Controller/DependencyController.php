@@ -26,7 +26,7 @@ class DependencyController extends AbstractController
      */
     public function indexAction()
     {
-        $bundles = $this->getFacade()->getAllBundles();
+        $bundles = $this->getFacade()->getAllModules();
 
         return $this->viewResponse([
             'bundles' => $bundles,
@@ -42,7 +42,7 @@ class DependencyController extends AbstractController
     {
         $bundleName = $request->query->getAlnum(static::QUERY_KEY_MODULE);
 
-        $bundleDependencyCollectionTransfer = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
+        $bundleDependencyCollectionTransfer = $this->getFacade()->showOutgoingDependenciesForModule($bundleName);
         $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleDependencyCollectionTransfer);
 
         return $this->viewResponse([
@@ -116,7 +116,7 @@ class DependencyController extends AbstractController
     {
         $module = $request->query->getAlnum(static::QUERY_KEY_MODULE);
 
-        $dependencies = $this->getFacade()->showIncomingDependenciesForBundle($module);
+        $dependencies = $this->getFacade()->showIncomingDependenciesForModule($module);
 
         return $this->viewResponse([
             static::QUERY_KEY_MODULE => $module,

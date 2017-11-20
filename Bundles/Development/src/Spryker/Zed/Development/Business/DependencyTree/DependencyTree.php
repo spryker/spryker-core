@@ -22,8 +22,8 @@ class DependencyTree extends AbstractDependencyTree
     const META_FOREIGN_CLASS_NAME = 'foreign class name';
     const META_FOREIGN_IS_EXTERNAL = 'foreign is external';
     const META_APPLICATION = 'application';
-    const META_BUNDLE = 'bundle';
-    const META_BUNDLE_IS_ENGINE = 'is engine';
+    const META_MODULE = 'bundle';
+    const META_MODULE_IS_ENGINE = 'is engine';
     const META_LAYER = 'layer';
     const META_COMPOSER_NAME = 'composer name';
     const META_COMPOSER_VERSION = 'composer version';
@@ -72,8 +72,8 @@ class DependencyTree extends AbstractDependencyTree
             static::META_FOREIGN_BUNDLE => $to,
             static::META_FOREIGN_BUNDLE_IS_ENGINE => $this->isEngineBundle($to),
             static::META_APPLICATION => $application,
-            static::META_BUNDLE => $bundle,
-            static::META_BUNDLE_IS_ENGINE => $this->isEngineBundle($bundle),
+            static::META_MODULE => $bundle,
+            static::META_MODULE_IS_ENGINE => $this->isEngineBundle($bundle),
             static::META_LAYER => $layer,
         ];
 
