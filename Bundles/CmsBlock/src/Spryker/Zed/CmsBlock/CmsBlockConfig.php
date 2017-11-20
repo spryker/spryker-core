@@ -10,6 +10,9 @@ namespace Spryker\Zed\CmsBlock;
 use Spryker\Shared\CmsBlock\CmsBlockConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\CmsBlock\CmsBlockConfig getSharedConfig()
+ */
 class CmsBlockConfig extends AbstractBundleConfig
 {
 

@@ -8,7 +8,13 @@
 namespace Spryker\Client\CmsBlock;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Client\Kernel\SharedConfigResolverAwareTrait;
 
 class CmsBlockConfig extends AbstractBundleConfig
 {
+
+    public function getTest()
+    {
+        $this->getSharedConfig()->getTest();
+    }
 }
