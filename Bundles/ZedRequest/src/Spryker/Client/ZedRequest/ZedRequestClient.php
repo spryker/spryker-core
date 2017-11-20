@@ -35,8 +35,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
-     * Specification:
-     * - Prepare and make the call to Zed.
+     * {@inheritdoc}
      *
      * @api
      *

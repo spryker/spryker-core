@@ -12,6 +12,9 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 interface ZedRequestClientInterface
 {
     /**
+     * Specification:
+     * - Prepare and make the call to Zed.
+     *
      * Third argument has changed from int to array. BC compatibility method will
      * convert the previous accepted integer to `['timeout => $timeoutInSeconds]`
      *

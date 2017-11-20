@@ -13,6 +13,8 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 class ZedRequestConfig extends AbstractBundleConfig
 {
+    const HASH_COST = 'cost';
+
     /**
      * @return string
      */
@@ -76,7 +78,7 @@ class ZedRequestConfig extends AbstractBundleConfig
 
         if (Config::hasKey(ZedRequestConstants::CLIENT_OPTIONS)) {
             $customClientConfiguration = $this->get(ZedRequestConstants::CLIENT_OPTIONS);
-            $clientConfiguration = array_merge($clientConfiguration, $customClientConfiguration);
+            $clientConfiguration += $customClientConfiguration;
         }
 
         return $clientConfiguration;
@@ -88,7 +90,7 @@ class ZedRequestConfig extends AbstractBundleConfig
     public function getTokenOptions()
     {
         return [
-            'cost' => $this->getHashCost(),
+            static::HASH_COST => $this->getHashCost(),
         ];
     }
 }

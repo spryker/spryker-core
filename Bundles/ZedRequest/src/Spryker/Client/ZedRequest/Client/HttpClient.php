@@ -35,7 +35,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param string $baseUrl
-     * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $rawToken
+     * @param string $rawToken
      * @param bool $isAuthenticationEnabled
      * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
