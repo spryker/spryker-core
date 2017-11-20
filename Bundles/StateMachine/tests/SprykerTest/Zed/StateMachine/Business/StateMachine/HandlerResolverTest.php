@@ -23,7 +23,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class HandlerResolverTest extends StateMachineMocks
 {
-
     const TEST_HANDLER_NAME = 'testing state machine name';
 
     /**
@@ -39,7 +38,7 @@ class HandlerResolverTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testHandlerResolverWhenRequestedNonExistantShouldThrowException()
+    public function testHandlerResolverWhenRequestedNonExistentShouldThrowException()
     {
         $this->expectException(StateMachineHandlerNotFound::class);
 
@@ -56,5 +55,4 @@ class HandlerResolverTest extends StateMachineMocks
 
         return new HandlerResolver([$stateMachineHandlerMock]);
     }
-
 }

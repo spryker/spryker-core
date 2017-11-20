@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class SearchClientServiceProvider implements ServiceProviderInterface
 {
-
     const CLIENT_SEARCH = 'search client';
 
     /**
@@ -40,5 +39,4 @@ class SearchClientServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

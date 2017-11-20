@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class QueryStringValidator extends ConstraintValidator
 {
-
     /**
      * @param string $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\Discount\Communication\Form\Constraint\QueryString $constraint
@@ -36,7 +35,8 @@ class QueryStringValidator extends ConstraintValidator
 
         if (count($validationMessages) > 0) {
             foreach ($validationMessages as $validationMessage) {
-                $this->buildViolation($validationMessage)
+                $this->context
+                    ->buildViolation($validationMessage)
                     ->addViolation();
             }
         }
@@ -56,5 +56,4 @@ class QueryStringValidator extends ConstraintValidator
                 $queryString
             );
     }
-
 }

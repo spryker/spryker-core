@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class ZedRequestClientServiceProvider implements ServiceProviderInterface
 {
-
     const CLIENT_ZED_REQUEST = 'zed request client';
 
     /**
@@ -40,5 +39,4 @@ class ZedRequestClientServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

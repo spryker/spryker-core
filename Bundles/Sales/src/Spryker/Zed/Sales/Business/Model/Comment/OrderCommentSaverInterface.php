@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CommentTransfer;
 
 interface OrderCommentSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderComment
      */
     public function save(CommentTransfer $commentTransfer);
-
 }

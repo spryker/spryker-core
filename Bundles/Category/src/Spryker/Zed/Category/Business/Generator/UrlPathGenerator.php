@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Business\Generator;
 
 class UrlPathGenerator implements UrlPathGeneratorInterface
 {
-
     const CATEGORY_NAME = 'name';
 
     /**
@@ -31,5 +30,4 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
 
         return '/' . implode('/', $formattedPath);
     }
-
 }

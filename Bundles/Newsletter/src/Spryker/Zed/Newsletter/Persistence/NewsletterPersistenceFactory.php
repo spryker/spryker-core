@@ -14,11 +14,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
- * @method \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface getQueryContainer()
  */
 class NewsletterPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
      */
@@ -42,5 +41,4 @@ class NewsletterPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyNewsletterTypeQuery::create();
     }
-
 }

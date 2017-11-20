@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class SequenceNumberQueryContainer extends AbstractQueryContainer implements SequenceNumberQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -54,5 +53,4 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
 
         return $query;
     }
-
 }

@@ -21,7 +21,6 @@ use SprykerTest\Zed\Refund\RefundPresentationTester;
  */
 class RefundCest
 {
-
     /**
      * @skip
      *
@@ -104,5 +103,4 @@ class RefundCest
 
         $i->assertSame($grandTotal, $i->grabTotalRefundedAmount());
     }
-
 }

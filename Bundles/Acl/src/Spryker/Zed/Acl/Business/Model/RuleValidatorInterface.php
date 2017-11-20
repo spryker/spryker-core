@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RuleTransfer;
 
 interface RuleValidatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RulesTransfer $rules
      *
@@ -55,5 +54,4 @@ interface RuleValidatorInterface
      * @return bool
      */
     public function isAccessible($bundle, $controller, $action);
-
 }

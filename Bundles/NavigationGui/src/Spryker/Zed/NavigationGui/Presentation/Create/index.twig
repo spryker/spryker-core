@@ -1,12 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Create Navigation' %}
+{% set widget_title = 'Navigation element details' %}
+{% block section_title 'Create Navigation Element' %}
 
 {% block head_title widget_title %}
-{% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/navigation-gui', 'Back to list' | trans) }}
+    {{ backActionButton('/navigation-gui', 'Back to Navigation Elements' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -18,7 +18,7 @@
             {{ form_start(navigationForm) }}
                 {{ form_widget(navigationForm) }}
 
-                <input id="navigation-save-btn" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                <input id="navigation-save-btn" type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(navigationForm) }}
 
         {% endblock %}

@@ -21,11 +21,10 @@ use Throwable;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -166,5 +165,4 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             json_encode($array)
         ));
     }
-
 }

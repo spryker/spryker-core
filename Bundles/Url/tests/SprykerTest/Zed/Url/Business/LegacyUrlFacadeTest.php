@@ -28,7 +28,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LegacyUrlFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacade
      */
@@ -254,5 +253,4 @@ class LegacyUrlFacadeTest extends Unit
 
         $this->assertEquals('/redirectingToUrl', $redirectQuery->findOne()->getToUrl());
     }
-
 }

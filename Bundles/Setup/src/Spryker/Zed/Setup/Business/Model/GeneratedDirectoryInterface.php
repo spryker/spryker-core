@@ -9,10 +9,8 @@ namespace Spryker\Zed\Setup\Business\Model;
 
 interface GeneratedDirectoryInterface
 {
-
     /**
      * @return void
      */
     public function clear();
-
 }

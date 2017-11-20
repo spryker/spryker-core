@@ -11,7 +11,6 @@ use Countable;
 
 interface DependencyInjectorCollectionInterface extends Countable
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface $dependencyInjector
      *
@@ -23,5 +22,4 @@ interface DependencyInjectorCollectionInterface extends Countable
      * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface[]
      */
     public function getDependencyInjector();
-
 }

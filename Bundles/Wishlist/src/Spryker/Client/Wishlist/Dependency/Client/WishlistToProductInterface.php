@@ -9,12 +9,10 @@ namespace Spryker\Client\Wishlist\Dependency\Client;
 
 interface WishlistToProductInterface
 {
-
     /**
      * @param array $idProductConcreteCollection
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection);
-
 }

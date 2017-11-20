@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,10 +14,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  */
 class CreateGlossaryController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**
@@ -64,7 +65,6 @@ class CreateGlossaryController extends AbstractController
                 )->build();
 
                 return $this->redirectResponse($redirectUrl);
-
             } else {
                 $this->addErrorMessage('Invalid data provided.');
             }
@@ -89,7 +89,23 @@ class CreateGlossaryController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
+            'viewActionButtons' => $this->getViewActionButtons($cmsPageTransfer),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     */
+    protected function getViewActionButtons(CmsPageTransfer $cmsPageTransfer)
+    {
+        $viewActionButtons = [];
+        foreach ($this->getFactory()->getCreateGlossaryExpanderPlugins() as $createGlossaryExpanderPlugin) {
+            $viewActionButtons = array_merge($viewActionButtons, $createGlossaryExpanderPlugin->getViewActionButtons($cmsPageTransfer));
+        }
+
+        return $viewActionButtons;
     }
 
     /**
@@ -115,5 +131,4 @@ class CreateGlossaryController extends AbstractController
 
         return $this->jsonResponse($result);
     }
-
 }

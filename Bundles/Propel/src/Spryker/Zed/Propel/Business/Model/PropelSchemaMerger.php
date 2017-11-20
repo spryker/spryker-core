@@ -16,7 +16,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
-
     /**
      * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
@@ -54,7 +53,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         }
 
         if (count($childArray) !== 1) {
-            $fileIdentifier = $schemaFiles[0]->getFileName();
+            $fileIdentifier = $schemaFiles[0]->getFilename();
             throw new SchemaMergeException('Ambiguous use of name, package and namespace in schema file "' . $fileIdentifier . '"');
         }
     }
@@ -274,5 +273,4 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
         return $toXmlElement;
     }
-
 }

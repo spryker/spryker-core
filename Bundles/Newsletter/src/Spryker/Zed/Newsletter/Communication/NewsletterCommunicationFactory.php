@@ -12,11 +12,10 @@ use Spryker\Zed\Newsletter\NewsletterDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
- * @method \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainerInterface getQueryContainer()
  */
 class NewsletterCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Newsletter\Dependency\Facade\NewsletterToMailInterface
      */
@@ -32,5 +31,4 @@ class NewsletterCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(NewsletterDependencyProvider::FACADE_GLOSSARY);
     }
-
 }

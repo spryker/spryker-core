@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
 interface ProductSearchToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -25,5 +24,4 @@ interface ProductSearchToTouchInterface
      * @return int
      */
     public function bulkTouchSetActive($itemType, array $itemIds = []);
-
 }

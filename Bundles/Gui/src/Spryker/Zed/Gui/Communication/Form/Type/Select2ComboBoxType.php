@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class Select2ComboBoxType extends AbstractType
 {
-
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
@@ -70,5 +69,4 @@ class Select2ComboBoxType extends AbstractType
     {
         return 'select2';
     }
-
 }

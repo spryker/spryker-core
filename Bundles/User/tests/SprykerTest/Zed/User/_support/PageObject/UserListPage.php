@@ -9,7 +9,5 @@ namespace SprykerTest\Zed\User\PageObject;
 
 class UserListPage
 {
-
     const URL = '/user';
-
 }

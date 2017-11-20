@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\CategoryCommunicationTester;
  */
 class CreateControllerCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryCommunicationTester $i
      *
@@ -56,5 +55,4 @@ class CreateControllerCest
 
         $i->see($message);
     }
-
 }

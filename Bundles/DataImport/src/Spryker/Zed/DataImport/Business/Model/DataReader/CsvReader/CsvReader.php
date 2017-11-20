@@ -19,7 +19,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface, Countable
 {
-
     /**
      * @var \SplFileObject
      */
@@ -227,5 +226,4 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
             $this->next();
         }
     }
-
 }

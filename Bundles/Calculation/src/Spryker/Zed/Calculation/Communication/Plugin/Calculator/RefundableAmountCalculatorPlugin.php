@@ -12,12 +12,11 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
 class RefundableAmountCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class RefundableAmountCalculatorPlugin extends AbstractPlugin implements Calcula
         $this->getFacade()
             ->calculateRefundableAmount($calculableObjectTransfer);
     }
-
 }

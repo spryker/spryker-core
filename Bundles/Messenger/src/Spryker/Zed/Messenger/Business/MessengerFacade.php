@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
 {
-
     /**
      * @api
      *
@@ -61,5 +60,4 @@ class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
     {
         return $this->getFactory()->createMessageTray()->getMessages();
     }
-
 }

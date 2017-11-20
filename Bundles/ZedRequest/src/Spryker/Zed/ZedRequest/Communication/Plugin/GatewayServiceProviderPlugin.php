@@ -16,11 +16,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
- * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacade getFacade()
+ * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
  */
 class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface
      */
@@ -65,5 +64,4 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
             TransferServer::getInstance()->setRequest($request);
         });
     }
-
 }

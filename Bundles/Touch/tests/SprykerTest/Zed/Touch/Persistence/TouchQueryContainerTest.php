@@ -25,7 +25,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
  */
 class TouchQueryContainerTest extends Unit
 {
-
     const ITEM_TYPE = 'test.item';
     const ITEM_ID_1 = 1;
     const ITEM_ID_2 = 2;
@@ -148,5 +147,4 @@ class TouchQueryContainerTest extends Unit
 
         return $touchEntity;
     }
-
 }

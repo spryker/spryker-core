@@ -14,7 +14,6 @@ use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageBri
 
 class ProductRelationDependencyProvider extends AbstractDependencyProvider
 {
-
     const KV_STORAGE = 'kv storage';
     const CLIENT_LOCALE = 'locale client';
 
@@ -35,5 +34,4 @@ class ProductRelationDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

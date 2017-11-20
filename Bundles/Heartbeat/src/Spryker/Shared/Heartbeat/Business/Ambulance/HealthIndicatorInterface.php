@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\HealthReportTransfer;
 
 interface HealthIndicatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\HealthReportTransfer $healthReportTransfer
      *
      * @return void
      */
     public function doHealthCheck(HealthReportTransfer $healthReportTransfer);
-
 }

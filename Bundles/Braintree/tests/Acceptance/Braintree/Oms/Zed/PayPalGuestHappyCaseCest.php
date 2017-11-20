@@ -20,7 +20,6 @@ use Acceptance\Braintree\Oms\Zed\Tester\OmsTester;
  */
 class PayPalGuestHappyCaseCest
 {
-
     /**
      * @skip Broken because of new checkout
      *
@@ -42,5 +41,4 @@ class PayPalGuestHappyCaseCest
         $i->amLoggedInUser();
         $i->closePayPalOrderHappyCase();
     }
-
 }

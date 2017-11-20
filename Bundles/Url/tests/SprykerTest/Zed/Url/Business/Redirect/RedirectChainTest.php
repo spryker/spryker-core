@@ -27,7 +27,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class RedirectChainTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacade
      */
@@ -147,5 +146,4 @@ class RedirectChainTest extends Unit
         $this->assertInstanceOf(SpyUrlRedirect::class, $redirectEntity, 'Url entity should have associated redirect entity.');
         $this->assertEquals($updatedUrlTransfer->getUrl(), $redirectEntity->getToUrl(), 'Redirect url should match the new url after update.');
     }
-
 }

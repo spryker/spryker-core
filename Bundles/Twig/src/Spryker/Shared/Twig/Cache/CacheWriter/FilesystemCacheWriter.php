@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 
 class FilesystemCacheWriter implements CacheWriterInterface
 {
-
     /**
      * @var string
      */
@@ -36,7 +35,7 @@ class FilesystemCacheWriter implements CacheWriterInterface
         foreach ($data as $key => $value) {
             $cacheFileContent .= '    \'' . $key . '\' => ' . var_export($value, true) . ',' . PHP_EOL;
         }
-        $cacheFileContent .= '];';
+        $cacheFileContent .= '];' . PHP_EOL;
 
         $directory = dirname($this->cacheFilePath);
         if (!is_dir($directory)) {
@@ -44,6 +43,9 @@ class FilesystemCacheWriter implements CacheWriterInterface
         }
 
         file_put_contents($this->cacheFilePath, $cacheFileContent);
-    }
 
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($this->cacheFilePath, true);
+        }
+    }
 }

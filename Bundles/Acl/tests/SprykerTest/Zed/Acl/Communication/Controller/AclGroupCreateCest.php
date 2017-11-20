@@ -22,7 +22,6 @@ use SprykerTest\Zed\Acl\PageObject\AclGroupCreatePage;
  */
 class AclGroupCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\Acl\AclCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class AclGroupCreateCest
         $i->amOnPage(AclGroupCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups / Create new Group');
     }
-
 }

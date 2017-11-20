@@ -17,9 +17,13 @@
                     <h3 class="m-t-none m-b">{{ 'Shipment Method' | trans }}</h3>
 
                     {{ form_start(form) }}
+
+                        {{ form_row(form.fkShipmentCarrier) }}
+                        {{ form_row(form.name) }}
+                        {{ form_money_collection(form.prices) }}
                         {{ form_widget(form) }}
 
-                        <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                        <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
                     {{ form_end(form) }}
 
                 </div>

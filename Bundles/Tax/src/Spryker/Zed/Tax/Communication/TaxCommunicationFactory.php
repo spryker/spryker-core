@@ -21,12 +21,11 @@ use Spryker\Zed\Tax\TaxDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  */
 class TaxCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider $taxRateFormDataProvider
      *
@@ -126,5 +125,4 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(TaxDependencyProvider::SERVICE_DATE_FORMATTER);
     }
-
 }

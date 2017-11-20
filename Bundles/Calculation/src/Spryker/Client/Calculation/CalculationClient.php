@@ -15,7 +15,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CalculationClient extends AbstractClient implements CalculationClientInterface
 {
-
     /**
      * Recalculates the given quote and returns an updated one.
      *
@@ -39,5 +38,4 @@ class CalculationClient extends AbstractClient implements CalculationClientInter
     {
         return $this->getFactory()->createZedStub();
     }
-
 }

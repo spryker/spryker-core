@@ -31,7 +31,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
  */
 class NavigationTouchTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Business\NavigationFacade
      */
@@ -189,5 +188,4 @@ class NavigationTouchTest extends Unit
             ->queryTouchEntriesByItemTypeAndItemIds(NavigationConfig::RESOURCE_TYPE_NAVIGATION_MENU, [$idNavigation])
             ->findOne();
     }
-
 }

@@ -17,12 +17,11 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
- * @method \Spryker\Zed\Cms\Business\CmsFacade getFacade()
- * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  */
 class RedirectController extends AbstractController
 {
-
     const REDIRECT_ADDRESS = '/cms/redirect';
     const REQUEST_ID_URL = 'id-url';
     const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
@@ -193,5 +192,4 @@ class RedirectController extends AbstractController
 
         return $this->redirectResponse('/cms/redirect');
     }
-
 }

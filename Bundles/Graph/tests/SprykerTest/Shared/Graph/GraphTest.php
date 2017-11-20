@@ -21,7 +21,6 @@ use Spryker\Shared\Graph\GraphAdapterInterface;
  */
 class GraphTest extends Unit
 {
-
     const GRAPH_NAME = 'graph name';
     const NODE_A = 'node A';
     const NODE_B = 'node B';
@@ -174,5 +173,4 @@ class GraphTest extends Unit
 
         return $adapter;
     }
-
 }

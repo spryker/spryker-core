@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
 
 class ServiceMethodBuilder extends AbstractBundleMethodBuilder
 {
-
     /**
      * @return string
      */
@@ -32,5 +31,4 @@ class ServiceMethodBuilder extends AbstractBundleMethodBuilder
             $bundleTransfer->getName()
         );
     }
-
 }

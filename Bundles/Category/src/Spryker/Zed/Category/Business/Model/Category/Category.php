@@ -13,7 +13,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class Category implements CategoryInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -110,5 +109,4 @@ class Category implements CategoryInterface
         $categoryEntity = $this->getCategoryEntity($idCategory);
         $categoryEntity->delete();
     }
-
 }

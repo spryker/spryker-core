@@ -9,7 +9,6 @@ namespace Spryker\Zed\Touch\Business;
 
 interface TouchFacadeInterface
 {
-
     /**
      * @api
      *
@@ -144,5 +143,4 @@ interface TouchFacadeInterface
      * @return int
      */
     public function removeTouchEntriesMarkedAsDeleted();
-
 }

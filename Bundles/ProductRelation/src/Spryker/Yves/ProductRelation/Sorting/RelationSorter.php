@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StorageProductAbstractRelationTransfer;
 
 class RelationSorter implements RelationSorterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $relationProducts
      *
@@ -25,5 +24,4 @@ class RelationSorter implements RelationSorterInterface
 
         return $relationProducts;
     }
-
 }

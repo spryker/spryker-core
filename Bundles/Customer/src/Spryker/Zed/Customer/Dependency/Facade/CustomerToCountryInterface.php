@@ -9,16 +9,6 @@ namespace Spryker\Zed\Customer\Dependency\Facade;
 
 interface CustomerToCountryInterface
 {
-
-    /**
-     * @deprecated Use getCountryByIso2Code() instead.
-     *
-     * @param string $iso2Code
-     *
-     * @return int
-     */
-    public function getIdCountryByIso2Code($iso2Code);
-
     /**
      * @param string $countryName
      *
@@ -37,5 +27,4 @@ interface CustomerToCountryInterface
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getCountryByIso2Code($iso2Code);
-
 }

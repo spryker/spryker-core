@@ -33,7 +33,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
  */
 class LockedOrderStateMachineTest extends Unit
 {
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -378,5 +377,4 @@ class LockedOrderStateMachineTest extends Unit
 
         return implode('-', $orderItemIds);
     }
-
 }

@@ -19,7 +19,6 @@ use Twig_Environment;
  */
 class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
-
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
@@ -72,7 +71,6 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
 
         $skuMap = $this->getProductAbstractSkuMap($cmsContent);
         if (is_array($productAbstractSkuList)) {
-
             $products = $this->collectProductAbstractList($productAbstractSkuList, $skuMap);
             $numberOfCollectedProducts = count($products);
             if ($numberOfCollectedProducts > 1) {
@@ -176,5 +174,4 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
 
         return $productData;
     }
-
 }

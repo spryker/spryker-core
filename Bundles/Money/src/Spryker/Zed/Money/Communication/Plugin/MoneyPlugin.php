@@ -13,11 +13,11 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Money\Business\MoneyFacade getFacade()
+ * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
+ * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  */
 class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
 {
-
     /**
      * @param int $amount
      * @param string|null $isoCode
@@ -113,5 +113,4 @@ class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
     {
         return $this->getFacade()->convertDecimalToInteger($value);
     }
-
 }

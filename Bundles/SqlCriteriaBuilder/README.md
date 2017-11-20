@@ -1,11 +1,13 @@
-# Sql Criteria Builder
+# SqlCriteriaBuilder Module
+
+SqlCriteriaBuilder is for building complex queries using javascript query builder component. For example product relations are using it to create a queries for dynamic rules.
 
 ## Installation
 
 ```
-composer require everon/criteria-builder
+composer require spryker/sql-criteria-builder
 ```
 
 ## Documentation
 
-[Sql Criteria Builder Documentation](https://github.com/oliwierptak/everon-criteria-builder)
+[Module Documentation](https://github.com/oliwierptak/everon-criteria-builder)

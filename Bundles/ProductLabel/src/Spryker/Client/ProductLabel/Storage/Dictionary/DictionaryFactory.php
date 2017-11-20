@@ -13,7 +13,6 @@ use Spryker\Shared\ProductLabel\KeyBuilder\LabelDictionaryKeyBuilder;
 
 class DictionaryFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\ProductLabel\Storage\Dictionary\LabelDictionaryInterface
      */
@@ -89,5 +88,4 @@ class DictionaryFactory extends AbstractFactory
     {
         return new KeyByNameStrategy();
     }
-
 }

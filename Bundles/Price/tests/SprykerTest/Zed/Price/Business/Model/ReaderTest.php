@@ -16,7 +16,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Price\Business\Exception\MissingPriceException;
-use Spryker\Zed\Price\Business\PriceFacade;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +29,6 @@ use Spryker\Zed\Price\Business\PriceFacade;
  */
 class ReaderTest extends Unit
 {
-
     const DUMMY_PRICE_TYPE_1 = 'TYPE1';
     const DUMMY_PRICE_TYPE_2 = 'TYPE2';
     const DUMMY_PRICE_TYPE_3 = 'TYPE3';
@@ -39,6 +37,11 @@ class ReaderTest extends Unit
     const DUMMY_SKU_PRODUCT_CONCRETE = 'CONCRETE';
     const DUMMY_PRICE_1 = 99;
     const DUMMY_PRICE_2 = 100;
+
+    /**
+     * @var \SprykerTest\Zed\Price\PriceBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacade
@@ -62,7 +65,8 @@ class ReaderTest extends Unit
     {
         parent::setUp();
 
-        $this->priceFacade = new PriceFacade();
+        $this->priceFacade = $this->tester->getFacade();
+
         $this->setTestData();
     }
 
@@ -79,17 +83,17 @@ class ReaderTest extends Unit
 
         $priceTypes = $this->priceFacade->getPriceTypeValues();
 
-        $isTypeInResult_1 = false;
-        $isTypeInResult_2 = false;
+        $isTypeInResult1 = false;
+        $isTypeInResult2 = false;
         foreach ($priceTypes as $priceType) {
             if ($priceType === self::DUMMY_PRICE_TYPE_1) {
-                $isTypeInResult_1 = true;
+                $isTypeInResult1 = true;
             } elseif ($priceType === self::DUMMY_PRICE_TYPE_2) {
-                $isTypeInResult_2 = true;
+                $isTypeInResult2 = true;
             }
         }
-        $this->assertTrue($isTypeInResult_1);
-        $this->assertTrue($isTypeInResult_2);
+        $this->assertTrue($isTypeInResult1);
+        $this->assertTrue($isTypeInResult2);
     }
 
     /**
@@ -359,5 +363,4 @@ class ReaderTest extends Unit
         $this->productAbstractEntity = $productAbstractEntity;
         $this->productConcreteEntity = $productConcreteEntity;
     }
-
 }

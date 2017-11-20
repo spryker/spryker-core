@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class BraintreeConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -68,5 +67,4 @@ class BraintreeConfig extends AbstractBundleConfig
     {
         return 'Spryker_BT_DE';
     }
-
 }

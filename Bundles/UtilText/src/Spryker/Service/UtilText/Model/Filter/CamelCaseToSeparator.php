@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilText\Model\Filter;
 
 class CamelCaseToSeparator implements CamelCaseToSeparatorInterface
 {
-
     /**
      * @param string $string
      * @param string $separator
@@ -20,5 +19,4 @@ class CamelCaseToSeparator implements CamelCaseToSeparatorInterface
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1' . addcslashes($separator, '$') . '$2', $string));
     }
-
 }

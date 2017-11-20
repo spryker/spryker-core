@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 
 class NewsletterToMailBridge implements NewsletterToMailInterface
 {
-
     /**
      * @var \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
@@ -34,5 +33,4 @@ class NewsletterToMailBridge implements NewsletterToMailInterface
     {
         $this->mailFacade->handleMail($mailTransfer);
     }
-
 }

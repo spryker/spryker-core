@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class ZedRequestYvesTester extends Actor
 {
-
     use _generated\ZedRequestYvesTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

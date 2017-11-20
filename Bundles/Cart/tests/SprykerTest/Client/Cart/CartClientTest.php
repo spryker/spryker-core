@@ -26,7 +26,6 @@ use Spryker\Client\Kernel\AbstractFactory;
  */
 class CartClientTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -246,6 +245,7 @@ class CartClientTest extends Unit
             'getQuote',
             'setQuote',
             'clearQuote',
+            'reloadItems',
         ])->getMock();
 
         return $quoteMock;
@@ -259,7 +259,7 @@ class CartClientTest extends Unit
         return $this->getMockBuilder(CartStubInterface::class)->setMethods([
             'addItem',
             'removeItem',
+            'reloadItems',
         ])->getMock();
     }
-
 }

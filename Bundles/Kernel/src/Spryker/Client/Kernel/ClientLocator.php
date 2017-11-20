@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\AbstractLocator;
 
 class ClientLocator extends AbstractLocator
 {
-
     const LOCATABLE_SUFFIX = 'Client';
 
     /**
@@ -49,5 +48,4 @@ class ClientLocator extends AbstractLocator
     {
         return new ClientResolver();
     }
-
 }

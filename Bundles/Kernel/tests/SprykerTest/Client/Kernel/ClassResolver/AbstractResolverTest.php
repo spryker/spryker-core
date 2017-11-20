@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\Kernel\ClassResolver;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -21,7 +23,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 abstract class AbstractResolverTest extends Unit
 {
-
     /**
      * @var string
      */
@@ -63,6 +64,11 @@ abstract class AbstractResolverTest extends Unit
     public function tearDown()
     {
         parent::tearDown();
+
+        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
+        $reflectionProperty = $reflectionResolver->getProperty('cache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
 
         $this->deleteCreatedFiles();
     }
@@ -124,8 +130,10 @@ abstract class AbstractResolverTest extends Unit
      */
     private function deleteCreatedFiles()
     {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->createdFiles);
+        if (is_dir($this->getBasePath())) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getBasePath());
+        }
     }
 
     /**
@@ -143,10 +151,10 @@ abstract class AbstractResolverTest extends Unit
             $this->getBasePath(),
             implode(DIRECTORY_SEPARATOR, $classNameParts),
         ];
-        $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
+        $directory = implode(DIRECTORY_SEPARATOR, $directoryParts);
 
-        if (!is_dir($directory)) {
-            mkdir($directory, 0775, true);
+        if (!is_dir($directory) || !is_writable($directory)) {
+            mkdir($directory, 0777, true);
         }
         $fileName = $directory . DIRECTORY_SEPARATOR . $class . '.php';
 
@@ -161,12 +169,6 @@ abstract class AbstractResolverTest extends Unit
      */
     private function getBasePath()
     {
-        $directoryParts = explode(DIRECTORY_SEPARATOR, __DIR__);
-        $testsDirectoryPosition = array_search('tests', $directoryParts);
-
-        $basePath = implode(DIRECTORY_SEPARATOR, array_slice($directoryParts, 0, $testsDirectoryPosition + 1));
-
-        return $basePath;
+        return __DIR__ . '/../_data/Generated';
     }
-
 }

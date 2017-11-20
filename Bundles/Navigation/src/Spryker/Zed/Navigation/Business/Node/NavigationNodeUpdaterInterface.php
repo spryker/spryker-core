@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NavigationNodeTransfer;
 
 interface NavigationNodeUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
     public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
-
 }

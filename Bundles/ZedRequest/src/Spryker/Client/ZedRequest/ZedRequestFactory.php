@@ -16,7 +16,6 @@ use Spryker\Client\ZedRequest\Client\ZedClient;
  */
 class ZedRequestFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\ZedRequest\Client\ZedClient
      */
@@ -70,4 +69,11 @@ class ZedRequestFactory extends AbstractFactory
         return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_TEXT);
     }
 
+    /**
+     * @return \Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface[]
+     */
+    public function getMetaDataProviderPlugins()
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::META_DATA_PROVIDER_PLUGINS);
+    }
 }

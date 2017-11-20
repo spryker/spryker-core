@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Business\Process;
 
 class Event implements EventInterface
 {
-
     /**
      * @var mixed
      */
@@ -181,5 +180,4 @@ class Event implements EventInterface
     {
         return isset($this->timeout);
     }
-
 }

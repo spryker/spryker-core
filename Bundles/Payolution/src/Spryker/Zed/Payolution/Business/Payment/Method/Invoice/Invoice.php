@@ -15,7 +15,6 @@ use Spryker\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 class Invoice extends AbstractPaymentMethod implements InvoiceInterface
 {
-
     /**
      * @return string
      */
@@ -206,5 +205,4 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
             $uniqueId
         );
     }
-
 }

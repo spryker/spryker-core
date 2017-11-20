@@ -9,12 +9,12 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Shared\Oms\OmsConfig;
 use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Finder implements FinderInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -148,13 +148,29 @@ class Finder implements FinderInterface
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
+        if (!$flaggedOrderItems) {
+            return false;
+        }
+
         foreach ($orderItems as $orderItem) {
-            if (in_array($orderItem, $flaggedOrderItems) === false) {
-                return false;
+            foreach ($flaggedOrderItems as $flaggedOrderItem) {
+                if ($flaggedOrderItem->getPrimaryKey() !== $orderItem->getPrimaryKey()) {
+                    return false;
+                }
             }
         }
 
         return true;
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder)
+    {
+        return $this->isOrderFlaggedAll($idOrder, OmsConfig::STATE_TYPE_FLAG_EXCLUDE_FROM_CUSTOMER);
     }
 
     /**
@@ -369,5 +385,4 @@ class Finder implements FinderInterface
 
         return $state->getDisplay();
     }
-
 }

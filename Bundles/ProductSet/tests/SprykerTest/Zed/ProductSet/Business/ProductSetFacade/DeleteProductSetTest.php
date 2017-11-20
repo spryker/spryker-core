@@ -25,7 +25,6 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
  */
 class DeleteProductSetTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -53,5 +52,4 @@ class DeleteProductSetTest extends Unit
 
         $this->tester->assertTouchDeleted(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as deleted.');
     }
-
 }

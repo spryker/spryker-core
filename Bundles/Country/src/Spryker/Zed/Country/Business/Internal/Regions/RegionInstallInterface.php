@@ -9,7 +9,6 @@ namespace Spryker\Zed\Country\Business\Internal\Regions;
 
 interface RegionInstallInterface
 {
-
     /**
      * key: iso3661-2 code
      * value: name
@@ -28,5 +27,4 @@ interface RegionInstallInterface
      * @return string
      */
     public function getCountryIso();
-
 }

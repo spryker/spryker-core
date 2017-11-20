@@ -13,11 +13,10 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 
 /**
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
- * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacade getFacade()
+ * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  */
 class IsPayedPlugin extends AbstractPlugin implements ConditionInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -27,5 +26,4 @@ class IsPayedPlugin extends AbstractPlugin implements ConditionInterface
     {
         return true;
     }
-
 }

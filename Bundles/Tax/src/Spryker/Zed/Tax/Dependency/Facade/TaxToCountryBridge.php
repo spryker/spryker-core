@@ -7,20 +7,17 @@
 
 namespace Spryker\Zed\Tax\Dependency\Facade;
 
-use Spryker\Zed\Country\Business\CountryFacade;
-
 class TaxToCountryBridge implements TaxToCountryBridgeInterface
 {
-
     /**
-     * @var \Spryker\Zed\Country\Business\CountryFacade
+     * @var \Spryker\Zed\Country\Business\CountryFacadeInterface
      */
     protected $countryFacade;
 
     /**
-     * @param \Spryker\Zed\Country\Business\CountryFacade $countryFacade
+     * @param \Spryker\Zed\Country\Business\CountryFacadeInterface $countryFacade
      */
-    public function __construct(CountryFacade $countryFacade)
+    public function __construct($countryFacade)
     {
         $this->countryFacade = $countryFacade;
     }
@@ -34,5 +31,4 @@ class TaxToCountryBridge implements TaxToCountryBridgeInterface
     {
         return $this->countryFacade->getAvailableCountries();
     }
-
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class PayolutionYvesTester extends Actor
 {
-
     use _generated\PayolutionYvesTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CommentForm extends AbstractType
 {
-
     const FORM_NAME = 'comment';
 
     /**
@@ -66,5 +65,4 @@ class CommentForm extends AbstractType
 
         return $this;
     }
-
 }

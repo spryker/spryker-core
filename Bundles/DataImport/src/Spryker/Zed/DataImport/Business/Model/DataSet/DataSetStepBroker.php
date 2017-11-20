@@ -14,7 +14,6 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 
 class DataSetStepBroker implements DataSetStepBrokerInterface, DataImportStepAwareInterface
 {
-
     /**
      * @var \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface[]
      */
@@ -51,5 +50,4 @@ class DataSetStepBroker implements DataSetStepBrokerInterface, DataImportStepAwa
             }
         }
     }
-
 }

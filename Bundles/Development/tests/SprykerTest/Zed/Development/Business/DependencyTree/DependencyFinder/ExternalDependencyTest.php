@@ -28,7 +28,6 @@ use Symfony\Component\Finder\Finder;
  */
 class ExternalDependencyTest extends Unit
 {
-
     /**
      * @throws \RuntimeException
      *
@@ -37,7 +36,7 @@ class ExternalDependencyTest extends Unit
     public function getTestFile()
     {
         $finder = new Finder();
-        $finder->files()->in(__DIR__ . '/Fixtures');
+        $finder->files()->in(__DIR__ . '/test_files');
 
         foreach ($finder as $item) {
             return $item;
@@ -60,7 +59,6 @@ class ExternalDependencyTest extends Unit
 
         $dependencyTree = $dependencyFinder->getDependencyTree()->getDependencyTree();
 
-        $this->assertCount(6, $dependencyTree);
+        $this->assertCount(5, $dependencyTree);
     }
-
 }

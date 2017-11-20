@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 abstract class AbstractAttributeKeyForm extends AbstractType
 {
-
     const FIELD_KEY = 'key';
 
     const OPTION_FILTER_TYPE_CHOICES = 'filter_type_choices';
@@ -106,5 +105,4 @@ abstract class AbstractAttributeKeyForm extends AbstractType
             ]),
         ];
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 
 class Sellable implements SellableInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
@@ -59,9 +58,8 @@ class Sellable implements SellableInterface
     public function calculateStockForProduct($sku)
     {
         $physicalItems = $this->stockFacade->calculateStockForProduct($sku);
-        $reservedItems = $this->omsFacade->sumReservedProductQuantitiesForSku($sku);
+        $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku);
 
         return $physicalItems - $reservedItems;
     }
-
 }

@@ -13,11 +13,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockProductConnector\Communication\CmsBlockProductConnectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacade getFacade()
+ * @method \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface getFacade()
  */
 class CmsBlockProductAbstractFormPlugin extends AbstractPlugin implements CmsBlockFormPluginInterface
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -39,5 +38,4 @@ class CmsBlockProductAbstractFormPlugin extends AbstractPlugin implements CmsBlo
             $dataProvider->getOptions()
         );
     }
-
 }

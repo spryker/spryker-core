@@ -12,19 +12,26 @@
 {% endblock %}
 
 {% block content %}
+    {{ form_start(form) }}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {{ tabs(
+    customerGroupFormTabs,
+    {
+        'customerGroupForm': form,
+        'customerAssignmentForm': form.customerAssignment,
+        'availableCustomerTable': availableCustomerTable,
+        'assignedCustomerTable': assignedCustomerTable
+    }
+    ) }}
 
-        {% block widget_content %}
+    {{ form_end(form) }}
+{% endblock %}
 
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
+{% block head_css %}
+    {{ parent() }}
+{% endblock %}
 
-            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
-            {{ form_end(form) }}
-
-        {% endblock %}
-
-    {% endembed %}
-
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-customer-group-form.js"></script>
 {% endblock %}

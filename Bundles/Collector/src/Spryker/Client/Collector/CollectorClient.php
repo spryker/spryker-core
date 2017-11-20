@@ -17,7 +17,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CollectorClient extends AbstractClient implements UrlMatcherInterface, CollectorClientInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class CollectorClient extends AbstractClient implements UrlMatcherInterface, Col
     {
         return $this->getFactory()->createUrlMatcher()->matchUrl($url, $localeName);
     }
-
 }

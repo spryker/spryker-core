@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryConfig extends AbstractBundleConfig
 {
-
     /**
      * Default available template for category
      */
@@ -37,5 +36,4 @@ class CategoryConfig extends AbstractBundleConfig
             static::CATEGORY_TEMPLATE_DEFAULT => '',
         ];
     }
-
 }

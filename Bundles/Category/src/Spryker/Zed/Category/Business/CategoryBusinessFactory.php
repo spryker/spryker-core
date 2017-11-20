@@ -30,12 +30,11 @@ use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  */
 class CategoryBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @deprecated Will be removed with next major release
      *
@@ -325,5 +324,4 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer()
         );
     }
-
 }

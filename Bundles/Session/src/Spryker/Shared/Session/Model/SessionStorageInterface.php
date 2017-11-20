@@ -9,7 +9,6 @@ namespace Spryker\Shared\Session\Model;
 
 interface SessionStorageInterface
 {
-
     /**
      * @return array
      */
@@ -19,5 +18,4 @@ interface SessionStorageInterface
      * @return \SessionHandlerInterface
      */
     public function getAndRegisterHandler();
-
 }

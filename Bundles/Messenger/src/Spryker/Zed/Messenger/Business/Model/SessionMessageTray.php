@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
 {
-
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
@@ -112,5 +111,4 @@ class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
     {
         return new FlashMessagesTransfer();
     }
-
 }

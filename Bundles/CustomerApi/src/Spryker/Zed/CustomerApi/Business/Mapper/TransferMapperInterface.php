@@ -9,7 +9,6 @@ namespace Spryker\Zed\CustomerApi\Business\Mapper;
 
 interface TransferMapperInterface
 {
-
     /**
      * @param array $data
      *
@@ -23,5 +22,4 @@ interface TransferMapperInterface
      * @return \Generated\Shared\Transfer\CustomerApiTransfer[]
      */
     public function toTransferCollection(array $data);
-
 }

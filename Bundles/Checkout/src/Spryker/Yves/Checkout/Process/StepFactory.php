@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Process\StepEngine;
 
 class StepFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
      */
@@ -49,5 +48,4 @@ class StepFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::CLIENT_QUOTE);
     }
-
 }

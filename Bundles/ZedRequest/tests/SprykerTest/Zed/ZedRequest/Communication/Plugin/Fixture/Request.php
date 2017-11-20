@@ -12,7 +12,6 @@ use Spryker\Zed\ZedRequest\Business\Client\Request as ClientRequest;
 
 class Request extends ClientRequest
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
@@ -51,5 +50,4 @@ class Request extends ClientRequest
     {
         $this->transfer = $transfer;
     }
-
 }

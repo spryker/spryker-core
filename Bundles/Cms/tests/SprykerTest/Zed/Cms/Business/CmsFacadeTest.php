@@ -8,11 +8,19 @@
 namespace SprykerTest\Zed\Cms\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CmsGlossaryTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Cms\Business\CmsFacade;
+use Spryker\Zed\Cms\Business\Page\LocaleCmsPageDataExpander;
+use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Glossary\Business\GlossaryBusinessFactory;
 use Spryker\Zed\Glossary\Business\GlossaryFacade;
@@ -36,7 +44,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class CmsFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacade
      */
@@ -71,6 +78,11 @@ class CmsFacadeTest extends Unit
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
     protected $touchQueryContainer;
+
+    /**
+     * @var \SprykerTest\Zed\Cms\CmsBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -379,6 +391,103 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCalculateFlattenedLocaleCmsPageDataAppliesPreConfiguredCmsPageDataExpanderPlugins()
+    {
+        // Assign
+        $input = new LocaleCmsPageDataTransfer();
+        $expanderPlugin = $this->createMock(CmsPageDataExpanderPluginInterface::class);
+        $this->tester->setDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_DATA_EXPANDER, [$expanderPlugin]);
+
+        // Assert
+        $expanderPlugin->expects($this->once())->method('expand');
+
+        // Act
+        $this->cmsFacade->calculateFlattenedLocaleCmsPageData($input, new LocaleTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateFlattenedLocaleCmsPageDataRetrievesFlattenedArray()
+    {
+        // Assign
+        $expectedResult = [
+            LocaleCmsPageDataExpander::PARAM_URL,
+            LocaleCmsPageDataExpander::PARAM_VALID_FROM,
+            LocaleCmsPageDataExpander::PARAM_VALID_TO,
+            LocaleCmsPageDataExpander::PARAM_IS_ACTIVE,
+            LocaleCmsPageDataExpander::PARAM_ID,
+            LocaleCmsPageDataExpander::PARAM_TEMPLATE,
+            LocaleCmsPageDataExpander::PARAM_PLACEHOLDERS,
+            LocaleCmsPageDataExpander::PARAM_NAME,
+            LocaleCmsPageDataExpander::PARAM_META_TITLE,
+            LocaleCmsPageDataExpander::PARAM_META_KEYWORDS,
+            LocaleCmsPageDataExpander::PARAM_META_DESCRIPTION,
+        ];
+        $input = new LocaleCmsPageDataTransfer();
+        $this->tester->setDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_DATA_EXPANDER, []);
+
+        // Act
+        $actualResult = $this->cmsFacade->calculateFlattenedLocaleCmsPageData($input, new LocaleTransfer());
+
+        // Assert
+        $this->assertEquals($expectedResult, array_keys($actualResult));
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtractCmsVersionDataTransferReturnsCmsVersionDataTransfer()
+    {
+        // Assign
+        $input = '{}';
+        $expectedResultClass = CmsVersionDataTransfer::class;
+
+        // Act
+        $actualResult = $this->cmsFacade->extractCmsVersionDataTransfer($input);
+
+        // Assert
+        $this->assertEquals($expectedResultClass, get_class($actualResult));
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtractCmsVersionDataTransferPopulatesCmsVersionDataTransfer()
+    {
+        // Assign
+        $expectedResult = "dummyTestValue";
+        $input = sprintf('{"cmsPage":{"templateName": "%s"}}', $expectedResult);
+
+        // Act
+        $actualResult = $this->cmsFacade->extractCmsVersionDataTransfer($input);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult->getCmsPage()->getTemplateName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtractLocaleCmsPageDataTransferReturnsLocaleCmsPageDataTransfer()
+    {
+        // Assign
+        $input = (new CmsVersionDataTransfer())
+            ->setCmsGlossary(new CmsGlossaryTransfer())
+            ->setCmsPage(new CmsPageTransfer())
+            ->setCmsTemplate(new CmsTemplateTransfer());
+        $expectedResultClass = LocaleCmsPageDataTransfer::class;
+
+        // Act
+        $actualResult = $this->cmsFacade->extractLocaleCmsPageDataTransfer($input, new LocaleTransfer());
+
+        // Assert
+        $this->assertEquals($expectedResultClass, get_class($actualResult));
+    }
+
+    /**
+     * @return void
+     */
     protected function buildGlossaryFacade()
     {
         $this->glossaryFacade = new GlossaryFacade();
@@ -408,5 +517,4 @@ class CmsFacadeTest extends Unit
 
         return $urlTransfer;
     }
-
 }

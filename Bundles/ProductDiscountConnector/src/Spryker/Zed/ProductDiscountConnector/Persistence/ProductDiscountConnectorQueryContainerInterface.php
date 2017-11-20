@@ -7,12 +7,10 @@ namespace Spryker\Zed\ProductDiscountConnector\Persistence;
 
 interface ProductDiscountConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKeys();
-
 }

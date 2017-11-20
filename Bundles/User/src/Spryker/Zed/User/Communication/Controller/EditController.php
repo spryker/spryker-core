@@ -17,13 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
- * @method \Spryker\Zed\User\Business\UserFacade getFacade()
+ * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
- * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  */
 class EditController extends AbstractController
 {
-
     const PARAM_ID_USER = 'id-user';
     const USER_LISTING_URL = '/user';
 
@@ -269,5 +268,4 @@ class EditController extends AbstractController
             $groupPlugin->removeUserFromGroup($idUser, $groupTransfer->getIdAclGroup());
         }
     }
-
 }

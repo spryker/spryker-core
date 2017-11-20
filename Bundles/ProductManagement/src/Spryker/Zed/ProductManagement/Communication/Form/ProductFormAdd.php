@@ -37,7 +37,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormAdd extends AbstractType
 {
-
     const FIELD_SKU = 'sku';
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
@@ -188,7 +187,6 @@ class ProductFormAdd extends AbstractType
             ->addNewToDateField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
-            ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
             ->addPriceForm($builder, $options)
             ->addSeoLocalizedForms($builder)
@@ -708,7 +706,6 @@ class ProductFormAdd extends AbstractType
                         $context->addViolation('Date "New from" is the same as "New to".');
                     }
                 }
-
             },
         ]);
     }
@@ -754,5 +751,4 @@ class ProductFormAdd extends AbstractType
             }
         );
     }
-
 }

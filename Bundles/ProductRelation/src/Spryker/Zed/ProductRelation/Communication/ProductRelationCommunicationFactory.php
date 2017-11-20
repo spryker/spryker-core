@@ -22,13 +22,12 @@ use Spryker\Zed\ProductRelation\Communication\Tabs\ProductRelationTabs;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
- * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacade getFacade()
+ * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
  */
 class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param int|null $idProductRelation
      *
@@ -178,5 +177,4 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_PRODUCT);
     }
-
 }

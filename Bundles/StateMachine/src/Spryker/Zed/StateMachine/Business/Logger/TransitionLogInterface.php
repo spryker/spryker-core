@@ -14,7 +14,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface;
 
 interface TransitionLogInterface
 {
-
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
@@ -86,5 +85,4 @@ interface TransitionLogInterface
      * @return void
      */
     public function saveAll();
-
 }

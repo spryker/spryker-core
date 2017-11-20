@@ -67,6 +67,8 @@
         <property name="isGuest" type="bool" />
         <property name="locale" type="Locale" />
         <property name="anonymizedAt" type="string" />
+        <property name="fkUser" type="int" />
+        <property name="username" type="string" />
     </transfer>
 
     <transfer name="CustomerError">

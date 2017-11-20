@@ -9,11 +9,9 @@ namespace Spryker\Zed\Customer\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CustomerUpdateForm extends CustomerForm
 {
-
     const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
     const FIELD_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
 
@@ -29,18 +27,6 @@ class CustomerUpdateForm extends CustomerForm
         parent::configureOptions($resolver);
 
         $resolver->setRequired(self::OPTION_ADDRESS_CHOICES);
-    }
-
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 
     /**
@@ -109,5 +95,4 @@ class CustomerUpdateForm extends CustomerForm
 
         return $this;
     }
-
 }

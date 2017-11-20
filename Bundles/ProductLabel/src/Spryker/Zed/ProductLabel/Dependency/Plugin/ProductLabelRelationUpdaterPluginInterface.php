@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabel\Dependency\Plugin;
 
 interface ProductLabelRelationUpdaterPluginInterface
 {
-
     /**
      * Specification:
      * - Returns a list of Product Label - Product Abstract relation to assign and deassign.
@@ -21,5 +20,4 @@ interface ProductLabelRelationUpdaterPluginInterface
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges();
-
 }

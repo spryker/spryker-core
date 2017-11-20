@@ -12,7 +12,6 @@ use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 
 class StepMockWithBreadcrumbs extends StepMock implements StepWithBreadcrumbInterface
 {
-
     /**
      * @return string
      */
@@ -22,7 +21,7 @@ class StepMockWithBreadcrumbs extends StepMock implements StepWithBreadcrumbInte
     }
 
     /**
-     * @param AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return bool
      */
@@ -40,5 +39,4 @@ class StepMockWithBreadcrumbs extends StepMock implements StepWithBreadcrumbInte
     {
         return !$this->requireInput($dataTransfer);
     }
-
 }

@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductRelation\ProductRelationCommunicationTester;
  */
 class ProductRelationCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductRelation\ProductRelationCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class ProductRelationCreateCest
         $i->amOnPage(ProductRelationCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / Create new Product Relation');
     }
-
 }

@@ -23,7 +23,6 @@ use SprykerTest\Zed\Refund\PageObject\SalesDetailPage;
  */
 class RefundPresentationTester extends Actor
 {
-
     use _generated\RefundPresentationTesterActions;
 
     /**
@@ -92,5 +91,4 @@ class RefundPresentationTester extends Actor
 
         return $refundTotal;
     }
-
 }

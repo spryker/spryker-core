@@ -10,7 +10,6 @@ use Spryker\Shared\Kernel\AbstractLocator;
 
 class MissingPropertyLocator extends AbstractLocator
 {
-
     /**
      * @param string $bundle
      *
@@ -19,5 +18,4 @@ class MissingPropertyLocator extends AbstractLocator
     public function locate($bundle)
     {
     }
-
 }

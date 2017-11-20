@@ -14,15 +14,12 @@ use Symfony\Component\Form\FormInterface;
 
 class OptionTabs extends AbstractTabs
 {
-
     /**
      * @var \Symfony\Component\Form\FormInterface
      */
     protected $productOptionGroupForm;
 
     /**
-     * OptionTabs constructor.
-     *
      * @param \Symfony\Component\Form\FormInterface $productOptionGroupForm
      */
     public function __construct(FormInterface $productOptionGroupForm)
@@ -102,5 +99,4 @@ class OptionTabs extends AbstractTabs
 
         return $this;
     }
-
 }

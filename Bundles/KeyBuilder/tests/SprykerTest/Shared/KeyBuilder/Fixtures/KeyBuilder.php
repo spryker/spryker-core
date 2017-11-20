@@ -11,7 +11,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class KeyBuilder
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -31,6 +30,4 @@ class KeyBuilder
     {
         return 'identifier.' . $data;
     }
-
-
 }

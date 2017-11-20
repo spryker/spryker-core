@@ -9,7 +9,6 @@ namespace Spryker\Zed\Setup\Business\Model;
 
 class System
 {
-
     /**
      * @param string|null $what
      *
@@ -26,5 +25,4 @@ class System
 
         return ob_get_clean();
     }
-
 }

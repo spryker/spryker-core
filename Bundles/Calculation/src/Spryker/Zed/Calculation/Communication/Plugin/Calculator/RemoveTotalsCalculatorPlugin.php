@@ -12,12 +12,11 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
 class RemoveTotalsCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -28,5 +27,4 @@ class RemoveTotalsCalculatorPlugin extends AbstractPlugin implements Calculation
         $this->getFacade()
             ->removeTotals($calculableObjectTransfer);
     }
-
 }

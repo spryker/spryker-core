@@ -23,7 +23,6 @@ use Spryker\Yves\Ratepay\Form\DataProvider\ElvDataProvider;
  */
 class ElvDataProviderTest extends AbstractDataProviderTest
 {
-
     /**
      * @return void
      */
@@ -56,5 +55,4 @@ class ElvDataProviderTest extends AbstractDataProviderTest
         $this->assertInstanceOf(RatepayPaymentElvTransfer::class, $paymentMethodTransfer);
         $this->assertSame(static::PHONE_NUMBER, $paymentMethodTransfer->getPhone());
     }
-
 }

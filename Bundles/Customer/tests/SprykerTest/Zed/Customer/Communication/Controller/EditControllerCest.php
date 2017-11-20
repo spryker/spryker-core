@@ -21,7 +21,6 @@ use SprykerTest\Zed\Customer\CustomerCommunicationTester;
  */
 class EditControllerCest
 {
-
     const NEW_FIRST_NAME = 'superMan';
 
     /**
@@ -77,5 +76,4 @@ class EditControllerCest
         $customerTransfer = $i->getLocator()->customer()->facade()->getCustomer($this->customer);
         $i->assertSame(static::NEW_FIRST_NAME, $customerTransfer->getFirstName());
     }
-
 }

@@ -15,11 +15,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
- * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacade getFacade()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
      */
@@ -63,5 +62,4 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
         $app->before(function (Request $request) {
         });
     }
-
 }

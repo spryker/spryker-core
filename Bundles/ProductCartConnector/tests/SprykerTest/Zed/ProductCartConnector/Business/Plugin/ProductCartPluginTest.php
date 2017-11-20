@@ -31,7 +31,6 @@ use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
  */
 class ProductCartPluginTest extends Unit
 {
-
     const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
     const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
     const TAX_SET_NAME = 'Sales Tax';
@@ -107,5 +106,4 @@ class ProductCartPluginTest extends Unit
         $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
         $this->assertEquals($productConcreteEntity->getIdProduct(), $expandedItemTransfer->getId());
     }
-
 }

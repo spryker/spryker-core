@@ -9,7 +9,6 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 class TableConfiguration
 {
-
     const SORT_ASC = 'asc';
     const SORT_DESC = 'desc';
 
@@ -27,6 +26,11 @@ class TableConfiguration
      * @var array
      */
     protected $footer = [];
+
+    /**
+     * @var array
+     */
+    protected $extraColumns = [];
 
     /**
      * @var int
@@ -158,6 +162,26 @@ class TableConfiguration
         $this->setFooter($headerKeys);
 
         return $this;
+    }
+
+    /**
+     * @param array $extraColumns
+     *
+     * @return $this
+     */
+    public function setExtraColumns(array $extraColumns)
+    {
+        $this->extraColumns = $extraColumns;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExtraColumns()
+    {
+        return $this->extraColumns;
     }
 
     /**
@@ -322,5 +346,4 @@ class TableConfiguration
     {
         $this->stateSave = $stateSave;
     }
-
 }

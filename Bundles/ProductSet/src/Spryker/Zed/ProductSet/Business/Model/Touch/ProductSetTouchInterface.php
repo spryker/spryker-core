@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 interface ProductSetTouchInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      *
@@ -32,5 +31,4 @@ interface ProductSetTouchInterface
      * @return bool
      */
     public function touchProductSetByStatus(ProductSetTransfer $productSetTransfer);
-
 }

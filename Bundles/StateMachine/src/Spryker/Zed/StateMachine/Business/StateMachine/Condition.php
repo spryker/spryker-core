@@ -16,7 +16,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Condition implements ConditionInterface
 {
-
     /**
      * @var array
      */
@@ -99,7 +98,6 @@ class Condition implements ConditionInterface
                 if ($isValidCondition) {
                     array_push($possibleTransitions, $transition);
                 }
-
             } else {
                 array_push($possibleTransitions, $transition);
             }
@@ -341,5 +339,4 @@ class Condition implements ConditionInterface
         }
         return $sourceStates;
     }
-
 }

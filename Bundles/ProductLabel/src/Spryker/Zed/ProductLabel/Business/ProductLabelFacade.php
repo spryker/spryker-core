@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -204,5 +203,4 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->createProductAbstractRelationUpdater($logger)
             ->updateProductLabelRelations();
     }
-
 }

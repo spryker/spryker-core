@@ -15,7 +15,6 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 class SessionHandlerMysql implements SessionHandlerInterface
 {
-
     const METRIC_SESSION_DELETE_TIME = 'Mysql/Session_delete_time';
     const METRIC_SESSION_WRITE_TIME = 'Mysql/Session_write_time';
     const METRIC_SESSION_READ_TIME = 'Mysql/Session_read_time';
@@ -210,5 +209,4 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $statement = $this->connection->query($query);
         $statement->execute();
     }
-
 }

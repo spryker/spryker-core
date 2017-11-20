@@ -15,7 +15,6 @@ use Generated\Shared\Search\PageIndexMap;
  */
 class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPlugin
 {
-
     const SUGGESTION_NAME = 'spelling-suggestion';
 
     const SIZE = 1;
@@ -40,5 +39,4 @@ class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPl
 
         return $termSuggest;
     }
-
 }

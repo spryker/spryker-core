@@ -13,11 +13,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
+ * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  */
 class CheckConditionConsole extends Console
 {
-
     const COMMAND_NAME = 'state-machine:check-condition';
     const COMMAND_DESCRIPTION = 'Check conditions';
     const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
@@ -52,5 +51,4 @@ class CheckConditionConsole extends Console
 
         $this->getFacade()->checkConditions($stateMachineName);
     }
-
 }

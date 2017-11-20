@@ -14,8 +14,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PropelFacade extends AbstractFacade implements PropelFacadeInterface
 {
-
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -26,6 +27,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -36,8 +39,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Create database for configured driver if it doesn't exist
+     * {@inheritdoc}
      *
      * @api
      *
@@ -49,9 +51,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Convert given PHP configuration into json configuration
-     * - File is placed in configured phpConfDir
+     * {@inheritdoc}
      *
      * @api
      *
@@ -63,6 +63,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -73,6 +75,20 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function adjustCorePropelSchemaFilesForPostgresql()
+    {
+        $this->getFactory()->createCorePostgresqlCompatibilityAdjuster()->adjustSchemaFiles();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -83,6 +99,22 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function adjustCorePostgresqlFunctions()
+    {
+        $this->getFactory()->createCorePostgresqlCompatibilityAdjuster()->addMissingFunctions();
+    }
+
+    /**
+     * @deprecated Please add the Commands directly to your ConsoleDependencyProvider.
+     *
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Symfony\Component\Console\Command\Command[]
@@ -93,6 +125,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -103,6 +137,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -111,5 +147,4 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     {
         return $this->getFactory()->getConfig()->getCurrentDatabaseEngineName();
     }
-
 }

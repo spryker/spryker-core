@@ -7,12 +7,15 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class VoucherForm extends AbstractType
 {
-
     const FIELD_QUANTITY = 'quantity';
     const FIELD_CUSTOM_CODE = 'custom_code';
     const FIELD_RANDOM_GENERATED_CODE_LENGTH = 'random_generated_code_length';
@@ -42,7 +45,7 @@ class VoucherForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_QUANTITY, 'text', [
+        $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
             'constraints' => [
                 new NotBlank(),
@@ -60,8 +63,8 @@ class VoucherForm extends AbstractType
     protected function addCustomCodeField(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_CUSTOM_CODE,
-            'text',
+            static::FIELD_CUSTOM_CODE,
+            TextType::class,
             [
                 'required' => false,
             ]
@@ -78,8 +81,8 @@ class VoucherForm extends AbstractType
     protected function addRandomGeneratedCodeLength(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_RANDOM_GENERATED_CODE_LENGTH,
-            'choice',
+            static::FIELD_RANDOM_GENERATED_CODE_LENGTH,
+            ChoiceType::class,
             [
                 'label' => 'Add Random Generated Code Length',
                 'placeholder' => 'No additional random characters',
@@ -99,8 +102,8 @@ class VoucherForm extends AbstractType
     protected function addMaxNumberOfUsesField(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_MAX_NUMBER_OF_USES,
-            'text',
+            static::FIELD_MAX_NUMBER_OF_USES,
+            TextType::class,
             [
                 'label' => 'Max number of uses (0 = Infinite usage)',
             ]
@@ -116,7 +119,7 @@ class VoucherForm extends AbstractType
      */
     protected function addIdDiscount(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_DISCOUNT, 'hidden');
+        $builder->add(static::FIELD_ID_DISCOUNT, HiddenType::class);
 
         return $this;
     }
@@ -128,7 +131,7 @@ class VoucherForm extends AbstractType
      */
     protected function addSubmitButton(FormBuilderInterface $builder)
     {
-        $builder->add('generate', 'submit', [
+        $builder->add('generate', SubmitType::class, [
             'attr' => [
                 'class' => 'btn-create',
             ],
@@ -155,5 +158,4 @@ class VoucherForm extends AbstractType
         $range = range(3, 10);
         return array_combine(array_values($range), $range);
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
  */
 class RecursiveFieldFilter extends AbstractFilter
 {
-
     const OPTION_FILTER_PATTERN = 'filter_pattern';
     const OPTION_FILTERED_STR = 'filtered_string';
 
@@ -82,5 +81,4 @@ class RecursiveFieldFilter extends AbstractFilter
 
         return $value;
     }
-
 }

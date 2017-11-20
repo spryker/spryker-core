@@ -22,7 +22,6 @@ use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupEditPage;
  */
 class CustomerGroupEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\CustomerGroup\CustomerGroupCommunicationTester $i
      *
@@ -35,5 +34,4 @@ class CustomerGroupEditCest
 
         $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups / Edit customer group');
     }
-
 }

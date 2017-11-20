@@ -26,7 +26,6 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
  */
 class CmsGlossaryReaderTest extends CmsMocks
 {
-
     /**
      * @return void
      */
@@ -177,5 +176,4 @@ class CmsGlossaryReaderTest extends CmsMocks
             2 => 'de_DE',
         ];
     }
-
 }

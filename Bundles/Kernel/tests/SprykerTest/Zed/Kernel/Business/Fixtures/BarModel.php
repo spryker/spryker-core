@@ -8,13 +8,11 @@ namespace SprykerTest\Zed\Kernel\Business\Fixtures;
 
 class BarModel
 {
-
     /**
-     * @param FooModel $fooModel
+     * @param \SprykerTest\Zed\Kernel\Business\Fixtures\FooModel $fooModel
      */
     public function __construct(FooModel $fooModel)
     {
         unset($fooModel);
     }
-
 }

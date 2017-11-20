@@ -9,7 +9,6 @@ namespace Spryker\Zed\Touch\Business\Model\BulkTouch;
 
 class BulkTouch implements BulkTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\BulkTouchInterface[]
      */
@@ -40,5 +39,4 @@ class BulkTouch implements BulkTouchInterface
 
         return $affectedRows;
     }
-
 }

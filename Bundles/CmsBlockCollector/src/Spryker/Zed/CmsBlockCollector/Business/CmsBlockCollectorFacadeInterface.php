@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface CmsBlockCollectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Collects CMS blocks to storage
@@ -43,5 +42,4 @@ interface CmsBlockCollectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

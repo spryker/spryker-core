@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Kernel\ClassResolver;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 /**
  * Auto-generated group annotations
@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
  */
 class ClassInfoTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -29,7 +28,7 @@ class ClassInfoTest extends Unit
     {
         $classInfo = new ClassInfo();
         $this->assertInstanceOf(
-            'Spryker\Zed\Kernel\ClassResolver\ClassInfo',
+            ClassInfo::class,
             $classInfo->setClass($classInfo)
         );
     }
@@ -53,7 +52,7 @@ class ClassInfoTest extends Unit
         $classInfo = new ClassInfo();
         $classInfo->setClass($classInfo);
 
-        $this->assertSame('Zed', $classInfo->getApplication());
+        $this->assertSame('Shared', $classInfo->getApplication());
     }
 
     /**
@@ -77,5 +76,4 @@ class ClassInfoTest extends Unit
 
         $this->assertSame('ClassResolver', $classInfo->getLayer());
     }
-
 }

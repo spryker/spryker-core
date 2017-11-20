@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface CalculationClientInterface
 {
-
     /**
      * @api
      *
@@ -23,5 +22,4 @@ interface CalculationClientInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer);
-
 }

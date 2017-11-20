@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 
 class Store
 {
-
     const APPLICATION_ZED = 'ZED';
 
     /**
@@ -70,6 +69,16 @@ class Store
     protected $currentLocale;
 
     /**
+     * @var array
+     */
+    protected $contexts;
+
+    /**
+     * @var string
+     */
+    protected static $defaultStore;
+
+    /**
      * Examples: EUR, PLN
      *
      * @link http://en.wikipedia.org/wiki/ISO_4217
@@ -79,14 +88,9 @@ class Store
     protected $currencyIsoCode;
 
     /**
-     * @var array
+     * @var string[]
      */
-    protected $contexts;
-
-    /**
-     * @var string
-     */
-    protected static $defaultStore;
+    protected $currencyIsoCodes = [];
 
     /**
      * @return \Spryker\Shared\Kernel\Store
@@ -167,6 +171,7 @@ class Store
         $this->allStoreNames = array_keys($stores);
         $this->allStores = $stores;
 
+        $this->setCurrencyIsoCode($this->getDefaultCurrencyCode());
         $this->setCurrentLocale(current($this->locales));
         $this->setCurrentCountry(current($this->countries));
     }
@@ -225,14 +230,6 @@ class Store
         }
 
         return $inActiveStores;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCurrencyIsoCode()
-    {
-        return $this->currencyIsoCode;
     }
 
     /**
@@ -338,4 +335,69 @@ class Store
         return $prefix;
     }
 
+    /**
+     * @param string $currencyIsoCode
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return void
+     */
+    public function setCurrencyIsoCode($currencyIsoCode)
+    {
+        if (count($this->currencyIsoCodes) === 0) {
+            $this->currencyIsoCode = $currencyIsoCode;
+            return;
+        }
+
+        if (!in_array($currencyIsoCode, $this->currencyIsoCodes)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '"%s" currency is not a valid value. Please use one of "%s".',
+                    $currencyIsoCode,
+                    implode('", "', $this->currencyIsoCodes)
+                )
+            );
+        }
+
+        $this->currencyIsoCode = $currencyIsoCode;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCurrencyIsoCodes()
+    {
+        return $this->currencyIsoCodes;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrencyIsoCode()
+    {
+        return $this->currencyIsoCode;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getConfigurationForStore($storeName)
+    {
+        return $this->getStoreSetup($storeName)[$storeName];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultCurrencyCode()
+    {
+        $defaultCurrencyCode = current($this->currencyIsoCodes);
+        if (!$defaultCurrencyCode) {
+            return $this->currencyIsoCode;
+        }
+
+        return $defaultCurrencyCode;
+    }
 }

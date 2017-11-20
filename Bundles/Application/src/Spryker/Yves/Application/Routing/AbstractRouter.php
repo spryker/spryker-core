@@ -21,7 +21,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 {
-
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
@@ -202,5 +201,4 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 
         return $service;
     }
-
 }

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Generator;
 
 interface GeneratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $bundleTransferCollection
      *
@@ -20,5 +19,4 @@ interface GeneratorInterface
      * @return string
      */
     public function getName();
-
 }

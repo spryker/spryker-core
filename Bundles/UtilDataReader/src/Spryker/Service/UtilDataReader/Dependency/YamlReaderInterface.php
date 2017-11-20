@@ -9,12 +9,10 @@ namespace Spryker\Service\UtilDataReader\Dependency;
 
 interface YamlReaderInterface
 {
-
     /**
      * @param string $fileName
      *
      * @return array
      */
     public function parse($fileName);
-
 }

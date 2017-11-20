@@ -13,7 +13,6 @@ use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterfac
 
 class AvailabilityStockFormDataProvider
 {
-
     const DATA_CLASS = 'data_class';
 
     /**
@@ -58,7 +57,7 @@ class AvailabilityStockFormDataProvider
 
     /**
      * @param string $sku
-     * @param array|\Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
+     * @param \Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
      *
      * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
@@ -128,5 +127,4 @@ class AvailabilityStockFormDataProvider
 
         return $stockProducts;
     }
-
 }

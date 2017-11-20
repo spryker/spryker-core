@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface RatepayClientInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ interface RatepayClientInterface
      * @return \Generated\Shared\Transfer\RatepayInstallmentCalculationResponseTransfer
      */
     public function installmentCalculation(QuoteTransfer $quoteTransfer);
-
 }

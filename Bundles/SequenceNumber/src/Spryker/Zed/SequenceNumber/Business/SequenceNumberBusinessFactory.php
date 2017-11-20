@@ -19,7 +19,6 @@ use Spryker\Zed\SequenceNumber\Business\Model\SequenceNumber;
  */
 class SequenceNumberBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @param int $min
      * @param int $max
@@ -48,8 +47,8 @@ class SequenceNumberBusinessFactory extends AbstractBusinessFactory
         return new SequenceNumber(
             $generator,
             $settings,
-            Propel::getConnection()
+            Propel::getConnection(),
+            $this->getConfig()->getSequenceLimits()
         );
     }
-
 }

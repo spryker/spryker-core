@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\KernelConstants;
 
 class ResolverCacheManager implements ResolverCacheFactoryInterface
 {
-
     /**
      * @return bool
      */
@@ -71,5 +70,4 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
 
         return $cacheProvider;
     }
-
 }

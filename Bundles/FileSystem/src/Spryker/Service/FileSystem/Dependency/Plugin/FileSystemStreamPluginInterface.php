@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FileSystemStreamTransfer;
 
 interface FileSystemStreamPluginInterface
 {
-
     /**
      * Specification:
      * - Create a file or update if exists using stream
@@ -74,5 +73,4 @@ interface FileSystemStreamPluginInterface
      * @return void
      */
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
-
 }

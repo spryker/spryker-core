@@ -7,12 +7,10 @@ namespace Spryker\Zed\Discount\Business\Persistence;
 
 interface DiscountConfiguratorHydrateInterface
 {
-
     /**
      * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function getByIdDiscount($idDiscount);
-
 }

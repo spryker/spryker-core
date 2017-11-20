@@ -13,11 +13,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class CodeTestConsole extends Console
 {
-
     const COMMAND_NAME = 'code:test';
     const OPTION_BUNDLE = 'module';
     const OPTION_BUNDLE_ALL = 'all';
@@ -66,5 +65,4 @@ class CodeTestConsole extends Console
 
         $this->getFacade()->runTest($bundle, $this->input->getOptions());
     }
-
 }

@@ -12,11 +12,10 @@ use Spryker\Zed\Nopayment\Business\Nopayment\Paid;
 
 /**
  * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
- * @method \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface getQueryContainer()
  */
 class NopaymentBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Nopayment\Business\Nopayment\Paid
      */
@@ -26,5 +25,4 @@ class NopaymentBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer()
         );
     }
-
 }

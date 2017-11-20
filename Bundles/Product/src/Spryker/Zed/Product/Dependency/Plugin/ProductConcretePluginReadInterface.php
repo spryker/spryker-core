@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcretePluginReadInterface
 {
-
     /**
      * Specification:
      * - Executed after a persisted concrete product is read from database.
@@ -25,5 +24,4 @@ interface ProductConcretePluginReadInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer);
-
 }

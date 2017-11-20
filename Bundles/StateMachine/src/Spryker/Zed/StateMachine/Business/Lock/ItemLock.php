@@ -16,7 +16,6 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 
 class ItemLock implements ItemLockInterface
 {
-
     /**
      * @var \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
      */
@@ -113,5 +112,4 @@ class ItemLock implements ItemLockInterface
     {
         return new SpyStateMachineLock();
     }
-
 }

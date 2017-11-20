@@ -11,7 +11,6 @@ use NumberFormatter;
 
 class IntlMoneyFormatterWithoutCurrency extends AbstractIntlMoneyFormatter
 {
-
     /**
      * @param string $localeName
      *
@@ -25,5 +24,4 @@ class IntlMoneyFormatterWithoutCurrency extends AbstractIntlMoneyFormatter
 
         return $numberFormatter;
     }
-
 }

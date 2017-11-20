@@ -13,7 +13,6 @@ use League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter;
 
 class Aws3v3AdapterBuilder implements AdapterBuilderInterface
 {
-
     const KEY = 'key';
     const SECRET = 'secret';
     const REGION = 'region';
@@ -81,5 +80,4 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
 
         return $this;
     }
-
 }

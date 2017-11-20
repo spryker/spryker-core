@@ -9,7 +9,6 @@ namespace Spryker\Zed\Auth\Business;
 
 interface AuthFacadeInterface
 {
-
     /**
      * @api
      *
@@ -106,5 +105,4 @@ interface AuthFacadeInterface
      * @return bool
      */
     public function resetPassword($token, $password);
-
 }

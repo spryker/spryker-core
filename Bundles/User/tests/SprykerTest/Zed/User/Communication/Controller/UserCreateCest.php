@@ -22,7 +22,6 @@ use SprykerTest\Zed\User\UserCommunicationTester;
  */
 class UserCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\User\UserCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class UserCreateCest
         $i->amOnPage(UserCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Users Control / User / Create new User');
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
  */
 class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
@@ -54,5 +53,4 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
 
         return $voucherCodes;
     }
-
 }

@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
 
 /**
- * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
  */
 class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery
      */
@@ -32,5 +31,4 @@ class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(SalesProductConnectorDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
-
 }

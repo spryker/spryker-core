@@ -18,7 +18,6 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
 
 class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
 {
-
     /**
      * @var null
      */
@@ -157,5 +156,4 @@ class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
 
         return $this;
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AuthConfig extends AbstractBundleConfig
 {
-
     const DEFAULT_URL_REDIRECT = '/';
     const DEFAULT_URL_LOGIN = '/auth/login';
 
@@ -118,5 +117,4 @@ class AuthConfig extends AbstractBundleConfig
     {
         return AuthConstants::DAY_IN_SECONDS;
     }
-
 }

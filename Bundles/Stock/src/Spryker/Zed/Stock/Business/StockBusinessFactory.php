@@ -16,11 +16,10 @@ use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
- * @method \Spryker\Zed\Stock\Persistence\StockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
  */
 class StockBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Stock\Business\Model\CalculatorInterface
      */
@@ -87,5 +86,4 @@ class StockBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_UPDATE);
     }
-
 }

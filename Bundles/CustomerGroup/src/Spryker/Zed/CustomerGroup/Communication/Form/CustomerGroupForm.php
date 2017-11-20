@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Form;
 
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Generated\Shared\Transfer\CustomerGroupToCustomerAssignmentTransfer;
+use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
-use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -22,16 +23,20 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CustomerGroupForm extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
-    const FIELD_ID_CUSTOMER_GROUP = 'id_customer_group';
-    const FIELD_CUSTOMERS = 'customers';
+    const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
+    const FIELD_CUSTOMER_ASSIGNMENT = 'customerAssignment';
 
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
      */
     protected $customerGroupQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\CustomerGroup\Communication\Form\CustomerAssignmentForm
+     */
+    protected $customerAssignmentForm;
 
     /**
      * @var int|null
@@ -40,11 +45,16 @@ class CustomerGroupForm extends AbstractType
 
     /**
      * @param \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface $customerGroupQueryContainer
+     * @param \Symfony\Component\Form\FormTypeInterface $customerAssignmentForm
      * @param int|null $idCustomerGroup
      */
-    public function __construct(CustomerGroupQueryContainerInterface $customerGroupQueryContainer, $idCustomerGroup)
-    {
+    public function __construct(
+        CustomerGroupQueryContainerInterface $customerGroupQueryContainer,
+        FormTypeInterface $customerAssignmentForm,
+        $idCustomerGroup
+    ) {
         $this->customerGroupQueryContainer = $customerGroupQueryContainer;
+        $this->customerAssignmentForm = $customerAssignmentForm;
         $this->idCustomerGroup = $idCustomerGroup;
     }
 
@@ -54,6 +64,18 @@ class CustomerGroupForm extends AbstractType
     public function getName()
     {
         return 'customer_group';
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => CustomerGroupTransfer::class,
+        ]);
     }
 
     /**
@@ -68,7 +90,7 @@ class CustomerGroupForm extends AbstractType
             ->addIdCustomerGroupField($builder)
             ->addNameField($builder)
             ->addDescriptionField($builder)
-            ->addCustomersField($builder);
+            ->addCustomerAssignmentSubForm($builder);
     }
 
     /**
@@ -78,7 +100,7 @@ class CustomerGroupForm extends AbstractType
      */
     protected function addIdCustomerGroupField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_CUSTOMER_GROUP, 'hidden');
+        $builder->add(static::FIELD_ID_CUSTOMER_GROUP, 'hidden');
 
         return $this;
     }
@@ -90,7 +112,7 @@ class CustomerGroupForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, 'text', [
+        $builder->add(static::FIELD_NAME, 'text', [
             'label' => 'Name',
             'constraints' => $this->getNameFieldConstraints(),
         ]);
@@ -105,37 +127,8 @@ class CustomerGroupForm extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_DESCRIPTION, 'textarea', [
+        $builder->add(static::FIELD_DESCRIPTION, 'textarea', [
             'label' => 'Description',
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addCustomersField(FormBuilderInterface $builder)
-    {
-        $customerCollection = $this->customerGroupQueryContainer->queryCustomer()
-            ->select([
-                 SpyCustomerTableMap::COL_ID_CUSTOMER,
-                 SpyCustomerTableMap::COL_FIRST_NAME,
-                 SpyCustomerTableMap::COL_LAST_NAME,
-                 SpyCustomerTableMap::COL_EMAIL,
-            ])
-            ->find();
-
-        $choices = $this->buildCustomerChoiceList($customerCollection);
-
-        $builder->add(self::FIELD_CUSTOMERS, new Select2ComboBoxType(), [
-            'label' => 'Assigned Users',
-            'placeholder' => false,
-            'multiple' => true,
-            'choices' => $choices,
             'required' => false,
         ]);
 
@@ -172,22 +165,21 @@ class CustomerGroupForm extends AbstractType
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ArrayCollection|\Orm\Zed\Customer\Persistence\SpyCustomer[] $customerCollection
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return array
+     * @return $this
      */
-    protected function buildCustomerChoiceList(ArrayCollection $customerCollection)
+    protected function addCustomerAssignmentSubForm(FormBuilderInterface $builder)
     {
-        $customerChoiceList = [];
-        foreach ($customerCollection as $customerEntity) {
-            $customerChoiceList[$customerEntity[SpyCustomerTableMap::COL_ID_CUSTOMER]] = sprintf(
-                '%s %s (%s)',
-                $customerEntity[SpyCustomerTableMap::COL_FIRST_NAME],
-                $customerEntity[SpyCustomerTableMap::COL_LAST_NAME],
-                $customerEntity[SpyCustomerTableMap::COL_EMAIL]
-            );
-        }
-        return $customerChoiceList;
-    }
+        $builder->add(
+            static::FIELD_CUSTOMER_ASSIGNMENT,
+            $this->customerAssignmentForm,
+            [
+                'label' => false,
+                'data_class' => CustomerGroupToCustomerAssignmentTransfer::class,
+            ]
+        );
 
+        return $this;
+    }
 }

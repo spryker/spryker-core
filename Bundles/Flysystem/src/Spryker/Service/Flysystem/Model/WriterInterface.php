@@ -9,7 +9,6 @@ namespace Spryker\Service\Flysystem\Model;
 
 interface WriterInterface
 {
-
     /**
      * @param string $filesystemName
      * @param string $path
@@ -118,5 +117,4 @@ interface WriterInterface
      * @return void
      */
     public function write($filesystemName, $path, $content, array $config = []);
-
 }

@@ -7,10 +7,8 @@ namespace Spryker\Zed\Oms\Dependency\Service;
 
 interface OmsToUtilNetworkInterface
 {
-
     /**
      * @return string
      */
     public function getHostName();
-
 }

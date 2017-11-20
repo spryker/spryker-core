@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SetStatusController extends AbstractController
 {
-
     const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
     const PARAM_REDIRECT_URL = 'redirect-url';
 
@@ -103,5 +102,4 @@ class SetStatusController extends AbstractController
             ->getProductLabelFacade()
             ->updateLabel($productLabelTransfer);
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
 {
-
     const BUNDLE_PLACEHOLDER = '[BUNDLE]';
 
     /**
@@ -128,6 +127,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Twig_' => 'spryker/twig',
             'Zend\\' => 'spryker/zend',
             'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
+            'Egulias\\EmailValidator\\' => 'spryker/egulias',
         ];
     }
 
@@ -152,6 +152,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'twig/twig' => 'spryker/twig',
             '/zendframework/' => 'spryker/zend',
             'phpdocumentor/graphviz' => 'spryker/graphviz',
+            'egulias/email-validator' => 'spryker/egulias',
         ];
     }
 
@@ -311,5 +312,4 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return 2;
     }
-
 }

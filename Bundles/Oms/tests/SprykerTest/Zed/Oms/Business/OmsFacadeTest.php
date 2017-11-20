@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\OmsConfig;
@@ -27,6 +28,10 @@ use Spryker\Zed\Oms\OmsConfig;
  */
 class OmsFacadeTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -63,7 +68,51 @@ class OmsFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\OmsFacade
+     * @return void
+     */
+    public function testIsOrderFlaggedExcludeFromCustomerShouldReturnTrueWhenAllStatesHaveFlag()
+    {
+        $testStateMachineProcessName = 'Test01';
+
+        $omsFacade = $this->createOmsFacadeWithTestStateMachine([$testStateMachineProcessName]);
+
+        $checkoutResponseTransfer = $this->tester->haveOrder([
+            'unitPrice' => 100,
+        ], $testStateMachineProcessName);
+
+        $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
+
+        $salesOrderEntity = SpySalesOrderQuery::create()->filterByIdSalesOrder($idSalesOrder)->findOne();
+
+        $omsFacade->triggerEvent('authorization-failed', $salesOrderEntity->getItems(), []);
+
+        $isOrderExcluded = $omsFacade->isOrderFlaggedExcludeFromCustomer($idSalesOrder);
+
+        $this->assertTrue($isOrderExcluded);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsOrderFlaggedExcludeFromCustomerShouldReturnFalseWhenAnyOfStatesMissingFlag()
+    {
+        $testStateMachineProcessName = 'Test01';
+
+        $omsFacade = $this->createOmsFacadeWithTestStateMachine([$testStateMachineProcessName]);
+
+        $checkoutResponseTransfer = $this->tester->haveOrder([
+            'unitPrice' => 100,
+        ], $testStateMachineProcessName);
+
+        $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
+
+        $isOrderExcluded = $omsFacade->isOrderFlaggedExcludeFromCustomer($idSalesOrder);
+
+        $this->assertFalse($isOrderExcluded);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function createOmsFacade()
     {
@@ -78,6 +127,29 @@ class OmsFacadeTest extends Unit
     }
 
     /**
+     * @param array $activeProcesses
+     * @param string|null $xmlFolder
+     *
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
+     */
+    protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], $xmlFolder = null)
+    {
+        $this->tester->configureTestStateMachine($activeProcesses, $xmlFolder);
+
+        return new OmsFacade();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\OmsConfig
+     */
+    protected function createOmsConfigMock()
+    {
+        return $this->getMockBuilder(OmsConfig::class)
+            ->setMethods(['getProcessDefinitionLocation', 'getActiveProcesses'])
+            ->getMock();
+    }
+
+    /**
      * @return void
      */
     public function testReservedItemsByNonExistentSku()
@@ -87,5 +159,4 @@ class OmsFacadeTest extends Unit
 
         $this->assertSame(0, $items->count());
     }
-
 }

@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\Currency\Business;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyBusinessFactory getFactory()
  */
 interface CurrencyFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns CurrencyTransfer object for given ISO code
@@ -35,4 +36,53 @@ interface CurrencyFacadeInterface
      */
     public function getCurrent();
 
+    /**
+     * Specification:
+     *  - Reads currency from spy_currency database table.
+     *
+     * @api
+     *
+     * @param int $idCurrency
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getByIdCurrency($idCurrency);
+
+    /**
+     * Specification:
+     *  - Persist currency to database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return int
+     */
+    public function createCurrency(CurrencyTransfer $currencyTransfer);
+
+    /**
+     * Specification:
+     *  - Reads all active currencies for current store
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getCurrentStoreWithCurrencies();
+
+    /**
+     * Specification:
+     *  - Reads all active store currencies
+     *
+     * @api
+     *
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies();
 }

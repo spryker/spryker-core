@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedRequest\Dependency\Facade;
 
 class ZedRequestToMessengerBridge implements ZedRequestToMessengerInterface
 {
-
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
      */
@@ -30,5 +29,4 @@ class ZedRequestToMessengerBridge implements ZedRequestToMessengerInterface
     {
         return $this->messengerFacade->getStoredMessages();
     }
-
 }

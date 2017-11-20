@@ -25,7 +25,6 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsPayedPlugin;
  */
 class IsPayedPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -36,5 +35,4 @@ class IsPayedPluginTest extends Unit
 
         $this->assertTrue($isPayedPlugin->check($salesOrderItemEntity));
     }
-
 }

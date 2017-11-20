@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Store;
  */
 class StorageKeyGenerator
 {
-
     const KEY_SEPARATOR = '.';
     const KEY_NAMESPACE = 'category';
 
@@ -75,5 +74,4 @@ class StorageKeyGenerator
 
         return $storeName . self::KEY_SEPARATOR . $key;
     }
-
 }

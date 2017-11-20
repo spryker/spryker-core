@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -167,5 +166,4 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
 
         return $navigationNodeEntity;
     }
-
 }

@@ -24,12 +24,11 @@ use Spryker\Zed\Navigation\Business\Url\NavigationNodeUrlCleaner;
 use Spryker\Zed\Navigation\NavigationDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
  */
 class NavigationBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Navigation\Business\Navigation\NavigationCreatorInterface
      */
@@ -141,5 +140,4 @@ class NavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new NavigationNodeUrlCleaner($this->getQueryContainer(), $this->createNavigationNodeUpdater());
     }
-
 }

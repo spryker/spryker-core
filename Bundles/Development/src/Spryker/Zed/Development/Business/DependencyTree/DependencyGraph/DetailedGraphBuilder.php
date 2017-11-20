@@ -12,12 +12,12 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\ExternalDep
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorFacade;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorQueryContainer;
+use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\UseStatement;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class DetailedGraphBuilder implements GraphBuilderInterface
 {
-
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
@@ -217,9 +217,9 @@ class DetailedGraphBuilder implements GraphBuilderInterface
             LocatorQueryContainer::class => 'QueryContainer',
             UseStatement::class => 'Use',
             ExternalDependency::class => 'External',
+            LocatorService::class => 'Service',
         ];
 
         return $mapped[$finderName];
     }
-
 }

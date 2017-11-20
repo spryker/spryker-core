@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface RatepayToSalesAggregatorInterface
 {
-
     /**
      * @param int $idSalesOrder
      *
@@ -32,5 +31,4 @@ interface RatepayToSalesAggregatorInterface
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
-
 }

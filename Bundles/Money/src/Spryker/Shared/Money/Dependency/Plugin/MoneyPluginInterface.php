@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface MoneyPluginInterface
 {
-
     /**
      * Specification:
      * - Returns a MoneyTransfer object created from given integer value.
@@ -122,5 +121,4 @@ interface MoneyPluginInterface
      * @return int
      */
     public function convertDecimalToInteger($value);
-
 }

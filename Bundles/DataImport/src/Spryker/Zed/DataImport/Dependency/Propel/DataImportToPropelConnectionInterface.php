@@ -9,7 +9,6 @@ namespace Spryker\Zed\DataImport\Dependency\Propel;
 
 interface DataImportToPropelConnectionInterface
 {
-
     /**
      * @return bool
      */
@@ -24,5 +23,4 @@ interface DataImportToPropelConnectionInterface
      * @return void
      */
     public function endTransaction();
-
 }

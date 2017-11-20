@@ -1,0 +1,9 @@
+<div id="calculator-input-types">
+    <div style="display:none;" id="calculator-default-input-type" class="discount-calculation-input-type">
+        {{ form_row(discountForm.discountCalculator.amount) }}
+    </div>
+
+    <div style="display:none;" id="calculator-money-input-type" class="discount-calculation-input-type">
+        {{ form_money_collection(discountForm.discountCalculator.moneyValueCollection) }}
+    </div>
+</div>

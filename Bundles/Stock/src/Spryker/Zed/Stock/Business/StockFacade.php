@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
-
     /**
      * Specification:
      * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
@@ -217,5 +216,4 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     {
         return $this->getFactory()->createReaderModel()->getStockProductsByIdProduct($idProductConcrete);
     }
-
 }

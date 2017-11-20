@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Business\Mapping;
 
 interface CmsGlossaryKeyGeneratorInterface
 {
-
     /**
      * @param int $idCmsPage
      * @param string $templateName
@@ -19,5 +18,4 @@ interface CmsGlossaryKeyGeneratorInterface
      * @return string
      */
     public function generateGlossaryKeyName($idCmsPage, $templateName, $placeholder, $autoIncrement = true);
-
 }

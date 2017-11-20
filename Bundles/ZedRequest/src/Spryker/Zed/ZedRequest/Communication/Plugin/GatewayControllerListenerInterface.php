@@ -11,12 +11,10 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 interface GatewayControllerListenerInterface
 {
-
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable|null
      */
     public function onKernelController(FilterControllerEvent $event);
-
 }

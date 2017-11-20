@@ -8,12 +8,11 @@
 namespace SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Symfony\Component\HttpFoundation\Request;
 use Spryker\Yves\StepEngine\Dependency\Step\AbstractBaseStep as AbstractBaseStep;
+use Symfony\Component\HttpFoundation\Request;
 
 class BaseStep extends AbstractBaseStep
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
@@ -53,5 +52,4 @@ class BaseStep extends AbstractBaseStep
     {
         return true;
     }
-
 }

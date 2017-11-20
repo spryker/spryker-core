@@ -14,11 +14,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CmsBlock\CmsBlockConfig getConfig()
- * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface getQueryContainer()
  */
 class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
@@ -42,5 +41,4 @@ class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCmsBlockTemplateQuery::create();
     }
-
 }

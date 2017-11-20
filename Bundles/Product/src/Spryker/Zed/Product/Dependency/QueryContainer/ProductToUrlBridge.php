@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Dependency\QueryContainer;
 
 class ProductToUrlBridge implements ProductToUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class ProductToUrlBridge implements ProductToUrlInterface
     {
         return $this->urlQueryContainer->queryUrls();
     }
-
 }

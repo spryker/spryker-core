@@ -13,11 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Installer\Business\InstallerFacade getFacade()
+ * @method \Spryker\Zed\Installer\Business\InstallerFacadeInterface getFacade()
  */
 class InitializeDatabaseConsole extends Console
 {
-
     const COMMAND_NAME = 'setup:init-db';
     const DESCRIPTION = 'Fill the database with required data';
 
@@ -74,5 +73,4 @@ class InitializeDatabaseConsole extends Console
         $pattern = '#^(.+)\\\(.+)\\\(.+)\\\(.+)\\\(.*)$#i';
         return preg_replace($pattern, '${2}', $className);
     }
-
 }

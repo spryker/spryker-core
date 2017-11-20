@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class NewRelicFacade extends AbstractFacade implements NewRelicFacadeInterface
 {
-
     /**
      * @api
      *
@@ -26,5 +25,4 @@ class NewRelicFacade extends AbstractFacade implements NewRelicFacadeInterface
     {
         return $this->getFactory()->createRecordDeployment()->recordDeployment($arguments);
     }
-
 }

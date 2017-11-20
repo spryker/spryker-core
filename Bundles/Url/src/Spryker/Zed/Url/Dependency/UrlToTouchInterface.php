@@ -9,7 +9,6 @@ namespace Spryker\Zed\Url\Dependency;
 
 interface UrlToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -25,5 +24,4 @@ interface UrlToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
-
 }

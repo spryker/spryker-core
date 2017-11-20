@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutPreSaveHookInterface
 {
-
     /**
      * Do something before orderTransfer save
      *
@@ -24,5 +23,4 @@ interface CheckoutPreSaveHookInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function preSave(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
 }

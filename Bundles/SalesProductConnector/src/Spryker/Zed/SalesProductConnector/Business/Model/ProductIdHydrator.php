@@ -12,7 +12,6 @@ use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryCont
 
 class ProductIdHydrator implements ProductIdHydratorInterface
 {
-
     /**
      * @var \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface
      */
@@ -58,5 +57,4 @@ class ProductIdHydrator implements ProductIdHydratorInterface
             ->queryProductConcreteBySku($sku)
             ->findOne();
     }
-
 }

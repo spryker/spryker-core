@@ -22,7 +22,6 @@ use Spryker\Shared\Search\SearchConstants;
 
 class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
-
     /**
      * @var string
      */
@@ -127,5 +126,4 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
 
         return $boolQuery;
     }
-
 }

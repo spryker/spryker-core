@@ -27,11 +27,10 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
- * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
  */
 class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable
      */
@@ -231,5 +230,4 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_MONEY);
     }
-
 }

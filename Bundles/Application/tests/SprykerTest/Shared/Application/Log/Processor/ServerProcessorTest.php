@@ -22,7 +22,6 @@ use Spryker\Shared\Application\Log\Processor\ServerProcessor;
  */
 class ServerProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -49,5 +48,4 @@ class ServerProcessorTest extends Unit
 
         $this->assertArrayHasKey(ServerProcessor::EXTRA, $result['extra']);
     }
-
 }

@@ -13,12 +13,11 @@ use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 class ItemBySkuCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -50,5 +49,4 @@ class ItemBySkuCollectorPlugin extends AbstractPlugin implements CollectorPlugin
             ComparatorOperators::TYPE_LIST,
         ];
     }
-
 }

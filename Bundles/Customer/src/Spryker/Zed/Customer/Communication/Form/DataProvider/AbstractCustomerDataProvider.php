@@ -11,7 +11,6 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 
 class AbstractCustomerDataProvider
 {
-
     /**
      * @return array
      */
@@ -21,5 +20,4 @@ class AbstractCustomerDataProvider
 
         return array_combine($salutationSet, $salutationSet);
     }
-
 }

@@ -13,11 +13,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class CodePhpMessDetectorConsole extends Console
 {
-
     const COMMAND_NAME = 'code:phpmd';
     const OPTION_BUNDLE = 'module';
     const OPTION_BUNDLE_ALL = 'all';
@@ -49,18 +48,17 @@ class CodePhpMessDetectorConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getOption(static::OPTION_BUNDLE);
-        $message = 'Run PHPMD in project level';
+        $module = $this->input->getOption(static::OPTION_BUNDLE);
 
-        if ($bundle) {
-            $message = 'Run PHPMD in all modules';
-            if ($bundle !== static::OPTION_BUNDLE_ALL) {
-                $message = 'Run PHPMD in ' . $bundle . ' module';
+        $message = 'Run PHPMD in PROJECT level';
+        if ($module) {
+            $message = 'Run PHPMD in all CORE modules';
+            if ($module !== static::OPTION_BUNDLE_ALL) {
+                $message = 'Run PHPMD in ' . $module . ' CORE module';
             }
         }
         $this->info($message);
 
-        return $this->getFacade()->runPhpMd($bundle, $this->input->getOptions());
+        return $this->getFacade()->runPhpMd($module, $this->input->getOptions());
     }
-
 }

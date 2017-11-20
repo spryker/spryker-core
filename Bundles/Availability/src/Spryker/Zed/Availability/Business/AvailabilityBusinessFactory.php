@@ -16,11 +16,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
- * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
  */
 class AvailabilityBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -93,5 +92,4 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductsAvailableCheckoutPreCondition($this->createSellableModel(), $this->getConfig());
     }
-
 }

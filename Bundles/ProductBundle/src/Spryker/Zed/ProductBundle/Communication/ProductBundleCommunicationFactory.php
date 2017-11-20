@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
- * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
 class ProductBundleCommunicationFactory extends AbstractCommunicationFactory
 {

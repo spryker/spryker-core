@@ -26,7 +26,6 @@ use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
  */
 class ProductSearchQueryContainer extends AbstractQueryContainer implements ProductSearchQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -308,5 +307,4 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
             ->addOr(SpyProductTableMap::COL_ATTRIBUTES, $condition, Criteria::LIKE)
             ->addOr(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES, $condition, Criteria::LIKE);
     }
-
 }

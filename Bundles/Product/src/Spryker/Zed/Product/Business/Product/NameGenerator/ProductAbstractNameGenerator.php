@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 class ProductAbstractNameGenerator implements ProductAbstractNameGeneratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -29,5 +28,4 @@ class ProductAbstractNameGenerator implements ProductAbstractNameGeneratorInterf
 
         return $productAbstractTransfer->getSku();
     }
-
 }

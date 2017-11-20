@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockGui\Dependency\Facade;
 
 interface CmsBlockGuiToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
@@ -19,5 +18,4 @@ interface CmsBlockGuiToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
-
 }

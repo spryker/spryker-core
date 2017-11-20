@@ -20,7 +20,6 @@ use Orm\Zed\Touch\Persistence\Base\SpyTouchQuery as BaseSpyTouchQuery;
  */
 abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
 {
-
     /**
      * @var array
      */
@@ -57,5 +56,4 @@ abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
     {
         self::$cache[$key] = $value;
     }
-
 } // SpyTouchQuery

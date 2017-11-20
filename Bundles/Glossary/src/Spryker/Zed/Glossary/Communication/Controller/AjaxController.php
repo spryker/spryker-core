@@ -12,13 +12,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  */
 class AjaxController extends AbstractController
 {
-
     const SEARCH_TERM = 'term';
 
     /**
@@ -33,5 +32,4 @@ class AjaxController extends AbstractController
 
         return new JsonResponse($keys);
     }
-
 }

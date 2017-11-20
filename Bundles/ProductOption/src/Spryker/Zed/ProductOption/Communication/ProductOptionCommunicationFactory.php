@@ -25,11 +25,10 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
- * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  */
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider|null $productOptionGroupDataProvider
      *
@@ -214,5 +213,4 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class In extends AbstractOperator
 {
-
     const TYPE = 'in';
 
     /**
@@ -37,5 +36,4 @@ class In extends AbstractOperator
 
         return $rule->getValue();
     }
-
 }

@@ -20,11 +20,10 @@ use Spryker\Zed\ProductGroup\ProductGroupDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductGroup\ProductGroupConfig getConfig()
- * @method \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface getQueryContainer()
  */
 class ProductGroupBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductGroup\Business\Model\ProductGroupCreatorInterface
      */
@@ -96,5 +95,4 @@ class ProductGroupBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductGroupDependencyProvider::FACADE_TOUCH);
     }
-
 }

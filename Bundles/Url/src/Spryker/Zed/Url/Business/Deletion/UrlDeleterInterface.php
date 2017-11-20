@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlDeleterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -26,5 +25,4 @@ interface UrlDeleterInterface
      * @return void
      */
     public function deleteUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
-
 }

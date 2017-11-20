@@ -12,12 +12,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade getFacade()
+ * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
  */
 class ViewController extends AbstractController
 {
-
     const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
 
     /**
@@ -72,5 +71,4 @@ class ViewController extends AbstractController
     {
         return new CustomerGroupTransfer();
     }
-
 }

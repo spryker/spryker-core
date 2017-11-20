@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
  */
 class ContainsTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -92,5 +91,4 @@ class ContainsTest extends Unit
     {
         return new Contains();
     }
-
 }

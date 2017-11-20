@@ -15,7 +15,6 @@ use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
  */
 class Newrelic extends AbstractWriter
 {
-
     use NewRelicApiTrait;
 
     const TYPE = 'newrelic';
@@ -35,5 +34,4 @@ class Newrelic extends AbstractWriter
 
         return true;
     }
-
 }

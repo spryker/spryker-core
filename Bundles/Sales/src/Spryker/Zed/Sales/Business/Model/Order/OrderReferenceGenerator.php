@@ -13,7 +13,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberInterface
      */
@@ -45,5 +44,4 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     {
         return $this->sequenceNumberFacade->generate($this->sequenceNumberSettings);
     }
-
 }

@@ -16,12 +16,11 @@ use Spryker\Zed\ProductRelation\Persistence\Rule\Query\ProductQuery;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
  */
 class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
@@ -88,5 +87,4 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
-
 }

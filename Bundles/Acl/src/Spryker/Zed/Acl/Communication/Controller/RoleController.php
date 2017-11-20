@@ -19,12 +19,11 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
- * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
- * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  */
 class RoleController extends AbstractController
 {
-
     const PARAM_ID_ROLE = 'id-role';
     const ACL_ROLE_LIST_URL = '/acl/role/index';
     const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
@@ -235,5 +234,4 @@ class RoleController extends AbstractController
             }
         }
     }
-
 }

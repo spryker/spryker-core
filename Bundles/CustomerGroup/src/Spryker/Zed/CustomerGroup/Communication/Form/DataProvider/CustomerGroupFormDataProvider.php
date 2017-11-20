@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\CustomerGroup\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
+use Generated\Shared\Transfer\CustomerGroupToCustomerAssignmentTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
-use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupToCustomerTableMap;
 
 class CustomerGroupFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
      */
@@ -30,12 +28,13 @@ class CustomerGroupFormDataProvider
     /**
      * @param int|null $idCustomerGroup
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
      */
     public function getData($idCustomerGroup = null)
     {
         if ($idCustomerGroup === null) {
-            return [];
+            return (new CustomerGroupTransfer())
+                ->setCustomerAssignment(new CustomerGroupToCustomerAssignmentTransfer());
         }
 
         $customerGroupEntity = $this
@@ -43,18 +42,11 @@ class CustomerGroupFormDataProvider
             ->queryCustomerGroupById($idCustomerGroup)
             ->findOne();
 
-        $data = $customerGroupEntity->toArray();
+        $customerGroupTransfer = (new CustomerGroupTransfer())
+            ->fromArray($customerGroupEntity->toArray(), true)
+            ->setCustomerAssignment(new CustomerGroupToCustomerAssignmentTransfer());
 
-        $customersArray = $this
-            ->customerGroupQueryContainer
-            ->queryCustomerGroupToCustomerByFkCustomerGroup($idCustomerGroup)
-            ->select(SpyCustomerGroupToCustomerTableMap::COL_FK_CUSTOMER)
-            ->find()
-            ->toArray();
-
-        $data['customers'] = $customersArray;
-
-        return $data;
+        return $customerGroupTransfer;
     }
 
     /**
@@ -66,37 +58,4 @@ class CustomerGroupFormDataProvider
     {
         return [];
     }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
-     */
-    public function prepareDataAsTransfer(array $data)
-    {
-        $customerGroupTransfer = new CustomerGroupTransfer();
-        $customers = $data['customers'];
-        unset($data['customers']);
-
-        $customerGroupTransfer->fromArray($data, true);
-        $this->addCustomers($customerGroupTransfer, $customers);
-
-        return $customerGroupTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
-     * @param array $idCustomers
-     *
-     * @return void
-     */
-    protected function addCustomers(CustomerGroupTransfer $customerGroupTransfer, array $idCustomers)
-    {
-        foreach ($idCustomers as $idCustomer) {
-            $customerTransfer = new CustomerGroupToCustomerTransfer();
-            $customerTransfer->setFkCustomer($idCustomer);
-            $customerGroupTransfer->addCustomer($customerTransfer);
-        }
-    }
-
 }

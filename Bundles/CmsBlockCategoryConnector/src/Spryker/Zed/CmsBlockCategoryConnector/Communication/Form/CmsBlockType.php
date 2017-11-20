@@ -16,7 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CmsBlockType extends AbstractType
 {
-
     const FIELD_CATEGORIES = 'id_categories';
 
     const OPTION_CATEGORY_ARRAY = 'option-category-array';
@@ -151,5 +150,4 @@ class CmsBlockType extends AbstractType
             'required' => false,
         ]);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Payolution\PayolutionConfig;
 
 abstract class AbstractPaymentMethod
 {
-
     const PAYOLUTION_DATE_FORMAT = 'Y-m-d';
 
     /**
@@ -178,5 +177,4 @@ abstract class AbstractPaymentMethod
             $addressTransfer->getAddress3()
         ));
     }
-
 }

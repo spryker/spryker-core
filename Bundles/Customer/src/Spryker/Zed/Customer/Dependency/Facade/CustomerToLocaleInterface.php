@@ -9,10 +9,8 @@ namespace Spryker\Zed\Customer\Dependency\Facade;
 
 interface CustomerToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
-
 }

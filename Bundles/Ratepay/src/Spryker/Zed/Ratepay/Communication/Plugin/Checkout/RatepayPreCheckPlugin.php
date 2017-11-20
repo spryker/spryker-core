@@ -16,12 +16,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 
 /**
- * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()
+ * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  * @method \Spryker\Zed\Ratepay\Communication\RatepayCommunicationFactory getFactory()
  */
 class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -89,7 +88,6 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
     protected function checkForErrors(RatepayResponseTransfer $ratepayResponseTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         if (!$ratepayResponseTransfer->getSuccessful()) {
-
             $errorMessage = $ratepayResponseTransfer->getCustomerMessage() != '' ? $ratepayResponseTransfer->getCustomerMessage() :
                 $ratepayResponseTransfer->getResultText();
 
@@ -117,5 +115,4 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
             ->getSalesAggregator()
             ->getOrderTotalByOrderTransfer($partialOrderTransfer);
     }
-
 }

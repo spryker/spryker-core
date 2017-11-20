@@ -18,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface CmsBlockProductConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Delete all relations of cms block to product abstracts
@@ -95,5 +94,4 @@ interface CmsBlockProductConnectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

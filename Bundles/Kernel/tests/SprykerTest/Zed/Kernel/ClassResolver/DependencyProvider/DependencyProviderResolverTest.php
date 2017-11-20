@@ -23,26 +23,25 @@ use SprykerTest\Zed\Kernel\ClassResolver\AbstractResolverTest;
  */
 class DependencyProviderResolverTest extends AbstractResolverTest
 {
+    /**
+     * @var string
+     */
+    protected $coreClass = 'Spryker\\Zed\\Kernel\\ClassResolver\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+    protected $projectClass = 'ProjectNamespace\\Zed\\Kernel\\ClassResolver\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+    protected $storeClass = 'ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelDependencyProvider';
-
-    /**
-     * @var string
-     */
-    protected $classPattern = 'Unit\\%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%DependencyProvider';
+    protected $classPattern = '%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\%bundle%DependencyProvider';
 
     /**
      * @var string
@@ -60,5 +59,4 @@ class DependencyProviderResolverTest extends AbstractResolverTest
 
         return $resolverMock;
     }
-
 }

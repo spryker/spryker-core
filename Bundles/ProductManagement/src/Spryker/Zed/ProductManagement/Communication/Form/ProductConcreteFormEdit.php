@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductConcreteFormEdit extends ProductFormAdd
 {
-
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
 
@@ -49,7 +48,6 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addProductAbstractIdHiddenField($builder)
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
-            ->addAttributeAbstractForms($builder, $options[self::OPTION_ATTRIBUTE_ABSTRACT])
             ->addPriceForm($builder, $options)
             ->addStockForm($builder, $options)
             ->addImageLocalizedForms($builder)
@@ -218,5 +216,4 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
         $resolver->setRequired(self::OPTION_IS_BUNDLE_ITEM);
     }
-
 }

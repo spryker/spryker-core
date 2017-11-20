@@ -12,7 +12,6 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
 
 class ProductSetKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class ProductSetKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET;
     }
-
 }

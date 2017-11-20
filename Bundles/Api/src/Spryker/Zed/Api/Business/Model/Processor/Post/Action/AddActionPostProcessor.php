@@ -17,7 +17,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
  */
 class AddActionPostProcessor implements PostProcessorInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\ApiConfig
      */
@@ -55,5 +54,4 @@ class AddActionPostProcessor implements PostProcessorInterface
 
         return $apiResponseTransfer;
     }
-
 }

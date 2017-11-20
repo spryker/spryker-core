@@ -15,12 +15,11 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -66,5 +65,4 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $event->getResponse()->headers->addCacheControlDirective('no-store', true);
         $event->getResponse()->headers->addCacheControlDirective('must-revalidate', true);
     }
-
 }

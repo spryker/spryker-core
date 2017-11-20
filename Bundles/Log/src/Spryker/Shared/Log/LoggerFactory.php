@@ -8,17 +8,23 @@
 namespace Spryker\Shared\Log;
 
 use Monolog\Logger as MonologLogger;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Log\Config\DefaultLoggerConfig;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
+use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoader;
+use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderDefault;
+use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderYves;
+use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderZed;
 
 class LoggerFactory
 {
-
     /**
      * @var array
      */
     protected static $loggers = [];
+
+    /**
+     * @var \Spryker\Shared\Log\Config\LoggerConfigInterface|null
+     */
+    protected static $loggerConfig = null;
 
     /**
      * @param \Spryker\Shared\Log\Config\LoggerConfigInterface|null $loggerConfig
@@ -28,8 +34,11 @@ class LoggerFactory
     public static function getInstance(LoggerConfigInterface $loggerConfig = null)
     {
         if ($loggerConfig === null) {
-            $loggerClassName = static::getLoggerClassName();
-            $loggerConfig = new $loggerClassName;
+            if (!static::$loggerConfig) {
+                static::$loggerConfig = static::createLoggerConfig();
+            }
+
+            $loggerConfig = static::$loggerConfig;
         }
 
         return static::createInstanceIfNotExists($loggerConfig);
@@ -44,7 +53,7 @@ class LoggerFactory
     {
         $channelName = $loggerConfig->getChannelName();
 
-        if (!array_key_exists($channelName, static::$loggers)) {
+        if (!isset(static::$loggers[$channelName])) {
             $logger = new MonologLogger($channelName, $loggerConfig->getHandlers(), $loggerConfig->getProcessors());
 
             static::$loggers[$channelName] = $logger;
@@ -54,11 +63,40 @@ class LoggerFactory
     }
 
     /**
-     * @return string
+     * @return \Spryker\Shared\Log\Config\LoggerConfigInterface
      */
-    protected static function getLoggerClassName()
+    protected static function createLoggerConfig()
     {
-        return Config::get(LogConstants::LOGGER_CONFIG, DefaultLoggerConfig::class);
+        $loggerConfigLoader = new LoggerConfigLoader([
+            static::createLoggerConfigLoaderYves(),
+            static::createLoggerConfigLoaderZed(),
+            static::createLoggerConfigLoaderDefault(),
+        ]);
+
+        return $loggerConfigLoader->getLoggerConfig();
     }
 
+    /**
+     * @return \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface|\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderYves
+     */
+    protected static function createLoggerConfigLoaderYves()
+    {
+        return new LoggerConfigLoaderYves();
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface|\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderZed
+     */
+    protected static function createLoggerConfigLoaderZed()
+    {
+        return new LoggerConfigLoaderZed();
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface|\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderDefault
+     */
+    protected static function createLoggerConfigLoaderDefault()
+    {
+        return new LoggerConfigLoaderDefault();
+    }
 }

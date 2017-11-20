@@ -17,11 +17,10 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
- * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class OmsPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */
@@ -69,5 +68,4 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(OmsDependencyProvider::QUERY_CONTAINER_SALES);
     }
-
 }

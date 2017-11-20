@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
  */
 interface DiscountQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -127,4 +126,12 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      */
     public function queryActiveCartRules();
 
+    /**
+     * @api
+     *
+     * @param int $idDiscountAmount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery
+     */
+    public function queryDiscountAmountById($idDiscountAmount);
 }

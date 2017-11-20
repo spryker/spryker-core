@@ -14,7 +14,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class OrderItemMatrix
 {
-
     const COL_STATE = 'COL_STATE';
 
     /**
@@ -243,5 +242,4 @@ class OrderItemMatrix
 
         return $processes;
     }
-
 }

@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductTransferMapperInterface
 {
-
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
@@ -41,5 +40,4 @@ interface ProductTransferMapperInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function convertProductCollection(ObjectCollection $productCollection);
-
 }

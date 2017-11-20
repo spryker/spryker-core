@@ -23,7 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateClientIdeAutoCompletionConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:ide:generate-client-auto-completion';
 
     /**
@@ -110,5 +109,4 @@ class GenerateClientIdeAutoCompletionConsole extends Console
     {
         return Config::get(KernelConstants::PROJECT_NAMESPACES)[0];
     }
-
 }

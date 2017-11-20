@@ -21,7 +21,6 @@ use SprykerTest\Zed\Discount\DiscountCommunicationTester;
  */
 class IndexControllerCest
 {
-
     /**
      * @param \SprykerTest\Zed\Discount\DiscountCommunicationTester $i
      *
@@ -45,5 +44,4 @@ class IndexControllerCest
         $i->seeResponseCodeIs(200);
         $i->canSeeCurrentUrlEquals('/discount/index/create');
     }
-
 }

@@ -22,7 +22,6 @@ use SprykerTest\Zed\CustomerGroup\PageObject\CustomerGroupViewPage;
  */
 class CustomerGroupViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\CustomerGroup\CustomerGroupCommunicationTester $i
      *
@@ -35,5 +34,4 @@ class CustomerGroupViewCest
 
         $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups / View customer group');
     }
-
 }

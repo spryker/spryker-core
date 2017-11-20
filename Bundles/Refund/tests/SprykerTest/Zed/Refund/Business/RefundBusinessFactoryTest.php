@@ -24,7 +24,6 @@ use Spryker\Zed\Refund\Business\RefundBusinessFactory;
  */
 class RefundBusinessFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -64,5 +63,4 @@ class RefundBusinessFactoryTest extends Unit
 
         $this->assertInstanceOf(RefundSaverInterface::class, $refundCalculationFactory->createRefundSaver());
     }
-
 }

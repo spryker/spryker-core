@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
     const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
 
@@ -60,5 +59,4 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

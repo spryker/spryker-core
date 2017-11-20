@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductOptionTranslationForm extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_LOCALE_CODE = 'localeCode';
     const FIELD_KEY = 'key';
@@ -109,5 +108,4 @@ class ProductOptionTranslationForm extends AbstractType
     {
         return 'product_option_value_translation';
     }
-
 }

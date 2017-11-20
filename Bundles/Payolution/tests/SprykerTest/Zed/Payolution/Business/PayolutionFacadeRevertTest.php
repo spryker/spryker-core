@@ -23,7 +23,6 @@ use SprykerTest\Zed\Payolution\Business\Api\Adapter\Http\ReversalAdapterMock;
  */
 class PayolutionFacadeRevertTest extends AbstractFacadeTest
 {
-
     /**
      * @return void
      */
@@ -112,5 +111,4 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
         $this->assertEquals(2, $this->getStatusLogCollectionForPayment()->count());
         $this->matchStatusLogWithResponse($statusLog, $expectedResponse);
     }
-
 }

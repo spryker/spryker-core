@@ -22,7 +22,6 @@ use Spryker\Yves\Money\Mapper\MoneyToTransferMapper;
 
 class MoneyFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\Money\Builder\MoneyBuilderInterface
      */
@@ -31,7 +30,7 @@ class MoneyFactory extends AbstractFactory
         return new MoneyBuilder(
             $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
-            $this->getStore()->getCurrencyIsoCode()
+            $this->getCurrencyPlugin()->getCurrent()->getCode()
         );
     }
 
@@ -152,5 +151,4 @@ class MoneyFactory extends AbstractFactory
     {
         return new DecimalToIntegerConverter();
     }
-
 }

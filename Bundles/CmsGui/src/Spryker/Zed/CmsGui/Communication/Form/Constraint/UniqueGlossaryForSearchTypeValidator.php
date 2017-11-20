@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueGlossaryForSearchTypeValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed translationKey is valid.
      *
@@ -84,7 +83,6 @@ class UniqueGlossaryForSearchTypeValidator extends ConstraintValidator
         }
 
         return true;
-
     }
 
     /**
@@ -121,5 +119,4 @@ class UniqueGlossaryForSearchTypeValidator extends ConstraintValidator
 
         return $root->getData();
     }
-
 }

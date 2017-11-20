@@ -11,7 +11,6 @@ use Spryker\Zed\Cms\CmsConfig;
 
 class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\CmsConfig
      */
@@ -81,5 +80,4 @@ class CmsPageUrlBuilder implements CmsPageUrlBuilderInterface
 
         return $languageCode;
     }
-
 }

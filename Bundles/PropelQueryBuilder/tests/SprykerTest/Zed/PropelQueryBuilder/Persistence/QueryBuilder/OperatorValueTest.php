@@ -36,7 +36,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\NotIn;
  */
 class OperatorValueTest extends Unit
 {
-
     /**
      * @var \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
@@ -206,5 +205,4 @@ class OperatorValueTest extends Unit
 
         $this->assertSame(['bar'], $value);
     }
-
 }

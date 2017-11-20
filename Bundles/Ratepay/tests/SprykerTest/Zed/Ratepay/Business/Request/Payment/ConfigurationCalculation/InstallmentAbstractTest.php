@@ -24,7 +24,6 @@ use SprykerTest\Zed\Ratepay\Business\Request\AbstractFacadeTest;
  */
 abstract class InstallmentAbstractTest extends AbstractFacadeTest
 {
-
     /**
      * @const Payment method code.
      */
@@ -136,5 +135,4 @@ abstract class InstallmentAbstractTest extends AbstractFacadeTest
         $this->assertSame($this->expectedResponseTransfer->getBaseResponse()->getSuccessful(), $this->responseTransfer->getBaseResponse()->getSuccessful());
         $this->assertFalse($this->expectedResponseTransfer->getBaseResponse()->getSuccessful());
     }
-
 }

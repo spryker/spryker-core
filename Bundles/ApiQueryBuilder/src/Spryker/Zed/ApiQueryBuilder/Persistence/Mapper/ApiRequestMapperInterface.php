@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ApiRequestMapperInterface
 {
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
@@ -27,5 +26,4 @@ interface ApiRequestMapperInterface
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */
     public function toPropelQueryBuilderCriteria(ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer);
-
 }

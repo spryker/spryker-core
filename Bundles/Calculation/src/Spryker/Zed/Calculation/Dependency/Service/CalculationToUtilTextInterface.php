@@ -9,7 +9,6 @@ namespace Spryker\Zed\Calculation\Dependency\Service;
 
 interface CalculationToUtilTextInterface
 {
-
     /**
      * @param string $value
      * @param string $algorithm
@@ -17,5 +16,4 @@ interface CalculationToUtilTextInterface
      * @return string
      */
     public function hashValue($value, $algorithm);
-
 }

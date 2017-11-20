@@ -12,7 +12,6 @@ use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CheckoutStub implements CheckoutStubInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\Client\ZedClient
      */
@@ -29,11 +28,10 @@ class CheckoutStub implements CheckoutStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         return $this->zedStub->call('/checkout/gateway/place-order', $quoteTransfer);
     }
-
 }

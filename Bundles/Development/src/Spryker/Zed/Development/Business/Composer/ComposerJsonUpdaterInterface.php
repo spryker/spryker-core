@@ -9,12 +9,10 @@ namespace Spryker\Zed\Development\Business\Composer;
 
 interface ComposerJsonUpdaterInterface
 {
-
     /**
      * @param array $bundles
      *
      * @return void
      */
     public function update(array $bundles);
-
 }

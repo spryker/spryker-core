@@ -11,7 +11,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConn
 
 class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToShipmentInterface
      */
@@ -55,5 +54,4 @@ class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
 
         return $list;
     }
-
 }

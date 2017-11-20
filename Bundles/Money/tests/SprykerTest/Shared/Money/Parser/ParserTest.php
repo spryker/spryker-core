@@ -27,7 +27,6 @@ use Spryker\Shared\Money\Parser\Parser;
  */
 class ParserTest extends Unit
 {
-
     /**
      * @dataProvider parseData
      *
@@ -79,5 +78,4 @@ class ParserTest extends Unit
 
         return $parser;
     }
-
 }

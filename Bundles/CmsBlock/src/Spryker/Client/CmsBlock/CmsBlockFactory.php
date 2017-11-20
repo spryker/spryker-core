@@ -16,7 +16,6 @@ use Spryker\Client\Kernel\AbstractFactory;
  */
 class CmsBlockFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\CmsBlock\Storage\CmsBlockStorageInterface
      */
@@ -43,5 +42,4 @@ class CmsBlockFactory extends AbstractFactory
     {
         return new CmsBlockKeyBuilder();
     }
-
 }

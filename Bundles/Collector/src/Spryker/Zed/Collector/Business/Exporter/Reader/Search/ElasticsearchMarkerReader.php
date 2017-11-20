@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\Collector\Business\Exporter\Reader\Search;
 
-use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
-
-class ElasticsearchMarkerReader extends ElasticsearchReader implements ReaderInterface
+class ElasticsearchMarkerReader extends ElasticsearchReader
 {
-
     const READER_NAME = 'elastic-search-marker-reader';
+    const META_ATTRIBUTE = '_meta';
 
     /**
      * @param string $key
@@ -22,13 +20,13 @@ class ElasticsearchMarkerReader extends ElasticsearchReader implements ReaderInt
      */
     public function read($key, $type = '')
     {
-        $mapping = $this->index->getType($this->type)->getMapping();
+        $typeName = $this->getType()->getName();
+        $mapping = $this->getType()->getMapping();
 
-        if (isset($mapping[$this->type][self::META_ATTRIBUTE][$key])) {
-            return $mapping[$this->type][self::META_ATTRIBUTE][$key];
+        if (isset($mapping[$typeName][static::META_ATTRIBUTE][$key])) {
+            return $mapping[$typeName][static::META_ATTRIBUTE][$key];
         }
 
         return null;
     }
-
 }

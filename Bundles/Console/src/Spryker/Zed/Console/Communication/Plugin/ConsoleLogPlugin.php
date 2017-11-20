@@ -16,7 +16,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConsoleLogPlugin implements EventSubscriberInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -71,5 +70,4 @@ class ConsoleLogPlugin implements EventSubscriberInterface
             ConsoleEvents::EXCEPTION => ['onConsoleException'],
         ];
     }
-
 }

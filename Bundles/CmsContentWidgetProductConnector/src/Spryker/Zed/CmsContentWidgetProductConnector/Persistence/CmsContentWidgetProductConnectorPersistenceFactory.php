@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorConfig getConfig()
- * @method \Spryker\Zed\CmsContentWidgetProductConnector\Persistence\CmsContentWidgetProductConnectorQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsContentWidgetProductConnector\Persistence\CmsContentWidgetProductConnectorQueryContainerInterface getQueryContainer()
  */
 class CmsContentWidgetProductConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsContentWidgetProductConnector\Dependency\QueryContainer\CmsContentWidgetProductConnectorToProductInterface
      */
@@ -24,5 +23,4 @@ class CmsContentWidgetProductConnectorPersistenceFactory extends AbstractPersist
     {
         return $this->getProvidedDependency(CmsContentWidgetProductConnectorDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
-
 }

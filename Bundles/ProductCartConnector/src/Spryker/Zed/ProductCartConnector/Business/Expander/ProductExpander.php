@@ -10,13 +10,11 @@ namespace Spryker\Zed\ProductCartConnector\Business\Expander;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpanderInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class ProductExpander implements ProductExpanderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface
      */
@@ -90,5 +88,4 @@ class ProductExpander implements ProductExpanderInterface
             ->setConcreteAttributes($productConcreteTransfer->getAttributes())
             ->setName($localizedProductName);
     }
-
 }

@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AttributeAbstractForm extends AbstractSubForm
 {
-
     const FIELD_NAME = 'name';
     const FIELD_VALUE = 'value';
     const FIELD_VALUE_HIDDEN_ID = 'value_hidden_id';
@@ -289,5 +288,4 @@ class AttributeAbstractForm extends AbstractSubForm
 
         return $result;
     }
-
 }

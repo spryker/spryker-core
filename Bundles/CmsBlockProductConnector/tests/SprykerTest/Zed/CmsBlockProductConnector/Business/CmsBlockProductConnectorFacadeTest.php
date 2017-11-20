@@ -16,7 +16,6 @@ use Codeception\Test\Unit;
  */
 class CmsBlockProductConnectorFacadeTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\CmsBlockProductConnector\BusinessTester
      */
@@ -71,5 +70,4 @@ class CmsBlockProductConnectorFacadeTest extends Unit
     {
         return $this->tester->getLocator()->cmsBlockProductConnector()->facade();
     }
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\StateMachine\Business\Process\Transition;
  */
 class ProcessTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -77,5 +76,4 @@ class ProcessTest extends Unit
     {
         return new Process();
     }
-
 }

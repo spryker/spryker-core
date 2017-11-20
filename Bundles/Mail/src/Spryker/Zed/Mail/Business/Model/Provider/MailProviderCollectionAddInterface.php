@@ -11,7 +11,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 interface MailProviderCollectionAddInterface
 {
-
     /**
      * @param \Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface $mailProvider
      * @param array|string $acceptedMailTypes
@@ -19,5 +18,4 @@ interface MailProviderCollectionAddInterface
      * @return $this
      */
     public function addProvider(MailProviderPluginInterface $mailProvider, $acceptedMailTypes);
-
 }

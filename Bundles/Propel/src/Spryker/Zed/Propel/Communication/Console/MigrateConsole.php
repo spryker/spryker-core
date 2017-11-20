@@ -16,7 +16,6 @@ use Symfony\Component\Process\Process;
 
 class MigrateConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:migrate';
 
     /**
@@ -50,5 +49,4 @@ class MigrateConsole extends Console
             echo $buffer;
         });
     }
-
 }

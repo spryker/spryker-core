@@ -31,7 +31,6 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
  */
 class AvailabilityHandlerTest extends Unit
 {
-
     const PRODUCT_SKU = 'sku-123-321';
 
     /**
@@ -231,5 +230,4 @@ class AvailabilityHandlerTest extends Unit
         return $this->getMockBuilder(AvailabilityToProductInterface::class)
             ->getMock();
     }
-
 }

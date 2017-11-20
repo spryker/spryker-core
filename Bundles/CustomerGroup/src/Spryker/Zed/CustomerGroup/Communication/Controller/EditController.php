@@ -11,12 +11,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade getFacade()
+ * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
  */
 class EditController extends AbstractController
 {
-
     const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
 
     /**
@@ -37,7 +36,8 @@ class EditController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $customerGroupTransfer = $dataProvider->prepareDataAsTransfer($form->getData());
+            /** @var \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer */
+            $customerGroupTransfer = $form->getData();
 
             $this->getFacade()->update($customerGroupTransfer);
 
@@ -49,7 +49,41 @@ class EditController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
             'idCustomerGroup' => $idCustomerGroup,
+            'customerGroupFormTabs' => $this->getFactory()->createCustomerGroupFormTabs()->createView(),
+            'availableCustomerTable' => $this->getFactory()
+                ->createAvailableCustomerTable($idCustomerGroup)
+                ->render(),
+            'assignedCustomerTable' => $this->getFactory()
+                ->createAssignedCustomerTable($idCustomerGroup)
+                ->render(),
         ]);
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function availableCustomerTableAction(Request $request)
+    {
+        $idCustomerGroup = $this->castId($request->query->get(static::PARAM_ID_CUSTOMER_GROUP));
+        $availableCustomerTable = $this->getFactory()
+            ->createAvailableCustomerTable($idCustomerGroup);
+
+        return $this->jsonResponse($availableCustomerTable->fetchData());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedCustomerTableAction(Request $request)
+    {
+        $idCustomerGroup = $this->castId($request->query->get(static::PARAM_ID_CUSTOMER_GROUP));
+        $assignedCustomerTable = $this->getFactory()
+            ->createAssignedCustomerTable($idCustomerGroup);
+
+        return $this->jsonResponse($assignedCustomerTable->fetchData());
+    }
 }

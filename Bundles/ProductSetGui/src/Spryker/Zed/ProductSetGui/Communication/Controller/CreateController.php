@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductSetGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ */
 class CreateController extends AbstractProductSetController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -59,5 +61,4 @@ class CreateController extends AbstractProductSetController
             'productTable' => $this->getFactory()->createProductTable($localeTransfer)->render(),
         ]);
     }
-
 }

@@ -13,11 +13,10 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
- * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
  */
 class ProductLabelGuiBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductLabelGui\Business\Model\PositionUpdaterInterface
      */
@@ -33,5 +32,4 @@ class ProductLabelGuiBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_PRODUCT_LABEL);
     }
-
 }

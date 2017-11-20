@@ -23,7 +23,6 @@ use SprykerTest\Zed\Kernel\Communication\Controller\Fixtures\MockController;
  */
 class AbstractControllerTest extends Unit
 {
-
     const EXPECTED_INTERNAL_TYPE = 'int';
 
     /**
@@ -64,5 +63,4 @@ class AbstractControllerTest extends Unit
             [[], 0, false],
         ];
     }
-
 }

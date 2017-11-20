@@ -24,7 +24,6 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
  */
 class IdFilterInsertTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -99,5 +98,4 @@ class IdFilterInsertTest extends Unit
         $result = $this->idFilterInsert->filter($ids, 'foo');
         $this->assertSame($ids, $result);
     }
-
 }

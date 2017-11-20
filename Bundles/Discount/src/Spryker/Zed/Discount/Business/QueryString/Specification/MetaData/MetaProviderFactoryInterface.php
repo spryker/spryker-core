@@ -7,12 +7,10 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 
 interface MetaProviderFactoryInterface
 {
-
     /**
      * @param string $type
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
      */
     public function createMetaProviderByType($type);
-
 }

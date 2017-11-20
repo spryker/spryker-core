@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade;
 
 class ProductLabelDiscountConnectorToProductLabelBridge implements ProductLabelDiscountConnectorToProductLabelInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
@@ -30,5 +29,4 @@ class ProductLabelDiscountConnectorToProductLabelBridge implements ProductLabelD
     {
         return $this->productLabelFacade->findAllLabels();
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductSearchAttributeTransfer;
 
 class SortedProductSearchTransferListMapper implements SortedProductSearchTransferListMapperInterface
 {
-
     /**
      * @param array $filterList
      *
@@ -33,5 +32,4 @@ class SortedProductSearchTransferListMapper implements SortedProductSearchTransf
 
         return $productSearchAttributeList;
     }
-
 }

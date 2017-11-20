@@ -11,13 +11,11 @@ use Spryker\Shared\Kernel\BundleProxy;
 
 class LocatorLocator extends AbstractLocatorLocator
 {
-
     /**
-     * @return BundleProxy
+     * @return \Spryker\Shared\Kernel\BundleProxy
      */
     protected function getBundleProxy()
     {
         return new BundleProxy();
     }
-
 }

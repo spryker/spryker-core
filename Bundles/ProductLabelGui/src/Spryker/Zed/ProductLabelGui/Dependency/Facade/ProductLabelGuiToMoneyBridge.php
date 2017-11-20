@@ -8,11 +8,9 @@
 namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Zed\Money\Business\MoneyFacadeInterface;
 
 class ProductLabelGuiToMoneyBridge implements ProductLabelGuiToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -21,7 +19,7 @@ class ProductLabelGuiToMoneyBridge implements ProductLabelGuiToMoneyInterface
     /**
      * @param \Spryker\Zed\Money\Business\MoneyFacadeInterface $moneyFacade
      */
-    public function __construct(MoneyFacadeInterface $moneyFacade)
+    public function __construct($moneyFacade)
     {
         $this->moneyFacade = $moneyFacade;
     }
@@ -49,5 +47,4 @@ class ProductLabelGuiToMoneyBridge implements ProductLabelGuiToMoneyInterface
             ->moneyFacade
             ->formatWithSymbol($moneyTransfer);
     }
-
 }

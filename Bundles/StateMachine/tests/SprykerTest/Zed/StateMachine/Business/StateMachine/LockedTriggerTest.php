@@ -25,7 +25,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class LockedTriggerTest extends StateMachineMocks
 {
-
     /**
      * @return void
      */
@@ -83,5 +82,4 @@ class LockedTriggerTest extends StateMachineMocks
             $itemLockMock
         );
     }
-
 }

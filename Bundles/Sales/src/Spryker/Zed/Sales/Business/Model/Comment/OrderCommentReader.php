@@ -14,7 +14,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderCommentReader implements OrderCommentReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -55,5 +54,4 @@ class OrderCommentReader implements OrderCommentReaderInterface
         }
         return $comments;
     }
-
 }

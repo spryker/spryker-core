@@ -10,26 +10,21 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 use Elastica\Client;
 use Elastica\Document;
 use Elastica\Exception\NotFoundException;
+use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
-class ElasticsearchWriter implements WriterInterface
+class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
-
     /**
      * @var \Elastica\Client
      */
     protected $client;
 
     /**
-     * @var \Elastica\Index
+     * @var \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
      */
-    protected $index;
-
-    /**
-     * @var string
-     */
-    protected $type;
+    protected $searchCollectorConfiguration;
 
     /**
      * @param \Elastica\Client $searchClient
@@ -39,8 +34,11 @@ class ElasticsearchWriter implements WriterInterface
     public function __construct(Client $searchClient, $indexName, $type)
     {
         $this->client = $searchClient;
-        $this->index = $this->client->getIndex($indexName);
-        $this->type = $type;
+
+        $this->searchCollectorConfiguration = new SearchCollectorConfigurationTransfer();
+        $this->searchCollectorConfiguration
+            ->setIndexName($indexName)
+            ->setTypeName($type);
     }
 
     /**
@@ -56,11 +54,9 @@ class ElasticsearchWriter implements WriterInterface
             throw new InvalidDataSetException();
         }
 
-        //@todo this is wrong, the touched type does not directly map to the processed type
-        $type = $this->index->getType($this->type);
         $documents = $this->createDocuments($dataSet);
-        $type->addDocuments($documents);
-        $response = $type->getIndex()->refresh();
+        $this->getType()->addDocuments($documents);
+        $response = $this->getIndex()->refresh();
 
         return $response->isOk();
     }
@@ -79,9 +75,10 @@ class ElasticsearchWriter implements WriterInterface
         }
 
         $documents = [];
-        foreach ($dataSet as $key => $value) {
+        $keys = array_keys($dataSet);
+        foreach ($keys as $key) {
             try {
-                $documents[] = $this->index->getType($this->type)->getDocument($key);
+                $documents[] = $this->getType()->getDocument($key);
             } catch (NotFoundException $e) {
                 continue;
             }
@@ -91,8 +88,8 @@ class ElasticsearchWriter implements WriterInterface
             return true;
         }
 
-        $response = $this->index->deleteDocuments($documents);
-        $this->index->flush(true);
+        $response = $this->getIndex()->deleteDocuments($documents);
+        $this->getIndex()->flush(true);
 
         return $response->isOk();
     }
@@ -143,4 +140,37 @@ class ElasticsearchWriter implements WriterInterface
         return count(array_filter(array_keys($array), 'is_int')) > 0;
     }
 
+    /**
+     * @return \Elastica\Index
+     */
+    protected function getIndex()
+    {
+        return $this->client->getIndex($this->searchCollectorConfiguration->getIndexName());
+    }
+
+    /**
+     * @return \Elastica\Type
+     */
+    protected function getType()
+    {
+        return $this->getIndex()->getType($this->searchCollectorConfiguration->getTypeName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer $collectorConfigurationTransfer
+     *
+     * @return void
+     */
+    public function setSearchCollectorConfiguration(SearchCollectorConfigurationTransfer $collectorConfigurationTransfer)
+    {
+        $this->searchCollectorConfiguration->fromArray($collectorConfigurationTransfer->modifiedToArray());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
+     */
+    public function getSearchCollectorConfiguration()
+    {
+        return $this->searchCollectorConfiguration;
+    }
 }

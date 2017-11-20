@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business\Model\Cache;
 
-use Application\Module\Zed;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationCacheEmptyException;
@@ -28,7 +27,6 @@ use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge;
  */
 class ZedNavigationCacheTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -166,5 +164,4 @@ class ZedNavigationCacheTest extends Unit
 
         return $navigationToUtilEncodingBridge;
     }
-
 }

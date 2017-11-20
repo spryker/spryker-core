@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\SalesPaymentTransfer;
  */
 interface PaymentFacadeInterface
 {
-
     /**
      * @api
      *
@@ -70,5 +69,4 @@ interface PaymentFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateOrderPayments(OrderTransfer $orderTransfer);
-
 }

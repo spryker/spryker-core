@@ -22,13 +22,12 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
- * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  */
 class AclCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
@@ -164,5 +163,4 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     {
         return new RulesetTable($this->getQueryContainer(), $idAclRole);
     }
-
 }

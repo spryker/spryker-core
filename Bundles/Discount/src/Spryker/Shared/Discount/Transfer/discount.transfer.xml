@@ -18,6 +18,9 @@
         <property name="validTo" type="string" />
         <property name="collectorQueryString" type="string" />
         <property name="decisionRuleQueryString" type="string" />
+        <property name="moneyValueCollection" type="MoneyValue[]" singular="MoneyValue" />
+        <property name="currency" type="Currency" />
+        <property name="priceMode" type="string" />
     </transfer>
 
     <transfer name="CalculatedDiscount">
@@ -25,8 +28,10 @@
         <property name="displayName" type="string" />
         <property name="description" type="string" />
         <property name="voucherCode" type="string"/>
-        <property name="unitGrossAmount" type="int" />
-        <property name="sumGrossAmount" type="int" />
+        <property name="unitAmount" type="int" />
+        <property name="sumAmount" type="int" />
+        <property name="unitGrossAmount" type="int" deprecated="use unitAmount" />
+        <property name="sumGrossAmount" type="int" deprecated="use sumAmount"/>
         <property name="quantity" type="int" />
     </transfer>
 
@@ -40,6 +45,8 @@
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="priceMode" type="string" />
+        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="Item">
@@ -50,7 +57,8 @@
 
     <transfer name="DiscountableItem">
         <property name="quantity" type="int"/>
-        <property name="unitGrossPrice" type="int"/>
+        <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
+        <property name="unitPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
         <property name="originalItem" type="Item" />
     </transfer>
@@ -65,6 +73,7 @@
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="totals" type="Totals" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="OrderItems">
@@ -106,6 +115,8 @@
         <property name="amount" type="string" />
         <property name="calculatorPlugin" type="string" />
         <property name="collectorQueryString" type="string" />
+        <property name="collectorStrategyType" type="string" />
+        <property name="moneyValueCollection" type="MoneyValue[]" singular="MoneyValue" />
     </transfer>
 
     <transfer name="DiscountCondition">
@@ -134,6 +145,16 @@
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int" />
         <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="DiscountMoneyAmount">
+        <property name="idDiscountAmount" type="int" />
+        <property name="fkCurrency" type="int" />
+        <property name="fkDiscount" type="int" />
+        <property name="netAmount" type="int" />
+        <property name="grossAmount" type="int" />
+        <property name="currencyIsoCode" type="string" />
+        <property name="currencySymbol" type="string" />
     </transfer>
 
 </transfers>

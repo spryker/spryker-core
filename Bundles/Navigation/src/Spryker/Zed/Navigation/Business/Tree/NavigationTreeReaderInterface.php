@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\NavigationTransfer;
 
 interface NavigationTreeReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -20,5 +19,4 @@ interface NavigationTreeReaderInterface
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer|null
      */
     public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null);
-
 }

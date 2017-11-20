@@ -25,7 +25,6 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionValueReaderTest extends MockProvider
 {
-
     /**
      * @return void
      */
@@ -84,5 +83,4 @@ class ProductOptionValueReaderTest extends MockProvider
             ->setMethods(['save', 'getSpyProductOptionGroup'])
             ->getMock();
     }
-
 }

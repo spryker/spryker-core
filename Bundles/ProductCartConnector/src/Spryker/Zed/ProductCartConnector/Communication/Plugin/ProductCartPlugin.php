@@ -12,12 +12,11 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade getFacade()
+ * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory getFactory()
  */
 class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -29,5 +28,4 @@ class ProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInte
 
         return $cartChangeTransfer;
     }
-
 }

@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  */
 class ConvertConfigConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:config:convert';
 
     /**
@@ -41,5 +40,4 @@ class ConvertConfigConsole extends Console
         $this->info('Write propel config');
         $this->getFacade()->convertConfig();
     }
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 
 interface DistributorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
      *
      * @return void
      */
     public function distributeDiscountAmountToDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer);
-
 }

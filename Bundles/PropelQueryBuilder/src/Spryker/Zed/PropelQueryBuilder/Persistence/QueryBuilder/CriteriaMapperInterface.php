@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
 
 interface CriteriaMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function toCriteria(PropelQueryBuilderCriteriaTransfer $propelQueryBuilderCriteriaTransfer);
-
 }

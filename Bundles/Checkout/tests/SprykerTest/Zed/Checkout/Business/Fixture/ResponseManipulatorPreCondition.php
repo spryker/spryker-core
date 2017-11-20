@@ -13,7 +13,6 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -37,5 +36,4 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
     {
         $checkoutResponseTransfer->fromArray($this->checkoutResponse->toArray(true), true);
     }
-
 }

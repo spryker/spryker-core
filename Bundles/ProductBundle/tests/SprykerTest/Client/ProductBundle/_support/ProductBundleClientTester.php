@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class ProductBundleClientTester extends Actor
 {
-
     use _generated\ProductBundleClientTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

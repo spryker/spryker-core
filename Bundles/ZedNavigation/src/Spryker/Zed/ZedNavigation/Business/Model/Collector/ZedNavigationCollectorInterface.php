@@ -9,10 +9,8 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Collector;
 
 interface ZedNavigationCollectorInterface
 {
-
     /**
      * @return array
      */
     public function getNavigation();
-
 }

@@ -13,12 +13,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @method \Spryker\Zed\User\Business\UserFacade getFacade()
+ * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  */
 class UserServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
@@ -71,5 +70,4 @@ class UserServiceProvider extends AbstractPlugin implements ServiceProviderInter
     public function boot(Application $app)
     {
     }
-
 }

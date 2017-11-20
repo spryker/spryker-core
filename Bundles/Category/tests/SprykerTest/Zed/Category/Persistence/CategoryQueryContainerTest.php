@@ -8,7 +8,9 @@
 namespace Unit\Spryker\Zed\Category\Persistence;
 
 use Codeception\Test\Unit;
+use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
@@ -23,7 +25,6 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
  */
 class CategoryQueryContainerTest extends Unit
 {
-
     const ID_CATEGORY_NODE = 23;
 
     /**
@@ -38,4 +39,25 @@ class CategoryQueryContainerTest extends Unit
         $this->assertInstanceOf(SpyCategoryClosureTableQuery::class, $query);
     }
 
+    /**
+     * @return void
+     */
+    public function testQueryAllCategoryNodesReturnCorrectQuery()
+    {
+        $categoryQueryContainer = new CategoryQueryContainer();
+        $query = $categoryQueryContainer->queryAllCategoryNodes();
+
+        $this->assertInstanceOf(SpyCategoryNodeQuery::class, $query);
+    }
+
+    /**
+     * @return void
+     */
+    public function testQueryAllCategoryAttributesReturnCorrectQuery()
+    {
+        $categoryQueryContainer = new CategoryQueryContainer();
+        $query = $categoryQueryContainer->queryAllCategoryAttributes();
+
+        $this->assertInstanceOf(SpyCategoryAttributeQuery::class, $query);
+    }
 }

@@ -11,7 +11,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class IndexMapCleaner implements IndexMapCleanerInterface
 {
-
     /**
      * @var string
      */
@@ -35,5 +34,4 @@ class IndexMapCleaner implements IndexMapCleanerInterface
             $fileSystem->remove($this->directory);
         }
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Api\Dependency\Plugin\OptionsForItemInterface;
 
 class ResourceHandler implements ResourceHandlerInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[]
      */
@@ -135,5 +134,4 @@ class ResourceHandler implements ResourceHandlerInterface
 
         return $options;
     }
-
 }

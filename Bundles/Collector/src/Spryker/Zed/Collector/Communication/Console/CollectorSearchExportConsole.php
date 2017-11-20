@@ -12,11 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\Collector\Business\CollectorFacade getFacade()
+ * @method \Spryker\Zed\Collector\Business\CollectorFacadeInterface getFacade()
  */
 class CollectorSearchExportConsole extends AbstractCollectorConsole
 {
-
     const COMMAND_NAME = 'collector:search:export';
     const COMMAND_DESCRIPTION = 'Collector export search';
 
@@ -46,5 +45,4 @@ class CollectorSearchExportConsole extends AbstractCollectorConsole
 
         $output->write($message);
     }
-
 }

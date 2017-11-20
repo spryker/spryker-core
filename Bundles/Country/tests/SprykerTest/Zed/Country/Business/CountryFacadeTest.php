@@ -27,7 +27,6 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainer;
  */
 class CountryFacadeTest extends Unit
 {
-
     const ISO2_CODE = 'qx';
     const ISO3_CODE = 'qxz';
 
@@ -124,5 +123,4 @@ class CountryFacadeTest extends Unit
         $this->expectException(MissingCountryException::class);
         $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
     }
-
 }

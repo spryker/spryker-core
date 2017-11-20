@@ -22,7 +22,6 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
  */
 class TokenHashGeneratorTest extends Unit
 {
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -56,5 +55,4 @@ class TokenHashGeneratorTest extends Unit
         $this->assertTrue($this->tokenGenerator->checkTokenEquals($hashOne, $hashOne));
         $this->assertFalse($this->tokenGenerator->checkTokenEquals($hashOne, $hashTwo));
     }
-
 }

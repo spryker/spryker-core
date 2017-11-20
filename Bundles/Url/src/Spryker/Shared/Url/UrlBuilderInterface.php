@@ -9,7 +9,6 @@ namespace Spryker\Shared\Url;
 
 interface UrlBuilderInterface
 {
-
     /**
      * @param string $bundle
      * @param string|null $controller
@@ -19,5 +18,4 @@ interface UrlBuilderInterface
      * @return string
      */
     public function build($bundle, $controller = null, $action = null, array $queryParameter = []);
-
 }

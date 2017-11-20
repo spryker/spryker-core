@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer;
 
 interface CmsBlockCategoryConnectorToCategoryQueryContainerInterface
 {
-
     /**
      * @param int $idLocale
      *
@@ -30,5 +29,4 @@ interface CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function queryCategoryTemplateById($idCategoryTemplate);
-
 }

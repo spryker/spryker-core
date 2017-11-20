@@ -19,12 +19,11 @@ use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
  */
 class CustomerCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Customer\Communication\Table\CustomerTable
      */
@@ -43,7 +42,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerAddressTable($idCustomer)
     {
-        return new AddressTable($this->getQueryContainer(), $idCustomer);
+        return new AddressTable($this->getQueryContainer(), $idCustomer, $this->getUtilSanitizeService());
     }
 
     /**
@@ -121,4 +120,19 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CustomerDependencyProvider::STORE);
     }
 
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
+     */
+    public function getCustomerTransferExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface
+     */
+    protected function getUtilSanitizeService()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
 }

@@ -11,12 +11,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
- * @method \Spryker\Zed\User\Business\UserFacade getFacade()
- * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -40,5 +39,4 @@ class IndexController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

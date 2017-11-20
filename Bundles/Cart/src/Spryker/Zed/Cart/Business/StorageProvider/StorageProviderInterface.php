@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 
 interface StorageProviderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -25,5 +24,4 @@ interface StorageProviderInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItems(CartChangeTransfer $cartChangeTransfer);
-
 }

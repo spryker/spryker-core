@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class GlossaryKeyBuilder implements KeyBuilderInterface
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -32,5 +31,4 @@ class GlossaryKeyBuilder implements KeyBuilderInterface
     {
         return 'glossary';
     }
-
 }

@@ -3,10 +3,10 @@
   "description": "ShipmentDiscountConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/discount": "^4.3.0",
+    "spryker/discount": "^4.3.0 || ^5.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/money": "^2.0.0",
-    "spryker/shipment": "^5.1.0"
+    "spryker/shipment": "^5.1.0 || ^6.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -16,20 +16,16 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
     "psr-4": {
       "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
       "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

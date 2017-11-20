@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 
 interface CustomerApiValidatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -20,5 +19,4 @@ interface CustomerApiValidatorInterface
      * @return array
      */
     public function validate(ApiDataTransfer $apiDataTransfer);
-
 }

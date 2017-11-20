@@ -14,11 +14,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
- * @method \Spryker\Zed\Session\Business\SessionFacade getFacade()
+ * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
      */
@@ -99,5 +98,4 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     {
         return (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg');
     }
-
 }

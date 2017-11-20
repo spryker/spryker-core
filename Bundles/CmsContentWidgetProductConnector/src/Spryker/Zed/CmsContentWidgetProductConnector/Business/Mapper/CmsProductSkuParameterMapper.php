@@ -12,7 +12,6 @@ use Spryker\Zed\CmsContentWidgetProductConnector\Persistence\CmsContentWidgetPro
 
 class CmsProductSkuParameterMapper implements CmsProductSkuParameterMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsContentWidgetProductConnector\Persistence\CmsContentWidgetProductConnectorQueryContainerInterface
      */
@@ -45,5 +44,4 @@ class CmsProductSkuParameterMapper implements CmsProductSkuParameterMapperInterf
 
         return $skuIdPairs;
     }
-
 }

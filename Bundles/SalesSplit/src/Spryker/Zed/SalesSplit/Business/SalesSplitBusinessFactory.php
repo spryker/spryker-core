@@ -18,7 +18,6 @@ use Spryker\Zed\SalesSplit\SalesSplitDependencyProvider;
  */
 class SalesSplitBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\SalesSplit\Business\Model\OrderItemSplitInterface
      */
@@ -54,5 +53,4 @@ class SalesSplitBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(SalesSplitDependencyProvider::SALES_QUERY_CONTAINER);
     }
-
 }

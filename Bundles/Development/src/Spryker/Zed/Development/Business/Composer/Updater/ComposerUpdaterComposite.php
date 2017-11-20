@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerUpdaterComposite implements UpdaterInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface[]
      */
@@ -43,5 +42,4 @@ class ComposerUpdaterComposite implements UpdaterInterface
 
         return $composerJson;
     }
-
 }

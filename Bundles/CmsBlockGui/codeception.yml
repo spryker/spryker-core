@@ -2,7 +2,7 @@ namespace: CmsBlockGui
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/CmsBlockGui
+    - tests/SprykerTest/Zed/CmsBlockGui
 
 paths:
     tests: tests

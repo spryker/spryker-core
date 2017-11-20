@@ -34,10 +34,21 @@
     protected ${{ property.name }}{% if property.type == 'array' %} = []{% endif %};
 {% endmacro %}
 
+{# propertyNamesMap #}
+{% macro addPropertyNameMap(propertyNameMap) %}
+    /**
+     * @var array
+     */
+    protected $transferPropertyNameMap = [
+    {% for propertyNameUnderScore, propertyNameCamelCase  in propertyNameMap %}
+    '{{ propertyNameUnderScore }}' => '{{ propertyNameCamelCase }}',
+    {% endfor -%}
+    ];
+{%- endmacro %}
+
 {# constructor #}
 {% macro addConstructor(properties) %}
 {% if properties %}
-
     public function __construct()
     {
 {% for property, collectionType in properties %}
@@ -52,12 +63,12 @@
 {# set method #}
 {%- macro addSet(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
-     {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
@@ -66,8 +77,14 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
+        {% if method.typeHint == "array" -%}
+        if (${{ method.property }} === null) {
+            ${{ method.property }} = [];
+        }
+
+        {% endif -%}
         $this->{{ method.property }} = ${{ method.property }};
-        $this->addModifiedProperty(self::{{ method.propertyConst }});
+        $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
     }
@@ -76,12 +93,12 @@
 {# get method #}
 {%- macro addGet(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
-     {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @return {{ method.return }}
@@ -95,12 +112,12 @@
 {# add method #}
 {%- macro addAdd(method) %}
     /**
-     {% if method.deprecationDescription is not null -%}
-     * @deprecated {{ method.deprecationDescription }}
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
-     {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
      * @param {{ method.var }} ${{ method.property }}
@@ -110,7 +127,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
         $this->{{ method.parent }}[] = ${{ method.property }};
-        $this->addModifiedProperty(self::{{ method.propertyConst }});
+        $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
     }
@@ -119,21 +136,19 @@
 {# require method #}
 {%- macro addRequire(method) %}
     /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
      {% if method.deprecationDescription is not null -%}
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     {% if method.bundles is defined -%}
-     * @bundle {{ method.bundles|join('|') }}
-     *
-     {% endif -%}
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function {{ method.name }}()
     {
-{% if method.isCollection %}
+{% if method.isCollection and method.typeHint != "array" %}
         $this->assertCollectionPropertyIsSet(self::{{ method.propertyConst }});
 {% else %}
         $this->assertPropertyIsSet(self::{{ method.propertyConst }});

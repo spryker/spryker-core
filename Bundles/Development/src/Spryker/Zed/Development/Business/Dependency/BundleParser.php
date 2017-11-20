@@ -19,7 +19,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class BundleParser implements BundleParserInterface
 {
-
     /**
      * @var array
      */
@@ -422,5 +421,4 @@ class BundleParser implements BundleParserInterface
             $this->addDependency($dependencyTransfer);
         }
     }
-
 }

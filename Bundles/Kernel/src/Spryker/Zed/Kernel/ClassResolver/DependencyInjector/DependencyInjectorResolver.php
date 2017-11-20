@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollection;
 
 class DependencyInjectorResolver extends AbstractClassResolver
 {
-
     const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
     const KEY_FROM_BUNDLE = '%fromBundle%';
 
@@ -26,7 +25,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     public function resolve($callerClass)
     {
@@ -39,6 +38,8 @@ class DependencyInjectorResolver extends AbstractClassResolver
         foreach ($injectFromBundles as $injectFromBundle) {
             $this->fromBundle = $injectFromBundle;
 
+            $this->unsetCurrentCacheEntry();
+
             if ($this->canResolve()) {
                 $resolvedInjector = $this->getResolvedClassInstance();
                 $dependencyInjectorCollection->addDependencyInjector($resolvedInjector);
@@ -49,7 +50,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface
+     * @return object|\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
     protected function getResolvedClassInstance()
     {
@@ -124,5 +125,4 @@ class DependencyInjectorResolver extends AbstractClassResolver
     {
         return new DependencyInjectorCollection();
     }
-
 }

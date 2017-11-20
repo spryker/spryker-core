@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 interface FacetConfigBuilderInterface
 {
-
     /**
      * @api
      *
@@ -60,5 +59,4 @@ interface FacetConfigBuilderInterface
      * @return array
      */
     public function getActiveParamNames(array $requestParameters);
-
 }

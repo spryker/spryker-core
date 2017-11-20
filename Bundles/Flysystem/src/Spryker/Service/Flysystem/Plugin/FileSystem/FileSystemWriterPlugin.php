@@ -22,7 +22,6 @@ use Spryker\Service\Kernel\AbstractPlugin;
  */
 class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
@@ -161,5 +160,4 @@ class FileSystemWriterPlugin extends AbstractPlugin implements FileSystemWriterP
             $fileSystemContentTransfer->getConfig()
         );
     }
-
 }

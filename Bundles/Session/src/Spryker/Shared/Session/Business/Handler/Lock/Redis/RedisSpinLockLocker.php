@@ -13,7 +13,6 @@ use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
 class RedisSpinLockLocker implements SessionLockerInterface
 {
-
     const KEY_SUFFIX = ':lock';
 
     const DEFAULT_TIMEOUT_MILLISECONDS = 10000;
@@ -244,5 +243,4 @@ end
 return 0
 LUA;
     }
-
 }

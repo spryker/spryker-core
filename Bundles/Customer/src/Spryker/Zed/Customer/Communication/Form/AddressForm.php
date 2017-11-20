@@ -10,14 +10,12 @@ namespace Spryker\Zed\Customer\Communication\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
 class AddressForm extends AbstractType
 {
-
     const OPTION_SALUTATION_CHOICES = 'salutation_choices';
     const OPTION_COUNTRY_CHOICES = 'country_choices';
     const OPTION_PREFERRED_COUNTRY_CHOICES = 'preferred_country_choices';
@@ -52,18 +50,6 @@ class AddressForm extends AbstractType
             'required' => false,
             static::OPTION_PREFERRED_COUNTRY_CHOICES => [],
         ]);
-    }
-
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 
     /**
@@ -342,5 +328,4 @@ class AddressForm extends AbstractType
     {
         return 'customer_address';
     }
-
 }

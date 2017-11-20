@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class ShipmentToMoneyBridge implements ShipmentToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -75,5 +74,4 @@ class ShipmentToMoneyBridge implements ShipmentToMoneyInterface
     {
         return $this->moneyFacade->convertDecimalToInteger($value);
     }
-
 }

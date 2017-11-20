@@ -14,12 +14,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class RequestServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const BUNDLE = 'module';
     const CONTROLLER = 'controller';
     const ACTION = 'action';
@@ -121,5 +120,4 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
     {
         return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg';
     }
-
 }

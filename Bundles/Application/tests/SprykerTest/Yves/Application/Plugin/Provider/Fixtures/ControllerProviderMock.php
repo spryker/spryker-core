@@ -11,7 +11,6 @@ use Spryker\Yves\Application\Plugin\Provider\YvesControllerProvider;
 
 class ControllerProviderMock extends YvesControllerProvider
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -21,5 +20,4 @@ class ControllerProviderMock extends YvesControllerProvider
     {
         $this->createController('/foo', 'foo', 'foo', 'index');
     }
-
 }

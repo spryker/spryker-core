@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 
 abstract class AbstractTouchUpdater implements TouchUpdaterInterface
 {
-
     const FK_TOUCH = 'fk_touch';
 
     /**
@@ -50,6 +49,14 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
     abstract protected function findOrCreateTouchKeyEntity($key, $idLocale);
+
+    /**
+     * @param string[] $keys
+     * @param int $idLocale
+     *
+     * @return void
+     */
+    abstract public function deleteTouchKeyEntities($keys, $idLocale);
 
     /**
      * @param \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface $bulkTouchUpdateQuery
@@ -158,5 +165,4 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     {
         return $this->touchKeyColumnName;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockProductConnector\Persistence;
 
 interface CmsBlockProductConnectorQueryContainerInterface
 {
-
     const COL_PRODUCT_ABSTRACT_NAME = 'name';
     const COL_PRODUCT_ABSTRACT_SKU = 'sku';
 
@@ -47,5 +46,4 @@ interface CmsBlockProductConnectorQueryContainerInterface
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
     public function queryCmsBlockProductConnectorByIdProductAbstract($idProductAbstract);
-
 }

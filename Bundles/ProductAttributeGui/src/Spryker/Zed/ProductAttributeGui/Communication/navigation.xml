@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product>
+        <pages>
+            <products>
+                <pages>
+                    <product-abstract-attribute-gui>
+                        <label>Product Abstract Attributes Management</label>
+                        <title>Product Abstract Attributes Management</title>
+                        <bundle>product-attribute-gui</bundle>
+                        <controller>view</controller>
+                        <action>productAbstract</action>
+                        <visible>0</visible>
+                    </product-abstract-attribute-gui>
+                    <product-concrete-attribute-gui>
+                        <label>Product Attributes Management</label>
+                        <title>Product Attributes Management</title>
+                        <bundle>product-attribute-gui</bundle>
+                        <controller>view</controller>
+                        <action>product</action>
+                        <visible>0</visible>
+                    </product-concrete-attribute-gui>
+                </pages>
+            </products>
+            <attributes>
+                <label>Attributes</label>
+                <title>Attributes</title>
+                <bundle>product-attribute-gui</bundle>
+                <controller>attribute</controller>
+                <action>index</action>
+                <pages>
+                    <attribute-create>
+                        <label>Create a Product Attribute</label>
+                        <title>Create a ProductAttribute</title>
+                        <bundle>product-attribute-gui</bundle>
+                        <controller>attribute</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </attribute-create>
+
+                    <attribute-view>
+                        <label>View Product Attribute</label>
+                        <title>View Product Attribute</title>
+                        <bundle>product-attribute-gui</bundle>
+                        <controller>attribute</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </attribute-view>
+
+                    <attribute-edit>
+                        <label>Edit Product Attribute</label>
+                        <title>Edit Product Attribute</title>
+                        <bundle>product-attribute-gui</bundle>
+                        <controller>attribute</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </attribute-edit>
+
+                    <attribute-edit-translations>
+                        <label>Edit Attribute Translations</label>
+                        <title>Edit Attribute Translations</title>
+                        <bundle>product-attribute-gui</bundle>
+                        <controller>attribute</controller>
+                        <action>translate</action>
+                        <visible>0</visible>
+                    </attribute-edit-translations>
+                </pages>
+            </attributes>
+        </pages>
+    </product>
+</config>

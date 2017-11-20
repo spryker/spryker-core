@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class EventJournalFacade extends AbstractFacade implements EventJournalFacadeInterface
 {
-
     /**
      * @api
      *
@@ -31,5 +30,4 @@ class EventJournalFacade extends AbstractFacade implements EventJournalFacadeInt
              ->createEventJournal()
              ->saveEvent($event);
     }
-
 }

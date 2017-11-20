@@ -11,7 +11,6 @@ use Psr\Log\LoggerInterface;
 
 interface TransferFacadeInterface
 {
-
     /**
      * Specification:
      * - Loads all *transfer.xml definitions
@@ -61,6 +60,19 @@ interface TransferFacadeInterface
 
     /**
      * Specification:
+     * - Loads all *schema.xml definitions
+     * - Generates transfer objects
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function generateEntityTransferObjects(LoggerInterface $messenger);
+
+    /**
+     * Specification:
      * - Validates all generated transfer objects
      *
      * @api
@@ -71,5 +83,4 @@ interface TransferFacadeInterface
      * @return bool
      */
     public function validateTransferObjects(LoggerInterface $messenger, array $options);
-
 }

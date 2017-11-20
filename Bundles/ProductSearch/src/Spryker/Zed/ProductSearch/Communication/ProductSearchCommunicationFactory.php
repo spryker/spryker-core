@@ -20,13 +20,12 @@ use Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransfer
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
- * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  */
 class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable
      */
@@ -130,5 +129,4 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SortedProductSearchTransferListMapper();
     }
-
 }

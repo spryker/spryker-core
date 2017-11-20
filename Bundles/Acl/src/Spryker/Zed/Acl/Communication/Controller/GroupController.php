@@ -17,11 +17,10 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
- * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  */
 class GroupController extends AbstractController
 {
-
     const USER_LIST_URL = '/acl/users';
     const PARAMETER_ID_GROUP = 'id-group';
     const PARAMETER_ID_USER = 'id-user';
@@ -197,5 +196,4 @@ class GroupController extends AbstractController
 
         return $this->jsonResponse($roles);
     }
-
 }

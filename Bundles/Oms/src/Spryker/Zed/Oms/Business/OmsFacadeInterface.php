@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 interface OmsFacadeInterface
 {
-
     /**
      * Specification:
      *  - Reads all manual event for given order.
@@ -55,6 +54,18 @@ interface OmsFacadeInterface
      * @return bool
      */
     public function isOrderFlaggedAll($idOrder, $flag);
+
+    /**
+     * Specification:
+     *  - Checks if all order items are flagged to exclude order from customer.
+     *
+     * @api
+     *
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
 
     /**
      * Specification:
@@ -272,6 +283,18 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     *  - Returns reserved quantity for the given sku which aggregated in OMS
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku);
+
+    /**
+     * Specification:
      *  - Gets state entity by state name from persistence
      *
      * @api
@@ -461,5 +484,4 @@ interface OmsFacadeInterface
      * @return void
      */
     public function sendOrderShippedMail(SpySalesOrder $salesOrderEntity);
-
 }

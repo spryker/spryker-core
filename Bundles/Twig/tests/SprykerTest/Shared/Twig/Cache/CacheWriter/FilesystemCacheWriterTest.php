@@ -23,7 +23,6 @@ use Spryker\Shared\Twig\Cache\CacheWriterInterface;
  */
 class FilesystemCacheWriterTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -44,7 +43,7 @@ class FilesystemCacheWriterTest extends Unit
     {
         $cacheDirectory = $this->getCacheDirectory();
 
-        return $cacheDirectory . '/cache.php';
+        return $cacheDirectory . 'cache.php';
     }
 
     /**
@@ -52,7 +51,7 @@ class FilesystemCacheWriterTest extends Unit
      */
     protected function getCacheDirectory()
     {
-        return __DIR__ . '/Fixtures/';
+        return __DIR__ . DIRECTORY_SEPARATOR . 'test_files' . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -77,5 +76,4 @@ class FilesystemCacheWriterTest extends Unit
 
         $this->assertTrue(is_dir($this->getCacheDirectory()), 'Cache directory was not created');
     }
-
 }

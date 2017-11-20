@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Queue\Business\QueueFacade getFacade()
+ * @method \Spryker\Zed\Queue\Business\QueueFacadeInterface getFacade()
  */
 class QueueWorkerConsole extends Console
 {
-
     const COMMAND_NAME = 'queue:worker:start';
     const DESCRIPTION = 'Start queue workers';
 
@@ -45,5 +44,4 @@ class QueueWorkerConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

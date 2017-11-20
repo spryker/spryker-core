@@ -20,7 +20,6 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductSetReorderTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-set-reorder-table';
 
     const COL_ID_PRODUCT_SET = 'id_product_set';
@@ -217,5 +216,4 @@ class ProductSetReorderTable extends AbstractTable
             $productAbstractEntity->getWeight()
         );
     }
-
 }

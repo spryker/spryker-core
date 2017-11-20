@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductBundleToProductBridge implements ProductBundleToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -78,5 +77,4 @@ class ProductBundleToProductBridge implements ProductBundleToProductInterface
     {
         return $this->productFacade->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
-
 }

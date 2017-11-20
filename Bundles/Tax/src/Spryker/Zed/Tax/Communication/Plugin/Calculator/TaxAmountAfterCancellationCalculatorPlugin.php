@@ -12,12 +12,11 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  */
 class TaxAmountAfterCancellationCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class TaxAmountAfterCancellationCalculatorPlugin extends AbstractPlugin implemen
         $this->getFacade()
             ->calculateTaxAfterCancellation($calculableObjectTransfer);
     }
-
 }

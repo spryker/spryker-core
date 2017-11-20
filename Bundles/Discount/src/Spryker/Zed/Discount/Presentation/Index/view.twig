@@ -57,11 +57,20 @@
               </tr>
               <tr>
                   <td>{{ 'Amount:' | trans }}</td>
-                  <td>{{ discountConfigurator.discountCalculator.amount }}</td>
+                  <td>
+                      {% if discountConfigurator.discountCalculator.moneyValueCollection|length > 0 %}
+                          {% for moneyValue in discountConfigurator.discountCalculator.moneyValueCollection  %}
+                              Gross {{ moneyValue.grossAmount }} <br />
+                              Net {{ moneyValue.netAmount }} <br />
+                          {% endfor %}
+                      {% else %}
+                          {{ discountConfigurator.discountCalculator.amount }}
+                      {% endif %}
+                  </td>
               </tr>
               <tr>
-                  <td>{{ 'Apply to:' | trans }}</td>
-                  <td>{{ discountConfigurator.discountCalculator.collectorQueryString }}</td>
+                  <td>{{ 'Apply to query:' | trans }}</td>
+                  <td>{{ (discountConfigurator.discountCalculator.collectorQueryString) ? discountConfigurator.discountCalculator.collectorQueryString : 'N/A' | trans }}</td>
               </tr>
           </table>
 
@@ -79,11 +88,16 @@
               </tr>
           </table>
 
-            {% if discountConfigurator.discountGeneral.discountType == 'voucher' %}
-                <hr>
-                <p><strong>{{ 'Generated Discount Codes' | trans }}</strong></p>
-                {{ voucherCodesTable | raw }}
-            {% endif %}
+        {% for block in renderedBlocks %}
+            {{ block | raw }}
+        {% endfor %}
+
+        {% if discountConfigurator.discountGeneral.discountType == 'voucher' %}
+            <hr>
+            <p><strong>{{ 'Generated Discount Codes' | trans }}</strong></p>
+            {{ voucherCodesTable | raw }}
+        {% endif %}
+
 
 
         {% endblock %}

@@ -15,7 +15,6 @@ use Spryker\Zed\Country\CountryConfig;
 
 class Install implements InstallInterface
 {
-
     /**
      * @var \Spryker\Zed\Country\CountryConfig
      */
@@ -240,5 +239,4 @@ class Install implements InstallInterface
     {
         return [];
     }
-
 }

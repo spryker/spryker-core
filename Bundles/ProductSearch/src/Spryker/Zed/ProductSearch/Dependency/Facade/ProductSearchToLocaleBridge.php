@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
 class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -48,5 +47,4 @@ class ProductSearchToLocaleBridge implements ProductSearchToLocaleInterface
     {
         return $this->localeFacade->getLocale($localeName);
     }
-
 }

@@ -18,13 +18,12 @@ use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @var string
      */
@@ -211,5 +210,4 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_PLUGINS);
     }
-
 }

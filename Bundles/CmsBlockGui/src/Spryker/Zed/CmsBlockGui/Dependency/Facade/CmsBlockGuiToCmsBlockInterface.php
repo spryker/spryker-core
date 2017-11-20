@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockGuiToCmsBlockInterface
 {
-
     /**
      * @param int $idCmsBlock
      *
@@ -69,4 +68,10 @@ interface CmsBlockGuiToCmsBlockInterface
      */
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
 
+    /**
+     * @param int $idCmsBlockTemplate
+     *
+     * @return bool
+     */
+    public function hasTemplateFileById($idCmsBlockTemplate);
 }

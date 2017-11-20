@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  */
 class SchemaCopyConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:schema:copy';
 
     /**
@@ -43,5 +42,4 @@ class SchemaCopyConsole extends Console
         $this->info('Copy and merge schema files');
         $this->getFacade()->copySchemaFilesToTargetDirectory();
     }
-
 }

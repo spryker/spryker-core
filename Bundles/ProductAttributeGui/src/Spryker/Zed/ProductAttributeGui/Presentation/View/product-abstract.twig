@@ -1,0 +1,43 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Manage Attributes for Product Abstract [' ~ productAbstract.sku  ~ ']' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ editActionButton(url('/product-management/edit?id-product-abstract=' ~ productAbstract.idProductAbstract), 'Edit Product Abstract' | trans) }}
+    {{ backActionButton(url('/product-management'), 'Back to Product List' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% include '@ProductAttributeGui/View/_partials/json-data.twig' with {
+        productAttributesJson: productAttributesJson,
+        metaAttributesJson: metaAttributesJson,
+        localesJson: localesJson
+    } %}
+
+    {% include '@ProductAttributeGui/View/_partials/add-attribute-form.twig' with {
+        form: attributeKeyForm
+    } %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes' } %}
+        {% block widget_content %}
+            {% include '@ProductAttributeGui/View/_partials/attribute-table.twig' with {
+                formActionUrl: '/product-attribute-gui/save/productAbstract',
+                locales: locales,
+                productAttributes: productAttributes,
+                metaAttributes: metaAttributes,
+                idProductAbstract: idProductAbstract,
+                idProductConcrete: ''
+            } %}
+        {% endblock %}
+    {% endembed %}
+
+    <input type="button" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" id="saveButton" />
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productattributegui-main.js"></script>
+{% endblock %}

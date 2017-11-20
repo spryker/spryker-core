@@ -33,7 +33,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface
      */
@@ -161,7 +160,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         if ($productAbstractTransfer) {
             $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
-            $formData = $this->appendVariantAbstractAttributes($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendBundledProducts($productTransfer, $formData);
         }
@@ -350,5 +348,4 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         return false;
     }
-
 }

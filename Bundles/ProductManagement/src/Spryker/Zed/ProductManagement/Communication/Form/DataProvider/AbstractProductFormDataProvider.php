@@ -30,7 +30,6 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class AbstractProductFormDataProvider
 {
-
     const LOCALE_NAME = 'locale_name';
 
     const FORM_FIELD_ID = 'id';
@@ -207,7 +206,6 @@ class AbstractProductFormDataProvider
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
         $data = array_merge($data, $this->getSeoDefaultFields());
-        $data = array_merge($data, $this->getAttributeAbstractDefaultFields());
         $data = array_merge($data, $this->getImagesDefaultFields());
 
         return $data;
@@ -777,5 +775,4 @@ class AbstractProductFormDataProvider
 
         return $priceData;
     }
-
 }

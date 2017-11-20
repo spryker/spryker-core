@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class FormFactoryServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -36,5 +35,4 @@ class FormFactoryServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

@@ -13,12 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class SearchPreferencesController extends AbstractController
 {
-
     const PARAM_ID = 'id';
 
     /**
@@ -145,5 +144,4 @@ class SearchPreferencesController extends AbstractController
 
         return $this->redirectResponse('/product-search/search-preferences');
     }
-
 }

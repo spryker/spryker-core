@@ -9,9 +9,11 @@ namespace Spryker\Zed\Country\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
+/**
+ * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
+ */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -36,5 +38,4 @@ class IndexController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 interface SearchHandlerInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $queryCriteria
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
@@ -20,5 +19,4 @@ interface SearchHandlerInterface
      * @return array
      */
     public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
-
 }

@@ -16,13 +16,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacade getFacade()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  */
 class VariantController extends AbstractController
 {
-
     const PARAM_SKU = 'sku';
     const PARAM_ATTRIBUTE_COLLECTION = 'attribute_collection';
     const PARAM_ATTRIBUTE_GROUP = 'attribute_group';
@@ -128,5 +127,4 @@ class VariantController extends AbstractController
             EditController::PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
         ])->build();
     }
-
 }

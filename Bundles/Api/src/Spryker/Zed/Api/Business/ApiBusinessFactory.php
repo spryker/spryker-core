@@ -39,11 +39,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
- * @method \Spryker\Zed\Api\Persistence\ApiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
 class ApiBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Api\Business\Model\DispatcherInterface
      */
@@ -339,5 +338,4 @@ class ApiBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()
         );
     }
-
 }

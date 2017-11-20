@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NavigationTransfer;
 
 interface NavigationDeleterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return void
      */
     public function deleteNavigation(NavigationTransfer $navigationTransfer);
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface;
 
 class ProductSetImageDeleter implements ProductSetImageDeleterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -52,5 +51,4 @@ class ProductSetImageDeleter implements ProductSetImageDeleterInterface
             $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
         }
     }
-
 }

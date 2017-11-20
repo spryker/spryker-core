@@ -11,7 +11,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractStatusChecker implements ProductAbstractStatusCheckerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -44,5 +43,4 @@ class ProductAbstractStatusChecker implements ProductAbstractStatusCheckerInterf
 
         return false;
     }
-
 }

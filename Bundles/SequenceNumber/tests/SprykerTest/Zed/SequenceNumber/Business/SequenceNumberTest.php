@@ -26,7 +26,6 @@ use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
  */
 class SequenceNumberTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade
      */
@@ -156,5 +155,4 @@ class SequenceNumberTest extends Unit
             $max
         );
     }
-
 }

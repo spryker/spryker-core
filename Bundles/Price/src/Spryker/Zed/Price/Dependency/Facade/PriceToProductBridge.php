@@ -9,7 +9,6 @@ namespace Spryker\Zed\Price\Dependency\Facade;
 
 class PriceToProductBridge implements PriceToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -72,5 +71,4 @@ class PriceToProductBridge implements PriceToProductInterface
     {
         return $this->productFacade->getAbstractSkuFromProductConcrete($sku);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 
 class CmsBlockToTouchBridge implements CmsBlockToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -44,5 +43,4 @@ class CmsBlockToTouchBridge implements CmsBlockToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $idCmsBlock);
     }
-
 }

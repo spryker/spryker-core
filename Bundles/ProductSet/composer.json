@@ -11,10 +11,11 @@
     "spryker/search": "^6.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/touch": "^3.0.0",
-    "spryker/url": "^3.0.0"
+    "spryker/url": "^3.2.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
     "spryker/propel": "^3.0.0",
     "spryker/testify": "*"
   },
@@ -24,7 +25,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\ProductSet\\": "tests/SprykerTest/Zed/ProductSet/_support/"
+      "SprykerTest\\Zed\\ProductSet\\Helper\\": "tests/SprykerTest/Zed/ProductSet/_support/Helper/"
     }
   },
   "autoload-dev": {

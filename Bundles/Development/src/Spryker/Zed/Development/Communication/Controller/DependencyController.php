@@ -12,12 +12,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class DependencyController extends AbstractController
 {
-
     const APPLICATION_ZED = 'Zed';
     const QUERY_KEY_BUILD_TREE = 'build-tree';
     const QUERY_KEY_BUNDLE = 'bundle';
@@ -141,7 +140,7 @@ class DependencyController extends AbstractController
         $callback = function () use ($request) {
             $bundleToView = $request->query->get(static::QUERY_KEY_BUNDLE, false);
 
-            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, true)) {
+            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, !$this->hasDependencyTreeCache())) {
                 $this->getFacade()->buildDependencyTree('*', $bundleToView, '*');
             }
 
@@ -162,7 +161,7 @@ class DependencyController extends AbstractController
             $bundleToView = $request->query->getBoolean(static::QUERY_KEY_BUNDLE, false);
             $showEngineBundle = $request->query->getBoolean('show-engine-bundle', true);
 
-            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, true)) {
+            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, !$this->hasDependencyTreeCache())) {
                 $bundle = (is_string($bundleToView)) ? $bundleToView : '*';
                 $this->getFacade()->buildDependencyTree('*', $bundle, '*');
             }
@@ -174,11 +173,15 @@ class DependencyController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
-    public function adjacencyMatrixAction()
+    public function adjacencyMatrixAction(Request $request)
     {
-        $this->getFacade()->buildDependencyTree('*', '*', '*');
+        if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, !$this->hasDependencyTreeCache())) {
+            $this->getFacade()->buildDependencyTree('*', '*', '*');
+        }
 
         $matrixData = $this->getFacade()->getAdjacencyMatrixData();
         $engineBundleList = $this->getFacade()->getEngineBundleList();
@@ -196,7 +199,7 @@ class DependencyController extends AbstractController
         $callback = function () use ($request) {
             $bundleToView = $request->query->getBoolean(static::QUERY_KEY_BUNDLE, false);
 
-            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, true)) {
+            if ($request->query->getBoolean(static::QUERY_KEY_BUILD_TREE, !$this->hasDependencyTreeCache())) {
                 $bundle = (is_string($bundleToView)) ? $bundleToView : '*';
                 $this->getFacade()->buildDependencyTree('*', $bundle, '*');
             }
@@ -207,4 +210,11 @@ class DependencyController extends AbstractController
         return $this->streamedResponse($callback);
     }
 
+    /**
+     * @return bool
+     */
+    protected function hasDependencyTreeCache()
+    {
+        return file_exists($this->getFactory()->getConfig()->getPathToJsonDependencyTree());
+    }
 }

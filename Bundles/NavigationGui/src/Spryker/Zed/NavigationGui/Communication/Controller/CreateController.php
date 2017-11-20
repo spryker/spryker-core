@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -33,7 +32,7 @@ class CreateController extends AbstractController
                 ->getNavigationFacade()
                 ->createNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation #%d successfully created.', $navigationTransfer->getIdNavigation()));
+            $this->addSuccessMessage(sprintf('Navigation element %d was created successfully.', $navigationTransfer->getIdNavigation()));
 
             return $this->redirectResponse('/navigation-gui');
         }
@@ -42,5 +41,4 @@ class CreateController extends AbstractController
             'navigationForm' => $navigationForm->createView(),
         ]);
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
 
 class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_URL = 'FACADE_URL';
     const FACADE_TOUCH = 'FACADE_TOUCH';
@@ -239,5 +238,4 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
 }

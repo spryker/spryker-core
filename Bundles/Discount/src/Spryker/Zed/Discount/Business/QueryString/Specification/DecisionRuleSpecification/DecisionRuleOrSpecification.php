@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class DecisionRuleOrSpecification implements DecisionRuleSpecificationInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
@@ -44,5 +43,4 @@ class DecisionRuleOrSpecification implements DecisionRuleSpecificationInterface
     {
         return $this->left->isSatisfiedBy($quoteTransfer, $itemTransfer) || $this->right->isSatisfiedBy($quoteTransfer, $itemTransfer);
     }
-
 }

@@ -19,7 +19,6 @@ use Twig_SimpleFilter;
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -53,9 +52,9 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $moneyFactory = $this->getFactory();
 
-        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true) use ($moneyFactory) {
+        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true, $isoCode = null) use ($moneyFactory) {
             if (!($money instanceof MoneyTransfer)) {
-                $money = $this->getMoneyTransfer($money);
+                $money = $this->getMoneyTransfer($money, $isoCode);
             }
 
             if ($withSymbol) {
@@ -75,9 +74,9 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $moneyFactory = $this->getFactory();
 
-        $filter = new Twig_SimpleFilter('moneyRaw', function ($money) use ($moneyFactory) {
+        $filter = new Twig_SimpleFilter('moneyRaw', function ($money, $isoCode = null) use ($moneyFactory) {
             if (!($money instanceof MoneyTransfer)) {
-                $money = $this->getMoneyTransfer($money);
+                $money = $this->getMoneyTransfer($money, $isoCode);
             }
 
             return $moneyFactory->createIntegerToDecimalConverter()->convert((int)$money->getAmount());
@@ -88,26 +87,26 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
 
     /**
      * @param int|string|float $money
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    protected function getMoneyTransfer($money)
+    protected function getMoneyTransfer($money, $isoCode = null)
     {
         $moneyFactory = $this->getFactory();
 
         if (is_int($money)) {
-            $money = $moneyFactory->createMoneyBuilder()->fromInteger($money);
+            $money = $moneyFactory->createMoneyBuilder()->fromInteger($money, $isoCode);
         }
 
         if (is_string($money)) {
-            $money = $moneyFactory->createMoneyBuilder()->fromString($money);
+            $money = $moneyFactory->createMoneyBuilder()->fromString($money, $isoCode);
         }
 
         if (is_float($money)) {
-            $money = $moneyFactory->createMoneyBuilder()->fromFloat($money);
+            $money = $moneyFactory->createMoneyBuilder()->fromFloat($money, $isoCode);
         }
 
         return $money;
     }
-
 }

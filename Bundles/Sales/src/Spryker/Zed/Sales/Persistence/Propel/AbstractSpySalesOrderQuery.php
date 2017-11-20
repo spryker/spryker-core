@@ -29,7 +29,6 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
 {
-
     /**
      * @param string $resultFieldName
      *
@@ -227,5 +226,4 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
 
         return $this;
     }
-
 } // SpySalesOrderQuery

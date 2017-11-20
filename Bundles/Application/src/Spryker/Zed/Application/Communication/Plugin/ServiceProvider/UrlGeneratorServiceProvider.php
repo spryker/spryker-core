@@ -12,12 +12,11 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -40,5 +39,4 @@ class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProvi
     public function boot(Application $app)
     {
     }
-
 }

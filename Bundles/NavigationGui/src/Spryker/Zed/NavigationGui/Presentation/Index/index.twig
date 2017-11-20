@@ -1,15 +1,15 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set widget_title = 'Navigation' %}
-{% block section_title %}{{ widget_title }}{% endblock %}
+{% block section_title 'Overview of Navigation Elements' %}
 
 {% block action %}
-    {{ createActionButton('/navigation-gui/create', 'Create Navigation' | trans) }}
+    {{ createActionButton('/navigation-gui/create', 'Create Navigation Element' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Navigations' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of navigation elements' } %}
 
         {% block widget_content %}
             {{ navigationTable | raw }}

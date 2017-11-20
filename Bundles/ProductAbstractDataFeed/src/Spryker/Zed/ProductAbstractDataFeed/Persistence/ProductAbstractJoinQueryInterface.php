@@ -12,7 +12,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 
 interface ProductAbstractJoinQueryInterface
 {
-
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $abstractProductQuery
      * @param \Generated\Shared\Transfer\ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer
@@ -20,5 +19,4 @@ interface ProductAbstractJoinQueryInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function applyJoins(SpyProductAbstractQuery $abstractProductQuery, ProductAbstractDataFeedTransfer $abstractProductDataFeedTransfer);
-
 }

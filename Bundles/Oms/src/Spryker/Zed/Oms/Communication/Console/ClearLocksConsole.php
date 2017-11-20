@@ -11,11 +11,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  */
 class ClearLocksConsole extends Console
 {
-
     const COMMAND_NAME = 'oms:clear-locks';
     const COMMAND_DESCRIPTION = 'Clear OMS state machine expired locks from lock table';
 
@@ -40,5 +39,4 @@ class ClearLocksConsole extends Console
     {
         $this->getFacade()->clearLocks();
     }
-
 }

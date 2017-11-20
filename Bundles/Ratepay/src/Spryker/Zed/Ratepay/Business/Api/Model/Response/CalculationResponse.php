@@ -8,7 +8,6 @@ namespace Spryker\Zed\Ratepay\Business\Api\Model\Response;
 
 class CalculationResponse extends BaseResponse
 {
-
     /**
      * @return float
      */
@@ -96,5 +95,4 @@ class CalculationResponse extends BaseResponse
     {
         return (int)$this->xmlObject->content->{'installment-calculation-result'}->{'payment-firstday'};
     }
-
 }

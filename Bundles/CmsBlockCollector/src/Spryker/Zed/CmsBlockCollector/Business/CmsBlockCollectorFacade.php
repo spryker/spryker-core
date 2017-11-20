@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCollector\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorFacadeInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
@@ -22,7 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CmsBlockCollectorFacade extends AbstractFacade implements CmsBlockCollectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -63,5 +61,4 @@ class CmsBlockCollectorFacade extends AbstractFacade implements CmsBlockCollecto
                 $output
             );
     }
-
 }

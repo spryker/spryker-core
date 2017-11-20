@@ -9,7 +9,6 @@ namespace Spryker\Client\Wishlist\Dependency\Client;
 
 class WishlistToCustomerBridge implements WishlistToCustomerInterface
 {
-
     /**
      * @var \Spryker\Client\Customer\CustomerClientInterface
      */
@@ -30,5 +29,4 @@ class WishlistToCustomerBridge implements WishlistToCustomerInterface
     {
         return $this->customerClient->getCustomer();
     }
-
 }

@@ -16,11 +16,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CustomerApi\CustomerApiConfig getConfig()
- * @method \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface getQueryContainer()
  */
 class CustomerApiBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerApi\Business\Model\CustomerApiInterface
      */
@@ -83,5 +82,4 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CustomerApiDependencyProvider::FACADE_CUSTOMER);
     }
-
 }

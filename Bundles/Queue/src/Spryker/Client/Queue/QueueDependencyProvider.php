@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 
 class QueueDependencyProvider extends AbstractDependencyProvider
 {
-
     const QUEUE_ADAPTERS = 'queue adapters';
 
     /**
@@ -47,5 +46,4 @@ class QueueDependencyProvider extends AbstractDependencyProvider
     protected function createQueueAdapters(Container $container)
     {
     }
-
 }

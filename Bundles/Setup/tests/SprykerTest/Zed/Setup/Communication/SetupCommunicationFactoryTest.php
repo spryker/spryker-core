@@ -21,7 +21,6 @@ use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
  */
 class SetupCommunicationFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -31,5 +30,4 @@ class SetupCommunicationFactoryTest extends Unit
 
         $this->assertInternalType('array', $communicationFactory->getSetupInstallCommandNames());
     }
-
 }

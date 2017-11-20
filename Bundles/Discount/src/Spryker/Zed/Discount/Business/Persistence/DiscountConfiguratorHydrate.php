@@ -12,22 +12,36 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[]
      */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
+    protected $discountConfigurationExpanderPlugins = [];
+
+    /**
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
+     */
+    protected $discountEntityMapper;
+
+    /**
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
+     */
+    public function __construct(
+        DiscountQueryContainerInterface $discountQueryContainer,
+        DiscountEntityMapperInterface $discountEntityMapper
+    ) {
         $this->discountQueryContainer = $discountQueryContainer;
+        $this->discountEntityMapper = $discountEntityMapper;
     }
 
     /**
@@ -53,6 +67,8 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountConfigurator->setDiscountCondition($discountConditionTransfer);
 
         $this->hydrateDiscountVoucher($idDiscount, $discountEntity, $discountConfigurator);
+
+        $discountConfigurator = $this->executeDiscountConfigurationExpanderPlugins($discountConfigurator);
 
         return $discountConfigurator;
     }
@@ -82,6 +98,10 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     {
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
         $discountCalculatorTransfer->fromArray($discountEntity->toArray(), true);
+        $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
+        $discountCalculatorTransfer->setMoneyValueCollection(
+            $this->discountEntityMapper->getMoneyValueCollectionForEntity($discountEntity)
+        );
 
         return $discountCalculatorTransfer;
     }
@@ -127,4 +147,28 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         return new DiscountConfiguratorTransfer();
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    protected function executeDiscountConfigurationExpanderPlugins(
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer
+    ) {
+        foreach ($this->discountConfigurationExpanderPlugins as $discountConfigurationExpanderPlugin) {
+            $discountConfiguratorTransfer = $discountConfigurationExpanderPlugin->expand($discountConfiguratorTransfer);
+        }
+
+        return $discountConfiguratorTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[] $discountConfigurationExpanderPlugins
+     *
+     * @return void
+     */
+    public function setDiscountConfigurationExpanderPlugins(array $discountConfigurationExpanderPlugins)
+    {
+        $this->discountConfigurationExpanderPlugins = $discountConfigurationExpanderPlugins;
+    }
 }

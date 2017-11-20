@@ -25,7 +25,6 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
  */
 class IntlMoneyFormatterWithoutCurrencyTest extends AbstractIntlMoneyFormatterTest
 {
-
     const AMOUNT = '1000';
     const CURRENCY = 'EUR';
     const LOCALE = 'de_DE';
@@ -59,5 +58,4 @@ class IntlMoneyFormatterWithoutCurrencyTest extends AbstractIntlMoneyFormatterTe
         $formatted = $intlMoneyFormatter->format($moneyTransfer);
         $this->assertSame('10,00', $formatted);
     }
-
 }

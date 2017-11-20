@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NodeController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
     const PARAM_ID_NAVIGATION_NODE = 'id-navigation-node';
     const PARAM_ID_SELECTED_TREE_NODE = 'id-selected-tree-node';
@@ -57,8 +56,8 @@ class NodeController extends AbstractController
                 ->createNavigationNode($navigationNodeTransfer);
 
             $this->addSuccessMessage(sprintf(
-                'Navigation node #%d successfully created.',
-                $navigationNodeTransfer->getIdNavigationNode()
+                'Navigation node "%s" was created successfully.',
+                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
             ));
 
             $queryParams = [
@@ -113,8 +112,8 @@ class NodeController extends AbstractController
                 ->updateNavigationNode($navigationNodeTransfer);
 
             $this->addSuccessMessage(sprintf(
-                'Navigation node #%d successfully updated.',
-                $navigationNodeTransfer->getIdNavigationNode()
+                'Navigation node "%s" was updated successfully.',
+                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
             ));
 
             $queryParams = [
@@ -146,14 +145,17 @@ class NodeController extends AbstractController
 
         $navigationNodeTransfer = new NavigationNodeTransfer();
         $navigationNodeTransfer->setIdNavigationNode($idNavigationNode);
+        $navigationNodeTransfer = $this->getFactory()
+            ->getNavigationFacade()
+            ->findNavigationNode($navigationNodeTransfer);
 
         $this->getFactory()
             ->getNavigationFacade()
             ->deleteNavigationNode($navigationNodeTransfer);
 
         $this->addSuccessMessage(sprintf(
-            'Navigation node #%d successfully deleted.',
-            $idNavigationNode
+            'Navigation node "%s" was deleted successfully.',
+            $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
         ));
 
         $queryParams = [
@@ -164,5 +166,4 @@ class NodeController extends AbstractController
 
         return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
     }
-
 }

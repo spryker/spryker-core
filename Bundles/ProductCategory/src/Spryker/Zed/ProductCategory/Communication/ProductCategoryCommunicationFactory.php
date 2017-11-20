@@ -15,12 +15,11 @@ use Spryker\Zed\ProductCategory\Communication\Table\ProductTable;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
  */
 class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -87,5 +86,4 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create($formType, $data, []);
     }
-
 }

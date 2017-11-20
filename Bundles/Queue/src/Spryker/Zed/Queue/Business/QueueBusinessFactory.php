@@ -17,11 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Queue\QueueConfig getConfig()
- * @method \Spryker\Zed\Queue\Persistence\QueueQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface getQueryContainer()
  */
 class QueueBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @var string
      */
@@ -50,6 +49,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
             $this->createProcessManager(),
             $this->getConfig(),
             $this->createWorkerProgressbar($output),
+            $this->getQueueClient(),
             $this->getQueueNames()
         );
     }
@@ -110,5 +110,4 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS);
     }
-
 }

@@ -21,7 +21,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ApiRouter implements RouterInterface
 {
-
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
@@ -128,5 +127,4 @@ class ApiRouter implements RouterInterface
             ));
         }
     }
-
 }

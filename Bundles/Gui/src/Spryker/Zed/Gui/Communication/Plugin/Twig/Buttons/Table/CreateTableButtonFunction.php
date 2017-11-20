@@ -9,7 +9,6 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table;
 
 class CreateTableButtonFunction extends AbstractTableFunction
 {
-
     /**
      * @return string
      */
@@ -33,5 +32,4 @@ class CreateTableButtonFunction extends AbstractTableFunction
     {
         return 'createTableButton';
     }
-
 }

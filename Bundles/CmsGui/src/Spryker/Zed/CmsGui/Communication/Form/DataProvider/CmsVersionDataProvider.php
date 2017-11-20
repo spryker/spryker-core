@@ -15,7 +15,6 @@ use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
 class CmsVersionDataProvider
 {
-
     const DATA_CLASS = 'data_class';
 
     /**
@@ -115,5 +114,4 @@ class CmsVersionDataProvider
 
         return $optionLabel;
     }
-
 }

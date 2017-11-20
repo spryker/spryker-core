@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class CategoryNameExists extends Constraint
 {
-
     /**
      * @var string
      */
@@ -78,5 +77,4 @@ class CategoryNameExists extends Constraint
     {
         return $this->idCategory;
     }
-
 }

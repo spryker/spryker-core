@@ -14,12 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
- * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
- * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
  */
 class PasswordController extends AbstractController
 {
-
     const PARAM_TOKEN = 'token';
     const RESET_REDIRECT_URL = '/auth/login';
 
@@ -93,5 +92,4 @@ class PasswordController extends AbstractController
             'form' => $resetPasswordForm->createView(),
         ]);
     }
-
 }

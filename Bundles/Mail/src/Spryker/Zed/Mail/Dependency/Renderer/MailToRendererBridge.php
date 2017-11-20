@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class MailToRendererBridge implements MailToRendererInterface
 {
-
     /**
      * @var \Twig_Environment
      */
@@ -56,5 +55,4 @@ class MailToRendererBridge implements MailToRendererInterface
 
         return $translator;
     }
-
 }

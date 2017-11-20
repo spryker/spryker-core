@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductApiToProductInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -34,5 +33,4 @@ interface ProductApiToProductInterface
      * @return int
      */
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
-
 }

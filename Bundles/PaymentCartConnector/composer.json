@@ -1,0 +1,29 @@
+{
+  "name": "spryker/payment-cart-connector",
+  "description": "PaymentCartConnector module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/cart": "^3.0.0"
+  },
+  "suggest": {
+    "spryker/cart": "If you want to use Cart plugins."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

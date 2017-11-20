@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PayolutionQueryContainer extends AbstractQueryContainer implements PayolutionQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -164,5 +163,4 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
 
         return $query->filterByFkPaymentPayolution($idPayment);
     }
-
 }

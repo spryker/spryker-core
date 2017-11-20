@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductBundleCheckoutAvailabilityCheckInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -18,5 +17,4 @@ interface ProductBundleCheckoutAvailabilityCheckInterface
      * @return void
      */
     public function checkCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
 }

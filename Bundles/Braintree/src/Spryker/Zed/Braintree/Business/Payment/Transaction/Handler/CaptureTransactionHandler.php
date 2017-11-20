@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\TransactionMetaTransfer;
 
 class CaptureTransactionHandler extends AbstractTransactionHandler
 {
-
     /**
      * @param \Generated\Shared\Transfer\TransactionMetaTransfer $transactionMetaTransfer
      *
@@ -23,5 +22,4 @@ class CaptureTransactionHandler extends AbstractTransactionHandler
 
         return $this->transaction->executeTransaction($transactionMetaTransfer);
     }
-
 }

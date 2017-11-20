@@ -14,11 +14,10 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterfa
 
 /**
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
- * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacade getFacade()
+ * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  */
 class DummyPaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -31,5 +30,4 @@ class DummyPaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCh
     ) {
         return $checkoutResponseTransfer;
     }
-
 }

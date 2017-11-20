@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class CmsBlockConfig extends AbstractSharedConfig
 {
-
     /**
      * Specification
      * - Defines the collector resource name
@@ -29,5 +28,4 @@ class CmsBlockConfig extends AbstractSharedConfig
             1
         ];
     }
-
 }

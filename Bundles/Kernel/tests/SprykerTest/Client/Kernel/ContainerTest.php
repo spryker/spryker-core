@@ -21,7 +21,6 @@ use Spryker\Client\Kernel\Locator;
  */
 class ContainerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -31,5 +30,4 @@ class ContainerTest extends Unit
 
         $this->assertInstanceOf(Locator::class, $container->getLocator());
     }
-
 }

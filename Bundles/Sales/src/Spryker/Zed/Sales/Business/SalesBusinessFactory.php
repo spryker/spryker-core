@@ -22,11 +22,10 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
- * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReaderInterface
      */
@@ -34,7 +33,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerOrderReader(
             $this->getQueryContainer(),
-            $this->createOrderHydrator()
+            $this->createOrderHydrator(),
+            $this->getOmsFacade()
         );
     }
 
@@ -181,5 +181,4 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(SalesDependencyProvider::HYDRATE_ORDER_PLUGINS);
     }
-
 }

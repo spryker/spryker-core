@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\UrlTransfer;
  */
 interface NavigationFacadeInterface
 {
-
     /**
      * Specification:
      * - Persists new navigation entity to database.
@@ -178,5 +177,4 @@ interface NavigationFacadeInterface
      * @return void
      */
     public function detachUrlFromNavigationNodes(UrlTransfer $urlTransfer);
-
 }

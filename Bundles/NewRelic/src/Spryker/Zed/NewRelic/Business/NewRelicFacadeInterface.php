@@ -12,7 +12,6 @@ namespace Spryker\Zed\NewRelic\Business;
  */
 interface NewRelicFacadeInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface NewRelicFacadeInterface
      * @return \Spryker\Zed\NewRelic\Business\Model\RecordDeploymentInterface
      */
     public function recordDeployment(array $arguments = []);
-
 }

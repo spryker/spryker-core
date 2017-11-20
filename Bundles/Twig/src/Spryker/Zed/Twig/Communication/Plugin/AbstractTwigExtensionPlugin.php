@@ -13,11 +13,10 @@ use Twig_ExtensionInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
- * @method \Spryker\Zed\Twig\Business\TwigFacade getFacade()
+ * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
 abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twig_ExtensionInterface
 {
-
     /**
      * Initializes the runtime environment.
      *
@@ -100,5 +99,4 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     {
         return [];
     }
-
 }

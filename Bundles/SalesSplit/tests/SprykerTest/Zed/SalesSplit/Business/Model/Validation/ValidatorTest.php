@@ -28,7 +28,6 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
  */
 class ValidatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -138,5 +137,4 @@ class ValidatorTest extends Unit
 
         return $spySalesOrderItem;
     }
-
 }

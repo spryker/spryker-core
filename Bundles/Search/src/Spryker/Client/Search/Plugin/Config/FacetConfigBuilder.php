@@ -13,7 +13,6 @@ use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
 
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
@@ -100,5 +99,4 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
             ->requireParameterName()
             ->requireType();
     }
-
 }

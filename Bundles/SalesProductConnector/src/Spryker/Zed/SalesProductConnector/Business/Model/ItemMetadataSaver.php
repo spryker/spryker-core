@@ -17,7 +17,6 @@ use Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryCont
 
 class ItemMetadataSaver implements ItemMetadataSaverInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -167,5 +166,4 @@ class ItemMetadataSaver implements ItemMetadataSaverInterface
 
         return $result;
     }
-
 }

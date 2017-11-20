@@ -24,7 +24,6 @@ use Spryker\Zed\Ratepay\RatepayDependencyProvider;
  */
 class MapperFactory extends AbstractBusinessFactory
 {
-
     /**
      * @var \Generated\Shared\Transfer\RatepayRequestTransfer
      */
@@ -287,5 +286,4 @@ class MapperFactory extends AbstractBusinessFactory
             $this->getMoneyFacade()
         );
     }
-
 }

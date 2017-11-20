@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInterface
 {
-
     /**
      * Trigger when first time adding item to state machine process
      *
@@ -332,5 +331,4 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     {
         $this->getFactory()->createItemLock()->clearLocks();
     }
-
 }

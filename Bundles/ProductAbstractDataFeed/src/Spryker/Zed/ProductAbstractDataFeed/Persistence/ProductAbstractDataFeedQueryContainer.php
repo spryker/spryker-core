@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer implements ProductAbstractDataFeedQueryContainerInterface
 {
-
     const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
     const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
@@ -87,5 +86,4 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
 
         return $abstractProductQuery;
     }
-
 }

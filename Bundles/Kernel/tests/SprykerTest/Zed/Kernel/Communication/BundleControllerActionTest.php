@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BundleControllerActionTest extends Unit
 {
-
     const BUNDLE = 'foo';
     const CONTROLLER = 'bar';
     const ACTION = 'baz';
@@ -85,5 +84,4 @@ class BundleControllerActionTest extends Unit
 
         return $request;
     }
-
 }

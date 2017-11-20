@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class WishlistToCartBridge implements WishlistToCartInterface
 {
-
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
      */
@@ -55,5 +54,4 @@ class WishlistToCartBridge implements WishlistToCartInterface
     {
         $this->cartClient->storeQuote($quoteTransfer);
     }
-
 }

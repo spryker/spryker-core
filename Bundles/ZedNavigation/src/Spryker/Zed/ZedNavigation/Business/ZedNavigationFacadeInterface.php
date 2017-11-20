@@ -12,7 +12,6 @@ namespace Spryker\Zed\ZedNavigation\Business;
  */
 interface ZedNavigationFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns an array with all navigation entries.
@@ -36,5 +35,4 @@ interface ZedNavigationFacadeInterface
      * @return void
      */
     public function writeNavigationCache();
-
 }

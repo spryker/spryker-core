@@ -12,7 +12,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductAbstractStorage implements ProductAbstractStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
      */
@@ -52,5 +51,4 @@ class ProductAbstractStorage implements ProductAbstractStorageInterface
 
         return $product;
     }
-
 }

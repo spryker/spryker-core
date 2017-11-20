@@ -17,11 +17,10 @@ use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\CmsCollector\Business\CmsCollectorFacade getFacade()
+ * @method \Spryker\Zed\CmsCollector\Business\CmsCollectorFacadeInterface getFacade()
  */
 class CmsVersionPageCollectorSearchPlugin extends AbstractCollectorPlugin
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -45,5 +44,4 @@ class CmsVersionPageCollectorSearchPlugin extends AbstractCollectorPlugin
         $this->getFacade()
             ->runSearchCmsVersionPageCollector($baseQuery, $localeTransfer, $result, $dataReader, $dataWriter, $touchUpdater, $output);
     }
-
 }

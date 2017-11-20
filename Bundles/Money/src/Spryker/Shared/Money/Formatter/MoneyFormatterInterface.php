@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface MoneyFormatterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
      * @return string
      */
     public function format(MoneyTransfer $moneyTransfer);
-
 }

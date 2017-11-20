@@ -22,12 +22,11 @@ use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
  */
 class CmsCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Cms\Communication\Table\CmsPageTable
      */
@@ -191,5 +190,4 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
-
 }

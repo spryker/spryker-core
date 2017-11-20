@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 
 class SalesToUserBridge implements SalesToUserInterface
 {
-
     /**
      * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
@@ -30,5 +29,4 @@ class SalesToUserBridge implements SalesToUserInterface
     {
         return $this->userFacade->getCurrentUser();
     }
-
 }

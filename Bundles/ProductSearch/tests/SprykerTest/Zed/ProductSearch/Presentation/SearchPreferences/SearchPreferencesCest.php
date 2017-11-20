@@ -22,7 +22,6 @@ use SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester;
  */
 class SearchPreferencesCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
@@ -68,5 +67,4 @@ class SearchPreferencesCest
         // TODO: don't need to delete, after we have clean test state after each test case
         $i->deactivateAttributeToSearch($attributeKey);
     }
-
 }

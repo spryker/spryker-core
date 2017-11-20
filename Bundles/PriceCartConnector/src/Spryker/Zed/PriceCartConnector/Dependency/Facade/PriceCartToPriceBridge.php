@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
 class PriceCartToPriceBridge implements PriceCartToPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
@@ -44,5 +43,4 @@ class PriceCartToPriceBridge implements PriceCartToPriceInterface
     {
         return $this->priceFacade->getPriceBySku($sku, $priceType);
     }
-
 }

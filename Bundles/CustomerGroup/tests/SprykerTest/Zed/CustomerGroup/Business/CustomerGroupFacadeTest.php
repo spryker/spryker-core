@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CustomerGroup\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerGroupToCustomerAssignmentTransfer;
 use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
@@ -29,7 +30,6 @@ use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
  */
 class CustomerGroupFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -168,9 +168,11 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
         $customerEntityTwo = $this->createCustomer('two@second.de', 'Second', 'Two', 'two');
-        $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-        $customerGroupToCustomerTransfer->setFkCustomer($customerEntityTwo->getIdCustomer());
-        $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
+        $customerGroupTransfer->setCustomerAssignment(
+            (new CustomerGroupToCustomerAssignmentTransfer())
+                ->addIdCustomerToAssign($customerEntityTwo->getIdCustomer())
+                ->addIdCustomerToDeAssign($customerEntityOne->getIdCustomer())
+        );
 
         $customerGroupTransfer->setName('Foo');
         $customerGroupTransfer->setDescription('Descr');
@@ -224,12 +226,12 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupToCustomerEntity->setFkCustomer($customerEntity->getIdCustomer());
         $customerGroupToCustomerEntity->save();
 
-        $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-        $customerGroupToCustomerTransfer->setFkCustomer($customerEntity->getIdCustomer());
-
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
-        $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
+        $customerGroupTransfer->setCustomerAssignment(
+            (new CustomerGroupToCustomerAssignmentTransfer())
+                ->addIdCustomerToDeAssign($customerEntity->getIdCustomer())
+        );
 
         $customerGroupFacade->removeCustomersFromGroup($customerGroupTransfer);
 
@@ -262,5 +264,4 @@ class CustomerGroupFacadeTest extends Unit
 
         return $customerEntity;
     }
-
 }

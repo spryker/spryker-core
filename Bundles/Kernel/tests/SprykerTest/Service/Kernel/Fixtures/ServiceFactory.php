@@ -26,5 +26,4 @@ class ServiceFactory extends AbstractServiceFactory
     ) {
         $container[AbstractServiceFactoryTest::CONTAINER_KEY] = AbstractServiceFactoryTest::CONTAINER_VALUE;
     }
-
 }

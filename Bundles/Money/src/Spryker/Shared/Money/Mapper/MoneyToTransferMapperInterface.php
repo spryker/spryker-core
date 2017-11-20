@@ -11,12 +11,10 @@ use Money\Money;
 
 interface MoneyToTransferMapperInterface
 {
-
     /**
      * @param \Money\Money $money
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function convert(Money $money);
-
 }

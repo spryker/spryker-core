@@ -11,11 +11,10 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacade getFacade()
+ * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {
-
     const SYSTEM_UP = 'UP';
     const SYSTEM_DOWN = 'DOWN';
     const SYSTEM_STATUS = 'status';
@@ -38,5 +37,4 @@ class IndexController extends AbstractController
             Response::HTTP_SERVICE_UNAVAILABLE
         );
     }
-
 }

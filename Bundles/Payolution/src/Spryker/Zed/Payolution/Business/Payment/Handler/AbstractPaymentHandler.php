@@ -15,7 +15,6 @@ use Spryker\Zed\Payolution\PayolutionConfig;
 
 abstract class AbstractPaymentHandler
 {
-
     /**
      * @var \Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface
      */
@@ -111,5 +110,4 @@ abstract class AbstractPaymentHandler
      * @return \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer|\Generated\Shared\Transfer\PayolutionCalculationResponseTransfer
      */
     abstract protected function sendRequest($requestData);
-
 }

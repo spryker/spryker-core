@@ -13,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserUpdateForm extends UserForm
 {
-
     const OPTION_STATUS_CHOICES = 'status_choices';
 
     /**
@@ -55,5 +54,4 @@ class UserUpdateForm extends UserForm
             'choices' => $options[self::OPTION_STATUS_CHOICES],
         ]);
     }
-
 }

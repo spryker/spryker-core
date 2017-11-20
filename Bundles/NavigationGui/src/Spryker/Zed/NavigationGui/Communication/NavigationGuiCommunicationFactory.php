@@ -21,11 +21,10 @@ use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
- * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\NavigationGui\Communication\Table\NavigationTable
      */
@@ -138,5 +137,4 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(NavigationGuiDependencyProvider::FACADE_URL);
     }
-
 }

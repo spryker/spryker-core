@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Persistence;
 
 interface ProductLabelGuiQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -41,5 +40,4 @@ interface ProductLabelGuiQueryContainerInterface
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductAbstractRelations();
-
 }

@@ -14,12 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
- * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
- * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  */
 class SetController extends AbstractController
 {
-
     const PARAM_URL_ID_TAX_SET = 'id-tax-set';
 
     /**
@@ -38,7 +37,7 @@ class SetController extends AbstractController
 
             if ($taxSetForm->isValid()) {
                 $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
-                $this->addSuccessMessage('Tax set successfully created.');
+                $this->addSuccessMessage(sprintf('Tax set %d was created successfully.', $taxSetTransfer->getIdTaxSet()));
                 $redirectUrl = Url::generate('/tax/set/edit', [
                     static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet(),
                 ])->build();
@@ -76,7 +75,7 @@ class SetController extends AbstractController
                 $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
 
                 if ($rowsAffected > 0) {
-                    $this->addSuccessMessage('Tax set successfully updated.');
+                    $this->addSuccessMessage(sprintf('Tax set %d was updated successfully.', $idTaxSet));
                 }
             } else {
                 $this->addErrorMessage('Tax set is not updated. Please fill-in all required fields.');
@@ -115,8 +114,9 @@ class SetController extends AbstractController
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
         try {
+            $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
             $this->getFacade()->deleteTaxSet($idTaxSet);
-            $this->addSuccessMessage('The tax set has been deleted.');
+            $this->addSuccessMessage(sprintf('Tax set %d was deleted successfully.', $idTaxSet));
         } catch (PropelException $e) {
             $this->addErrorMessage('Could not delete tax set. Is it assigned to product or shipping method?');
         }
@@ -147,5 +147,4 @@ class SetController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

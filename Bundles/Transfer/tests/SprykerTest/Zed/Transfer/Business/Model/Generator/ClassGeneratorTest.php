@@ -25,7 +25,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class ClassGeneratorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -75,5 +74,4 @@ class ClassGeneratorTest extends Unit
 
         $this->assertTrue(is_dir($this->getFixtureDirectory()));
     }
-
 }

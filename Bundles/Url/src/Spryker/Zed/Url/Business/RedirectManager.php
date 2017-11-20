@@ -20,7 +20,6 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
  */
 class RedirectManager implements RedirectManagerInterface
 {
-
     const ITEM_TYPE_REDIRECT = 'redirect';
 
     /**
@@ -291,5 +290,4 @@ class RedirectManager implements RedirectManagerInterface
 
         return $query->count() > 0;
     }
-
 }

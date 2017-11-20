@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductLabelGuiFacade extends AbstractFacade implements ProductLabelGuiFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -32,5 +31,4 @@ class ProductLabelGuiFacade extends AbstractFacade implements ProductLabelGuiFac
             ->createPositionUpdater()
             ->update($productLabelTransferCollection, $positionMap);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class TranslationSaver implements TranslationSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
      */
@@ -44,7 +43,6 @@ class TranslationSaver implements TranslationSaverInterface
     public function addValueTranslations(ProductOptionGroupTransfer $productOptionGroupTransfer)
     {
         foreach ($productOptionGroupTransfer->getProductOptionValueTranslations() as $productOptionTranslationTransfer) {
-
             $value = $productOptionTranslationTransfer->getName();
             $key = $productOptionTranslationTransfer->getKey();
 
@@ -72,7 +70,6 @@ class TranslationSaver implements TranslationSaverInterface
         }
 
         foreach ($productOptionGroupTransfer->getGroupNameTranslations() as $groupNameTranslationTransfer) {
-
             $value = $groupNameTranslationTransfer->getName();
             $key = $productOptionGroupTransfer->getName();
 
@@ -114,5 +111,4 @@ class TranslationSaver implements TranslationSaverInterface
             $this->glossaryFacade->updateAndTouchTranslation($key, $localeTransfer, $value);
         }
     }
-
 }

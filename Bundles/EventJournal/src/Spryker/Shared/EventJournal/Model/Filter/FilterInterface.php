@@ -14,7 +14,6 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
  */
 interface FilterInterface
 {
-
     /**
      * @param \Spryker\Shared\EventJournal\Model\EventInterface $event
      *
@@ -26,5 +25,4 @@ interface FilterInterface
      * @return string
      */
     public function getType();
-
 }

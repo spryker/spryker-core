@@ -23,7 +23,6 @@ use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
  */
 class ClassDefinitionTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -249,7 +248,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, '\ArrayObject', 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', [], false);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }
@@ -271,7 +270,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1', $bundles, false);
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', $bundles, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
@@ -300,7 +299,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, '\\ArrayObject', 'PROPERTIES', [], false);
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTIES', [], false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
@@ -411,5 +410,4 @@ class ClassDefinitionTest extends Unit
         $classDefinition = new ClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
     }
-
 }

@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  */
 class CheckTimeoutConsole extends Console
 {
-
     const COMMAND_NAME = 'oms:check-timeout';
     const COMMAND_DESCRIPTION = 'Check timeouts';
 
@@ -41,5 +40,4 @@ class CheckTimeoutConsole extends Console
     {
         $this->getFacade()->checkTimeouts();
     }
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CmsPageUrlConstraintValidator extends ConstraintValidator
 {
-
     /**
      * @param mixed $value
      * @param \Symfony\Component\Validator\Constraint $constraint
@@ -53,5 +52,4 @@ class CmsPageUrlConstraintValidator extends ConstraintValidator
                 ->addViolation();
         }
     }
-
 }

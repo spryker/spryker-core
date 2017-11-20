@@ -23,7 +23,6 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
  */
 class DataImporterCollectionTest extends Unit
 {
-
     const DATA_IMPORTER_TYPE_A = 'data-importer-type-a';
     const DATA_IMPORTER_TYPE_B = 'data-importer-type-b';
 
@@ -54,5 +53,4 @@ class DataImporterCollectionTest extends Unit
         $dataImporterReportTransfer = $dataImporterCollection->import();
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
     }
-
 }

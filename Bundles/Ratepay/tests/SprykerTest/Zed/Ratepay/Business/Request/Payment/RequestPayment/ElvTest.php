@@ -24,7 +24,6 @@ use SprykerTest\Zed\Ratepay\Business\Request\Payment\ElvAbstractTest;
  */
 class ElvTest extends ElvAbstractTest
 {
-
     /**
      * @return void
      */
@@ -71,5 +70,4 @@ class ElvTest extends ElvAbstractTest
         $this->assertEquals(RatepayConstants::ELV, $this->responseTransfer->getPaymentMethod());
         $this->assertEquals($this->expectedResponseTransfer->getPaymentMethod(), $this->responseTransfer->getPaymentMethod());
     }
-
 }

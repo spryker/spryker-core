@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsCollector\Business;
 
 use Spryker\Zed\CmsCollector\Business\Collector\Search\CmsVersionPageCollector as CmsVersionSearchPageCollector;
 use Spryker\Zed\CmsCollector\Business\Collector\Storage\CmsVersionPageCollector as CmsVersionStoragePageCollector;
-use Spryker\Zed\CmsCollector\Business\Extractor\DataExtractor;
 use Spryker\Zed\CmsCollector\Business\Map\CmsDataPageMapBuilder;
 use Spryker\Zed\CmsCollector\CmsCollectorDependencyProvider;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery as CmsVersionPageCollectorSearchQuery;
@@ -21,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CmsCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsCollector\Business\Collector\Storage\CmsVersionPageCollector
      */
@@ -29,8 +27,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $cmsVersionPageCollector = new CmsVersionStoragePageCollector(
             $this->getUtilDataReaderService(),
-            $this->createDataExtractor(),
-            $this->getCollectorDataExpanderPlugins()
+            $this->getCmsFacade()
         );
 
         $cmsVersionPageCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -61,19 +58,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsDataPageMapBuilder()
     {
-        return new CmsDataPageMapBuilder(
-            $this->createDataExtractor()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsCollector\Business\Extractor\DataExtractor
-     */
-    public function createDataExtractor()
-    {
-        return new DataExtractor(
-            $this->getUtilEncodingService()
-        );
+        return new CmsDataPageMapBuilder($this->getCmsFacade());
     }
 
     /**
@@ -109,22 +94,6 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingInterface
-     */
-    public function getUtilEncodingService()
-    {
-        return $this->getProvidedDependency(CmsCollectorDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
-     */
-    protected function getCollectorDataExpanderPlugins()
-    {
-        return $this->getProvidedDependency(CmsCollectorDependencyProvider::COLLECTOR_DATA_EXPANDER_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector
      */
     protected function createCmsVersionPageCollectorStorageQuery()
@@ -140,4 +109,11 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
         return new CmsVersionPageCollectorSearchQuery();
     }
 
+    /**
+     * @return \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface
+     */
+    protected function getCmsFacade()
+    {
+        return $this->getProvidedDependency(CmsCollectorDependencyProvider::FACADE_CMS);
+    }
 }

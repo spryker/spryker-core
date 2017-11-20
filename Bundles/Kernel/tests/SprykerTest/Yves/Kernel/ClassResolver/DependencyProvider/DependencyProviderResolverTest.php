@@ -23,21 +23,20 @@ use SprykerTest\Yves\Kernel\ClassResolver\AbstractResolverTest;
  */
 class DependencyProviderResolverTest extends AbstractResolverTest
 {
+    /**
+     * @var string
+     */
+    protected $projectClass = 'ProjectNamespace\\Yves\\Kernel\\ClassResolver\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Yves\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+    protected $storeClass = 'ProjectNamespace\\Yves\\KernelDE\\ClassResolver\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Yves\\KernelDE\\ClassResolver\\Fixtures\\KernelDependencyProvider';
-
-    /**
-     * @var string
-     */
-    protected $classPattern = 'Unit\\%namespace%\\Yves\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%DependencyProvider';
+    protected $classPattern = '%namespace%\\Yves\\%bundle%%store%\\ClassResolver\\%bundle%DependencyProvider';
 
     /**
      * @var string
@@ -55,5 +54,4 @@ class DependencyProviderResolverTest extends AbstractResolverTest
 
         return $resolverMock;
     }
-
 }

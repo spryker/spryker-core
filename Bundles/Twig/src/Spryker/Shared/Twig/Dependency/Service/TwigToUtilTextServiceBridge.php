@@ -9,7 +9,6 @@ namespace Spryker\Shared\Twig\Dependency\Service;
 
 class TwigToUtilTextServiceBridge implements TwigToUtilTextServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilText\UtilTextServiceInterface
      */
@@ -42,5 +41,4 @@ class TwigToUtilTextServiceBridge implements TwigToUtilTextServiceInterface
     {
         return $this->utilTextService->separatorToCamelCase($string);
     }
-
 }

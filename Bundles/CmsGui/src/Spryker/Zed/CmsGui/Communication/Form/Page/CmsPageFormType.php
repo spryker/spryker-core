@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CmsPageFormType extends AbstractType
 {
-
     const FIELD_SEARCHABLE = 'isSearchable';
     const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
     const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
@@ -305,5 +304,4 @@ class CmsPageFormType extends AbstractType
     {
         return 'cms_page';
     }
-
 }

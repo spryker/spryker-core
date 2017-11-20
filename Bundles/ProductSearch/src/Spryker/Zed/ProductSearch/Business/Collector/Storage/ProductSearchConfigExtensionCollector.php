@@ -19,7 +19,6 @@ use Spryker\Zed\ProductSearch\ProductSearchConfig;
 
 class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Business\Attribute\AttributeReaderInterface
      */
@@ -128,5 +127,4 @@ class ProductSearchConfigExtensionCollector extends AbstractStoragePropelCollect
             ));
         }
     }
-
 }

@@ -20,11 +20,10 @@ use Spryker\Zed\Tax\TaxDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
- * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Tax\Business\Model\TaxReaderInterface
      */
@@ -109,5 +108,4 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     {
         return new TaxAmountCalculator($this->createAccruedTaxCalculator());
     }
-
 }

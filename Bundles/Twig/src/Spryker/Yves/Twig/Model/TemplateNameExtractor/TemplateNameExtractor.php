@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor as SharedTem
 
 class TemplateNameExtractor extends SharedTemplateNameExtractor
 {
-
     /**
      * @param string $templatePath
      *
@@ -33,5 +32,4 @@ class TemplateNameExtractor extends SharedTemplateNameExtractor
 
         return $templatePath;
     }
-
 }

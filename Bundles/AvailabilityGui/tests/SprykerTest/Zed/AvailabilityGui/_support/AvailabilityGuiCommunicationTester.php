@@ -20,7 +20,6 @@ use Codeception\Actor;
  */
 class AvailabilityGuiCommunicationTester extends Actor
 {
-
     use _generated\AvailabilityGuiCommunicationTesterActions;
 
     /**
@@ -37,5 +36,4 @@ class AvailabilityGuiCommunicationTester extends Actor
 
         $this->assertGreaterThan(0, $itemListItems);
     }
-
 }

@@ -11,7 +11,6 @@ use SessionHandlerInterface;
 
 interface SessionStorageHandlerPoolInterface
 {
-
     /**
      * @param \SessionHandlerInterface $sessionHandler
      * @param string $sessionHandlerName
@@ -26,5 +25,4 @@ interface SessionStorageHandlerPoolInterface
      * @return \SessionHandlerInterface
      */
     public function getHandler($sessionHandlerName);
-
 }

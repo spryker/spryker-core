@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductAbstractDataFeedQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface ProductAbstractDataFeedQueryContainerInterface extends QueryContainerI
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAbstractProductDataFeed(ProductAbstractDataFeedTransfer $productDataFeedTransfer = null);
-
 }

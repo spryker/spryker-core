@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class EngineBundleFilter implements DependencyFilterInterface
 {
-
     /**
      * @var array
      */
@@ -35,5 +34,4 @@ class EngineBundleFilter implements DependencyFilterInterface
     {
         return in_array($dependency[DependencyTree::META_BUNDLE], $this->filterBundles);
     }
-
 }

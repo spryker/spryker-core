@@ -28,7 +28,6 @@ use SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub;
  */
 class AbstractTouchUpdaterTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Collector\CollectorConfig
      */
@@ -63,10 +62,20 @@ class AbstractTouchUpdaterTest extends Unit
         $connection = $this->createConnectionMock();
 
         $touchUpdater = $this->createTouchUpdater();
+        $databaseEngine = $this->collectorConfig->getCurrentEngineName();
+        $expectedQuery = '';
 
-        $expectedQuery =
-            "UPDATE touchKeyTableName_value SET key = 'data_key1' WHERE touchKeyIdColumnName_value = 'new value'; \n"
-            . "UPDATE touchKeyTableName_value SET key = 'data_key2' WHERE touchKeyIdColumnName_value = 'new value2'";
+        if ($databaseEngine === $this->collectorConfig->getPostgresEngineName()) {
+            $expectedQuery =
+                "UPDATE touchKeyTableName_value SET key = 'data_key1' WHERE touchKeyIdColumnName_value = 'new value'; \n"
+                . "UPDATE touchKeyTableName_value SET key = 'data_key2' WHERE touchKeyIdColumnName_value = 'new value2'";
+        }
+
+        if ($databaseEngine === $this->collectorConfig->getMysqlEngineName()) {
+            $expectedQuery =
+                "UPDATE `touchKeyTableName_value` SET `key` = 'data_key1' WHERE `touchKeyTableName_value`.`touchKeyIdColumnName_value` = 'new value'; \n"
+                . "UPDATE `touchKeyTableName_value` SET `key` = 'data_key2' WHERE `touchKeyTableName_value`.`touchKeyIdColumnName_value` = 'new value2'";
+        }
 
         $connection->expects($this->once())
             ->method('exec')
@@ -87,8 +96,16 @@ class AbstractTouchUpdaterTest extends Unit
         $connection = $this->createConnectionMock();
 
         $touchUpdater = $this->createTouchUpdater();
+        $databaseEngine = $this->collectorConfig->getCurrentEngineName();
+        $expectedQuery = '';
 
-        $expectedQuery = 'DELETE FROM touchKeyTableName_value WHERE fk_touch IN (id_touch1,id_touch2)';
+        if ($databaseEngine === $this->collectorConfig->getPostgresEngineName()) {
+            $expectedQuery = 'DELETE FROM touchKeyTableName_value WHERE fk_touch IN (id_touch1,id_touch2)';
+        }
+
+        if ($databaseEngine === $this->collectorConfig->getMysqlEngineName()) {
+            $expectedQuery = 'DELETE FROM `touchKeyTableName_value` WHERE `fk_touch` IN (id_touch1,id_touch2)';
+        }
 
         $connection->expects($this->once())
             ->method('exec')
@@ -209,5 +226,4 @@ class AbstractTouchUpdaterTest extends Unit
     {
         return new CollectorConfigWithNotDefinedDbEngineFake();
     }
-
 }

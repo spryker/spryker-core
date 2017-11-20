@@ -13,7 +13,6 @@ use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstra
 
 class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @param string $touchKey
      * @param array $collectItemData
@@ -56,5 +55,4 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
     {
         return true;
     }
-
 }

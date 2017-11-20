@@ -27,7 +27,6 @@ use Twig_Loader_Filesystem;
  */
 class TwigCurrencyServiceProviderTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Currency\Communication\Plugin\ServiceProvider\TwigCurrencyServiceProvider
      */
@@ -126,5 +125,4 @@ class TwigCurrencyServiceProviderTest extends Unit
     {
         return static::getApplication()['twig']->getFunction(TwigCurrencyServiceProvider::CURRENCY_SYMBOL_FUNCTION_NAME);
     }
-
 }

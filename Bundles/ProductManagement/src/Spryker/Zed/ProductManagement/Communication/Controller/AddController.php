@@ -16,13 +16,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacade getFacade()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  */
 class AddController extends AbstractController
 {
-
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
@@ -50,7 +49,7 @@ class AddController extends AbstractController
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
-                    ->buildProductAbstractTransfer($form);
+                    ->buildProductAbstractTransfer($form, null);
 
                 $concreteProductCollection = $this->createProductConcreteCollection(
                     $type,
@@ -68,7 +67,6 @@ class AddController extends AbstractController
                 ));
 
                 return $this->createRedirectResponseAfterAdd($idProductAbstract);
-
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -181,5 +179,4 @@ class AddController extends AbstractController
 
         return $concreteProductCollection;
     }
-
 }

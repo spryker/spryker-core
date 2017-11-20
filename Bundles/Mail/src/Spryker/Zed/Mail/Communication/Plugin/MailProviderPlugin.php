@@ -12,12 +12,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 /**
- * @method \Spryker\Zed\Mail\Business\MailFacade getFacade()
+ * @method \Spryker\Zed\Mail\Business\MailFacadeInterface getFacade()
  * @method \Spryker\Zed\Mail\Communication\MailCommunicationFactory getFactory()
  */
 class MailProviderPlugin extends AbstractPlugin implements MailProviderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
@@ -27,5 +26,4 @@ class MailProviderPlugin extends AbstractPlugin implements MailProviderPluginInt
     {
         $this->getFacade()->sendMail($mailTransfer);
     }
-
 }

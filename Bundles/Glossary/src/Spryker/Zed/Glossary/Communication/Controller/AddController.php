@@ -13,12 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  */
 class AddController extends AbstractController
 {
-
     const FORM_ADD_TYPE = 'add';
+
+    const MESSAGE_CREATE_SUCCESS = 'Translation %d was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,8 +42,9 @@ class AddController extends AbstractController
 
             $glossaryFacade = $this->getFacade();
             $glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
+            $idGlossaryKey = $this->getFacade()->getKeyIdentifier($keyTranslationTransfer->getGlossaryKey());
 
-            $this->addSuccessMessage('Saved entry to glossary.');
+            $this->addSuccessMessage(sprintf(static::MESSAGE_CREATE_SUCCESS, $idGlossaryKey));
 
             return $this->redirectResponse('/glossary');
         }
@@ -51,5 +53,4 @@ class AddController extends AbstractController
             'form' => $glossaryForm->createView(),
         ]);
     }
-
 }

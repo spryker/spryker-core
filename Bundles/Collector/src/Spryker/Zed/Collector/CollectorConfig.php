@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CollectorConfig extends AbstractBundleConfig
 {
-
     const COLLECTOR_TOUCH_ID = 'collector_touch_id';
     const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
     const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
@@ -132,5 +131,4 @@ class CollectorConfig extends AbstractBundleConfig
     {
         return false;
     }
-
 }

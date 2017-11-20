@@ -24,7 +24,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductLabelFormType extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
     const FIELD_STATUS_FLAG = 'isActive';
@@ -273,5 +272,4 @@ class ProductLabelFormType extends AbstractType
 
         return $this;
     }
-
 }
