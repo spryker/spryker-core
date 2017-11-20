@@ -171,7 +171,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      */
     public function createDatabase()
     {
-        $this->getFactory()->createPropelDatabaseEngineCollection()->getEngine()->createIfNotExists();
+        $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->createIfNotExists();
     }
 
     /**
@@ -183,7 +183,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      */
     public function dropDatabase()
     {
-        $this->getFactory()->createPropelDatabaseEngineCollection()->getEngine()->dropDatabase();
+        $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->dropDatabase();
     }
 
     /**
@@ -197,7 +197,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      */
     public function exportDatabase($backupPath)
     {
-        $this->getFactory()->createPropelDatabaseEngineCollection()->getEngine()->exportDatabase($backupPath);
+        $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->exportDatabase($backupPath);
     }
 
     /**
@@ -211,6 +211,6 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      */
     public function importDatabase($backupPath)
     {
-        $this->getFactory()->createPropelDatabaseEngineCollection()->getEngine()->importDatabase($backupPath);
+        $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->importDatabase($backupPath);
     }
 }

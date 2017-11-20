@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\MySql;
+namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql;
 
 use RuntimeException;
 use Spryker\Shared\Config\Config;

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine;
+namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter;
 
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
 
-interface EngineInterface extends CreateDatabaseInterface, DropDatabaseInterface, ExportDatabaseInterface, ImportDatabaseInterface
+interface AdapterInterface extends CreateDatabaseInterface, DropDatabaseInterface, ExportDatabaseInterface, ImportDatabaseInterface
 {
     /**
      * @return string

@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine;
+namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter;
 
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
 
-class Engine implements EngineInterface
+class Adapter implements AdapterInterface
 {
     /**
      * @var string
      */
-    protected $engine;
+    protected $adapter;
 
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface
@@ -40,20 +40,20 @@ class Engine implements EngineInterface
     protected $importCommand;
 
     /**
-     * @param string $engine
+     * @param string $adapter
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface $createCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface $dropCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface $exportCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface $importCommand
      */
     public function __construct(
-        $engine,
+        $adapter,
         CreateDatabaseInterface $createCommand,
         DropDatabaseInterface $dropCommand,
         ExportDatabaseInterface $exportCommand,
         ImportDatabaseInterface $importCommand
     ) {
-        $this->engine = $engine;
+        $this->adapter = $adapter;
         $this->createCommand = $createCommand;
         $this->dropCommand = $dropCommand;
         $this->exportCommand = $exportCommand;
@@ -65,7 +65,7 @@ class Engine implements EngineInterface
      */
     public function getEngine()
     {
-        return $this->engine;
+        return $this->adapter;
     }
 
     /**

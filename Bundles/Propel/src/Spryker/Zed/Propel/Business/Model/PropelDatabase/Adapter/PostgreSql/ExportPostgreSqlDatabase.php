@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine\PostgreSql;
+namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql;
 
 use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
 use Symfony\Component\Process\Process;
 
-class ImportPostgreSqlDatabase implements ImportDatabaseInterface
+class ExportPostgreSqlDatabase implements ExportDatabaseInterface
 {
     /**
      * @param string $backupPath
      *
      * @return void
      */
-    public function importDatabase($backupPath)
+    public function exportDatabase($backupPath)
     {
         $this->runProcess(
-            $this->getImportCommand($backupPath)
+            $this->getExportCommand($backupPath)
         );
     }
 
@@ -32,13 +32,13 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
      *
      * @return string
      */
-    protected function getImportCommand($backupPath)
+    protected function getExportCommand($backupPath)
     {
         if ($this->useSudo()) {
-            return $this->getSudoImportCommand($backupPath);
+            return $this->getSudoExportCommand($backupPath);
         }
 
-        return $this->getImportCommandRemote($backupPath);
+        return $this->getExportCommandRemote($backupPath);
     }
 
     /**
@@ -46,15 +46,15 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
      *
      * @return string
      */
-    protected function getImportCommandRemote($backupPath)
+    protected function getExportCommandRemote($backupPath)
     {
         return sprintf(
-            'pg_restore -i -h %s -p %s -U %s -d %s -v %s',
+            'pg_dump -i -h %s -p %s -U %s -F c -b -v -f %s %s',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
-            Config::get(PropelConstants::ZED_DB_DATABASE),
-            $backupPath
+            $backupPath,
+            Config::get(PropelConstants::ZED_DB_DATABASE)
         );
     }
 
@@ -63,13 +63,9 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
      *
      * @return string
      */
-    protected function getSudoImportCommand($backupPath)
+    protected function getSudoExportCommand($backupPath)
     {
-        return sprintf(
-            'sudo pg_restore -d %s %s',
-            Config::get(PropelConstants::ZED_DB_DATABASE),
-            $backupPath
-        );
+        return $this->getExportCommandRemote($backupPath);
     }
 
     /**
