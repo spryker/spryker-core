@@ -23,6 +23,7 @@ class LogBusinessFactory extends AbstractBusinessFactory
     public function createLogClearer()
     {
         return new LogClear(
+            $this->getFilesystem(),
             $this->getConfig()->getLogFileDirectories()
         );
     }
@@ -33,5 +34,13 @@ class LogBusinessFactory extends AbstractBusinessFactory
     public function createLogListener()
     {
         return new LogListenerCollection($this->getProvidedDependency(LogDependencyProvider::LOG_LISTENERS));
+    }
+
+    /**
+     * @return \Symfony\Component\Filesystem\Filesystem
+     */
+    protected function getFilesystem()
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::FILESYSTEM);
     }
 }

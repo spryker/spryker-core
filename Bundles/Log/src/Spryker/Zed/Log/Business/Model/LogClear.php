@@ -12,15 +12,22 @@ use Symfony\Component\Filesystem\Filesystem;
 class LogClear implements LogClearInterface
 {
     /**
+     * @var \Symfony\Component\Filesystem\Filesystem
+     */
+    protected $filesystem;
+
+    /**
      * @var array
      */
     protected $logFileDirectories = [];
 
     /**
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param array $logFileDirectories
      */
-    public function __construct(array $logFileDirectories)
+    public function __construct(Filesystem $filesystem, array $logFileDirectories)
     {
+        $this->filesystem = $filesystem;
         $this->logFileDirectories = $logFileDirectories;
     }
 
@@ -29,10 +36,9 @@ class LogClear implements LogClearInterface
      */
     public function clearLogs()
     {
-        $filesystem = new Filesystem();
         foreach ($this->logFileDirectories as $logFileDirectory) {
             if (is_dir($logFileDirectory)) {
-                $filesystem->remove($logFileDirectory);
+                $this->filesystem->remove($logFileDirectory);
             }
         }
     }
