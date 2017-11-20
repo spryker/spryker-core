@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\Log\Business;
 
+use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Log\Business\Model\LogClear;
-use Spryker\Zed\Log\Business\Model\LogListener\LogListenerCollection;
-use Spryker\Zed\Log\LogDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Log\LogConfig getConfig()
@@ -18,29 +16,13 @@ use Spryker\Zed\Log\LogDependencyProvider;
 class LogBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Log\Business\Model\LogClearInterface
+     * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
      */
-    public function createLogClearer()
+    public function createSanitizer()
     {
-        return new LogClear(
-            $this->getFilesystem(),
-            $this->getConfig()->getLogFileDirectories()
+        return new Sanitizer(
+            $this->getConfig()->getSanitizerFieldNames(),
+            $this->getConfig()->getSanitizedFieldValue()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface
-     */
-    public function createLogListener()
-    {
-        return new LogListenerCollection($this->getProvidedDependency(LogDependencyProvider::LOG_LISTENERS));
-    }
-
-    /**
-     * @return \Symfony\Component\Filesystem\Filesystem
-     */
-    protected function getFilesystem()
-    {
-        return $this->getProvidedDependency(LogDependencyProvider::FILESYSTEM);
     }
 }
