@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Shared\Kernel\AbstractBundleConfig as SharedAbstractBundleConfig;
+use Spryker\Shared\Kernel\SharedConfigResolverAwareTrait;
 
 abstract class AbstractBundleConfig extends SharedAbstractBundleConfig
 {

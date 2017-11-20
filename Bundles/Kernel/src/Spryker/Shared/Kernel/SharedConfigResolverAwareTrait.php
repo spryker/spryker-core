@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Kernel;
+namespace Spryker\Shared\Kernel;
 
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 use Spryker\Shared\Kernel\ClassResolver\Config\SharedConfigResolver;
@@ -42,7 +42,7 @@ trait SharedConfigResolverAwareTrait
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig
      */
     private function resolveSharedConfig()
     {
