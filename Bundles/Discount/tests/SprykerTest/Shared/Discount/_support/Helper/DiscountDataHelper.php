@@ -8,11 +8,9 @@
 namespace SprykerTest\Shared\Discount\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\CurrencyBuilder;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
 use Generated\Shared\DataBuilder\DiscountVoucherBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Propel\Runtime\Propel;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -25,6 +23,7 @@ class DiscountDataHelper extends Module
 
     /**
      * @param array $override
+     * @param array $discountAmounts
      *
      * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
      */
@@ -90,7 +89,7 @@ class DiscountDataHelper extends Module
     }
 
     /**
-     *
+     * @return void
      */
     public function resetCurrentDiscounts()
     {
