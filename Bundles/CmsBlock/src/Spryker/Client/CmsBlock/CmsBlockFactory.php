@@ -11,9 +11,6 @@ use Spryker\Client\CmsBlock\KeyBuilder\CmsBlockKeyBuilder;
 use Spryker\Client\CmsBlock\Storage\CmsBlockStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 
-/**
- * @method \Spryker\Client\CmsBlock\CmsBlockConfig getConfig
- */
 class CmsBlockFactory extends AbstractFactory
 {
     /**

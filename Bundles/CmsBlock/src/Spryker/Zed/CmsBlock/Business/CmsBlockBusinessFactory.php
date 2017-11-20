@@ -30,8 +30,6 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsBlockReader()
     {
-        $demo = $this->getConfig()->getTest();
-
         return new CmsBlockReader(
             $this->getQueryContainer(),
             $this->createCmsBlockMapper()

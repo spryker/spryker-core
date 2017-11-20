@@ -10,22 +10,11 @@ namespace Spryker\Zed\CmsBlock;
 use Spryker\Shared\CmsBlock\CmsBlockConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Shared\CmsBlock\CmsBlockConfig getSharedConfig()
- */
 class CmsBlockConfig extends AbstractBundleConfig
 {
     const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
     const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
     const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
-
-    /**
-     * @return array
-     */
-    public function getTest()
-    {
-        return $this->getSharedConfig()->getTest();
-    }
 
     /**
      * @return string
