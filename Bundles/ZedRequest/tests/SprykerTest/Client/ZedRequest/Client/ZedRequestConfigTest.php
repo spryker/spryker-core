@@ -22,7 +22,6 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
  */
 class ZedRequestConfigTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Client\ZedRequest\ZedRequestClientTester
      */
@@ -37,12 +36,11 @@ class ZedRequestConfigTest extends Unit
             'timeout' => 30,
             'connect_timeout' => 1,
         ];
-        $this->tester->setConfig(ZedRequestConstants::CLIENT_CONFIG, $configuredClientOptions);
+        $this->tester->setConfig(ZedRequestConstants::CLIENT_OPTIONS, $configuredClientOptions);
 
         $zedRequestConfig = new ZedRequestConfig();
         $clientOptions = $zedRequestConfig->getClientConfiguration();
         $this->assertSame(30, $clientOptions['timeout']);
         $this->assertSame(1, $clientOptions['connect_timeout']);
     }
-
 }

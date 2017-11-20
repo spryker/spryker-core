@@ -48,5 +48,5 @@ interface ZedRequestConstants
      *
      * @api
      */
-    const CLIENT_CONFIG = 'ZED_REQUEST:CLIENT_OPTIONS';
+    const CLIENT_OPTIONS = 'ZED_REQUEST:CLIENT_OPTIONS';
 }

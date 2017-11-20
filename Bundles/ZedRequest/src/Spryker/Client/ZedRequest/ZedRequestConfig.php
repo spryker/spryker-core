@@ -74,8 +74,8 @@ class ZedRequestConfig extends AbstractBundleConfig
             'connect_timeout' => 1.5,
         ];
 
-        if (Config::hasKey(ZedRequestConstants::CLIENT_CONFIG)) {
-            $customClientConfiguration = $this->get(ZedRequestConstants::CLIENT_CONFIG);
+        if (Config::hasKey(ZedRequestConstants::CLIENT_OPTIONS)) {
+            $customClientConfiguration = $this->get(ZedRequestConstants::CLIENT_OPTIONS);
             $clientConfiguration = array_merge($clientConfiguration, $customClientConfiguration);
         }
 
