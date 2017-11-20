@@ -110,7 +110,7 @@ class Finder implements FinderInterface
         );
 
         $process = $processBuilder->createProcess($stateMachineProcessTransfer);
-        $manualEvents = $process->getManualEventsBySource();
+        $manualEvents = $process->getManuallyExecutableEventsBySource();
 
         $stateName = $stateMachineItemTransfer->getStateName();
         if (isset($manualEvents[$stateName])) {
@@ -348,7 +348,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
-     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess|null
      */
     protected function getStateMachineProcessEntity(StateMachineProcessTransfer $stateMachineProcessTransfer)
     {
@@ -366,10 +366,13 @@ class Finder implements FinderInterface
      */
     protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag)
     {
-        return $this->queryContainer->queryItemsByIdStateMachineProcessAndItemStates(
+        /** @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]|\Propel\Runtime\Collection\ObjectCollection $itemStateCollection */
+        $itemStateCollection = $this->queryContainer->queryItemsByIdStateMachineProcessAndItemStates(
             $stateMachineProcessTransfer->getStateMachineName(),
             $stateMachineProcessTransfer->getProcessName(),
             $statesByFlag
         )->find();
+
+        return $itemStateCollection;
     }
 }
