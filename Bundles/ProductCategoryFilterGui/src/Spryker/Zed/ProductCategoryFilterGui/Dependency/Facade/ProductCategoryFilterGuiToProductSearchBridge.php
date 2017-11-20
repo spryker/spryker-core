@@ -32,12 +32,4 @@ class ProductCategoryFilterGuiToProductSearchBridge implements ProductCategoryFi
     {
         return $this->productSearchFacade->suggestProductSearchAttributeKeys($searchText, $limit);
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
-     */
-    public function getProductSearchAttributeList()
-    {
-        return $this->productSearchFacade->getProductSearchAttributeList();
-    }
 }

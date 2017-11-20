@@ -35,8 +35,12 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
             return null;
         }
 
-        $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
+        $productCategoryFilterTransfer = (new ProductCategoryFilterTransfer())->fromArray($productCategoryFilterEntity->toArray(), true);
 
-        return $productCategoryFilterTransfer->fromArray($productCategoryFilterEntity->toArray(), true);
+        $filterData = json_decode($productCategoryFilterEntity->getFilterData(), true);
+
+        $productCategoryFilterTransfer->setFilterDataArray($filterData);
+
+        return $productCategoryFilterTransfer;
     }
 }

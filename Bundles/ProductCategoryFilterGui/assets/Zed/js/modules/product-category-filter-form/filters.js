@@ -7,8 +7,9 @@
 
 require('ZedGui');
 
-var filters = $('#filters');
+var filters = $('#product_category_filter_filters');
 var filtersContainer = $('#filter-container');
+var list = $('#filter-container ol');
 
 
 $(document).ready(function() {
@@ -29,15 +30,16 @@ function getCurrentList() {
     return filters.val();
 }
 
-function addToList(filterToAdd) {
-    filtersContainer.prepend('<li data-filter="{{ filter.name }}" class="filter-item dd-item">\n' +
+function addToList(filterToAdd, count) {
+    list.append('<li data-filter="' + filterToAdd + '" class="filter-item dd-item">\n' +
         '                            <div class="dd-handle">\n' +
         '                                <a class="btn btn-xs btn-outline btn-danger" title="Remove Filter">\n' +
         '                                    <i class="fa fa-fw fa-trash"></i>\n' +
         '                                </a>\n' +
-                                        filterToAdd +
+                                        filterToAdd + ' (' + count + ')' +
         '                            </div>\n' +
         '                        </li>');
+    filtersContainer.trigger('change');
 }
 
 module.exports = {

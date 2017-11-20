@@ -9,19 +9,22 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductCategoryFilterForm extends AbstractType
 {
-    const FIELD_FILTER = 'filter';
+    const FIELD_FILTER_AUTOCOMPLETE = 'filter-autocomplete';
+    const FIELD_ACTIVE_FILTERS = 'active_filters';
+    const FIELD_INACTIVE_FILTERS = 'inactive_filters';
 
     /**
      * @return string The name of this type
      */
     public function getName()
     {
-        return 'product_category';
+        return 'product_category_filter';
     }
 
     /**
@@ -41,7 +44,9 @@ class ProductCategoryFilterForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addFilterField($builder);
+        $this->addFilterAutocompleteField($builder);
+        $this->addActiveFilterHiddenField($builder);
+        $this->addInactiveFilterHiddenField($builder);
     }
 
     /**
@@ -49,9 +54,9 @@ class ProductCategoryFilterForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFilterField(FormBuilderInterface $builder)
+    protected function addFilterAutocompleteField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FILTER, new AutosuggestType(), [
+        $builder->add(self::FIELD_FILTER_AUTOCOMPLETE, new AutosuggestType(), [
             'label' => 'Add filter',
             'url' => '/product-category-filter-gui/filter-suggestion',
             'attr' => [
@@ -59,6 +64,30 @@ class ProductCategoryFilterForm extends AbstractType
             ],
             'required' => false,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addActiveFilterHiddenField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_ACTIVE_FILTERS, new HiddenType());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addInactiveFilterHiddenField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_INACTIVE_FILTERS, new HiddenType());
 
         return $this;
     }
