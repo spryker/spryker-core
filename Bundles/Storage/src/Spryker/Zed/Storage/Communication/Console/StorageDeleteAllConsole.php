@@ -34,17 +34,20 @@ class StorageDeleteAllConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($this->getFacade()->getTotalCount() === 0) {
             $this->info('Storage is empty');
 
-            return;
+            return static::CODE_SUCCESS;
         }
 
         $this->info('Delete all keys from storage');
-        $this->getFacade()->deleteAll();
+        $deletedKeyCount = $this->getFacade()->deleteAll();
+        $this->info(sprintf('Deleted "<fg=green>%s</>" keys from storage', $deletedKeyCount));
+
+        return static::CODE_SUCCESS;
     }
 }

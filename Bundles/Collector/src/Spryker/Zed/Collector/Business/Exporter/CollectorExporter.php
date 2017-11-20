@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -34,18 +35,26 @@ class CollectorExporter
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
+     * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreInterface|null $storeFacade
      */
     public function __construct(
         TouchQueryContainerInterface $touchQueryContainer,
         CollectorToLocaleInterface $localeFacade,
-        ExporterInterface $exporter
+        ExporterInterface $exporter,
+        CollectorToStoreInterface $storeFacade = null
     ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->exporter = $exporter;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -92,7 +101,7 @@ class CollectorExporter
      */
     public function exportStorage(OutputInterface $output)
     {
-        $storeName = Store::getInstance()->getStoreName();
+        $storeName = $this->getStoreName();
 
         $results = [];
 
@@ -102,7 +111,8 @@ class CollectorExporter
             $storeName
         ));
 
-        $localeCollection = Store::getInstance()->getLocalesPerStore($storeName);
+        $localeCollection = $this->getLocalesForStore();
+
         foreach ($localeCollection as $localeCode) {
             $localeTransfer = $this->localeFacade->getLocale($localeCode);
             $results[$storeName . '@' . $localeCode] = $this->exportStorageByLocale($localeTransfer, $output);
@@ -176,5 +186,29 @@ class CollectorExporter
             ->find();
 
         return array_unique(array_merge($types, $availableTypes));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName()
+    {
+        if ($this->storeFacade) {
+            return $this->storeFacade->getCurrentStore()->getName();
+        }
+
+        return Store::getInstance()->getStoreName();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getLocalesForStore()
+    {
+        if ($this->storeFacade) {
+            return $this->storeFacade->getCurrentStore()->getAvailableLocaleIsoCodes();
+        }
+
+        return Store::getInstance()->getLocalesPerStore($this->getStoreName());
     }
 }

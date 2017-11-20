@@ -23,6 +23,9 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns the path to rdb dump file.
+     *
      * @return string
      */
     public function getRdbDumpPath()

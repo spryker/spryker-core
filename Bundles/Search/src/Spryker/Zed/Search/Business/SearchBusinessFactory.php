@@ -13,6 +13,7 @@ use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
@@ -231,5 +232,24 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     protected function createElasticsearchSnapshot()
     {
         return new Snapshot($this->getElasticsearchClient());
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopierInterface
+     */
+    public function createElasticsearchIndexCopier()
+    {
+        return new IndexCopier(
+            $this->getGuzzleClient(),
+            $this->getConfig()->getReindexUrl()
+        );
+    }
+
+    /**
+     * @return \GuzzleHttp\Client
+     */
+    protected function getGuzzleClient()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
     }
 }

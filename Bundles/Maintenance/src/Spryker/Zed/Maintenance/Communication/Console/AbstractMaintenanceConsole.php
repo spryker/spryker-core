@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Maintenance\Communication\Console;
 
-use InvalidArgumentException;
 use Spryker\Zed\Kernel\Communication\Console\Console;
+use Spryker\Zed\Maintenance\Business\Exception\InvalidApplicationNameException;
 use Symfony\Component\Console\Input\InputInterface;
 
 /**
@@ -34,7 +34,7 @@ abstract class AbstractMaintenanceConsole extends Console
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      *
-     * @throws \InvalidArgumentException
+     * @throws \Spryker\Zed\Maintenance\Business\Exception\InvalidApplicationNameException
      *
      * @return string
      */
@@ -43,7 +43,7 @@ abstract class AbstractMaintenanceConsole extends Console
         $applicationName = strtolower($input->getArgument(static::ARGUMENT_APPLICATION));
 
         if (!in_array($applicationName, $this->allowedApplications)) {
-            throw new InvalidArgumentException(sprintf('Invalid application name. Given "%s" only on of "%s" is allowed.', $applicationName, implode(', ', $this->allowedApplications)));
+            throw new InvalidApplicationNameException(sprintf('Invalid application name. Given "%s" only on of "%s" is allowed.', $applicationName, implode(', ', $this->allowedApplications)));
         }
 
         return $applicationName;

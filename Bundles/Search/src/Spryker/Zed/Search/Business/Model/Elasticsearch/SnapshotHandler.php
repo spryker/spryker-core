@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
+use Elastica\Snapshot;
 use RuntimeException;
 
 class SnapshotHandler implements SnapshotHandlerInterface
@@ -19,7 +20,7 @@ class SnapshotHandler implements SnapshotHandlerInterface
     /**
      * @param \Elastica\Snapshot $elasticaSnapshot
      */
-    public function __construct($elasticaSnapshot)
+    public function __construct(Snapshot $elasticaSnapshot)
     {
         $this->elasticaSnapshot = $elasticaSnapshot;
     }

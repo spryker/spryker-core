@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -25,6 +27,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -35,6 +39,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -45,6 +51,8 @@ class MaintenanceFacade extends AbstractFacade implements MaintenanceFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void

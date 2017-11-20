@@ -240,4 +240,17 @@ interface SearchFacadeInterface
      * @return bool
      */
     public function closeAllIndices();
+
+    /**
+     * Specification:
+     * - Copies one index to another index.
+     *
+     * @api
+     *
+     * @param string $source
+     * @param string $target
+     *
+     * @return bool
+     */
+    public function copyIndex($source, $target);
 }

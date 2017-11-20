@@ -24,12 +24,12 @@ interface PropelFacadeInterface
     public function copySchemaFilesToTargetDirectory();
 
     /**
+     * Specification:
+     * - Creates database for configured driver if it doesn't exist
+     *
      * @api
      *
-     * @deprecated Use `createDatabase` instead.
-     *
-     * Specification:
-     * - Create database for configured driver if it doesn't exist
+     * @deprecated Use `createDatabase()` instead.
      *
      * @return void
      */
@@ -37,7 +37,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Convert given PHP configuration into json configuration
+     * - Converts given PHP configuration into json configuration
      * - File is placed in configured phpConfDir
      *
      * @api
@@ -109,7 +109,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Delete all migration files and the migration directory.
+     * - Deletes all migration files and the migration directory.
      *
      * @api
      *
@@ -119,7 +119,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Create database if not exists for configured driver.
+     * - Creates database if not exists for configured driver.
      *
      * @api
      *
@@ -129,7 +129,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Drop database for configured driver.
+     * - Drops database for configured driver.
      *
      * @api
      *
@@ -139,7 +139,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Export database backup for configured driver to `$backupPath`.
+     * - Exports database backup for configured driver to `$backupPath`.
      *
      * @api
      *
@@ -151,7 +151,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Import database backup for configured driver from `$backupPath`.
+     * - Imports database backup for configured driver from `$backupPath`.
      *
      * @api
      *

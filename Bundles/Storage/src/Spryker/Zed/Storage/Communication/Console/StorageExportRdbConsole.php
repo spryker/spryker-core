@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageExportRdbConsole extends Console
 {
-    const COMMAND_NAME = 'storage:export';
+    const COMMAND_NAME = 'storage:redis:export';
     const DESCRIPTION = 'This command will export the rdb file.';
 
     const ARGUMENT_DESTINATION = 'destination';
@@ -27,8 +27,8 @@ class StorageExportRdbConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         $this->addArgument(static::ARGUMENT_DESTINATION, InputArgument::REQUIRED, 'Path to destination.');
 

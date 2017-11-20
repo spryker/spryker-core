@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Search\Communication\Console;
 
-use GuzzleHttp\Client;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,17 +48,7 @@ class SearchCopyIndexConsole extends Console
         $source = $input->getArgument(static::ARGUMENT_SOURCE);
         $target = $input->getArgument(static::ARGUMENT_TARGET);
 
-        $body = sprintf('{"source": {"index": "%s"}, "dest": {"index": "%s"}}', $source, $target);
-
-        $client = new Client();
-        $response = $client->post('localhost:10005/_reindex?pretty', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'body' => $body,
-        ]);
-
-        if ($response->getStatusCode() === 200) {
+        if ($this->getFacade()->copyIndex($source, $target)) {
             return static::CODE_SUCCESS;
         }
 

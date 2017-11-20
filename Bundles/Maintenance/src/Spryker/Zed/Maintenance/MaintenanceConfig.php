@@ -7,20 +7,14 @@
 
 namespace Spryker\Zed\Maintenance;
 
-use Spryker\Shared\Maintenance\MaintenanceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MaintenanceConfig extends AbstractBundleConfig
 {
     /**
-     * @return string
-     */
-    public function getMaintenancePageZed()
-    {
-        return $this->get(MaintenanceConstants::MAINTENANCE_PAGE_ZED);
-    }
-
-    /**
+     * Specification:
+     * - Directory to which the marker file will be written.
+     *
      * @return string
      */
     public function getMaintenanceMarkerDirZed()
@@ -29,14 +23,9 @@ class MaintenanceConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
-     */
-    public function getMaintenancePageYves()
-    {
-        return $this->get(MaintenanceConstants::MAINTENANCE_PAGE_YVES);
-    }
-
-    /**
+     * Specification:
+     * - Directory to which the marker file will be written.
+     *
      * @return string
      */
     public function getMaintenanceMarkerDirYves()

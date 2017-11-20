@@ -292,4 +292,19 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     {
         return $this->getFactory()->createSearchIndicesManager()->close();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $source
+     * @param string $target
+     *
+     * @return bool
+     */
+    public function copyIndex($source, $target)
+    {
+        return $this->getFactory()->createElasticsearchIndexCopier()->copyIndex($source, $target);
+    }
 }

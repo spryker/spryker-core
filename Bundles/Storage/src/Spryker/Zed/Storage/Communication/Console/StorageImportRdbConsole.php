@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageImportRdbConsole extends Console
 {
-    const COMMAND_NAME = 'storage:import';
+    const COMMAND_NAME = 'storage:redis:import';
     const DESCRIPTION = 'This command will import a rdb file.';
 
     const ARGUMENT_SOURCE = 'source';
@@ -27,8 +27,8 @@ class StorageImportRdbConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         $this->addArgument(static::ARGUMENT_SOURCE, InputArgument::REQUIRED, 'Path of the rdb file.');
 

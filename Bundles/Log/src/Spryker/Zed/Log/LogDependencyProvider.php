@@ -68,7 +68,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface[]
      */
     protected function getLogListeners()
     {

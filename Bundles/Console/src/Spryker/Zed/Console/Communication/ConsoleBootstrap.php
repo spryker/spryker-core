@@ -173,7 +173,7 @@ class ConsoleBootstrap extends Application
      * from anybody who wants to force color mode for the execution of this Application.
      *
      * For Spryker's deploy tool it is needed to get colored output from the console commands
-     * executed by this script without force projects to deal with ansi flags of the underlying
+     * executed by this script without force projects to deal with ANSI Escape sequences of the underlying
      * console commands.
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output

@@ -64,7 +64,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
     protected function installNodeJs(LoggerInterface $logger)
     {
         $logger->info('Download node source');
-        $process = $this->getProcess('curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -');
+        $process = $this->getProcess($this->getDownloadCommand());
         $process->run(function ($type, $buffer) use ($logger) {
             $logger->info($buffer);
         });
@@ -76,5 +76,13 @@ class NodeInstaller implements PackageManagerInstallerInterface
         });
 
         return $process->isSuccessful();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDownloadCommand()
+    {
+        return 'curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -';
     }
 }

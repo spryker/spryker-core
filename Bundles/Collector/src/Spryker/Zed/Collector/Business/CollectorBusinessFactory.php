@@ -44,7 +44,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createStorageExporter()
+            $this->createStorageExporter(),
+            $this->getStoreFacade()
         );
     }
 
@@ -62,6 +63,14 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_STORE);
     }
 
     /**
@@ -174,7 +183,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new CollectorExporter(
             $this->getTouchQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createElasticsearchExporter($searchWriter)
+            $this->createElasticsearchExporter($searchWriter),
+            $this->getStoreFacade()
         );
     }
 
