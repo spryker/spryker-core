@@ -225,7 +225,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return array
      */
-    public function getEngineBundleList()
+    public function getEngineModuleList()
     {
         return $this->getFactory()->getEngineBundleList();
     }
@@ -314,7 +314,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return array
      */
-    public function listAllBundles()
+    public function listAllModules()
     {
         return $this->getFactory()->createArchitectureBundleFinder()->find();
     }

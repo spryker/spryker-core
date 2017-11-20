@@ -183,7 +183,7 @@ class DependencyController extends AbstractController
         }
 
         $matrixData = $this->getFacade()->getAdjacencyMatrixData();
-        $engineBundleList = $this->getFacade()->getEngineBundleList();
+        $engineBundleList = $this->getFacade()->getEngineModuleList();
 
         return $this->viewResponse(['matrixData' => $matrixData, 'engineBundles' => $engineBundleList]);
     }

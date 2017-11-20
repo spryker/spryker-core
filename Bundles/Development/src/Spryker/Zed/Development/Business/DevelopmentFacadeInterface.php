@@ -166,7 +166,7 @@ interface DevelopmentFacadeInterface
      *
      * @return array
      */
-    public function getEngineBundleList();
+    public function getEngineModuleList();
 
     /**
      * @api
@@ -223,7 +223,7 @@ interface DevelopmentFacadeInterface
     public function generateServiceIdeAutoCompletion();
 
     /**
-     * Run the architecture sniffer against the given bundle and returns the violations
+     * Run the architecture sniffer against the given module and returns the violations
      *
      * @api
      *
@@ -235,13 +235,13 @@ interface DevelopmentFacadeInterface
     public function runArchitectureSniffer($directory, array $options = []);
 
     /**
-     * Returns a list of all bundles in project and core namespaces
+     * Returns a list of all modules in project and core namespaces
      *
      * @api
      *
      * @return array
      */
-    public function listAllBundles();
+    public function listAllModules();
 
     /**
      * Returns all architecture rules
