@@ -9,6 +9,4 @@ namespace Spryker\Shared\Maintenance;
 
 interface MaintenanceConstants
 {
-    const MAINTENANCE_PAGE_ZED = 'MAINTENANCE:MAINTENANCE_PAGE_ZED';
-    const MAINTENANCE_PAGE_YVES = 'MAINTENANCE:MAINTENANCE_PAGE_YVES';
 }

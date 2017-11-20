@@ -51,7 +51,8 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getExistsCommand()
     {
         return sprintf(
-            'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
+            'PGPASSWORD=%s psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
+            Config::get(PropelConstants::ZED_DB_PASSWORD),
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
@@ -78,7 +79,8 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getCreateCommandRemote()
     {
         return sprintf(
-            'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
+            'PGPASSWORD=%s psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
+            Config::get(PropelConstants::ZED_DB_PASSWORD),
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
@@ -93,7 +95,8 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getSudoCreateCommand()
     {
         return sprintf(
-            'sudo createdb %s -E UTF8 -T template0',
+            'PGPASSWORD=%s sudo createdb %s -E UTF8 -T template0',
+            Config::get(PropelConstants::ZED_DB_PASSWORD),
             Config::get(PropelConstants::ZED_DB_DATABASE)
         );
     }
@@ -107,8 +110,6 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $this->exportPostgresPassword();
-
         $process = new Process($command);
         $process->run();
 
@@ -119,17 +120,6 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
-    }
-
-    /**
-     * @return void
-     */
-    protected function exportPostgresPassword()
-    {
-        putenv(sprintf(
-            'PGPASSWORD=%s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
-        ));
     }
 
     /**

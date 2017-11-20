@@ -24,7 +24,7 @@ class StorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns the path to rdb dump file.
+     * - Returns the path where the rdb dump file should be copied to.
      *
      * @return string
      */
