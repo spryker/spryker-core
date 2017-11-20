@@ -8,7 +8,13 @@
 namespace SprykerTest\Shared\Discount\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\CurrencyBuilder;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
+use Generated\Shared\DataBuilder\DiscountVoucherBuilder;
+use Generated\Shared\DataBuilder\MoneyValueBuilder;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Propel\Runtime\Propel;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -22,7 +28,7 @@ class DiscountDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
      */
-    public function haveDiscount(array $override = [])
+    public function haveDiscount(array $override = [], array $discountAmounts = [])
     {
         $discountFacade = $this->getDiscountFacade();
 
@@ -31,6 +37,13 @@ class DiscountDataHelper extends Module
             ->withDiscountCondition()
             ->withDiscountCalculator()
             ->build();
+
+        $discountCalculatorTransfer = $discountConfigurator->getDiscountCalculator();
+
+        foreach ($discountAmounts as $price) {
+            $moneyValueTransfer = (new MoneyValueBuilder($price))->build();
+            $discountCalculatorTransfer->addMoneyValue($moneyValueTransfer);
+        }
 
         $this->debugSection('Discount', $discountConfigurator->toArray());
         $discountId = $discountFacade->saveDiscount($discountConfigurator);
@@ -43,6 +56,21 @@ class DiscountDataHelper extends Module
         });
 
         return $discountConfigurator->getDiscountGeneral();
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function haveGeneratedVoucherCodes(array $override = [])
+    {
+        $discountFacade = $this->getDiscountFacade();
+        $discountVoucherTransfer = (new DiscountVoucherBuilder($override))->build();
+
+        $discountFacade->saveVoucherCodes($discountVoucherTransfer);
+
+        return $discountVoucherTransfer;
     }
 
     /**
@@ -59,5 +87,18 @@ class DiscountDataHelper extends Module
     private function getDiscountQuery()
     {
         return $this->getLocator()->discount()->queryContainer();
+    }
+
+    /**
+     *
+     */
+    public function resetCurrentDiscounts()
+    {
+        $discounts = SpyDiscountQuery::create()->find();
+        Propel::disableInstancePooling();
+        foreach ($discounts as $discountEntity) {
+            $discountEntity->setIsActive(false);
+            $discountEntity->save();
+        }
     }
 }
