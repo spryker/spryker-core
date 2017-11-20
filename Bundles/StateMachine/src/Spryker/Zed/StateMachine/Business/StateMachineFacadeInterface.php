@@ -62,6 +62,18 @@ interface StateMachineFacadeInterface
     public function checkConditions($stateMachineName);
 
     /**
+     * Specification:
+     * - Checks if state machine owns any predefined handler.
+     *
+     * @api
+     *
+     * @param string $stateMachineName
+     *
+     * @return bool
+     */
+    public function hasHandler($stateMachineName);
+
+    /**
      * @api
      *
      * @param string $stateMachineName

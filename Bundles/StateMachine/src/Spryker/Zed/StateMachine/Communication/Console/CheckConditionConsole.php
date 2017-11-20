@@ -8,8 +8,8 @@
 namespace Spryker\Zed\StateMachine\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,20 +19,19 @@ class CheckConditionConsole extends Console
 {
     const COMMAND_NAME = 'state-machine:check-condition';
     const COMMAND_DESCRIPTION = 'Check conditions';
-    const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
+    const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::COMMAND_DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
-        $this->addOption(
-            self::OPTION_STATE_MACHINE_NAME,
-            's',
-            InputOption::VALUE_REQUIRED,
+        $this->addArgument(
+            static::ARGUMENT_STATE_MACHINE_NAME,
+            InputArgument::REQUIRED,
             'Name of state machine to execute condition check'
         );
 
@@ -47,7 +46,13 @@ class CheckConditionConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $stateMachineName = $this->input->getOption(self::OPTION_STATE_MACHINE_NAME);
+        $stateMachineName = $this->input->getArgument(static::ARGUMENT_STATE_MACHINE_NAME);
+
+        $hasHandler = $this->getFacade()->hasHandler($stateMachineName);
+        if (!$hasHandler) {
+            $this->error(sprintf('State machine "%s" was not found.', $stateMachineName));
+            return;
+        }
 
         $this->getFacade()->checkConditions($stateMachineName);
     }

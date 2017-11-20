@@ -129,6 +129,22 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $stateMachineName
+     *
+     * @return bool
+     */
+    public function hasHandler($stateMachineName)
+    {
+        return $this->getFactory()
+            ->createStateMachineFinder()
+            ->hasHandler($stateMachineName);
+    }
+
+    /**
      * Specification:
      *  - Read all expired timeout events for given state machine
      *  - Execute events

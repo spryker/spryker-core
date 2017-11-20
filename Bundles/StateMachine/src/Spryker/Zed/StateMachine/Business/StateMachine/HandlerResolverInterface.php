@@ -15,4 +15,11 @@ interface HandlerResolverInterface
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface
      */
     public function get($stateMachineName);
+
+    /**
+     * @param string $stateMachineName
+     *
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface|null
+     */
+    public function find($stateMachineName);
 }

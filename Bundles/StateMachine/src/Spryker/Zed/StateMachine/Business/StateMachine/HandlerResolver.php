@@ -32,10 +32,10 @@ class HandlerResolver implements HandlerResolverInterface
      */
     public function get($stateMachineName)
     {
-        foreach ($this->handlers as $handler) {
-            if ($handler->getStateMachineName() === $stateMachineName) {
-                return $handler;
-            }
+        $stateMachineHandler = $this->find($stateMachineName);
+
+        if ($stateMachineHandler !== null) {
+            return $stateMachineHandler;
         }
 
         throw new StateMachineHandlerNotFound(
@@ -44,5 +44,21 @@ class HandlerResolver implements HandlerResolverInterface
                 $stateMachineName
             )
         );
+    }
+
+    /**
+     * @param string $stateMachineName
+     *
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface|null
+     */
+    public function find($stateMachineName)
+    {
+        foreach ($this->handlers as $handler) {
+            if ($handler->getStateMachineName() === $stateMachineName) {
+                return $handler;
+            }
+        }
+
+        return null;
     }
 }

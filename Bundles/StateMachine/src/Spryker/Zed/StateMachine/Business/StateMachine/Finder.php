@@ -49,6 +49,16 @@ class Finder implements FinderInterface
     /**
      * @param string $stateMachineName
      *
+     * @return bool
+     */
+    public function hasHandler($stateMachineName)
+    {
+        return $this->stateMachineHandlerResolver->find($stateMachineName) !== null;
+    }
+
+    /**
+     * @param string $stateMachineName
+     *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
      */
     public function getProcesses($stateMachineName)
