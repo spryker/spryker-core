@@ -42,7 +42,7 @@ class ZedRequestConfig extends AbstractBundleConfig
         if ($sslEnabled === true) {
             // @deprecated This is just for backward compatibility
             if (!$this->getConfig()->hasKey(ZedRequestConstants::BASE_URL_SSL_ZED_API)) {
-                return 'https://' . $this->getConfig()->get(ZedRequestConstants::HOST_SSL_ZED_API);
+                return '//' . $this->getConfig()->get(ZedRequestConstants::HOST_SSL_ZED_API);
             }
 
             return $this->getConfig()->get(ZedRequestConstants::BASE_URL_SSL_ZED_API);
@@ -50,7 +50,7 @@ class ZedRequestConfig extends AbstractBundleConfig
 
         // @deprecated This is just for backward compatibility
         if (!$this->getConfig()->hasKey(ZedRequestConstants::BASE_URL_ZED_API)) {
-            return 'http://' . $this->getConfig()->get(ZedRequestConstants::HOST_ZED_API);
+            return '//' . $this->getConfig()->get(ZedRequestConstants::HOST_ZED_API);
         }
 
         return $this->getConfig()->get(ZedRequestConstants::BASE_URL_ZED_API);
