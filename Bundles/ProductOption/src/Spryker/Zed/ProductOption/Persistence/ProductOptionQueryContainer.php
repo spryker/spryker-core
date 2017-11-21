@@ -28,6 +28,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
     const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
 
+    const EMPTY_SEARCH_TERM = '';
+
     /**
      * @api
      *
@@ -295,7 +297,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer)
+    protected function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer)
     {
         $query = $this->getFactory()
             ->createProductAbstractQuery();
@@ -336,7 +338,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         $query->groupByAttributes();
         $query->groupByIdProductAbstract();
 
-        if (trim($term) !== '') {
+        if (trim($term) !== static::EMPTY_SEARCH_TERM) {
             $term = '%' . mb_strtoupper($term) . '%';
 
             $query->where('UPPER(' . SpyProductAbstractTableMap::COL_SKU . ') LIKE ?', $term, PDO::PARAM_STR)

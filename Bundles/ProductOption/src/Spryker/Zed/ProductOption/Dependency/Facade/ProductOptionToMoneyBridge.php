@@ -24,16 +24,6 @@ class ProductOptionToMoneyBridge implements ProductOptionToMoneyInterface
     }
 
     /**
-     * @param int $value
-     *
-     * @return float
-     */
-    public function convertIntegerToDecimal($value)
-    {
-        return $this->moneyFacade->convertIntegerToDecimal($value);
-    }
-
-    /**
      * @param float $value
      *
      * @return int
@@ -72,27 +62,5 @@ class ProductOptionToMoneyBridge implements ProductOptionToMoneyInterface
     public function fromInteger($amount, $isoCode = null)
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
-    }
-
-    /**
-     * @param float $amount
-     * @param string|null $isoCode
-     *
-     * @return \Generated\Shared\Transfer\MoneyTransfer
-     */
-    public function fromFloat($amount, $isoCode = null)
-    {
-        return $this->moneyFacade->fromFloat($amount, $isoCode);
-    }
-
-    /**
-     * @param float $amount
-     * @param string|null $isoCode
-     *
-     * @return \Generated\Shared\Transfer\MoneyTransfer
-     */
-    public function fromString($amount, $isoCode = null)
-    {
-        return $this->moneyFacade->fromString($amount, $isoCode);
     }
 }

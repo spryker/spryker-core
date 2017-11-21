@@ -22,7 +22,7 @@ class ProductOptionGroupDataProvider
     protected $taxFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     * @var \Generated\Shared\Transfer\ProductOptionGroupTransfer|null
      */
     protected $productOptionGroupTransfer;
 

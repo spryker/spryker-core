@@ -370,7 +370,7 @@ class ProductOptionListTable extends AbstractTable
 
     /**
      * @param \Spryker\Service\UtilText\Model\Url\Url $viewDiscountUrl
-     * @param string $isActive
+     * @param bool $isActive
      *
      * @return string
      */

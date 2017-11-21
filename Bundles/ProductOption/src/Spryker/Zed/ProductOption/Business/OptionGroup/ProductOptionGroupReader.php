@@ -103,7 +103,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
         $groupNameTranslations = $this->getOptionTranslations(
             $availableLocales,
             $productOptionGroupTransfer->getName(),
-            $this->createRelatedKeyHash($productOptionGroupTransfer->getName())
+            $this->createRelatedKeyHash(ProductOptionGroupTransfer::class, $productOptionGroupTransfer->getIdProductOptionGroup())
         );
 
         $productOptionGroupTransfer->setGroupNameTranslations(new ArrayObject($groupNameTranslations));
@@ -141,13 +141,14 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     }
 
     /**
+     * @param string $identifierGroup
      * @param int $identifier
      *
      * @return string
      */
-    protected function createRelatedKeyHash($identifier)
+    protected function createRelatedKeyHash($identifierGroup, $identifier)
     {
-        return hash('sha256', $identifier);
+        return hash('sha256', $identifierGroup . $identifier);
     }
 
     /**
@@ -167,7 +168,10 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
             $productOptionValueTransfer = $this->hydrateProductOptionValueTransfer($productOptionValueEntity);
             $productOptionValueTransfer->setPrices($this->getPriceCollection($productOptionValueEntity));
 
-            $relatedOptionHash = $this->createRelatedKeyHash($productOptionValueEntity->getIdProductOptionValue());
+            $relatedOptionHash = $this->createRelatedKeyHash(
+                SpyProductOptionValue::class,
+                $productOptionValueEntity->getIdProductOptionValue()
+            );
             $productOptionValueTransfer->setOptionHash($relatedOptionHash);
 
             $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);

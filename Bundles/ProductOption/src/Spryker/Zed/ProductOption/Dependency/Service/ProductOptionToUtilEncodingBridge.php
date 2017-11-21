@@ -27,7 +27,7 @@ class ProductOptionToUtilEncodingBridge implements ProductOptionToUtilEncodingIn
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
     public function encodeJson($value, $options = null, $depth = null)
     {

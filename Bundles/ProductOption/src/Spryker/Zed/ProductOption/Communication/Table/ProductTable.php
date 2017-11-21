@@ -13,6 +13,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductTable extends AbstractTable
@@ -97,7 +98,11 @@ class ProductTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->productOptionQueryContainer
-            ->queryProductsAbstractBySearchTermForAssignment(null, $this->idProductOptionGroup, $this->localeTransfer)
+            ->queryProductsAbstractBySearchTermForAssignment(
+                ProductOptionQueryContainer::EMPTY_SEARCH_TERM,
+                $this->idProductOptionGroup,
+                $this->localeTransfer
+            )
             ->setModelAlias('spy_product_abstract');
 
         $queryResults = $this->runQuery($query, $config);
@@ -110,17 +115,17 @@ class ProductTable extends AbstractTable
                 'name' => urlencode($product['name']),
             ];
 
-            $checkbox_html = sprintf(
+            $checkboxHtml = sprintf(
                 "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='%s'>",
                 $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
-                $this->utilEncodingService->encodeJson($info)
+                (string)$this->utilEncodingService->encodeJson($info)
             );
 
             $results[] = [
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 SpyProductAbstractTableMap::COL_SKU => $product[SpyProductAbstractTableMap::COL_SKU],
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $product['name'],
-                self::COL_CHECKBOX => $checkbox_html,
+                self::COL_CHECKBOX => $checkboxHtml,
             ];
         }
         unset($queryResults);

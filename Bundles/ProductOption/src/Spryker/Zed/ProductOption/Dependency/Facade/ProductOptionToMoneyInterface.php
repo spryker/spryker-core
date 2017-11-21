@@ -10,13 +10,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 interface ProductOptionToMoneyInterface
 {
     /**
-     * @param int $value
-     *
-     * @return float
-     */
-    public function convertIntegerToDecimal($value);
-
-    /**
      * @param float $value
      *
      * @return int
@@ -44,20 +37,4 @@ interface ProductOptionToMoneyInterface
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function fromInteger($amount, $isoCode = null);
-
-    /**
-     * @param float $amount
-     * @param string|null $isoCode
-     *
-     * @return \Generated\Shared\Transfer\MoneyTransfer
-     */
-    public function fromFloat($amount, $isoCode = null);
-
-    /**
-     * @param float $amount
-     * @param string|null $isoCode
-     *
-     * @return \Generated\Shared\Transfer\MoneyTransfer
-     */
-    public function fromString($amount, $isoCode = null);
 }

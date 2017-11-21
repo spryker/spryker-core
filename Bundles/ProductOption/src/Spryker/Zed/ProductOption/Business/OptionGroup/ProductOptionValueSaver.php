@@ -156,7 +156,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     protected function getProductOptionValueById($idProductOptionValue)
     {
         $productOptionValueEntity = $this->productOptionQueryContainer
-            ->queryProductOptionByValueId((int)$idProductOptionValue)
+            ->queryProductOptionByValueId($idProductOptionValue)
             ->findOne();
 
         return $productOptionValueEntity;

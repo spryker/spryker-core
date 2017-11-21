@@ -202,7 +202,7 @@ class ProductOptionTable extends AbstractTable
         return sprintf(
             "<input id='product_category_checkbox_%d' class='product_category_checkbox' type='checkbox' checked='checked' data-info='%s'>",
             $productOption['id_product_abstract'],
-            $this->utilEncodingService->encodeJson($info)
+            (string)$this->utilEncodingService->encodeJson($info)
         );
     }
 }

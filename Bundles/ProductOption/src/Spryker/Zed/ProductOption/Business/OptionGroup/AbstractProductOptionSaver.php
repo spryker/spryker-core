@@ -132,7 +132,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
     protected function getOptionGroupById($idProductOptionGroup)
     {
         $productOptionGroupEntity = $this->productOptionQueryContainer
-            ->queryProductOptionGroupById((int)$idProductOptionGroup)
+            ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
 
         return $productOptionGroupEntity;
@@ -161,7 +161,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
     protected function isProductAlreadyInGroup(SpyProductOptionGroup $productOptionGroupEntity, $idProductAbstract)
     {
         foreach ($productOptionGroupEntity->getSpyProductAbstracts() as $productAbstractEntity) {
-            if ((int)$productAbstractEntity->getIdProductAbstract() === (int)$idProductAbstract) {
+            if ($productAbstractEntity->getIdProductAbstract() === $idProductAbstract) {
                 return true;
             }
         }
@@ -178,7 +178,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
     protected function createProductAbstractProductOptionGroupEntity(SpyProductOptionGroup $productOptionGroupEntity, $idProductAbstract)
     {
         $productAbstractProductOptionGroupEntity = new SpyProductAbstractProductOptionGroup();
-        $productAbstractProductOptionGroupEntity->setFkProductAbstract((int)$idProductAbstract);
+        $productAbstractProductOptionGroupEntity->setFkProductAbstract($idProductAbstract);
         $productAbstractProductOptionGroupEntity->setFkProductOptionGroup($productOptionGroupEntity->getIdProductOptionGroup());
 
         return $productAbstractProductOptionGroupEntity;

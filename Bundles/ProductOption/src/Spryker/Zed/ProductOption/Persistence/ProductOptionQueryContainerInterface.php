@@ -130,16 +130,6 @@ interface ProductOptionQueryContainerInterface
      * @api
      *
      * @param string $term
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @param string $term
      * @param int $idProductOptionGroup
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

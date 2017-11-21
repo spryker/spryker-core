@@ -123,7 +123,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected function getOptionGroupById($idProductOptionGroup)
     {
         $productOptionGroupEntity = $this->productOptionQueryContainer
-            ->queryProductOptionGroupById((int)$idProductOptionGroup)
+            ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
 
         return $productOptionGroupEntity;
