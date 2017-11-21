@@ -150,15 +150,6 @@ interface ProductOptionQueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Unnecessary method will be removed without replacement.
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
-     */
-    public function queryProductOptionGroupWithValues();
-
-    /**
-     * @api
-     *
      * @param string $value
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery

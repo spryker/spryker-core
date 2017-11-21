@@ -346,22 +346,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
         return $query;
     }
-
-    /**
-     * @api
-     *
-     * @deprecated Unnecessary method will be removed without replacement.
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
-     */
-    public function queryProductOptionGroupWithValues()
-    {
-        return $this->getFactory()
-            ->createProductOptionGroupQuery()
-            ->leftJoinSpyProductOptionValue()
-            ->groupByIdProductOptionGroup();
-    }
-
+    
     /**
      * @api
      *
