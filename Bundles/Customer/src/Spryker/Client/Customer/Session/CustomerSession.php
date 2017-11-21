@@ -8,6 +8,8 @@
 namespace Spryker\Client\Customer\Session;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface;
+use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface;
 use Spryker\Client\Session\SessionClientInterface;
 
 class CustomerSession implements CustomerSessionInterface
@@ -20,11 +22,29 @@ class CustomerSession implements CustomerSessionInterface
     private $sessionClient;
 
     /**
-     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
+     * @var CustomerSessionGetPluginInterface[]
      */
-    public function __construct(SessionClientInterface $sessionClient)
+    protected $customerSessionGetPlugins;
+
+    /**
+     * @var CustomerSessionSetPluginInterface[]
+     */
+    protected $customerSessionSetPlugins;
+
+    /**
+     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
+     * @param CustomerSessionGetPluginInterface[] $customerSessionGetPlugins
+     * @param CustomerSessionSetPluginInterface[] $customerSessionSetPlugins
+     */
+    public function __construct(
+        SessionClientInterface $sessionClient,
+        array $customerSessionGetPlugins = [],
+        array $customerSessionSetPlugins = []
+    )
     {
         $this->sessionClient = $sessionClient;
+        $this->customerSessionGetPlugins = $customerSessionGetPlugins;
+        $this->customerSessionSetPlugins = $customerSessionSetPlugins;
     }
 
     /**
@@ -48,7 +68,17 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function getCustomer()
     {
-        return $this->sessionClient->get(self::SESSION_KEY);
+        $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
+
+        if ($customerTransfer === null) {
+            return null;
+        }
+
+        foreach ($this->customerSessionGetPlugins as $customerSessionGetPlugin) {
+            $customerSessionGetPlugin->executes($customerTransfer);
+        }
+
+        return $customerTransfer;
     }
 
     /**
@@ -63,6 +93,20 @@ class CustomerSession implements CustomerSessionInterface
             $customerTransfer
         );
 
+        foreach ($this->customerSessionSetPlugins as $customerSessionSetPlugin) {
+            $customerSessionSetPlugin->execute($customerTransfer);
+        }
+
         return $customerTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function markCustomerAsDirty()
+    {
+        if ($this->hasCustomer() !== false) {
+            $this->getCustomer()->setIsDirty(true);
+        }
     }
 }

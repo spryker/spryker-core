@@ -448,4 +448,18 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->createZedCustomerStub()
             ->anonymizeCustomer($customerTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function markCustomerAsDirty()
+    {
+        $this->getFactory()
+            ->createSessionCustomerSession()
+            ->markCustomerAsDirty();
+    }
 }
