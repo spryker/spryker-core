@@ -29,7 +29,7 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
     protected $priceProductConfig;
 
     /**
-     * @var \Orm\Zed\PriceProduct\Persistence\SpyPriceType
+     * @var \Orm\Zed\PriceProduct\Persistence\SpyPriceType[]
      */
     protected static $priceTypeCache = [];
 

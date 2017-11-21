@@ -114,7 +114,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
     }
 
     /**
-     * @param string $status
+     * @param bool $status
      *
      * @return string
      */

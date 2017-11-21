@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Price;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Price\PriceConfig as SharedPriceConfig;
-use Spryker\Shared\Price\PriceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Price\PriceConfig getSharedConfig()
+ */
 class PriceConfig extends AbstractBundleConfig
 {
     /**
@@ -19,10 +19,7 @@ class PriceConfig extends AbstractBundleConfig
      */
     public function getPriceModes()
     {
-        return [
-            SharedPriceConfig::PRICE_MODE_NET => SharedPriceConfig::PRICE_MODE_NET,
-            SharedPriceConfig::PRICE_MODE_GROSS => SharedPriceConfig::PRICE_MODE_GROSS,
-        ];
+        return $this->getSharedConfig()->getPriceModes();
     }
 
     /**
@@ -30,7 +27,7 @@ class PriceConfig extends AbstractBundleConfig
      */
     public function getDefaultPriceMode()
     {
-        return Config::get(PriceConstants::DEFAULT_PRICE_MODE, SharedPriceConfig::PRICE_MODE_GROSS);
+        return $this->getSharedConfig()->getDefaultPriceMode();
     }
 
     /**
@@ -38,7 +35,7 @@ class PriceConfig extends AbstractBundleConfig
      */
     public function getNetPriceModeIdentifier()
     {
-        return SharedPriceConfig::PRICE_MODE_NET;
+        return $this->getSharedConfig()->getNetPriceModeIdentifier();
     }
 
     /**
@@ -46,6 +43,6 @@ class PriceConfig extends AbstractBundleConfig
      */
     public function getGrossPriceModeIdentifier()
     {
-        return SharedPriceConfig::PRICE_MODE_GROSS;
+        return $this->getSharedConfig()->getGrossPriceModeIdentifier();
     }
 }

@@ -341,7 +341,7 @@ class Reader implements ReaderInterface
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      * @param array $productPrice
      *
-     * @return int
+     * @return int|null
      */
     protected function findPriceByPriceMode(PriceProductCriteriaTransfer $priceProductCriteriaTransfer, array $productPrice)
     {

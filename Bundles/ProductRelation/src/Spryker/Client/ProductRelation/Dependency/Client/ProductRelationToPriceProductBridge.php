@@ -25,7 +25,7 @@ class ProductRelationToPriceProductBridge implements ProductRelationToPriceProdu
     /**
      * @param array $priceMap
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPrice(array $priceMap)
     {

@@ -118,7 +118,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param int $idProductRelation
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|mixed
      */
     protected function findRelationProducts($idProductRelation)
     {

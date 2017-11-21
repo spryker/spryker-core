@@ -25,7 +25,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $currencyClient;
 
     /**
-     * @var \Spryker\Client\Price\PriceConfig
+     * @var \Spryker\Client\PriceProduct\PriceProductConfig
      */
     protected $priceProductConfig;
 
