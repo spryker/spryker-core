@@ -152,6 +152,15 @@ class ProductOptionListTable extends AbstractTable
     }
 
     /**
+     * Example return
+     *  [
+     *      idProductOptionValue1 =>
+     *          [
+     *              PRICE_NET => ['<span>CHF 15.00</span>', '<span>EUR 10.00</span>', ...],
+     *              PRICE_GROSS => ['<span>CHF 17.00</span>', '<span>EUR 15.00</span>', ...],
+     *          ]
+     *  ]
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueCollection
      *
      * @return string[] First level keys are product option value ids,
@@ -178,7 +187,7 @@ class ProductOptionListTable extends AbstractTable
     }
 
     /**
-     * @param int $price
+     * @param int|null $price
      * @param int $idCurrency
      *
      * @return string
