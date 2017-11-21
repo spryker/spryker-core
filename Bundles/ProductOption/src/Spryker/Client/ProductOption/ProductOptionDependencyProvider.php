@@ -8,9 +8,9 @@ namespace Spryker\Client\ProductOption;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyBridge;
-use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceBridge;
-use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageBridge;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientBridge;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientBridge;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageClientBridge;
 
 class ProductOptionDependencyProvider extends AbstractDependencyProvider
 {
@@ -40,7 +40,7 @@ class ProductOptionDependencyProvider extends AbstractDependencyProvider
     protected function addStorageClient(Container $container)
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
-            return new ProductOptionToStorageBridge($container->getLocator()->storage()->client());
+            return new ProductOptionToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;
@@ -54,7 +54,7 @@ class ProductOptionDependencyProvider extends AbstractDependencyProvider
     protected function addPriceClient(Container $container)
     {
         $container[static::CLIENT_PRICE] = function (Container $container) {
-            return new ProductOptionToPriceBridge($container->getLocator()->price()->client());
+            return new ProductOptionToPriceClientBridge($container->getLocator()->price()->client());
         };
 
         return $container;
@@ -68,7 +68,7 @@ class ProductOptionDependencyProvider extends AbstractDependencyProvider
     protected function addCurrencyClient(Container $container)
     {
         $container[static::CLIENT_CURRENCY] = function (Container $container) {
-            return new ProductOptionToCurrencyBridge($container->getLocator()->currency()->client());
+            return new ProductOptionToCurrencyClientBridge($container->getLocator()->currency()->client());
         };
 
         return $container;

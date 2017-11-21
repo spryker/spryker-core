@@ -9,16 +9,16 @@ namespace Spryker\Client\ProductOption\Storage;
 
 use Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer;
 use Generated\Shared\Transfer\StorageProductOptionGroupTransfer;
-use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageClientInterface;
 use Spryker\Client\ProductOption\OptionGroup\ProductOptionValuePriceReaderInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductOptionStorage implements ProductOptionStorageInterface
 {
     /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface
+     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageClientInterface
      */
-    protected $storage;
+    protected $storageClient;
 
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
@@ -41,18 +41,18 @@ class ProductOptionStorage implements ProductOptionStorageInterface
     protected $translations = [];
 
     /**
-     * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface $storage
+     * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageClientInterface $storage
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param \Spryker\Client\ProductOption\OptionGroup\ProductOptionValuePriceReaderInterface $productOptionValuePriceReader
      * @param string $localeName
      */
     public function __construct(
-        ProductOptionToStorageInterface $storage,
+        ProductOptionToStorageClientInterface $storage,
         KeyBuilderInterface $keyBuilder,
         ProductOptionValuePriceReaderInterface $productOptionValuePriceReader,
         $localeName
     ) {
-        $this->storage = $storage;
+        $this->storageClient = $storage;
         $this->keyBuilder = $keyBuilder;
         $this->productOptionValuePriceReader = $productOptionValuePriceReader;
         $this->localeName = $localeName;
@@ -67,7 +67,7 @@ class ProductOptionStorage implements ProductOptionStorageInterface
     {
         $productOptionKey = $this->keyBuilder->generateKey($idAbstractProduct, $this->localeName);
 
-        $productOptions = $this->storage->get($productOptionKey);
+        $productOptions = $this->storageClient->get($productOptionKey);
         if (!$productOptions || !is_array($productOptions)) {
             return new StorageProductOptionGroupCollectionTransfer();
         }

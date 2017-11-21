@@ -37,7 +37,7 @@ class ProductOptionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface
+     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageClientInterface
      */
     protected function getStorageClient()
     {
@@ -56,7 +56,7 @@ class ProductOptionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceInterface
+     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface
      */
     protected function getPriceClient()
     {
@@ -64,7 +64,7 @@ class ProductOptionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyInterface
+     * @return \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface
      */
     protected function getCurrencyClient()
     {

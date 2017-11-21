@@ -10,8 +10,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StorageProductOptionGroupTransfer;
 use Generated\Shared\Transfer\StorageProductOptionValueTransfer;
-use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyInterface;
-use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceInterface;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface;
 use Spryker\Client\ProductOption\OptionGroup\ProductOptionValuePriceReader;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
 
@@ -38,12 +38,12 @@ class ProductOptionValuePriceReaderTest extends Unit
     protected $productOptionValuePriceReader;
 
     /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $priceClientMock;
 
     /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $currencyClientMock;
 
@@ -54,8 +54,8 @@ class ProductOptionValuePriceReaderTest extends Unit
     {
         parent::setUp();
 
-        $this->priceClientMock = $this->getMockBuilder(ProductOptionToPriceInterface::class)->getMock();
-        $this->currencyClientMock = $this->getMockBuilder(ProductOptionToCurrencyInterface::class)->getMock();
+        $this->priceClientMock = $this->getMockBuilder(ProductOptionToPriceClientInterface::class)->getMock();
+        $this->currencyClientMock = $this->getMockBuilder(ProductOptionToCurrencyClientInterface::class)->getMock();
 
         $this->mockCurrentCurrency();
         $this->mockCurrentPriceMode();
@@ -215,7 +215,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     }
 
     /**
-     * @uses ProductOptionToCurrencyInterface::getCurrent()
+     * @uses ProductOptionToCurrencyClientInterface::getCurrent()
      * @uses CurrencyTransfer::getCode()
      *
      * @return void
@@ -235,7 +235,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     }
 
     /**
-     * @uses ProductOptionToPriceInterface::getCurrentPriceMode()
+     * @uses ProductOptionToPriceClientInterface::getCurrentPriceMode()
      *
      * @return void
      */

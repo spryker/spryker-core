@@ -10,19 +10,19 @@ namespace Spryker\Client\ProductOption\OptionGroup;
 use ArrayObject;
 use Generated\Shared\Transfer\StorageProductOptionGroupTransfer;
 use Generated\Shared\Transfer\StorageProductOptionValueTransfer;
-use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyInterface;
-use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceInterface;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface;
+use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
 
 class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInterface
 {
     /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceInterface
+     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface
      */
     protected $priceClient;
 
     /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyInterface
+     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface
      */
     protected $currencyClient;
 
@@ -37,10 +37,10 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     protected static $currentPriceModeBuffer;
 
     /**
-     * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceInterface $priceClient
-     * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyInterface $currencyClient
+     * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface $priceClient
+     * @param \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface $currencyClient
      */
-    public function __construct(ProductOptionToPriceInterface $priceClient, ProductOptionToCurrencyInterface $currencyClient)
+    public function __construct(ProductOptionToPriceClientInterface $priceClient, ProductOptionToCurrencyClientInterface $currencyClient)
     {
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;

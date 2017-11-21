@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductOption\Dependency\Client;
 
-class ProductOptionToStorageBridge implements ProductOptionToStorageInterface
+class ProductOptionToStorageClientBridge implements ProductOptionToStorageClientInterface
 {
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductOption\Dependency\Client;
 
-class ProductOptionToCurrencyBridge implements ProductOptionToCurrencyInterface
+class ProductOptionToCurrencyClientBridge implements ProductOptionToCurrencyClientInterface
 {
     /**
      * @var \Spryker\Client\Currency\CurrencyClientInterface

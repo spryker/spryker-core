@@ -5,10 +5,10 @@
  */
 namespace Spryker\Client\ProductOption\Dependency\Client;
 
-interface ProductOptionToPriceInterface
+interface ProductOptionToCurrencyClientInterface
 {
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrentPriceMode();
+    public function getCurrent();
 }

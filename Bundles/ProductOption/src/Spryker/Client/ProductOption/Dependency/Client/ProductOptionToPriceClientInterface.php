@@ -5,12 +5,10 @@
  */
 namespace Spryker\Client\ProductOption\Dependency\Client;
 
-interface ProductOptionToStorageInterface
+interface ProductOptionToPriceClientInterface
 {
     /**
-     * @param string $key
-     *
-     * @return array
+     * @return string
      */
-    public function get($key);
+    public function getCurrentPriceMode();
 }

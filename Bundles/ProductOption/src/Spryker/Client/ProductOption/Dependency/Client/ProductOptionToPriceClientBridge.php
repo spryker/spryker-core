@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductOption\Dependency\Client;
 
-class ProductOptionToPriceBridge implements ProductOptionToPriceInterface
+class ProductOptionToPriceClientBridge implements ProductOptionToPriceClientInterface
 {
     /**
      * @var \Spryker\Client\Price\PriceClientInterface
