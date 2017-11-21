@@ -62,7 +62,7 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQueryContainerInterface
      */
     public function getSalesQueryContainer()
     {
@@ -70,7 +70,7 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryQueryContainerInterface
      */
     public function getCountryQueryContainer()
     {

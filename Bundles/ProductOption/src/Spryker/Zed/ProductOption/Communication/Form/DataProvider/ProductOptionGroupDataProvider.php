@@ -9,15 +9,15 @@ namespace Spryker\Zed\ProductOption\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 
 class ProductOptionGroupDataProvider
 {
     const NEW_GROUP_NAME = 'new_group_name';
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface $taxFacade
      */
     protected $taxFacade;
 
@@ -27,18 +27,18 @@ class ProductOptionGroupDataProvider
     protected $productOptionGroupTransfer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface $taxFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface $localeFacade
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer|null $productOptionGroupTransfer
      */
     public function __construct(
-        ProductOptionToTaxInterface $taxFacade,
-        ProductOptionToLocaleInterface $localeFacade,
+        ProductOptionToTaxFacadeInterface $taxFacade,
+        ProductOptionToLocaleFacadeInterface $localeFacade,
         ProductOptionGroupTransfer $productOptionGroupTransfer = null
     ) {
         $this->taxFacade = $taxFacade;

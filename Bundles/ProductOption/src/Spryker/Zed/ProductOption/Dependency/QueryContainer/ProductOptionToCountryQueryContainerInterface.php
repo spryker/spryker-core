@@ -5,10 +5,10 @@
  */
 namespace Spryker\Zed\ProductOption\Dependency\QueryContainer;
 
-interface ProductOptionToSalesInterface
+interface ProductOptionToCountryQueryContainerInterface
 {
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
-    public function querySalesOrderItem();
+    public function queryCountries();
 }

@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-class ProductOptionToTouchBridge implements ProductOptionToTouchInterface
+class ProductOptionToTouchFacadeBridge implements ProductOptionToTouchFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface

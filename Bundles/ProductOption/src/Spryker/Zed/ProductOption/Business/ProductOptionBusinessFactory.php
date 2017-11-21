@@ -128,7 +128,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface
      */
     protected function getLocaleFacade()
     {
@@ -136,7 +136,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface
      */
     protected function getCurrencyFacade()
     {
@@ -144,7 +144,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface
      */
     protected function getStoreFacade()
     {
@@ -152,7 +152,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface
      */
     protected function getTouchFacade()
     {
@@ -160,7 +160,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
      */
     protected function getTaxFacade()
     {
@@ -168,7 +168,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface
      */
     protected function getGlossaryFacade()
     {
@@ -176,7 +176,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceFacadeInterface
      */
     protected function getPriceFacade()
     {

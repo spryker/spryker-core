@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Service;
 
-class ProductOptionToUtilEncodingBridge implements ProductOptionToUtilEncodingInterface
+class ProductOptionToUtilEncodingServiceBridge implements ProductOptionToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface

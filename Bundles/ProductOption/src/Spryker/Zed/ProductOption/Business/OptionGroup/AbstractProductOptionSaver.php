@@ -11,7 +11,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 
@@ -23,17 +23,17 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface
      */
     protected $touchFacade;
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface $touchFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface $touchFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        ProductOptionToTouchInterface $touchFacade
+        ProductOptionToTouchFacadeInterface $touchFacade
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->touchFacade = $touchFacade;

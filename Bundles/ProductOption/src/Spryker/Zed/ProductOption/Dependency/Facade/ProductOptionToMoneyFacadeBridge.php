@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 
-class ProductOptionToMoneyBridge implements ProductOptionToMoneyInterface
+class ProductOptionToMoneyFacadeBridge implements ProductOptionToMoneyFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface

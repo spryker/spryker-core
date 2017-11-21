@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-class ProductOptionToPriceBridge implements ProductOptionToPriceInterface
+class ProductOptionToPriceFacadeBridge implements ProductOptionToPriceFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface

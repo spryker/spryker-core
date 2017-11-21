@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-interface ProductOptionToLocaleInterface
+interface ProductOptionToLocaleFacadeInterface
 {
     /**
      * @param string $localeName

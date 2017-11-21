@@ -13,7 +13,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionTable extends AbstractTable
@@ -34,7 +34,7 @@ class ProductOptionTable extends AbstractTable
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
@@ -55,14 +55,14 @@ class ProductOptionTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceInterface $utilEncodingService
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idProductOptionGroup
      * @param string $tableContext
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        ProductOptionToUtilEncodingInterface $utilEncodingService,
+        ProductOptionToUtilEncodingServiceInterface $utilEncodingService,
         LocaleTransfer $localeTransfer,
         $idProductOptionGroup,
         $tableContext

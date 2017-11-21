@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\QueryContainer;
 
-class ProductOptionToSalesBridge implements ProductOptionToSalesInterface
+class ProductOptionToSalesQueryContainerBridge implements ProductOptionToSalesQueryContainerInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface

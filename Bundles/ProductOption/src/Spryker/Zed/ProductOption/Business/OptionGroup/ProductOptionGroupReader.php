@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
@@ -30,26 +30,26 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface $productOptionValuePriceHydrator
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface $glossaryFacade
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductOptionValuePriceHydratorInterface $productOptionValuePriceHydrator,
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        ProductOptionToGlossaryInterface $glossaryFacade,
-        ProductOptionToLocaleInterface $localeFacade
+        ProductOptionToGlossaryFacadeInterface $glossaryFacade,
+        ProductOptionToLocaleFacadeInterface $localeFacade
     ) {
         $this->productOptionValuePriceHydrator = $productOptionValuePriceHydrator;
         $this->productOptionQueryContainer = $productOptionQueryContainer;

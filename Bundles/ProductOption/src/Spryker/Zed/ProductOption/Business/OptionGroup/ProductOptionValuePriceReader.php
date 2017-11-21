@@ -13,26 +13,26 @@ use Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface;
 
 class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInterface
 {
     const DEFAULT_PRICE = null;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface
      */
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceFacadeInterface
      */
     protected $priceFacade;
 
@@ -57,14 +57,14 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     protected static $currencyCodeBuffer = [];
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface $currencyFacade
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreInterface $storeFacade
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceFacadeInterface $priceFacade
      */
     public function __construct(
-        ProductOptionToCurrencyInterface $currencyFacade,
-        ProductOptionToStoreInterface $storeFacade,
-        ProductOptionToPriceInterface $priceFacade
+        ProductOptionToCurrencyFacadeInterface $currencyFacade,
+        ProductOptionToStoreFacadeInterface $storeFacade,
+        ProductOptionToPriceFacadeInterface $priceFacade
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->storeFacade = $storeFacade;

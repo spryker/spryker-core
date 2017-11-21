@@ -10,17 +10,17 @@ namespace Spryker\Zed\ProductOption;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchBridge;
-use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryBridge;
-use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesBridge;
-use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryQueryContainerBridge;
+use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQueryContainerBridge;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceBridge;
 use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginException;
 
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
@@ -49,19 +49,19 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new ProductOptionToLocaleBridge($container->getLocator()->locale()->facade());
+            return new ProductOptionToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
-            return new ProductOptionToTouchBridge($container->getLocator()->touch()->facade());
+            return new ProductOptionToTouchFacadeBridge($container->getLocator()->touch()->facade());
         };
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductOptionToGlossaryBridge($container->getLocator()->glossary()->facade());
+            return new ProductOptionToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
         $container[self::FACADE_TAX] = function (Container $container) {
-            return new ProductOptionToTaxBridge($container->getLocator()->tax()->facade());
+            return new ProductOptionToTaxFacadeBridge($container->getLocator()->tax()->facade());
         };
 
         $container = $this->addCurrencyFacade($container);
@@ -79,7 +79,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCurrencyFacade(Container $container)
     {
         $container[static::FACADE_CURRENCY] = function (Container $container) {
-            return new ProductOptionToCurrencyBridge($container->getLocator()->currency()->facade());
+            return new ProductOptionToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
         };
 
         return $container;
@@ -93,7 +93,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStoreFacade(Container $container)
     {
         $container[static::FACADE_STORE] = function (Container $container) {
-            return new ProductOptionToStoreBridge($container->getLocator()->store()->facade());
+            return new ProductOptionToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;
@@ -107,7 +107,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     protected function addPriceFacade(Container $container)
     {
         $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductOptionToPriceBridge($container->getLocator()->price()->facade());
+            return new ProductOptionToPriceFacadeBridge($container->getLocator()->price()->facade());
         };
 
         return $container;
@@ -121,11 +121,11 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return new ProductOptionToSalesBridge($container->getLocator()->sales()->queryContainer());
+            return new ProductOptionToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
         };
 
         $container[self::QUERY_CONTAINER_COUNTRY] = function (Container $container) {
-            return new ProductOptionToCountryBridge($container->getLocator()->country()->queryContainer());
+            return new ProductOptionToCountryQueryContainerBridge($container->getLocator()->country()->queryContainer());
         };
 
         return $container;
@@ -172,23 +172,23 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::FACADE_TAX] = function (Container $container) {
-            return new ProductOptionToTaxBridge($container->getLocator()->tax()->facade());
+            return new ProductOptionToTaxFacadeBridge($container->getLocator()->tax()->facade());
         };
 
         $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new ProductOptionToLocaleBridge($container->getLocator()->locale()->facade());
+            return new ProductOptionToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
 
         $container[self::FACADE_MONEY] = function (Container $container) {
-            return new ProductOptionToMoneyBridge($container->getLocator()->money()->facade());
+            return new ProductOptionToMoneyFacadeBridge($container->getLocator()->money()->facade());
         };
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductOptionToGlossaryBridge($container->getLocator()->glossary()->facade());
+            return new ProductOptionToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new ProductOptionToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+            return new ProductOptionToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         $container = $this->addCurrencyFacade($container);

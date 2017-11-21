@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-class ProductOptionToStoreBridge implements ProductOptionToStoreInterface
+class ProductOptionToStoreFacadeBridge implements ProductOptionToStoreFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface

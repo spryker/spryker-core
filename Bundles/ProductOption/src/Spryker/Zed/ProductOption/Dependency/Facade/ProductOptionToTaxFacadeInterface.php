@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-interface ProductOptionToTaxInterface
+interface ProductOptionToTaxFacadeInterface
 {
     /**
      * @return string

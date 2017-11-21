@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Service;
 
-interface ProductOptionToUtilEncodingInterface
+interface ProductOptionToUtilEncodingServiceInterface
 {
     /**
      * @param mixed $value

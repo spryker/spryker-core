@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductOption\Business\Calculator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
@@ -20,17 +20,17 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
      */
     protected $taxFacade;
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface $taxFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface $taxFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
-        ProductOptionToTaxInterface $taxFacade
+        ProductOptionToTaxFacadeInterface $taxFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->taxFacade = $taxFacade;

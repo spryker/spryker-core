@@ -7,7 +7,7 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 
-interface ProductOptionToMoneyInterface
+interface ProductOptionToMoneyFacadeInterface
 {
     /**
      * @param float $value

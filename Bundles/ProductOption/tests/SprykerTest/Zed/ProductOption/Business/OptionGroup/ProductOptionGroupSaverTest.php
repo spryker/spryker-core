@@ -16,7 +16,7 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInt
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
@@ -122,7 +122,7 @@ class ProductOptionGroupSaverTest extends MockProvider
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface|null $productOptionContainerMock
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface|null $touchFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface|null $touchFacadeMock
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface|null $translationSaverMock
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface|null $productOptionValueSaverMock
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface|null $abstractProductOptionSaver
@@ -131,7 +131,7 @@ class ProductOptionGroupSaverTest extends MockProvider
      */
     protected function createProductOptionGroupSaver(
         ProductOptionQueryContainerInterface $productOptionContainerMock = null,
-        ProductOptionToTouchInterface $touchFacadeMock = null,
+        ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
         TranslationSaverInterface $translationSaverMock = null,
         ProductOptionValueSaverInterface $productOptionValueSaverMock = null,
         AbstractProductOptionSaverInterface $abstractProductOptionSaver = null

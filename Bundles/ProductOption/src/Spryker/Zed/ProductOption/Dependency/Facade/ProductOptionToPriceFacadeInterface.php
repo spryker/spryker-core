@@ -6,10 +6,15 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-interface ProductOptionToStoreInterface
+interface ProductOptionToPriceFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return string
      */
-    public function getCurrentStore();
+    public function getGrossPriceModeIdentifier();
+
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier();
 }

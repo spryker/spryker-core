@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
-class ProductOptionToLocaleBridge implements ProductOptionToLocaleInterface
+class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

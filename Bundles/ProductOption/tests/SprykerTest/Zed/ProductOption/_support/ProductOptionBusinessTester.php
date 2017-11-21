@@ -14,8 +14,8 @@ use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Propel\Runtime\Propel;
 use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
 
 /**
  * Inherited Methods
@@ -171,7 +171,7 @@ class ProductOptionBusinessTester extends Actor
     {
         $this->setDependency(
             ProductOptionDependencyProvider::FACADE_STORE,
-            new ProductOptionToStoreBridge($storeFacade)
+            new ProductOptionToStoreFacadeBridge($storeFacade)
         );
     }
 
@@ -184,7 +184,7 @@ class ProductOptionBusinessTester extends Actor
     {
         $this->setDependency(
             ProductOptionDependencyProvider::FACADE_CURRENCY,
-            new ProductOptionToCurrencyBridge($currencyFacade)
+            new ProductOptionToCurrencyFacadeBridge($currencyFacade)
         );
     }
 }

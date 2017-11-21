@@ -15,8 +15,8 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionListTable extends AbstractTable
@@ -43,12 +43,12 @@ class ProductOptionListTable extends AbstractTable
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface
      */
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface
      */
     protected $moneyFacade;
 
@@ -59,13 +59,13 @@ class ProductOptionListTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface $currencyFacade
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        ProductOptionToCurrencyInterface $currencyFacade,
-        ProductOptionToMoneyInterface $moneyFacade
+        ProductOptionToCurrencyFacadeInterface $currencyFacade,
+        ProductOptionToMoneyFacadeInterface $moneyFacade
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->currencyFacade = $currencyFacade;

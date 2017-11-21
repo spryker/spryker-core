@@ -8,7 +8,7 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-class ProductOptionToGlossaryBridge implements ProductOptionToGlossaryInterface
+class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface

@@ -11,12 +11,12 @@ use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface;
 
 class ProductOptionValuePriceHydrator implements ProductOptionValuePriceHydratorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface
      */
     protected $currencyFacade;
 
@@ -26,9 +26,9 @@ class ProductOptionValuePriceHydrator implements ProductOptionValuePriceHydrator
     protected static $currencyBuffer = [];
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyInterface $currencyFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface $currencyFacade
      */
-    public function __construct(ProductOptionToCurrencyInterface $currencyFacade)
+    public function __construct(ProductOptionToCurrencyFacadeInterface $currencyFacade)
     {
         $this->currencyFacade = $currencyFacade;
     }
