@@ -13,13 +13,14 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductTable extends AbstractTable
 {
     const TABLE_IDENTIFIER = 'product-table';
     const COL_CHECKBOX = 'checkbox';
+
+    const EMPTY_SEARCH_TERM = '';
 
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
@@ -99,7 +100,7 @@ class ProductTable extends AbstractTable
     {
         $query = $this->productOptionQueryContainer
             ->queryProductsAbstractBySearchTermForAssignment(
-                ProductOptionQueryContainer::EMPTY_SEARCH_TERM,
+                static::EMPTY_SEARCH_TERM,
                 $this->idProductOptionGroup,
                 $this->localeTransfer
             )
