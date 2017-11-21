@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Price;
 
-use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Spryker\Zed\Kernel\Communication\Form\AbstractCollectionType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  */
-class ProductMoneyCollectionType extends MoneyCollectionType
+class ProductMoneyCollectionType extends AbstractCollectionType
 {
     /**
      * @var string
@@ -28,11 +31,55 @@ class ProductMoneyCollectionType extends MoneyCollectionType
     protected static $grossPriceModeIdentifier;
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string[] $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $defaultOptions = [
+            'entry_options' => [
+                'data_class' => MoneyValueTransfer::class,
+            ],
+            'entry_type' => $this->getFactory()->getMoneyFormTypePlugin()->getType(),
+        ];
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $this->setInitialMoneyValueData($event);
+            }
+        );
+
+        parent::buildForm($builder, array_replace_recursive($defaultOptions, $options));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getBlockPrefix()
     {
         return 'product_money_collection';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return void
+     */
+    protected function setInitialMoneyValueData(FormEvent $event)
+    {
+        $moneyCollectionInitialDataProvider = $this->getFactory()->createMoneyCollectionMultiStoreDataProvider();
+
+        if (count($event->getData()) === 0) {
+            $event->setData($moneyCollectionInitialDataProvider->getInitialData());
+            return;
+        }
+
+        $event->setData(
+            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($event->getData())
+        );
     }
 
     /**
@@ -94,7 +141,7 @@ class ProductMoneyCollectionType extends MoneyCollectionType
         $priceType = $priceTypeTransfer->getName();
         $priceModeConfiguration = $priceTypeTransfer->getPriceModeConfiguration();
 
-        if ($priceModeConfiguration === ProductManagementConstants::PRICE_MODE_BOTH) {
+        if ($priceModeConfiguration === $this->getPriceModeIdentifierForBothType()) {
             $priceTypes[$netPriceModeIdentifier][$priceType] = $priceTypeTransfer;
             $priceTypes[$grossPriceModeIdentifier][$priceType] = $priceTypeTransfer;
         }
@@ -129,7 +176,7 @@ class ProductMoneyCollectionType extends MoneyCollectionType
         $storeName = $moneyValueFormView->vars['store_name'];
         $currencySymbol = $moneyValueFormView->vars['currency_symbol'];
 
-        if ($priceModeConfiguration === ProductManagementConstants::PRICE_MODE_BOTH) {
+        if ($priceModeConfiguration === $this->getPriceModeIdentifierForBothType()) {
             $priceTable[$storeName][$currencySymbol][$netPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
             $priceTable[$storeName][$currencySymbol][$grossPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
         } else {
@@ -137,6 +184,14 @@ class ProductMoneyCollectionType extends MoneyCollectionType
         }
 
         return $priceTable;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPriceModeIdentifierForBothType()
+    {
+        return $this->getFactory()->getPriceProductFacade()->getPriceModeIdentifierForBothType();
     }
 
     /**

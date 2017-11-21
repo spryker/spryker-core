@@ -9,7 +9,7 @@ namespace Spryker\Client\Wishlist\Product;
 
 use ArrayObject;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
-use Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductInterface;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientInterface;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface;
 
 class ProductStorage implements ProductStorageInterface
@@ -20,17 +20,17 @@ class ProductStorage implements ProductStorageInterface
     protected $productClient;
 
     /**
-     * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductInterface
+     * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientInterface
      */
     protected $priceProductClient;
 
     /**
      * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface $productClient
-     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductInterface $priceProductClient
+     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientInterface $priceProductClient
      */
     public function __construct(
         WishlistToProductInterface $productClient,
-        WishlistToPriceProductInterface $priceProductClient
+        WishlistToPriceProductClientInterface $priceProductClient
     ) {
         $this->productClient = $productClient;
         $this->priceProductClient = $priceProductClient;

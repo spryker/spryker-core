@@ -39,21 +39,21 @@ class PriceCartToPriceProductBridge implements PriceCartToPriceProductInterface
      * @param string $sku
      * @param string|null $priceType
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceType = null)
+    public function findPriceBySku($sku, $priceType = null)
     {
-        return $this->priceProductFacade->getPriceBySku($sku, $priceType);
+        return $this->priceProductFacade->findPriceBySku($sku, $priceType);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
+    public function findPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
     {
-        return $this->priceProductFacade->getPriceFor($priceFilterTransfer);
+        return $this->priceProductFacade->findPriceFor($priceFilterTransfer);
     }
 
     /**

@@ -12,16 +12,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 interface BulkWriterInterface
 {
     /**
-     * @param string $name
-     *
-     * @throws \Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceType
-     */
-    public function createPriceType($name);
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void

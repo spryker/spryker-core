@@ -10,12 +10,14 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Price;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ */
 class ProductMoneyType extends AbstractType
 {
     const FIELD_FK_PRICE_TYPE = 'fk_price_type';
@@ -32,7 +34,7 @@ class ProductMoneyType extends AbstractType
 
         $builder->add(
             PriceProductTransfer::MONEY_VALUE,
-            MoneyType::class,
+            $this->getFactory()->getMoneyFormTypePlugin()->getType(),
             [
                 'data_class' => MoneyValueTransfer::class,
             ]

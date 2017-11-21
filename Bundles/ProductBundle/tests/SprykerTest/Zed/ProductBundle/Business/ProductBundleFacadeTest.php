@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductBundle\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -373,6 +374,29 @@ class ProductBundleFacadeTest extends Unit
 
         $this->assertNotNull($productConcreteTransfer->getProductBundle());
         $this->assertCount(2, $productConcreteTransfer->getProductBundle()->getBundledProducts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterBundleItemsOnCartReloadShouldRemoveBundleItems()
+    {
+        $productBundleFacade = $this->createProductBundleFacade();
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withBundleItem([
+                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => 1,
+            ])->withItem([
+                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => 1,
+            ])->withAnotherItem([
+                ItemTransfer::SKU => '123',
+            ])
+            ->build();
+
+        $updatedQuoteTransfer = $productBundleFacade->filterBundleItemsOnCartReload($quoteTransfer);
+
+        $this->assertCount(0, $updatedQuoteTransfer->getBundleItems());
+        $this->assertCount(2, $updatedQuoteTransfer->getItems());
     }
 
     /**

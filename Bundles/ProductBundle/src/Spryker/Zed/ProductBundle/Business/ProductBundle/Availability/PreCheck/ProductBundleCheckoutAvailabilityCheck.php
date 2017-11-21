@@ -40,7 +40,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array|\ArrayObject
      */
     protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer)
     {
@@ -70,7 +70,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
     /**
      * @param \ArrayObject $currentCartItems
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundledItems
+     * @param mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $bundledItems
      *
      * @return bool
      */

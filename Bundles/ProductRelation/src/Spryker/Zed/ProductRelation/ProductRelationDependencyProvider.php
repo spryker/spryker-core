@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleBridge;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToMoneyBridge;
-use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductBridge;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeBridge;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToProductBridge as FacadeProductRelationToProductBridge;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchBridge;
 use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProductBridge as QueryContainerProductRelationToProductBridge;
@@ -198,7 +198,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
     protected function addPriceProductFacade(Container $container)
     {
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
-            return new ProductRelationToPriceProductBridge(
+            return new ProductRelationToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
             );
         };

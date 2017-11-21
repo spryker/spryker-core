@@ -25,7 +25,7 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
     public function getPriceTypeDefaultName()
     {
         return $this->getFactory()
-            ->createSharedPriceConfig()
+            ->getModuleConfig()
             ->getPriceTypeDefaultName();
     }
 

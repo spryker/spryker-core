@@ -44,10 +44,10 @@ class PriceProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\PriceProduct\PriceProductConfig
+     * @return \Spryker\Client\PriceProduct\PriceProductConfig|\Spryker\Client\Kernel\AbstractBundleConfig
      */
-    public function createSharedPriceConfig()
+    public function getModuleConfig()
     {
-        return $this->getConfig()->createSharedPriceConfig();
+        return parent::getConfig();
     }
 }

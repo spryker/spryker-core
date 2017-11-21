@@ -30,4 +30,12 @@ class PriceFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(PriceDependencyProvider::CLIENT_QUOTE);
     }
+
+    /**
+     * @return \Spryker\Client\Price\PriceConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     */
+    public function getModuleConfig()
+    {
+        return parent::getConfig();
+    }
 }

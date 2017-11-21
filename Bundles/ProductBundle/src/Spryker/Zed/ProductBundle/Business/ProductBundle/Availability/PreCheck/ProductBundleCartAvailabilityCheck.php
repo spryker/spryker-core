@@ -89,7 +89,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param string $stock
+     * @param int $stock
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
@@ -109,14 +109,14 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      */
     protected function createCartMessageTransfer($stock, $translationKey, $sku)
     {
-        $messageTranfer = new MessageTransfer();
-        $messageTranfer->setValue($translationKey);
-        $messageTranfer->setParameters([
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($translationKey);
+        $messageTransfer->setParameters([
             static::SKU_TRANSLATION_PARAMTER => $sku,
             static::STOCK_TRANSLATION_PARAMETER => $stock,
         ]);
 
-        return $messageTranfer;
+        return $messageTransfer;
     }
 
     /**
@@ -200,7 +200,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundledProducts
+     * @param mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null

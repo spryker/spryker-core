@@ -15,16 +15,16 @@ interface ReaderInterface
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceTypeName = null);
+    public function findPriceBySku($sku, $priceTypeName = null);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return int
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
+    public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
 
     /**
      * @param string $sku

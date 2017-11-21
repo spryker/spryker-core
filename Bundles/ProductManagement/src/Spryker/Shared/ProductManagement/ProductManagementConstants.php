@@ -11,18 +11,10 @@ interface ProductManagementConstants
 {
     const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
 
-    /** @deprecated Please use ProductManagementConstants::BASE_URL_YVES instead */
-    const HOST_YVES = 'HOST_YVES';
-
     /**
      * Base URL for Yves including scheme and port (e.g. http://www.de.demoshop.local:8080)
      *
      * @api
      */
     const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
-
-    /**
-     * Price mode for price type when its applicable to gross and net price modes.
-     */
-    const PRICE_MODE_BOTH = 'BOTH';
 }

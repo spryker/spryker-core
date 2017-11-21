@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceBridge;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductBridgeProduct;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge;
@@ -97,7 +97,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     protected function addFacadePriceProduct(Container $container)
     {
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
-            return new ProductBundleToPriceProductBridgeProduct($container->getLocator()->priceProduct()->facade());
+            return new ProductBundleToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
         };
         return $container;
     }

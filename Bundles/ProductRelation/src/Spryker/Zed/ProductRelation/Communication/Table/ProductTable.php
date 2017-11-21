@@ -14,7 +14,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductRelation\Communication\Controller\ViewController;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToMoneyInterface;
-use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductInterface;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
@@ -50,7 +50,7 @@ class ProductTable extends AbstractProductTable
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductInterface
+     * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
 
@@ -59,7 +59,7 @@ class ProductTable extends AbstractProductTable
      * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeInterface $priceProductFacade
      * @param int|null $idProductRelation
      */
     public function __construct(
@@ -67,7 +67,7 @@ class ProductTable extends AbstractProductTable
         ProductRelationToLocaleInterface $localeFacade,
         ProductRelationToUtilEncodingInterface $utilEncodingService,
         ProductRelationToMoneyInterface $moneyFacade,
-        ProductRelationToPriceProductInterface $priceProductFacade,
+        ProductRelationToPriceProductFacadeInterface $priceProductFacade,
         $idProductRelation = null
     ) {
         $this->productRelationQueryContainer = $productRelationQueryContainer;
@@ -251,7 +251,11 @@ class ProductTable extends AbstractProductTable
      */
     protected function formatProductPrice($sku)
     {
-        $price = $this->priceProductFacade->getPriceBySku($sku);
+        $price = $this->priceProductFacade->findPriceBySku($sku);
+
+        if ($price === null) {
+            return 'N/A';
+        }
 
         $moneyTransfer = $this->moneyFacade->fromInteger($price);
 

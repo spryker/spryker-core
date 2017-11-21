@@ -24,8 +24,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function getPriceModes()
     {
         return $this->getFactory()
-            ->getConfig()
-            ->createSharedConfig()
+            ->getModuleConfig()
             ->getPriceModes();
     }
 
@@ -39,8 +38,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function getDefaultPriceMode()
     {
         return $this->getFactory()
-            ->getConfig()
-            ->createSharedConfig()
+            ->getModuleConfig()
             ->getDefaultPriceMode();
     }
 
@@ -54,8 +52,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function getNetPriceModeIdentifier()
     {
         return $this->getFactory()
-            ->getConfig()
-            ->createSharedConfig()
+            ->getModuleConfig()
             ->getNetPriceModeIdentifier();
     }
 
@@ -69,8 +66,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function getGrossPriceModeIdentifier()
     {
         return $this->getFactory()
-           ->getConfig()
-           ->createSharedConfig()
+           ->getModuleConfig()
            ->getGrossPriceModeIdentifier();
     }
 }

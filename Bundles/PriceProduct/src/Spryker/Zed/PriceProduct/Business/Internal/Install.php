@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Internal;
 
-use Spryker\Zed\PriceProduct\Business\Model\WriterInterface;
+use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceTypeWriterInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class Install implements InstallInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Writer
+     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceTypeWriterInterface
      */
-    protected $writer;
+    protected $priceTypeWriter;
 
     /**
      * @var \Spryker\Zed\PriceProduct\PriceProductConfig
@@ -23,12 +23,14 @@ class Install implements InstallInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Business\Model\WriterInterface $writer
+     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceTypeWriterInterface $priceTypeWriter
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
-    public function __construct(WriterInterface $writer, PriceProductConfig $config)
-    {
-        $this->writer = $writer;
+    public function __construct(
+        PriceTypeWriterInterface $priceTypeWriter,
+        PriceProductConfig $config
+    ) {
+        $this->priceTypeWriter = $priceTypeWriter;
         $this->config = $config;
     }
 
@@ -45,6 +47,6 @@ class Install implements InstallInterface
      */
     protected function createPriceType()
     {
-        $this->writer->createPriceType($this->config->getPriceTypeDefaultName());
+        $this->priceTypeWriter->createPriceType($this->config->getPriceTypeDefaultName());
     }
 }

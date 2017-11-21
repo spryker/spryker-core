@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToCartBridge;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToCustomerBridge;
-use Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductBridge;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientClientBridge;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
@@ -47,7 +47,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
     protected function addPriceProductClient(Container $container)
     {
         $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
-            return new WishlistToPriceProductBridge($container->getLocator()->priceProduct()->client());
+            return new WishlistToPriceProductClientClientBridge($container->getLocator()->priceProduct()->client());
         };
         return $container;
     }

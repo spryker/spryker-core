@@ -1,11 +1,11 @@
 {
   "name": "spryker/shipment-cart-connector",
-  "description": "Shipment Cart Connector module",
+  "description": "ShipmentCartConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/shipment": "^6.1.0",
+    "spryker/kernel": "^3.13.0",
     "spryker/price": "^5.0.0",
-    "spryker/kernel": "^3.13.0"
+    "spryker/shipment": "^6.1.0"
   },
   "require-dev": {
     "spryker/cart": "*"
@@ -20,9 +20,6 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
-      "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },

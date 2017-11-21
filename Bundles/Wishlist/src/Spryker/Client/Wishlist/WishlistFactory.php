@@ -75,7 +75,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductInterface
+     * @return \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientInterface
      */
     protected function getPriceProductClient()
     {

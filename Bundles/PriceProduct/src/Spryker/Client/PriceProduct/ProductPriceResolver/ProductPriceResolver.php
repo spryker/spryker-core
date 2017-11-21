@@ -25,7 +25,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $currencyClient;
 
     /**
-     * @var \Spryker\Client\Price\PriceConfig
+     * @var \Spryker\Client\PriceProduct\PriceProductConfig
      */
     protected $priceProductConfig;
 
@@ -51,8 +51,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      */
     public function resolve(array $priceMap)
     {
-        $currentProductPriceTransfer = (new CurrentProductPriceTransfer())
-            ->setPrice(0);
+        $currentProductPriceTransfer = new CurrentProductPriceTransfer();
 
         $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
         $currentPriceMode = $this->priceClient->getCurrentPriceMode();
@@ -63,7 +62,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
         $price = null;
         $prices = $priceMap[$currencyIsoCode][$currentPriceMode];
-        $defaultProductPriceType = $this->getPriceProductConfig()->getPriceTypeDefaultName();
+        $defaultProductPriceType = $this->priceProductConfig->getPriceTypeDefaultName();
         if (isset($prices[$defaultProductPriceType])) {
             $price = $prices[$defaultProductPriceType];
         }
@@ -71,13 +70,5 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         return $currentProductPriceTransfer
             ->setPrice($price)
             ->setPrices($prices);
-    }
-
-    /**
-     * @return \Spryker\Shared\PriceProduct\PriceProductConfig
-     */
-    protected function getPriceProductConfig()
-    {
-        return $this->priceProductConfig->createSharedPriceConfig();
     }
 }

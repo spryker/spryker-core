@@ -35,7 +35,7 @@ class PriceProductToTouchFacadeBridge implements PriceProductToTouchFacadeInterf
 
     /**
      * @param string $itemType
-     * @param string $itemId
+     * @param int $itemId
      *
      * @return bool
      */

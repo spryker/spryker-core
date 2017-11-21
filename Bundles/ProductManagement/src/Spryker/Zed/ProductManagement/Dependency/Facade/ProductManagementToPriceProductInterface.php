@@ -13,9 +13,9 @@ interface ProductManagementToPriceProductInterface
      * @param string $sku
      * @param string|null $priceTypeName
      *
-     * @return int
+     * @return int|null
      */
-    public function getPriceBySku($sku, $priceTypeName = null);
+    public function findPriceBySku($sku, $priceTypeName = null);
 
     /**
      * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
@@ -34,4 +34,9 @@ interface ProductManagementToPriceProductInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForBothType();
 }

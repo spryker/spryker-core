@@ -14,9 +14,13 @@ use Spryker\Zed\PriceProduct\Business\Model\PriceGrouper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeMapper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReader;
+use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceTypeWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReader;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReader;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
@@ -53,7 +57,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getProductFacade(),
             $this->createPriceTypeReader(),
-            $this->createPriceProductMapper()
+            $this->createPriceProductStoreWriter()
         );
     }
 
@@ -68,7 +72,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getProductFacade(),
             $this->createPriceTypeReader(),
-            $this->createPriceProductMapper()
+            $this->createPriceProductStoreWriter()
         );
     }
 
@@ -143,7 +147,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createInstaller()
     {
-        return new Install($this->createWriterModel(), $this->getConfig());
+        return new Install($this->createPriceTypeWriter(), $this->getConfig());
     }
 
     /**
@@ -152,6 +156,46 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createPriceGrouper()
     {
         return new PriceGrouper($this->createReaderModel(), $this->createPriceProductMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceTypeWriterInterface
+     */
+    public function createPriceTypeWriter()
+    {
+        return new PriceTypeWriter($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractWriterInterface
+     */
+    public function createPriceProductAbstractWriter()
+    {
+        return new PriceProductAbstractWriter(
+            $this->createPriceTypeReader(),
+            $this->getQueryContainer(),
+            $this->createPriceProductStoreWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteWriterInterface
+     */
+    public function createPriceProductConcreteWriter()
+    {
+        return new PriceProductConcreteWriter(
+            $this->createPriceTypeReader(),
+            $this->getQueryContainer(),
+            $this->createPriceProductStoreWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface
+     */
+    protected function createPriceProductStoreWriter()
+    {
+        return new PriceProductStoreWriter($this->getQueryContainer());
     }
 
     /**
@@ -192,5 +236,13 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     protected function getStoreFacade()
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig|\Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    public function getModuleConfig()
+    {
+        return parent::getConfig();
     }
 }

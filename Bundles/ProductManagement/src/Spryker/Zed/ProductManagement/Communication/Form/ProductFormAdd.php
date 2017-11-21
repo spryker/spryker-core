@@ -413,7 +413,7 @@ class ProductFormAdd extends AbstractType
                         function ($dataToValidate, ExecutionContextInterface $context) {
                             $selectedAttributes = array_filter(array_values($dataToValidate));
                             if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                                $context->addViolation('Please enter at least Sku and Name of the product in every locale under General', [$context->getGroup()]);
+                                $context->addViolation('Please enter at least Sku and Name of the product in every locale under General');
                                 GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                             }
                         },

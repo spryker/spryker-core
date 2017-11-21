@@ -44,7 +44,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     }
 
     /**
-     * @return bool
+     * @return void
      */
     protected function createDatabase()
     {

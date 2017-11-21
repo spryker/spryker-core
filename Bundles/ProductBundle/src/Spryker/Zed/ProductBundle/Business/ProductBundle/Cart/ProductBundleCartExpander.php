@@ -20,7 +20,7 @@ use OutOfBoundsException;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -34,7 +34,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     protected $productBundleQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
 
@@ -70,14 +70,14 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface $priceFacade
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToPriceProductInterface $priceProductFacade,
+        ProductBundleToPriceProductFacadeInterface $priceProductFacade,
         ProductBundleToProductInterface $productFacade,
         ProductBundleToLocaleInterface $localeFacade,
         ProductBundleToPriceInterface $priceFacade
@@ -345,7 +345,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         if (!isset(static::$productPriceCache[$sku])) {
             $priceFilterTransfer = $this->createPriceProductFilterTransfer($sku, $currencyIsoCode, $priceMode);
-            static::$productPriceCache[$sku] = $this->priceProductFacade->getPriceFor($priceFilterTransfer);
+            static::$productPriceCache[$sku] = $this->priceProductFacade->findPriceFor($priceFilterTransfer);
         }
 
          return static::$productPriceCache[$sku];
@@ -411,7 +411,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findBundledItemsByIdProductConcrete($idProductConcrete)
     {

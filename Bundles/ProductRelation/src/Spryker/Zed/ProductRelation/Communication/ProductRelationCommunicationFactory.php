@@ -180,7 +180,7 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductInterface
+     * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeInterface
      */
     protected function getPriceProductFacade()
     {

@@ -91,9 +91,6 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
      */
     protected function getPriceModes()
     {
-        return $this
-            ->getConfig()
-            ->createSharedConfig()
-            ->getPriceModes();
+        return $this->getConfig()->getPriceModes();
     }
 }

@@ -28,7 +28,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      *
      * @return mixed
      */
-    public function getPriceBySku($sku, $priceType = null)
+    public function findPriceBySku($sku, $priceType = null)
     {
         return $this->prices[$sku];
     }
@@ -38,7 +38,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      *
      * @return mixed
      */
-    public function getPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
+    public function findPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
     {
         if (!isset($this->prices[$priceFilterTransfer->getSku()])) {
             return null;

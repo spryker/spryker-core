@@ -99,7 +99,7 @@ class PriceManager implements PriceManagerInterface
         PriceProductFilterTransfer $priceProductFilterTransfer,
         $priceMode
     ) {
-        $price = $this->priceProductFacade->getPriceFor($priceProductFilterTransfer);
+        $price = $this->priceProductFacade->findPriceFor($priceProductFilterTransfer);
 
         if ($price === null) {
             throw new PriceMissingException(

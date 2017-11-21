@@ -14,4 +14,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class PriceBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\Price\PriceConfig|\Spryker\Zed\Kernel\AbstractBundleConfig
+     */
+    public function getModuleConfig()
+    {
+        return parent::getConfig();
+    }
 }

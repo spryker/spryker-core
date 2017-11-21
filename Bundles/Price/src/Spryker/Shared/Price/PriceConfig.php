@@ -8,8 +8,9 @@
 namespace Spryker\Shared\Price;
 
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class PriceConfig
+class PriceConfig extends AbstractSharedConfig
 {
     const PRICE_MODE_NET = 'NET_MODE';
     const PRICE_MODE_GROSS = 'GROSS_MODE';
