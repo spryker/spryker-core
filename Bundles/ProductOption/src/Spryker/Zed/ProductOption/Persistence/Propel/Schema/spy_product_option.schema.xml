@@ -31,6 +31,7 @@
 
     <table name="spy_product_option_value" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValue">
         <column name="id_product_option_value" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="price" type="INTEGER" description="Deprecated"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="value" required="true" type="VARCHAR" size="255"/>
         <column name="fk_product_option_group" type="integer" required="true"/>
