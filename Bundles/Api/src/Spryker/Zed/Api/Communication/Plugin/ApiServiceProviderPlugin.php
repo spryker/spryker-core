@@ -10,7 +10,6 @@ namespace Spryker\Zed\Api\Communication\Plugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -20,11 +19,15 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
+     * @deprecated Please don't use this property anymore. The needed ControllerListenerInterface is now retrieved by the Factory.
+     *
      * @var \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
      */
     protected $controllerListener;
 
     /**
+     * @deprecated Please remove usage of this setter. The needed ControllerListenerInterface is now retrieved by the Factory.
+     *
      * @param \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface $controllerListener
      *
      * @return void
@@ -41,15 +44,25 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
      */
     public function register(Application $app)
     {
-        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $dispatcher */
-        $dispatcher = $app['dispatcher'];
-        $dispatcher->addListener(
+        $this->getEventDispatcher($app)->addListener(
             KernelEvents::CONTROLLER,
             [
-                $this->controllerListener,
+                $this->getControllerListener(),
                 'onKernelController',
             ]
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
+     */
+    protected function getControllerListener()
+    {
+        if (!$this->controllerListener) {
+            return $this->getFactory()->createControllerListener();
+        }
+
+        return $this->controllerListener;
     }
 
     /**
@@ -59,7 +72,15 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
      */
     public function boot(Application $app)
     {
-        $app->before(function (Request $request) {
-        });
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected function getEventDispatcher(Application $app)
+    {
+        return $app['dispatcher'];
     }
 }
