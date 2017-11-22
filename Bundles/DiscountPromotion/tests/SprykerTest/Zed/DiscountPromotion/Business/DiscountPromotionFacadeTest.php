@@ -131,6 +131,47 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCollectShouldAdjustQuantityBasedOnAvailability()
+    {
+        $discountPromotionFacade = $this->getDiscountPromotionFacade();
+
+        $promotionItemSku = '001';
+        $promotionItemQuantity = 5;
+        $grossPrice = 100;
+        $price = 80;
+        $quantity = 1;
+
+        $discountGeneralTransfer = $this->tester->haveDiscount();
+
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
+        $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
+
+        $discountTransfer = (new DiscountTransfer())
+            ->setIdDiscount($discountGeneralTransfer->getIdDiscount());
+
+        $itemTransfer = (new ItemTransfer())
+            ->setAbstractSku($promotionItemSku)
+            ->setQuantity($quantity)
+            ->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion())
+            ->setUnitGrossPrice($grossPrice)
+            ->setUnitPrice($price);
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $collectedDiscounts = $discountPromotionFacade->collect($discountTransfer, $quoteTransfer);
+
+        $promotionItemTransfer = $quoteTransfer->getItems()[0];
+
+        $this->assertCount(0, $quoteTransfer->getPromotionItems());
+        $this->assertSame($quantity, $collectedDiscounts[0]->getQuantity());
+        $this->assertSame($promotionItemQuantity, $promotionItemTransfer->getMaxQuantity());
+    }
+
+    /**
+     * @return void
+     */
     public function testSavePromotionDiscountShouldHavePersistedPromotionDiscount()
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
