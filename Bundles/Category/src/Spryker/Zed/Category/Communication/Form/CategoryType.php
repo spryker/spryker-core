@@ -188,8 +188,7 @@ class CategoryType extends AbstractType
         $builder->add(static::FIELD_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
             'property_path' => 'parentCategoryNode',
             'label' => 'Parent',
-            'choices' => $choices,
-            'choices_as_values' => true,
+            'choices' => array_flip($choices),
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'group_by' => 'path',
@@ -209,8 +208,7 @@ class CategoryType extends AbstractType
     {
         $builder->add(self::FIELD_EXTRA_PARENTS, new Select2ComboBoxType(), [
             'label' => 'Additional Parents',
-            'choices' => $choices,
-            'choices_as_values' => true,
+            'choices' => array_flip($choices),
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'multiple' => true,

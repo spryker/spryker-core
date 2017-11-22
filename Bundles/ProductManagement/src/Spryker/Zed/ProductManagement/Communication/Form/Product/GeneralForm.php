@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductNameRegex;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -17,14 +19,6 @@ class GeneralForm extends AbstractSubForm
 {
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'product_general';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -50,7 +44,7 @@ class GeneralForm extends AbstractSubForm
     protected function addNameField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_NAME, 'text', [
+            ->add(self::FIELD_NAME, TextType::class, [
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
@@ -78,7 +72,7 @@ class GeneralForm extends AbstractSubForm
     protected function addDescriptionField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_DESCRIPTION, 'textarea', [
+            ->add(self::FIELD_DESCRIPTION, TextareaType::class, [
                 'required' => false,
             ]);
 

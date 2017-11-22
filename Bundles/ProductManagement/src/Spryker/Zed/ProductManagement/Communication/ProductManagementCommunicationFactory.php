@@ -42,16 +42,18 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormAdd(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormAdd(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
+        $options = [
+            ProductFormAdd::OPTION_LOCALE_PROVIDER => $this->createLocaleProvider(),
+            ProductFormAdd::OPTION_PRODUCT_QUERY_CONTAINER => $this->getProductQueryContainer(),
+            ProductFormAdd::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER => $this->getQueryContainer(),
+            ProductFormAdd::OPTION_MONEY_FACADE => $this->getMoneyFacade(),
+            ProductFormAdd::OPTION_CURRENCY_FACADE => $this->getCurrencyFacade(),
+            ProductFormAdd::OPTION_UTIL_TEXT_SERVICE => $this->getUtilEncoding(),
+        ];
 
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        $formOptions += $options;
+
+        return $this->getFormFactory()->create(ProductFormAdd::class, $formData, $formOptions);
     }
 
     /**
@@ -62,16 +64,18 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormEdit(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
+        $options = [
+            ProductFormAdd::OPTION_LOCALE_PROVIDER => $this->createLocaleProvider(),
+            ProductFormAdd::OPTION_PRODUCT_QUERY_CONTAINER => $this->getProductQueryContainer(),
+            ProductFormAdd::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER => $this->getQueryContainer(),
+            ProductFormAdd::OPTION_MONEY_FACADE => $this->getMoneyFacade(),
+            ProductFormAdd::OPTION_CURRENCY_FACADE => $this->getCurrencyFacade(),
+            ProductFormAdd::OPTION_UTIL_TEXT_SERVICE => $this->getUtilEncoding(),
+        ];
 
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        $formOptions += $options;
+
+        return $this->getFormFactory()->create(ProductFormEdit::class, $formData, $formOptions);
     }
 
     /**
@@ -82,16 +86,18 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductVariantFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductConcreteFormEdit(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
+        $options = [
+            ProductFormAdd::OPTION_LOCALE_PROVIDER => $this->createLocaleProvider(),
+            ProductFormAdd::OPTION_PRODUCT_QUERY_CONTAINER => $this->getProductQueryContainer(),
+            ProductFormAdd::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER => $this->getQueryContainer(),
+            ProductFormAdd::OPTION_MONEY_FACADE => $this->getMoneyFacade(),
+            ProductFormAdd::OPTION_CURRENCY_FACADE => $this->getCurrencyFacade(),
+            ProductFormAdd::OPTION_UTIL_TEXT_SERVICE => $this->getUtilEncoding(),
+        ];
 
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        $formOptions += $options;
+
+        return $this->getFormFactory()->create(ProductConcreteFormEdit::class, $formData, $formOptions);
     }
 
     /**

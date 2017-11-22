@@ -7,6 +7,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -38,7 +39,7 @@ class BundledProductForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SKU, 'text', [
+        $builder->add(self::FIELD_SKU, TextType::class, [
             'label' => 'sku',
             'required' => true,
             'attr' => [

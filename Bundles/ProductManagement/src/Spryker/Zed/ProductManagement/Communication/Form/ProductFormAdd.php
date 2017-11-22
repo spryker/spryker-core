@@ -29,13 +29,16 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInte
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -65,6 +68,13 @@ class ProductFormAdd extends AbstractType
     const OPTION_ID_LOCALE = 'option_id_locale';
     const OPTION_TAX_RATES = 'option_tax_rates';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+
+    const OPTION_LOCALE_PROVIDER = 'locale-provider';
+    const OPTION_PRODUCT_QUERY_CONTAINER = 'product-query-container';
+    const OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER = 'product-management-query-container';
+    const OPTION_MONEY_FACADE = 'money-facade';
+    const OPTION_CURRENCY_FACADE = 'currency-facade';
+    const OPTION_UTIL_TEXT_SERVICE = 'util-text-service';
 
     const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
@@ -106,38 +116,6 @@ class ProductFormAdd extends AbstractType
     protected $utilTextService;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface $currencyFacade
-     */
-    public function __construct(
-        LocaleProvider $localeProvider,
-        ProductQueryContainerInterface $productQueryContainer,
-        ProductManagementQueryContainerInterface $productManagementQueryContainer,
-        ProductManagementToMoneyInterface $moneyFacade,
-        ProductManagementToUtilTextInterface $utilTextService,
-        ProductManagementToCurrencyInterface $currencyFacade
-    ) {
-        $this->localeProvider = $localeProvider;
-        $this->productQueryContainer = $productQueryContainer;
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
-        $this->moneyFacade = $moneyFacade;
-        $this->utilTextService = $utilTextService;
-        $this->currencyFacade = $currencyFacade;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'ProductFormAdd';
-    }
-
-    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
@@ -151,12 +129,19 @@ class ProductFormAdd extends AbstractType
         $resolver->setRequired(static::OPTION_ATTRIBUTE_SUPER);
         $resolver->setRequired(static::OPTION_TAX_RATES);
 
+        $resolver->setRequired(self::OPTION_LOCALE_PROVIDER);
+        $resolver->setRequired(self::OPTION_PRODUCT_QUERY_CONTAINER);
+        $resolver->setRequired(self::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER);
+        $resolver->setRequired(self::OPTION_MONEY_FACADE);
+        $resolver->setRequired(self::OPTION_CURRENCY_FACADE);
+        $resolver->setRequired(self::OPTION_UTIL_TEXT_SERVICE);
+
         $validationGroups = $this->getValidationGroups();
 
         $resolver->setDefaults([
-            'cascade_validation' => true,
+            'constraints' => new Valid(),
             'required' => false,
-            'validation_groups' => function (FormInterface $form) use ($validationGroups) {
+            'validation_groups' => function () use ($validationGroups) {
                 return $validationGroups;
             },
             'compound' => true,
@@ -190,6 +175,13 @@ class ProductFormAdd extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->localeProvider = $options[static::OPTION_LOCALE_PROVIDER];
+        $this->productQueryContainer = $options[static::OPTION_PRODUCT_QUERY_CONTAINER];
+        $this->productManagementQueryContainer = $options[static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER];
+        $this->moneyFacade = $options[static::OPTION_MONEY_FACADE];
+        $this->currencyFacade = $options[static::OPTION_CURRENCY_FACADE];
+        $this->utilTextService = $options[static::OPTION_UTIL_TEXT_SERVICE];
+
         $this
             ->addSkuField($builder)
             ->addNewFromDateField($builder)
@@ -313,7 +305,7 @@ class ProductFormAdd extends AbstractType
     protected function addSkuField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SKU, 'text', [
+            ->add(self::FIELD_SKU, TextType::class, [
                 'label' => 'SKU Prefix',
                 'required' => true,
                 'constraints' => [
@@ -324,29 +316,27 @@ class ProductFormAdd extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new Callback([
-                        'methods' => [
-                            function ($sku, ExecutionContextInterface $context) {
-                                $form = $context->getRoot();
-                                $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                                $sku = $this->utilTextService->generateSlug($sku);
+                        'callback' => function ($sku, ExecutionContextInterface $context) {
+                            $form = $context->getRoot();
+                            $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
+                            $sku = $this->utilTextService->generateSlug($sku);
 
-                                $skuCount = $this->productQueryContainer
-                                    ->queryProduct()
-                                    ->filterByFkProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
+                            $skuCount = $this->productQueryContainer
+                                ->queryProduct()
+                                ->filterByFkProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
+                                ->filterBySku($sku)
+                                ->_or()
+                                ->useSpyProductAbstractQuery()
                                     ->filterBySku($sku)
-                                    ->_or()
-                                    ->useSpyProductAbstractQuery()
-                                        ->filterBySku($sku)
-                                    ->endUse()
-                                    ->count();
+                                ->endUse()
+                                ->count();
 
-                                if ($skuCount > 0) {
-                                    $context->addViolation(
-                                        sprintf('The SKU "%s" is already used', $sku)
-                                    );
-                                }
-                            },
-                        ],
+                            if ($skuCount > 0) {
+                                $context->addViolation(
+                                    sprintf('The SKU "%s" is already used', $sku)
+                                );
+                            }
+                        },
                         'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                 ],
@@ -411,7 +401,7 @@ class ProductFormAdd extends AbstractType
     protected function addProductAbstractIdHiddenField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_ABSTRACT, 'hidden', []);
+            ->add(self::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, []);
 
         return $this;
     }
@@ -429,15 +419,13 @@ class ProductFormAdd extends AbstractType
             ->add($name, $this->createGeneralForm(), [
                 'label' => false,
                 'constraints' => [new Callback([
-                    'methods' => [
-                        function ($dataToValidate, ExecutionContextInterface $context) {
-                            $selectedAttributes = array_filter(array_values($dataToValidate));
-                            if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                                $context->addViolation('Please enter at least Sku and Name of the product in every locale under General');
-                                GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
-                            }
-                        },
-                    ],
+                    'callback' => function ($dataToValidate, ExecutionContextInterface $context) {
+                        $selectedAttributes = array_filter(array_values($dataToValidate));
+                        if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
+                            $context->addViolation('Please enter at least Sku and Name of the product in every locale under General');
+                            GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
+                        }
+                    },
                     'groups' => [self::VALIDATION_GROUP_GENERAL],
                 ])],
             ]);
@@ -456,29 +444,26 @@ class ProductFormAdd extends AbstractType
     protected function addAttributeAbstractForm(FormBuilderInterface $builder, $name, LocaleTransfer $localeTransfer = null, array $options = [])
     {
         $builder
-            ->add($name, 'collection', [
-                'type' => new AttributeAbstractForm(
-                    $this->productManagementQueryContainer,
-                    $this->localeProvider,
-                    $localeTransfer
-                ),
-                'options' => [
+            ->add($name, CollectionType::class, [
+                'entry_type' => AttributeAbstractForm::class,
+                'entry_options' => [
                     AttributeAbstractForm::OPTION_ATTRIBUTE => $options,
+                    AttributeAbstractForm::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER => $this->productManagementQueryContainer,
+                    AttributeAbstractForm::OPTION_LOCALE_PROVIDER => $this->localeProvider,
+                    AttributeAbstractForm::OPTION_LOCALE_TRANSFER => $localeTransfer,
                 ],
                 'label' => false,
                 'constraints' => [new Callback([
-                    'methods' => [
-                        function ($attributes, ExecutionContextInterface $context) {
-                            foreach ($attributes as $type => $valueSet) {
-                                if ($valueSet[AttributeAbstractForm::FIELD_NAME] && empty($valueSet[AttributeAbstractForm::FIELD_VALUE])) {
-                                    $context->addViolation(sprintf(
-                                        'Please enter value for product attribute "%s" or disable it',
-                                        $type
-                                    ));
-                                }
+                    'callback' => function ($attributes, ExecutionContextInterface $context) {
+                        foreach ($attributes as $type => $valueSet) {
+                            if ($valueSet[AttributeAbstractForm::FIELD_NAME] && empty($valueSet[AttributeAbstractForm::FIELD_VALUE])) {
+                                $context->addViolation(sprintf(
+                                    'Please enter value for product attribute "%s" or disable it',
+                                    $type
+                                ));
                             }
-                        },
-                    ],
+                        }
+                    },
                     'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT],
                 ])],
             ]);
@@ -495,28 +480,25 @@ class ProductFormAdd extends AbstractType
     protected function addAttributeSuperForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FORM_ATTRIBUTE_SUPER, 'collection', [
-                'type' => new AttributeSuperForm(
-                    $this->productManagementQueryContainer,
-                    $this->localeProvider
-                ),
-                'options' => [
+            ->add(self::FORM_ATTRIBUTE_SUPER, CollectionType::class, [
+                'entry_type' => AttributeSuperForm::class,
+                'entry_options' => [
                     AttributeSuperForm::OPTION_ATTRIBUTE => $options,
+                    AttributeSuperForm::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER => $this->productManagementQueryContainer,
+                    AttributeSuperForm::OPTION_LOCALE_PROVIDER => $this->localeProvider,
                 ],
                 'label' => false,
                 'constraints' => [new Callback([
-                    'methods' => [
-                        function ($attributes, ExecutionContextInterface $context) {
-                            foreach ($attributes as $type => $valueSet) {
-                                if ($valueSet[AttributeSuperForm::FIELD_NAME] && empty($valueSet[AttributeSuperForm::FIELD_VALUE])) {
-                                    $context->addViolation(sprintf(
-                                        'Please enter value for variant attribute "%s" or disable it',
-                                        $type
-                                    ));
-                                }
+                    'callback' => function ($attributes, ExecutionContextInterface $context) {
+                        foreach ($attributes as $type => $valueSet) {
+                            if ($valueSet[AttributeSuperForm::FIELD_NAME] && empty($valueSet[AttributeSuperForm::FIELD_VALUE])) {
+                                $context->addViolation(sprintf(
+                                    'Please enter value for variant attribute "%s" or disable it',
+                                    $type
+                                ));
                             }
-                        },
-                    ],
+                        }
+                    },
                     'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_SUPER],
                 ])],
             ]);
@@ -553,16 +535,16 @@ class ProductFormAdd extends AbstractType
      */
     protected function addTaxRateField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_TAX_RATE, new Select2ComboBoxType(), [
+        $builder->add(self::FIELD_TAX_RATE, Select2ComboBoxType::class, [
             'label' => 'Tax Set',
             'required' => true,
-            'choices' => $options[static::OPTION_TAX_RATES],
+            'choices' => array_flip($options[static::OPTION_TAX_RATES]),
+            'choices_as_values' => true,
             'placeholder' => '-',
             'constraints' => [
                 new NotBlank(),
             ],
         ]);
-
         return $this;
     }
 
@@ -576,8 +558,8 @@ class ProductFormAdd extends AbstractType
     protected function addImageSetForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, 'collection', [
-                'type' => new ImageSetForm(),
+            ->add($name, CollectionType::class, [
+                'entry_type' => ImageSetForm::class,
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -598,7 +580,7 @@ class ProductFormAdd extends AbstractType
     protected function addSeoForm(FormBuilderInterface $builder, $name, array $options = [])
     {
         $builder
-            ->add($name, new SeoForm(), [
+            ->add($name, SeoForm::class, [
                 'label' => false,
             ]);
 
@@ -657,11 +639,11 @@ class ProductFormAdd extends AbstractType
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm
+     * @return string
      */
     protected function createGeneralForm()
     {
-        return new GeneralForm();
+        return GeneralForm::class;
     }
 
     /**

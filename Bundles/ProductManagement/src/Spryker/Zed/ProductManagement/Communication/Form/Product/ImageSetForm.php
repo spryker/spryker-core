@@ -8,11 +8,15 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ImageSetForm extends AbstractSubForm
@@ -26,14 +30,6 @@ class ImageSetForm extends AbstractSubForm
     const PRODUCT_IMAGES = 'product_images';
 
     const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'product_image_set';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -50,7 +46,7 @@ class ImageSetForm extends AbstractSubForm
         ];
 
         $resolver->setDefaults([
-            'cascade_validation' => true,
+            'constraints' => new Valid(),
             'required' => false,
             'validation_groups' => function (FormInterface $form) use ($validationGroups) {
                 return $validationGroups;
@@ -87,7 +83,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addSetIdField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_ID, 'hidden', []);
+            ->add(self::FIELD_SET_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -101,7 +97,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addNameField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_NAME, 'text', [
+            ->add(self::FIELD_SET_NAME, TextType::class, [
                 'required' => false,
                 'label' => 'Image Set Name',
             ]);
@@ -118,7 +114,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addLocaleHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_FK_LOCALE, 'hidden', []);
+            ->add(self::FIELD_SET_FK_LOCALE, HiddenType::class, []);
 
         return $this;
     }
@@ -132,7 +128,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addProductHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_FK_PRODUCT, 'hidden', []);
+            ->add(self::FIELD_SET_FK_PRODUCT, HiddenType::class, []);
 
         return $this;
     }
@@ -146,7 +142,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addProductAbstractHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_FK_PRODUCT_ABSTRACT, 'hidden', []);
+            ->add(self::FIELD_SET_FK_PRODUCT_ABSTRACT, HiddenType::class, []);
 
         return $this;
     }
@@ -160,28 +156,26 @@ class ImageSetForm extends AbstractSubForm
     protected function addImageCollectionForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRODUCT_IMAGES, 'collection', [
-                'type' => new ImageCollectionForm(),
+            ->add(self::PRODUCT_IMAGES, CollectionType::class, [
+                'entry_type' => ImageCollectionForm::class,
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
                 'constraints' => [new Callback([
-                    'methods' => [
-                        function ($images, ExecutionContextInterface $context) {
-                            $selectedAttributes = [];
-                            foreach ($images as $type => $valueSet) {
-                                if (!empty($valueSet['value'])) {
-                                    $selectedAttributes[] = $valueSet['value'];
-                                    break;
-                                }
+                    'callback' => function ($images, ExecutionContextInterface $context) {
+                        $selectedAttributes = [];
+                        foreach ($images as $valueSet) {
+                            if (!empty($valueSet['value'])) {
+                                $selectedAttributes[] = $valueSet['value'];
+                                break;
                             }
+                        }
 
-                            if (!empty($selectedAttributes)) {
-                                $context->addViolation('Please enter required image information');
-                            }
-                        },
-                    ],
+                        if (!empty($selectedAttributes)) {
+                            $context->addViolation('Please enter required image information');
+                        }
+                    },
                     'groups' => [self::VALIDATION_GROUP_IMAGE_COLLECTION],
                 ])],
             ]);

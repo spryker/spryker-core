@@ -17,14 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class AttributeSuperForm extends AttributeAbstractForm
 {
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'product_attribute_super';
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -37,8 +29,6 @@ class AttributeSuperForm extends AttributeAbstractForm
         $attributeData = new Collection($attributes[$name]);
 
         $inputManager = new AttributeInputManager();
-        $allowInput = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT);
-        $isSuper = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_SUPER);
         $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
         $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
         $config = $this->getValueFieldConfig($name, $attributes);
@@ -57,21 +47,15 @@ class AttributeSuperForm extends AttributeAbstractForm
                 $value
             )->findOne();
 
-        $input = new Select2ComboBoxType();
+        $input = Select2ComboBoxType::class;
         $config['multiple'] = true;
         $config['placeholder'] = '-';
         $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
         $config['attr']['tags'] = false;
 
-        if ($allowInput) {
-            //$config['attr']['tags'] = true;
-        } else {
-            //$config['attr']['class'] .= ' ajax';
-        }
-
         if ($isDisabled) {
             $config = $this->getValueFieldConfig($name, $attributes);
-            $config['read_only'] = true;
+            $config['attr']['readonly'] = 'readonly';
             $input = $inputManager->getSymfonyInputType(null, $value);
         }
 

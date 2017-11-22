@@ -13,9 +13,9 @@ use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
-use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,6 +28,9 @@ class AttributeAbstractForm extends AbstractSubForm
     const FIELD_VALUE_HIDDEN_ID = 'value_hidden_id';
 
     const OPTION_ATTRIBUTE = 'option_attribute';
+    const OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER = 'product-management-query-container';
+    const OPTION_LOCALE_PROVIDER = 'locale-provider';
+    const OPTION_LOCALE_TRANSFER = 'locale-transfer';
 
     const VALIDATION_GROUP_ATTRIBUTE_VALUE = 'validation_group_attribute_value';
 
@@ -52,29 +55,6 @@ class AttributeAbstractForm extends AbstractSubForm
     protected $localeProvider;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     */
-    public function __construct(
-        ProductManagementQueryContainerInterface $productManagementQueryContainer,
-        LocaleProvider $localeProvider,
-        LocaleTransfer $localeTransfer = null
-    ) {
-        $this->productManagementQueryContainer = $productManagementQueryContainer;
-        $this->localeProvider = $localeProvider;
-        $this->localeTransfer = $localeTransfer;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'product_attribute_abstract';
-    }
-
-    /**
      * @param string $name
      * @param array $attributes
      *
@@ -82,10 +62,7 @@ class AttributeAbstractForm extends AbstractSubForm
      */
     protected function getValueFieldConfig($name, $attributes)
     {
-        $isDisabled = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED];
-
         return [
-            'read_only' => $isDisabled,
             'label' => false,
             'required' => true,
             'attr' => [
@@ -93,6 +70,7 @@ class AttributeAbstractForm extends AbstractSubForm
                 'style' => '',
                 'product_specific' => $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC],
                 'id_attribute' => $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_ID],
+                'readonly' => 'readonly',
             ],
             'constraints' => [
                 new NotBlank([
@@ -111,12 +89,14 @@ class AttributeAbstractForm extends AbstractSubForm
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(self::OPTION_ATTRIBUTE);
+        $resolver->setRequired(static::OPTION_ATTRIBUTE);
+        $resolver->setRequired(static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER);
+        $resolver->setRequired(static::OPTION_LOCALE_PROVIDER);
+        $resolver->setDefined(static::OPTION_LOCALE_TRANSFER);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $groups = [ProductFormAdd::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT];
-                $originalData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
                 if ($submittedData[self::FIELD_NAME] && !$submittedData[self::FIELD_VALUE]) {
@@ -137,6 +117,10 @@ class AttributeAbstractForm extends AbstractSubForm
     public function buildForm(FormBuilderInterface $builder, array $options = [])
     {
         parent::buildForm($builder, $options);
+
+        $this->productManagementQueryContainer = $options[static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER];
+        $this->localeProvider = $options[static::OPTION_LOCALE_PROVIDER];
+        $this->localeTransfer = isset($options[static::OPTION_LOCALE_TRANSFER]) ? $options[static::OPTION_LOCALE_TRANSFER] : null;
 
         $this
             ->addCheckboxNameField($builder, $options)
@@ -160,13 +144,13 @@ class AttributeAbstractForm extends AbstractSubForm
         $isProductSpecific = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC];
 
         $builder
-            ->add(self::FIELD_NAME, 'checkbox', [
+            ->add(self::FIELD_NAME, CheckboxType::class, [
                 'label' => $label,
-                'read_only' => $isDisabled,
                 'disabled' => $isDisabled,
                 'attr' => [
                     'class' => 'attribute_metadata_checkbox',
                     'product_specific' => $isProductSpecific,
+                    'readonly' => $isDisabled, // Check if this will work too or if we need to add readonly only to the attr if $isDisabled is true
                 ],
             ]);
 
@@ -182,7 +166,7 @@ class AttributeAbstractForm extends AbstractSubForm
     protected function addValueIdHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_VALUE_HIDDEN_ID, 'hidden', []);
+            ->add(self::FIELD_VALUE_HIDDEN_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -217,10 +201,10 @@ class AttributeAbstractForm extends AbstractSubForm
 
         if ($isDisabled) {
             $config = $this->getValueFieldConfig($name, $attributes);
-            $config['read_only'] = true;
+            $config['attr']['readonly'] = true; // Check if this will work too or if we need to add readonly only to the attr if $isDisabled is true
             $input = $inputManager->getSymfonyInputType(null, $value);
         } else {
-            if (strtolower($input) === 'select2') {
+            if (strtolower($input) === Select2ComboBoxType::class) {
                 $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
                 if ($this->localeTransfer instanceof LocaleTransfer) {
                     $idLocale = $this->localeTransfer->getIdLocale();
@@ -233,15 +217,13 @@ class AttributeAbstractForm extends AbstractSubForm
                         $value
                     )->findOne();
 
-                $input = new Select2ComboBoxType();
+                $input = Select2ComboBoxType::class;
                 $config['multiple'] = false;
                 $config['placeholder'] = '-';
                 $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
 
                 if ($allowInput) {
                     $config['attr']['tags'] = true;
-                } else {
-                    //$config['attr']['class'] .= ' ajax';
                 }
             } else {
                 $config['attr']['class'] .= ' kv_attribute_autocomplete';
