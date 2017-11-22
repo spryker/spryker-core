@@ -78,7 +78,7 @@ class ZedRequestConfig extends AbstractBundleConfig
 
         if (Config::hasKey(ZedRequestConstants::CLIENT_OPTIONS)) {
             $customClientConfiguration = $this->get(ZedRequestConstants::CLIENT_OPTIONS);
-            $clientConfiguration += $customClientConfiguration;
+            $clientConfiguration = array_merge($clientConfiguration, $customClientConfiguration);
         }
 
         return $clientConfiguration;
