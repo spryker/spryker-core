@@ -95,13 +95,12 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             return [];
         }
 
-        $adjustedQuantity = $this->adjustPromotionItemQuantity($promotionItemInQuote, $promotionMaximumQuantity);
-
-        $promotionItemInQuote->setMaxQuantity($adjustedQuantity);
+        $promotionItemInQuote->setMaxQuantity($promotionMaximumQuantity);
 
         $usedNotAppliedCodes = $this->findUsedNotAppliedVoucherCodes($discountTransfer, $quoteTransfer);
         $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedCodes);
 
+        $adjustedQuantity = $this->adjustPromotionItemQuantity($promotionItemInQuote, $promotionMaximumQuantity);
         $discountableItemTransfer = $this->createPromotionDiscountableItemTransfer($promotionItemInQuote, $adjustedQuantity);
 
         return [$discountableItemTransfer];
@@ -162,10 +161,11 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $availableMaxQuantity)
     {
+        $currentQuantity = $promotionItemTransfer->getQuantity();
         if ($promotionItemTransfer->getQuantity() > $availableMaxQuantity) {
-            return $promotionItemTransfer->getMaxQuantity();
+            $currentQuantity = $promotionItemTransfer->getMaxQuantity();
         }
-        return $availableMaxQuantity;
+        return $currentQuantity;
     }
 
     /**
