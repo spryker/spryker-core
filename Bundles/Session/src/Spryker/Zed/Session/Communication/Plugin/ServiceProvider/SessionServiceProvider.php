@@ -19,11 +19,15 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
+     * @deprecated Please don't use this property anymore. The needed ClientInterface is now retrieved by the Factory.
+     *
      * @var \Spryker\Client\Session\SessionClientInterface
      */
     private $client;
 
     /**
+     * @deprecated Please remove usage of this setter. The needed ClientInterface is now retrieved by the Factory.
+     *
      * @param \Spryker\Client\Session\SessionClientInterface $client
      *
      * @return void
@@ -78,7 +82,19 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         }
 
         $session = $this->getSession($application);
-        $this->client->setContainer($session);
+        $this->getSessionClient()->setContainer($session);
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    protected function getSessionClient()
+    {
+        if (!$this->client) {
+            return $this->getFactory()->getSessionClient();
+        }
+
+        return $this->client;
     }
 
     /**
