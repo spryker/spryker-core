@@ -129,12 +129,12 @@ class ProductFormAdd extends AbstractType
         $resolver->setRequired(static::OPTION_ATTRIBUTE_SUPER);
         $resolver->setRequired(static::OPTION_TAX_RATES);
 
-        $resolver->setRequired(self::OPTION_LOCALE_PROVIDER);
-        $resolver->setRequired(self::OPTION_PRODUCT_QUERY_CONTAINER);
-        $resolver->setRequired(self::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER);
-        $resolver->setRequired(self::OPTION_MONEY_FACADE);
-        $resolver->setRequired(self::OPTION_CURRENCY_FACADE);
-        $resolver->setRequired(self::OPTION_UTIL_TEXT_SERVICE);
+        $resolver->setRequired(static::OPTION_LOCALE_PROVIDER);
+        $resolver->setRequired(static::OPTION_PRODUCT_QUERY_CONTAINER);
+        $resolver->setRequired(static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER);
+        $resolver->setRequired(static::OPTION_MONEY_FACADE);
+        $resolver->setRequired(static::OPTION_CURRENCY_FACADE);
+        $resolver->setRequired(static::OPTION_UTIL_TEXT_SERVICE);
 
         $validationGroups = $this->getValidationGroups();
 

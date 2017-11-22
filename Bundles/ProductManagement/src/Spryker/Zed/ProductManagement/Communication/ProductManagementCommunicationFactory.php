@@ -48,7 +48,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             ProductFormAdd::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER => $this->getQueryContainer(),
             ProductFormAdd::OPTION_MONEY_FACADE => $this->getMoneyFacade(),
             ProductFormAdd::OPTION_CURRENCY_FACADE => $this->getCurrencyFacade(),
-            ProductFormAdd::OPTION_UTIL_TEXT_SERVICE => $this->getUtilEncoding(),
+            ProductFormAdd::OPTION_UTIL_TEXT_SERVICE => $this->getUtilTextService(),
         ];
 
         $formOptions += $options;
