@@ -58,6 +58,23 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return OrderListTransfer
+     */
+    public function getPaginatedCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer)
+    {
+        return $this->getFactory()
+            ->createPaginatedCustomerOrderReader()
+            ->getOrders($orderListTransfer, $idCustomer);
+    }
+
+    /**
      * Specification:
      *  - Returns the order for the given customer id and sales order id.
      *  - Aggregates order totals calls -> SalesAggregator

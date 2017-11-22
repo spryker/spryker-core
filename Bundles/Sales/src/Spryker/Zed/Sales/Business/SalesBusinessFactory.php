@@ -12,6 +12,7 @@ use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
@@ -32,6 +33,18 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createCustomerOrderReader()
     {
         return new CustomerOrderReader(
+            $this->getQueryContainer(),
+            $this->createOrderHydrator(),
+            $this->getOmsFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReaderInterface
+     */
+    public function createPaginatedCustomerOrderReader()
+    {
+        return new PaginatedCustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator(),
             $this->getOmsFacade()
