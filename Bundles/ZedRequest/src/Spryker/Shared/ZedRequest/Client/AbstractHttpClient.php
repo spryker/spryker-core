@@ -314,7 +314,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             return [];
         }
 
-        if (is_int($requestOptions)) {
+        if (is_numeric($requestOptions)) {
             return ['timeout' => $requestOptions];
         }
 

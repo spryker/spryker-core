@@ -22,13 +22,16 @@ interface ZedRequestClientInterface
      *
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
-     * @param array|int|null $requestOptions
+     * @param array|int|null $requestOptions Deprecated: Do not use "int" anymore, please use an array for requestOptions.
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function call($url, TransferInterface $object, $requestOptions = null);
 
     /**
+     * Specification:
+     * - Returns an array of MessageTransfers containing info messages for the last response.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -36,6 +39,9 @@ interface ZedRequestClientInterface
     public function getLastResponseInfoMessages();
 
     /**
+     * Specification:
+     * - Returns an array of MessageTransfers containing error messages for the last response.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -43,6 +49,9 @@ interface ZedRequestClientInterface
     public function getLastResponseErrorMessages();
 
     /**
+     * Specification:
+     * - Returns an array of MessageTransfers containing success messages for the last response.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
