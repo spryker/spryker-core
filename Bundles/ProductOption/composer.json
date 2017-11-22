@@ -10,7 +10,7 @@
     "spryker/kernel": "^3.13.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
-    "spryker/money": "^2.3.1",
+    "spryker/money": "^2.4.0",
     "spryker/price": "^5.0.0",
     "spryker/product": "^5.0.0",
     "spryker/propel-orm": "^1.0.0",
