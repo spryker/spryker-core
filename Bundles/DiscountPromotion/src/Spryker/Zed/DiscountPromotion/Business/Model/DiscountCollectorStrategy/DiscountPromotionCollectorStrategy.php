@@ -156,17 +156,16 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $promotionItemTransfer
-     * @param int $maxQuantity
+     * @param int $availableMaxQuantity
      *
      * @return int
      */
-    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $maxQuantity)
+    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $availableMaxQuantity)
     {
-        $currentQuantity = $promotionItemTransfer->getQuantity();
-        if ($promotionItemTransfer->getQuantity() > $maxQuantity) {
-            $currentQuantity = $promotionItemTransfer->getMaxQuantity();
+        if ($promotionItemTransfer->getQuantity() > $availableMaxQuantity) {
+            return $promotionItemTransfer->getMaxQuantity();
         }
-        return $currentQuantity;
+        return $availableMaxQuantity;
     }
 
     /**
@@ -177,14 +176,12 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function createPromotionDiscountableItemTransfer(ItemTransfer $promotionItemTransfer, $currentQuantity)
     {
-        $discountableItemTransfer = (new DiscountableItemTransfer())
+        return(new DiscountableItemTransfer())
             ->setOriginalItem($promotionItemTransfer)
             ->setOriginalItemCalculatedDiscounts($promotionItemTransfer->getCalculatedDiscounts())
             ->setQuantity($currentQuantity)
             ->setUnitPrice($promotionItemTransfer->getUnitPrice())
             ->setUnitGrossPrice($promotionItemTransfer->getUnitGrossPrice());
-
-        return $discountableItemTransfer;
     }
 
     /**
