@@ -143,11 +143,9 @@ class OrderHydrator implements OrderHydratorInterface
 
         $orderTransfer->setTotalOrderCount(0);
         if ($orderTransfer->getCustomerReference()) {
-            $orderTransfer->setTotalOrderCount(
-                $this->getTotalCustomerOrderCount(
-                    $orderTransfer->getCustomerReference()
-                )
-            );
+            $customerReference = $orderTransfer->getCustomerReference();
+            $totalCustomerOrderCount = $this->getTotalCustomerOrderCount($customerReference);
+            $orderTransfer->setTotalOrderCount($totalCustomerOrderCount);
         }
 
         $uniqueProductQuantity = (int)$this->queryContainer
