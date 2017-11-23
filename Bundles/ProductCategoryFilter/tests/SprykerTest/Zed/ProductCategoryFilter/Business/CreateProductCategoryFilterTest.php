@@ -14,6 +14,8 @@ use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
  * @group Business
  * @group CreateProductCategoryFilterTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\ProductCategoryFilter\ProductCategoryFilterBusinessTester $tester
  */
 class CreateProductCategoryFilterTest extends Unit
 {
