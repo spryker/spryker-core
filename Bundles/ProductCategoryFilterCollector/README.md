@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/ProductCategoryFilterCollector.svg)](https://travis-ci.org/spryker/ProductCategoryFilterCollector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/ProductCategoryFilterCollector/badge.svg)](https://coveralls.io/github/spryker/ProductCategoryFilterCollector)
 
-{{ADD DESCRIPTION HERE}}
+ProductCategoryFilterCollector provides product category filter data for Yves by exporting it to key-value storage.
 
 ## Installation
 
