@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterConfig getConfig()
- * @method \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface getQueryContainer()
  */
 class ProductCategoryFilterPersistenceFactory extends AbstractPersistenceFactory
 {

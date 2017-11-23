@@ -35,6 +35,16 @@ class ProductCategoryFilterGuiToProductCategoryFilterBridge implements ProductCa
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
+     */
+    public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
+    {
+        return $this->productCategoryFilterFacade->updateProductCategoryFilter($productCategoryFilterTransfer);
+    }
+
+    /**
      * @param int $categoryId
      *
      * @return void
@@ -52,5 +62,13 @@ class ProductCategoryFilterGuiToProductCategoryFilterBridge implements ProductCa
     public function findProductCategoryFilterByCategoryId($categoryId)
     {
         return $this->productCategoryFilterFacade->findProductCategoryFilterByCategoryId($categoryId);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllProductCategoriesWithFilters()
+    {
+        return $this->productCategoryFilterFacade->getAllProductCategoriesWithFilters();
     }
 }

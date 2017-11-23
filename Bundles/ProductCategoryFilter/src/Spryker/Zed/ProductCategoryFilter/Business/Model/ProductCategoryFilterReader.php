@@ -31,16 +31,34 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
     {
         $productCategoryFilterEntity = $this->getProductCategoryFilterEntityByCategoryId($categoryId);
 
+        $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
+        $productCategoryFilterTransfer->setFkCategory($categoryId);
+
         if (!$productCategoryFilterEntity) {
-            return null;
+            return $productCategoryFilterTransfer;
         }
 
-        $productCategoryFilterTransfer = (new ProductCategoryFilterTransfer())->fromArray($productCategoryFilterEntity->toArray(), true);
+        $productCategoryFilterTransfer = $productCategoryFilterTransfer->fromArray($productCategoryFilterEntity->toArray(), true);
 
         $filterData = json_decode($productCategoryFilterEntity->getFilterData(), true);
 
         $productCategoryFilterTransfer->setFilterDataArray($filterData);
 
         return $productCategoryFilterTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllProductCategoriesWithFilters()
+    {
+        $categoryIds = [];
+        $productCategoryFilters = $this->productCategoryFilterQueryContainer->queryProductCategoryFilter()->find()->toArray();
+        foreach ($productCategoryFilters as $productCategoryFilter) {
+            $productCategoryFilterTransfer = (new ProductCategoryFilterTransfer())->fromArray($productCategoryFilter);
+            $categoryIds[] = $productCategoryFilterTransfer->getFkCategory();
+        }
+
+        return $categoryIds;
     }
 }

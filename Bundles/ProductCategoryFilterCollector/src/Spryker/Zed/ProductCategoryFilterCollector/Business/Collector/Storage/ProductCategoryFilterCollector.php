@@ -31,4 +31,12 @@ class ProductCategoryFilterCollector extends AbstractStoragePropelCollector
     {
         return $collectItemData[ProductCategoryFilterTransfer::FILTER_DATA];
     }
+
+    /**
+     * @return bool
+     */
+    protected function isStorageTableJoinWithLocaleEnabled()
+    {
+        return true;
+    }
 }

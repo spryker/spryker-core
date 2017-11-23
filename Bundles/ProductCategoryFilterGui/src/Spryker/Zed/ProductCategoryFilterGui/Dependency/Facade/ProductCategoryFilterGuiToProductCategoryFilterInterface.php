@@ -19,6 +19,13 @@ interface ProductCategoryFilterGuiToProductCategoryFilterInterface
     public function createProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
+     */
+    public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer);
+
+    /**
      * @param int $categoryId
      *
      * @return void
@@ -31,4 +38,9 @@ interface ProductCategoryFilterGuiToProductCategoryFilterInterface
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
     public function findProductCategoryFilterByCategoryId($categoryId);
+
+    /**
+     * @return array
+     */
+    public function getAllProductCategoriesWithFilters();
 }

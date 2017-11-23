@@ -11,17 +11,27 @@ interface ProductCategoryFilterClientInterface
 {
     /**
      * Specification:
-     * - Reads resource from storage based on categoryId and locale
-     * - Formats (re-orders/removes) facets based on returned configuration
-     * - Returns formatted facets based on category filters saved in database
+     * - Returns formatted facets based on product category filters
      *
      * @api
      *
      * @param array $facets
+     * @param array $productCategoryFilters
+     *
+     * @return array
+     */
+    public function updateFacetsByCategory($facets, $productCategoryFilters);
+
+    /**
+     * Specification:
+     * - Returns product category filters from storage based on category id and locale
+     *
+     * @api
+     *
      * @param int $categoryId
      * @param string $localeName
      *
      * @return array
      */
-    public function updateFacetsByCategory($facets, $categoryId, $localeName);
+    public function getProductCategoryFiltersForCategoryByLocale($categoryId, $localeName);
 }

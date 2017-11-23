@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataFormatter\ProductCategoryFilterDataFormatter;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider\ProductCategoryFilterDataProvider;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Table\CategoryRootNodeTable;
@@ -87,6 +88,14 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     public function createProductCategoryFilterDataProvider()
     {
         return new ProductCategoryFilterDataProvider($this->getProductCategoryFilterFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataFormatter\ProductCategoryFilterDataFormatter
+     */
+    public function createProductCategoryFilterDataFormatter()
+    {
+        return new ProductCategoryFilterDataFormatter();
     }
 
     /**

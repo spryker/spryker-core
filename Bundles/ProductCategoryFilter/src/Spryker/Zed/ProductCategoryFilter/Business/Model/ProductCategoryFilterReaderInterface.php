@@ -15,4 +15,9 @@ interface ProductCategoryFilterReaderInterface
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
     public function findProductCategoryFilterByCategoryId($categoryId);
+
+    /**
+     * @return array
+     */
+    public function getAllProductCategoriesWithFilters();
 }
