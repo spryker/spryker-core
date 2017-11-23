@@ -324,6 +324,20 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function createPageUrlWithLocale($pageTransfer, $url, LocaleTransfer $localeTransfer)
+    {
+        return $this->getFactory()
+            ->createPageManager()
+            ->createPageUrlWithLocale($pageTransfer, $url, $localeTransfer);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api
