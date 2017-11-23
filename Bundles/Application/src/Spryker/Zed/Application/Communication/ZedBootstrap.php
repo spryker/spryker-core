@@ -140,6 +140,26 @@ class ZedBootstrap
     }
 
     /**
+     *
+     * @return void
+     */
+    protected function registerApiServiceProvider()
+    {
+        foreach ($this->getApiServiceProvider() as $provider) {
+            $this->application->register($provider);
+        }
+    }
+
+    /**
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getApiServiceProvider()
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::SERVICE_PROVIDER_API);
+    }
+
+    /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function getBaseApplication()

@@ -152,6 +152,7 @@ class CustomerStub implements CustomerStubInterface
     {
         $customerTransfer = $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
 
+        //TODO is this code allow here?
         $this->callDefaultAddressChangePlugins($customerTransfer);
 
         return $customerTransfer;
@@ -166,6 +167,7 @@ class CustomerStub implements CustomerStubInterface
     {
         $customerTransfer = $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
 
+        //TODO is this code allow here?
         $this->callDefaultAddressChangePlugins($customerTransfer);
 
         return $customerTransfer;
