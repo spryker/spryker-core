@@ -14,27 +14,9 @@ use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\ServiceProviderInterface;
-use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvider;
-use Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider;
-use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
-use Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
-use Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver;
-use Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvider;
-use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as SprykerSessionServiceProvider;
-use Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider as SprykerTwigServiceProvider;
-use Spryker\Zed\ZedNavigation\Communication\Plugin\ServiceProvider\ZedNavigationServiceProvider;
-use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerPlugin;
-use Spryker\Zed\ZedRequest\Communication\Plugin\GatewayServiceProviderPlugin;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -68,13 +50,8 @@ class ZedBootstrap
         $application['debug'] = true;
         $application['locale'] = $this->getCurrentLocale();
 
-        $this->addFragmentControllerResolver();
-        $this->enableHttpMethodParameterOverride();
-
         $this->registerServiceProvider();
         $application['session.test'] = true;
-
-        $this->addVariablesToTwig();
 
         return $this->application;
     }
@@ -96,23 +73,12 @@ class ZedBootstrap
     /**
      * @return void
      */
-    protected function addFragmentControllerResolver()
-    {
-        $application = $this->application;
-        $application['resolver'] = $application->share(function () use ($application) {
-            return new ZedFragmentControllerResolver($application);
-        });
-    }
-
-    /**
-     * @return void
-     */
     private function registerServiceProvider()
     {
         $serviceProviders = $this->getServiceProvider();
         foreach ($serviceProviders as $serviceProvider) {
             if (!($serviceProvider instanceof ServiceProviderInterface)) {
-                $serviceProvider = $serviceProvider = new $serviceProvider;
+                $serviceProvider = new $serviceProvider;
             }
             $this->application->register($serviceProvider);
         }
@@ -134,71 +100,13 @@ class ZedBootstrap
     private function getDefaultServiceProvider()
     {
         return [
-            new SessionServiceProvider(),
-            new SprykerSessionServiceProvider(),
-            new TwigServiceProvider(),
-            new SprykerTwigServiceProvider(),
             new FormServiceProvider(),
             new HttpFragmentServiceProvider(),
             new ServiceControllerServiceProvider(),
             new ValidatorServiceProvider(),
-            new HeaderServiceProvider(),
-            new MvcRoutingServiceProvider(),
-            new RequestServiceProvider(),
-            new RoutingServiceProvider(),
-            new SubRequestServiceProvider(),
-            new TranslationServiceProvider(),
-            new UrlGeneratorServiceProvider(),
-            new GuiTwigExtensionServiceProvider(),
-            $this->getGatewayServiceProvider(),
-            new FormFactoryServiceProvider(),
-            new ZedNavigationServiceProvider(),
-            new DateTimeFormatterServiceProvider(),
-            new TwigMoneyServiceProvider(),
+            new SessionServiceProvider(),
+            new TwigServiceProvider(),
         ];
-    }
-
-    /**
-     * @return \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayServiceProviderPlugin
-     */
-    private function getGatewayServiceProvider()
-    {
-        $controllerListener = new GatewayControllerListenerPlugin();
-        $serviceProvider = new GatewayServiceProviderPlugin();
-        $serviceProvider->setControllerListener($controllerListener);
-
-        return $serviceProvider;
-    }
-
-    /**
-     * @return void
-     */
-    protected function addVariablesToTwig()
-    {
-        $application = $this->application;
-        $application['twig.global.variables'] = $application->share(
-            $application->extend('twig.global.variables', function (array $variables) {
-                $variables += [
-                    'environment' => APPLICATION_ENV,
-                    'store' => Store::getInstance()->getStoreName(),
-                    'title' => 'Testify | Zed | ' . ucfirst(APPLICATION_ENV),
-                    'currentController' => get_class($this),
-                ];
-
-                return $variables;
-            })
-        );
-    }
-
-    /**
-     * Allow overriding http method. Needed to use the "_method" parameter in forms.
-     * This should not be changeable by projects
-     *
-     * @return void
-     */
-    private function enableHttpMethodParameterOverride()
-    {
-        Request::enableHttpMethodParameterOverride();
     }
 
     /**
