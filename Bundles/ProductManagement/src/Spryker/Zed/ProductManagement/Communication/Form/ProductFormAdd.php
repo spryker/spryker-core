@@ -14,6 +14,8 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
+use Spryker\Zed\Money\Business\MoneyFacadeInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
@@ -124,18 +126,53 @@ class ProductFormAdd extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(static::OPTION_ID_LOCALE);
-        $resolver->setRequired(static::OPTION_ATTRIBUTE_ABSTRACT);
-        $resolver->setRequired(static::OPTION_ATTRIBUTE_SUPER);
-        $resolver->setRequired(static::OPTION_TAX_RATES);
+        $this->setRequired($resolver);
+        $this->setAllowedTypes($resolver);
+        $this->setDefaults($resolver);
+    }
 
-        $resolver->setRequired(static::OPTION_LOCALE_PROVIDER);
-        $resolver->setRequired(static::OPTION_PRODUCT_QUERY_CONTAINER);
-        $resolver->setRequired(static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER);
-        $resolver->setRequired(static::OPTION_MONEY_FACADE);
-        $resolver->setRequired(static::OPTION_CURRENCY_FACADE);
-        $resolver->setRequired(static::OPTION_UTIL_TEXT_SERVICE);
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    protected function setRequired(OptionsResolver $resolver)
+    {
+        $resolver->setRequired([
+            static::OPTION_ID_LOCALE,
+            static::OPTION_ATTRIBUTE_ABSTRACT,
+            static::OPTION_ATTRIBUTE_SUPER,
+            static::OPTION_TAX_RATES,
+            static::OPTION_LOCALE_PROVIDER,
+            static::OPTION_PRODUCT_QUERY_CONTAINER,
+            static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER,
+            static::OPTION_MONEY_FACADE,
+            static::OPTION_CURRENCY_FACADE,
+            static::OPTION_UTIL_TEXT_SERVICE,
+        ]);
+    }
 
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    protected function setAllowedTypes(OptionsResolver $resolver)
+    {
+        $resolver->setAllowedTypes(static::OPTION_LOCALE_PROVIDER, LocaleProvider::class);
+        $resolver->setAllowedTypes(static::OPTION_PRODUCT_QUERY_CONTAINER, ProductQueryContainerInterface::class);
+        $resolver->setAllowedTypes(static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER, ProductManagementQueryContainerInterface::class);
+        $resolver->setAllowedTypes(static::OPTION_MONEY_FACADE, MoneyFacadeInterface::class);
+        $resolver->setAllowedTypes(static::OPTION_CURRENCY_FACADE, CurrencyFacadeInterface::class);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    protected function setDefaults(OptionsResolver $resolver)
+    {
         $validationGroups = $this->getValidationGroups();
 
         $resolver->setDefaults([
@@ -156,14 +193,14 @@ class ProductFormAdd extends AbstractType
     {
         return [
             Constraint::DEFAULT_GROUP,
-            self::VALIDATION_GROUP_UNIQUE_SKU,
-            self::VALIDATION_GROUP_GENERAL,
-            self::VALIDATION_GROUP_PRICE_AND_TAX,
-            self::VALIDATION_GROUP_PRICE_AND_STOCK,
-            self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
-            self::VALIDATION_GROUP_ATTRIBUTE_SUPER,
-            self::VALIDATION_GROUP_SEO,
-            self::VALIDATION_GROUP_IMAGE_SET,
+            static::VALIDATION_GROUP_UNIQUE_SKU,
+            static::VALIDATION_GROUP_GENERAL,
+            static::VALIDATION_GROUP_PRICE_AND_TAX,
+            static::VALIDATION_GROUP_PRICE_AND_STOCK,
+            static::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT,
+            static::VALIDATION_GROUP_ATTRIBUTE_SUPER,
+            static::VALIDATION_GROUP_SEO,
+            static::VALIDATION_GROUP_IMAGE_SET,
         ];
     }
 
@@ -175,12 +212,7 @@ class ProductFormAdd extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->localeProvider = $options[static::OPTION_LOCALE_PROVIDER];
-        $this->productQueryContainer = $options[static::OPTION_PRODUCT_QUERY_CONTAINER];
-        $this->productManagementQueryContainer = $options[static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER];
-        $this->moneyFacade = $options[static::OPTION_MONEY_FACADE];
-        $this->currencyFacade = $options[static::OPTION_CURRENCY_FACADE];
-        $this->utilTextService = $options[static::OPTION_UTIL_TEXT_SERVICE];
+        $this->addInjected($options);
 
         $this
             ->addSkuField($builder)
@@ -194,6 +226,21 @@ class ProductFormAdd extends AbstractType
             ->addSeoLocalizedForms($builder)
             ->addImageLocalizedForms($builder)
             ->addStoreRelationForm($builder);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function addInjected(array $options)
+    {
+        $this->localeProvider = $options[static::OPTION_LOCALE_PROVIDER];
+        $this->productQueryContainer = $options[static::OPTION_PRODUCT_QUERY_CONTAINER];
+        $this->productManagementQueryContainer = $options[static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER];
+        $this->moneyFacade = $options[static::OPTION_MONEY_FACADE];
+        $this->currencyFacade = $options[static::OPTION_CURRENCY_FACADE];
+        $this->utilTextService = $options[static::OPTION_UTIL_TEXT_SERVICE];
     }
 
     /**
