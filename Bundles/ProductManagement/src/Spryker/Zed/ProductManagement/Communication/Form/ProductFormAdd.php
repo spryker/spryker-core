@@ -162,8 +162,8 @@ class ProductFormAdd extends AbstractType
         $resolver->setAllowedTypes(static::OPTION_LOCALE_PROVIDER, LocaleProvider::class);
         $resolver->setAllowedTypes(static::OPTION_PRODUCT_QUERY_CONTAINER, ProductQueryContainerInterface::class);
         $resolver->setAllowedTypes(static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER, ProductManagementQueryContainerInterface::class);
-        $resolver->setAllowedTypes(static::OPTION_MONEY_FACADE, MoneyFacadeInterface::class);
-        $resolver->setAllowedTypes(static::OPTION_CURRENCY_FACADE, CurrencyFacadeInterface::class);
+        $resolver->setAllowedTypes(static::OPTION_MONEY_FACADE, ProductManagementToMoneyInterface::class);
+        $resolver->setAllowedTypes(static::OPTION_CURRENCY_FACADE, ProductManagementToCurrencyInterface::class);
     }
 
     /**
