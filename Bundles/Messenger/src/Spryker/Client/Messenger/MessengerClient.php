@@ -8,7 +8,7 @@
 namespace Spryker\Client\Messenger;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\Messenger\MessengerConstants;
+use Spryker\Shared\Messenger\MessengerConfig;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 /**
@@ -27,7 +27,7 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
      */
     public function addSuccessMessage($message)
     {
-        $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_SUCCESS, $message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_SUCCESS, $message);
     }
 
     /**
@@ -41,7 +41,7 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
      */
     public function addInfoMessage($message)
     {
-        $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_INFO, $message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_INFO, $message);
     }
 
     /**
@@ -55,7 +55,7 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
      */
     public function addErrorMessage($message)
     {
-        $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_ERROR, $message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_ERROR, $message);
     }
 
     /**

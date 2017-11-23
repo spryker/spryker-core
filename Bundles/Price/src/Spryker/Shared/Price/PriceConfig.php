@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\Price;
 
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class PriceConfig extends AbstractSharedConfig
@@ -31,7 +30,7 @@ class PriceConfig extends AbstractSharedConfig
      */
     public function getDefaultPriceMode()
     {
-        return Config::get(PriceConstants::DEFAULT_PRICE_MODE, static::PRICE_MODE_GROSS);
+        return PriceConfig::PRICE_MODE_GROSS;
     }
 
     /**

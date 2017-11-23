@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Messenger\FlashMessenger;
 
-use Spryker\Shared\Messenger\MessengerConstants;
+use Spryker\Shared\Messenger\MessengerConfig;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class FlashMessenger implements FlashMessengerInterface
@@ -32,7 +32,7 @@ class FlashMessenger implements FlashMessengerInterface
      */
     public function addSuccessMessage($message)
     {
-        $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_SUCCESS, $message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_SUCCESS, $message);
 
         return $this;
     }
@@ -44,7 +44,7 @@ class FlashMessenger implements FlashMessengerInterface
      */
     public function addInfoMessage($message)
     {
-        $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_INFO, $message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_INFO, $message);
 
         return $this;
     }
@@ -56,7 +56,7 @@ class FlashMessenger implements FlashMessengerInterface
      */
     public function addErrorMessage($message)
     {
-        $this->addToFlashBag(MessengerConstants::FLASH_MESSAGES_ERROR, $message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_ERROR, $message);
 
         return $this;
     }

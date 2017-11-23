@@ -15,7 +15,7 @@ interface CartClientInterface
 {
     /**
      * Specification:
-     *  - Get current quote from session
+     *  - Gets current quote from session
      *
      * @api
      *

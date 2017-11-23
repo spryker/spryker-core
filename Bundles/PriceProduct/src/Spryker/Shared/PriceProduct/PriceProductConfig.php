@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\PriceProduct;
 
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class PriceProductConfig extends AbstractSharedConfig
@@ -22,7 +21,7 @@ class PriceProductConfig extends AbstractSharedConfig
      */
     public function getPriceTypeDefaultName()
     {
-        return Config::get(PriceProductConstants::DEFAULT_PRICE_TYPE);
+        return 'DEFAULT';
     }
 
     /**

@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 
-class ShipmentCartValidate implements ShipmentCartValidateInterface
+class ShipmentCartValidator implements ShipmentCartValidatorInterface
 {
     const CART_PRE_CHECK_SHIPMENT_FAILED_TRANSLATION_KEY = 'cart.pre.check.shipment.failed';
 

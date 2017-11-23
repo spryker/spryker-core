@@ -9,8 +9,6 @@ namespace Spryker\Shared\Price;
 
 interface PriceConstants
 {
-    const DEFAULT_PRICE_MODE = 'DEFAULT_PRICE_MODE';
-
     /**
      * @deprecated use \Spryker\Shared\PriceProduct\PriceProductConfig instead
      */
