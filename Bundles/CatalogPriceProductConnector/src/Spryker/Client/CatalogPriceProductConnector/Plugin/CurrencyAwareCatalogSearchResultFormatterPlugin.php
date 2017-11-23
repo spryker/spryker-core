@@ -33,7 +33,7 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return mixed
+     * @return mixed|array
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {

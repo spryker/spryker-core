@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShipmentCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpander;
-use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidate;
+use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidator;
 use Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorDependencyProvider;
 
 /**
@@ -26,11 +26,11 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidateInterface
+     * @return \Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidatorInterface
      */
     public function createShipmentCartValidate()
     {
-        return new ShipmentCartValidate($this->getShipmentFacade(), $this->getPriceFacade());
+        return new ShipmentCartValidator($this->getShipmentFacade(), $this->getPriceFacade());
     }
 
     /**

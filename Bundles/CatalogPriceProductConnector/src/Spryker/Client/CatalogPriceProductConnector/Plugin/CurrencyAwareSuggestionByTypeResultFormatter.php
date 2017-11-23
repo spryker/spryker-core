@@ -19,14 +19,14 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface
      */
-    protected $suggestionByTypeResultFormatterPlugin;
+    protected $rawCatalogSearchResultFormatterPlugin;
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin
      */
     public function __construct(ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin)
     {
-        $this->suggestionByTypeResultFormatterPlugin = $rawCatalogSearchResultFormatterPlugin;
+        $this->rawCatalogSearchResultFormatterPlugin = $rawCatalogSearchResultFormatterPlugin;
     }
 
     /**
@@ -37,7 +37,7 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
-        $results = $this->suggestionByTypeResultFormatterPlugin->formatResult($searchResult, $requestParameters);
+        $results = $this->rawCatalogSearchResultFormatterPlugin->formatResult($searchResult, $requestParameters);
 
         if (!isset($results['product_abstract'])) {
             return $results;
@@ -60,6 +60,6 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
      */
     public function getName()
     {
-        return $this->suggestionByTypeResultFormatterPlugin->getName();
+        return $this->rawCatalogSearchResultFormatterPlugin->getName();
     }
 }

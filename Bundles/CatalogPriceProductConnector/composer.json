@@ -15,9 +15,9 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/search": "If you want to use Elastica plugins",
+    "spryker/search": "If you want to use Search plugins",
     "spryker/elastica": "If you want to use Elastica plugins.",
-    "spryker/config": "If you want to use Elastica plugins."
+    "spryker/config": "If you want to use Config plugins."
   },
   "autoload": {
     "psr-4": {

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShipmentCartConnector\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface ShipmentCartValidateInterface
+interface ShipmentCartValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

@@ -9,8 +9,4 @@ namespace Spryker\Shared\PriceProduct;
 
 interface PriceProductConstants
 {
-    /**
-     * Default price type configuration used when resolving prices, when price type is not given.
-     */
-    const DEFAULT_PRICE_TYPE = 'DEFAULT_PRICE_TYPE';
 }
