@@ -17,6 +17,16 @@ class GiftCardBalanceQueryContainer extends AbstractQueryContainer implements Gi
     /**
      * @api
      *
+     * @return \Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLogQuery
+     */
+    public function queryGiftCardBalanceLog()
+    {
+        return $this->getFactory()->createGiftCardBalanceLogQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param string $giftCardCode
      *
      * @return \Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLogQuery
@@ -25,7 +35,7 @@ class GiftCardBalanceQueryContainer extends AbstractQueryContainer implements Gi
     {
         return $this
             ->getFactory()
-            ->createTransactionLogQuery()
+            ->createGiftCardBalanceLogQuery()
             ->useSpyGiftCardQuery()
             ->filterByCode($giftCardCode)
             ->endUse();

@@ -252,11 +252,11 @@ class GiftCardReader implements GiftCardReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \ArrayObject|\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
+     * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard[]
      */
     public function getGiftCardPaymentsForOrder($idSalesOrder)
     {
-        $result = new ArrayObject();
+        $result = [];
 
         $queryResults = $this->queryContainer->queryPaymentGiftCardsForIdSalesOrder($idSalesOrder);
         foreach ($queryResults as $queryResult) {
@@ -276,10 +276,27 @@ class GiftCardReader implements GiftCardReaderInterface
         $giftCardPaymentEntities = $this->getGiftCardPaymentsForOrder($idSalesOrder);
         $giftCardCodes = $this->extractGiftCardCodesFromGiftCardPaymentEntities($giftCardPaymentEntities);
 
-        $giftCardEntities = $this->queryContainer->queryGiftCardByCodes($giftCardCodes)->find();
+        $giftCardEntities = $this->getGiftCardEntitiesByCodes($giftCardCodes);
         $giftCardTransfers = $this->getGiftCardTransfersFromEntities($giftCardEntities);
 
         return $giftCardTransfers;
+    }
+
+    /**
+     * @param array $giftCardCodes
+     *
+     * @return array
+     */
+    protected function getGiftCardEntitiesByCodes(array $giftCardCodes)
+    {
+        $giftCardQuery = $this->queryContainer->queryGiftCardByCodes($giftCardCodes);
+        $giftCardEntities = [];
+
+        foreach ($giftCardQuery->find() as $giftCardEntity) {
+            $giftCardEntities[] = $giftCardEntity;
+        }
+
+        return $giftCardEntities;
     }
 
     /**

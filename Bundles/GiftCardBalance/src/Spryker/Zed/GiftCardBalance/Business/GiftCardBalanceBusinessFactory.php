@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\GiftCardBalance\GiftCardBalanceConfig getConfig()
- * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface getQueryContainer()
  */
 class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
 {

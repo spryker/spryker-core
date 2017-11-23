@@ -12,14 +12,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\GiftCardBalance\GiftCardBalanceConfig getConfig()
- * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface getQueryContainer()
  */
 class GiftCardBalancePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
      * @return \Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLogQuery
      */
-    public function createTransactionLogQuery()
+    public function createGiftCardBalanceLogQuery()
     {
         return SpyGiftCardBalanceLogQuery::create();
     }

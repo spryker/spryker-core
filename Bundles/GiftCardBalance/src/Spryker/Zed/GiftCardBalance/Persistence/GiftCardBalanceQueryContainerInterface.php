@@ -12,6 +12,13 @@ interface GiftCardBalanceQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLogQuery
+     */
+    public function queryGiftCardBalanceLog();
+
+    /**
+     * @api
+     *
      * @param string $giftCardCode
      *
      * @return \Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLogQuery
