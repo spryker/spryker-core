@@ -17,4 +17,11 @@ interface ProductCategoryFilterQueryContainerInterface
      * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
     public function queryProductCategoryFilterByCategoryId($idCategory);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
+     */
+    public function queryProductCategoryFilter();
 }

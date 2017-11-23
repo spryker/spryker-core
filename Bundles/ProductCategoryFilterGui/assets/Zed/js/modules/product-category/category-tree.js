@@ -28,6 +28,9 @@ var config = {
         },
         'category': {
             'icon': 'fa fa-sitemap'
+        },
+        'edited-category': {
+            'icon': 'fa fa-edit'
         }
     }
 };
@@ -89,9 +92,9 @@ function createTreeLoadHandler(idCategory, selected, skipFormLoad) {
 
         if (skipFormLoad) {
             selectNode(selected);
-            setNodeListeners(idCategory);
+            setListeners(idCategory);
         } else {
-            setNodeListeners(idCategory);
+            setListeners(idCategory);
             selectNode(selected);
         }
     }
@@ -131,7 +134,7 @@ function getNodeName(id) {
 /**
  * @return {void}
  */
-function setNodeListeners() {
+function setListeners() {
     $('#category-tree').on('select_node.jstree', function(e, data) {
         if(data.node.data.rootNode) {
             $('#category-tree').jstree(true).deselect_node(data.node);
@@ -156,6 +159,25 @@ function setNodeListeners() {
         currentlySelectedNodeId = idCategory;
         loadForm(idCategory);
     });
+
+    window.document.addEventListener(
+        'categoryChanged',
+        function(e) {
+            $('#category-node-' + e.detail.idCategory + '_anchor i')
+                .removeClass(config.categoryTreeNodeTypes.default.icon)
+                .addClass(config.categoryTreeNodeTypes['edited-category'].icon);
+            },
+        false
+    );
+
+    window.document.addEventListener(
+        'resetCategory', function(e) {
+            $('#category-node-' + e.detail.idCategory + '_anchor i')
+                .removeClass(config.categoryTreeNodeTypes['edited-category'].icon)
+                .addClass(config.categoryTreeNodeTypes.default.icon);
+        },
+        false
+    );
 }
 
 /**
@@ -219,29 +241,6 @@ function onTreeSearchKeyup() {
     treeSearchTimeout = setTimeout(function () {
         $('#category-tree').jstree(true).search($treeSearchField.val());
     }, 250);
-}
-
-/**
- * @param {Object} jstreeNode
- *
- * @returns {Array}
- */
-function getCategoryNodesRecursively(jstreeNode) {
-    var nodes = [];
-
-    $.each(jstreeNode.children, function(i, childNode) {
-        var categoryNode = {
-            'category_node': {
-                'id_category_node': childNode.data.idCategoryNode,
-                'position': (i + 1)
-            },
-            'children': getCategoryNodesRecursively(childNode)
-        };
-
-        nodes.push(categoryNode);
-    });
-
-    return nodes;
 }
 
 

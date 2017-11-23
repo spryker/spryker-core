@@ -45,6 +45,18 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
      *
      * @api
      */
+    public function getAllProductCategoriesWithFilters()
+    {
+        return $this->getFactory()
+            ->createProductCategoryFilterReader()
+            ->getAllProductCategoriesWithFilters();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
     public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
         return $this->getFactory()

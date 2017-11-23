@@ -23,6 +23,24 @@ class ProductCategoryFilterQueryContainer extends AbstractQueryContainer impleme
      */
     public function queryProductCategoryFilterByCategoryId($idCategory)
     {
-        return $this->getFactory()->createProductGroupQuery()->filterByFkCategory($idCategory);
+        return $this->createProductGroupQuery()->filterByFkCategory($idCategory);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
+     */
+    public function queryProductCategoryFilter()
+    {
+        return $this->createProductGroupQuery();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
+     */
+    protected function createProductGroupQuery()
+    {
+        return $this->getFactory()->createProductGroupQuery();
     }
 }

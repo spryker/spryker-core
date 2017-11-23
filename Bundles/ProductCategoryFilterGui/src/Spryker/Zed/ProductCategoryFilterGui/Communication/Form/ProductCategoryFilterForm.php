@@ -16,8 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductCategoryFilterForm extends AbstractType
 {
     const FIELD_FILTER_AUTOCOMPLETE = 'filter-autocomplete';
-    const FIELD_ACTIVE_FILTERS = 'active_filters';
-    const FIELD_INACTIVE_FILTERS = 'inactive_filters';
+    const FIELD_FILTERS = 'filters';
 
     /**
      * @return string The name of this type
@@ -46,7 +45,6 @@ class ProductCategoryFilterForm extends AbstractType
     {
         $this->addFilterAutocompleteField($builder);
         $this->addActiveFilterHiddenField($builder);
-        $this->addInactiveFilterHiddenField($builder);
     }
 
     /**
@@ -75,19 +73,7 @@ class ProductCategoryFilterForm extends AbstractType
      */
     protected function addActiveFilterHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ACTIVE_FILTERS, new HiddenType());
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addInactiveFilterHiddenField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_INACTIVE_FILTERS, new HiddenType());
+        $builder->add(self::FIELD_FILTERS, new HiddenType());
 
         return $this;
     }

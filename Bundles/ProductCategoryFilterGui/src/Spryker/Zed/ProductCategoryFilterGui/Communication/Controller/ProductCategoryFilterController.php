@@ -11,6 +11,7 @@ use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductCategoryFilterController extends AbstractController
 {
     const PARAM_ID_CATEGORY_NODE = 'id-category-node';
+    const REDIRECT_ADDRESS = '/product-category-filter-gui/product-category-filter';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -43,56 +45,63 @@ class ProductCategoryFilterController extends AbstractController
             )
             ->handleRequest($request);
 
+        $productCategoryFilterTransfer = $this->getFactory()
+            ->getProductCategoryFilterFacade()
+            ->findProductCategoryFilterByCategoryId($idCategory);
+
+        if ($productCategoryFilterForm->isValid()) {
+            /** @var \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer */
+            $submittedFilters = $this->getFactory()
+                ->createProductCategoryFilterDataFormatter()
+                ->formatFilterData($productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS]);
+            $productCategoryFilterTransfer->setFilterData(json_encode($submittedFilters));
+            $productCategoryFilterTransfer->setFilterDataArray($submittedFilters);
+            $facadeFunction = 'createProductCategoryFilter';
+            if ($productCategoryFilterTransfer->getIdProductCategoryFilter()) {
+                $facadeFunction = 'updateProductCategoryFilter';
+            }
+
+            $this->getFactory()
+                ->getProductCategoryFilterFacade()
+                ->$facadeFunction($productCategoryFilterTransfer);
+        }
+
         $searchResultsForCategory = $this->getFactory()
             ->getCatalogClient()
             ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
 
-        $productCategoryFilters = $this->getFactory()
-            ->getProductCategoryFilterFacade()
-            ->findProductCategoryFilterByCategoryId($idCategory)
-            ->getFilterDataArray();
-
         $filters = $this->getFactory()
             ->getProductCategoyFilterClient()
-            ->updateFacetsByCategory($searchResultsForCategory[FacetResultFormatterPlugin::NAME], $idCategory, $localeTransfer->getLocaleName());
-
-//        if ($productCategoryFilterForm->isValid()) {
-            /** @var \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer */
-//            $productCategoryFilterTransfer = $productCategoryFilterForm->getData();
-
-//            $productCategoryFilterTransfer->setFkNavigation($idNavigation);
-//            if ($idNavigationNode) {
-//                $productCategoryFilterTransfer->setFkParentNavigationNode($idNavigationNode);
-//            }
-//
-//            $productCategoryFilterTransfer = $this->getFactory()
-//                ->getNavigationFacade()
-//                ->createNavigationNode($productCategoryFilterTransfer);
-//
-//            $this->addSuccessMessage(sprintf(
-//                'Navigation node "%s" was created successfully.',
-//                $productCategoryFilterTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
-//            ));
-//
-//            $queryParams = [
-//                static::PARAM_ID_NAVIGATION => $idNavigation,
-//                static::PARAM_ID_NAVIGATION_NODE => $idNavigationNode,
-//                static::PARAM_ID_SELECTED_TREE_NODE => $idNavigationNode,
-//            ];
-//
-//            if ($idNavigationNode) {
-//                return $this->redirectResponse(Url::generate('/navigation-gui/node/update', $queryParams)->build());
-//            } else {
-//                return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
-//            }
-//        }
+            ->updateFacetsByCategory(
+                $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
+                $productCategoryFilterTransfer->getFilterDataArray()
+            );
 
         return $this->viewResponse([
             'productCategoryFilterForm' => $productCategoryFilterForm->createView(),
             'category' => $category,
             'filters' => $filters,
-            'productCategoryFilters' => $productCategoryFilters,
+            'productCategoryFilters' => $productCategoryFilterTransfer,
+            'allFilters' => $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function resetAction(Request $request)
+    {
+        $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
+
+        $this->getFactory()
+            ->getProductCategoryFilterFacade()
+            ->deleteProductCategoryFilterByCategoryId($idCategory);
+
+        $redirectUrl = self::REDIRECT_ADDRESS . '?' . self::PARAM_ID_CATEGORY_NODE . '=' . $idCategory;
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**

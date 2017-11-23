@@ -6,36 +6,49 @@
         {% block widget_content %}
             <div class="ibox-title">
                 <h5>{{ 'Category Filters for' | trans }} {{ category.name }}</h5>
+                {% if productCategoryFilters.idProductCategoryFilter %}
+                    <a href="{{ url('/product-category-filter-gui/product-category-filter/reset', {'id-category-node' : category.idCategory}) }}" id="reset-filters" class="btn btn-sm btn-danger pull-right">{{ 'Reset to global settings' | trans }}</a>
+                {% endif %}
                 <input type="hidden" id="idCategory" value="{{ category.idCategory }}"/>
             </div>
-            <div class="ibox-content sk-loading">
-                <div class="alert alert-info alert-dismissable">
-                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                    {% filter trans|raw %}
-                        <div>
-                            There are no manual filter preferences defined for this category, The filters listed bellow are global settings, To define manual references for this category, modify the filters below
-                        </div>
-                    {% endfilter %}
-                </div>
-            </div>
-            {{ form_start(productCategoryFilterForm) }}
             <div class="ibox-content">
-                <table width="100%">
-                    <tr>
-                        <td width="100%">
-                            {{ form_errors(productCategoryFilterForm) }}
-                            {{ form_widget(productCategoryFilterForm) }}
-                        </td>
-                        <td>&nbsp</td>
-                        <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  disabled id="addButton" /></td>
-                    </tr>
-                </table>
+                {% if not productCategoryFilters.idProductCategoryFilter %}
+                    <div class="alert alert-info alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {% filter trans|raw %}
+                            <div>
+                                There are no manual filter preferences defined for this category, The filters listed bellow are global settings, To define manual references for this category, modify the filters below
+                            </div>
+                        {% endfilter %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {% filter trans|raw %}
+                            <div>
+                                Filter preferences for this category have been manually defined. You can discard the custom settings by resetting to global settings.
+                            </div>
+                        {% endfilter %}
+                    </div>
+                {% endif %}
+                {{ form_start(productCategoryFilterForm) }}
+                <div class="ibox-content">
+                    <table width="100%">
+                        <tr>
+                            <td width="100%">
+                                {{ form_errors(productCategoryFilterForm) }}
+                                {{ form_widget(productCategoryFilterForm) }}
+                            </td>
+                            <td>&nbsp</td>
+                            <td style="padding-top: 15px"><input type="button" onclick="return false" class="btn btn-primary" value="{{ 'Add' | trans }}"  disabled id="addButton" /></td>
+                        </tr>
+                    </table>
+                </div>
+                {{ form_end(productCategoryFilterForm) }}
+                {% include '@ProductCategoryFilterGui/ProductCategoryFilter/_partials/filters.twig' %}
             </div>
-            {{ form_end(productCategoryFilterForm) }}
         {% endblock %}
     </div>
-
-    {% include '@ProductCategoryFilterGui/ProductCategoryFilter/_partials/filters.twig' %}
 
 {% endblock %}
 

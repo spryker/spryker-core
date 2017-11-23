@@ -13,7 +13,7 @@ use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvi
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiConfig getConfig()
- * @method \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface getQueryContainer()
  */
 class ProductCategoryFilterGuiPersistenceFactory extends AbstractPersistenceFactory
 {

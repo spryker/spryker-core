@@ -18,22 +18,32 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
      * @api
      *
      * @param array $facets
-     * @param int $categoryId
-     * @param string $localeName
+     * @param array $productCategoryFilters
      *
      * @return array
      */
-    public function updateFacetsByCategory($facets, $categoryId, $localeName)
+    public function updateFacetsByCategory($facets, $productCategoryFilters)
     {
-        $productCategoryFilters = $this->getFactory()->getStorageClient()->get(
-            $this->getFactory()->createProductCategoryFilterKeyBuilder()->generateKey($categoryId, $localeName)
-        );
-
         if (empty($productCategoryFilters)) {
             return $facets;
         }
 
         return $this->getNewFacetsBasedOnCategory($productCategoryFilters, $facets);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $categoryId
+     * @param string $localeName
+     *
+     * @return mixed
+     */
+    public function getProductCategoryFiltersForCategoryByLocale($categoryId, $localeName)
+    {
+        return $this->getFactory()->getStorageClient()->get(
+            $this->getFactory()->createProductCategoryFilterKeyBuilder()->generateKey($categoryId, $localeName)
+        );
     }
 
     /**
@@ -46,7 +56,7 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
     {
         $newFacets = [];
         foreach ($productCategoryFilters as $filterName => $showFilter) {
-            if ($showFilter && isset($facets[$filterName])) {
+            if ($showFilter && isset($oldFacets[$filterName])) {
                 $newFacets[$filterName] = $oldFacets[$filterName];
             }
         }

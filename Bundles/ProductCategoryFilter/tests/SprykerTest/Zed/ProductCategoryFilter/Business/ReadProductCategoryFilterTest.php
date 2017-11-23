@@ -12,6 +12,8 @@ use Codeception\Test\Unit;
  * @group Business
  * @group ReadProductCategoryFilterTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\ProductCategoryFilter\ProductCategoryFilterBusinessTester $tester
  */
 class ReadProductCategoryFilterTest extends Unit
 {
@@ -29,5 +31,21 @@ class ReadProductCategoryFilterTest extends Unit
         // Assert
         $this->assertSame($productCategoryFilter->getFilterData(), $productCategoryFilterFromDb->getFilterData(), 'Product category filter contain correct data');
         $this->assertSame($productCategoryFilter->getFkCategory(), $productCategoryFilterFromDb->getFkCategory(), 'Product category filter related to correct category');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAllProductCategoriesWithFiltersFromDatabase()
+    {
+        // Arrange
+        $productCategoryFilter1 = $this->tester->haveProductCategoryFilter();
+        $productCategoryFilter2 = $this->tester->haveProductCategoryFilter();
+
+        // Act
+        $categories = $this->tester->getFacade()->getAllProductCategoriesWithFilters();
+
+        // Assert
+        $this->assertSame([$productCategoryFilter1->getFkCategory(), $productCategoryFilter2->getFkCategory()], $categories);
     }
 }

@@ -16,7 +16,7 @@ use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterUpdate
 use Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterConfig getConfig()
  */
 class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory

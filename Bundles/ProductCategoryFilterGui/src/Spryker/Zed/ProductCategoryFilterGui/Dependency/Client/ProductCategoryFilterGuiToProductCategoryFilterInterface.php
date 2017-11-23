@@ -11,10 +11,9 @@ interface ProductCategoryFilterGuiToProductCategoryFilterInterface
 {
     /**
      * @param array $facets
-     * @param int $categoryId
-     * @param string $localeName
+     * @param array $productCategoryFilters
      *
      * @return array
      */
-    public function updateFacetsByCategory($facets, $categoryId, $localeName);
+    public function updateFacetsByCategory($facets, $productCategoryFilters);
 }
