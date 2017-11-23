@@ -25,20 +25,6 @@ class IndexController extends AbstractController
         return $this->viewResponse([
             'RootCategoriesTable' => $rootCategoriesTable->render(),
         ]);
-//        $this->getFactory()->getProductCategoryFilterFacade()->deleteProductCategoryFilterByCategoryId($categoryId);
-//        $this->getFactory()->getProductCategoryFilterFacade()->createProductCategoryFilter(
-//            (new ProductCategoryFilterTransfer())->fromArray(
-//                [
-//                    ProductCategoryFilterTransfer::FK_CATEGORY => $categoryId,
-//                    ProductCategoryFilterTransfer::FILTER_DATA => json_encode([
-//                        'weight' => true,
-//                        'price' => false,
-//                        'category' => true,
-//                    ]),
-//                ],
-//                true
-//            )
-//        );
     }
 
     /**
