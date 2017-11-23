@@ -27,7 +27,7 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesFacadeTest extends Unit
 {
-    const DEFAULT_OMS_PROCESS_NAME = 'test';
+    const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     const DEFAULT_ITEM_STATE = 'test';
 
     /**
@@ -40,12 +40,8 @@ class SalesFacadeTest extends Unit
      */
     public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
     {
-        $this->markTestSkipped();
-
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
-
-        $checkoutResponseTransfer = $this->tester->haveOrder();
 
         $salesOrderEntity = $this->tester->create();
 
@@ -68,6 +64,28 @@ class SalesFacadeTest extends Unit
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getBillingAddress());
         $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getShippingAddress());
         $this->assertCount(1, $orderTransfer->getExpenses());
+
+        $this->assertSame(1, $orderTransfer->getTotalOrderCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOrderByIdSalesOrderWhenGuestCustomerShouldNotCountOrders()
+    {
+        $productTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
+
+        $salesOrderEntity = $this->tester->create();
+
+        $salesOrderEntity->setCustomerReference(null);
+        $salesOrderEntity->save();
+
+        $salesFacade = $this->createSalesFacade();
+
+        $orderTransfer = $salesFacade->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
+
+        $this->assertSame(0, $orderTransfer->getTotalOrderCount());
     }
 
     /**
