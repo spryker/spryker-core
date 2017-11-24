@@ -44,11 +44,11 @@ class AvailabilityEditStockCest
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
-        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 50);
+        $i->fillField('//*[@id="availability_stock_form_stocks_0_quantity"]', 50);
         $i->click('Save');
         $i->seeResponseCodeIs(200);
 
-        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 'string');
+        $i->fillField('//*[@id="availability_stock_form_stocks_0_quantity"]', 'string');
         $i->click('input[type=submit]');
         $i->see('This value is not valid.');
 

@@ -63,8 +63,8 @@ class ZedHelper extends Module
 
         $tester->amOnPage('/auth/login');
 
-        $tester->fillField('#auth_username', $username);
-        $tester->fillField('#auth_password', $password);
+        $tester->fillField('#login_form_username', $username);
+        $tester->fillField('#login_form_password', $password);
         $tester->click('Login');
 
         static::$alreadyLoggedIn = true;
