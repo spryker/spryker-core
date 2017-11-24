@@ -870,14 +870,12 @@ abstract class AbstractTable
     {
         $formFactory = $this->getFormFactory();
 
-        $deleteForm = new DeleteForm();
-
         $options = [
             'fields' => $options,
             'action' => $url,
         ];
 
-        $form = $formFactory->create($deleteForm, [], $options);
+        $form = $formFactory->create(DeleteForm::class, [], $options);
 
         $options['form'] = $form->createView();
         $options['title'] = $title;

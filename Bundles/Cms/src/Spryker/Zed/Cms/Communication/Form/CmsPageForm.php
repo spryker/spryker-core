@@ -8,8 +8,7 @@
 namespace Spryker\Zed\Cms\Communication\Form;
 
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -24,6 +23,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ */
 class CmsPageForm extends AbstractType
 {
     const FIELD_ID_CMS_PAGE = 'idCmsPage';
@@ -39,27 +43,6 @@ class CmsPageForm extends AbstractType
     const FIELD_FK_LOCALE = 'fk_locale';
     const FIELD_IS_SEARCHABLE = 'is_searchable';
     const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
-
-    /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
-     */
-    protected $urlFacade;
-
-    /**
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
-     */
-    public function __construct(CmsToUrlInterface $urlFacade)
-    {
-        $this->urlFacade = $urlFacade;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_page';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -225,20 +208,18 @@ class CmsPageForm extends AbstractType
             new NotBlank(),
             new Length(['max' => 255]),
             new Callback([
-                'methods' => [
-                    function ($url, ExecutionContextInterface $context) {
-                        $urlTransfer = new UrlTransfer();
-                        $urlTransfer->setUrl($url);
+                'callback' => function ($url, ExecutionContextInterface $context) {
+                    $urlTransfer = new UrlTransfer();
+                    $urlTransfer->setUrl($url);
 
-                        if ($this->urlFacade->hasUrl($urlTransfer)) {
-                            $context->addViolation('URL is already used');
-                        }
+                    if ($this->getFactory()->getUrlFacade()->hasUrl($urlTransfer)) {
+                        $context->addViolation('URL is already used');
+                    }
 
-                        if ($url[0] !== '/') {
-                            $context->addViolation('URL must start with a slash');
-                        }
-                    },
-                ],
+                    if ($url[0] !== '/') {
+                        $context->addViolation('URL must start with a slash');
+                    }
+                },
                 'groups' => [static::GROUP_UNIQUE_URL_CHECK],
             ]),
         ];

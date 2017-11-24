@@ -9,8 +9,10 @@ namespace Spryker\Zed\Cms\Communication\Form;
 
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +24,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ */
 class CmsRedirectForm extends AbstractType
 {
     const FIELD_ID_URL_REDIRECT = 'id_url_redirect';
@@ -31,27 +38,6 @@ class CmsRedirectForm extends AbstractType
 
     const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
     const MAX_COUNT_CHARACTERS_REDIRECT_URL = 255;
-
-    /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
-     */
-    protected $urlFacade;
-
-    /**
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
-     */
-    public function __construct(CmsToUrlInterface $urlFacade)
-    {
-        $this->urlFacade = $urlFacade;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_redirect';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -95,7 +81,7 @@ class CmsRedirectForm extends AbstractType
      */
     protected function addIdRedirectField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_URL_REDIRECT, 'hidden');
+        $builder->add(self::FIELD_ID_URL_REDIRECT, HiddenType::class);
 
         return $this;
     }
@@ -107,7 +93,7 @@ class CmsRedirectForm extends AbstractType
      */
     protected function addFromUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FROM_URL, 'text', [
+        $builder->add(self::FIELD_FROM_URL, TextType::class, [
             'label' => 'URL',
             'constraints' => $this->getUrlConstraints(),
         ]);
@@ -123,9 +109,9 @@ class CmsRedirectForm extends AbstractType
     protected function addToUrlField(FormBuilderInterface $builder)
     {
         $constraints = $this->getMandatoryConstraints();
-        $constraints[] = new Callback(['methods' => [[$this, 'validateUrlRedirectLoop']]]);
+        $constraints[] = new Callback(['callback' => [$this, 'validateUrlRedirectLoop']]);
 
-        $builder->add(self::FIELD_TO_URL, 'text', [
+        $builder->add(self::FIELD_TO_URL, TextType::class, [
             'label' => 'To URL',
             'constraints' => $constraints,
         ]);
@@ -142,7 +128,7 @@ class CmsRedirectForm extends AbstractType
     {
         $builder->add(
             self::FIELD_STATUS,
-            'choice',
+            ChoiceType::class,
             [
                 'label' => 'Redirect status code',
                 'constraints' => [
@@ -171,16 +157,14 @@ class CmsRedirectForm extends AbstractType
         $urlConstraints = $this->getMandatoryConstraints();
 
         $urlConstraints[] = new Callback([
-            'methods' => [
-                function ($url, ExecutionContextInterface $context) {
-                    $urlTransfer = new UrlTransfer();
-                    $urlTransfer->setUrl($url);
+            'callback' => function ($url, ExecutionContextInterface $context) {
+                $urlTransfer = new UrlTransfer();
+                $urlTransfer->setUrl($url);
 
-                    if ($this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer)) {
-                        $context->addViolation('URL is already used.');
-                    }
-                },
-            ],
+                if ($this->getFactory()->getUrlFacade()->hasUrlOrRedirectedUrl($urlTransfer)) {
+                    $context->addViolation('URL is already used.');
+                }
+            },
             'groups' => [self::GROUP_UNIQUE_URL_CHECK],
         ]);
 
@@ -197,13 +181,11 @@ class CmsRedirectForm extends AbstractType
             $this->createNotBlankConstraint(),
             $this->createLengthConstraint(self::MAX_COUNT_CHARACTERS_REDIRECT_URL),
             new Callback([
-                'methods' => [
-                    function ($url, ExecutionContextInterface $context) {
-                        if ($url[0] !== '/') {
-                            $context->addViolation('URL must start with a slash');
-                        }
-                    },
-                ],
+                'callback' => function ($url, ExecutionContextInterface $context) {
+                    if ($url[0] !== '/') {
+                        $context->addViolation('URL must start with a slash');
+                    }
+                },
             ]),
         ];
     }
@@ -251,7 +233,7 @@ class CmsRedirectForm extends AbstractType
             ->setSource($sourceUrlTransfer)
             ->setToUrl($toUrl);
 
-        $validationResponse = $this->urlFacade->validateUrlRedirect($urlRedirectTransfer);
+        $validationResponse = $this->getFactory()->getUrlFacade()->validateUrlRedirect($urlRedirectTransfer);
 
         if (!$validationResponse->getIsValid()) {
             $context->addViolation($validationResponse->getError());
