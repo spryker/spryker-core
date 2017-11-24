@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
+use Elastica\Exception\NotFoundException;
+use Elastica\Exception\ResponseException;
 use Elastica\Snapshot;
 use RuntimeException;
 
@@ -48,7 +50,9 @@ class SnapshotHandler implements SnapshotHandlerInterface
             $this->elasticaSnapshot->getRepository($repositoryName);
 
             return true;
-        } catch (RuntimeException $exception) {
+        } catch (ResponseException $exception) {
+            return false;
+        } catch (NotFoundException $exception) {
             return false;
         }
     }
