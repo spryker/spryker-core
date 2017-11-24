@@ -11,15 +11,23 @@ use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ */
 class CategoryType extends AbstractType
 {
     const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
@@ -42,14 +50,6 @@ class CategoryType extends AbstractType
      * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
      */
     protected $formPlugins = [];
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'category';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -104,27 +104,25 @@ class CategoryType extends AbstractType
      */
     protected function addCategoryKeyField(FormBuilderInterface $builder, CategoryQueryContainerInterface $categoryQueryContainer)
     {
-        $builder->add(static::FIELD_CATEGORY_KEY, 'text', [
+        $builder->add(static::FIELD_CATEGORY_KEY, TextType::class, [
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'methods' => [
-                        function ($key, ExecutionContextInterface $context) use ($categoryQueryContainer) {
-                            $data = $context->getRoot()->getData();
+                    'callback' => function ($key, ExecutionContextInterface $context) use ($categoryQueryContainer) {
+                        $data = $context->getRoot()->getData();
 
-                            $exists = false;
-                            if ($data instanceof CategoryTransfer) {
-                                $exists = $categoryQueryContainer
-                                        ->queryCategoryByKey($key)
-                                        ->filterByIdCategory($data->getIdCategory(), Criteria::NOT_EQUAL)
-                                        ->count() > 0;
-                            }
+                        $exists = false;
+                        if ($data instanceof CategoryTransfer) {
+                            $exists = $categoryQueryContainer
+                                    ->queryCategoryByKey($key)
+                                    ->filterByIdCategory($data->getIdCategory(), Criteria::NOT_EQUAL)
+                                    ->count() > 0;
+                        }
 
-                            if ($exists) {
-                                $context->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
-                            }
-                        },
-                    ],
+                        if ($exists) {
+                            $context->addViolation(sprintf('Category with key "%s" already in use, please choose another one.', $key));
+                        }
+                    },
                 ]),
             ],
         ]);
@@ -139,7 +137,7 @@ class CategoryType extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_IS_ACTIVE, 'checkbox', [
+        $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
             'label' => 'Active',
             'required' => false,
         ]);
@@ -154,7 +152,7 @@ class CategoryType extends AbstractType
      */
     protected function addIsInMenuField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_IS_IN_MENU, 'checkbox', [
+        $builder->add(static::FIELD_IS_IN_MENU, CheckboxType::class, [
             'label' => 'Visible in the category tree',
             'required' => false,
         ]);
@@ -169,7 +167,7 @@ class CategoryType extends AbstractType
      */
     protected function addIsSearchableField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_IS_SEARCHABLE, 'checkbox', [
+        $builder->add(static::FIELD_IS_SEARCHABLE, CheckboxType::class, [
             'label' => 'Allow to search for this category',
             'required' => false,
         ]);
@@ -185,11 +183,11 @@ class CategoryType extends AbstractType
      */
     protected function addParentNodeField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(static::FIELD_PARENT_CATEGORY_NODE, new Select2ComboBoxType(), [
+        $builder->add(static::FIELD_PARENT_CATEGORY_NODE, Select2ComboBoxType::class, [
             'property_path' => 'parentCategoryNode',
             'label' => 'Parent',
-            'choices' => array_flip($choices),
-            'choices_as_values' => false,
+            'choices' => $choices,
+            'choices_as_values' => true,
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'group_by' => 'path',
@@ -207,10 +205,10 @@ class CategoryType extends AbstractType
      */
     protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_EXTRA_PARENTS, new Select2ComboBoxType(), [
+        $builder->add(self::FIELD_EXTRA_PARENTS, Select2ComboBoxType::class, [
             'label' => 'Additional Parents',
-            'choices' => array_flip($choices),
-            'choices_as_values' => false,
+            'choices' => $choices,
+            'choices_as_values' => true,
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
             'multiple' => true,
@@ -257,8 +255,8 @@ class CategoryType extends AbstractType
      */
     protected function addLocalizedAttributesForm(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_LOCALIZED_ATTRIBUTES, 'collection', [
-            'type' => new CategoryLocalizedAttributeType(),
+        $builder->add(static::FIELD_LOCALIZED_ATTRIBUTES, CollectionType::class, [
+            'entry_type' => CategoryLocalizedAttributeType::class,
         ]);
 
         return $this;
@@ -271,7 +269,7 @@ class CategoryType extends AbstractType
      */
     protected function addPluginForms(FormBuilderInterface $builder)
     {
-        foreach ($this->formPlugins as $formPlugin) {
+        foreach ($this->getFactory()->getCategoryFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);
         }
 

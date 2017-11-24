@@ -6,9 +6,15 @@
 
 namespace Spryker\Zed\Category\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ */
 class DeleteType extends AbstractType
 {
     const FIELD_PK_CATEGORY_NODE = 'id_category_node';
@@ -34,7 +40,7 @@ class DeleteType extends AbstractType
      */
     protected function addPkCategoryNodeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PK_CATEGORY_NODE, 'hidden');
+        $builder->add(self::FIELD_PK_CATEGORY_NODE, HiddenType::class);
 
         return $this;
     }
@@ -46,16 +52,8 @@ class DeleteType extends AbstractType
      */
     protected function addFkNodeCategoryField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_NODE_CATEGORY, 'hidden');
+        $builder->add(self::FIELD_FK_NODE_CATEGORY, HiddenType::class);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'categoryDelete';
     }
 }
