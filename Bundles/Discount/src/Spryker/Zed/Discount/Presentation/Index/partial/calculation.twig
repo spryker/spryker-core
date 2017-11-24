@@ -16,9 +16,9 @@
     <button type="button" class="btn btn-sm btn-success" id="btn-calculation-get" data-label-plain-query="{{ 'Plain query' | trans }}" data-label-query-builder="{{ 'Query builder' | trans }}">
         {{ 'Plain query' | trans }}
     </button>
-</div>
 
-{% include "@Discount/Index/partial/query_builder_info.twig" only %}
+    {% include "@Discount/Index/partial/query_builder_info.twig" only %}
+</div>
 
 {% import "@Discount/Index/partial/_plugin_types_macro.twig" as form_macro %}
 {{ form_macro.render_plugin_types(discountForm.discountCalculator) }}
