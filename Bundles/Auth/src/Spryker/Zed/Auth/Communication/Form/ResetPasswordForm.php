@@ -7,11 +7,17 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
+ * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
+ */
 class ResetPasswordForm extends AbstractType
 {
     const FIELD_PASSWORD = 'password';
@@ -35,7 +41,7 @@ class ResetPasswordForm extends AbstractType
      */
     protected function addUserNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, 'repeated', [
+        $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
                 new Required(),
                 new NotBlank(),
@@ -61,13 +67,5 @@ class ResetPasswordForm extends AbstractType
         ]);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'reset_password';
     }
 }

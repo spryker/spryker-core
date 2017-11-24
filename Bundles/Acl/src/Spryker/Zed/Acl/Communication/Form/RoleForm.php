@@ -7,22 +7,21 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ */
 class RoleForm extends AbstractType
 {
     const FIELD_NAME = 'name';
     const FIELD_ID_ROLE = 'id_acl_role';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'role';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -44,7 +43,7 @@ class RoleForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, 'text', [
+        $builder->add(self::FIELD_NAME, TextType::class, [
             'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
@@ -61,7 +60,7 @@ class RoleForm extends AbstractType
      */
     protected function addRoleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_ROLE, 'hidden', [
+        $builder->add(self::FIELD_ID_ROLE, HiddenType::class, [
             'label' => 'Role name',
         ]);
 
