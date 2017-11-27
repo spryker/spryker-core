@@ -68,7 +68,7 @@ class IndexControllerCest
         $email = $customerTransfer->getEmail();
 
         $formData = [
-            'customer' => [
+            'customer_form' => [
                 'email' => $email,
                 'salutation' => $customerTransfer->getSalutation(),
                 'first_name' => $customerTransfer->getFirstName(),
@@ -77,7 +77,7 @@ class IndexControllerCest
         ];
 
         $i->amOnPage('/customer/add');
-        $i->submitForm(['name' => 'customer'], $formData);
+        $i->submitForm(['name' => 'customer_form'], $formData);
 
         $i->listDataTable('/customer/index/table');
         $i->seeInLastRow([2 => $email]);
@@ -94,7 +94,7 @@ class IndexControllerCest
         $email = $customerTransfer->getEmail();
 
         $formData = [
-            'customer' => [
+            'customer_form' => [
                 'email' => $email,
                 'salutation' => $customerTransfer->getSalutation(),
                 'last_name' => $customerTransfer->getLastName(),
@@ -102,10 +102,10 @@ class IndexControllerCest
         ];
 
         $i->amOnPage('/customer/add');
-        $i->submitForm(['name' => 'customer'], $formData);
+        $i->submitForm(['name' => 'customer_form'], $formData);
         $i->expect('I am back on the form page');
         $i->seeCurrentUrlEquals('/customer/add');
-        $i->see('This value should not be blank.', '#customer');
+        $i->see('This value should not be blank.', '#customer_form');
         $i->listDataTable('/customer/index/table');
         $i->dontSeeInLastRow([2 => $email]);
     }

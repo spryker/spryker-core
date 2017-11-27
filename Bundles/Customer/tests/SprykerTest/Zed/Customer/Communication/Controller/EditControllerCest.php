@@ -61,7 +61,7 @@ class EditControllerCest
         $email = $this->customer->getEmail();
 
         $formData = [
-            'customer' => [
+            'customer_update_form' => [
                 'email' => $email,
                 'salutation' => $this->customer->getSalutation(),
                 'first_name' => static::NEW_FIRST_NAME,
@@ -71,7 +71,7 @@ class EditControllerCest
 
         $url = '/customer/edit?id-customer=' . (int)$this->customer->getIdCustomer();
         $i->amOnPage($url);
-        $i->submitForm(['name' => 'customer'], $formData);
+        $i->submitForm(['name' => 'customer_update_form'], $formData);
 
         $customerTransfer = $i->getLocator()->customer()->facade()->getCustomer($this->customer);
         $i->assertSame(static::NEW_FIRST_NAME, $customerTransfer->getFirstName());
