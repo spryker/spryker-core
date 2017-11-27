@@ -8,43 +8,17 @@
 namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
 use Generated\Shared\Transfer\ProductLabelAggregateFormTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ */
 class ProductLabelAggregateFormType extends AbstractType
 {
-    /**
-     * @var \Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType|\Symfony\Component\Form\FormTypeInterface
-     */
-    protected $productLabelFormType;
-
-    /**
-     * @var \Spryker\Zed\ProductLabelGui\Communication\Form\RelatedProductFormType|\Symfony\Component\Form\FormTypeInterface
-     */
-    protected $relatedProductFormType;
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface $productLabelFormType
-     * @param \Symfony\Component\Form\FormTypeInterface $relatedProductFormType
-     */
-    public function __construct(
-        FormTypeInterface $productLabelFormType,
-        FormTypeInterface $relatedProductFormType
-    ) {
-        $this->productLabelFormType = $productLabelFormType;
-        $this->relatedProductFormType = $relatedProductFormType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'productLabelAggregate';
-    }
-
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -81,7 +55,7 @@ class ProductLabelAggregateFormType extends AbstractType
     {
         $builder->add(
             ProductLabelAggregateFormTransfer::PRODUCT_LABEL,
-            $this->productLabelFormType,
+            ProductLabelFormType::class,
             [
                 'label' => false,
             ]
@@ -99,7 +73,7 @@ class ProductLabelAggregateFormType extends AbstractType
     {
         $builder->add(
             ProductLabelAggregateFormTransfer::PRODUCT_ABSTRACT_RELATIONS,
-            $this->relatedProductFormType,
+            RelatedProductFormType::class,
             [
                 'label' => false,
             ]

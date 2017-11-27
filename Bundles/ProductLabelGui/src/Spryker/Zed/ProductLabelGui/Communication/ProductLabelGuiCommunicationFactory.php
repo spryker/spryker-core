@@ -59,39 +59,33 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     protected function createProductLabelAggregateFormType()
     {
-        return new ProductLabelAggregateFormType(
-            $this->createProductLabelFormType(),
-            $this->createRelatedProductFormType()
-        );
+        return ProductLabelAggregateFormType::class;
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     protected function createProductLabelFormType()
     {
-        return new ProductLabelFormType(
-            $this->createProductLabelLocalizedAttributesFormType(),
-            $this->createUniqueProductLabelNameConstraint()
-        );
+        return ProductLabelFormType::class;
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     protected function createProductLabelLocalizedAttributesFormType()
     {
-        return new ProductLabelLocalizedAttributesFormType();
+        return ProductLabelLocalizedAttributesFormType::class;
     }
 
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createUniqueProductLabelNameConstraint()
+    public function createUniqueProductLabelNameConstraint()
     {
         return new UniqueProductLabelNameConstraint([
             UniqueProductLabelNameConstraint::OPTION_QUERY_CONTAINER => $this->getQueryContainer(),
@@ -99,11 +93,11 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     protected function createRelatedProductFormType()
     {
-        return new RelatedProductFormType();
+        return RelatedProductFormType::class;
     }
 
     /**

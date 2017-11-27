@@ -8,26 +8,23 @@
 namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ */
 class RelatedProductFormType extends AbstractType
 {
     const FIELD_ID_PRODUCT_LABEL = 'idProductLabel';
     const FIELD_IDS_PRODUCT_ABSTRACT_CSV = 'idsProductAbstractCsv';
     const FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV = 'idsProductAbstractToAssignCsv';
     const FIELD_IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN_CSV = 'idsProductAbstractToDeAssignCsv';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'productRelation';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

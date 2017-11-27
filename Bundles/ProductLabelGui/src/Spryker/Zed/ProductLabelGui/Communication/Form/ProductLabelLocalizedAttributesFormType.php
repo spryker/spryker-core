@@ -8,25 +8,22 @@
 namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ */
 class ProductLabelLocalizedAttributesFormType extends AbstractType
 {
     const FIELD_LOCALE_ID = 'localeId';
     const FIELD_LOCALE_NAME = 'localeName';
     const FIELD_NAME = 'name';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'productLabelLocalizedAttributes';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

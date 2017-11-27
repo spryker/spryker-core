@@ -10,18 +10,21 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 use DateTime;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ */
 class ProductLabelFormType extends AbstractType
 {
     const FIELD_NAME = 'name';
@@ -31,36 +34,6 @@ class ProductLabelFormType extends AbstractType
     const FIELD_VALID_TO_DATE = 'validTo';
     const FIELD_FRONT_END_REFERENCE = 'frontEndReference';
     const FIELD_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
-
-    /**
-     * @var \Symfony\Component\Validator\Constraint
-     */
-    protected $uniqueNameConstraint;
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface
-     */
-    protected $localizedAttributesFormType;
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface $localizedAttributesFormType
-     * @param \Symfony\Component\Validator\Constraint $uniqueNameConstraints
-     */
-    public function __construct(
-        FormTypeInterface $localizedAttributesFormType,
-        Constraint $uniqueNameConstraints
-    ) {
-        $this->localizedAttributesFormType = $localizedAttributesFormType;
-        $this->uniqueNameConstraint = $uniqueNameConstraints;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'productLabel';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -74,7 +47,7 @@ class ProductLabelFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ProductLabelTransfer::class,
             'constraints' => [
-                $this->uniqueNameConstraint,
+                $this->getFactory()->createUniqueProductLabelNameConstraint(),
             ],
         ]);
     }
@@ -265,7 +238,7 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_LOCALIZED_ATTRIBUTES,
             CollectionType::class,
             [
-                'entry_type' => $this->localizedAttributesFormType,
+                'entry_type' => ProductLabelLocalizedAttributesFormType::class,
                 'property_path' => 'localizedAttributesCollection',
             ]
         );
