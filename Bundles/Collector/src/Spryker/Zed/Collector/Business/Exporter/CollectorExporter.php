@@ -13,7 +13,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
-use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreInterface;
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -35,7 +35,7 @@ class CollectorExporter
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreInterface
+     * @var \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface
      */
     protected $storeFacade;
 
@@ -43,13 +43,13 @@ class CollectorExporter
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
-     * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreInterface|null $storeFacade
+     * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface|null $storeFacade
      */
     public function __construct(
         TouchQueryContainerInterface $touchQueryContainer,
         CollectorToLocaleInterface $localeFacade,
         ExporterInterface $exporter,
-        CollectorToStoreInterface $storeFacade = null
+        CollectorToStoreFacadeInterface $storeFacade = null
     ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;

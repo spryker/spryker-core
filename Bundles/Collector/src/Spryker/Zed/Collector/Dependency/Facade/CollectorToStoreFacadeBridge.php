@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Collector\Dependency\Facade;
 
-class CollectorToStoreBridge implements CollectorToStoreInterface
+class CollectorToStoreFacadeBridge implements CollectorToStoreFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface

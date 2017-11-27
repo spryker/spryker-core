@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Collector\Dependency\Facade;
 
-interface CollectorToStoreInterface
+interface CollectorToStoreFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer

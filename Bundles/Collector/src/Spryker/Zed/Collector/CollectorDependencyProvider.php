@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Collector;
 
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleBridge;
-use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreBridge;
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -95,7 +95,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStoreFacade(Container $container)
     {
         $container[static::FACADE_STORE] = function (Container $container) {
-            return new CollectorToStoreBridge($container->getLocator()->store()->facade());
+            return new CollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

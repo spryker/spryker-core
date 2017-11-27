@@ -66,7 +66,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreInterface
+     * @return \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface
      */
     protected function getStoreFacade()
     {
