@@ -132,6 +132,6 @@ class UniqueValueValidator extends ConstraintValidator
      */
     protected function hasTranslationPrefix($optionValue)
     {
-        return strpos($optionValue, ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) !== false;
+        return strpos($optionValue, ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) !== 0;
     }
 }
