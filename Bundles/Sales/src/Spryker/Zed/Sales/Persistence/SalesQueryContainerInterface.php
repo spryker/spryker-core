@@ -104,6 +104,25 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idSalesOrder
      *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function querySalesOrderDetailsWithDescendingItemStateHistory($idSalesOrder);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     * @param int $idCustomer
+     *
+     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery
+     */
+    public function querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer($idSalesOrder, $idCustomer);
+
+    /**
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
      */
     public function queryCommentsByIdSalesOrder($idSalesOrder);
