@@ -6,17 +6,19 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ */
 class CmsPageAttributesFormType extends AbstractType
 {
     const FIELD_NAME = 'name';
@@ -27,29 +29,6 @@ class CmsPageAttributesFormType extends AbstractType
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
 
     const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
-
-    /**
-     * @var \Symfony\Component\Validator\Constraint
-     */
-    protected $uniqueUrlConstraint;
-
-    /**
-     * @var \Symfony\Component\Validator\Constraint
-     */
-    protected $uniqueNameConstraint;
-
-    /**
-     * @param \Symfony\Component\Validator\Constraint $uniqueUrlConstraint
-     * @param \Symfony\Component\Validator\Constraint $uniqueNameConstraint
-     */
-    public function __construct(
-        Constraint $uniqueUrlConstraint,
-        Constraint $uniqueNameConstraint
-    ) {
-
-        $this->uniqueUrlConstraint = $uniqueUrlConstraint;
-        $this->uniqueNameConstraint = $uniqueNameConstraint;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -107,8 +86,8 @@ class CmsPageAttributesFormType extends AbstractType
 
         $resolver->setDefaults([
             'constraints' => [
-                $this->uniqueUrlConstraint,
-                $this->uniqueNameConstraint,
+                $this->getFactory()->createUniqueUrlConstraint(),
+                $this->getFactory()->createUniqueNameConstraint(),
             ],
         ]);
     }
@@ -175,14 +154,6 @@ class CmsPageAttributesFormType extends AbstractType
         $builder->add(static::FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES, HiddenType::class);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_page_attributes';
     }
 
     /**

@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Version;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ */
 class CmsVersionFormType extends AbstractType
 {
     const OPTION_VERSION_NAME_CHOICES = 'version_choices';
@@ -66,13 +69,5 @@ class CmsVersionFormType extends AbstractType
         ]);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return self::CMS_VERSION;
     }
 }

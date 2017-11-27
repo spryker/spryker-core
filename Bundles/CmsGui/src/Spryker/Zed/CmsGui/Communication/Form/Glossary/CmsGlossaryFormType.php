@@ -47,14 +47,6 @@ class CmsGlossaryFormType extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_glossary';
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -63,7 +55,7 @@ class CmsGlossaryFormType extends AbstractType
     protected function addCmsGlossaryAttributeFormCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_GLOSSARY_ATTRIBUTES, CollectionType::class, [
-            'type' => $this->getFactory()->createCmsGlossaryAttributesFormType(),
+            'entry_type' => CmsGlossaryAttributesFormType::class,
             'allow_add' => true,
             'entry_options' => [
                 'data_class' => $options[static::OPTION_DATA_CLASS_ATTRIBUTES],
