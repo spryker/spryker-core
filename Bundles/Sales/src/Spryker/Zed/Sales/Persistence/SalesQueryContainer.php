@@ -185,8 +185,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @api
      *
-     * @deprecated Use SalesQueryContainer::querySalesOrderDetailsWithDescendingItemStateHistory() or
-     *             SalesQueryContainer::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
+     * @deprecated Use SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistory() or
+     *             SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
      *
      * @param int $idSalesOrder
      *
@@ -269,6 +269,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
     /**
      * @api
+     *
+     * @deprecated Use SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistory() or
+     *             SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
