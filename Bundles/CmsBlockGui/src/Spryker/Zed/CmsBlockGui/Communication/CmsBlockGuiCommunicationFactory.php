@@ -85,13 +85,8 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsBlockForm(CmsBlockFormDataProvider $cmsBlockFormDataProvider, $idCmsBlock = null)
     {
-        $cmsBlockForm = new CmsBlockForm(
-            $this->getCmsBlockQueryContainer(),
-            $this->getCmsBlockFormPlugins()
-        );
-
         return $this->getFormFactory()->create(
-            $cmsBlockForm,
+            CmsBlockForm::class,
             $cmsBlockFormDataProvider->getData($idCmsBlock),
             $cmsBlockFormDataProvider->getOptions()
         );
@@ -138,22 +133,20 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
         CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider,
         $idCmsBlock
     ) {
-        $cmsBlockGlossaryForm = $this->createCmsBlockGlossaryFormType();
-
         return $this->getFormFactory()
             ->create(
-                $cmsBlockGlossaryForm,
+                CmsBlockGlossaryForm::class,
                 $cmsBlockGlossaryFormDataProvider->getData($idCmsBlock),
                 $cmsBlockGlossaryFormDataProvider->getOptions()
             );
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm|\Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     public function createCmsBlockGlossaryPlaceholderTranslationFormType()
     {
-        return new CmsBlockGlossaryPlaceholderTranslationForm();
+        return CmsBlockGlossaryPlaceholderTranslationForm::class;
     }
 
     /**
@@ -175,18 +168,10 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    protected function createCmsBlockGlossaryFormType()
-    {
-        return new CmsBlockGlossaryForm();
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm
+     * @return string
      */
     public function createCmsBlockGlossaryPlaceholderFormType()
     {
-        return new CmsBlockGlossaryPlaceholderForm();
+        return CmsBlockGlossaryPlaceholderForm::class;
     }
 }
