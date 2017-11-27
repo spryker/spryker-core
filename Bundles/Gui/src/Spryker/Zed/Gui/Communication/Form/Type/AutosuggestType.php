@@ -8,11 +8,15 @@
 namespace Spryker\Zed\Gui\Communication\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
 class AutosuggestType extends AbstractType
 {
     const URL = 'url';
@@ -61,14 +65,6 @@ class AutosuggestType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'autosuggest';
+        return TextType::class;
     }
 }

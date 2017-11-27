@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
 class ImageType extends AbstractType
 {
     const OPTION_IMAGE_WIDTH = 'image_width';

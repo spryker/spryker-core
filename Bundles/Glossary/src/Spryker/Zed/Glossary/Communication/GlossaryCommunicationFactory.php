@@ -85,11 +85,11 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Glossary\Communication\Form\TranslationForm
+     * @return string
      */
     protected function createTranslationForm()
     {
-        return new TranslationForm($this->getFacade());
+        return TranslationForm::class;
     }
 
     /**
@@ -97,6 +97,6 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createUpdateTranslationForm()
     {
-        return new UpdateTranslationForm($this->getFacade());
+        return UpdateTranslationForm::class;
     }
 }

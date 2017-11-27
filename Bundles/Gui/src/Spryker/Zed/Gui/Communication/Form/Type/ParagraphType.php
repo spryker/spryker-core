@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
 class ParagraphType extends AbstractType
 {
     const OPTION_TEXT = 'text';
@@ -44,13 +47,5 @@ class ParagraphType extends AbstractType
             'label' => false,
             'mapped' => false,
         ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'label';
     }
 }
