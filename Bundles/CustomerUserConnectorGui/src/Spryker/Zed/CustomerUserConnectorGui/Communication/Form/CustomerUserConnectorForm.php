@@ -8,24 +8,19 @@
 namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
+ */
 class CustomerUserConnectorForm extends AbstractType
 {
     const FIELD_ID_USER = CustomerUserConnectionUpdateTransfer::ID_USER;
     const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_ASSIGN;
     const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = CustomerUserConnectionUpdateTransfer::ID_CUSTOMERS_TO_DE_ASSIGN;
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'customerUserConnection';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

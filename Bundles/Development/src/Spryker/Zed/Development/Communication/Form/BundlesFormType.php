@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\Development\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
+ */
 class BundlesFormType extends AbstractType
 {
-    const FORM_TYPE_NAME = 'bundlesFormType';
     const BUNDLE_NAME_CHOICES = 'bundleNames';
     const EXCLUDED_BUNDLES = 'excludedBundles';
     const SHOW_INCOMING = 'showIncoming';
@@ -28,14 +31,6 @@ class BundlesFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::BUNDLE_NAME_CHOICES);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return static::FORM_TYPE_NAME;
     }
 
     /**
