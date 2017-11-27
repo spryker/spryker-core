@@ -113,6 +113,6 @@ class UniqueGroupNameValidator extends ConstraintValidator
      */
     protected function hasTranslationPrefix($groupName)
     {
-        return strpos($groupName, ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX) == 0;
+        return strpos($groupName, ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX) === 0;
     }
 }
