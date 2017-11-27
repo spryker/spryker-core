@@ -34,7 +34,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductCategoryFilterReader()
     {
-        return new ProductCategoryFilterReader($this->getQueryContainer());
+        return new ProductCategoryFilterReader($this->getQueryContainer(), $this->getUtilEncodingService());
     }
 
     /**
@@ -62,10 +62,18 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchInterface
+     * @return \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchFacadeInterface
      */
     public function getTouchFacade()
     {
         return $this->getProvidedDependency(ProductCategoryFilterDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

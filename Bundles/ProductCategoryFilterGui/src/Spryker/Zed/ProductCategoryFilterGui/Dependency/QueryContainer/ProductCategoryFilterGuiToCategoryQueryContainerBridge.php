@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer;
 
-class ProductCategoryFilterGuiToCategoryBridge implements ProductCategoryFilterGuiToCategoryInterface
+class ProductCategoryFilterGuiToCategoryQueryContainerBridge implements ProductCategoryFilterGuiToCategoryQueryContainerInterface
 {
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface

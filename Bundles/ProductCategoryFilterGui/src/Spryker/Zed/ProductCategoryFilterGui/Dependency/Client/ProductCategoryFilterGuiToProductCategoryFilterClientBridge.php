@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Client;
 
-class ProductCategoryFilterGuiToProductCategoryFilterBridge implements ProductCategoryFilterGuiToProductCategoryFilterInterface
+class ProductCategoryFilterGuiToProductCategoryFilterClientBridge implements ProductCategoryFilterGuiToProductCategoryFilterClientInterface
 {
     /**
      * @var \Spryker\Client\ProductCategoryFilter\ProductCategoryFilterClient

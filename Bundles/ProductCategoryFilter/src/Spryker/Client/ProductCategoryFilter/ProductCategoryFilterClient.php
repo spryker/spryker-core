@@ -15,52 +15,36 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductCategoryFilterClient extends AbstractClient implements ProductCategoryFilterClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param array $facets
-     * @param array $productCategoryFilters
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer[] $facets
+     * @param array|null $productCategoryFilters
      *
-     * @return array
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
     public function updateFacetsByCategory($facets, $productCategoryFilters)
     {
-        if (empty($productCategoryFilters)) {
-            return $facets;
-        }
-
-        return $this->getNewFacetsBasedOnCategory($productCategoryFilters, $facets);
+        return $this->getFactory()
+            ->createFacetUpdaterByProductCategoryFilters()
+            ->update($facets, $productCategoryFilters);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $categoryId
      * @param string $localeName
      *
-     * @return mixed
+     * @return array
      */
     public function getProductCategoryFiltersForCategoryByLocale($categoryId, $localeName)
     {
         return $this->getFactory()->getStorageClient()->get(
             $this->getFactory()->createProductCategoryFilterKeyBuilder()->generateKey($categoryId, $localeName)
         );
-    }
-
-    /**
-     * @param array $productCategoryFilters
-     * @param array $oldFacets
-     *
-     * @return array
-     */
-    protected function getNewFacetsBasedOnCategory($productCategoryFilters, $oldFacets)
-    {
-        $newFacets = [];
-        foreach ($productCategoryFilters as $filterName => $showFilter) {
-            if ($showFilter && isset($oldFacets[$filterName])) {
-                $newFacets[$filterName] = $oldFacets[$filterName];
-            }
-        }
-
-        return $newFacets;
     }
 }

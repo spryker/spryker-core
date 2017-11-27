@@ -16,7 +16,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ProductCategoryFilterCollectorToCollectorBridge implements ProductCategoryFilterCollectorToCollectorInterface
+class ProductCategoryFilterCollectorToCollectorFacadeBridge implements ProductCategoryFilterCollectorToCollectorFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface

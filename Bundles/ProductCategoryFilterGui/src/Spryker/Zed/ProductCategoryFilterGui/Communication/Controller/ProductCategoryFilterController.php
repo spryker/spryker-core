@@ -51,11 +51,13 @@ class ProductCategoryFilterController extends AbstractController
 
         if ($productCategoryFilterForm->isValid()) {
             /** @var \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer */
-            $submittedFilters = $this->getFactory()
-                ->createProductCategoryFilterDataFormatter()
-                ->formatFilterData($productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS]);
-            $productCategoryFilterTransfer->setFilterData(json_encode($submittedFilters));
-            $productCategoryFilterTransfer->setFilterDataArray($submittedFilters);
+            $productCategoryFilterTransfer = $this->getFactory()
+                ->createProductCategoryFilterHydrator()
+                ->hydrate(
+                    $productCategoryFilterTransfer,
+                    $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS]
+                );
+
             $facadeFunction = 'createProductCategoryFilter';
             if ($productCategoryFilterTransfer->getIdProductCategoryFilter()) {
                 $facadeFunction = 'updateProductCategoryFilter';
@@ -71,7 +73,7 @@ class ProductCategoryFilterController extends AbstractController
             ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
 
         $filters = $this->getFactory()
-            ->getProductCategoyFilterClient()
+            ->getProductCategoryFilterClient()
             ->updateFacetsByCategory(
                 $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
                 $productCategoryFilterTransfer->getFilterDataArray()

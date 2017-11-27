@@ -18,6 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface ProductCategoryFilterCollectorFacadeInterface
 {
     /**
+     * Specification:
+     * - Exports all touched product category filter entries
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -28,7 +31,7 @@ interface ProductCategoryFilterCollectorFacadeInterface
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return mixed
+     * @return void
      */
     public function runStorageProductCategoryFilterCollector(
         SpyTouchQuery $baseQuery,

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 
-class ProductCategoryFilterGuiToProductCategoryFilterBridge implements ProductCategoryFilterGuiToProductCategoryFilterInterface
+class ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge implements ProductCategoryFilterGuiToProductCategoryFilterFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductCategoryFilter\Business\ProductCategoryFilterFacadeInterface

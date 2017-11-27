@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductCategoryFilter;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductCategoryFilter\Dependency\Client\ProductCategoryFilterToStorageBridge;
+use Spryker\Client\ProductCategoryFilter\Dependency\Client\ProductCategoryFilterToStorageClientBridge;
 
 class ProductCategoryFilterDependencyProvider extends AbstractDependencyProvider
 {
@@ -35,7 +35,7 @@ class ProductCategoryFilterDependencyProvider extends AbstractDependencyProvider
     protected function addStorageClient(Container $container)
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
-            return new ProductCategoryFilterToStorageBridge($container->getLocator()->storage()->client());
+            return new ProductCategoryFilterToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;

@@ -9,11 +9,13 @@ namespace Spryker\Zed\ProductCategoryFilter;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchBridge;
+use Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchFacadeBridge;
+use Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceBridge;
 
 class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_TOUCH = 'FACADE_TOUCH';
+    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +25,7 @@ class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyPr
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addTouchFacade($container);
+        $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -35,7 +38,19 @@ class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyPr
     protected function addTouchFacade(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
-            return new ProductCategoryFilterToTouchBridge($container->getLocator()->touch()->facade());
+            return new ProductCategoryFilterToTouchFacadeBridge($container->getLocator()->touch()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addUtilEncodingService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ProductCategoryFilterToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
     }
 }

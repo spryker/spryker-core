@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductCategoryFilter\Dependency\Client;
 
-interface ProductCategoryFilterToStorageInterface
+interface ProductCategoryFilterToStorageClientInterface
 {
     /**
      * @param string $key

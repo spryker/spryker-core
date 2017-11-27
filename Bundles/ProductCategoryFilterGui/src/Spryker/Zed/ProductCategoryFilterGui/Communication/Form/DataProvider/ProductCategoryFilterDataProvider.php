@@ -8,19 +8,19 @@
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
-use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterInterface;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterFacadeInterface;
 
 class ProductCategoryFilterDataProvider
 {
     /**
-     * @var \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterInterface
+     * @var \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterFacadeInterface
      */
     protected $productCategoryFilterFacade;
 
     /**
-     * @param \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterInterface $navigationFacade
+     * @param \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterFacadeInterface $navigationFacade
      */
-    public function __construct(ProductCategoryFilterGuiToProductCategoryFilterInterface $navigationFacade)
+    public function __construct(ProductCategoryFilterGuiToProductCategoryFilterFacadeInterface $navigationFacade)
     {
         $this->productCategoryFilterFacade = $navigationFacade;
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
-interface ProductCategoryFilterGuiToLocaleInterface
+interface ProductCategoryFilterGuiToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer

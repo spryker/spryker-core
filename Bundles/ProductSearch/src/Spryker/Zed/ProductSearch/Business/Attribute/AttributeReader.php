@@ -129,7 +129,7 @@ class AttributeReader implements AttributeReaderInterface
      * @param string $searchText
      * @param int $limit
      *
-     * @return mixed
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     protected function applySearchParamsToQuery($query, $searchText, $limit)
     {

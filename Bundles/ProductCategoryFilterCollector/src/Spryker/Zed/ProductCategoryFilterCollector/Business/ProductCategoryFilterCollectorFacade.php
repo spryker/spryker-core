@@ -24,6 +24,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductCategoryFilterCollectorFacade extends AbstractFacade implements ProductCategoryFilterCollectorFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -45,10 +47,8 @@ class ProductCategoryFilterCollectorFacade extends AbstractFacade implements Pro
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()->createStorageProductGroupCollector();
-
         $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+            $this->getFactory()->createStorageProductGroupCollector(),
             $baseQuery,
             $localeTransfer,
             $result,

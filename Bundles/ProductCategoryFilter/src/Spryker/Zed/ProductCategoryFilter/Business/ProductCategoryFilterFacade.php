@@ -13,13 +13,16 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\ProductCategoryFilter\Business\ProductCategoryFilterBusinessFactory getFactory()
  */
-
 class ProductCategoryFilterFacade extends AbstractFacade implements ProductCategoryFilterFacadeInterface
 {
     /**
      * {@inheritdoc}
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
     public function createProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
@@ -32,6 +35,10 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
      * {@inheritdoc}
      *
      * @api
+     *
+     * @param int $categoryId
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
     public function findProductCategoryFilterByCategoryId($categoryId)
     {
@@ -44,18 +51,24 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
      * {@inheritdoc}
      *
      * @api
+     *
+     * @return array
      */
     public function getAllProductCategoriesWithFilters()
     {
         return $this->getFactory()
             ->createProductCategoryFilterReader()
-            ->getAllProductCategoriesWithFilters();
+            ->getAllProductCategoriesIdsWithFilters();
     }
 
     /**
      * {@inheritdoc}
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
     public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
@@ -68,6 +81,8 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
      * {@inheritdoc}
      *
      * @api
+     *
+     * @param int $categoryId
      */
     public function deleteProductCategoryFilterByCategoryId($categoryId)
     {

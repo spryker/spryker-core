@@ -14,14 +14,14 @@ interface ProductCategoryFilterTouchInterface
     /**
      * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return mixed
+     * @return bool
      */
     public function touchProductCategoryFilterActive(ProductCategoryFilterTransfer $productCategoryFilterTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return mixed
+     * @return bool
      */
     public function touchProductCategoryFilterDeleted(ProductCategoryFilterTransfer $productCategoryFilterTransfer);
 }

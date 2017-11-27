@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Client;
 
-interface ProductCategoryFilterGuiToProductCategoryFilterInterface
+interface ProductCategoryFilterGuiToCatalogClientInterface
 {
     /**
-     * @param array $facets
-     * @param array $productCategoryFilters
+     * @param string $searchString
+     * @param array $requestParameters
      *
      * @return array
      */
-    public function updateFacetsByCategory($facets, $productCategoryFilters);
+    public function catalogSearch($searchString, array $requestParameters);
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
-class ProductCategoryFilterGuiToProductSearchBridge implements ProductCategoryFilterGuiToProductSearchInterface
+class ProductCategoryFilterGuiToProductSearchFacadeBridge implements ProductCategoryFilterGuiToProductSearchFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface

@@ -19,5 +19,5 @@ interface ProductCategoryFilterReaderInterface
     /**
      * @return array
      */
-    public function getAllProductCategoriesWithFilters();
+    public function getAllProductCategoriesIdsWithFilters();
 }

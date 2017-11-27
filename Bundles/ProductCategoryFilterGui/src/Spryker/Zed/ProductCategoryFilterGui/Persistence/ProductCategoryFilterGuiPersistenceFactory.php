@@ -18,7 +18,7 @@ use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvi
 class ProductCategoryFilterGuiPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryInterface
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryQueryContainerInterface
      */
     public function getCategoryQueryContainer()
     {

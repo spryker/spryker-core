@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer;
 
-interface ProductCategoryFilterGuiToCategoryInterface
+interface ProductCategoryFilterGuiToCategoryQueryContainerInterface
 {
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery

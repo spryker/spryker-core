@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
-interface ProductCategoryFilterGuiToProductSearchInterface
+interface ProductCategoryFilterGuiToProductSearchFacadeInterface
 {
     /**
      * @param string $searchText

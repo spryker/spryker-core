@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilter\Dependency\Facade;
 
-class ProductCategoryFilterToTouchBridge implements ProductCategoryFilterToTouchInterface
+class ProductCategoryFilterToTouchFacadeBridge implements ProductCategoryFilterToTouchFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface

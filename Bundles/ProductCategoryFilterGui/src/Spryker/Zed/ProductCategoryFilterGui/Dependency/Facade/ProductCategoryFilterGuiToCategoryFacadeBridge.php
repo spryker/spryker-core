@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-class ProductCategoryFilterGuiToCategoryBridge implements ProductCategoryFilterGuiToCategoryInterface
+class ProductCategoryFilterGuiToCategoryFacadeBridge implements ProductCategoryFilterGuiToCategoryFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Category\Business\CategoryFacade

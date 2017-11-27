@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
-class ProductCategoryFilterGuiToLocaleBridge implements ProductCategoryFilterGuiToLocaleInterface
+class ProductCategoryFilterGuiToLocaleFacadeBridge implements ProductCategoryFilterGuiToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

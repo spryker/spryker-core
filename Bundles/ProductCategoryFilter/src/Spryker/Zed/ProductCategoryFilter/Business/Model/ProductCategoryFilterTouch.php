@@ -9,21 +9,19 @@ namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
-use Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchInterface;
+use Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchFacadeInterface;
 
 class ProductCategoryFilterTouch implements ProductCategoryFilterTouchInterface
 {
     /**
-     * @var \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchFacadeInterface
      */
     protected $touchFacade;
 
     /**
-     * ProductCategoryFilterTouch constructor.
-     *
-     * @param \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchInterface $touchFacade
+     * @param \Spryker\Zed\ProductCategoryFilter\Dependency\Facade\ProductCategoryFilterToTouchFacadeInterface $touchFacade
      */
-    public function __construct(ProductCategoryFilterToTouchInterface $touchFacade)
+    public function __construct(ProductCategoryFilterToTouchFacadeInterface $touchFacade)
     {
         $this->touchFacade = $touchFacade;
     }

@@ -51,6 +51,7 @@ class ProductCategoryFilterCreator implements ProductCategoryFilterCreatorInterf
         $productCategoryFilterTransfer->setIdProductCategoryFilter($productCategoryFilterEntity->getIdProductCategoryFilter());
 
         $this->productCategoryFilterTouch->touchProductCategoryFilterActive($productCategoryFilterTransfer);
+
         return $productCategoryFilterTransfer;
     }
 

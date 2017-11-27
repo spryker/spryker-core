@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductCategoryFilterCollector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductCategoryFilterCollector\Dependency\Facade\ProductCategoryFilterCollectorToCollectorBridge;
+use Spryker\Zed\ProductCategoryFilterCollector\Dependency\Facade\ProductCategoryFilterCollectorToCollectorFacadeBridge;
 
 class ProductCategoryFilterCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -39,7 +39,7 @@ class ProductCategoryFilterCollectorDependencyProvider extends AbstractBundleDep
     protected function addCollectorFacade(Container $container)
     {
         $container[static::FACADE_COLLECTOR] = function (Container $container) {
-            return new ProductCategoryFilterCollectorToCollectorBridge($container->getLocator()->collector()->facade());
+            return new ProductCategoryFilterCollectorToCollectorFacadeBridge($container->getLocator()->collector()->facade());
         };
     }
 

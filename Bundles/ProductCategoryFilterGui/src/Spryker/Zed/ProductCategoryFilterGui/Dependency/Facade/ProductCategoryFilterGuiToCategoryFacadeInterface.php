@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-interface ProductCategoryFilterGuiToCategoryInterface
+interface ProductCategoryFilterGuiToCategoryFacadeInterface
 {
     /**
      * @param int $idCategory

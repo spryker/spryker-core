@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilter\Dependency\Facade;
 
-interface ProductCategoryFilterToTouchInterface
+interface ProductCategoryFilterToTouchFacadeInterface
 {
     /**
      * @param string $itemType

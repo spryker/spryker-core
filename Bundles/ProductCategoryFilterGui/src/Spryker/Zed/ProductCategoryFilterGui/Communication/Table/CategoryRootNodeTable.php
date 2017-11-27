@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Table;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryInterface;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryQueryContainerInterface;
 
 class CategoryRootNodeTable extends AbstractTable
 {
@@ -27,10 +27,10 @@ class CategoryRootNodeTable extends AbstractTable
     protected $idLocale;
 
     /**
-     * @param \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryInterface $productCategoryFilterGuiQueryContainer
+     * @param \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryQueryContainerInterface $productCategoryFilterGuiQueryContainer
      * @param int $idLocale
      */
-    public function __construct(ProductCategoryFilterGuiToCategoryInterface $productCategoryFilterGuiQueryContainer, $idLocale)
+    public function __construct(ProductCategoryFilterGuiToCategoryQueryContainerInterface $productCategoryFilterGuiQueryContainer, $idLocale)
     {
         $this->productCategoryFilterGuiQueryContainer = $productCategoryFilterGuiQueryContainer;
         $this->idLocale = $idLocale;

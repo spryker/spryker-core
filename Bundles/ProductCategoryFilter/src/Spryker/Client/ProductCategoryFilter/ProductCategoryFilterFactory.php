@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductCategoryFilter;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductCategoryFilter\FacetUpdater\FacetUpdaterByProductCategoryFilters;
 use Spryker\Shared\ProductCategoryFilter\KeyBuilder\ProductCategoryFilterKeyBuilder;
 
 class ProductCategoryFilterFactory extends AbstractFactory
@@ -26,5 +27,13 @@ class ProductCategoryFilterFactory extends AbstractFactory
     public function createProductCategoryFilterKeyBuilder()
     {
         return new ProductCategoryFilterKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductCategoryFilter\FacetUpdater\FacetUpdaterInterface
+     */
+    public function createFacetUpdaterByProductCategoryFilters()
+    {
+        return new FacetUpdaterByProductCategoryFilters();
     }
 }

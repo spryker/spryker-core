@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductCategoryFilter\Dependency\Client;
 
-class ProductCategoryFilterToStorageBridge implements ProductCategoryFilterToStorageInterface
+class ProductCategoryFilterToStorageClientBridge implements ProductCategoryFilterToStorageClientInterface
 {
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface

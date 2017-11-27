@@ -13,13 +13,17 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterface
 {
-    use RetrievesProductCategoryFilterEntityTrait;
     use DatabaseTransactionHandlerTrait;
 
     /**
      * @var \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface
      */
     protected $productCategoryFilterTouch;
+
+    /**
+     * @var \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface
+     */
+    protected $productCategoryFilterQueryContainer;
 
     /**
      * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
@@ -70,5 +74,17 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
         $productCategoryFilterEntity->save();
 
         return $productCategoryFilterEntity;
+    }
+
+    /**
+     * @param int $categoryId
+     *
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter
+     */
+    protected function getProductCategoryFilterEntityByCategoryId($categoryId)
+    {
+        return $this->productCategoryFilterQueryContainer
+            ->queryProductCategoryFilterByCategoryId($categoryId)
+            ->findOne();
     }
 }
