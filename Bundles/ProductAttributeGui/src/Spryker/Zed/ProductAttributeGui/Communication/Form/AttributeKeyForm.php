@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ */
 class AttributeKeyForm extends AbstractType
 {
     const FIELD_KEY = 'key';
@@ -32,14 +35,6 @@ class AttributeKeyForm extends AbstractType
         $resolver->setDefaults([
             'required' => false,
         ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'attribute_form';
     }
 
     /**

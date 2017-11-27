@@ -80,9 +80,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createAttributeForm(array $data = [], array $options = [])
     {
-        $attributeFormType = $this->createAttributeFormType();
-
-        return $this->getFormFactory()->create($attributeFormType, $data, $options);
+        return $this->getFormFactory()->create(AttributeForm::class, $data, $options);
     }
 
     /**
@@ -134,17 +132,15 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createAttributeTranslationFormCollection(array $data = [], array $options = [])
     {
-        $attributeTranslationFormCollectionType = $this->createAttributeTranslationFormCollectionType();
-
-        return $this->getFormFactory()->create($attributeTranslationFormCollectionType, $data, $options);
+        return $this->getFormFactory()->create(AttributeTranslationCollectionForm::class, $data, $options);
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @return string
      */
     public function createAttributeTranslationFormCollectionType()
     {
-        return new AttributeTranslationCollectionForm();
+        return AttributeTranslationCollectionForm::class;
     }
 
     /**
@@ -156,17 +152,17 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @return string
      */
     protected function createAttributeFormType()
     {
-        return new AttributeForm($this->getProductAttributeQueryContainer());
+        return AttributeForm::class;
     }
 
     /**
      * @return \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
-    protected function getProductAttributeQueryContainer()
+    public function getProductAttributeQueryContainer()
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_ATTRIBUTE);
     }
