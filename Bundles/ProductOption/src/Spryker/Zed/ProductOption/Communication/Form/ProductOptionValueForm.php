@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -88,6 +89,9 @@ class ProductOptionValueForm extends AbstractType
         $builder->add(self::FIELD_VALUE, 'text', [
             'label' => 'Option name translation key',
             'required' => true,
+            'attr' => [
+                'placeholder' => ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . '(your key)',
+            ],
             'constraints' => [
                 new NotBlank(),
                 new Regex([

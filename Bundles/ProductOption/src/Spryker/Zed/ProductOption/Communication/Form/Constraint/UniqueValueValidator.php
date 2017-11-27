@@ -40,6 +40,10 @@ class UniqueValueValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueValue');
         }
 
+        if (!$this->hasTranslationPrefix($value)) {
+            $value = $this->addTranslationPrefix($value);
+        }
+
         if (!$this->isValueChanged($value, $constraint)) {
             return;
         }
@@ -68,17 +72,17 @@ class UniqueValueValidator extends ConstraintValidator
     }
 
     /**
-     * @param string $submitedValue
+     * @param string $submittedValue
      * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue $constraint
      *
      * @return bool
      */
-    protected function isValueChanged($submitedValue, UniqueValue $constraint)
+    protected function isValueChanged($submittedValue, UniqueValue $constraint)
     {
         /** @var \Symfony\Component\Form\Form $root */
         $root = $this->context->getRoot();
 
-        $idProductOptionValue = $this->findProductOptionValueId($root->getData(), $submitedValue);
+        $idProductOptionValue = $this->findProductOptionValueId($root->getData(), $submittedValue);
         if (!$idProductOptionValue) {
             return true;
         }
@@ -87,7 +91,7 @@ class UniqueValueValidator extends ConstraintValidator
             ->queryProductOptionByValueId($idProductOptionValue)
             ->findOne();
 
-        if ($productOptionValueEntity->getValue() !== $submitedValue) {
+        if ($productOptionValueEntity->getValue() !== $submittedValue) {
             return true;
         }
 
@@ -98,7 +102,7 @@ class UniqueValueValidator extends ConstraintValidator
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
      * @param string $submittedValue
      *
-     * @return int
+     * @return int|null
      */
     protected function findProductOptionValueId(ProductOptionGroupTransfer $productOptionGroupTransfer, $submittedValue)
     {
@@ -108,6 +112,26 @@ class UniqueValueValidator extends ConstraintValidator
             }
         }
 
-        return 0;
+        return null;
+    }
+
+    /**
+     * @param string $optionValue
+     *
+     * @return string
+     */
+    protected function addTranslationPrefix($optionValue)
+    {
+        return ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $optionValue;
+    }
+
+    /**
+     * @param string $optionValue
+     *
+     * @return bool
+     */
+    protected function hasTranslationPrefix($optionValue)
+    {
+        return strpos($optionValue, ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) !== false;
     }
 }
