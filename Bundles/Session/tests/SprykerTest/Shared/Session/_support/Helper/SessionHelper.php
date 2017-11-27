@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Shared\Session\Helper;
+
+use Codeception\Module;
+use Spryker\Client\Session\SessionClient;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+class SessionHelper extends Module
+{
+    /**
+     * @return void
+     */
+    public function _initialize()
+    {
+        $sessionClient = new SessionClient();
+        $sessionClient->setContainer(new Session());
+    }
+}

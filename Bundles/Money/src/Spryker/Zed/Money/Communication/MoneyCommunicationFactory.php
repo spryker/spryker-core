@@ -21,11 +21,11 @@ use Spryker\Zed\Money\MoneyDependencyProvider;
 class MoneyCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\Money\Communication\Form\Type\MoneyType|\Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     public function createMoneyFormType()
     {
-        return new MoneyType();
+        return MoneyType::class;
     }
 
     /**
