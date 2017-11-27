@@ -9,8 +9,7 @@ namespace Spryker\Zed\NavigationGui\Communication\Form;
 
 use Generated\Shared\Transfer\NavigationTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,32 +18,15 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ */
 class NavigationFormType extends AbstractType
 {
     const FIELD_NAME = 'name';
     const FIELD_KEY = 'key';
     const FIELD_IS_ACTIVE = 'is_active';
-
-    /**
-     * @var \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface
-     */
-    protected $navigationGuiQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface $navigationGuiQueryContainer
-     */
-    public function __construct(NavigationGuiQueryContainerInterface $navigationGuiQueryContainer)
-    {
-        $this->navigationGuiQueryContainer = $navigationGuiQueryContainer;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'navigation';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -105,9 +87,7 @@ class NavigationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Callback([
-                        'methods' => [
-                            [$this, 'uniqueKeyCheck'],
-                        ],
+                        'callback' => [$this, 'uniqueKeyCheck'],
                     ]),
                 ],
             ]);
@@ -168,7 +148,7 @@ class NavigationFormType extends AbstractType
      */
     protected function hasExistingNavigationKey($key, $idNavigation = null)
     {
-        $query = $this->navigationGuiQueryContainer
+        $query = $this->getQueryContainer()
             ->queryNavigation()
             ->filterByKey($key);
 

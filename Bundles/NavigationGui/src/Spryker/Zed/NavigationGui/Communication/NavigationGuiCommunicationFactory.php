@@ -45,11 +45,11 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType
+     * @return string
      */
     protected function createNavigationFormType()
     {
-        return new NavigationFormType($this->getQueryContainer());
+        return NavigationFormType::class;
     }
 
     /**
@@ -91,11 +91,11 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType
+     * @return string
      */
     protected function createNavigationNodeFormType()
     {
-        return new NavigationNodeFormType($this->createNavigationNodeLocalizedAttributesFormType());
+        return NavigationNodeFormType::class;
     }
 
     /**
@@ -107,11 +107,11 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType
+     * @return string
      */
     protected function createNavigationNodeLocalizedAttributesFormType()
     {
-        return new NavigationNodeLocalizedAttributesFormType($this->getUrlFacade());
+        return NavigationNodeLocalizedAttributesFormType::class;
     }
 
     /**
