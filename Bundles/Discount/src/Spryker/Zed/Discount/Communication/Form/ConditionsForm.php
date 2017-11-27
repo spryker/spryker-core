@@ -7,28 +7,20 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ */
 class ConditionsForm extends AbstractType
 {
     const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
-
-    /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
-     */
-    protected $discountFacade;
-
-    /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
-     */
-    public function __construct(DiscountFacadeInterface $discountFacade)
-    {
-        $this->discountFacade = $discountFacade;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -50,11 +42,11 @@ class ConditionsForm extends AbstractType
     {
         $label = 'Apply when';
 
-        $builder->add(static::FIELD_DECISION_RULE_QUERY_STRING, 'textarea', [
+        $builder->add(static::FIELD_DECISION_RULE_QUERY_STRING, TextareaType::class, [
             'label' => $label,
             'constraints' => [
                 new QueryString([
-                    QueryString::OPTION_DISCOUNT_FACADE => $this->discountFacade,
+                    QueryString::OPTION_DISCOUNT_FACADE => $this->getFacade(),
                     QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_DECISION_RULE,
                 ]),
             ],
@@ -70,15 +62,5 @@ class ConditionsForm extends AbstractType
         ]);
 
         return $this;
-    }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'discount_conditions';
     }
 }

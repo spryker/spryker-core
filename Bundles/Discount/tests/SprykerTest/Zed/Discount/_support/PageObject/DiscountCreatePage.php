@@ -24,7 +24,7 @@ class DiscountCreatePage
 
     // Locators: Discount Tab
     const BTN_CALCULATION_GET = '#btn-calculation-get';
-    const FIELD_DISCOUNT_QUERY = '#discount_discountCalculator_collector_query_string';
+    const FIELD_DISCOUNT_QUERY = '#discount_form_discountCalculator_collector_query_string';
     const DISCOUNT_CALCULATION_GROUP = '#builder_calculation_group_0';
     const CURRENT_TAB = '.nav-tabs li.active';
     const CURRENT_TAB_ERROR = '.nav-tabs li.active.error';
@@ -123,22 +123,22 @@ class DiscountCreatePage
         $this->open();
 
         $data = array_merge($this->discountData[$discountName], $dynamicData, $override);
-        !$data['type'] ?: $i->selectOption('#discount_discountGeneral_discount_type', $data['type']);
-        !$data['name'] ?: $i->fillField('#discount_discountGeneral_display_name', $data['name']);
-        !$data['description'] ?: $i->fillField('#discount_discountGeneral_description', $data['description']);
-        !$data['excl'] ?: $i->click('#discount_discountGeneral_is_exclusive_' . $data['excl']);
-        !$data['validFrom'] ?: $i->fillField('#discount_discountGeneral_valid_from', $data['validFrom']);
-        !$data['validTo'] ?: $i->fillField('#discount_discountGeneral_valid_to', $data['validTo']);
+        !$data['type'] ?: $i->selectOption('#discount_form_discountGeneral_discount_type', $data['type']);
+        !$data['name'] ?: $i->fillField('#discount_form_discountGeneral_display_name', $data['name']);
+        !$data['description'] ?: $i->fillField('#discount_form_discountGeneral_description', $data['description']);
+        !$data['excl'] ?: $i->click('#discount_form_discountGeneral_is_exclusive_' . $data['excl']);
+        !$data['validFrom'] ?: $i->fillField('#discount_form_discountGeneral_valid_from', $data['validFrom']);
+        !$data['validTo'] ?: $i->fillField('#discount_form_discountGeneral_valid_to', $data['validTo']);
 
         $this->tab('Discount calculation');
-        !$data['calcType'] ?: $i->selectOption('#discount_discountCalculator_calculator_plugin', $data['calcType']);
-        !$data['amount'] ?: $i->fillField('#discount_discountCalculator_moneyValueCollection_0_gross_amount', $data['amount']);
+        !$data['calcType'] ?: $i->selectOption('#discount_form_discountCalculator_calculator_plugin', $data['calcType']);
+        !$data['amount'] ?: $i->fillField('#discount_form_discountCalculator_moneyValueCollection_0_gross_amount', $data['amount']);
         $i->click(self::BTN_CALCULATION_GET);
         !$data['applyTo'] ?: $i->fillField(self::FIELD_DISCOUNT_QUERY, $data['applyTo']);
 
         $this->tab('Conditions');
         $i->click('#btn-condition-get');
-        $i->fillField('#discount_discountCondition_decision_rule_query_string', $data['applyWhen']);
+        $i->fillField('#discount_form_discountCondition_decision_rule_query_string', $data['applyWhen']);
         $i->click('#create-discount-button');
     }
 
