@@ -10,10 +10,11 @@ namespace Spryker\Zed\CustomerGroup\Communication\Form;
 use Generated\Shared\Transfer\CustomerGroupToCustomerAssignmentTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
@@ -21,50 +22,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
+ * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
+ */
 class CustomerGroupForm extends AbstractType
 {
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
-    const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
+    const FIELD_ID_CUSTOMER_GROUP = self::ID_CUSTOMER_GROUP;
     const FIELD_CUSTOMER_ASSIGNMENT = 'customerAssignment';
-
-    /**
-     * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
-     */
-    protected $customerGroupQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\CustomerGroup\Communication\Form\CustomerAssignmentForm
-     */
-    protected $customerAssignmentForm;
-
-    /**
-     * @var int|null
-     */
-    private $idCustomerGroup;
-
-    /**
-     * @param \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface $customerGroupQueryContainer
-     * @param \Symfony\Component\Form\FormTypeInterface $customerAssignmentForm
-     * @param int|null $idCustomerGroup
-     */
-    public function __construct(
-        CustomerGroupQueryContainerInterface $customerGroupQueryContainer,
-        FormTypeInterface $customerAssignmentForm,
-        $idCustomerGroup
-    ) {
-        $this->customerGroupQueryContainer = $customerGroupQueryContainer;
-        $this->customerAssignmentForm = $customerAssignmentForm;
-        $this->idCustomerGroup = $idCustomerGroup;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'customer_group';
-    }
+    const ID_CUSTOMER_GROUP = 'idCustomerGroup';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -73,6 +42,7 @@ class CustomerGroupForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefined(static::ID_CUSTOMER_GROUP);
         $resolver->setDefaults([
             'data_class' => CustomerGroupTransfer::class,
         ]);
@@ -88,7 +58,7 @@ class CustomerGroupForm extends AbstractType
     {
         $this
             ->addIdCustomerGroupField($builder)
-            ->addNameField($builder)
+            ->addNameField($builder, $options)
             ->addDescriptionField($builder)
             ->addCustomerAssignmentSubForm($builder);
     }
@@ -100,21 +70,22 @@ class CustomerGroupForm extends AbstractType
      */
     protected function addIdCustomerGroupField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ID_CUSTOMER_GROUP, 'hidden');
+        $builder->add(static::FIELD_ID_CUSTOMER_GROUP, HiddenType::class);
 
         return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_NAME, 'text', [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
-            'constraints' => $this->getNameFieldConstraints(),
+            'constraints' => $this->getNameFieldConstraints($options),
         ]);
 
         return $this;
@@ -127,7 +98,7 @@ class CustomerGroupForm extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DESCRIPTION, 'textarea', [
+        $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
             'label' => 'Description',
             'required' => false,
         ]);
@@ -136,9 +107,11 @@ class CustomerGroupForm extends AbstractType
     }
 
     /**
+     * @param array $options
+     *
      * @return array
      */
-    protected function getNameFieldConstraints()
+    protected function getNameFieldConstraints(array $options)
     {
         $constraints = [
             new Required(),
@@ -146,19 +119,17 @@ class CustomerGroupForm extends AbstractType
             new Length(['max' => 70]),
         ];
 
-        $customerGroupQuery = $this->customerGroupQueryContainer->queryCustomerGroup();
-        if ($this->idCustomerGroup) {
-            $customerGroupQuery->filterByIdCustomerGroup($this->idCustomerGroup, Criteria::NOT_EQUAL);
+        $customerGroupQuery = $this->getQueryContainer()->queryCustomerGroup();
+        if ($options[static::ID_CUSTOMER_GROUP]) {
+            $customerGroupQuery->filterByIdCustomerGroup($options[static::ID_CUSTOMER_GROUP], Criteria::NOT_EQUAL);
         }
 
         $constraints[] = new Callback([
-            'methods' => [
-                function ($name, ExecutionContextInterface $context) use ($customerGroupQuery) {
-                    if ($customerGroupQuery->findByName($name)->count() > 0) {
-                        $context->addViolation('Name is already used');
-                    }
-                },
-            ],
+            'callback' => function ($name, ExecutionContextInterface $context) use ($customerGroupQuery) {
+                if ($customerGroupQuery->findByName($name)->count() > 0) {
+                    $context->addViolation('Name is already used');
+                }
+            },
         ]);
 
         return $constraints;
@@ -173,7 +144,7 @@ class CustomerGroupForm extends AbstractType
     {
         $builder->add(
             static::FIELD_CUSTOMER_ASSIGNMENT,
-            $this->customerAssignmentForm,
+            CustomerAssignmentForm::class,
             [
                 'label' => false,
                 'data_class' => CustomerGroupToCustomerAssignmentTransfer::class,
