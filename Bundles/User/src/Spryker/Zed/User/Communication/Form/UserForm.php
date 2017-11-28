@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
-use Spryker\Zed\User\Business\UserFacadeInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +22,11 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
+ * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
+ */
 class UserForm extends AbstractType
 {
     const OPTION_GROUP_CHOICES = 'group_choices';
@@ -33,22 +40,9 @@ class UserForm extends AbstractType
     const FIELD_STATUS = 'status';
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacadeInterface
-     */
-    protected $userFacade;
-
-    /**
-     * @param \Spryker\Zed\User\Business\UserFacadeInterface $userFacade
-     */
-    public function __construct(UserFacadeInterface $userFacade)
-    {
-        $this->userFacade = $userFacade;
-    }
-
-    /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'user';
     }
@@ -118,7 +112,7 @@ class UserForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_USERNAME, 'text', [
+            ->add(self::FIELD_USERNAME, TextType::class, [
                 'label' => 'E-mail',
                 'constraints' => [
                     new NotBlank(),
@@ -138,7 +132,7 @@ class UserForm extends AbstractType
     protected function addPasswordField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_PASSWORD, 'repeated', [
+            ->add(self::FIELD_PASSWORD, RepeatedType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -160,7 +154,7 @@ class UserForm extends AbstractType
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_FIRST_NAME, 'text', [
+            ->add(self::FIELD_FIRST_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -177,7 +171,7 @@ class UserForm extends AbstractType
     protected function addLastNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_LAST_NAME, 'text', [
+            ->add(self::FIELD_LAST_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -195,7 +189,7 @@ class UserForm extends AbstractType
     protected function addGroupField(FormBuilderInterface $builder, array $choices)
     {
         $builder
-            ->add(self::FIELD_GROUP, 'choice', [
+            ->add(self::FIELD_GROUP, ChoiceType::class, [
                 'constraints' => [
                     new Choice([
                         'choices' => array_keys($choices),
@@ -217,15 +211,13 @@ class UserForm extends AbstractType
     protected function createUniqueEmailConstraint()
     {
         return new Callback([
-            'methods' => [
-                function ($email, ExecutionContextInterface $contextInterface) {
-                    if ($this->userFacade->hasUserByUsername($email)) {
-                        $contextInterface->addViolation('User with email "{{ username }}" already exists.', [
-                            '{{ username }}' => $email,
-                        ]);
-                    }
-                },
-            ],
+            'callback' => function ($email, ExecutionContextInterface $contextInterface) {
+                if ($this->getFacade()->hasUserByUsername($email)) {
+                    $contextInterface->addViolation('User with email "{{ username }}" already exists.', [
+                        '{{ username }}' => $email,
+                    ]);
+                }
+            },
             'groups' => [self::GROUP_UNIQUE_USERNAME_CHECK],
         ]);
     }
