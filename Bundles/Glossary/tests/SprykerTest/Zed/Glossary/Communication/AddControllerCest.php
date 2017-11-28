@@ -37,7 +37,7 @@ class AddControllerCest
             'translation_form' => $keyTranslationTransfer->toArray(),
         ];
 
-        $i->submitForm(['name' => 'translation_form'], $formData);
+        $i->submitForm(['name' => 'translation'], $formData);
 
         $i->seeResponseCodeIs(302);
         $i->amOnPage('/glossary');
@@ -55,12 +55,12 @@ class AddControllerCest
         $i->seeResponseCodeIs(200);
 
         $formData = [
-            'translation_form' => [
+            'translation' => [
                 'glossary_key' => $keyTranslationTransfer->getGlossaryKey(),
             ],
         ];
 
-        $i->submitForm(['name' => 'translation_form'], $formData);
+        $i->submitForm(['name' => 'translation'], $formData);
 
         $i->seeResponseCodeIs(302);
         $i->amOnPage('/glossary');

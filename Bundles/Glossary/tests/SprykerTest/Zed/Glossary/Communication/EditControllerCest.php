@@ -40,7 +40,7 @@ class EditControllerCest
 
         $formData['locales'] = ['en_US' => null, 'de_DE' => null];
 
-        $i->submitForm(['name' => 'update_translation_form'], $formData);
+        $i->submitForm(['name' => 'translation'], $formData);
 
         $i->seeResponseCodeIs(302);
         $i->amOnPage('/glossary');
