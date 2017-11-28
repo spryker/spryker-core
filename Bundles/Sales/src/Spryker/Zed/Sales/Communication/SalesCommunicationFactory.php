@@ -35,9 +35,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerForm(array $formData = [], array $formOptions = [])
     {
-        $customerFormType = new CustomerForm();
-
-        return $this->getFormFactory()->create($customerFormType, $formData, $formOptions);
+        return $this->getFormFactory()->create(CustomerForm::class, $formData, $formOptions);
     }
 
     /**
@@ -64,9 +62,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAddressForm(array $formData = [], array $formOptions = [])
     {
-        $addressFormType = new AddressForm();
-
-        return $this->getFormFactory()->create($addressFormType, $formData, $formOptions);
+        return $this->getFormFactory()->create(AddressForm::class, $formData, $formOptions);
     }
 
     /**
@@ -77,7 +73,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCommentForm(array $formData = [], array $formOptions = [])
     {
-        return $this->getFormFactory()->create(new CommentForm(), $formData, $formOptions);
+        return $this->getFormFactory()->create(CommentForm::class, $formData, $formOptions);
     }
 
     /**

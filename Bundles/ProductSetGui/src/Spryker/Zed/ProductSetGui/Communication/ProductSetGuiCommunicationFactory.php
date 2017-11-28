@@ -157,19 +157,19 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @return string
      */
     protected function createCreateProductSetFormType()
     {
-        return new CreateProductSetFormType();
+        return CreateProductSetFormType::class;
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @return string
      */
     protected function createUpdateProductSetFormType()
     {
-        return new UpdateProductSetFormType();
+        return UpdateProductSetFormType::class;
     }
 
     /**
@@ -184,11 +184,11 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @return string
      */
     protected function createReorderProductSetsFormType()
     {
-        return new ReorderProductSetsFormType();
+        return ReorderProductSetsFormType::class;
     }
 
     /**

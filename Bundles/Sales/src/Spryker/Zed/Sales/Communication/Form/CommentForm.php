@@ -8,10 +8,17 @@
 namespace Spryker\Zed\Sales\Communication\Form;
 
 use Generated\Shared\Transfer\CommentTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
+ * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ */
 class CommentForm extends AbstractType
 {
     const FORM_NAME = 'comment';
@@ -19,7 +26,7 @@ class CommentForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return self::FORM_NAME;
     }
@@ -43,7 +50,7 @@ class CommentForm extends AbstractType
      */
     protected function addCommentField(FormBuilderInterface $builder)
     {
-        $builder->add(CommentTransfer::MESSAGE, 'textarea', [
+        $builder->add(CommentTransfer::MESSAGE, TextareaType::class, [
             'constraints' => [
                 new NotBlank([
                     'message' => 'Please add your message to post a comment',
@@ -61,7 +68,7 @@ class CommentForm extends AbstractType
      */
     protected function addFkSalesOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(CommentTransfer::FK_SALES_ORDER, 'hidden');
+        $builder->add(CommentTransfer::FK_SALES_ORDER, HiddenType::class);
 
         return $this;
     }

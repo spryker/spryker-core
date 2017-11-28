@@ -14,6 +14,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ */
 class ProductsFormType extends AbstractType
 {
     const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
@@ -42,13 +46,11 @@ class ProductsFormType extends AbstractType
             ],
             'constraints' => [
                 new Callback([
-                    'methods' => [
-                        function (array $productAbstractIds, ExecutionContextInterface $context) {
-                            if (count($productAbstractIds) < 2) {
-                                $context->addViolation('You need to select minimum 2 products.');
-                            }
-                        },
-                    ],
+                    'callback' => function (array $productAbstractIds, ExecutionContextInterface $context) {
+                        if (count($productAbstractIds) < 2) {
+                            $context->addViolation('You need to select minimum 2 products.');
+                        }
+                    },
                 ]),
             ],
         ]);
