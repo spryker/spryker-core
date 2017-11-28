@@ -7,20 +7,20 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use Spryker\Shared\Kernel\Communication\Application;
+use Silex\Application;
 
 class WidgetContainerRegistry implements WidgetContainerRegistryInterface
 {
 
-    protected const WIDGET_CONTAINER_STACK = 'widget_stack';
+    protected const WIDGET_CONTAINER_STACK = 'widget_container_stack';
 
     /**
-     * @var \Spryker\Shared\Kernel\Communication\Application
+     * @var \Silex\Application
      */
     protected $application;
 
     /**
-     * @param \Spryker\Shared\Kernel\Communication\Application $application
+     * @param \Silex\Application $application
      */
     public function __construct(Application $application)
     {
