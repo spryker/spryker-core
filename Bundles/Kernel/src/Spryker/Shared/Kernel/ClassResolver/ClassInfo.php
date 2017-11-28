@@ -120,7 +120,7 @@ class ClassInfo
      */
     protected function adjustTestNamespace(array $callerClassParts)
     {
-        //support obsolete test namespace convention: Unit\PyzTest\Zed\..
+        // Support obsolete test namespace convention: Unit\PyzTest\Zed\..
         if ($this->isTestNamespace($callerClassParts[self::KEY_APPLICATION], self::TEST_NAMESPACE_SUFFIX)) {
             array_shift($callerClassParts);
         }
