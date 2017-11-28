@@ -14,6 +14,11 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class AttributeSuperForm extends AttributeAbstractForm
 {
     /**
@@ -35,12 +40,12 @@ class AttributeSuperForm extends AttributeAbstractForm
 
         $config['attr']['data-value'] = null;
 
-        $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
+        $idLocale = $this->getFactory()->createLocaleProvider()->getCurrentLocale()->getIdLocale();
         if ($this->localeTransfer instanceof LocaleTransfer) {
             $idLocale = $this->localeTransfer->getIdLocale();
         }
 
-        $existingValue = $this->productManagementQueryContainer
+        $existingValue = $this->getQueryContainer()
             ->queryFindAttributeByValueOrTranslation(
                 $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
                 $idLocale,

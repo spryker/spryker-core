@@ -6,12 +6,18 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class BundledProductForm extends AbstractType
 {
     const FIELD_QUANTITY = 'quantity';
@@ -57,7 +63,7 @@ class BundledProductForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_QUANTITY, 'text', [
+        $builder->add(self::FIELD_QUANTITY, TextType::class, [
             'label' => 'quantity',
             'required' => true,
             'constraints' => [
@@ -79,22 +85,12 @@ class BundledProductForm extends AbstractType
      */
     protected function addIdProductConcreteField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_CONCRETE, 'hidden', [
+        $builder->add(self::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, [
             'label' => 'quantity',
             'required' => false,
             'constraints' => [],
         ]);
 
         return $this;
-    }
-
-    /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'bundled_product';
     }
 }

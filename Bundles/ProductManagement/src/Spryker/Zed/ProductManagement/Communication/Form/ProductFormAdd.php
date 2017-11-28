@@ -44,7 +44,9 @@ use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  */
 class ProductFormAdd extends AbstractType
 {
@@ -71,13 +73,6 @@ class ProductFormAdd extends AbstractType
     const OPTION_TAX_RATES = 'option_tax_rates';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
 
-    const OPTION_LOCALE_PROVIDER = 'locale-provider';
-    const OPTION_PRODUCT_QUERY_CONTAINER = 'product-query-container';
-    const OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER = 'product-management-query-container';
-    const OPTION_MONEY_FACADE = 'money-facade';
-    const OPTION_CURRENCY_FACADE = 'currency-facade';
-    const OPTION_UTIL_TEXT_SERVICE = 'util-text-service';
-
     const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
     const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
     const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
@@ -86,36 +81,6 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
     const VALIDATION_GROUP_IMAGE_SET = 'validation_group_image';
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
-     */
-    protected $localeProvider;
-
-    /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
-    protected $productQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
-     */
-    protected $productManagementQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
-     */
-    protected $moneyFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface
-     */
-    protected $currencyFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
-     */
-    protected $utilTextService;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -127,7 +92,6 @@ class ProductFormAdd extends AbstractType
         parent::configureOptions($resolver);
 
         $this->setRequired($resolver);
-        $this->setAllowedTypes($resolver);
         $this->setDefaults($resolver);
     }
 
@@ -143,27 +107,7 @@ class ProductFormAdd extends AbstractType
             static::OPTION_ATTRIBUTE_ABSTRACT,
             static::OPTION_ATTRIBUTE_SUPER,
             static::OPTION_TAX_RATES,
-            static::OPTION_LOCALE_PROVIDER,
-            static::OPTION_PRODUCT_QUERY_CONTAINER,
-            static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER,
-            static::OPTION_MONEY_FACADE,
-            static::OPTION_CURRENCY_FACADE,
-            static::OPTION_UTIL_TEXT_SERVICE,
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    protected function setAllowedTypes(OptionsResolver $resolver)
-    {
-        $resolver->setAllowedTypes(static::OPTION_LOCALE_PROVIDER, LocaleProvider::class);
-        $resolver->setAllowedTypes(static::OPTION_PRODUCT_QUERY_CONTAINER, ProductQueryContainerInterface::class);
-        $resolver->setAllowedTypes(static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER, ProductManagementQueryContainerInterface::class);
-        $resolver->setAllowedTypes(static::OPTION_MONEY_FACADE, ProductManagementToMoneyInterface::class);
-        $resolver->setAllowedTypes(static::OPTION_CURRENCY_FACADE, ProductManagementToCurrencyInterface::class);
     }
 
     /**
@@ -212,8 +156,6 @@ class ProductFormAdd extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addInjected($options);
-
         $this
             ->addSkuField($builder)
             ->addNewFromDateField($builder)
@@ -229,28 +171,13 @@ class ProductFormAdd extends AbstractType
     }
 
     /**
-     * @param array $options
-     *
-     * @return void
-     */
-    protected function addInjected(array $options)
-    {
-        $this->localeProvider = $options[static::OPTION_LOCALE_PROVIDER];
-        $this->productQueryContainer = $options[static::OPTION_PRODUCT_QUERY_CONTAINER];
-        $this->productManagementQueryContainer = $options[static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER];
-        $this->moneyFacade = $options[static::OPTION_MONEY_FACADE];
-        $this->currencyFacade = $options[static::OPTION_CURRENCY_FACADE];
-        $this->utilTextService = $options[static::OPTION_UTIL_TEXT_SERVICE];
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
     protected function addGeneralLocalizedForms(FormBuilderInterface $builder)
     {
-        $localeCollection = $this->localeProvider->getLocaleCollection();
+        $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
             $name = self::getGeneralFormName($localeTransfer->getLocaleName());
             $this->addGeneralForm($builder, $name);
@@ -267,7 +194,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addSeoLocalizedForms(FormBuilderInterface $builder, array $options = [])
     {
-        $localeCollection = $this->localeProvider->getLocaleCollection();
+        $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
             $name = self::getSeoFormName($localeTransfer->getLocaleName());
             $this->addSeoForm($builder, $name, $options);
@@ -284,10 +211,10 @@ class ProductFormAdd extends AbstractType
      */
     protected function addAttributeAbstractForms(FormBuilderInterface $builder, array $options = [])
     {
-        $localeCollection = $this->localeProvider->getLocaleCollection();
+        $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
             $name = self::getAbstractAttributeFormName($localeTransfer->getLocaleName());
-            $localeTransfer = $this->localeProvider->getLocaleTransfer($localeTransfer->getLocaleName());
+            $localeTransfer = $this->getFactory()->createLocaleProvider()->getLocaleTransfer($localeTransfer->getLocaleName());
             $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options[$localeTransfer->getLocaleName()]);
         }
 
@@ -313,7 +240,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addImageLocalizedForms(FormBuilderInterface $builder)
     {
-        $localeCollection = $this->localeProvider->getLocaleCollection(true);
+        $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection(true);
         foreach ($localeCollection as $localeTransfer) {
             $name = self::getImagesFormName($localeTransfer->getLocaleName());
             $this->addImageSetForm($builder, $name);
@@ -366,9 +293,9 @@ class ProductFormAdd extends AbstractType
                         'callback' => function ($sku, ExecutionContextInterface $context) {
                             $form = $context->getRoot();
                             $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                            $sku = $this->utilTextService->generateSlug($sku);
+                            $sku = $this->getFactory()->getUtilTextService()->generateSlug($sku);
 
-                            $skuCount = $this->productQueryContainer
+                            $skuCount = $this->getFactory()->getProductQueryContainer()
                                 ->queryProduct()
                                 ->filterByFkProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
                                 ->filterBySku($sku)
@@ -495,8 +422,6 @@ class ProductFormAdd extends AbstractType
                 'entry_type' => AttributeAbstractForm::class,
                 'entry_options' => [
                     AttributeAbstractForm::OPTION_ATTRIBUTE => $options,
-                    AttributeAbstractForm::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER => $this->productManagementQueryContainer,
-                    AttributeAbstractForm::OPTION_LOCALE_PROVIDER => $this->localeProvider,
                     AttributeAbstractForm::OPTION_LOCALE_TRANSFER => $localeTransfer,
                 ],
                 'label' => false,
@@ -531,8 +456,6 @@ class ProductFormAdd extends AbstractType
                 'entry_type' => AttributeSuperForm::class,
                 'entry_options' => [
                     AttributeSuperForm::OPTION_ATTRIBUTE => $options,
-                    AttributeSuperForm::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER => $this->productManagementQueryContainer,
-                    AttributeSuperForm::OPTION_LOCALE_PROVIDER => $this->localeProvider,
                 ],
                 'label' => false,
                 'constraints' => [new Callback([
@@ -571,6 +494,7 @@ class ProductFormAdd extends AbstractType
                 'entry_type' => ProductMoneyType::class,
             ]
         );
+
         return $this;
     }
 
@@ -598,11 +522,10 @@ class ProductFormAdd extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $name
-     * @param array $options
      *
      * @return $this
      */
-    protected function addImageSetForm(FormBuilderInterface $builder, $name, array $options = [])
+    protected function addImageSetForm(FormBuilderInterface $builder, $name)
     {
         $builder
             ->add($name, CollectionType::class, [

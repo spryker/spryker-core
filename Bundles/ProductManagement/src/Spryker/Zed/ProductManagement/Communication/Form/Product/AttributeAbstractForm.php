@@ -90,8 +90,6 @@ class AttributeAbstractForm extends AbstractSubForm
         parent::configureOptions($resolver);
 
         $resolver->setRequired(static::OPTION_ATTRIBUTE);
-        $resolver->setRequired(static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER);
-        $resolver->setRequired(static::OPTION_LOCALE_PROVIDER);
         $resolver->setDefined(static::OPTION_LOCALE_TRANSFER);
 
         $resolver->setDefaults([
@@ -118,8 +116,6 @@ class AttributeAbstractForm extends AbstractSubForm
     {
         parent::buildForm($builder, $options);
 
-        $this->productManagementQueryContainer = $options[static::OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER];
-        $this->localeProvider = $options[static::OPTION_LOCALE_PROVIDER];
         $this->localeTransfer = isset($options[static::OPTION_LOCALE_TRANSFER]) ? $options[static::OPTION_LOCALE_TRANSFER] : null;
 
         $this
@@ -205,12 +201,12 @@ class AttributeAbstractForm extends AbstractSubForm
             $input = $inputManager->getSymfonyInputType(null, $value);
         } else {
             if (strtolower($input) === Select2ComboBoxType::class) {
-                $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
+                $idLocale = $this->getFactory()->createLocaleProvider()->getCurrentLocale()->getIdLocale();
                 if ($this->localeTransfer instanceof LocaleTransfer) {
                     $idLocale = $this->localeTransfer->getIdLocale();
                 }
 
-                $existingValue = $this->productManagementQueryContainer
+                $existingValue = $this->getQueryContainer()
                     ->queryFindAttributeByValueOrTranslation(
                         $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
                         $idLocale,
@@ -248,7 +244,7 @@ class AttributeAbstractForm extends AbstractSubForm
         $result = [];
         $attributeValue = $attributes[AbstractProductFormDataProvider::FORM_FIELD_VALUE];
 
-        $valueCollection = $this->productManagementQueryContainer
+        $valueCollection = $this->getQueryContainer()
             ->queryFindAttributeByValueOrTranslation(
                 $attributes[AbstractProductFormDataProvider::FORM_FIELD_ID],
                 $idLocale

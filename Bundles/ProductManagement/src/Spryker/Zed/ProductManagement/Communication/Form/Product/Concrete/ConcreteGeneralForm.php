@@ -11,6 +11,11 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class ConcreteGeneralForm extends GeneralForm
 {
     const FIELD_IS_SEARCHABLE = 'is_searchable';

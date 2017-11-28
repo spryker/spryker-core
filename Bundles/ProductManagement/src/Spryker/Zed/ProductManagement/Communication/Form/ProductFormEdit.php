@@ -16,6 +16,11 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class ProductFormEdit extends ProductFormAdd
 {
     /**
@@ -55,9 +60,9 @@ class ProductFormEdit extends ProductFormAdd
                         'callback' => function ($sku, ExecutionContextInterface $context) {
                             $form = $context->getRoot();
                             $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
-                            $sku = $this->utilTextService->generateSlug($sku);
+                            $sku = $this->getFactory()->getUtilTextService()->generateSlug($sku);
 
-                            $skuCount = $this->productQueryContainer
+                            $skuCount = $this->getQueryContainer()
                                 ->queryProduct()
                                 ->filterByFkProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
                                 ->filterBySku($sku)
