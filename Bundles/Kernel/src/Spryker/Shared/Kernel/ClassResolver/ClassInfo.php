@@ -9,6 +9,7 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 class ClassInfo
 {
+    const TEST_NAMESPACE_SUFFIX = 'Test';
     const KEY_NAMESPACE = 0;
     const KEY_APPLICATION = 1;
     const KEY_BUNDLE = 2;
@@ -119,13 +120,13 @@ class ClassInfo
      */
     protected function adjustTestNamespace(array $callerClassParts)
     {
-        //support obsolete test namespace convention
-        if ($this->isTestNamespace($callerClassParts[self::KEY_APPLICATION], 'Test')) {
+        //support obsolete test namespace convention: Unit\PyzTest\Zed\..
+        if ($this->isTestNamespace($callerClassParts[self::KEY_APPLICATION], self::TEST_NAMESPACE_SUFFIX)) {
             array_shift($callerClassParts);
         }
 
-        if ($this->isTestNamespace($callerClassParts[self::KEY_NAMESPACE], 'Test')) {
-            $callerClassParts = $this->removeTestNamespaceSuffix($callerClassParts, 'Test');
+        if ($this->isTestNamespace($callerClassParts[self::KEY_NAMESPACE], self::TEST_NAMESPACE_SUFFIX)) {
+            $callerClassParts = $this->removeTestNamespaceSuffix($callerClassParts, self::TEST_NAMESPACE_SUFFIX);
         }
 
         return $callerClassParts;
@@ -158,7 +159,7 @@ class ClassInfo
     protected function removeTestNamespaceSuffix(array $callerClassParts, $testNamespaceSuffix)
     {
         $namespace = $callerClassParts[self::KEY_NAMESPACE];
-        $namespaceWithoutTestSuffix = substr($namespace, 0, - strlen($testNamespaceSuffix));
+        $namespaceWithoutTestSuffix = substr($namespace, 0, -strlen($testNamespaceSuffix));
         $callerClassParts[self::KEY_NAMESPACE] = $namespaceWithoutTestSuffix;
 
         return $callerClassParts;
