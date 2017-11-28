@@ -34,7 +34,7 @@ class AddControllerCest
         $i->seeResponseCodeIs(200);
 
         $formData = [
-            'translation_form' => $keyTranslationTransfer->toArray(),
+            'translation' => $keyTranslationTransfer->toArray(),
         ];
 
         $i->submitForm(['name' => 'translation'], $formData);
