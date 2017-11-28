@@ -47,7 +47,7 @@ class ClassInfo
 
         if ($this->isFullyQualifiedClassName($callerClass)) {
             $callerClassParts = explode('\\', ltrim($callerClass, '\\'));
-            $callerClassParts = $this->removeTestNamespace($callerClassParts);
+            $callerClassParts = $this->adjustTestNamespace($callerClassParts);
         }
 
         $this->callerClassParts = $callerClassParts;
@@ -117,21 +117,49 @@ class ClassInfo
      *
      * @return array
      */
-    private function removeTestNamespace(array $callerClassParts)
+    protected function adjustTestNamespace(array $callerClassParts)
     {
-        $namespace = $callerClassParts[self::KEY_NAMESPACE];
-        $namespaceLength = strlen($namespace);
+        //support obsolete test namespace convention
+        if ($this->isTestNamespace($callerClassParts[self::KEY_APPLICATION], 'Test')) {
+            array_shift($callerClassParts);
+        }
 
-        $testNamespaceSuffix = 'Test';
+        if ($this->isTestNamespace($callerClassParts[self::KEY_NAMESPACE], 'Test')) {
+            $callerClassParts = $this->removeTestNamespaceSuffix($callerClassParts, 'Test');
+        }
+
+        return $callerClassParts;
+    }
+
+    /**
+     * @param string $rootNamespace
+     * @param string $testNamespaceSuffix
+     *
+     * @return bool
+     */
+    protected function isTestNamespace($rootNamespace, $testNamespaceSuffix)
+    {
+        $rootNamespaceLength = strlen($rootNamespace);
         $testNamespaceSuffixLength = strlen($testNamespaceSuffix);
 
-        if ($testNamespaceSuffixLength < $namespaceLength) {
-            $isTestNamespace = substr_compare($namespace, $testNamespaceSuffix, $namespaceLength - $testNamespaceSuffixLength, $testNamespaceSuffixLength) === 0;
-            if ($isTestNamespace) {
-                $namespaceWithoutTestSuffix = substr($namespace, 0, -$testNamespaceSuffixLength);
-                $callerClassParts[self::KEY_NAMESPACE] = $namespaceWithoutTestSuffix;
-            }
+        if ($testNamespaceSuffixLength >= $rootNamespaceLength) {
+            return false;
         }
+
+        return substr_compare($rootNamespace, $testNamespaceSuffix, $rootNamespaceLength - $testNamespaceSuffixLength, $testNamespaceSuffixLength) === 0;
+    }
+
+    /**
+     * @param array $callerClassParts
+     * @param string $testNamespaceSuffix
+     *
+     * @return array
+     */
+    protected function removeTestNamespaceSuffix(array $callerClassParts, $testNamespaceSuffix)
+    {
+        $namespace = $callerClassParts[self::KEY_NAMESPACE];
+        $namespaceWithoutTestSuffix = substr($namespace, 0, - strlen($testNamespaceSuffix));
+        $callerClassParts[self::KEY_NAMESPACE] = $namespaceWithoutTestSuffix;
 
         return $callerClassParts;
     }
