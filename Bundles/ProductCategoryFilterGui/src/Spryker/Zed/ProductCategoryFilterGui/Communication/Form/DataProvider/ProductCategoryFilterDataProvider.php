@@ -34,7 +34,7 @@ class ProductCategoryFilterDataProvider
     {
         $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
 
-        if ($idProductCategoryFilter) {
+        if ($idProductCategoryFilter !== null) {
             $productCategoryFilterTransfer = $this->productCategoryFilterFacade->findProductCategoryFilterByCategoryId($idProductCategoryFilter);
         }
 

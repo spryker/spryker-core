@@ -30,7 +30,7 @@ class DeleteProductCategoryFilterTest extends Unit
         $this->tester->getFacade()->deleteProductCategoryFilterByCategoryId($productCategoryFilter->getFkCategory());
 
         // Assert
-        $this->assertNull($this->tester->getFacade()->findProductCategoryFilterByCategoryId($productCategoryFilter->getFkCategory()));
+        $this->assertNull($this->tester->getFacade()->findProductCategoryFilterByCategoryId($productCategoryFilter->getFkCategory())->getIdProductCategoryFilter());
         $this->tester->assertTouchDeleted(
             ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER,
             $productCategoryFilter->getFkCategory(),
