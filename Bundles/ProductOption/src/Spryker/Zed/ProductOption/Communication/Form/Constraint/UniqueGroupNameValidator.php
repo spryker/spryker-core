@@ -87,8 +87,6 @@ class UniqueGroupNameValidator extends ConstraintValidator
             ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
 
-        $submittedGroupName = $this->addTranslationPrefix($submittedGroupName);
-
         if ($productOptionGroupEntity->getName() !== $submittedGroupName) {
             return true;
         }
