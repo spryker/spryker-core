@@ -93,10 +93,8 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
         ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider,
         $idProductRelation = null
     ) {
-        $productRelationFormType = $this->createRelationFormType();
-
         return $this->getFormFactory()->create(
-            $productRelationFormType,
+            ProductRelationFormType::class,
             $productRelationFormTypeDataProvider->getData($idProductRelation),
             $productRelationFormTypeDataProvider->getOptions()
         );
@@ -105,7 +103,7 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createUniqueRelationTypeForProductAbstractConstraint()
+    public function createUniqueRelationTypeForProductAbstractConstraint()
     {
         return new UniqueRelationTypeForProductAbstract([
             UniqueRelationTypeForProductAbstract::OPTION_PRODUCT_RELATION_QUERY_CONTAINER => $this->getQueryContainer(),
@@ -121,20 +119,17 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
+     * @return string
      */
     protected function createRelationFormType()
     {
-        return new ProductRelationFormType(
-            $this->createRuleSetTransformer(),
-            $this->createUniqueRelationTypeForProductAbstractConstraint()
-        );
+        return ProductRelationFormType::class;
     }
 
     /**
      * @return \Symfony\Component\Form\DataTransformerInterface
      */
-    protected function createRuleSetTransformer()
+    public function createRuleSetTransformer()
     {
         return new RuleQuerySetTransformer($this->getUtilEncodingService());
     }
