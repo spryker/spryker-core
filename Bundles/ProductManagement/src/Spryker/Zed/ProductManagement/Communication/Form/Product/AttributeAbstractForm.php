@@ -266,4 +266,12 @@ class AttributeAbstractForm extends AbstractSubForm
 
         return $result;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'product_attribute_abstract';
+    }
 }

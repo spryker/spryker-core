@@ -19,6 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BundlesFormType extends AbstractType
 {
+    const FORM_TYPE_NAME = 'bundlesFormType';
     const BUNDLE_NAME_CHOICES = 'bundleNames';
     const EXCLUDED_BUNDLES = 'excludedBundles';
     const SHOW_INCOMING = 'showIncoming';
@@ -50,5 +51,13 @@ class BundlesFormType extends AbstractType
         $builder->add(static::SHOW_INCOMING, CheckboxType::class, [
             'required' => false,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return static::FORM_TYPE_NAME;
     }
 }

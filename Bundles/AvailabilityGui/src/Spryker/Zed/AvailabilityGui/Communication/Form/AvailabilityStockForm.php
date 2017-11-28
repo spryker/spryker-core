@@ -58,4 +58,12 @@ class AvailabilityStockForm extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'AvailabilityGui_stock';
+    }
 }

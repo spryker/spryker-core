@@ -83,4 +83,12 @@ class StockSubForm extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'stock_form';
+    }
 }

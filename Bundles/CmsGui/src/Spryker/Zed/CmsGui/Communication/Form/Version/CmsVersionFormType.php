@@ -70,4 +70,12 @@ class CmsVersionFormType extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return static::CMS_VERSION;
+    }
 }

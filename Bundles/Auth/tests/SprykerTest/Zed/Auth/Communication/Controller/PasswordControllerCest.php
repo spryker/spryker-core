@@ -29,6 +29,6 @@ class PasswordControllerCest
     public function testResetPasswordRequestFormIsVisible(AuthCommunicationTester $i)
     {
         $i->amOnPage('/auth/password/reset-request');
-        $i->seeElement('form', ['name' => 'reset_password_request_form']);
+        $i->seeElement('form', ['name' => 'reset_password']);
     }
 }

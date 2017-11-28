@@ -245,4 +245,12 @@ class ProductLabelFormType extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'productLabel';
+    }
 }

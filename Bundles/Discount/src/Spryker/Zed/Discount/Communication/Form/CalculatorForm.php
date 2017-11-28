@@ -278,4 +278,12 @@ class CalculatorForm extends AbstractType
             $pluginName
         ));
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'discount_calculator';
+    }
 }

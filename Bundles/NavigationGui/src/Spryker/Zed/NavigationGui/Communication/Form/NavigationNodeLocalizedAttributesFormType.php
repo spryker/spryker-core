@@ -349,4 +349,12 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
 
         return $this->getFactory()->getUrlFacade()->findUrl($urlTransfer);
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'navigation_node_localized_attributes';
+    }
 }

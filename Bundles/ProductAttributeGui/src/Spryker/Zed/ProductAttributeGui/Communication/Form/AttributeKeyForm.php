@@ -89,4 +89,12 @@ class AttributeKeyForm extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'attribute_form';
+    }
 }

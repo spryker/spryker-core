@@ -165,4 +165,12 @@ class CmsPageAttributesFormType extends AbstractType
     {
         return $event->getData();
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_page_attributes';
+    }
 }

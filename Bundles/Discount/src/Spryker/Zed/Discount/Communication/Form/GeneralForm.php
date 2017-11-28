@@ -177,4 +177,12 @@ class GeneralForm extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'discount_general';
+    }
 }

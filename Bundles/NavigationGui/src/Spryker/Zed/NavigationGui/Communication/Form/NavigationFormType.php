@@ -158,4 +158,12 @@ class NavigationFormType extends AbstractType
 
         return $query->count() > 0;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'navigation';
+    }
 }

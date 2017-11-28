@@ -129,4 +129,12 @@ class CategoryType extends AbstractType
 
         return $warningMessage;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms-blocks';
+    }
 }

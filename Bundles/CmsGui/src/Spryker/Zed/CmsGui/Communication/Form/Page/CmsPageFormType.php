@@ -276,4 +276,12 @@ class CmsPageFormType extends AbstractType
             }
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_page';
+    }
 }

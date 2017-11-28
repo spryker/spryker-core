@@ -81,4 +81,12 @@ class ProductLabelAggregateFormType extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'productLabelAggregate';
+    }
 }

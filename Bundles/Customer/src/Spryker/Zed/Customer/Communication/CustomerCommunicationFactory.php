@@ -123,9 +123,21 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Please use `getLocaleFacadePublic()` instead.
+     *
      * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
     protected function getLocaleFacade()
+    {
+        return $this->getLocaleFacadePublic();
+    }
+
+    /**
+     * Deprecated: This will be renamed to `getLocaleFacade()` in the next major.
+     *
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
+     */
+    public function getLocaleFacadePublic()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_LOCALE);
     }

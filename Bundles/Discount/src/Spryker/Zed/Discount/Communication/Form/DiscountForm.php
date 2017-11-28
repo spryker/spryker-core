@@ -106,4 +106,12 @@ class DiscountForm extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'discount';
+    }
 }

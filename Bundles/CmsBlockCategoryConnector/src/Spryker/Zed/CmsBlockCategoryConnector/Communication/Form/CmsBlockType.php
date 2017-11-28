@@ -147,4 +147,12 @@ class CmsBlockType extends AbstractType
             'required' => false,
         ]);
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'categories';
+    }
 }

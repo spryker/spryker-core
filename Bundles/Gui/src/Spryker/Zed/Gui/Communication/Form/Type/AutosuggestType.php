@@ -67,4 +67,12 @@ class AutosuggestType extends AbstractType
     {
         return TextType::class;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'autosuggest';
+    }
 }

@@ -169,4 +169,12 @@ class TranslationForm extends AbstractType
 
         return $constraints;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'translation';
+    }
 }

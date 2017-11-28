@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Customer\Communication\Form;
 
 use DateTime;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -28,9 +26,8 @@ use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
- * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class CustomerForm extends AbstractType
 {
@@ -51,32 +48,9 @@ class CustomerForm extends AbstractType
     const FIELD_LOCALE = 'locale';
 
     /**
-<<<<<<< HEAD
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
-     */
-    protected $customerQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
-     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
-     */
-    public function __construct(
-        CustomerQueryContainerInterface $customerQueryContainer,
-        CustomerToLocaleInterface $localeFacade
-    ) {
-        $this->customerQueryContainer = $customerQueryContainer;
-        $this->localeFacade = $localeFacade;
-    }
-
-    /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'customer';
     }
@@ -153,7 +127,8 @@ class CustomerForm extends AbstractType
         $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
             'label' => 'Salutation',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -201,7 +176,8 @@ class CustomerForm extends AbstractType
         $builder->add(self::FIELD_GENDER, ChoiceType::class, [
             'label' => 'Gender',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'constraints' => [
                 new Required(),
             ],
@@ -277,7 +253,8 @@ class CustomerForm extends AbstractType
         $builder->add(static::FIELD_LOCALE, ChoiceType::class, [
             'label' => 'Locale',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
 
         ]);
@@ -376,7 +353,7 @@ class CustomerForm extends AbstractType
             },
             function ($localeAsInt) {
                 if ($localeAsInt !== null) {
-                    return $this->localeFacade->getLocaleById($localeAsInt);
+                    return $this->getFactory()->getLocaleFacadePublic()->getLocaleById($localeAsInt);
                 }
             }
         );

@@ -165,4 +165,12 @@ class CategoryLocalizedAttributeType extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'localizedAttributes';
+    }
 }

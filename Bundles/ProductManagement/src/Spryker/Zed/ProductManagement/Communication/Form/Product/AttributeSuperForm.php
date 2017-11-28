@@ -68,4 +68,12 @@ class AttributeSuperForm extends AttributeAbstractForm
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'product_attribute_super';
+    }
 }

@@ -226,4 +226,12 @@ class CmsPageForm extends AbstractType
 
         return $urlConstraints;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_page';
+    }
 }

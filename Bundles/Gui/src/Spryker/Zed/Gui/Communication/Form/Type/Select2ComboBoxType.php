@@ -65,4 +65,12 @@ class Select2ComboBoxType extends AbstractType
     {
         return ChoiceType::class;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'select2';
+    }
 }

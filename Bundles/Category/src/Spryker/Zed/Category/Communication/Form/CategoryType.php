@@ -275,4 +275,12 @@ class CategoryType extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'category';
+    }
 }

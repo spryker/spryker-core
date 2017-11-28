@@ -143,4 +143,12 @@ class RelatedProductFormType extends AbstractType
                 }
             ));
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'productRelation';
+    }
 }

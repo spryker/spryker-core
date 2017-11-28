@@ -153,4 +153,12 @@ class CustomerGroupForm extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'customer_group';
+    }
 }

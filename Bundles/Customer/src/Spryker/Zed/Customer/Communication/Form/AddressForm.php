@@ -329,4 +329,12 @@ class AddressForm extends AbstractType
             new Length(['max' => 100]),
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'customer_address';
+    }
 }

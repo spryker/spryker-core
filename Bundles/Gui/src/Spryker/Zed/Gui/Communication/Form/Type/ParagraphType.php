@@ -48,4 +48,12 @@ class ParagraphType extends AbstractType
             'mapped' => false,
         ]);
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'label';
+    }
 }

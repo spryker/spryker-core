@@ -154,4 +154,12 @@ class VoucherForm extends AbstractType
 
         return array_combine(array_values($range), $range);
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'discount_voucher';
+    }
 }

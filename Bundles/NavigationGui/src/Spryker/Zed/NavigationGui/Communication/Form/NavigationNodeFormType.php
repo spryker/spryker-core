@@ -255,4 +255,12 @@ class NavigationNodeFormType extends AbstractType
 
         $event->setData($navigationNodeTransfer);
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'navigation_node';
+    }
 }

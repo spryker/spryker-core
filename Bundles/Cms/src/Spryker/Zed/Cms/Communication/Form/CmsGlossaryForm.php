@@ -224,4 +224,12 @@ class CmsGlossaryForm extends AbstractType
 
         return $placeholderConstraints;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_glossary';
+    }
 }

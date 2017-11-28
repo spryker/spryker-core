@@ -239,4 +239,12 @@ class CmsRedirectForm extends AbstractType
             $context->addViolation($validationResponse->getError());
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_redirect';
+    }
 }

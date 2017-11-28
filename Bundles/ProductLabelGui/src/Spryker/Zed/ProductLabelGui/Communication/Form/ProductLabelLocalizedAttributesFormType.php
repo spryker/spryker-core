@@ -98,4 +98,12 @@ class ProductLabelLocalizedAttributesFormType extends AbstractType
             ]
         );
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'productLabelLocalizedAttributes';
+    }
 }

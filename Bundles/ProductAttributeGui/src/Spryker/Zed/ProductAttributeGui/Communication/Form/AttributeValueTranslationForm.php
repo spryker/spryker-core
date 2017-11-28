@@ -87,4 +87,12 @@ class AttributeValueTranslationForm extends AbstractType
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'value_translation';
+    }
 }

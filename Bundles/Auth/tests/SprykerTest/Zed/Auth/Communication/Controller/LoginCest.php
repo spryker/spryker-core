@@ -29,6 +29,6 @@ class LoginCest
     public function testLoginFormIsVisible(AuthCommunicationTester $i)
     {
         $i->amOnPage('/auth/login');
-        $i->seeElement('form', ['name' => 'login_form']);
+        $i->seeElement('form', ['name' => 'auth']);
     }
 }
