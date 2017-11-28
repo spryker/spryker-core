@@ -28,9 +28,7 @@ class RateController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider();
-
-        $form = $this->getFactory()->createTaxRateForm($taxRateFormDataProvider);
+        $form = $this->getFactory()->createTaxRateForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {

@@ -7,32 +7,25 @@
 namespace Spryker\Zed\Tax\Communication\Form;
 
 use ArrayObject;
-use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ */
 class TaxSetForm extends AbstractType
 {
     const FIELD_NAME = 'name';
     const FIELD_TAX_RATES = 'taxRates';
     const FIELD_ID_TAX_SET = 'idTaxSet';
-
-    /**
-     * @var \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider
-     */
-    protected $taxSetFormDataProvider;
-
-    /**
-     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider $taxSetFormDataProvider
-     */
-    public function __construct(TaxSetFormDataProvider $taxSetFormDataProvider)
-    {
-        $this->taxSetFormDataProvider = $taxSetFormDataProvider;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -55,7 +48,7 @@ class TaxSetForm extends AbstractType
     {
         $builder->add(
             self::FIELD_NAME,
-            'text',
+            TextType::class,
             [
                 'label' => 'Name',
                 'required' => true,
@@ -75,20 +68,18 @@ class TaxSetForm extends AbstractType
      */
     protected function addTaxRates(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TAX_RATES, 'choice', [
+        $builder->add(self::FIELD_TAX_RATES, ChoiceType::class, [
             'expanded' => true,
             'multiple' => true,
             'label' => 'Tax rates',
-            'choice_list' => $this->taxSetFormDataProvider->getOptions()[self::FIELD_TAX_RATES],
+            'choice_list' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES],
             'constraints' => [
                 new Callback([
-                    'methods' => [
-                        function (ArrayObject $taxRates, ExecutionContextInterface $context) {
-                            if ($taxRates->count() <= 0) {
-                                $context->addViolation('You should choose one or more tax rates');
-                            }
-                        },
-                    ],
+                    'callback' => function (ArrayObject $taxRates, ExecutionContextInterface $context) {
+                        if ($taxRates->count() <= 0) {
+                            $context->addViolation('You should choose one or more tax rates');
+                        }
+                    },
                 ]),
             ],
         ]);
@@ -113,7 +104,7 @@ class TaxSetForm extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'tax_set';
     }
