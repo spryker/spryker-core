@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Twig_SimpleFunction;
 
 /**
- * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade getFacade()
+ * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
  */
 class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProviderInterface

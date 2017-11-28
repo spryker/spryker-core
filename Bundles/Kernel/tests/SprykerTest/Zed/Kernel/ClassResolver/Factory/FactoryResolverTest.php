@@ -26,22 +26,22 @@ class FactoryResolverTest extends AbstractResolverTest
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelFactory';
+    protected $coreClass = 'Spryker\\Zed\\Kernel\\ClassResolver\\KernelFactory';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelFactory';
+    protected $projectClass = 'ProjectNamespace\\Zed\\Kernel\\ClassResolver\\KernelFactory';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelFactory';
+    protected $storeClass = 'ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\KernelFactory';
 
     /**
      * @var string
      */
-    protected $classPattern = 'Unit\\%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%Factory';
+    protected $classPattern = '%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\%bundle%Factory';
 
     /**
      * @var string

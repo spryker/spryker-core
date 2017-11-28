@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Communication\Table;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Spryker\Shared\Customer\CustomerConstants;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -33,13 +34,23 @@ class AddressTable extends AbstractTable
     protected $idCustomer;
 
     /**
+     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitize;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
      * @param int $idCustomer
+     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface $utilSanitize
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, $idCustomer)
-    {
+    public function __construct(
+        CustomerQueryContainerInterface $customerQueryContainer,
+        $idCustomer,
+        CustomerToUtilSanitizeServiceInterface $utilSanitize
+    ) {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->idCustomer = $idCustomer;
+        $this->utilSanitize = $utilSanitize;
     }
 
     /**
@@ -125,7 +136,8 @@ class AddressTable extends AbstractTable
                     $tags[] = '<span class="label label-danger" title="Default shipping address">SHIPPING</span>';
                 }
 
-                $lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1] = (!empty($tags) ? implode('&nbsp;', $tags) . '&nbsp;' : '') . $lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1];
+                $address = $this->utilSanitize->escapeHtml($lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1]);
+                $lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1] = (!empty($tags) ? implode('&nbsp;', $tags) . '&nbsp;' : '') . $address;
 
                 $lines[$key][self::ACTIONS] = $this->buildLinks($value);
             }

@@ -12,10 +12,14 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
 interface ShipmentFacadeInterface
 {
     /**
+     * Specification:
+     * - Creates carrier using provided ShipmentCarrier transfer object data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer
@@ -26,7 +30,7 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Finds list of carrier transfers from database
+     * - Retrieves the list of carriers from database as transfer object collection.
      *
      * @api
      *
@@ -36,7 +40,7 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Finds list of shipment method transfers from database
+     * - Retrieves the list of shipment methods from database as transfer object collection.
      *
      * @api
      *
@@ -45,6 +49,10 @@ interface ShipmentFacadeInterface
     public function getMethods();
 
     /**
+     * Specification:
+     * - Creates shipment method in database using provided ShipmentMethod transfer object data.
+     * - Creates shipment method prices in database using "prices" collection defined in ShipmentMethod transfer object.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
@@ -55,8 +63,8 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Finds a shipment method by ID
-     * - Returns NULL if the method does not exist
+     * - Retrieves a shipment method from database by ID.
+     * - Returns NULL if the method does not exist.
      *
      * @api
      *
@@ -67,6 +75,14 @@ interface ShipmentFacadeInterface
     public function findMethodById($idShipmentMethod);
 
     /**
+     * Specification:
+     * - Retrieves active shipment methods.
+     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
+     * - Selects shipment method price for the provided currency and current store.
+     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
+     * - Excludes shipment methods which do not have a valid price as a result.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -76,6 +92,9 @@ interface ShipmentFacadeInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     * - Retrieves a shipment method from database by ID.
+     *
      * @api
      *
      * @param int $idMethod
@@ -85,6 +104,9 @@ interface ShipmentFacadeInterface
     public function getShipmentMethodTransferById($idMethod);
 
     /**
+     * Specification:
+     * - Checks if the shipment method exists in database.
+     *
      * @api
      *
      * @param int $idMethod
@@ -94,6 +116,9 @@ interface ShipmentFacadeInterface
     public function hasMethod($idMethod);
 
     /**
+     * Specification:
+     * - Deletes shipment method from database using provided ID.
+     *
      * @api
      *
      * @param int $idMethod
@@ -103,6 +128,12 @@ interface ShipmentFacadeInterface
     public function deleteMethod($idMethod);
 
     /**
+     * Specification:
+     * - Updates shipment method in database using provided ShipmentMethod transfer object data.
+     * - Updates/creates shipment method prices using "prices" collection in ShipmentMethod transfer object.
+     * - Returns with shipment method's primary key on success.
+     * - Returns false if shipment method was not found in database.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
@@ -112,6 +143,13 @@ interface ShipmentFacadeInterface
     public function updateMethod(ShipmentMethodTransfer $methodTransfer);
 
     /**
+     * Specification:
+     * - Updates tax rates in Quote transfer object if shipment method is set in Quote transfer object.
+     * - Selects shipment method tax rate using shipping address's country code.
+     * - Uses default tax rate if shipping address is not defined in Quote transfer object.
+     * - Sets tax rate in provided Quote transfer object's shipment method.
+     * - Sets tax rate in provided Quote transfer object's selected shipment expense.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -121,6 +159,10 @@ interface ShipmentFacadeInterface
     public function calculateShipmentTaxRate(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     * - Adds shipment sales expense to sales order.
+     * - Creates sales shipment for sales order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -141,4 +183,19 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateOrderShipment(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Transforms provided ShipmentMethod entity into ShipmentMethod transfer object.
+     * - ShipmentMethod transfer object's CarrierName field is populated using ShipmentMethod entity's carrier connection.
+     * - ShipmentMethod entity related ShipmentMethodPrice entities are transformed to MoneyValue transfer object collection.
+     * - Currency transfer object in MoneyValue transfer objects is populated using the corresponding ShipmentMethodPrice entity's currency reference.
+     *
+     * @api
+     *
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity);
 }

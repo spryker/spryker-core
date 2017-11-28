@@ -10,7 +10,7 @@ namespace Spryker\Zed\Braintree\Communication\Plugin\Oms\Condition;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
+ * @method \Spryker\Zed\Braintree\Business\BraintreeFacadeInterface getFacade()
  */
 class IsReversalApprovedPlugin extends AbstractCheckPlugin
 {

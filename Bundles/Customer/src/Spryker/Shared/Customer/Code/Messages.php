@@ -26,6 +26,7 @@ interface Messages
     const CUSTOMER_AUTHORIZATION_FAILED = 'customer.authorization.failed';
     const CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
     const CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
+    const CUSTOMER_EMAIL_FORMAT_INVALID = 'customer.email.format.invalid';
     const CUSTOMER_EMAIL_INVALID = 'customer.email.invalid';
     const CUSTOMER_TOKEN_INVALID = 'customer.token.invalid';
     const CUSTOMER_ANONYMIZATION_SUCCESS = 'customer.anonymization.success';

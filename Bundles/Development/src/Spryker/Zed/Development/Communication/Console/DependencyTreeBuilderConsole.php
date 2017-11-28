@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class DependencyTreeBuilderConsole extends Console
 {

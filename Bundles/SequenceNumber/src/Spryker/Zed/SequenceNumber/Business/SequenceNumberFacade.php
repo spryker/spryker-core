@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SequenceNumberFacade extends AbstractFacade implements SequenceNumberFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
@@ -24,9 +26,8 @@ class SequenceNumberFacade extends AbstractFacade implements SequenceNumberFacad
      */
     public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings)
     {
-        $sequenceNumber = $this->getFactory()
-            ->createSequenceNumber($sequenceNumberSettings);
-
-        return $sequenceNumber->generate();
+        return $this->getFactory()
+            ->createSequenceNumber($sequenceNumberSettings)
+            ->generate();
     }
 }

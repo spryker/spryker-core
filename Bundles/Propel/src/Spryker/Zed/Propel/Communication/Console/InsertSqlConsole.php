@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,7 +39,8 @@ class InsertSqlConsole extends Console
     {
         $this->info('Insert SQL');
 
-        $command = 'vendor/bin/propel sql:insert --config-dir config/Zed';
+        $config = Config::get(PropelConstants::PROPEL);
+        $command = 'vendor/bin/propel sql:insert --config-dir ' . $config['paths']['phpConfDir'];
 
         $process = new Process($command, APPLICATION_ROOT_DIR);
 

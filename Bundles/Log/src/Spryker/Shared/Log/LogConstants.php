@@ -15,6 +15,38 @@ interface LogConstants
      *
      * @api
      */
+    const LOGGER_CONFIG_YVES = 'LOG:LOGGER_CONFIG_YVES';
+
+    /**
+     * Specification:
+     * - Channel name of Yves logger.
+     *
+     * @api
+     */
+    const LOGGER_CHANNEL_YVES = 'LOG:LOGGER_CHANNEL_YVES';
+
+    /**
+     * Specification:
+     * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
+     *
+     * @api
+     */
+    const LOGGER_CONFIG_ZED = 'LOG:LOGGER_CONFIG_ZED';
+
+    /**
+     * Specification:
+     * - Channel name of Zed logger.
+     *
+     * @api
+     */
+    const LOGGER_CHANNEL_ZED = 'LOG:LOGGER_CHANNEL_ZED';
+
+    /**
+     * Specification:
+     * - Class name of the class which implements LoggerConfigInterface. E.g. SprykerLoggerConfig::class
+     *
+     * @api
+     */
     const LOGGER_CONFIG = 'LOGGER_CONFIG';
 
     /**
@@ -28,6 +60,9 @@ interface LogConstants
     /**
      * Specification:
      * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
+     * - If set logs will be written to the specified file.
+     *
+     * @deprecated Please use the application specific constants. E.g. LOG_FILE_PATH_YVES
      *
      * @api
      */
@@ -35,11 +70,47 @@ interface LogConstants
 
     /**
      * Specification:
+     * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
+     * - If set logs will be written to the specified file.
+     *
+     * @api
+     */
+    const LOG_FILE_PATH_YVES = 'LOG_FILE_PATH_YVES';
+
+    /**
+     * Specification:
+     * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
+     * - If set logs will be written to the specified file.
+     *
+     * @api
+     */
+    const LOG_FILE_PATH_ZED = 'LOG_FILE_PATH_ZED';
+
+    /**
+     * Specification:
      * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
+     *
+     * @deprecated Please use the application specific constants. E.g. EXCEPTION_LOG_FILE_PATH_YVES
      *
      * @api
      */
     const EXCEPTION_LOG_FILE_PATH = 'LOG:EXCEPTION_LOG_FILE_PATH';
+
+    /**
+     * Specification:
+     * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
+     *
+     * @api
+     */
+    const EXCEPTION_LOG_FILE_PATH_YVES = 'LOG:EXCEPTION_LOG_FILE_PATH_YVES';
+
+    /**
+     * Specification:
+     * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
+     *
+     * @api
+     */
+    const EXCEPTION_LOG_FILE_PATH_ZED = 'LOG:EXCEPTION_LOG_FILE_PATH_ZED';
 
     /**
      * Specification:

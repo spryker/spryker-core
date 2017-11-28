@@ -4,31 +4,22 @@
   "license": "proprietary",
   "require": {
     "codeception/codeception": "^2.3.5",
-    "php-mock/php-mock": "^1.0.1",
-    "satooshi/php-coveralls": "^1.0.0",
-    "spryker/application": "^3.0.0",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/money": "^2.0.0",
     "spryker/propel": "^3.0.4",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/session": "^3.0.0",
-    "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/twig": "^3.0.0",
-    "spryker/util-date-time": "^1.0.0",
-    "spryker/zed-navigation": "^1.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/silex": "^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "^3.0.0",
+    "spryker/twig": "^3.0.0"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Testify\\": "tests/SprykerTest/Shared/Testify/_support/Helper/"
+      "SprykerTest\\Shared\\Testify\\Helper\\": "tests/SprykerTest/Shared/Testify/_support/Helper/"
     }
   },
   "autoload-dev": {

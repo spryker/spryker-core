@@ -68,4 +68,12 @@ class StateMachineConfig extends AbstractBundleConfig
             'svg' => 'image/svg+xml',
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function getSubProcessPrefixDelimiter()
+    {
+        return ' - ';
+    }
 }

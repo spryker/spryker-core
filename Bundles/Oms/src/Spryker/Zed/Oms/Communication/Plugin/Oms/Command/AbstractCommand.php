@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
 abstract class AbstractCommand extends AbstractPlugin

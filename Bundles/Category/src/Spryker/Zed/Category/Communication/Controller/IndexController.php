@@ -15,9 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @deprecated This class has been replaced by \Spryker\Zed\Category\Communication\Controller\RootController
  *
- * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  */
 class IndexController extends AbstractController
 {

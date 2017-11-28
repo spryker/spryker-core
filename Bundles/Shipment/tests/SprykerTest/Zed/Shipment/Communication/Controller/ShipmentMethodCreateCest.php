@@ -29,6 +29,8 @@ class ShipmentMethodCreateCest
      */
     public function breadcrumbIsVisible(ShipmentCommunicationTester $i)
     {
+        $i->registerMoneyCollectionFormTypePlugin();
+
         $i->amOnPage(ShipmentMethodCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Shipment / Shipment Methods / Create new Shipment Method');
     }

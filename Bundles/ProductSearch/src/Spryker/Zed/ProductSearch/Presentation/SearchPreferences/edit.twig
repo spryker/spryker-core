@@ -16,7 +16,7 @@
             {{ form_start(form) }}
                 {{ form_widget(form) }}
 
-                <input type="submit" id="{{ form.vars.name }}_submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                <input type="submit" id="{{ form.vars.name }}_submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}
 
         {% endblock %}
