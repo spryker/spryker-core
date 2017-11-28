@@ -12,6 +12,9 @@ use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -20,7 +23,9 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  */
 class ProductOptionGroupForm extends AbstractType
 {
@@ -38,52 +43,6 @@ class ProductOptionGroupForm extends AbstractType
     const PRODUCT_OPTION_VALUES_TO_BE_REMOVED = 'product_option_values_to_be_removed';
 
     const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
-
-    /**
-     * @var \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm
-     */
-    protected $productOptionForm;
-
-    /**
-     * @var \Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm
-     */
-    protected $productOptionTranslationForm;
-
-    /**
-     * @var \Symfony\Component\Form\DataTransformerInterface
-     */
-    protected $arrayToArrayObjectTransformer;
-
-    /**
-     * @var \Symfony\Component\Form\DataTransformerInterface
-     */
-    protected $stringToArrayTransformer;
-
-    /**
-     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
-     */
-    protected $productOptionQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm $productOptionForm
-     * @param \Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm $productOptionTranslationForm
-     * @param \Symfony\Component\Form\DataTransformerInterface $arrayToArrayObjectTransformer
-     * @param \Symfony\Component\Form\DataTransformerInterface $stringToArrayTransformer
-     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     */
-    public function __construct(
-        ProductOptionValueForm $productOptionForm,
-        ProductOptionTranslationForm $productOptionTranslationForm,
-        DataTransformerInterface $arrayToArrayObjectTransformer,
-        DataTransformerInterface $stringToArrayTransformer,
-        ProductOptionQueryContainerInterface $productOptionQueryContainer
-    ) {
-        $this->productOptionForm = $productOptionForm;
-        $this->productOptionTranslationForm = $productOptionTranslationForm;
-        $this->arrayToArrayObjectTransformer = $arrayToArrayObjectTransformer;
-        $this->stringToArrayTransformer = $stringToArrayTransformer;
-        $this->productOptionQueryContainer = $productOptionQueryContainer;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -121,7 +80,7 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, 'text', [
+        $builder->add(self::FIELD_NAME, TextType::class, [
             'label' => 'Group name translation key',
             'required' => true,
             'attr' => [
@@ -130,7 +89,7 @@ class ProductOptionGroupForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new UniqueGroupName([
-                    UniqueGroupName::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                    UniqueGroupName::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->getQueryContainer(),
                 ]),
                 new Regex([
                     'pattern' => self::ALPHA_NUMERIC_PATTERN,
@@ -149,8 +108,8 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addValuesFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUES, 'collection', [
-            'type' => $this->productOptionForm,
+        $builder->add(self::FIELD_VALUES, CollectionType::class, [
+            'entry_type' => $this->getFactory()->createProductOptionValueForm(),
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
@@ -167,7 +126,7 @@ class ProductOptionGroupForm extends AbstractType
         ]);
 
         $builder->get(self::FIELD_VALUES)
-            ->addModelTransformer($this->arrayToArrayObjectTransformer);
+            ->addModelTransformer($this->getFactory()->createArrayToArrayObjectTransformer());
 
         return $this;
     }
@@ -179,15 +138,15 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addValueTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE_TRANSLATIONS, 'collection', [
-            'type' => $this->productOptionTranslationForm,
+        $builder->add(self::FIELD_VALUE_TRANSLATIONS, CollectionType::class, [
+            'entry_type' => $this->getFactory()->createProductOptionTranslationForm(),
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
         ]);
 
         $builder->get(self::FIELD_VALUE_TRANSLATIONS)
-            ->addModelTransformer($this->arrayToArrayObjectTransformer);
+            ->addModelTransformer($this->getFactory()->createArrayToArrayObjectTransformer());
 
         return $this;
     }
@@ -199,15 +158,15 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addGroupNameTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GROUP_NAME_TRANSLATIONS, 'collection', [
-            'type' => $this->productOptionTranslationForm,
+        $builder->add(self::FIELD_GROUP_NAME_TRANSLATIONS, CollectionType::class, [
+            'entry_type' => $this->getFactory()->createProductOptionTranslationForm(),
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
         ]);
 
         $builder->get(self::FIELD_GROUP_NAME_TRANSLATIONS)
-            ->addModelTransformer($this->arrayToArrayObjectTransformer);
+            ->addModelTransformer($this->getFactory()->createArrayToArrayObjectTransformer());
 
         return $this;
     }
@@ -239,7 +198,7 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addIdProductOptionGroup(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_OPTION_GROUP, 'hidden');
+        $builder->add(self::FIELD_ID_PRODUCT_OPTION_GROUP, HiddenType::class);
 
         return $this;
     }
@@ -252,14 +211,14 @@ class ProductOptionGroupForm extends AbstractType
     protected function addProductsToBeAssignedField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::PRODUCTS_TO_BE_ASSIGNED, 'hidden', [
+            ->add(self::PRODUCTS_TO_BE_ASSIGNED, HiddenType::class, [
                 'attr' => [
                     'id' => self::PRODUCTS_TO_BE_ASSIGNED,
                 ],
             ]);
 
         $builder->get(self::PRODUCTS_TO_BE_ASSIGNED)
-            ->addModelTransformer($this->stringToArrayTransformer);
+            ->addModelTransformer($this->getFactory()->createStringToArrayTransformer());
 
         return $this;
     }
@@ -272,14 +231,14 @@ class ProductOptionGroupForm extends AbstractType
     protected function addProductsToBeDeAssignedField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::PRODUCTS_TO_BE_DE_ASSIGNED, 'hidden', [
+            ->add(self::PRODUCTS_TO_BE_DE_ASSIGNED, HiddenType::class, [
                 'attr' => [
                     'id' => self::PRODUCTS_TO_BE_DE_ASSIGNED,
                 ],
             ]);
 
         $builder->get(self::PRODUCTS_TO_BE_DE_ASSIGNED)
-            ->addModelTransformer($this->stringToArrayTransformer);
+            ->addModelTransformer($this->getFactory()->createStringToArrayTransformer());
 
         return $this;
     }
@@ -292,24 +251,22 @@ class ProductOptionGroupForm extends AbstractType
     protected function addProductOptionValuesToBeRemoved(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::PRODUCT_OPTION_VALUES_TO_BE_REMOVED, 'hidden', [
+            ->add(self::PRODUCT_OPTION_VALUES_TO_BE_REMOVED, HiddenType::class, [
                 'attr' => [
                     'id' => self::PRODUCT_OPTION_VALUES_TO_BE_REMOVED,
                 ],
             ]);
 
         $builder->get(self::PRODUCT_OPTION_VALUES_TO_BE_REMOVED)
-            ->addModelTransformer($this->stringToArrayTransformer);
+            ->addModelTransformer($this->getFactory()->createStringToArrayTransformer());
 
         return $this;
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'product_option_general';
     }
