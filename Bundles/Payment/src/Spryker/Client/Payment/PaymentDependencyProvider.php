@@ -9,10 +9,11 @@ namespace Spryker\Client\Payment;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientBridge;
 
 class PaymentDependencyProvider extends AbstractDependencyProvider
 {
-    const SERVICE_ZED = 'zed service';
+    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -21,8 +22,20 @@ class PaymentDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_ZED] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+        $container = $this->addZedRequestClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container)
+    {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new PaymentToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

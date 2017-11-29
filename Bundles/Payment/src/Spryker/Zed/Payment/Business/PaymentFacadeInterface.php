@@ -18,6 +18,9 @@ use Generated\Shared\Transfer\SalesPaymentTransfer;
 interface PaymentFacadeInterface
 {
     /**
+     * Specification:
+     * - Creates sales payments
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -28,6 +31,9 @@ interface PaymentFacadeInterface
     public function savePaymentForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
+     * Specification:
+     * - Runs pre-check plugins
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -38,6 +44,9 @@ interface PaymentFacadeInterface
     public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
+     * Specification:
+     * - Runs post-check plugins
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -49,7 +58,7 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     *   - Returns payment method price to pay
+     *  - Returns payment method price to pay
      *
      * @api
      *
@@ -61,7 +70,7 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     *   - Populates order transfer with payment data
+     *  - Populates order transfer with payment data
      *
      * @api
      *
@@ -72,6 +81,10 @@ interface PaymentFacadeInterface
     public function hydrateOrderPayments(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Finds available payment methods
+     * - Runs filter plugins
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -81,6 +94,10 @@ interface PaymentFacadeInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     * - Distributes total price to payment methods
+     * - Calculates price to pay
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer

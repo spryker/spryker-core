@@ -16,6 +16,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class PaymentClient extends AbstractClient implements PaymentClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

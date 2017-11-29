@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Nopayment\Communication\Plugin\Payment;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface;
@@ -19,15 +20,17 @@ use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInter
 class PriceToPayPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     * @return PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer)
+    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->filterPaymentMethods($paymentMethods, $quoteTransfer);
+        return $this->getFacade()->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
     }
 }

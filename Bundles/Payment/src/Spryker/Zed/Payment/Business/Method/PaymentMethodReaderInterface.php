@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Payment;
+namespace Spryker\Zed\Payment\Business\Method;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface PaymentClientInterface
+interface PaymentMethodReaderInterface
 {
     /**
-     * Specification:
-     * - Requests available payment methods from Zed
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer

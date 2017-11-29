@@ -8,7 +8,6 @@
 namespace Spryker\Yves\Checkout\Form;
 
 use Pyz\Yves\Checkout\Form\Steps\PaymentForm;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\DataContainer\DataContainer;
 use Spryker\Yves\Checkout\Form\Filter\SubFormFilter;
@@ -97,7 +96,7 @@ class FormFactory extends AbstractFactory
      */
     protected function getFormFactory()
     {
-        return $this->getProvidedDependency(ApplicationConstants::FORM_FACTORY);
+        return $this->getProvidedDependency(CheckoutDependencyProvider::FORM_FACTORY);
     }
 
     protected function createSubFormDataProvider($subFormProvider)

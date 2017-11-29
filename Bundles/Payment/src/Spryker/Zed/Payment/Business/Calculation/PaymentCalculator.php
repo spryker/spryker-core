@@ -22,8 +22,6 @@ class PaymentCalculator implements PaymentCalculatorInterface
         $paymentCollection = $this->getPaymentCollection($calculableObjectTransfer);
         $availablePriceToPay = $calculableObjectTransfer->getTotals()->getGrandTotal();
 
-        //TODO build a new list with payments when the single payment property is removed
-        //this is inplace mutation, which is not obvious
         foreach ($paymentCollection as $paymentTransfer) {
             if ($paymentTransfer->getAmount() > $availablePriceToPay || !$paymentTransfer->getIsLimitedAmount()) {
                 $paymentTransfer->setAmount($availablePriceToPay);
@@ -34,13 +32,12 @@ class PaymentCalculator implements PaymentCalculatorInterface
             $availablePriceToPay -= $paymentTransfer->getAmount();
         }
 
-        //TODO one could remove payments without an amount here (but this might be easier without the extra payment property)
-
         $calculableObjectTransfer->getTotals()->setPriceToPay($availablePriceToPay);
     }
 
     /**
-     * @deprecated To be removed when the single payment property on the quote is removed
+     * @deprecated To be removed when the single payment property
+     * (\Generated\Shared\Transfer\CalculableObjectTransfer::getPayment()) in the quote is removed
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *

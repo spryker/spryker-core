@@ -15,6 +15,11 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollectio
 
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     */
+    const FORM_FACTORY = 'FORM_FACTORY';
+
     const PAYMENT_METHOD_HANDLER = 'payment method handler';
     const PAYMENT_SUB_FORMS = 'payment sub forms';
 

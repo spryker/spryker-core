@@ -7,18 +7,21 @@
 
 namespace Spryker\Zed\Payment\Dependency\Plugin\Payment;
 
-use ArrayObject;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PaymentMethodFilterPluginInterface
 {
     /**
+     * Specification:
+     * - Returns filtered by set of plugins array object of payments
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer);
+    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer);
 }

@@ -9,7 +9,8 @@ namespace Spryker\Zed\GiftCard\Business\Payment;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\PaymentInformationTransfer;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\GiftCard\GiftCardConfig;
 
@@ -29,18 +30,18 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject
+     * @return PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer)
+    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
         if (!$this->containsGiftCards($quoteTransfer)) {
-            return $paymentMethods;
+            return $paymentMethodsTransfer;
         }
 
-        return $this->excludeBlacklistedPaymentMethods($paymentMethods);
+        return $this->excludeBlacklistedPaymentMethods($paymentMethodsTransfer);
     }
 
     /**
@@ -76,33 +77,37 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param PaymentMethodsTransfer $paymentMethodsTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     * @return PaymentMethodsTransfer
      */
-    protected function excludeBlacklistedPaymentMethods(ArrayObject $paymentMethods)
+    protected function excludeBlacklistedPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer)
     {
         $result = new ArrayObject();
 
-        foreach ($paymentMethods as $paymentMethod) {
-            if (!$this->isBlacklisted($paymentMethod)) {
-                $result[] = $paymentMethod;
+        foreach ($paymentMethodsTransfer->getMethods() as $paymentMethod) {
+            if ($this->isBlacklisted($paymentMethod)) {
+                continue;
             }
+
+            $result->append($paymentMethod);
         }
 
-        return $result;
+        $paymentMethodsTransfer->setMethods($result);
+
+        return $paymentMethodsTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer $paymentInformationTransfer
+     * @param PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return bool
      */
-    protected function isBlacklisted(PaymentInformationTransfer $paymentInformationTransfer)
+    protected function isBlacklisted(PaymentMethodTransfer $paymentMethodTransfer)
     {
         $giftCardMethodBlacklist = $this->giftCardConfig->getGiftCardMethodBlacklist();
         foreach ($giftCardMethodBlacklist as $giftCardMethod) {
-            if ($paymentInformationTransfer->getMethod() === $giftCardMethod) {
+            if ($paymentMethodTransfer->getMethodName() === $giftCardMethod) {
                 return true;
             }
         }

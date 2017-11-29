@@ -8,21 +8,21 @@
 namespace Spryker\Client\Payment\Zed;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientInterface;
 
 class PaymentStub implements PaymentStubInterface
 {
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClient
+     * @var \Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientInterface
      */
-    protected $zedStub;
+    protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param \Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(ZedRequestClient $zedStub)
+    public function __construct(PaymentToZedRequestClientInterface $zedRequestClient)
     {
-        $this->zedStub = $zedStub;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -32,6 +32,6 @@ class PaymentStub implements PaymentStubInterface
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/payment/gateway/get-available-methods', $quoteTransfer, null, true);
+        return $this->zedRequestClient->call('/payment/gateway/get-available-methods', $quoteTransfer, null, true);
     }
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface GiftCardFacadeInterface
@@ -56,12 +57,12 @@ interface GiftCardFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     * @return PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer);
+    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer);
 
     /**
      * @api

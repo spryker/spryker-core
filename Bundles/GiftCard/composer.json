@@ -14,7 +14,8 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/calculation": "*"
   },
   "suggest": {
     "spryker/discount": "If you want to make sure GiftCards have no Discount applied",

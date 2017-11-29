@@ -13,7 +13,8 @@
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/sales": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/calculation": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins.",

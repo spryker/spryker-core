@@ -16,7 +16,7 @@ use Spryker\Yves\Payment\Form\Filter\PaymentFormFilter;
 class PaymentFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Payment\Form\Filter\PaymentFormFilter
+     * @return \Spryker\Yves\Payment\Form\Filter\PaymentFormFilterInterface
      */
     public function createPaymentMethodFormFilter()
     {

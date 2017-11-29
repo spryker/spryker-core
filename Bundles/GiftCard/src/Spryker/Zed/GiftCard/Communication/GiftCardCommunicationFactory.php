@@ -16,15 +16,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class GiftCardCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @throws \Exception
-     *
-     * @return void
-     */
-    public function createGiftCardTable()
-    {
-        //TODO add table view for giftcards zed backend
-        //TODO implement
-        throw new Exception('not implemented');
-    }
 }

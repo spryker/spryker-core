@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Checkout\Dependency\Plugin\Form;
+namespace Spryker\Yves\Payment\Form\Filter;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
-interface SubFormFilterPluginInterface
+interface PaymentFormFilterInterface
 {
     /**
-     * Specification:
-     * - Filters invalid sub-forms for checkout
-     *
-     * @api
-     *
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $formPluginCollection
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
      *

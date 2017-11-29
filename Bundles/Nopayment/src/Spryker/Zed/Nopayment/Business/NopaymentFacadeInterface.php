@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Nopayment\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
@@ -32,12 +33,18 @@ interface NopaymentFacadeInterface
     public function isPaid(SpySalesOrderItem $orderItem);
 
     /**
+     * Specification:
+     * - Filters Nopayment payment methods
+     * - Whitelisted payment methods always will be included (@see \Spryker\Shared\Nopayment\NopaymentConstants::WHITELIST_PAYMENT_METHODS)
+     * - If quote total > 0, then filter Nopayment payment methods out
+     * - If quote total = 0, then filter regular payment methods out
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     * @return PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer);
+    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer);
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
-use Spryker\Zed\Payment\Business\Method\PaymentMethodMarshaller;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
@@ -76,11 +76,11 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodMarshaller
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface
      */
-    public function createPaymentMethodMarshaller()
+    public function createPaymentMethodReader()
     {
-        return new PaymentMethodMarshaller(
+        return new PaymentMethodReader(
             $this->getPaymentMethodFilterPlugins(),
             $this->getConfig()
         );

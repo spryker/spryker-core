@@ -18,6 +18,8 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $formPluginCollection
@@ -27,6 +29,8 @@ class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPlu
      */
     public function filter(SubFormPluginCollection $formPluginCollection, AbstractTransfer $data)
     {
-        return $this->getFactory()->createPaymentMethodFormFilter()->filter($formPluginCollection, $data);
+        return $this->getFactory()
+            ->createPaymentMethodFormFilter()
+            ->filter($formPluginCollection, $data);
     }
 }

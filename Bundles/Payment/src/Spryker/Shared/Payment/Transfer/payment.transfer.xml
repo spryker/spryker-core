@@ -28,19 +28,12 @@
         <property name="paymentMethod" type="string" />
     </transfer>
 
-    <!-- TODO consider how to deal with the following: -->
-    <!-- these two transfers can probably be merged. PaymentInformation is contained in SalesPayment,
-     but still a reasonable object: It contains information about a payment method,
-     whether is a used on or an available one or whatever (PaymentInformation is more versatile)
-     -->
-
-    <transfer name="PaymentInformation">
-        <property name="provider" type="string" />
-        <property name="method" type="string" />
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]" />
     </transfer>
 
-    <transfer name="PaymentMethods">
-        <property name="availableMethods" singular="availableMethod" type="PaymentInformation[]" />
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string" />
     </transfer>
 
     <transfer name="Totals">

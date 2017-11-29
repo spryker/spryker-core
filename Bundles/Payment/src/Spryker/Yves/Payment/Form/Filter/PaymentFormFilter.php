@@ -13,7 +13,7 @@ use Spryker\Client\Payment\PaymentClientInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
-class PaymentFormFilter
+class PaymentFormFilter implements PaymentFormFilterInterface
 {
     /**
      * @var \Spryker\Client\Payment\PaymentClientInterface
@@ -40,14 +40,29 @@ class PaymentFormFilter
             return $formPluginCollection;
         }
 
-        $availableMethods = $this->paymentClient->getAvailableMethods($data);
+        $paymentMethodsTransfer = $this->paymentClient->getAvailableMethods($data);
+        $formPluginCollection = $this->filterSubFormPluginCollection($formPluginCollection, $paymentMethodsTransfer);
 
-        //todo: use just remove function instead of re-creation
+        return $formPluginCollection;
+    }
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subFormPluginCollection
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
+     *
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     */
+    protected function filterSubFormPluginCollection(
+        SubFormPluginCollection $subFormPluginCollection,
+        PaymentMethodsTransfer $paymentMethodsTransfer
+    ) {
         $collection = new SubFormPluginCollection();
 
-        foreach ($formPluginCollection as $formPlugin) {
-            if ($this->containsMethod($availableMethods, $formPlugin->createSubForm()->getName())) {
-                $collection->add($formPlugin);
+        foreach ($subFormPluginCollection as $subFormPlugin) {
+            $subFormName = $subFormPlugin->createSubForm()->getName();
+
+            if ($this->containsMethod($paymentMethodsTransfer, $subFormName)) {
+                $collection->add($subFormPlugin);
             }
         }
 
@@ -62,10 +77,8 @@ class PaymentFormFilter
      */
     protected function containsMethod(PaymentMethodsTransfer $paymentMethodsTransfer, $paymentMethodName)
     {
-        foreach ($paymentMethodsTransfer->getAvailableMethods() as $availableMethod) {
-            $name = $availableMethod->getProvider() . $availableMethod->getMethod();
-
-            if ($name === $paymentMethodName) {
+        foreach ($paymentMethodsTransfer->getMethods() as $availableMethod) {
+            if ($availableMethod->getMethodName() === $paymentMethodName) {
                 return true;
             }
         }

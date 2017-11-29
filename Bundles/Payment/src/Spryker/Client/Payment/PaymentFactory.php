@@ -17,9 +17,16 @@ class PaymentFactory extends AbstractFactory
      */
     public function createZedStub()
     {
-        $zedStub = $this->getProvidedDependency(PaymentDependencyProvider::SERVICE_ZED);
-        $cartStub = new PaymentStub($zedStub);
+        return new PaymentStub(
+            $this->getZedRequestClient()
+        );
+    }
 
-        return $cartStub;
+    /**
+     * @return \Spryker\Client\Payment\Dependency\Client\PaymentToZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $zedStub = $this->getProvidedDependency(PaymentDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

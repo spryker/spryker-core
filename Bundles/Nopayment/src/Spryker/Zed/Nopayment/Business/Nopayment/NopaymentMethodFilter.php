@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Nopayment\Business\Nopayment;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Nopayment\NopaymentConfig;
 
@@ -27,61 +28,61 @@ class NopaymentMethodFilter
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PaymentInformationTransfer[] $paymentMethods
+     * @param PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PaymentInformationTransfer[]
+     * @return PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(ArrayObject $paymentMethods, QuoteTransfer $quoteTransfer)
+    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getTotals()->getPriceToPay() === 0) {
-            return $this->disallowRegularPaymentMethods($paymentMethods);
+            return $this->disallowRegularPaymentMethods($paymentMethodsTransfer);
         }
 
-        return $this->disallowNoPaymentMethods($paymentMethods);
+        return $this->disallowNoPaymentMethods($paymentMethodsTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param PaymentMethodsTransfer $paymentMethodsTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     * @return PaymentMethodsTransfer
      */
-    protected function disallowRegularPaymentMethods(ArrayObject $paymentMethods)
+    protected function disallowRegularPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer)
     {
         $allowedMethods = new ArrayObject();
 
-        foreach ($paymentMethods as $paymentMethod) {
-            if (in_array($paymentMethod->getMethod(), $this->nopaymentConfig->getWhitelistMethods())) {
-                $allowedMethods[] = $paymentMethod;
+        foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
+            if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getWhitelistMethods())) {
+                $allowedMethods[] = $paymentMethodTransfer;
             }
 
-            if (in_array($paymentMethod->getMethod(), $this->nopaymentConfig->getNopaymentMethods())) {
-                $allowedMethods[] = $paymentMethod;
+            if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getNopaymentMethods())) {
+                $allowedMethods[] = $paymentMethodTransfer;
             }
         }
 
-        return $allowedMethods;
+        return $paymentMethodsTransfer->setMethods($allowedMethods);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject $paymentMethods
+     * @param PaymentMethodsTransfer $paymentMethodsTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentInformationTransfer[]|\ArrayObject
+     * @return PaymentMethodsTransfer
      */
-    protected function disallowNoPaymentMethods(ArrayObject $paymentMethods)
+    protected function disallowNoPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer)
     {
         $allowedMethods = new ArrayObject();
 
-        foreach ($paymentMethods as $paymentMethod) {
-            if (in_array($paymentMethod->getMethod(), $this->nopaymentConfig->getWhitelistMethods())) {
-                $allowedMethods[] = $paymentMethod;
+        foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
+            if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getWhitelistMethods())) {
+                $allowedMethods[] = $paymentMethodTransfer;
             }
 
-            if (!in_array($paymentMethod->getMethod(), $this->nopaymentConfig->getNopaymentMethods())) {
-                $allowedMethods[] = $paymentMethod;
+            if (!in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getNopaymentMethods())) {
+                $allowedMethods[] = $paymentMethodTransfer;
             }
         }
 
-        return $allowedMethods;
+        return $paymentMethodsTransfer->setMethods($allowedMethods);
     }
 }
