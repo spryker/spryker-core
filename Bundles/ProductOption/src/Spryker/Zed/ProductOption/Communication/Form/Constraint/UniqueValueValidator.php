@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -22,19 +22,20 @@ class UniqueValueValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
-     * @param mixed $value The value that should be validated
+     * @param mixed|\Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer The value that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($productOptionValueTransfer, Constraint $constraint)
     {
-        if (in_array($value, $this->validatedValues)) {
-            $this->buildViolation('Product option with this value is already used.')
-                ->addViolation();
+        if (in_array($productOptionValueTransfer->getValue(), $this->validatedValues)) {
+            $this->addUniqueViolationMessage();
         }
+
+        $value = $productOptionValueTransfer->getValue();
 
         if (!$constraint instanceof UniqueValue) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueValue');
@@ -44,16 +45,26 @@ class UniqueValueValidator extends ConstraintValidator
             $value = $this->addTranslationPrefix($value);
         }
 
-        if (!$this->isValueChanged($value, $constraint)) {
+        if (!$this->isValueChanged($value, $constraint, $productOptionValueTransfer->getIdProductOptionValue())) {
             return;
         }
 
         if (!$this->isUniqueValue($value, $constraint)) {
-            $this->buildViolation('Product option with this sku is already used.')
-                ->addViolation();
+            $this->addUniqueViolationMessage();
         }
 
-        $this->validatedValues[] = $value;
+        $this->validatedValues[] = $productOptionValueTransfer->getValue();
+    }
+
+    /**
+     * @return void
+     */
+    protected function addUniqueViolationMessage()
+    {
+        $this->context
+            ->buildViolation('Product option with this value is already used.')
+            ->atPath(ProductOptionValueTransfer::VALUE)
+            ->addViolation();
     }
 
     /**
@@ -65,7 +76,7 @@ class UniqueValueValidator extends ConstraintValidator
     protected function isUniqueValue($value, UniqueValue $constraint)
     {
         $numberOfDiscounts = $constraint->getProductOptionQueryContainer()
-            ->queryProductOptionValue(ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $value)
+            ->queryProductOptionValue($value)
             ->count();
 
         return $numberOfDiscounts === 0;
@@ -74,15 +85,12 @@ class UniqueValueValidator extends ConstraintValidator
     /**
      * @param string $submittedValue
      * @param \Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue $constraint
+     * @param int $idProductOptionValue
      *
      * @return bool
      */
-    protected function isValueChanged($submittedValue, UniqueValue $constraint)
+    protected function isValueChanged($submittedValue, UniqueValue $constraint, $idProductOptionValue)
     {
-        /** @var \Symfony\Component\Form\Form $root */
-        $root = $this->context->getRoot();
-
-        $idProductOptionValue = $this->findProductOptionValueId($root->getData(), $submittedValue);
         if (!$idProductOptionValue) {
             return true;
         }
@@ -96,23 +104,6 @@ class UniqueValueValidator extends ConstraintValidator
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     * @param string $submittedValue
-     *
-     * @return int|null
-     */
-    protected function findProductOptionValueId(ProductOptionGroupTransfer $productOptionGroupTransfer, $submittedValue)
-    {
-        foreach ($productOptionGroupTransfer->getProductOptionValues() as $productOptionValueTransfer) {
-            if ($productOptionValueTransfer->getValue() === $submittedValue) {
-                return $productOptionValueTransfer->getIdProductOptionValue();
-            }
-        }
-
-        return null;
     }
 
     /**

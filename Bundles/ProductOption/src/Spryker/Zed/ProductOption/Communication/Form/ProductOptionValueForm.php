@@ -76,6 +76,14 @@ class ProductOptionValueForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ProductOptionValueTransfer::class,
+            'constraints' => [
+                new UniqueValue([
+                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                ]),
+                new UniqueOptionValueSku([
+                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                ]),
+            ],
         ]);
     }
 
@@ -98,9 +106,6 @@ class ProductOptionValueForm extends AbstractType
                     'pattern' => self::ALPHA_NUMERIC_PATTERN,
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".',
                 ]),
-                new UniqueValue([
-                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
-                ]),
             ],
         ]);
 
@@ -119,9 +124,6 @@ class ProductOptionValueForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new UniqueOptionValueSku([
-                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
-                ]),
             ],
         ]);
 
