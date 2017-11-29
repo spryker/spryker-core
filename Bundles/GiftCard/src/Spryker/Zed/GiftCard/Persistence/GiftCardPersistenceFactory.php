@@ -15,7 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCardQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
  */
 class GiftCardPersistenceFactory extends AbstractPersistenceFactory

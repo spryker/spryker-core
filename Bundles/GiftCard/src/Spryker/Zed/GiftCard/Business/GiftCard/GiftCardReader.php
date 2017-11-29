@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer;
 use Generated\Shared\Transfer\GiftCardProductConfigurationTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
@@ -126,7 +125,7 @@ class GiftCardReader implements GiftCardReaderInterface
 
     /**
      * @param \Orm\Zed\GiftCard\Persistence\SpyGiftCard $giftCardEntity
-     * @param GiftCardTransfer $giftCardTransfer
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
      * @return \Generated\Shared\Transfer\GiftCardTransfer
      */
@@ -269,7 +268,7 @@ class GiftCardReader implements GiftCardReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return GiftCardTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder)
     {
@@ -314,5 +313,4 @@ class GiftCardReader implements GiftCardReaderInterface
 
         return $codes;
     }
-
 }

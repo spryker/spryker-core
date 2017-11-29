@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
-use Generated\Shared\Transfer\GiftCardTransfer;
-
 interface GiftCardReaderInterface
 {
     /**
@@ -79,7 +77,7 @@ interface GiftCardReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return GiftCardTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder);
 }

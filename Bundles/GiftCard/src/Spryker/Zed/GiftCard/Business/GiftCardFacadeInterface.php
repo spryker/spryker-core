@@ -149,10 +149,11 @@ interface GiftCardFacadeInterface
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer);
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
-     * @return GiftCardTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder);
-
 }

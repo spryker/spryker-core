@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
 use Spryker\Shared\GiftCard\GiftCardConfig;
-use Spryker\Shared\GiftCard\GiftCardConstants;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;

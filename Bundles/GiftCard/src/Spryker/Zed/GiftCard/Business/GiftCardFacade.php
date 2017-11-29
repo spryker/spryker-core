@@ -207,9 +207,11 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param int $idSalesOrder
      *
-     * @return GiftCardTransfer[]
+     * @return \Generated\Shared\Transfer\GiftCardTransfer[]
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder)
     {

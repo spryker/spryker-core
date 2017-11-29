@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
- * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  */
 class GiftCardCommunicationFactory extends AbstractCommunicationFactory
 {

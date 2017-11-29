@@ -1,10 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\GiftCard\Communication\Controller;
 
-
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +22,7 @@ class SalesController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        /** @var OrderTransfer $orderTransfer */
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $request->request->get('orderTransfer');
 
         $giftCardTransfers = $this->getFacade()->findGiftCardsByIdSalesOrder($orderTransfer->getIdSalesOrder());

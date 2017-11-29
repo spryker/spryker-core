@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard;
 use Spryker\Shared\GiftCard\GiftCardConfig;
-use Spryker\Shared\GiftCard\GiftCardConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
