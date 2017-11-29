@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductSetGui\Communication\Form\Images;
 
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

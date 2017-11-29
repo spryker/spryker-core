@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form;
 
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductSetGui\Communication\Form\General\GeneralFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Images\ImagesFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Products\ProductsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Seo\SeoFormType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
