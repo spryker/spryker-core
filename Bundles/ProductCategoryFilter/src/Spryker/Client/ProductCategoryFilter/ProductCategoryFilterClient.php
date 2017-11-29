@@ -47,10 +47,10 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
             $this->getFactory()->createProductCategoryFilterKeyBuilder()->generateKey($categoryId, $localeName)
         );
 
-        if ($productCategoryFilters) {
-            return $productCategoryFilters;
+        if (!$productCategoryFilters) {
+            return [];
         }
 
-        return [];
+        return $productCategoryFilters;
     }
 }
