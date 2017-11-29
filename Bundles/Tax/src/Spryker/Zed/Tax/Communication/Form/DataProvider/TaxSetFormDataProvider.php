@@ -9,7 +9,6 @@ namespace Spryker\Zed\Tax\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 use Spryker\Zed\Tax\Communication\Form\TaxSetForm;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
 
 class TaxSetFormDataProvider
 {
@@ -57,7 +56,11 @@ class TaxSetFormDataProvider
     protected function createTaxRatesList()
     {
         $taxRateCollection = $this->taxFacade->getTaxRates();
+        $choices = [];
+        foreach ($taxRateCollection->getTaxRates() as $taxRateTransfer) {
+            $choices[$taxRateTransfer->getIdTaxRate()] = $taxRateTransfer->getName();
+        }
 
-        return new ObjectChoiceList($taxRateCollection->getTaxRates(), 'name', [], null, 'idTaxRate');
+        return $choices;
     }
 }

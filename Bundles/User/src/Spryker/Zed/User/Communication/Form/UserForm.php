@@ -9,6 +9,7 @@ namespace Spryker\Zed\User\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -140,7 +141,7 @@ class UserForm extends AbstractType
                 'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off']],
                 'second_options' => ['label' => 'Repeat Password', 'attr' => ['autocomplete' => 'off']],
                 'required' => true,
-                'type' => 'password',
+                'type' => PasswordType::class,
             ]);
 
         return $this;

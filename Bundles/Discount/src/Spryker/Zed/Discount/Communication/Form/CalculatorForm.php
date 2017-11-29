@@ -210,7 +210,7 @@ class CalculatorForm extends AbstractType
         $builder->add(static::FIELD_CALCULATOR_PLUGIN, ChoiceType::class, [
             'label' => 'Calculator type',
             'placeholder' => 'Select one',
-            'choices' => $this->getFactory()->createCalculatorFormDataProvider()->getData()[static::FIELD_CALCULATOR_PLUGIN],
+            'choices' => array_flip($this->getFactory()->createCalculatorFormDataProvider()->getData()[static::FIELD_CALCULATOR_PLUGIN]),
             'required' => true,
             'choice_attr' => function ($pluginName) {
                 return [

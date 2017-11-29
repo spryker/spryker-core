@@ -72,7 +72,7 @@ class TaxSetForm extends AbstractType
             'expanded' => true,
             'multiple' => true,
             'label' => 'Tax rates',
-            'choice_list' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES],
+            'choices' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES],
             'constraints' => [
                 new Callback([
                     'callback' => function (ArrayObject $taxRates, ExecutionContextInterface $context) {
