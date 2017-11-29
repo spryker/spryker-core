@@ -18,4 +18,6 @@ interface ProductSearchConfig
     const RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION = 'product_search_config_extension';
 
     const PRODUCT_SEARCH_CONFIG_EXPANDER_RESOURCE_ID = 1;
+
+    const PRODUCT_ABSTRACT_PAGE_SEARCH_TYPE = 'product_abstract';
 }

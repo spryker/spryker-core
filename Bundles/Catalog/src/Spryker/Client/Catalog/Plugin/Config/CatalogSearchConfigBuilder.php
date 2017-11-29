@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\Catalog\Plugin\Config;
+
+use Generated\Shared\Transfer\PaginationConfigTransfer;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
+use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
+use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
+
+/**
+ * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
+ */
+class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigBuilderInterface
+{
+    const DEFAULT_ITEMS_PER_PAGE = 12;
+    const VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfigBuilder
+     *
+     * @return void
+     */
+    public function buildFacetConfig(FacetConfigBuilderInterface $facetConfigBuilder)
+    {
+        $facetConfigBuilderPlugins = $this->getFactory()->getFacetConfigTransferBuilderPlugins();
+
+        foreach ($facetConfigBuilderPlugins as $facetConfigBuilderPlugin) {
+            $facetConfigBuilder->addFacet($facetConfigBuilderPlugin->build());
+        }
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface $sortConfigBuilder
+     *
+     * @return void
+     */
+    public function buildSortConfig(SortConfigBuilderInterface $sortConfigBuilder)
+    {
+        $sortConfigBuilderPlugins = $this->getFactory()->getSortConfigTransferBuilderPlugins();
+
+        foreach ($sortConfigBuilderPlugins as $sortConfigBuilderPlugin) {
+            $sortConfigBuilder->addSort($sortConfigBuilderPlugin->build());
+        }
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfigBuilder
+     *
+     * @return void
+     */
+    public function buildPaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder)
+    {
+        $paginationConfigTransfer = (new PaginationConfigTransfer())
+            ->setParameterName('page')
+            ->setItemsPerPageParameterName('ipp')
+            ->setDefaultItemsPerPage(self::DEFAULT_ITEMS_PER_PAGE)
+            ->setValidItemsPerPageOptions(self::VALID_ITEMS_PER_PAGE_OPTIONS);
+
+        $paginationConfigBuilder->setPagination($paginationConfigTransfer);
+    }
+}
