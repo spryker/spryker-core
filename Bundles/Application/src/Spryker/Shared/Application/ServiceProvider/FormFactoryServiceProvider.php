@@ -11,6 +11,8 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\ContainerGlobals;
+use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
@@ -36,6 +38,7 @@ class FormFactoryServiceProvider implements ServiceProviderInterface
                     },
                 ];
                 $twig->addRuntimeLoader(new FactoryRuntimeLoader($data));
+                $twig->addExtension(new FormExtension(class_exists(HttpKernelRuntime::class) ? null : $app['twig.form.renderer']));
 
                 return $twig;
             })
