@@ -30,10 +30,10 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
     }
 
     /**
-     * @param PaymentMethodsTransfer $paymentMethodsTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return PaymentMethodsTransfer
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
@@ -77,9 +77,9 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
     }
 
     /**
-     * @param PaymentMethodsTransfer $paymentMethodsTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      *
-     * @return PaymentMethodsTransfer
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     protected function excludeBlacklistedPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer)
     {
@@ -99,7 +99,7 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
     }
 
     /**
-     * @param PaymentMethodTransfer $paymentMethodTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return bool
      */

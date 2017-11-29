@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\GiftCard\Communication;
 
-use Exception;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
