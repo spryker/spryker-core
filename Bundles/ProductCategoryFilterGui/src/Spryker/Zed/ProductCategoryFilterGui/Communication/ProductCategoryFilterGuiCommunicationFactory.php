@@ -76,7 +76,7 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductCategoryFilterForm($data = null, array $options = [])
+    public function createProductCategoryFilterForm(array $data = null, array $options = [])
     {
         $form = new ProductCategoryFilterForm();
         return $this->getFormFactory()->create($form, $data, $options);

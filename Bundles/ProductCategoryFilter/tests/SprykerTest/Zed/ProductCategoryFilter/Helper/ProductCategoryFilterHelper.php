@@ -22,7 +22,7 @@ class ProductCategoryFilterHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
-    public function haveProductCategoryFilter($override = [])
+    public function haveProductCategoryFilter(array $override = [])
     {
         $categoryDataHelper = $this->getCategoryDataHelper();
         $category = $categoryDataHelper->haveCategory();

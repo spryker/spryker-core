@@ -20,11 +20,11 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer[] $facets
-     * @param array|null $productCategoryFilters
+     * @param array $productCategoryFilters
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
-    public function updateFacetsByCategory($facets, $productCategoryFilters)
+    public function updateFacetsByCategory(array $facets, array $productCategoryFilters)
     {
         return $this->getFactory()
             ->createFacetUpdaterByProductCategoryFilters()
@@ -43,8 +43,14 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
      */
     public function getProductCategoryFiltersForCategoryByLocale($categoryId, $localeName)
     {
-        return $this->getFactory()->getStorageClient()->get(
+        $productCategoryFilters = $this->getFactory()->getStorageClient()->get(
             $this->getFactory()->createProductCategoryFilterKeyBuilder()->generateKey($categoryId, $localeName)
         );
+
+        if ($productCategoryFilters) {
+            return $productCategoryFilters;
+        }
+
+        return [];
     }
 }

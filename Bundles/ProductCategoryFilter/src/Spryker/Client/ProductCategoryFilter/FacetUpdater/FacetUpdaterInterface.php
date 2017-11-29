@@ -11,9 +11,9 @@ interface FacetUpdaterInterface
 {
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer[] $facets
-     * @param array|null $updateCriteria
+     * @param array $updateCriteria
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
-    public function update($facets, $updateCriteria);
+    public function update(array $facets, array $updateCriteria);
 }

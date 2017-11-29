@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use PDO;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
@@ -131,7 +132,7 @@ class AttributeReader implements AttributeReaderInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    protected function applySearchParamsToQuery($query, $searchText, $limit)
+    protected function applySearchParamsToQuery(SpyProductAttributeKeyQuery $query, $searchText, $limit)
     {
         $query->limit($limit)
             ->setFormatter(new PropelArraySetFormatter());

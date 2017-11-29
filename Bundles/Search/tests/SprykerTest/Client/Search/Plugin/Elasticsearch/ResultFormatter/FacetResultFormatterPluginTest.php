@@ -82,13 +82,13 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     public function resultFormatterDataProvider()
     {
         return [
-//            'empty result set' => $this->getEmptyResultTestData(),
-//            'string facet result set' => $this->getStringFacetResultTestData(),
-//            'multiple string facet result set' => $this->getMultiStringFacetResultTestData(),
-//            'integer facet result set' => $this->getIntegerFacetResultTestData(),
+            'empty result set' => $this->getEmptyResultTestData(),
+            'string facet result set' => $this->getStringFacetResultTestData(),
+            'multiple string facet result set' => $this->getMultiStringFacetResultTestData(),
+            'integer facet result set' => $this->getIntegerFacetResultTestData(),
             'multiple integer facet result set' => $this->getMultiIntegerFacetResultTestData(),
-//            'category result set' => $this->getCategoryResultTestData(),
-//            'filtered result set' => $this->getFilteredResultTestData(),
+            'category result set' => $this->getCategoryResultTestData(),
+            'filtered result set' => $this->getFilteredResultTestData(),
         ];
     }
 

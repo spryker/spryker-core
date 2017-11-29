@@ -69,6 +69,7 @@ class ProductCategoryFilterDeleter implements ProductCategoryFilterDeleterInterf
     {
         $productCategoryFilterEntity = $this->getProductCategoryFilterEntityByCategoryId($categoryId);
         $productCategoryFilterEntity->delete();
+
         return $productCategoryFilterEntity;
     }
 
