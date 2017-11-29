@@ -351,7 +351,7 @@ interface CustomerFacadeInterface
      */
     public function saveCustomerForOrder(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     );
 
     /**
@@ -367,7 +367,7 @@ interface CustomerFacadeInterface
      */
     public function checkOrderPreSaveConditions(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     );
 
     /**
