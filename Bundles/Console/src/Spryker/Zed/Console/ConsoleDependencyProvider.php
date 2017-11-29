@@ -53,7 +53,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Symfony\Component\Console\Command\Command[]
      */
-    public function getConsoleCommands(Container $container)
+    protected function getConsoleCommands(Container $container)
     {
         return [];
     }
@@ -105,7 +105,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
      */
-    public function getConsolePreRunHookPlugins(Container $container)
+    protected function getConsolePreRunHookPlugins(Container $container)
     {
         return [];
     }
@@ -115,7 +115,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
      */
-    public function getConsolePostRunHookPlugins(Container $container)
+    protected function getConsolePostRunHookPlugins(Container $container)
     {
         return [];
     }
