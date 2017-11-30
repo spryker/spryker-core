@@ -614,7 +614,7 @@ class StateMachineFacadeTest extends Unit
         $expectedResult = true;
 
         // Act
-        $actualResult = $stateMachineFacade->doesStateMachineExist($stateMachineName);
+        $actualResult = $stateMachineFacade->stateMachineExists($stateMachineName);
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
@@ -632,7 +632,7 @@ class StateMachineFacadeTest extends Unit
         $expectedResult = false;
 
         // Act
-        $actualResult = $stateMachineFacade->doesStateMachineExist($stateMachineName);
+        $actualResult = $stateMachineFacade->stateMachineExists($stateMachineName);
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);

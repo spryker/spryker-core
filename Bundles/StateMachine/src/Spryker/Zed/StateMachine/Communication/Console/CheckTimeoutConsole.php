@@ -48,7 +48,7 @@ class CheckTimeoutConsole extends Console
     {
         $stateMachineName = $this->input->getArgument(static::ARGUMENT_STATE_MACHINE_NAME);
 
-        $doesExist = $this->getFacade()->doesStateMachineExist($stateMachineName);
+        $doesExist = $this->getFacade()->stateMachineExists($stateMachineName);
         if (!$doesExist) {
             $this->error(sprintf('State machine "%s" was not found.', $stateMachineName));
             return;

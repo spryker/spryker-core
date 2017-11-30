@@ -91,7 +91,7 @@ interface StateMachineFacadeInterface
      *
      * @return bool
      */
-    public function doesStateMachineExist($stateMachineName);
+    public function stateMachineExists($stateMachineName);
 
     /**
      * Specification:
