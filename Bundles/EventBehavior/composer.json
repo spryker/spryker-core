@@ -15,7 +15,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "^3.1.0",
-    "spryker/console": "^3.1.0",
+    "spryker/console": "^3.1.0 || ^4.0.0",
     "spryker/propel": "^3.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/testify": "*"

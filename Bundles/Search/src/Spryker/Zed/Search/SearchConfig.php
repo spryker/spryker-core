@@ -21,6 +21,18 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getReindexUrl()
+    {
+        return sprintf(
+            '%s:%s/_reindex?pretty',
+            $this->get(SearchConstants::ELASTICA_PARAMETER__HOST),
+            $this->get(SearchConstants::ELASTICA_PARAMETER__PORT)
+        );
+    }
+
+    /**
      * @return array
      */
     public function getJsonIndexDefinitionDirectories()

@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Elastica\Snapshot;
 use Psr\Log\LoggerInterface;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
@@ -21,6 +23,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
@@ -45,6 +48,14 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function createSearchIndexManager()
     {
         return new SearchIndexManager($this->getElasticsearchIndex());
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManagerInterface
+     */
+    public function createSearchIndicesManager()
+    {
+        return new SearchIndexManager($this->getElasticsearchIndex('_all'));
     }
 
     /**
@@ -137,13 +148,15 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @param null|string $index
+     *
      * @return \Elastica\Index
      */
-    protected function getElasticsearchIndex()
+    protected function getElasticsearchIndex($index = null)
     {
         return $this
             ->createIndexProvider()
-            ->getClient();
+            ->getClient($index);
     }
 
     /**
@@ -203,5 +216,40 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function getSearchPageMapPlugins()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::PLUGIN_SEARCH_PAGE_MAPS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandlerInterface
+     */
+    public function createSnapshotHandler()
+    {
+        return new SnapshotHandler($this->createElasticsearchSnapshot());
+    }
+
+    /**
+     * @return \Elastica\Snapshot
+     */
+    protected function createElasticsearchSnapshot()
+    {
+        return new Snapshot($this->getElasticsearchClient());
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopierInterface
+     */
+    public function createElasticsearchIndexCopier()
+    {
+        return new IndexCopier(
+            $this->getGuzzleClient(),
+            $this->getConfig()->getReindexUrl()
+        );
+    }
+
+    /**
+     * @return \GuzzleHttp\Client
+     */
+    protected function getGuzzleClient()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
     }
 }
