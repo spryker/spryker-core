@@ -47,7 +47,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
      */
     public function checkPreConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if ($this->isRegisteredCustomer($quoteTransfer)) {
+        if ($this->hasIdCustomer($quoteTransfer)) {
             return;
         }
 
@@ -77,7 +77,7 @@ class PreConditionChecker implements PreConditionCheckerInterface
      *
      * @return bool
      */
-    protected function isRegisteredCustomer(QuoteTransfer $quoteTransfer)
+    protected function hasIdCustomer(QuoteTransfer $quoteTransfer)
     {
         return $quoteTransfer->getCustomer() !== null && $quoteTransfer->getCustomer()->getIdCustomer() !== null;
     }
