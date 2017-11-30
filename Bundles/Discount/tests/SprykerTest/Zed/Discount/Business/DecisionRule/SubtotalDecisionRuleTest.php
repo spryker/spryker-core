@@ -30,7 +30,7 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
     public function testWhenSubTotalMatchesClauseShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $grandTotal) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $grandTotal) {
             return $clauseTransfer->getValue() === $grandTotal;
         });
 

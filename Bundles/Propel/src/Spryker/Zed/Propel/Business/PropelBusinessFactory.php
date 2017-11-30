@@ -12,6 +12,8 @@ use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
 use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\AdapterCollection;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\AdapterFactory;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollection;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator;
@@ -120,6 +122,16 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Propel\Business\Model\DirectoryRemoverInterface
+     */
+    public function createMigrationDirectoryRemover()
+    {
+        return new DirectoryRemover(
+            $this->getConfig()->getMigrationDirectory()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface
      */
     public function createPostgresqlCompatibilityAdjuster()
@@ -150,6 +162,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabaseInterface
      */
     public function createDatabaseCreator()
@@ -160,6 +174,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface
      */
     protected function createDatabaseCreatorCollection()
@@ -173,6 +189,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
     protected function createMySqlDatabaseCreator()
@@ -181,6 +199,8 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
     protected function createPostgreSqlDatabaseCreator()
@@ -326,5 +346,26 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function createMigrationCheckConsole()
     {
         return new MigrationCheckConsole();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\AdapterCollectionInterface
+     */
+    public function createPropelDatabaseAdapterCollection()
+    {
+        $adapterCollection = new AdapterCollection($this->getConfig()->getCurrentDatabaseEngine());
+
+        $adapterCollection->addAdapter($this->createAdapterFactory()->createMySqlAdapter());
+        $adapterCollection->addAdapter($this->createAdapterFactory()->createPostgreSqlAdapter());
+
+        return $adapterCollection;
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\AdapterFactoryInterface
+     */
+    protected function createAdapterFactory()
+    {
+        return new AdapterFactory();
     }
 }

@@ -47,7 +47,7 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
             count($allCollectors)
         );
 
-        $output->writeln('');
+        $output->write(PHP_EOL);
         $output->writeln($collectorInfo);
 
         $exportResults = $this->getFacade()->exportStorage($output);

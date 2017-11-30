@@ -13,6 +13,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class LogConfig extends AbstractBundleConfig
 {
     /**
+     * @var string[]
+     */
+    protected $logDirectoryConstants = [
+        LogConstants::LOG_FILE_PATH_YVES,
+        LogConstants::LOG_FILE_PATH_ZED,
+        LogConstants::LOG_FILE_PATH,
+        LogConstants::EXCEPTION_LOG_FILE_PATH_YVES,
+        LogConstants::EXCEPTION_LOG_FILE_PATH_ZED,
+        LogConstants::EXCEPTION_LOG_FILE_PATH,
+    ];
+
+    /**
      * @return string
      */
     public function getChannelName()
@@ -21,7 +33,7 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
     public function getSanitizerFieldNames()
     {
@@ -29,7 +41,7 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSanitizedFieldValue()
     {
@@ -41,6 +53,10 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getLogFilePath()
     {
+        if ($this->getConfig()->hasKey(LogConstants::LOG_FILE_PATH_ZED)) {
+            return $this->get(LogConstants::LOG_FILE_PATH_ZED);
+        }
+
         return $this->get(LogConstants::LOG_FILE_PATH);
     }
 
@@ -57,6 +73,26 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getExceptionLogFilePath()
     {
+        if ($this->getConfig()->hasKey(LogConstants::EXCEPTION_LOG_FILE_PATH_ZED)) {
+            return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH_ZED);
+        }
+
         return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH);
+    }
+
+    /**
+     * @return array
+     */
+    public function getLogFileDirectories()
+    {
+        $logFileDirectories = [];
+
+        foreach ($this->logDirectoryConstants as $logDirectoryConstant) {
+            if ($this->getConfig()->hasKey($logDirectoryConstant)) {
+                $logFileDirectories[] = dirname($this->get($logDirectoryConstant));
+            }
+        }
+
+        return array_unique($logFileDirectories);
     }
 }

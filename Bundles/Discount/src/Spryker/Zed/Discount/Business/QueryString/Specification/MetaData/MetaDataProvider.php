@@ -30,6 +30,18 @@ class MetaDataProvider implements MetaDataProviderInterface
     protected $logicalComparators;
 
     /**
+     * @var string[]|null Numerical array of available fields.
+     */
+    protected $availableFieldsBuffer = null;
+
+    /**
+     * @see MetaDataProvider::availableFieldsBuffer
+     *
+     * @var array|null Each key is an available field. Contains the flipped $availableFieldsBuffer variable for performance reason.
+     */
+    protected $availableFieldsMapBuffer = null;
+
+    /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[] $specificationPlugins
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators $logicalComparators
@@ -49,6 +61,32 @@ class MetaDataProvider implements MetaDataProviderInterface
      */
     public function getAvailableFields()
     {
+        if (!isset($this->availableFieldsBuffer)) {
+            $this->loadAvailableFieldsBuffers();
+        }
+
+        return $this->availableFieldsBuffer;
+    }
+
+    /**
+     * @param string $field
+     *
+     * @return bool
+     */
+    public function isFieldAvailable($field)
+    {
+        if (!isset($this->availableFieldsMapBuffer)) {
+            $this->loadAvailableFieldsBuffers();
+        }
+
+        return isset($this->availableFieldsMapBuffer[$field]);
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadAvailableFieldsBuffers()
+    {
         $queryStringFields = [];
         foreach ($this->specificationPlugins as $specificationPlugin) {
             if ($specificationPlugin instanceof DiscountRuleWithAttributesPluginInterface) {
@@ -61,7 +99,8 @@ class MetaDataProvider implements MetaDataProviderInterface
             }
         }
 
-        return $queryStringFields;
+        $this->availableFieldsBuffer = $queryStringFields;
+        $this->availableFieldsMapBuffer = array_flip($queryStringFields);
     }
 
     /**

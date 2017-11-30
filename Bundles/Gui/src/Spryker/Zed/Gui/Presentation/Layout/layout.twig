@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block head_title %}{{ title | trans }}{% endblock %}</title>
+    <title>{% block head_title %}{% if title is defined %}{{ title | trans }}{% endif %}{% endblock %}</title>
 
     {% block head_css %}
         <link rel="stylesheet" href="/assets/css/spryker-zed-gui-commons.css">
@@ -39,7 +39,7 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                        <span class="m-r-sm text-muted welcome-message">{{ 'Welcome' | trans }}{% if username is defined %} <strong>{{ username }}</strong>{% endif %} <em>[{{ environment }}]</em></span>
+                        <span class="m-r-sm text-muted welcome-message">{{ 'Welcome' | trans }}{% if username is defined %} <strong>{{ username }}</strong>{% endif %}{% if environment is defined %} <em>[{{ environment }}]</em>{% endif %}</span>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -60,7 +60,7 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-xs-12 col-md-6">
-                <h2>{% block section_title %}{{ title|trans }}{% endblock %}</h2>
+                <h2>{% block section_title %}{% if title is defined %}{{ title|trans }}{% endif %}{% endblock %}</h2>
                 {% if app.twig.getFunction('breadcrumb') != false %}
                     {% include '@Gui/Partials/breadcrumb.twig' %}
                 {% else %}
