@@ -5,7 +5,7 @@
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
-    "spryker/payment": "^4.0.0",
+    "spryker/payment": "^4.0.0"
   },
   "require-dev": {
     "spryker/step-engine": "^3.1.0",

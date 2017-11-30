@@ -4,20 +4,27 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
-    "spryker/oms": "^7.0.0",
-    "spryker/payment": "^4.0.0",
     "spryker/product": "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^7.0.0",
-    "spryker/util-encoding": "^2.0.0"
+    "spryker/util-encoding": "^2.0.0",
+    "spryker/propel-orm": "^1.5.0",
+    "spryker/sales": "^8.0.0",
+    "spryker/symfony": "^3.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "^3.0.0",
     "spryker/testify": "*",
-    "spryker/calculation": "*"
+    "spryker/calculation": "*",
+    "spryker/cart": "^4.0.0",
+    "spryker/discount": "^5.0.0",
+    "spryker/oms": "^7.0.0",
+    "spryker/payment": "^4.0.0",
+    "spryker/shipment": "^6.2.0",
+    "spryker/checkout": "^3.2.0"
   },
   "suggest": {
+    "spryker/payment": "If you want to use Payment plugins",
+    "spryker/oms": "If you want to use OMS plugins",
     "spryker/discount": "If you want to make sure GiftCards have no Discount applied",
     "spryker/calculation": "To correctly calculate gift card payments",
     "spryker/cart": "To expand information about gift card products",
