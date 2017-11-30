@@ -7,11 +7,11 @@
 
 namespace Spryker\Yves\Checkout\Form;
 
-use Pyz\Yves\Checkout\Form\Steps\PaymentForm;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Checkout\DataContainer\DataContainer;
 use Spryker\Yves\Checkout\Form\Filter\SubFormFilter;
 use Spryker\Yves\Checkout\Form\Provider\SubFormDataProviders;
+use Spryker\Yves\Checkout\Form\Steps\PaymentForm;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
@@ -73,7 +73,7 @@ class FormFactory extends AbstractFactory
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subForms
      *
-     * @return \Pyz\Yves\Checkout\Form\Steps\PaymentForm
+     * @return \Spryker\Yves\Checkout\Form\Steps\PaymentForm
      */
     protected function createPaymentForm(SubFormPluginCollection $subForms)
     {
@@ -99,6 +99,11 @@ class FormFactory extends AbstractFactory
         return $this->getProvidedDependency(CheckoutDependencyProvider::FORM_FACTORY);
     }
 
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subFormProvider
+     *
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     */
     protected function createSubFormDataProvider($subFormProvider)
     {
         return new SubFormDataProviders($subFormProvider);
