@@ -9,6 +9,8 @@ namespace Spryker\Zed\Storage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Storage\Business\Model\Storage;
+use Spryker\Zed\Storage\Business\Model\StorageExporter;
+use Spryker\Zed\Storage\Business\Model\StorageImporter;
 use Spryker\Zed\Storage\StorageDependencyProvider;
 
 /**
@@ -17,7 +19,7 @@ use Spryker\Zed\Storage\StorageDependencyProvider;
 class StorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Storage\Business\Model\Storage
+     * @return \Spryker\Zed\Storage\Business\Model\StorageInterface
      */
     public function createStorage()
     {
@@ -27,10 +29,26 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClient
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     protected function getStorageClient()
     {
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Storage\Business\Model\StorageExporterInterface
+     */
+    public function createStorageExporter()
+    {
+        return new StorageExporter($this->getConfig()->getRedisPort());
+    }
+
+    /**
+     * @return \Spryker\Zed\Storage\Business\Model\StorageImporterInterface
+     */
+    public function createStorageImporter()
+    {
+        return new StorageImporter($this->getConfig()->getRdbDumpPath());
     }
 }

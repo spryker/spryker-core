@@ -14,12 +14,20 @@ use Symfony\Component\Process\Process;
 
 class SetupHelper extends Module
 {
+    const SPRYKER_DEPLOY = 'vendor/bin/deploy -r testing -q';
+
+    /**
+     * @deprecated Please use the spryker/deploy module.
+     */
     const TEST_ENV_SCRIPT = 'setup_test';
 
     /**
+     * @var bool
+     */
+    protected $hasSetupTool;
+
+    /**
      * @param \Codeception\TestInterface $test
-     *
-     * @throws \Exception
      *
      * @return void
      */
@@ -27,11 +35,25 @@ class SetupHelper extends Module
     {
         parent::_before($test);
 
-        $process = $this->runTestSetup('--restore');
+        if ($this->hasSprykerSetup()) {
+            $this->run('-s restore');
 
-        if (!$process->isSuccessful()) {
-            throw new Exception('An error in data restore occurred: ' . $process->getErrorOutput());
+            return;
         }
+
+        $this->run('--restore');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSprykerSetup()
+    {
+        if ($this->hasSetupTool === null) {
+            $this->hasSetupTool = file_exists(APPLICATION_ROOT_DIR . '/vendor/bin/deploy');
+        }
+
+        return $this->hasSetupTool;
     }
 
     /**
@@ -39,7 +61,13 @@ class SetupHelper extends Module
      */
     public function runCollectors()
     {
-        $this->runTestSetup('--collectors');
+        if ($this->hasSprykerSetup()) {
+            $this->run('-s collectors');
+
+            return $this;
+        }
+
+        $this->run('--collectors');
 
         return $this;
     }
@@ -47,26 +75,33 @@ class SetupHelper extends Module
     /**
      * @param string $argument
      *
-     * @return \Symfony\Component\Process\Process
+     * @throws \Exception
+     *
+     * @return void
      */
-    protected function runTestSetup($argument)
+    protected function run($argument)
     {
-        $process = new Process(sprintf(
-            '%s' . self::TEST_ENV_SCRIPT . ' %s',
-            $this->getSetupScriptPath(),
-            $argument
-        ));
+        $command = $this->buildCommandToExecute($argument);
+        $process = new Process($command, APPLICATION_ROOT_DIR);
 
         $process->run();
 
-        return $process;
+        if (!$process->isSuccessful()) {
+            throw new Exception('An error in data restore occurred: ' . $process->getErrorOutput());
+        }
     }
 
     /**
+     * @param string $argument
+     *
      * @return string
      */
-    protected function getSetupScriptPath()
+    protected function buildCommandToExecute($argument)
     {
-        return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR;
+        if ($this->hasSprykerSetup()) {
+            return sprintf(static::SPRYKER_DEPLOY . ' %s', $argument);
+        }
+
+        return sprintf(static::TEST_ENV_SCRIPT . ' %s', $argument);
     }
 }

@@ -31,4 +31,9 @@ interface SearchIndexManagerInterface
      * @return \Elastica\Document
      */
     public function getDocument($key, $type);
+
+    /**
+     * @return bool
+     */
+    public function close();
 }

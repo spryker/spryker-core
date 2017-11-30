@@ -15,7 +15,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/console": "^3.0.0",
+    "spryker/console": "^3.0.0 || ^4.0.0",
     "spryker/testify": "^3.3.0",
     "spryker/transfer": "^3.0.0"
   },

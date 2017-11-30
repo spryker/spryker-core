@@ -9,10 +9,13 @@ namespace Spryker\Zed\Log;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Symfony\Component\Filesystem\Filesystem;
 
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUEUE = 'queue client';
+    const LOG_LISTENERS = 'log listener';
+    const FILESYSTEM = 'filesystem';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +34,19 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = $this->addLogListener($container);
+        $container = $this->addFilesystem($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addQueueClient(Container $container)
     {
         $container[self::CLIENT_QUEUE] = function () use ($container) {
@@ -38,5 +54,41 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLogListener(Container $container)
+    {
+        $container[static::LOG_LISTENERS] = function () {
+            return $this->getLogListeners();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFilesystem(Container $container)
+    {
+        $container[static::FILESYSTEM] = function () {
+            return new Filesystem();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface[]
+     */
+    protected function getLogListeners()
+    {
+        return [];
     }
 }

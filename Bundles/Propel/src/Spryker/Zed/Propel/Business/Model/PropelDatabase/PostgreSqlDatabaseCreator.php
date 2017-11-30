@@ -107,8 +107,6 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     }
 
     /**
-     * Check if exit code can be used to return bool
-     *
      * @param string $command
      *
      * @throws \RuntimeException
@@ -126,9 +124,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        $returnValue = (int)$process->getOutput();
-
-        return (bool)$returnValue;
+        return true;
     }
 
     /**
