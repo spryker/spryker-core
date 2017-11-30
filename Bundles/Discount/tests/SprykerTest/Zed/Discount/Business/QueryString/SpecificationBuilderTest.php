@@ -418,6 +418,8 @@ class SpecificationBuilderTest extends Unit
     }
 
     /**
+     * @see MetaDataProviderInterface::isFieldAvailable()
+     *
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProviderMock
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $createComparatorOperatorsMock
      * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface|null $metaDataProviderMock
@@ -436,8 +438,15 @@ class SpecificationBuilderTest extends Unit
 
         if ($metaDataProviderMock === null) {
             $metaDataProviderMock = $this->createMetaDataProviderMock();
-            $metaDataProviderMock->method('getAvailableFields')
-                ->willReturn(['quantity', 'sku', 'color', 'attribute.value']);
+            $metaDataProviderMock
+                ->expects($this->any())
+                ->method('isFieldAvailable')
+                ->will($this->returnValueMap([
+                    ['quantity', true],
+                    ['sku', true],
+                    ['color', true],
+                    ['attribute.value', true],
+                ]));
         }
 
         return new SpecificationBuilder(

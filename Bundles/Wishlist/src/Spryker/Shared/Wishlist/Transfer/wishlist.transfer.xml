@@ -87,4 +87,9 @@
         <property name="sku" type="string" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="bundleItems" type="Item[]" singular="bundleItem" />
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

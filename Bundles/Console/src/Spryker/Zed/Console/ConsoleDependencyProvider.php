@@ -9,7 +9,6 @@ namespace Spryker\Zed\Console;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -142,8 +141,6 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getServiceProviders(Container $container)
     {
-        return [
-            new PropelServiceProvider(),
-        ];
+        return [];
     }
 }
