@@ -605,7 +605,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasHandlerReturnsTrueWhenStateMachineHasHandler()
+    public function testDoesStateMachineExistReturnsTrueWhenStateMachineHasHandler()
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
@@ -614,7 +614,7 @@ class StateMachineFacadeTest extends Unit
         $expectedResult = true;
 
         // Act
-        $actualResult = $stateMachineFacade->hasHandler($stateMachineName);
+        $actualResult = $stateMachineFacade->doesStateMachineExist($stateMachineName);
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
@@ -623,7 +623,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasHandlerReturnsFalseWhenStateMachineHasNoHandler()
+    public function testDoesStateMachineExistReturnsFalseWhenStateMachineHasNoHandler()
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
@@ -632,7 +632,7 @@ class StateMachineFacadeTest extends Unit
         $expectedResult = false;
 
         // Act
-        $actualResult = $stateMachineFacade->hasHandler($stateMachineName);
+        $actualResult = $stateMachineFacade->doesStateMachineExist($stateMachineName);
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);

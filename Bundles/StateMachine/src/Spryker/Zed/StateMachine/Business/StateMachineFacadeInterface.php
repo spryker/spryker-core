@@ -83,7 +83,7 @@ interface StateMachineFacadeInterface
 
     /**
      * Specification:
-     * - Checks if state machine owns any predefined handler.
+     * - Checks if state machine exists.
      *
      * @api
      *
@@ -91,7 +91,7 @@ interface StateMachineFacadeInterface
      *
      * @return bool
      */
-    public function hasHandler($stateMachineName);
+    public function doesStateMachineExist($stateMachineName);
 
     /**
      * Specification:

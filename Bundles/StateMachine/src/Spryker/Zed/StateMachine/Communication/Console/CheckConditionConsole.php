@@ -48,8 +48,8 @@ class CheckConditionConsole extends Console
     {
         $stateMachineName = $this->input->getArgument(static::ARGUMENT_STATE_MACHINE_NAME);
 
-        $hasHandler = $this->getFacade()->hasHandler($stateMachineName);
-        if (!$hasHandler) {
+        $doesExist = $this->getFacade()->doesStateMachineExist($stateMachineName);
+        if (!$doesExist) {
             $this->error(sprintf('State machine "%s" was not found.', $stateMachineName));
             return;
         }

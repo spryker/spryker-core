@@ -110,7 +110,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * @return bool
      */
-    public function hasHandler($stateMachineName)
+    public function doesStateMachineExist($stateMachineName)
     {
         return $this->getFactory()
             ->createStateMachineFinder()

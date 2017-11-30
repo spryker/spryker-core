@@ -347,6 +347,7 @@ class Process implements ProcessInterface
                 $eventsBySource[$sourceName][] = $event->getName();
             }
         }
+
         return $eventsBySource;
     }
 
