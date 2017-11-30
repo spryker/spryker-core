@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -244,9 +245,15 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
+        $countryEntity = $orderEntity->getBillingAddress()->getCountry();
+
         $billingAddressTransfer = new AddressTransfer();
         $billingAddressTransfer->fromArray($orderEntity->getBillingAddress()->toArray(), true);
-        $billingAddressTransfer->setIso2Code($orderEntity->getBillingAddress()->getCountry()->getIso2Code());
+        $billingAddressTransfer->setIso2Code($countryEntity->getIso2Code());
+
+        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
+        $billingAddressTransfer->setCountry($countryTransfer);
+
         $orderTransfer->setBillingAddress($billingAddressTransfer);
     }
 
@@ -258,9 +265,15 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
+        $countryEntity = $orderEntity->getShippingAddress()->getCountry();
+
         $shippingAddressTransfer = new AddressTransfer();
         $shippingAddressTransfer->fromArray($orderEntity->getShippingAddress()->toArray(), true);
-        $shippingAddressTransfer->setIso2Code($orderEntity->getShippingAddress()->getCountry()->getIso2Code());
+        $shippingAddressTransfer->setIso2Code($countryEntity->getIso2Code());
+
+        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
+        $shippingAddressTransfer->setCountry($countryTransfer);
+
         $orderTransfer->setShippingAddress($shippingAddressTransfer);
     }
 

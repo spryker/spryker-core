@@ -66,6 +66,7 @@
         <property name="cellPhone" type="string" />
         <property name="comment" type="string" />
         <property name="description" type="string" />
+        <property name="country" type="Country" />
     </transfer>
 
     <transfer name="Comment">
