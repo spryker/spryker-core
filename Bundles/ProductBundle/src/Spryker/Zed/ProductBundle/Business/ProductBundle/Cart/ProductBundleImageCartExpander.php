@@ -82,17 +82,17 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
      */
     protected function getProductImages(array $imageSets)
     {
-        $firstImageSet = [];
+        $firstProductImageSetImages = [];
         foreach ($imageSets as $imageSet) {
             if ($imageSet->getName() === static::DEFAULT_IMAGE_SET_NAME) {
                 return $imageSet->getProductImages();
             }
 
-            if (!$firstImageSet) {
-                $firstImageSet = $imageSet;
+            if (!$firstProductImageSetImages) {
+                $firstProductImageSetImages = $imageSet->getProductImages();
             }
         }
 
-        return $firstImageSet;
+        return $firstProductImageSetImages;
     }
 }
